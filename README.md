@@ -46,4 +46,4 @@ aws-quiz-bank/
 4. 開啟 `http://localhost:3000` 測試 Google 登入。
 5. 手動同步題庫：`npm run sync:questions`
 
-GitLab scheduled pipeline 使用根目錄 `.gitlab-ci.yml` 定期執行同一支同步程式。
+GitHub Actions 使用根目錄 `.github/workflows/sync-google-sheet.yml` 定期執行同一支同步程式。
