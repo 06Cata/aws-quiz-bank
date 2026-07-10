@@ -10,5 +10,14 @@ export function createClient() {
     return null;
   }
 
+  try {
+    const parsedUrl = new URL(supabaseUrl);
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      return null;
+    }
+  } catch {
+    return null;
+  }
+
   return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
