@@ -42,6 +42,29 @@ export default function Home() {
       return;
     }
 
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code) {
+      supabase.auth
+        .exchangeCodeForSession(code)
+        .then(({ data, error }) => {
+          if (error) {
+            setAuthMessage(error.message);
+            return;
+          }
+
+          setUser(data.session?.user ?? null);
+          window.history.replaceState({}, document.title, window.location.pathname);
+        })
+        .catch(() => {
+          setAuthMessage("Google 登入回傳處理失敗");
+        })
+        .finally(() => {
+          setIsCheckingSession(false);
+        });
+
+      return;
+    }
+
     supabase.auth
       .getUser()
       .then(({ data }) => {
