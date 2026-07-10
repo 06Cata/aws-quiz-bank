@@ -32,19 +32,33 @@ export default function Home() {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [isLoginPanelOpen, setIsLoginPanelOpen] = useState(false);
+  const [authMessage, setAuthMessage] = useState("");
 
   useEffect(() => {
     const supabase = createClient();
-
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user);
+    if (!supabase) {
+      setAuthMessage("Vercel web 專案缺少 Supabase 前端環境變數");
       setIsCheckingSession(false);
-    });
+      return;
+    }
+
+    supabase.auth
+      .getUser()
+      .then(({ data }) => {
+        setUser(data.user);
+      })
+      .catch(() => {
+        setAuthMessage("讀取登入狀態失敗");
+      })
+      .finally(() => {
+        setIsCheckingSession(false);
+      });
 
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      setAuthMessage("");
       setIsCheckingSession(false);
     });
 
@@ -56,6 +70,13 @@ export default function Home() {
   async function signInWithGoogle() {
     setIsLoading(true);
     const supabase = createClient();
+    if (!supabase) {
+      setAuthMessage("尚未設定 NEXT_PUBLIC_SUPABASE_URL 或 NEXT_PUBLIC_SUPABASE_ANON_KEY");
+      setIsLoading(false);
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -64,6 +85,7 @@ export default function Home() {
     });
 
     if (error) {
+      setAuthMessage(error.message);
       setIsLoading(false);
     }
   }
@@ -71,6 +93,12 @@ export default function Home() {
   async function signOut() {
     setIsLoading(true);
     const supabase = createClient();
+    if (!supabase) {
+      setAuthMessage("尚未設定 Supabase 前端環境變數");
+      setIsLoading(false);
+      return;
+    }
+
     await supabase.auth.signOut();
     setUser(null);
     setIsLoading(false);
@@ -167,7 +195,7 @@ export default function Home() {
                     ? "正在讀取 Supabase session"
                     : user
                       ? `目前 Gmail：${gmail}`
-                      : "目前沒有登入 Gmail 帳號"}
+                      : authMessage || "目前沒有登入 Gmail 帳號"}
                 </p>
               </div>
 
