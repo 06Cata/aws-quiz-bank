@@ -31,6 +31,68 @@ async def select_questions(limit: int = 20) -> list[dict]:
         return response.json()
 
 
+async def select_wrong_questions_for_user(user_id: str, limit: int = 20) -> list[dict]:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        return []
+
+    stats_url = f"{settings.supabase_url}/rest/v1/user_question_stats"
+    questions_url = f"{settings.supabase_url}/rest/v1/questions"
+    headers = _service_headers()
+    stats_params = {
+        "select": "question_id,wrong_count",
+        "user_id": f"eq.{user_id}",
+        "wrong_count": "gt.0",
+        "order": "wrong_count.desc,updated_at.desc",
+        "limit": str(max(limit * 5, 100)),
+    }
+
+    async with httpx.AsyncClient(timeout=20) as client:
+        stats_response = await client.get(stats_url, headers=headers, params=stats_params)
+        stats_response.raise_for_status()
+        stats = stats_response.json()
+
+        question_ids = [
+            str(item.get("question_id"))
+            for item in stats
+            if item.get("question_id")
+        ]
+        if not question_ids:
+            return []
+
+        questions_response = await client.get(
+            questions_url,
+            headers=headers,
+            params={
+                "select": "*",
+                "id": f"in.({','.join(question_ids)})",
+                "is_active": "eq.true",
+            },
+        )
+        questions_response.raise_for_status()
+        questions = {
+            item["id"]: item
+            for item in questions_response.json()
+            if item.get("id")
+        }
+
+    weighted_questions: list[dict] = []
+    for item in stats:
+        question_id = str(item.get("question_id") or "")
+        question = questions.get(question_id)
+        if not question:
+            continue
+
+        wrong_count = max(int(item.get("wrong_count") or 1), 1)
+        repeat_count = min(wrong_count, 5)
+        for _ in range(repeat_count):
+            weighted_questions.append({**question, "review_wrong_count": wrong_count})
+
+        if len(weighted_questions) >= limit:
+            break
+
+    return weighted_questions[:limit]
+
+
 async def get_auth_user(access_token: str) -> dict:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")

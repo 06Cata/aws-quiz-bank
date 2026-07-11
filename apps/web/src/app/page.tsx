@@ -246,7 +246,7 @@ export default function Home() {
     setIsLoading(false);
   }
 
-  async function startQuiz() {
+  async function loadQuestionSet(endpoint: string, emptyMessage: string, loadedMessage: string) {
     if (!user) {
       setQuizMessage("請先登入才能記錄您的答題狀態");
       setIsLoginPanelOpen(true);
@@ -277,7 +277,7 @@ export default function Home() {
     setQuizMessage("");
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/questions?limit=20`, {
+      const response = await fetch(`${apiBaseUrl}${endpoint}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -290,7 +290,7 @@ export default function Home() {
       const nextQuestions = data.items ?? [];
 
       if (nextQuestions.length === 0) {
-        setQuizMessage("目前題庫沒有可用題目，請先確認 Google Sheet 同步結果");
+        setQuizMessage(emptyMessage);
         return;
       }
 
@@ -299,12 +299,28 @@ export default function Home() {
       setSelectedOptions([]);
       setHasAnswered(false);
       setHasStartedQuiz(true);
-      setQuizMessage(`已載入 ${nextQuestions.length} 題`);
+      setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
     } catch {
       setQuizMessage("題庫讀取失敗，請確認 FastAPI 或 Vercel API 已啟動");
     } finally {
       setIsLoadingQuestions(false);
     }
+  }
+
+  async function startQuiz() {
+    await loadQuestionSet(
+      "/api/questions?limit=20",
+      "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
+      "已載入"
+    );
+  }
+
+  async function startWrongReview() {
+    await loadQuestionSet(
+      "/api/questions/wrong?limit=20",
+      "目前沒有錯題紀錄，先完成幾題後再回來複習",
+      "已載入錯題複習"
+    );
   }
 
   function chooseOption(optionKey: string) {
@@ -431,6 +447,15 @@ export default function Home() {
               {isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
             </button>
 
+            <button
+              type="button"
+              onClick={startWrongReview}
+              disabled={isLoadingQuestions}
+              className="border-2 border-flashYellow bg-black px-7 py-4 font-display text-sm uppercase text-flashYellow shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
+            >
+              複習錯題
+            </button>
+
             {!user ? (
               <button
                 type="button"
@@ -502,7 +527,7 @@ export default function Home() {
                       <p className="text-lg font-black leading-7 text-zinc-100">{zhOptionText}</p>
                       {optionText.en ? (
                         <p className="mt-2 border-t border-white/10 pt-2 text-sm leading-6 text-zinc-500">
-                          英文對照：{optionText.en}
+                          {optionText.en}
                         </p>
                       ) : null}
                     </div>
