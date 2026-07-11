@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { User } from "@supabase/supabase-js";
+import { useEffect, useRef, useState } from "react";
+import type { Session, User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
 const sampleOptions = [
@@ -33,6 +33,54 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoginPanelOpen, setIsLoginPanelOpen] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
+  const ensuredProfileUserIds = useRef<Set<string>>(new Set());
+  const profileCheckInFlightUserId = useRef<string | null>(null);
+
+  async function ensureMemberProfile(session: Session | null) {
+    const userId = session?.user?.id;
+    if (!session?.access_token || !userId) {
+      return;
+    }
+
+    if (ensuredProfileUserIds.current.has(userId) || profileCheckInFlightUserId.current === userId) {
+      return;
+    }
+
+    profileCheckInFlightUserId.current = userId;
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setAuthMessage("已登入，但尚未設定 API 網址，無法確認會員資料");
+      setIsLoginPanelOpen(true);
+      profileCheckInFlightUserId.current = null;
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/profiles/me`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("profile check failed");
+      }
+
+      const data = (await response.json()) as { created?: boolean };
+      ensuredProfileUserIds.current.add(userId);
+      if (data.created) {
+        setAuthMessage("已自動建立會員資料");
+        setIsLoginPanelOpen(true);
+      }
+    } catch {
+      setAuthMessage("已登入，但會員資料確認失敗，請確認 FastAPI 已啟動");
+      setIsLoginPanelOpen(true);
+    } finally {
+      profileCheckInFlightUserId.current = null;
+    }
+  }
 
   useEffect(() => {
     const supabase = createClient();
@@ -46,13 +94,15 @@ export default function Home() {
     if (code) {
       supabase.auth
         .exchangeCodeForSession(code)
-        .then(({ data, error }) => {
+        .then(async ({ data, error }) => {
           if (error) {
             setAuthMessage(error.message);
             return;
           }
 
-          setUser(data.session?.user ?? null);
+          const session = data.session ?? null;
+          setUser(session?.user ?? null);
+          await ensureMemberProfile(session);
           window.history.replaceState({}, document.title, window.location.pathname);
         })
         .catch(() => {
@@ -66,9 +116,11 @@ export default function Home() {
     }
 
     supabase.auth
-      .getUser()
-      .then(({ data }) => {
-        setUser(data.user);
+      .getSession()
+      .then(async ({ data }) => {
+        const session = data.session ?? null;
+        setUser(session?.user ?? null);
+        await ensureMemberProfile(session);
       })
       .catch(() => {
         setAuthMessage("讀取登入狀態失敗");
@@ -79,9 +131,12 @@ export default function Home() {
 
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
-      setAuthMessage("");
+      if (!session) {
+        setAuthMessage("");
+      }
+      await ensureMemberProfile(session);
       setIsCheckingSession(false);
     });
 
@@ -216,10 +271,11 @@ export default function Home() {
                 <p className="mt-1 break-all text-sm text-zinc-300">
                   {isCheckingSession
                     ? "正在讀取 Supabase session"
-                    : user
-                      ? `目前 Gmail：${gmail}`
-                      : authMessage || "目前沒有登入 Gmail 帳號"}
+                    : authMessage || (user ? `目前 Gmail：${gmail}` : "目前沒有登入 Gmail 帳號")}
                 </p>
+                {user && authMessage ? (
+                  <p className="mt-1 break-all text-xs text-zinc-400">目前 Gmail：{gmail}</p>
+                ) : null}
               </div>
 
               <button
