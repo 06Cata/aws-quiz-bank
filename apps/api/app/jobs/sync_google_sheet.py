@@ -16,7 +16,17 @@ SHEET_ID = settings.google_sheet_id
 SHEET_NAME = settings.google_sheet_name
 
 QUESTION_ALIASES = ("題目", "Question", "question", "question_text", "題目 (Question)")
-DOMAIN_ALIASES = ("考試領域 (Domain)", "考試領域", "Domain", "Exam Domain", "exam_domain", "領域")
+DOMAIN_ALIASES = (
+    "考試領域 (Domain)_text",
+    "Domain_text",
+    "exam_domain_text",
+    "考試領域 (Domain)",
+    "考試領域",
+    "Domain",
+    "Exam Domain",
+    "exam_domain",
+    "領域",
+)
 QUESTION_NO_ALIASES = ("題號", "Question No", "question_no", "No", "編號")
 OPTIONS_ALIASES = ("選項", "Options", "options", "選項 (Options)")
 EXPLANATIONS_ALIASES = (
