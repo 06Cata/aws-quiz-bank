@@ -72,6 +72,17 @@ function optionEntries(question: QuizQuestion) {
   return Object.entries(question.options ?? {}).sort(([left], [right]) => left.localeCompare(right));
 }
 
+function sortedOptionKeys(options: string[]) {
+  return [...options].map((option) => option.trim().toUpperCase()).filter(Boolean).sort();
+}
+
+function sameOptions(left: string[], right: string[]) {
+  const normalizedLeft = sortedOptionKeys(left);
+  const normalizedRight = sortedOptionKeys(right);
+  return normalizedLeft.length === normalizedRight.length
+    && normalizedLeft.every((option, index) => option === normalizedRight[index]);
+}
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
@@ -85,6 +96,7 @@ export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [hasAnswered, setHasAnswered] = useState(false);
+  const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
 
@@ -235,9 +247,29 @@ export default function Home() {
   }
 
   async function startQuiz() {
+    if (!user) {
+      setQuizMessage("請先登入才能記錄您的答題狀態");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
     if (!apiBaseUrl) {
       setQuizMessage("尚未設定 API 網址，無法讀取題庫");
+      return;
+    }
+
+    const supabase = createClient();
+    if (!supabase) {
+      setQuizMessage("尚未設定 Supabase 前端環境變數，無法讀取題庫");
+      return;
+    }
+
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data.session?.access_token;
+    if (!accessToken) {
+      setQuizMessage("請先登入才能記錄您的答題狀態");
+      setIsLoginPanelOpen(true);
       return;
     }
 
@@ -245,7 +277,11 @@ export default function Home() {
     setQuizMessage("");
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/questions?limit=20`);
+      const response = await fetch(`${apiBaseUrl}/api/questions?limit=20`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
       if (!response.ok) {
         throw new Error("questions request failed");
       }
@@ -288,7 +324,7 @@ export default function Home() {
     setSelectedOptions([optionKey]);
   }
 
-  function confirmAnswer() {
+  async function confirmAnswer() {
     if (selectedOptions.length === 0) {
       setQuizMessage("請先選擇答案，再按確定");
       return;
@@ -296,6 +332,53 @@ export default function Home() {
 
     setQuizMessage("");
     setHasAnswered(true);
+
+    if (!hasStartedQuiz || !currentQuestion?.id) {
+      return;
+    }
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setQuizMessage("答案已顯示，但尚未設定 API 網址，無法寫入作答紀錄");
+      return;
+    }
+
+    const supabase = createClient();
+    if (!supabase) {
+      setQuizMessage("答案已顯示，但尚未設定 Supabase，無法寫入作答紀錄");
+      return;
+    }
+
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data.session?.access_token;
+    if (!accessToken) {
+      setQuizMessage("答案已顯示；登入後才會寫入錯題紀錄");
+      return;
+    }
+
+    setIsSavingAttempt(true);
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/attempts`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          question_id: currentQuestion.id,
+          selected_options: sortedOptionKeys(selectedOptions),
+          is_correct: sameOptions(selectedOptions, correctOptions)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("attempt request failed");
+      }
+    } catch {
+      setQuizMessage("答案已顯示，但作答紀錄寫入失敗，請稍後再試");
+    } finally {
+      setIsSavingAttempt(false);
+    }
   }
 
   function nextQuestion() {
@@ -307,6 +390,7 @@ export default function Home() {
     setCurrentQuestionIndex((index) => index + 1);
     setSelectedOptions([]);
     setHasAnswered(false);
+    setIsSavingAttempt(false);
   }
 
   const gmail = user?.email ?? "";
@@ -482,10 +566,10 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={confirmAnswer}
-                    disabled={selectedOptions.length === 0}
+                    disabled={selectedOptions.length === 0 || isSavingAttempt}
                     className="border-2 border-acidGreen bg-acidGreen px-6 py-3 font-display text-sm text-black shadow-[6px_6px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:shadow-none"
                   >
-                    確定
+                    {isSavingAttempt ? "紀錄中..." : "確定"}
                   </button>
                 ) : null}
                 <div className="border-l-4 border-zinc-700 bg-[#101010] p-4">

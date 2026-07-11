@@ -108,3 +108,86 @@ async def ensure_profile_for_user(user: dict) -> dict:
         insert_response.raise_for_status()
         created = insert_response.json()
         return {"created": True, "profile": created[0] if created else profile_payload}
+
+
+async def record_question_attempt(
+    user_id: str,
+    question_id: str,
+    selected_options: list[str],
+    is_correct: bool,
+) -> dict:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        raise RuntimeError("Supabase service role is not configured")
+
+    now = datetime.now(UTC).isoformat()
+    attempts_url = f"{settings.supabase_url}/rest/v1/question_attempts"
+    stats_url = f"{settings.supabase_url}/rest/v1/user_question_stats"
+    headers = {
+        **_service_headers(),
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
+
+    attempt_payload = {
+        "user_id": user_id,
+        "question_id": question_id,
+        "selected_options": selected_options,
+        "is_correct": is_correct,
+        "answered_at": now,
+    }
+
+    stats_params = {
+        "select": "user_id,question_id,total_attempts,correct_count,wrong_count",
+        "user_id": f"eq.{user_id}",
+        "question_id": f"eq.{question_id}",
+        "limit": "1",
+    }
+
+    async with httpx.AsyncClient(timeout=20) as client:
+        attempt_response = await client.post(attempts_url, headers=headers, json=attempt_payload)
+        attempt_response.raise_for_status()
+        attempt = attempt_response.json()
+
+        existing_response = await client.get(stats_url, headers=_service_headers(), params=stats_params)
+        existing_response.raise_for_status()
+        existing = existing_response.json()
+
+        if existing:
+            current = existing[0]
+            stats_payload = {
+                "total_attempts": int(current.get("total_attempts") or 0) + 1,
+                "correct_count": int(current.get("correct_count") or 0) + (1 if is_correct else 0),
+                "wrong_count": int(current.get("wrong_count") or 0) + (0 if is_correct else 1),
+                "last_answered_at": now,
+                "updated_at": now,
+            }
+            if not is_correct:
+                stats_payload["last_wrong_at"] = now
+
+            stats_response = await client.patch(
+                stats_url,
+                headers=headers,
+                params={"user_id": f"eq.{user_id}", "question_id": f"eq.{question_id}"},
+                json=stats_payload,
+            )
+            stats_response.raise_for_status()
+            stats = stats_response.json()
+        else:
+            stats_payload = {
+                "user_id": user_id,
+                "question_id": question_id,
+                "total_attempts": 1,
+                "correct_count": 1 if is_correct else 0,
+                "wrong_count": 0 if is_correct else 1,
+                "last_answered_at": now,
+                "last_wrong_at": None if is_correct else now,
+                "updated_at": now,
+            }
+            stats_response = await client.post(stats_url, headers=headers, json=stats_payload)
+            stats_response.raise_for_status()
+            stats = stats_response.json()
+
+    return {
+        "attempt": attempt[0] if attempt else attempt_payload,
+        "stats": stats[0] if stats else stats_payload,
+    }
