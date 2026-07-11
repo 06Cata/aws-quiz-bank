@@ -276,7 +276,25 @@ export default function Home() {
       return;
     }
 
+    if (currentQuestion?.choice_type === "multiple") {
+      setSelectedOptions((options) =>
+        options.includes(optionKey)
+          ? options.filter((key) => key !== optionKey)
+          : [...options, optionKey].sort()
+      );
+      return;
+    }
+
     setSelectedOptions([optionKey]);
+  }
+
+  function confirmAnswer() {
+    if (selectedOptions.length === 0) {
+      setQuizMessage("請先選擇答案，再按確定");
+      return;
+    }
+
+    setQuizMessage("");
     setHasAnswered(true);
   }
 
@@ -374,7 +392,9 @@ export default function Home() {
                 const isSelected = selectedOptions.includes(optionKey);
                 const isCorrect = correctOptions.includes(optionKey);
                 const answerStateClass = !hasAnswered
-                  ? "border-zinc-800 bg-[#181818] hover:border-acidGreen"
+                  ? isSelected
+                    ? "border-flashYellow bg-[#221c0b]"
+                    : "border-zinc-800 bg-[#181818] hover:border-acidGreen"
                   : isCorrect
                     ? "border-acidGreen bg-[#0d1a12]"
                     : isSelected
@@ -457,10 +477,22 @@ export default function Home() {
                 ) : null}
               </div>
             ) : (
-              <div className="mt-6 border-l-4 border-zinc-700 bg-[#101010] p-4">
-                <p className="font-black text-zinc-200">
-                  {hasStartedQuiz ? "選擇一個答案後會立即顯示解析" : "按左側「開始刷題」讀取正式題庫"}
-                </p>
+              <div className="mt-6 space-y-3">
+                {hasStartedQuiz ? (
+                  <button
+                    type="button"
+                    onClick={confirmAnswer}
+                    disabled={selectedOptions.length === 0}
+                    className="border-2 border-acidGreen bg-acidGreen px-6 py-3 font-display text-sm text-black shadow-[6px_6px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:shadow-none"
+                  >
+                    確定
+                  </button>
+                ) : null}
+                <div className="border-l-4 border-zinc-700 bg-[#101010] p-4">
+                  <p className="font-black text-zinc-200">
+                    {hasStartedQuiz ? "選好答案後按「確定」才會顯示正確答案與解析" : "按左側「開始刷題」讀取正式題庫"}
+                  </p>
+                </div>
               </div>
             )}
           </div>

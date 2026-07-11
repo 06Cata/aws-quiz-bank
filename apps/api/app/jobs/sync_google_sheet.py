@@ -16,7 +16,7 @@ SHEET_ID = settings.google_sheet_id
 SHEET_NAME = settings.google_sheet_name
 
 QUESTION_ALIASES = ("題目", "Question", "question", "question_text", "題目 (Question)")
-DOMAIN_ALIASES = ("考試領域", "Exam Domain", "exam_domain", "領域")
+DOMAIN_ALIASES = ("考試領域 (Domain)", "考試領域", "Domain", "Exam Domain", "exam_domain", "領域")
 QUESTION_NO_ALIASES = ("題號", "Question No", "question_no", "No", "編號")
 OPTIONS_ALIASES = ("選項", "Options", "options", "選項 (Options)")
 EXPLANATIONS_ALIASES = (
@@ -140,6 +140,13 @@ def extract_correct_options(answer_value: Any) -> list[str]:
     return list(dict.fromkeys(matches))
 
 
+def normalize_correct_options(answer_value: Any, choice_type: str) -> list[str]:
+    correct_options = extract_correct_options(answer_value)
+    if choice_type == "single":
+        return correct_options[:1]
+    return correct_options
+
+
 def int_or_none(value: str) -> int | None:
     match = re.search(r"\d+", value)
     return int(match.group(0)) if match else None
@@ -162,7 +169,8 @@ def build_question_payload(row: dict[str, str], row_number: int) -> dict[str, An
     options = bilingual_option_map(parse_jsonish(options_raw))
     option_explanations = bilingual_option_map(parse_jsonish(pick(row, EXPLANATIONS_ALIASES)))
     answer_json = parse_jsonish(answer_raw)
-    correct_options = extract_correct_options(answer_json)
+    choice_type = parse_choice_type(pick(row, CHOICE_TYPE_ALIASES))
+    correct_options = normalize_correct_options(answer_json, choice_type)
 
     if not question_text["zh"] and not question_text["en"]:
         return None
@@ -189,7 +197,7 @@ def build_question_payload(row: dict[str, str], row_number: int) -> dict[str, An
         "option_explanations": option_explanations,
         "correct_options": correct_options,
         "answer_text": bilingual(answer_json),
-        "choice_type": parse_choice_type(pick(row, CHOICE_TYPE_ALIASES)),
+        "choice_type": choice_type,
         "discussion": bilingual(parse_jsonish(pick(row, DISCUSSION_ALIASES))),
         "is_active": True,
     }
