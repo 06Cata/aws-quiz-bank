@@ -608,6 +608,17 @@ export default function Home() {
         </div>
       </section>
 
+      <footer className="mx-auto mt-10 max-w-6xl pb-28 text-right text-xs text-zinc-500 md:pb-6">
+        <a
+          href="mailto:catalinakuowork@gmail.com"
+          aria-label="寄信給開發者 catalinakuowork@gmail.com"
+          className="font-bold underline decoration-zinc-700 underline-offset-4 transition hover:text-flashYellow hover:decoration-flashYellow"
+        >
+          寄信給開發者
+        </a>
+        <span className="ml-2">catalinakuowork@gmail.com</span>
+      </footer>
+
       <aside className="fixed bottom-6 left-20 z-40 md:left-6">
         {isLoginPanelOpen ? (
           <div className="w-[min(380px,calc(100vw-112px))] border border-zinc-700 bg-[#090909]/95 p-4 shadow-[8px_8px_0_#ff3b30] backdrop-blur md:w-[360px]">
