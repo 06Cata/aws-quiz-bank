@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.attempts import router as attempts_router
+from app.api.notes import router as notes_router
 from app.api.profiles import router as profiles_router
 from app.api.questions import router as questions_router
 from app.api.sessions import router as sessions_router
@@ -21,6 +22,7 @@ app.include_router(questions_router, prefix="/api")
 app.include_router(profiles_router, prefix="/api")
 app.include_router(attempts_router, prefix="/api")
 app.include_router(sessions_router, prefix="/api")
+app.include_router(notes_router, prefix="/api")
 
 
 @app.get("/health")

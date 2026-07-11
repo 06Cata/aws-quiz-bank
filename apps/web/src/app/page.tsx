@@ -24,6 +24,20 @@ type QuizQuestion = {
 
 type QuizMode = "practice" | "wrong" | "exam";
 
+type ReviewNote = {
+  id?: string;
+  question_id?: string;
+  option_key?: string;
+  quiz_mode?: QuizMode;
+  question_no?: number | null;
+  exam_domain?: string | null;
+  question_text?: LocalizedText;
+  option_text?: LocalizedText;
+  explanation_text?: LocalizedText;
+  correct_options?: string[];
+  updated_at?: string;
+};
+
 const sampleQuestion: QuizQuestion = {
   question_no: 3,
   exam_domain: "安全性與合規",
@@ -101,6 +115,11 @@ export default function Home() {
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
+  const [isLoadingNotes, setIsLoadingNotes] = useState(false);
+  const [isSavingNoteKey, setIsSavingNoteKey] = useState<string | null>(null);
+  const [notesMessage, setNotesMessage] = useState("");
+  const [reviewNotes, setReviewNotes] = useState<ReviewNote[]>([]);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
 
@@ -248,6 +267,131 @@ export default function Home() {
     await supabase.auth.signOut();
     setUser(null);
     setIsLoading(false);
+  }
+
+  async function getAccessToken() {
+    const supabase = createClient();
+    if (!supabase) {
+      return null;
+    }
+
+    const { data } = await supabase.auth.getSession();
+    return data.session?.access_token ?? null;
+  }
+
+  function upsertNoteInState(note: ReviewNote) {
+    setReviewNotes((notes) => {
+      const noteQuestionId = note.question_id ?? "";
+      const noteOptionKey = note.option_key ?? "";
+      const remainingNotes = notes.filter((item) =>
+        item.question_id !== noteQuestionId || item.option_key !== noteOptionKey
+      );
+      return [note, ...remainingNotes];
+    });
+  }
+
+  async function loadReviewNotes() {
+    if (!user) {
+      setNotesMessage("請先登入才能讀取複習筆記");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setNotesMessage("尚未設定 API 網址，無法讀取複習筆記");
+      return;
+    }
+
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+      setNotesMessage("請先登入才能讀取複習筆記");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
+    setIsLoadingNotes(true);
+    setNotesMessage("");
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/notes`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("notes request failed");
+      }
+
+      const data = (await response.json()) as { items?: ReviewNote[] };
+      setReviewNotes(data.items ?? []);
+      setIsNotesOpen(true);
+      setNotesMessage((data.items ?? []).length > 0 ? "" : "目前還沒有複習筆記");
+    } catch {
+      setNotesMessage("複習筆記讀取失敗，請確認 API 與 review_notes 資料表");
+    } finally {
+      setIsLoadingNotes(false);
+    }
+  }
+
+  async function saveReviewNote(optionKey: string) {
+    if (!user) {
+      setNotesMessage("請先登入才能儲存複習筆記");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
+    if (!currentQuestion?.id) {
+      setNotesMessage("預覽題不能存成筆記，請先開始刷題");
+      return;
+    }
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setNotesMessage("尚未設定 API 網址，無法儲存複習筆記");
+      return;
+    }
+
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+      setNotesMessage("請先登入才能儲存複習筆記");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
+    setIsSavingNoteKey(optionKey);
+    setNotesMessage("");
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/notes`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          question_id: currentQuestion.id,
+          option_key: optionKey,
+          quiz_mode: quizMode
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("note request failed");
+      }
+
+      const data = (await response.json()) as { note?: ReviewNote };
+      if (data.note) {
+        upsertNoteInState(data.note);
+      }
+      setIsNotesOpen(true);
+      setNotesMessage(`已將 ${optionKey} 選項解析存成筆記卡牌`);
+    } catch {
+      setNotesMessage("複習筆記儲存失敗，請確認 API 與 review_notes 資料表");
+    } finally {
+      setIsSavingNoteKey(null);
+    }
   }
 
   async function loadQuestionSet(
@@ -553,8 +697,17 @@ export default function Home() {
               </button>
 
               <div className="w-full border border-zinc-800 bg-[#090909] px-5 py-3 text-left text-sm font-black text-zinc-500">
-                <span className="block">複習筆記</span>
-                <span className="mt-1 block text-xs font-bold text-zinc-600">之後接在這裡</span>
+                <button
+                  type="button"
+                  onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
+                  disabled={isLoadingNotes}
+                  className="w-full text-left"
+                >
+                  <span className="block text-zinc-200">複習筆記</span>
+                  <span className="mt-1 block text-xs font-bold text-zinc-500">
+                    {isLoadingNotes ? "讀取筆記中..." : isNotesOpen ? "收合筆記卡牌" : "查看已存卡牌"}
+                  </span>
+                </button>
               </div>
             </div>
 
@@ -574,6 +727,65 @@ export default function Home() {
             <p className="max-w-xl border-l-4 border-flashYellow bg-[#16120a] px-4 py-3 text-sm font-bold text-flashYellow">
               {quizMessage}
             </p>
+          ) : null}
+
+          {notesMessage ? (
+            <p className="max-w-xl border-l-4 border-deepPink bg-[#170817] px-4 py-3 text-sm font-bold text-deepPink">
+              {notesMessage}
+            </p>
+          ) : null}
+
+          {isNotesOpen ? (
+            <div className="max-w-xl border border-zinc-800 bg-[#090909] p-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-black text-flashYellow">複習筆記卡牌</p>
+                <button
+                  type="button"
+                  onClick={loadReviewNotes}
+                  disabled={isLoadingNotes}
+                  className="border border-zinc-700 px-3 py-1 text-xs font-bold text-zinc-300 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-60"
+                >
+                  重新整理
+                </button>
+              </div>
+
+              {reviewNotes.length > 0 ? (
+                <div className="mt-4 grid gap-3">
+                  {reviewNotes.slice(0, 8).map((note) => {
+                    const noteQuestionText = localizedText(note.question_text);
+                    const noteOptionText = localizedText(note.option_text);
+                    const noteExplanationText = localizedText(note.explanation_text);
+                    const noteKey = `${note.question_id}-${note.option_key}`;
+
+                    return (
+                      <article key={noteKey} className="border border-zinc-800 bg-[#121212] p-3">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="text-xs font-black tracking-[0.2em] text-deepPink">
+                            {note.exam_domain || "未分類"}
+                          </p>
+                          <span className="bg-hotRed px-2 py-1 text-xs font-black text-white">
+                            {note.option_key}
+                          </span>
+                        </div>
+                        <p className="mt-2 line-clamp-2 text-sm font-black leading-6 text-white">
+                          {noteQuestionText.zh || noteQuestionText.en || "缺少題目文字"}
+                        </p>
+                        <p className="mt-2 text-sm font-bold text-zinc-200">
+                          {noteOptionText.zh || noteOptionText.en || "缺少選項文字"}
+                        </p>
+                        {noteExplanationText.zh || noteExplanationText.en ? (
+                          <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-500">
+                            {noteExplanationText.zh || noteExplanationText.en}
+                          </p>
+                        ) : null}
+                      </article>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="mt-4 text-sm text-zinc-500">目前還沒有卡牌。答題後在各選項解析旁按「存成筆記」。</p>
+              )}
+            </div>
           ) : null}
         </div>
 
@@ -660,7 +872,19 @@ export default function Home() {
                           const text = localizedText(explanation);
                           return (
                             <div key={key} className="border-l-2 border-zinc-700 pl-3">
-                              <p className="text-sm font-black text-zinc-100">{key}. {text.zh}</p>
+                              <div className="flex items-start justify-between gap-3">
+                                <p className="text-sm font-black text-zinc-100">{key}. {text.zh}</p>
+                                {hasStartedQuiz && currentQuestion?.id ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => saveReviewNote(key)}
+                                    disabled={isSavingNoteKey === key}
+                                    className="shrink-0 border border-flashYellow px-2 py-1 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-wait disabled:opacity-60"
+                                  >
+                                    {isSavingNoteKey === key ? "儲存中" : "存成筆記"}
+                                  </button>
+                                ) : null}
+                              </div>
                               {text.en ? <p className="mt-1 text-xs leading-5 text-zinc-500">{text.en}</p> : null}
                             </div>
                           );
