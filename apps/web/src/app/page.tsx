@@ -385,7 +385,6 @@ export default function Home() {
       if (data.note) {
         upsertNoteInState(data.note);
       }
-      setIsNotesOpen(true);
       setNotesMessage(`已將 ${optionKey} 選項解析存成筆記卡牌`);
     } catch {
       setNotesMessage("複習筆記儲存失敗，請確認 API 與 review_notes 資料表");
@@ -475,6 +474,7 @@ export default function Home() {
       setSelectedOptions([]);
       setHasAnswered(false);
       setHasStartedQuiz(true);
+      setIsNotesOpen(false);
       setQuizMode(options.mode);
       setActiveSessionId(nextSessionId);
       setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
@@ -735,46 +735,61 @@ export default function Home() {
             </p>
           ) : null}
 
+        </div>
+
+        <div className="film-frame bg-[#111] p-5">
           {isNotesOpen ? (
-            <div className="max-w-xl border border-zinc-800 bg-[#090909] p-4">
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-black text-flashYellow">複習筆記卡牌</p>
-                <button
-                  type="button"
-                  onClick={loadReviewNotes}
-                  disabled={isLoadingNotes}
-                  className="border border-zinc-700 px-3 py-1 text-xs font-bold text-zinc-300 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-60"
-                >
-                  重新整理
-                </button>
+            <div className="border border-zinc-800 bg-filmBlack p-5">
+              <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+                <div>
+                  <p className="text-xs tracking-[0.28em] text-deepPink">複習資料</p>
+                  <h2 className="mt-2 text-2xl font-black text-flashYellow">複習筆記卡牌</h2>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={loadReviewNotes}
+                    disabled={isLoadingNotes}
+                    className="border border-zinc-700 px-3 py-2 text-xs font-black text-zinc-300 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-60"
+                  >
+                    重新整理
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsNotesOpen(false)}
+                    className="border border-zinc-700 px-3 py-2 text-xs font-black text-zinc-300 transition hover:border-hotRed hover:text-hotRed"
+                  >
+                    返回題目
+                  </button>
+                </div>
               </div>
 
               {reviewNotes.length > 0 ? (
-                <div className="mt-4 grid gap-3">
-                  {reviewNotes.slice(0, 8).map((note) => {
+                <div className="grid max-h-[70vh] gap-4 overflow-y-auto pr-2">
+                  {reviewNotes.map((note) => {
                     const noteQuestionText = localizedText(note.question_text);
                     const noteOptionText = localizedText(note.option_text);
                     const noteExplanationText = localizedText(note.explanation_text);
                     const noteKey = `${note.question_id}-${note.option_key}`;
 
                     return (
-                      <article key={noteKey} className="border border-zinc-800 bg-[#121212] p-3">
+                      <article key={noteKey} className="border border-zinc-800 bg-[#121212] p-4">
                         <div className="flex items-center justify-between gap-3">
-                          <p className="text-xs font-black tracking-[0.2em] text-deepPink">
+                          <p className="text-xs font-black tracking-[0.18em] text-deepPink">
                             {note.exam_domain || "未分類"}
                           </p>
-                          <span className="bg-hotRed px-2 py-1 text-xs font-black text-white">
+                          <span className="grid h-8 w-8 shrink-0 place-items-center bg-hotRed text-sm font-black text-white">
                             {note.option_key}
                           </span>
                         </div>
-                        <p className="mt-2 line-clamp-2 text-sm font-black leading-6 text-white">
+                        <p className="mt-4 text-base font-black leading-7 text-white">
                           {noteQuestionText.zh || noteQuestionText.en || "缺少題目文字"}
                         </p>
-                        <p className="mt-2 text-sm font-bold text-zinc-200">
+                        <p className="mt-4 border-l-4 border-flashYellow pl-3 text-lg font-black leading-7 text-zinc-100">
                           {noteOptionText.zh || noteOptionText.en || "缺少選項文字"}
                         </p>
                         {noteExplanationText.zh || noteExplanationText.en ? (
-                          <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-500">
+                          <p className="mt-3 text-sm leading-7 text-zinc-400">
                             {noteExplanationText.zh || noteExplanationText.en}
                           </p>
                         ) : null}
@@ -783,13 +798,15 @@ export default function Home() {
                   })}
                 </div>
               ) : (
-                <p className="mt-4 text-sm text-zinc-500">目前還沒有卡牌。答題後在各選項解析旁按「存成筆記」。</p>
+                <div className="border-l-4 border-zinc-700 bg-[#101010] p-4">
+                  <p className="font-black text-zinc-200">目前還沒有卡牌</p>
+                  <p className="mt-2 text-sm leading-6 text-zinc-500">
+                    回到題目，答題後在各選項解析旁按「存成筆記」。
+                  </p>
+                </div>
               )}
             </div>
-          ) : null}
-        </div>
-
-        <div className="film-frame bg-[#111] p-5">
+          ) : (
           <div className="border border-zinc-800 bg-filmBlack p-5">
             <div className="mb-5 flex items-center justify-between border-b border-zinc-800 pb-4">
               <div>
@@ -931,6 +948,7 @@ export default function Home() {
               </div>
             )}
           </div>
+          )}
         </div>
       </section>
 
