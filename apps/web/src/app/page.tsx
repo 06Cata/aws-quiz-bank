@@ -721,12 +721,9 @@ export default function Home() {
                 type="button"
                 onClick={startMockExam}
                 disabled={isLoadingQuestions}
-                className="w-full border-2 border-deepPink bg-black px-5 py-3 text-left text-sm font-black text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
+                className="w-full border-2 border-deepPink bg-black px-7 py-4 text-center font-display text-sm uppercase text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
               >
-                <span className="block">模擬考模式</span>
-                <span className="mt-1 block text-xs font-bold text-zinc-500">
-                  建立 quiz_sessions 回合紀錄
-                </span>
+                模擬考模式
               </button>
             </div>
 
@@ -744,12 +741,9 @@ export default function Home() {
                 type="button"
                 onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
                 disabled={isLoadingNotes}
-                className="w-full border-2 border-hotRed bg-black px-5 py-3 text-left text-sm font-black text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-hotRed hover:text-black disabled:cursor-wait disabled:opacity-70"
+                className="w-full border-2 border-hotRed bg-black px-7 py-4 text-center font-display text-sm uppercase text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-hotRed hover:text-black disabled:cursor-wait disabled:opacity-70"
               >
-                <span className="block">複習筆記</span>
-                <span className="mt-1 block text-xs font-bold text-zinc-500">
-                  {isLoadingNotes ? "讀取筆記中..." : isNotesOpen ? "收合筆記卡牌" : "查看已存卡牌"}
-                </span>
+                複習筆記
               </button>
             </div>
 
