@@ -2,7 +2,12 @@ from fastapi import APIRouter, Header, HTTPException
 from httpx import HTTPStatusError
 from pydantic import BaseModel, Field
 
-from app.services.supabase import get_auth_user, select_review_notes_for_user, upsert_review_note
+from app.services.supabase import (
+    delete_review_note_for_user,
+    get_auth_user,
+    select_review_notes_for_user,
+    upsert_review_note,
+)
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
@@ -71,3 +76,23 @@ async def save_note(
         raise HTTPException(status_code=500, detail="Unable to save review note") from exc
 
     return {"note": note}
+
+
+@router.delete("/{note_id}")
+async def delete_note(
+    note_id: str,
+    authorization: str | None = Header(default=None),
+) -> dict:
+    user = await authenticated_user(authorization)
+
+    try:
+        is_deleted = await delete_review_note_for_user(user_id=user["id"], note_id=note_id)
+    except HTTPStatusError as exc:
+        raise HTTPException(status_code=502, detail="Unable to delete review note") from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Unable to delete review note") from exc
+
+    if not is_deleted:
+        raise HTTPException(status_code=404, detail="Review note not found")
+
+    return {"deleted": True}

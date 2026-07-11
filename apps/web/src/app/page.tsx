@@ -118,6 +118,7 @@ export default function Home() {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isLoadingNotes, setIsLoadingNotes] = useState(false);
   const [isSavingNoteKey, setIsSavingNoteKey] = useState<string | null>(null);
+  const [isDeletingNoteId, setIsDeletingNoteId] = useState<string | null>(null);
   const [notesMessage, setNotesMessage] = useState("");
   const [reviewNotes, setReviewNotes] = useState<ReviewNote[]>([]);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
@@ -393,6 +394,49 @@ export default function Home() {
     }
   }
 
+  async function deleteReviewNote(noteId: string | undefined) {
+    if (!noteId) {
+      setNotesMessage("缺少筆記 ID，無法刪除");
+      return;
+    }
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setNotesMessage("尚未設定 API 網址，無法刪除複習筆記");
+      return;
+    }
+
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+      setNotesMessage("請先登入才能刪除複習筆記");
+      setIsLoginPanelOpen(true);
+      return;
+    }
+
+    setIsDeletingNoteId(noteId);
+    setNotesMessage("");
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/notes/${noteId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("delete note request failed");
+      }
+
+      setReviewNotes((notes) => notes.filter((note) => note.id !== noteId));
+      setNotesMessage("已刪除複習筆記卡牌");
+    } catch {
+      setNotesMessage("複習筆記刪除失敗，請稍後再試");
+    } finally {
+      setIsDeletingNoteId(null);
+    }
+  }
+
   async function loadQuestionSet(
     endpoint: string,
     emptyMessage: string,
@@ -496,7 +540,7 @@ export default function Home() {
 
   async function startWrongReview() {
     await loadQuestionSet(
-      "/api/questions/wrong",
+      "/api/questions/wrong?limit=20",
       "目前沒有錯題紀錄，先完成幾題後再回來複習",
       "已載入錯題複習",
       { mode: "wrong" }
@@ -662,7 +706,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid max-w-xl gap-4 sm:grid-cols-2">
+          <div className="grid max-w-lg gap-5 sm:grid-cols-2">
             <div className="space-y-3">
               <button
                 type="button"
@@ -677,7 +721,7 @@ export default function Home() {
                 type="button"
                 onClick={startMockExam}
                 disabled={isLoadingQuestions}
-                className="w-full border border-deepPink bg-black px-5 py-3 text-left text-sm font-black text-deepPink transition hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
+                className="w-full border-2 border-deepPink bg-black px-5 py-3 text-left text-sm font-black text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
               >
                 <span className="block">模擬考模式</span>
                 <span className="mt-1 block text-xs font-bold text-zinc-500">
@@ -696,19 +740,17 @@ export default function Home() {
                 複習錯題
               </button>
 
-              <div className="w-full border border-zinc-800 bg-[#090909] px-5 py-3 text-left text-sm font-black text-zinc-500">
-                <button
-                  type="button"
-                  onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
-                  disabled={isLoadingNotes}
-                  className="w-full text-left"
-                >
-                  <span className="block text-zinc-200">複習筆記</span>
-                  <span className="mt-1 block text-xs font-bold text-zinc-500">
-                    {isLoadingNotes ? "讀取筆記中..." : isNotesOpen ? "收合筆記卡牌" : "查看已存卡牌"}
-                  </span>
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
+                disabled={isLoadingNotes}
+                className="w-full border-2 border-hotRed bg-black px-5 py-3 text-left text-sm font-black text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-hotRed hover:text-black disabled:cursor-wait disabled:opacity-70"
+              >
+                <span className="block">複習筆記</span>
+                <span className="mt-1 block text-xs font-bold text-zinc-500">
+                  {isLoadingNotes ? "讀取筆記中..." : isNotesOpen ? "收合筆記卡牌" : "查看已存卡牌"}
+                </span>
+              </button>
             </div>
 
             {!user ? (
@@ -778,9 +820,19 @@ export default function Home() {
                           <p className="text-xs font-black tracking-[0.18em] text-deepPink">
                             {note.exam_domain || "未分類"}
                           </p>
-                          <span className="grid h-8 w-8 shrink-0 place-items-center bg-hotRed text-sm font-black text-white">
-                            {note.option_key}
-                          </span>
+                          <div className="flex shrink-0 items-center gap-2">
+                            <span className="grid h-8 w-8 place-items-center bg-hotRed text-sm font-black text-white">
+                              {note.option_key}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => deleteReviewNote(note.id)}
+                              disabled={isDeletingNoteId === note.id}
+                              className="border border-zinc-700 px-2 py-1 text-xs font-black text-zinc-400 transition hover:border-hotRed hover:text-hotRed disabled:cursor-wait disabled:opacity-60"
+                            >
+                              {isDeletingNoteId === note.id ? "刪除中" : "刪除"}
+                            </button>
+                          </div>
                         </div>
                         <p className="mt-4 text-base font-black leading-7 text-white">
                           {noteQuestionText.zh || noteQuestionText.en || "缺少題目文字"}

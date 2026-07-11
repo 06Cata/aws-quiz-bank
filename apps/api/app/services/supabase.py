@@ -88,6 +88,31 @@ def _domain_quotas(total_count: int) -> dict[str, int]:
     return base_quotas
 
 
+def _weighted_sample_without_replacement(
+    candidates: list[tuple[dict, float]],
+    target_count: int,
+) -> list[dict]:
+    pool = [
+        (question, max(score, 0.01))
+        for question, score in candidates
+    ]
+    selected_questions: list[dict] = []
+
+    while pool and len(selected_questions) < target_count:
+        total_weight = sum(score for _, score in pool)
+        pick = random.uniform(0, total_weight)
+        cumulative_weight = 0.0
+
+        for index, (question, score) in enumerate(pool):
+            cumulative_weight += score
+            if pick <= cumulative_weight:
+                selected_questions.append(question)
+                pool.pop(index)
+                break
+
+    return selected_questions
+
+
 async def select_exam_questions(limit: int | None = None) -> list[dict]:
     questions = await select_questions()
     if not questions:
@@ -189,18 +214,13 @@ async def select_wrong_questions_for_user(user_id: str, limit: int | None = None
             if item.get("id")
         }
 
-    sorted_stats = sorted(
-        stats,
-        key=lambda item: (
-            (int(item.get("wrong_count") or 0) / max(int(item.get("total_attempts") or 1), 1)),
-            int(item.get("wrong_count") or 0),
-            str(item.get("updated_at") or ""),
-        ),
-        reverse=True,
+    max_wrong_count = max(
+        (int(item.get("wrong_count") or 0) for item in stats),
+        default=1,
     )
+    weighted_candidates: list[tuple[dict, float]] = []
 
-    weighted_questions: list[dict] = []
-    for item in sorted_stats:
+    for item in stats:
         question_id = str(item.get("question_id") or "")
         question = questions.get(question_id)
         if not question:
@@ -209,19 +229,18 @@ async def select_wrong_questions_for_user(user_id: str, limit: int | None = None
         wrong_count = max(int(item.get("wrong_count") or 1), 1)
         total_attempts = max(int(item.get("total_attempts") or 1), 1)
         wrong_ratio = wrong_count / total_attempts
-        repeat_count = min(max(round(wrong_ratio * 5), 1), 5)
-        for _ in range(repeat_count):
-            weighted_questions.append({
-                **question,
-                "review_wrong_count": wrong_count,
-                "review_wrong_ratio": wrong_ratio,
-            })
+        normalized_wrong_count = wrong_count / max(max_wrong_count, 1)
+        review_score = (wrong_ratio * 0.7) + (normalized_wrong_count * 0.3)
+        weighted_candidates.append(({
+            **question,
+            "review_wrong_count": wrong_count,
+            "review_wrong_ratio": wrong_ratio,
+            "review_score": review_score,
+        }, review_score))
 
-    questions_for_review = weighted_questions
-    if limit is None:
-        return questions_for_review
+    target_count = min(limit or len(weighted_candidates), len(weighted_candidates))
+    return _weighted_sample_without_replacement(weighted_candidates, target_count)
 
-    return questions_for_review[:limit]
 
 
 async def upsert_review_note(
@@ -309,6 +328,28 @@ async def select_review_notes_for_user(user_id: str) -> list[dict]:
         response = await client.get(url, headers=_service_headers(), params=params)
         response.raise_for_status()
         return response.json()
+
+
+async def delete_review_note_for_user(user_id: str, note_id: str) -> bool:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        raise RuntimeError("Supabase service role is not configured")
+
+    url = f"{settings.supabase_url}/rest/v1/review_notes"
+    headers = {
+        **_service_headers(),
+        "Prefer": "return=representation",
+    }
+    params = {
+        "id": f"eq.{note_id}",
+        "user_id": f"eq.{user_id}",
+    }
+
+    async with httpx.AsyncClient(timeout=20) as client:
+        response = await client.delete(url, headers=headers, params=params)
+        response.raise_for_status()
+        deleted_notes = response.json()
+
+    return bool(deleted_notes)
 
 
 async def get_auth_user(access_token: str) -> dict:
