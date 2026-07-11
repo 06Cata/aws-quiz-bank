@@ -309,7 +309,7 @@ export default function Home() {
 
   async function startQuiz() {
     await loadQuestionSet(
-      "/api/questions?limit=20",
+      "/api/questions",
       "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
       "已載入"
     );
@@ -317,7 +317,7 @@ export default function Home() {
 
   async function startWrongReview() {
     await loadQuestionSet(
-      "/api/questions/wrong?limit=20",
+      "/api/questions/wrong",
       "目前沒有錯題紀錄，先完成幾題後再回來複習",
       "已載入錯題複習"
     );

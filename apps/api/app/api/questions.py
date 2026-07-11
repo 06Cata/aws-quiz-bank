@@ -25,7 +25,7 @@ async def authenticated_user(authorization: str | None) -> dict:
 
 @router.get("/wrong")
 async def list_wrong_questions(
-    limit: int = Query(default=20, ge=1, le=100),
+    limit: int | None = Query(default=None, ge=1),
     authorization: str | None = Header(default=None),
 ) -> dict:
     user = await authenticated_user(authorization)
@@ -35,7 +35,7 @@ async def list_wrong_questions(
 
 @router.get("")
 async def list_questions(
-    limit: int = Query(default=20, ge=1, le=100),
+    limit: int | None = Query(default=None, ge=1),
     authorization: str | None = Header(default=None),
 ) -> dict:
     await authenticated_user(authorization)

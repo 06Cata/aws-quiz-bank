@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+import random
 
 import httpx
 
@@ -12,7 +13,7 @@ def _service_headers() -> dict[str, str]:
     }
 
 
-async def select_questions(limit: int = 20) -> list[dict]:
+async def select_questions(limit: int | None = None) -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
 
@@ -22,16 +23,20 @@ async def select_questions(limit: int = 20) -> list[dict]:
         "select": "*",
         "is_active": "eq.true",
         "order": "question_no.asc",
-        "limit": str(limit),
     }
+    if limit is not None:
+        params["limit"] = str(limit)
 
     async with httpx.AsyncClient(timeout=20) as client:
         response = await client.get(url, headers=headers, params=params)
         response.raise_for_status()
-        return response.json()
+        questions = response.json()
+
+    random.shuffle(questions)
+    return questions
 
 
-async def select_wrong_questions_for_user(user_id: str, limit: int = 20) -> list[dict]:
+async def select_wrong_questions_for_user(user_id: str, limit: int | None = None) -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
 
@@ -39,12 +44,12 @@ async def select_wrong_questions_for_user(user_id: str, limit: int = 20) -> list
     questions_url = f"{settings.supabase_url}/rest/v1/questions"
     headers = _service_headers()
     stats_params = {
-        "select": "question_id,wrong_count",
+        "select": "question_id,total_attempts,wrong_count,updated_at",
         "user_id": f"eq.{user_id}",
         "wrong_count": "gt.0",
-        "order": "wrong_count.desc,updated_at.desc",
-        "limit": str(max(limit * 5, 100)),
     }
+    if limit is not None:
+        stats_params["limit"] = str(max(limit * 5, 100))
 
     async with httpx.AsyncClient(timeout=20) as client:
         stats_response = await client.get(stats_url, headers=headers, params=stats_params)
@@ -75,22 +80,39 @@ async def select_wrong_questions_for_user(user_id: str, limit: int = 20) -> list
             if item.get("id")
         }
 
+    sorted_stats = sorted(
+        stats,
+        key=lambda item: (
+            (int(item.get("wrong_count") or 0) / max(int(item.get("total_attempts") or 1), 1)),
+            int(item.get("wrong_count") or 0),
+            str(item.get("updated_at") or ""),
+        ),
+        reverse=True,
+    )
+
     weighted_questions: list[dict] = []
-    for item in stats:
+    for item in sorted_stats:
         question_id = str(item.get("question_id") or "")
         question = questions.get(question_id)
         if not question:
             continue
 
         wrong_count = max(int(item.get("wrong_count") or 1), 1)
-        repeat_count = min(wrong_count, 5)
+        total_attempts = max(int(item.get("total_attempts") or 1), 1)
+        wrong_ratio = wrong_count / total_attempts
+        repeat_count = min(max(round(wrong_ratio * 5), 1), 5)
         for _ in range(repeat_count):
-            weighted_questions.append({**question, "review_wrong_count": wrong_count})
+            weighted_questions.append({
+                **question,
+                "review_wrong_count": wrong_count,
+                "review_wrong_ratio": wrong_ratio,
+            })
 
-        if len(weighted_questions) >= limit:
-            break
+    questions_for_review = weighted_questions
+    if limit is None:
+        return questions_for_review
 
-    return weighted_questions[:limit]
+    return questions_for_review[:limit]
 
 
 async def get_auth_user(access_token: str) -> dict:
