@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Header, HTTPException, Query
 from httpx import HTTPStatusError
 
-from app.services.supabase import get_auth_user, select_questions, select_wrong_questions_for_user
+from app.services.supabase import get_auth_user, select_exam_questions, select_questions, select_wrong_questions_for_user
 
 router = APIRouter(prefix="/questions", tags=["questions"])
 
@@ -30,6 +30,16 @@ async def list_wrong_questions(
 ) -> dict:
     user = await authenticated_user(authorization)
     questions = await select_wrong_questions_for_user(user_id=user["id"], limit=limit)
+    return {"items": questions}
+
+
+@router.get("/exam")
+async def list_exam_questions(
+    limit: int = Query(default=65, ge=1),
+    authorization: str | None = Header(default=None),
+) -> dict:
+    await authenticated_user(authorization)
+    questions = await select_exam_questions(limit=limit)
     return {"items": questions}
 
 

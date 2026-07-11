@@ -22,6 +22,8 @@ type QuizQuestion = {
   discussion?: LocalizedText | null;
 };
 
+type QuizMode = "practice" | "wrong" | "exam";
+
 const sampleQuestion: QuizQuestion = {
   question_no: 3,
   exam_domain: "安全性與合規",
@@ -97,6 +99,8 @@ export default function Home() {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
+  const [quizMode, setQuizMode] = useState<QuizMode>("practice");
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
 
@@ -246,7 +250,12 @@ export default function Home() {
     setIsLoading(false);
   }
 
-  async function loadQuestionSet(endpoint: string, emptyMessage: string, loadedMessage: string) {
+  async function loadQuestionSet(
+    endpoint: string,
+    emptyMessage: string,
+    loadedMessage: string,
+    options: { mode: QuizMode; createSession?: boolean } = { mode: "practice" }
+  ) {
     if (!user) {
       setQuizMessage("請先登入才能記錄您的答題狀態");
       setIsLoginPanelOpen(true);
@@ -294,11 +303,36 @@ export default function Home() {
         return;
       }
 
+      let nextSessionId: string | null = null;
+      if (options.createSession) {
+        const sessionResponse = await fetch(`${apiBaseUrl}/api/sessions`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            mode: options.mode,
+            certification: "AWS Cloud Practitioner",
+            question_count: nextQuestions.length
+          })
+        });
+
+        if (!sessionResponse.ok) {
+          throw new Error("session request failed");
+        }
+
+        const sessionData = (await sessionResponse.json()) as { session?: { id?: string } };
+        nextSessionId = sessionData.session?.id ?? null;
+      }
+
       setQuestions(nextQuestions);
       setCurrentQuestionIndex(0);
       setSelectedOptions([]);
       setHasAnswered(false);
       setHasStartedQuiz(true);
+      setQuizMode(options.mode);
+      setActiveSessionId(nextSessionId);
       setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
     } catch {
       setQuizMessage("題庫讀取失敗，請確認 FastAPI 或 Vercel API 已啟動");
@@ -311,7 +345,8 @@ export default function Home() {
     await loadQuestionSet(
       "/api/questions",
       "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
-      "已載入"
+      "已載入",
+      { mode: "practice" }
     );
   }
 
@@ -319,7 +354,17 @@ export default function Home() {
     await loadQuestionSet(
       "/api/questions/wrong",
       "目前沒有錯題紀錄，先完成幾題後再回來複習",
-      "已載入錯題複習"
+      "已載入錯題複習",
+      { mode: "wrong" }
+    );
+  }
+
+  async function startMockExam() {
+    await loadQuestionSet(
+      "/api/questions/exam?limit=65",
+      "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
+      "已建立模擬考回合",
+      { mode: "exam", createSession: true }
     );
   }
 
@@ -381,6 +426,7 @@ export default function Home() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          session_id: activeSessionId,
           question_id: currentQuestion.id,
           selected_options: sortedOptionKeys(selectedOptions),
           is_correct: sameOptions(selectedOptions, correctOptions)
@@ -397,9 +443,44 @@ export default function Home() {
     }
   }
 
-  function nextQuestion() {
+  async function finishActiveSession() {
+    if (!activeSessionId) {
+      return;
+    }
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    const supabase = createClient();
+    if (!apiBaseUrl || !supabase) {
+      return;
+    }
+
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data.session?.access_token;
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await fetch(`${apiBaseUrl}/api/sessions/${activeSessionId}/finish`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("finish session failed");
+    }
+  }
+
+  async function nextQuestion() {
     if (currentQuestionIndex + 1 >= questions.length) {
-      setQuizMessage("已完成目前載入的題目");
+      try {
+        await finishActiveSession();
+        setActiveSessionId(null);
+        setQuizMessage(quizMode === "exam" ? "模擬考已完成，已寫入 quiz_sessions" : "已完成目前載入的題目");
+      } catch {
+        setQuizMessage("題目已完成，但回合結束紀錄寫入失敗，請稍後再試");
+      }
       return;
     }
 
@@ -437,31 +518,52 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4">
-            <button
-              type="button"
-              onClick={startQuiz}
-              disabled={isLoadingQuestions}
-              className="border-2 border-acidGreen bg-acidGreen px-7 py-4 font-display text-sm uppercase text-black shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
-            >
-              {isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
-            </button>
+          <div className="grid max-w-xl gap-4 sm:grid-cols-2">
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={startQuiz}
+                disabled={isLoadingQuestions}
+                className="w-full border-2 border-acidGreen bg-acidGreen px-7 py-4 font-display text-sm uppercase text-black shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
+              >
+                {isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
+              </button>
 
-            <button
-              type="button"
-              onClick={startWrongReview}
-              disabled={isLoadingQuestions}
-              className="border-2 border-flashYellow bg-black px-7 py-4 font-display text-sm uppercase text-flashYellow shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
-            >
-              複習錯題
-            </button>
+              <button
+                type="button"
+                onClick={startMockExam}
+                disabled={isLoadingQuestions}
+                className="w-full border border-deepPink bg-black px-5 py-3 text-left text-sm font-black text-deepPink transition hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
+              >
+                <span className="block">模擬考模式</span>
+                <span className="mt-1 block text-xs font-bold text-zinc-500">
+                  建立 quiz_sessions 回合紀錄
+                </span>
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={startWrongReview}
+                disabled={isLoadingQuestions}
+                className="w-full border-2 border-flashYellow bg-black px-7 py-4 font-display text-sm uppercase text-flashYellow shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
+              >
+                複習錯題
+              </button>
+
+              <div className="w-full border border-zinc-800 bg-[#090909] px-5 py-3 text-left text-sm font-black text-zinc-500">
+                <span className="block">複習筆記</span>
+                <span className="mt-1 block text-xs font-bold text-zinc-600">之後接在這裡</span>
+              </div>
+            </div>
 
             {!user ? (
               <button
                 type="button"
                 onClick={signInWithGoogle}
                 disabled={isLoading}
-                className="border-2 border-zinc-600 bg-black px-7 py-4 font-display text-sm uppercase text-zinc-100 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-70"
+                className="border-2 border-zinc-600 bg-black px-7 py-4 font-display text-sm uppercase text-zinc-100 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-70 sm:col-span-2"
               >
                 {isLoading ? "正在連線..." : "使用 Google 登入"}
               </button>

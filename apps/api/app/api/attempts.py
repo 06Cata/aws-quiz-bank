@@ -8,6 +8,7 @@ router = APIRouter(prefix="/attempts", tags=["attempts"])
 
 
 class AttemptPayload(BaseModel):
+    session_id: str | None = None
     question_id: str = Field(min_length=1)
     selected_options: list[str] = Field(min_length=1)
     is_correct: bool
@@ -44,6 +45,7 @@ async def create_attempt(
             question_id=payload.question_id,
             selected_options=selected_options,
             is_correct=payload.is_correct,
+            session_id=payload.session_id,
         )
     except HTTPException:
         raise
