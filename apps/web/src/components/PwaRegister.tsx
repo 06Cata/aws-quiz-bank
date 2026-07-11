@@ -26,9 +26,26 @@ export function PwaRegister() {
       return;
     }
 
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      // PWA should never block quiz usage if service worker registration fails.
-    });
+    let hasReloaded = false;
+    const handleControllerChange = () => {
+      if (hasReloaded) {
+        return;
+      }
+      hasReloaded = true;
+      window.location.reload();
+    };
+
+    navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
+    navigator.serviceWorker
+      .register("/sw.js", { updateViaCache: "none" })
+      .then((registration) => registration.update())
+      .catch(() => {
+        // PWA should never block quiz usage if service worker registration fails.
+      });
+
+    return () => {
+      navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
+    };
   }, []);
 
   return null;

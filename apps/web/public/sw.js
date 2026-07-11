@@ -1,4 +1,4 @@
-const CACHE_NAME = "aws-quiz-bank-pwa-v1";
+const CACHE_NAME = "aws-quiz-bank-pwa-v2";
 const APP_SHELL = ["/", "/manifest.webmanifest", "/icons/icon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -57,13 +57,13 @@ self.addEventListener("fetch", (event) => {
   if (requestUrl.pathname.startsWith("/_next/static/")) {
     event.respondWith(
       caches.open(CACHE_NAME).then(async (cache) => {
-        const cachedResponse = await cache.match(request);
-        const networkResponsePromise = fetch(request).then((networkResponse) => {
+        try {
+          const networkResponse = await fetch(request);
           cache.put(request, networkResponse.clone());
           return networkResponse;
-        });
-
-        return cachedResponse || networkResponsePromise;
+        } catch {
+          return cache.match(request);
+        }
       })
     );
     return;

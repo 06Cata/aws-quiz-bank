@@ -517,12 +517,13 @@ export default function Home() {
 
     try {
       const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+        cache: "no-store",
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
       if (!response.ok) {
-        throw new Error("questions request failed");
+        throw new Error(`HTTP ${response.status}`);
       }
 
       const data = (await response.json()) as { items?: QuizQuestion[] };
@@ -565,8 +566,9 @@ export default function Home() {
       setQuizMode(options.mode);
       setActiveSessionId(nextSessionId);
       setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
-    } catch {
-      setQuizMessage("題庫讀取失敗，請稍後再試或確認 API 連線");
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : "網路連線失敗";
+      setQuizMessage(`題庫讀取失敗（${reason}），請稍後再試`);
     } finally {
       setIsLoadingQuestions(false);
     }
