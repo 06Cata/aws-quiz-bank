@@ -15,7 +15,7 @@ async def authenticated_user(authorization: str | None) -> dict:
         raise HTTPException(status_code=401, detail="Missing Supabase access token")
 
     try:
-        await get_auth_user(access_token)
+        return await get_auth_user(access_token)
     except HTTPStatusError as exc:
         status_code = 401 if exc.response.status_code in {401, 403} else 502
         raise HTTPException(status_code=status_code, detail="Unable to verify Supabase user") from exc
