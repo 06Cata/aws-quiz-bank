@@ -75,20 +75,42 @@ def bilingual(value: Any) -> dict[str, str]:
     if isinstance(value, dict):
         zh = (
             value.get("zh")
+            or value.get("ZH")
             or value.get("繁體中文")
             or value.get("中文")
             or value.get("Traditional Chinese")
             or ""
         )
-        en = value.get("en") or value.get("English") or value.get("英文") or ""
+        en = value.get("en") or value.get("ENGLISH") or value.get("English") or value.get("英文") or ""
         return {"zh": str(zh), "en": str(en)}
 
     return {"zh": str(value), "en": ""}
 
 
+def pick_language_map(value: dict[str, Any], aliases: tuple[str, ...]) -> dict[str, Any]:
+    normalized = {str(key).strip().lower(): item for key, item in value.items()}
+    for alias in aliases:
+        item = normalized.get(alias.strip().lower())
+        if isinstance(item, dict):
+            return item
+    return {}
+
+
 def bilingual_option_map(value: Any) -> dict[str, dict[str, str]]:
     if not isinstance(value, dict):
         return {}
+
+    zh_map = pick_language_map(value, ("zh", "繁體中文", "中文", "traditional chinese"))
+    en_map = pick_language_map(value, ("en", "english", "英文"))
+    if zh_map or en_map:
+        option_keys = sorted({str(key).strip().upper() for key in zh_map.keys() | en_map.keys() if str(key).strip()})
+        return {
+            option_key: {
+                "zh": str(zh_map.get(option_key) or zh_map.get(option_key.lower()) or ""),
+                "en": str(en_map.get(option_key) or en_map.get(option_key.lower()) or ""),
+            }
+            for option_key in option_keys
+        }
 
     result: dict[str, dict[str, str]] = {}
     for key, option_value in value.items():

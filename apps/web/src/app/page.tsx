@@ -4,28 +4,73 @@ import { useEffect, useRef, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
-const sampleOptions = [
-  {
-    key: "A",
-    zh: "AWS Trusted Advisor",
-    en: "Checks best practices but is not the EC2 vulnerability scanner."
+type LocalizedText = {
+  zh?: string;
+  en?: string;
+};
+
+type QuizQuestion = {
+  id?: string;
+  question_no?: number | null;
+  exam_domain?: string | null;
+  question_text: LocalizedText;
+  options: Record<string, LocalizedText>;
+  option_explanations?: Record<string, LocalizedText>;
+  correct_options?: string[];
+  answer_text?: LocalizedText | null;
+  choice_type?: "single" | "multiple";
+  discussion?: LocalizedText | null;
+};
+
+const sampleQuestion: QuizQuestion = {
+  question_no: 3,
+  exam_domain: "安全性與合規",
+  question_text: {
+    zh: "哪一項 AWS 服務可自動掃描 Amazon EC2 執行個體的軟體漏洞與非預期網路暴露？",
+    en: "Which AWS service automatically scans EC2 instances for software vulnerabilities and unintended network exposure?"
   },
-  {
-    key: "B",
-    zh: "Amazon Inspector",
-    en: "Automated vulnerability management for EC2 workloads."
+  options: {
+    A: {
+      zh: "AWS Trusted Advisor",
+      en: "Checks best practices but is not the EC2 vulnerability scanner."
+    },
+    B: {
+      zh: "Amazon Inspector",
+      en: "Automated vulnerability management for EC2 workloads."
+    },
+    C: {
+      zh: "AWS Config",
+      en: "Tracks resource configuration history."
+    },
+    D: {
+      zh: "Amazon GuardDuty",
+      en: "Threat detection and continuous monitoring."
+    }
   },
-  {
-    key: "C",
-    zh: "AWS Config",
-    en: "Tracks resource configuration history."
+  option_explanations: {
+    B: {
+      zh: "Amazon Inspector 是用於自動化弱點管理，可掃描 EC2 工作負載。",
+      en: "Amazon Inspector provides automated vulnerability management for EC2 workloads."
+    }
   },
-  {
-    key: "D",
-    zh: "Amazon GuardDuty",
-    en: "Threat detection and continuous monitoring."
+  correct_options: ["B"],
+  choice_type: "single",
+  discussion: {
+    zh: "正式題目會從 Supabase questions 表讀取。",
+    en: "Production questions are loaded from the Supabase questions table."
   }
-];
+};
+
+function localizedText(value: LocalizedText | null | undefined, fallback = "") {
+  return {
+    zh: value?.zh?.trim() || fallback,
+    en: value?.en?.trim() || ""
+  };
+}
+
+function optionEntries(question: QuizQuestion) {
+  return Object.entries(question.options ?? {}).sort(([left], [right]) => left.localeCompare(right));
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +78,13 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoginPanelOpen, setIsLoginPanelOpen] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
+  const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
+  const [quizMessage, setQuizMessage] = useState("");
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [hasAnswered, setHasAnswered] = useState(false);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
 
@@ -182,7 +234,71 @@ export default function Home() {
     setIsLoading(false);
   }
 
+  async function startQuiz() {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) {
+      setQuizMessage("尚未設定 API 網址，無法讀取題庫");
+      return;
+    }
+
+    setIsLoadingQuestions(true);
+    setQuizMessage("");
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/questions?limit=20`);
+      if (!response.ok) {
+        throw new Error("questions request failed");
+      }
+
+      const data = (await response.json()) as { items?: QuizQuestion[] };
+      const nextQuestions = data.items ?? [];
+
+      if (nextQuestions.length === 0) {
+        setQuizMessage("目前題庫沒有可用題目，請先確認 Google Sheet 同步結果");
+        return;
+      }
+
+      setQuestions(nextQuestions);
+      setCurrentQuestionIndex(0);
+      setSelectedOptions([]);
+      setHasAnswered(false);
+      setHasStartedQuiz(true);
+      setQuizMessage(`已載入 ${nextQuestions.length} 題`);
+    } catch {
+      setQuizMessage("題庫讀取失敗，請確認 FastAPI 或 Vercel API 已啟動");
+    } finally {
+      setIsLoadingQuestions(false);
+    }
+  }
+
+  function chooseOption(optionKey: string) {
+    if (hasAnswered) {
+      return;
+    }
+
+    setSelectedOptions([optionKey]);
+    setHasAnswered(true);
+  }
+
+  function nextQuestion() {
+    if (currentQuestionIndex + 1 >= questions.length) {
+      setQuizMessage("已完成目前載入的題目");
+      return;
+    }
+
+    setCurrentQuestionIndex((index) => index + 1);
+    setSelectedOptions([]);
+    setHasAnswered(false);
+  }
+
   const gmail = user?.email ?? "";
+  const currentQuestion = hasStartedQuiz ? questions[currentQuestionIndex] : sampleQuestion;
+  const questionText = localizedText(currentQuestion?.question_text);
+  const discussion = localizedText(currentQuestion?.discussion);
+  const correctOptions = currentQuestion?.correct_options ?? [];
+  const currentOptions = currentQuestion ? optionEntries(currentQuestion) : [];
+  const correctAnswerLabel = correctOptions.join(", ");
+  const examDomain = currentQuestion?.exam_domain?.trim() || "尚未載入考試領域";
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
@@ -190,7 +306,7 @@ export default function Home() {
         <div className="space-y-8">
           <div className="inline-flex items-center gap-3 border border-zinc-700 bg-darkroom px-4 py-2 text-xs font-black tracking-[0.3em] text-flashYellow">
             <span className="h-2 w-2 rounded-full bg-acidGreen" />
-            AWS 雲端從業人員
+            AWS Cloud Practitioner
           </div>
 
           <div className="space-y-4">
@@ -203,58 +319,150 @@ export default function Home() {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={signInWithGoogle}
-            disabled={isLoading}
-            className="border-2 border-acidGreen bg-acidGreen px-7 py-4 font-display text-sm uppercase text-black shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
-          >
-            {isLoading ? "正在連線..." : user ? "已登入 Google" : "使用 Google 登入"}
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <button
+              type="button"
+              onClick={startQuiz}
+              disabled={isLoadingQuestions}
+              className="border-2 border-acidGreen bg-acidGreen px-7 py-4 font-display text-sm uppercase text-black shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
+            >
+              {isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
+            </button>
+
+            {!user ? (
+              <button
+                type="button"
+                onClick={signInWithGoogle}
+                disabled={isLoading}
+                className="border-2 border-zinc-600 bg-black px-7 py-4 font-display text-sm uppercase text-zinc-100 transition hover:border-flashYellow hover:text-flashYellow disabled:cursor-wait disabled:opacity-70"
+              >
+                {isLoading ? "正在連線..." : "使用 Google 登入"}
+              </button>
+            ) : null}
+          </div>
+
+          {quizMessage ? (
+            <p className="max-w-xl border-l-4 border-flashYellow bg-[#16120a] px-4 py-3 text-sm font-bold text-flashYellow">
+              {quizMessage}
+            </p>
+          ) : null}
         </div>
 
         <div className="film-frame bg-[#111] p-5">
           <div className="border border-zinc-800 bg-filmBlack p-5">
             <div className="mb-5 flex items-center justify-between border-b border-zinc-800 pb-4">
               <div>
-                <p className="text-xs tracking-[0.28em] text-deepPink">第 003 題</p>
-                <h2 className="mt-2 text-2xl font-black">安全性與合規</h2>
+                <p className="text-xs tracking-[0.28em] text-deepPink">
+                  {hasStartedQuiz ? `第 ${currentQuestionIndex + 1} / ${questions.length} 題` : "預覽題"}
+                </p>
+                <h2 className="mt-2 text-2xl font-black">{examDomain}</h2>
               </div>
-              <span className="bg-flashYellow px-3 py-1 text-xs font-black text-black">單選</span>
+              <span className="bg-flashYellow px-3 py-1 text-xs font-black text-black">
+                {currentQuestion?.choice_type === "multiple" ? "複選" : "單選"}
+              </span>
             </div>
 
             <p className="text-xl font-bold leading-9 text-white">
-              哪一項 AWS 服務可自動掃描 Amazon EC2 執行個體的軟體漏洞與非預期網路暴露？
+              {questionText.zh}
             </p>
-            <p className="mt-2 text-sm leading-6 text-zinc-400">
-              Which AWS service automatically scans EC2 instances for software vulnerabilities and unintended network exposure?
-            </p>
+            {questionText.en ? <p className="mt-2 text-sm leading-6 text-zinc-400">{questionText.en}</p> : null}
 
             <div className="mt-6 grid gap-3">
-              {sampleOptions.map((option) => (
-                <div
-                  key={option.key}
-                  className="border border-zinc-800 bg-[#181818] p-4 transition hover:border-acidGreen"
-                >
+              {currentOptions.map(([optionKey, option]) => {
+                const optionText = localizedText(option);
+                const zhOptionText = optionText.zh || "（缺少繁體中文選項）";
+                const isSelected = selectedOptions.includes(optionKey);
+                const isCorrect = correctOptions.includes(optionKey);
+                const answerStateClass = !hasAnswered
+                  ? "border-zinc-800 bg-[#181818] hover:border-acidGreen"
+                  : isCorrect
+                    ? "border-acidGreen bg-[#0d1a12]"
+                    : isSelected
+                      ? "border-hotRed bg-[#1a0d0d]"
+                      : "border-zinc-800 bg-[#181818] opacity-70";
+
+                return (
+                  <button
+                    type="button"
+                    key={optionKey}
+                    onClick={() => chooseOption(optionKey)}
+                    aria-label={`選項 ${optionKey}：${zhOptionText}`}
+                    className={`border p-4 text-left transition ${answerStateClass}`}
+                    disabled={hasAnswered}
+                 >
                   <div className="flex gap-3">
                     <span className="grid h-8 w-8 shrink-0 place-items-center bg-hotRed font-black text-white">
-                      {option.key}
+                      {optionKey}
                     </span>
-                    <div>
-                      <p className="font-bold">{option.zh}</p>
-                      <p className="mt-1 text-sm text-zinc-400">{option.en}</p>
+                    <div className="min-w-0">
+                      <p className="text-lg font-black leading-7 text-zinc-100">{zhOptionText}</p>
+                      {optionText.en ? (
+                        <p className="mt-2 border-t border-white/10 pt-2 text-sm leading-6 text-zinc-500">
+                          英文對照：{optionText.en}
+                        </p>
+                      ) : null}
                     </div>
                   </div>
-                </div>
-              ))}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="mt-6 border-l-4 border-acidGreen bg-[#0d1a12] p-4">
-              <p className="font-black text-acidGreen">正確答案：B. Amazon Inspector</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-300">
-                選完後會立即顯示正確答案、各選項解析與社群討論。正式資料會從 Supabase questions 表讀取。
-              </p>
-            </div>
+            {hasAnswered ? (
+              <div className="mt-6 space-y-4">
+                <div className="border-l-4 border-acidGreen bg-[#0d1a12] p-4">
+                  <p className="font-black text-acidGreen">正確答案：{correctAnswerLabel}</p>
+                  {correctOptions.length > 0 ? (
+                    <p className="mt-2 text-sm leading-6 text-zinc-300">
+                      你選擇：{selectedOptions.join(", ")}
+                    </p>
+                  ) : null}
+                </div>
+
+                {currentQuestion?.option_explanations && Object.keys(currentQuestion.option_explanations).length > 0 ? (
+                  <div className="border border-zinc-800 bg-[#101010] p-4">
+                    <p className="font-black text-flashYellow">各選項解析</p>
+                    <div className="mt-3 grid gap-3">
+                      {Object.entries(currentQuestion.option_explanations)
+                        .sort(([left], [right]) => left.localeCompare(right))
+                        .map(([key, explanation]) => {
+                          const text = localizedText(explanation);
+                          return (
+                            <div key={key} className="border-l-2 border-zinc-700 pl-3">
+                              <p className="text-sm font-black text-zinc-100">{key}. {text.zh}</p>
+                              {text.en ? <p className="mt-1 text-xs leading-5 text-zinc-500">{text.en}</p> : null}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                ) : null}
+
+                {discussion.zh || discussion.en ? (
+                  <div className="border border-zinc-800 bg-[#101010] p-4">
+                    <p className="font-black text-deepPink">社群討論</p>
+                    {discussion.zh ? <p className="mt-2 text-sm leading-6 text-zinc-300">{discussion.zh}</p> : null}
+                    {discussion.en ? <p className="mt-1 text-xs leading-5 text-zinc-500">{discussion.en}</p> : null}
+                  </div>
+                ) : null}
+
+                {hasStartedQuiz ? (
+                  <button
+                    type="button"
+                    onClick={nextQuestion}
+                    className="border border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
+                  >
+                    {currentQuestionIndex + 1 >= questions.length ? "完成本輪" : "下一題"}
+                  </button>
+                ) : null}
+              </div>
+            ) : (
+              <div className="mt-6 border-l-4 border-zinc-700 bg-[#101010] p-4">
+                <p className="font-black text-zinc-200">
+                  {hasStartedQuiz ? "選擇一個答案後會立即顯示解析" : "按左側「開始刷題」讀取正式題庫"}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
