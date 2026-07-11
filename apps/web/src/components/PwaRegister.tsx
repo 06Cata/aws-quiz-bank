@@ -8,6 +8,20 @@ export function PwaRegister() {
       return;
     }
 
+    if (process.env.NODE_ENV !== "production") {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => {
+          registration.unregister();
+        });
+      });
+      caches.keys().then((cacheNames) => {
+        cacheNames.forEach((cacheName) => {
+          caches.delete(cacheName);
+        });
+      });
+      return;
+    }
+
     if (!window.isSecureContext && window.location.hostname !== "localhost") {
       return;
     }

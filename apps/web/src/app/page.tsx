@@ -99,6 +99,21 @@ function sameOptions(left: string[], right: string[]) {
     && normalizedLeft.every((option, index) => option === normalizedRight[index]);
 }
 
+function createTimeoutSignal(timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+  return { signal: controller.signal, timeoutId };
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs = 5000): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      window.setTimeout(() => reject(new Error("timeout")), timeoutMs);
+    })
+  ]);
+}
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
@@ -145,12 +160,15 @@ export default function Home() {
     }
 
     try {
+      const { signal, timeoutId } = createTimeoutSignal();
       const response = await fetch(`${apiBaseUrl}/api/profiles/me`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session.access_token}`
-        }
+        },
+        signal
       });
+      window.clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error("profile check failed");
@@ -180,8 +198,7 @@ export default function Home() {
 
     const code = new URLSearchParams(window.location.search).get("code");
     if (code) {
-      supabase.auth
-        .exchangeCodeForSession(code)
+      withTimeout(supabase.auth.exchangeCodeForSession(code))
         .then(async ({ data, error }) => {
           if (error) {
             setAuthMessage(error.message);
@@ -190,7 +207,7 @@ export default function Home() {
 
           const session = data.session ?? null;
           setUser(session?.user ?? null);
-          await ensureMemberProfile(session);
+          void ensureMemberProfile(session);
           window.history.replaceState({}, document.title, window.location.pathname);
         })
         .catch(() => {
@@ -203,14 +220,20 @@ export default function Home() {
       return;
     }
 
-    supabase.auth
-      .getSession()
+    const sessionFallbackId = window.setTimeout(() => {
+      setAuthMessage("登入狀態讀取逾時，請重新整理或重新登入");
+      setIsCheckingSession(false);
+    }, 5000);
+
+    withTimeout(supabase.auth.getSession())
       .then(async ({ data }) => {
+        window.clearTimeout(sessionFallbackId);
         const session = data.session ?? null;
         setUser(session?.user ?? null);
-        await ensureMemberProfile(session);
+        void ensureMemberProfile(session);
       })
       .catch(() => {
+        window.clearTimeout(sessionFallbackId);
         setAuthMessage("讀取登入狀態失敗");
       })
       .finally(() => {
@@ -224,17 +247,19 @@ export default function Home() {
       if (!session) {
         setAuthMessage("");
       }
-      await ensureMemberProfile(session);
+      void ensureMemberProfile(session);
       setIsCheckingSession(false);
     });
 
     return () => {
+      window.clearTimeout(sessionFallbackId);
       subscription.unsubscribe();
     };
   }, []);
 
   async function signInWithGoogle() {
     setIsLoading(true);
+    setAuthMessage("");
     const supabase = createClient();
     if (!supabase) {
       setAuthMessage("尚未設定 NEXT_PUBLIC_SUPABASE_URL 或 NEXT_PUBLIC_SUPABASE_ANON_KEY");
@@ -243,15 +268,33 @@ export default function Home() {
       return;
     }
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`
-      }
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          skipBrowserRedirect: true
+        }
+      });
 
-    if (error) {
-      setAuthMessage(error.message);
+      if (error) {
+        setAuthMessage(error.message);
+        setIsLoginPanelOpen(true);
+        setIsLoading(false);
+        return;
+      }
+
+      if (!data.url) {
+        setAuthMessage("Google 登入網址建立失敗，請確認 Supabase Google provider 設定");
+        setIsLoginPanelOpen(true);
+        setIsLoading(false);
+        return;
+      }
+
+      window.location.assign(data.url);
+    } catch {
+      setAuthMessage("Google 登入啟動失敗，請重新整理後再試");
+      setIsLoginPanelOpen(true);
       setIsLoading(false);
     }
   }
@@ -523,7 +566,7 @@ export default function Home() {
       setActiveSessionId(nextSessionId);
       setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
     } catch {
-      setQuizMessage("題庫讀取失敗，請確認 FastAPI 或 Vercel API 已啟動");
+      setQuizMessage("題庫讀取失敗，請稍後再試或確認 API 連線");
     } finally {
       setIsLoadingQuestions(false);
     }
@@ -721,7 +764,7 @@ export default function Home() {
                 type="button"
                 onClick={startMockExam}
                 disabled={isLoadingQuestions}
-                className="w-full border-2 border-deepPink bg-black px-7 py-4 text-center font-display text-sm uppercase text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-deepPink hover:text-black disabled:cursor-wait disabled:opacity-70"
+                className="w-full border-2 border-deepPink bg-black px-7 py-4 text-center font-display text-sm uppercase text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
                 模擬考模式
               </button>
@@ -741,7 +784,7 @@ export default function Home() {
                 type="button"
                 onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
                 disabled={isLoadingNotes}
-                className="w-full border-2 border-hotRed bg-black px-7 py-4 text-center font-display text-sm uppercase text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 hover:bg-hotRed hover:text-black disabled:cursor-wait disabled:opacity-70"
+                className="w-full border-2 border-hotRed bg-black px-7 py-4 text-center font-display text-sm uppercase text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
                 複習筆記
               </button>
@@ -880,7 +923,7 @@ export default function Home() {
                 const answerStateClass = !hasAnswered
                   ? isSelected
                     ? "border-flashYellow bg-[#221c0b]"
-                    : "border-zinc-800 bg-[#181818] hover:border-acidGreen"
+                    : "border-zinc-800 bg-[#181818]"
                   : isCorrect
                     ? "border-acidGreen bg-[#0d1a12]"
                     : isSelected
@@ -1052,7 +1095,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={signInWithGoogle}
-                  disabled={isLoading || isCheckingSession}
+                  disabled={isLoading}
                   className="border border-acidGreen px-4 py-2 text-sm font-bold text-acidGreen transition hover:bg-acidGreen hover:text-black disabled:cursor-wait disabled:opacity-70"
                 >
                   使用 Google 登入
@@ -1063,21 +1106,25 @@ export default function Home() {
         ) : (
           <button
             type="button"
-            onClick={() => setIsLoginPanelOpen(true)}
-            className="flex items-center gap-3 border border-zinc-700 bg-[#090909]/95 px-4 py-3 text-left shadow-[6px_6px_0_#ff3b30] backdrop-blur transition hover:border-acidGreen"
+            onClick={() => {
+              if (user) {
+                setIsLoginPanelOpen(true);
+                return;
+              }
+              void signInWithGoogle();
+            }}
+            disabled={isLoading}
+            className="flex items-center gap-2 border border-zinc-700 bg-[#090909]/95 px-3 py-2 text-left shadow-[4px_4px_0_#ff3b30] backdrop-blur transition hover:border-zinc-500"
             aria-expanded={isLoginPanelOpen}
-            aria-label="打開登入狀態"
+            aria-label={user ? "打開登入狀態" : "使用 Google 登入"}
           >
             <span
-              className={`h-3 w-3 rounded-full ${
+              className={`h-2.5 w-2.5 rounded-full ${
                 isCheckingSession ? "bg-flashYellow" : user ? "bg-acidGreen" : "bg-hotRed"
               }`}
             />
             <span>
-              <span className="block text-xs font-black tracking-[0.2em] text-flashYellow">登入</span>
-              <span className="block text-sm font-black text-white">
-                {isCheckingSession ? "檢查中" : user ? "已登入" : "未登入"}
-              </span>
+              <span className="block text-xs font-black tracking-[0.16em] text-flashYellow">登入</span>
             </span>
           </button>
         )}
