@@ -804,6 +804,39 @@ export default function Home() {
             ) : null}
           </div>
 
+          {user ? (
+            <div className="max-w-lg border border-zinc-700 bg-[#090909] p-3 md:hidden">
+              <button
+                type="button"
+                onClick={() => setIsLoginPanelOpen((open) => !open)}
+                className="flex w-full items-center justify-between gap-3 text-left"
+                aria-expanded={isLoginPanelOpen}
+              >
+                <span className="flex min-w-0 items-center gap-2">
+                  <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-acidGreen" />
+                  <span className="truncate text-sm font-black text-white">已登入 {gmail}</span>
+                </span>
+                <span className="shrink-0 text-xs font-bold text-zinc-400">
+                  {isLoginPanelOpen ? "收合" : "帳號"}
+                </span>
+              </button>
+
+              {isLoginPanelOpen ? (
+                <div className="mt-3 border-t border-zinc-800 pt-3">
+                  {authMessage ? <p className="mb-3 text-xs text-zinc-400">{authMessage}</p> : null}
+                  <button
+                    type="button"
+                    onClick={signOut}
+                    disabled={isLoading}
+                    className="border border-zinc-600 px-3 py-2 text-xs font-bold text-zinc-100 disabled:cursor-wait disabled:opacity-70"
+                  >
+                    登出
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           {quizMessage ? (
             <p className="max-w-xl border-l-4 border-flashYellow bg-[#16120a] px-4 py-3 text-sm font-bold text-flashYellow">
               {quizMessage}
@@ -1054,7 +1087,7 @@ export default function Home() {
         <span className="ml-2">catalinakuowork@gmail.com</span>
       </footer>
 
-      <aside className="fixed bottom-6 left-20 z-40 md:left-6">
+      <aside className="fixed bottom-6 left-6 z-40 hidden md:block">
         {isLoginPanelOpen ? (
           <div className="w-[min(380px,calc(100vw-112px))] border border-zinc-700 bg-[#090909]/95 p-4 shadow-[8px_8px_0_#ff3b30] backdrop-blur md:w-[360px]">
             <div className="flex items-start justify-between gap-4">
