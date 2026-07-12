@@ -24,6 +24,14 @@ type QuizQuestion = {
 
 type QuizMode = "practice" | "wrong" | "exam";
 
+type ExamResult = {
+  correctCount: number;
+  answeredCount: number;
+  totalCount: number;
+  accuracy: number;
+  timedOut: boolean;
+};
+
 type ReviewNote = {
   id?: string;
   question_id?: string;
@@ -76,6 +84,14 @@ const sampleQuestion: QuizQuestion = {
     en: "Production questions are loaded from the Supabase questions table."
   }
 };
+
+const EXAM_DURATION_SECONDS = 90 * 60;
+
+function formatExamTime(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
 
 function localizedText(value: LocalizedText | null | undefined, fallback = "") {
   return {
@@ -130,6 +146,12 @@ export default function Home() {
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  const [examEndsAt, setExamEndsAt] = useState<number | null>(null);
+  const [examSecondsRemaining, setExamSecondsRemaining] = useState(EXAM_DURATION_SECONDS);
+  const [examCorrectCount, setExamCorrectCount] = useState(0);
+  const [examAnsweredCount, setExamAnsweredCount] = useState(0);
+  const [examResult, setExamResult] = useState<ExamResult | null>(null);
+  const [isExamPaused, setIsExamPaused] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isLoadingNotes, setIsLoadingNotes] = useState(false);
   const [isSavingNoteKey, setIsSavingNoteKey] = useState<string | null>(null);
@@ -138,6 +160,25 @@ export default function Home() {
   const [reviewNotes, setReviewNotes] = useState<ReviewNote[]>([]);
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
+  const isFinishingExam = useRef(false);
+
+  useEffect(() => {
+    if (quizMode !== "exam" || !examEndsAt || examResult) {
+      return;
+    }
+
+    const updateRemainingTime = () => {
+      const remaining = Math.max(0, Math.ceil((examEndsAt - Date.now()) / 1000));
+      setExamSecondsRemaining(remaining);
+      if (remaining === 0) {
+        void finalizeExam(true);
+      }
+    };
+
+    updateRemainingTime();
+    const intervalId = window.setInterval(updateRemainingTime, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [examEndsAt, examResult, examCorrectCount, examAnsweredCount, quizMode, questions.length]);
 
   async function ensureMemberProfile(session: Session | null) {
     const userId = session?.user?.id;
@@ -566,6 +607,17 @@ export default function Home() {
       setQuizMode(options.mode);
       setActiveSessionId(nextSessionId);
       setQuizMessage(`${loadedMessage} ${nextQuestions.length} 題`);
+      isFinishingExam.current = false;
+      setExamCorrectCount(0);
+      setExamAnsweredCount(0);
+      setExamResult(null);
+      setIsExamPaused(false);
+      if (options.mode === "exam") {
+        setExamSecondsRemaining(EXAM_DURATION_SECONDS);
+        setExamEndsAt(Date.now() + EXAM_DURATION_SECONDS * 1000);
+      } else {
+        setExamEndsAt(null);
+      }
     } catch (error) {
       const reason = error instanceof Error ? error.message : "網路連線失敗";
       setQuizMessage(`題庫讀取失敗（${reason}），請稍後再試`);
@@ -624,8 +676,16 @@ export default function Home() {
       return;
     }
 
+    const isCorrectAnswer = sameOptions(selectedOptions, correctOptions);
     setQuizMessage("");
     setHasAnswered(true);
+
+    if (quizMode === "exam") {
+      setExamAnsweredCount((count) => count + 1);
+      if (isCorrectAnswer) {
+        setExamCorrectCount((count) => count + 1);
+      }
+    }
 
     if (!hasStartedQuiz || !currentQuestion?.id) {
       return;
@@ -662,7 +722,7 @@ export default function Home() {
           session_id: activeSessionId,
           question_id: currentQuestion.id,
           selected_options: sortedOptionKeys(selectedOptions),
-          is_correct: sameOptions(selectedOptions, correctOptions)
+          is_correct: isCorrectAnswer
         })
       });
 
@@ -705,12 +765,71 @@ export default function Home() {
     }
   }
 
+  async function finalizeExam(timedOut = false) {
+    if (isFinishingExam.current || examResult) {
+      return;
+    }
+
+    isFinishingExam.current = true;
+    setExamEndsAt(null);
+    setExamSecondsRemaining(0);
+    setIsExamPaused(false);
+
+    const totalCount = questions.length;
+    const accuracy = totalCount > 0 ? Math.round((examCorrectCount / totalCount) * 1000) / 10 : 0;
+    setExamResult({
+      correctCount: examCorrectCount,
+      answeredCount: examAnsweredCount,
+      totalCount,
+      accuracy,
+      timedOut
+    });
+
+    try {
+      await finishActiveSession();
+      setActiveSessionId(null);
+      setQuizMessage(timedOut ? "模擬考時間到，系統已自動交卷" : "模擬考已完成");
+    } catch {
+      setQuizMessage("模擬考已結束，但回合結束紀錄寫入失敗，請稍後再試");
+    }
+  }
+
+  function toggleExamPause() {
+    if (examResult) {
+      return;
+    }
+
+    if (isExamPaused) {
+      setExamEndsAt(Date.now() + examSecondsRemaining * 1000);
+      setIsExamPaused(false);
+      return;
+    }
+
+    const remaining = examEndsAt
+      ? Math.max(0, Math.ceil((examEndsAt - Date.now()) / 1000))
+      : examSecondsRemaining;
+    setExamSecondsRemaining(remaining);
+    setExamEndsAt(null);
+    setIsExamPaused(true);
+  }
+
+  function finishExamEarly() {
+    const confirmed = window.confirm("確定要提早結束模擬考嗎？未作答題目仍會計入正確率分母。");
+    if (confirmed) {
+      void finalizeExam(false);
+    }
+  }
+
   async function nextQuestion() {
     if (currentQuestionIndex + 1 >= questions.length) {
+      if (quizMode === "exam") {
+        await finalizeExam(false);
+        return;
+      }
       try {
         await finishActiveSession();
         setActiveSessionId(null);
-        setQuizMessage(quizMode === "exam" ? "模擬考已完成，已寫入 quiz_sessions" : "已完成目前載入的題目");
+        setQuizMessage("已完成目前載入的題目");
       } catch {
         setQuizMessage("題目已完成，但回合結束紀錄寫入失敗，請稍後再試");
       }
@@ -734,6 +853,37 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
+      {quizMode === "exam" && hasStartedQuiz && !examResult ? (
+        <div
+          className="fixed left-1/2 top-3 z-50 flex -translate-x-1/2 items-center gap-3 border-2 border-deepPink bg-black px-3 py-2 shadow-[5px_5px_0_#ff3b30] md:left-8 md:top-6 md:translate-x-0"
+          role="timer"
+          aria-label={`模擬考剩餘時間 ${formatExamTime(examSecondsRemaining)}`}
+        >
+          <div className="shrink-0">
+            <p className="text-[9px] font-black tracking-[0.14em] text-zinc-400">模擬考剩餘時間</p>
+            <p className="mt-1 font-display text-xl leading-none text-deepPink">
+              {formatExamTime(examSecondsRemaining)}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={toggleExamPause}
+              className="border border-flashYellow px-2 py-1 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
+            >
+              {isExamPaused ? "繼續" : "暫停"}
+            </button>
+            <button
+              type="button"
+              onClick={finishExamEarly}
+              className="border border-hotRed px-2 py-1 text-xs font-black text-hotRed transition hover:bg-hotRed hover:text-black"
+            >
+              提早結束
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <section className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-center">
         <div className="space-y-8">
           <div className="inline-flex items-center gap-3 border border-zinc-700 bg-darkroom px-4 py-2 text-xs font-black tracking-[0.3em] text-flashYellow">
@@ -932,18 +1082,38 @@ export default function Home() {
             </div>
           ) : (
           <div className="border border-zinc-800 bg-filmBlack p-5">
-            <div className="mb-5 flex items-center justify-between border-b border-zinc-800 pb-4">
+            <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
               <div>
                 <p className="text-xs tracking-[0.28em] text-deepPink">
                   {hasStartedQuiz ? `第 ${currentQuestionIndex + 1} / ${questions.length} 題` : "預覽題"}
                 </p>
                 <h2 className="mt-2 text-2xl font-black">{examDomain}</h2>
               </div>
-              <span className="bg-flashYellow px-3 py-1 text-xs font-black text-black">
-                {currentQuestion?.choice_type === "multiple" ? "複選" : "單選"}
-              </span>
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <span className="bg-flashYellow px-3 py-1 text-xs font-black text-black">
+                  {currentQuestion?.choice_type === "multiple" ? "複選" : "單選"}
+                </span>
+              </div>
             </div>
 
+            {examResult ? (
+              <div className="border-l-4 border-acidGreen bg-[#0d1a12] p-5">
+                <p className="text-xs font-black tracking-[0.22em] text-acidGreen">
+                  {examResult.timedOut ? "時間到，自動交卷" : "模擬考完成"}
+                </p>
+                <p className="mt-3 font-display text-4xl text-white">正確率 {examResult.accuracy}%</p>
+                <p className="mt-3 text-sm font-bold text-zinc-300">
+                  答對 {examResult.correctCount} 題／共 {examResult.totalCount} 題
+                  {examResult.answeredCount < examResult.totalCount
+                    ? `，已作答 ${examResult.answeredCount} 題`
+                    : ""}
+                </p>
+                <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-6 text-zinc-400">
+                  AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率
+                </p>
+              </div>
+            ) : (
+            <>
             <p className="text-xl font-bold leading-9 text-white">
               {questionText.zh}
             </p>
@@ -1070,6 +1240,8 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+            )}
+            </>
             )}
           </div>
           )}
