@@ -6,11 +6,19 @@ import httpx
 
 from app.core.config import settings
 
-EXAM_DOMAIN_WEIGHTS = {
-    "domain_1": 0.24,
-    "domain_2": 0.30,
-    "domain_3": 0.34,
-    "domain_4": 0.12,
+EXAM_DOMAIN_WEIGHTS_BY_EXAM = {
+    "clf": {
+        "domain_1": 0.24,
+        "domain_2": 0.30,
+        "domain_3": 0.34,
+        "domain_4": 0.12,
+    },
+    "saa": {
+        "domain_1": 0.26,
+        "domain_2": 0.24,
+        "domain_3": 0.30,
+        "domain_4": 0.20,
+    },
 }
 
 
@@ -96,28 +104,54 @@ async def select_questions(limit: int | None = None, exam: str = "clf") -> list[
     return questions
 
 
-def _exam_domain_key(question: dict) -> str | None:
+def _exam_domain_weights(exam: str = "clf") -> dict[str, float]:
+    return EXAM_DOMAIN_WEIGHTS_BY_EXAM.get(exam.strip().lower(), EXAM_DOMAIN_WEIGHTS_BY_EXAM["clf"])
+
+
+def _exam_domain_key(question: dict, exam: str = "clf") -> str | None:
     exam_domain = str(question.get("exam_domain") or "").lower()
-    if "領域 1" in exam_domain or "domain 1" in exam_domain or "cloud concepts" in exam_domain:
+    normalized_exam = exam.strip().lower()
+
+    if "領域 1" in exam_domain or "domain 1" in exam_domain:
         return "domain_1"
-    if "領域 2" in exam_domain or "domain 2" in exam_domain or "security and compliance" in exam_domain:
+    if "領域 2" in exam_domain or "domain 2" in exam_domain:
         return "domain_2"
-    if "領域 3" in exam_domain or "domain 3" in exam_domain or "cloud technology and services" in exam_domain:
+    if "領域 3" in exam_domain or "domain 3" in exam_domain:
         return "domain_3"
-    if "領域 4" in exam_domain or "domain 4" in exam_domain or "billing" in exam_domain:
+    if "領域 4" in exam_domain or "domain 4" in exam_domain:
         return "domain_4"
+
+    if normalized_exam == "saa":
+        if "design resilient architectures" in exam_domain or "設計彈性架構" in exam_domain:
+            return "domain_1"
+        if "design high-performing architectures" in exam_domain or "設計高性能架構" in exam_domain:
+            return "domain_2"
+        if "design secure architectures" in exam_domain or "設計安全架構" in exam_domain:
+            return "domain_3"
+        if "design cost-optimized architectures" in exam_domain or "設計成本優化架構" in exam_domain:
+            return "domain_4"
+    else:
+        if "cloud concepts" in exam_domain or "雲端概念" in exam_domain:
+            return "domain_1"
+        if "security and compliance" in exam_domain or "安全與合規" in exam_domain:
+            return "domain_2"
+        if "cloud technology and services" in exam_domain or "雲端技術與服務" in exam_domain:
+            return "domain_3"
+        if "billing" in exam_domain or "計費" in exam_domain:
+            return "domain_4"
+
     return None
 
 
-def _domain_quotas(total_count: int) -> dict[str, int]:
+def _domain_quotas(total_count: int, weights: dict[str, float]) -> dict[str, int]:
     base_quotas = {
         domain: int(total_count * weight)
-        for domain, weight in EXAM_DOMAIN_WEIGHTS.items()
+        for domain, weight in weights.items()
     }
     remaining = total_count - sum(base_quotas.values())
     remainders = sorted(
-        EXAM_DOMAIN_WEIGHTS,
-        key=lambda domain: (total_count * EXAM_DOMAIN_WEIGHTS[domain]) - base_quotas[domain],
+        weights,
+        key=lambda domain: (total_count * weights[domain]) - base_quotas[domain],
         reverse=True,
     )
 
@@ -157,16 +191,14 @@ async def select_exam_questions(limit: int | None = None, exam: str = "clf") -> 
     if not questions:
         return []
 
+    normalized_exam = exam.strip().lower()
+    weights = _exam_domain_weights(normalized_exam)
     target_count = min(limit or len(questions), len(questions))
-    if exam == "saa":
-        random.shuffle(questions)
-        return questions[:target_count]
-
-    grouped_questions: dict[str, list[dict]] = {domain: [] for domain in EXAM_DOMAIN_WEIGHTS}
+    grouped_questions: dict[str, list[dict]] = {domain: [] for domain in weights}
     unmatched_questions: list[dict] = []
 
     for question in questions:
-        domain = _exam_domain_key(question)
+        domain = _exam_domain_key(question, normalized_exam)
         if domain:
             grouped_questions[domain].append(question)
         else:
@@ -178,9 +210,9 @@ async def select_exam_questions(limit: int | None = None, exam: str = "clf") -> 
 
     selected_questions: list[dict] = []
     selected_ids: set[str] = set()
-    quotas = _domain_quotas(target_count)
+    quotas = _domain_quotas(target_count, weights)
 
-    for domain in EXAM_DOMAIN_WEIGHTS:
+    for domain in weights:
         for question in grouped_questions[domain][:quotas[domain]]:
             question_id = str(question.get("id") or "")
             if question_id and question_id not in selected_ids:

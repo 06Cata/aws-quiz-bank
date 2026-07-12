@@ -112,7 +112,7 @@ const EXAMS: Record<ExamType, ExamConfig> = {
     certification: "AWS Cloud Practitioner",
     mockQuestionCount: 65,
     durationSeconds: 90 * 60,
-    resultNote: "AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率"
+    resultNote: "AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。"
   },
   saa: {
     name: "AWS Solutions Architect Associate",
@@ -121,7 +121,7 @@ const EXAMS: Record<ExamType, ExamConfig> = {
     certification: "AWS Solutions Architect Associate",
     mockQuestionCount: 65,
     durationSeconds: 130 * 60,
-    resultNote: "SAA 模擬考每題難易度與權重可能不同，建議在練習時，將目標穩定設定在 80% 以上的正確率"
+    resultNote: "AWS 助理級考試滿分爲1000分，及格分數為 720 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。"
   }
 };
 
