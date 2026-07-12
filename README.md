@@ -11,8 +11,11 @@ aws-quiz-bank/
 ├── README.md # 專案入口說明
 ├── package.json # monorepo npm scripts 與 workspace 設定
 ├── .env.example # 後端與同步工作需要的環境變數範例
+├── .dockerignore # Docker build 排除本機依賴、快取與密鑰
+├── compose.yaml # 一次啟動 Web、API 與題庫同步 job
 ├── apps/ # 前後端應用程式
 │   ├── web/ # Next.js 前端
+│   │   ├── Dockerfile # Next.js production standalone image
 │   │   ├── package.json # 前端依賴與啟動指令
 │   │   ├── next.config.ts # Next.js 設定
 │   │   ├── postcss.config.mjs # Tailwind/PostCSS 設定
@@ -27,6 +30,7 @@ aws-quiz-bank/
 │   │       │   └── page.tsx # 首頁與 Google 登入入口
 │   │       └── lib/supabase/client.ts # 瀏覽器端 Supabase client
 │   └── api/ # FastAPI 後端
+│       ├── Dockerfile # FastAPI 與題庫同步共用 image
 │       ├── requirements.txt # Python 依賴
 │       └── app/ # API 原始碼
 │           ├── main.py # FastAPI app 入口
@@ -47,3 +51,25 @@ aws-quiz-bank/
 5. 手動同步題庫：`npm run sync:questions`
 
 GitHub Actions 使用根目錄 `.github/workflows/sync-google-sheet.yml` 定期執行同一支同步程式。
+
+## Docker
+
+使用根目錄 `.env.local` 建置並啟動 production 容器：
+
+```bash
+docker compose --env-file .env.local up --build
+```
+
+開啟 `http://localhost:3000`，API 健康檢查是 `http://localhost:8000/health`。
+
+執行一次 Google Sheet 題庫同步：
+
+```bash
+docker compose --env-file .env.local --profile jobs run --rm sync-questions
+```
+
+停止服務：
+
+```bash
+docker compose down
+```
