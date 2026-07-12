@@ -1293,7 +1293,7 @@ export default function Home() {
                     <div className="min-w-0">
                       <p className="text-lg font-black leading-7 text-zinc-100">{zhOptionText}</p>
                       {optionText.en ? (
-                        <p className="mt-2 border-t border-white/10 pt-2 text-sm leading-6 text-zinc-500">
+                        <p className="mt-2 border-t border-white/10 pt-2 text-base leading-7 text-zinc-400">
                           {optionText.en}
                         </p>
                       ) : null}
@@ -1326,7 +1326,7 @@ export default function Home() {
                           return (
                             <div key={key} className="border-l-2 border-zinc-700 pl-3">
                               <div className="flex items-start justify-between gap-3">
-                                <p className="text-sm font-black text-zinc-100">{key}. {text.zh}</p>
+                                <p className="text-base font-black leading-7 text-zinc-100">{key}. {text.zh}</p>
                                 {hasStartedQuiz && currentQuestion?.id ? (
                                   <button
                                     type="button"
@@ -1338,7 +1338,7 @@ export default function Home() {
                                   </button>
                                 ) : null}
                               </div>
-                              {text.en ? <p className="mt-1 text-xs leading-5 text-zinc-500">{text.en}</p> : null}
+                              {text.en ? <p className="mt-2 text-sm leading-6 text-zinc-400">{text.en}</p> : null}
                             </div>
                           );
                         })}
