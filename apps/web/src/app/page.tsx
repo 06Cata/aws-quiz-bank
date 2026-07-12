@@ -1010,7 +1010,7 @@ export default function Home() {
               <span className="block text-hotRed">BANK</span>
             </h1>
             <p className="max-w-xl text-lg leading-8 text-zinc-300">
-              初次登入使用gmail帳號，系統會自動建立會員資料，並將答題紀錄寫入後端資料庫。若要複習錯題，請先完成幾題後再回來複習。
+              Beta版，題目持續更新中。初次登入使用gmail帳號，系統會自動建立會員資料，並將答題紀錄寫入資料庫。若要複習錯題，請先完成幾題後再回來複習。答案解析可以存入筆記卡牌，方便複習。
             </p>
           </div>
 
