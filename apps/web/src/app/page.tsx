@@ -43,6 +43,14 @@ type ExamResult = {
   timedOut: boolean;
 };
 
+type RoundResult = {
+  mode: "practice" | "wrong";
+  correctCount: number;
+  answeredCount: number;
+  totalCount: number;
+  accuracy: number;
+};
+
 type ReviewNote = {
   id?: string;
   question_id?: string;
@@ -182,6 +190,7 @@ export default function Home() {
   const [examCorrectCount, setExamCorrectCount] = useState(0);
   const [examAnsweredCount, setExamAnsweredCount] = useState(0);
   const [examResult, setExamResult] = useState<ExamResult | null>(null);
+  const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [isExamPaused, setIsExamPaused] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isLoadingNotes, setIsLoadingNotes] = useState(false);
@@ -440,6 +449,7 @@ export default function Home() {
     setExamCorrectCount(0);
     setExamAnsweredCount(0);
     setExamResult(null);
+    setRoundResult(null);
     setIsExamPaused(false);
     isFinishingExam.current = false;
   }
@@ -691,6 +701,7 @@ export default function Home() {
       setExamCorrectCount(0);
       setExamAnsweredCount(0);
       setExamResult(null);
+      setRoundResult(null);
       setIsExamPaused(false);
       if (options.mode === "exam") {
         setExamSecondsRemaining(currentExam.durationSeconds);
@@ -760,11 +771,9 @@ export default function Home() {
     setQuizMessage("");
     setHasAnswered(true);
 
-    if (quizMode === "exam") {
-      setExamAnsweredCount((count) => count + 1);
-      if (isCorrectAnswer) {
-        setExamCorrectCount((count) => count + 1);
-      }
+    setExamAnsweredCount((count) => count + 1);
+    if (isCorrectAnswer) {
+      setExamCorrectCount((count) => count + 1);
     }
 
     if (!hasStartedQuiz || !currentQuestion?.id) {
@@ -906,13 +915,16 @@ export default function Home() {
         await finalizeExam(false);
         return;
       }
-      try {
-        await finishActiveSession();
-        setActiveSessionId(null);
-        setQuizMessage("已完成目前載入的題目");
-      } catch {
-        setQuizMessage("題目已完成，但回合結束紀錄寫入失敗，請稍後再試");
-      }
+      const totalCount = questions.length;
+      const accuracy = totalCount > 0 ? Math.round((examCorrectCount / totalCount) * 1000) / 10 : 0;
+      setRoundResult({
+        mode: quizMode,
+        correctCount: examCorrectCount,
+        answeredCount: examAnsweredCount,
+        totalCount,
+        accuracy
+      });
+      setQuizMessage(quizMode === "wrong" ? "錯題複習已完成" : "本輪刷題已完成");
       return;
     }
 
@@ -1224,6 +1236,23 @@ export default function Home() {
                 <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-6 text-zinc-400">
                   {currentExam.resultNote}
                 </p>
+              </div>
+            ) : roundResult ? (
+              <div className="border-l-4 border-flashYellow bg-[#16120a] p-5">
+                <p className="text-xs font-black tracking-[0.22em] text-flashYellow">
+                  {roundResult.mode === "wrong" ? "錯題複習完成" : "本輪刷題完成"}
+                </p>
+                <p className="mt-3 font-display text-4xl text-white">正確率 {roundResult.accuracy}%</p>
+                <p className="mt-3 text-sm font-bold text-zinc-300">
+                  答對 {roundResult.correctCount} 題／共 {roundResult.totalCount} 題
+                </p>
+                <button
+                  type="button"
+                  onClick={roundResult.mode === "wrong" ? startWrongReview : startQuiz}
+                  className="mt-5 border-2 border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
+                >
+                  {roundResult.mode === "wrong" ? "再次複習錯題" : "重新開始刷題"}
+                </button>
               </div>
             ) : (
             <>

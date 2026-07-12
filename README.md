@@ -1,6 +1,6 @@
 # AWS Quiz Bank
 
-AWS Cloud Practitioner 刷題網站。前端使用 Next.js、React、TypeScript、Tailwind；後端 API 使用 FastAPI；資料庫與登入使用 Supabase。
+AWS Cloud Practitioner 與 AWS Solutions Architect Associate 刷題網站。前端使用 Next.js、React、TypeScript、Tailwind；後端 API 使用 FastAPI；資料庫與登入使用 Supabase。
 
 ## Project Structure
 
@@ -35,8 +35,9 @@ aws-quiz-bank/
 │       └── app/ # API 原始碼
 │           ├── main.py # FastAPI app 入口
 │           ├── api/questions.py # 題目 API router
+│           ├── api/saa.py # SAA 四大功能、作答與回合 API router
 │           ├── core/config.py # 環境變數設定
-│           └── services/supabase.py # Supabase REST 查詢服務
+│           └── services/supabase.py # CLF/SAA 白名單資料表與 Supabase REST 查詢服務
 ├── packages/ # 共用規格
 │   └── shared/question-schema.md # 題目 JSON 欄位格式
 └── scripts/ # 同步與維運腳本預留資料夾
