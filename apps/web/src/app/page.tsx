@@ -976,7 +976,7 @@ export default function Home() {
         </div>
       ) : null}
 
-      <section className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-center">
+      <section className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-14 lg:gap-16">
         <div className="space-y-8">
           <div className="max-w-lg">
             <label htmlFor="exam-selector" className="mb-2 block text-xs font-black tracking-[0.2em] text-zinc-500 md:hidden">
@@ -1026,7 +1026,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid max-w-lg gap-5 sm:grid-cols-2">
+          <div className="grid max-w-lg gap-5 sm:grid-cols-2 md:max-w-[480px]">
             <div className="space-y-3">
               <button
                 type="button"
@@ -1126,7 +1126,7 @@ export default function Home() {
 
         </div>
 
-        <div className="film-frame bg-[#111] p-5">
+        <div className="film-frame bg-[#111] p-5 md:ml-2 md:pl-8">
           {isNotesOpen ? (
             <div className="border border-zinc-800 bg-filmBlack p-5">
               <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
