@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from dataclasses import dataclass
 import random
 
 import httpx
@@ -11,6 +12,43 @@ EXAM_DOMAIN_WEIGHTS = {
     "domain_3": 0.34,
     "domain_4": 0.12,
 }
+
+
+@dataclass(frozen=True)
+class QuizTables:
+    questions: str
+    sessions: str
+    attempts: str
+    stats: str
+    notes: str
+    stores_certification: bool
+
+
+QUIZ_TABLES = {
+    "clf": QuizTables(
+        questions="questions",
+        sessions="quiz_sessions",
+        attempts="question_attempts",
+        stats="user_question_stats",
+        notes="review_notes",
+        stores_certification=True,
+    ),
+    "saa": QuizTables(
+        questions="saa_questions",
+        sessions="saa_quiz_sessions",
+        attempts="saa_question_attempts",
+        stats="saa_user_question_stats",
+        notes="saa_review_notes",
+        stores_certification=False,
+    ),
+}
+
+
+def quiz_tables(exam: str = "clf") -> QuizTables:
+    try:
+        return QUIZ_TABLES[exam.strip().lower()]
+    except KeyError as exc:
+        raise ValueError("exam must be either 'clf' or 'saa'") from exc
 
 
 def _empty_localized_text() -> dict[str, str]:
@@ -34,11 +72,12 @@ def _service_headers() -> dict[str, str]:
     }
 
 
-async def select_questions(limit: int | None = None) -> list[dict]:
+async def select_questions(limit: int | None = None, exam: str = "clf") -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
 
-    url = f"{settings.supabase_url}/rest/v1/questions"
+    tables = quiz_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.questions}"
     headers = _service_headers()
     params = {
         "select": "*",
@@ -113,12 +152,16 @@ def _weighted_sample_without_replacement(
     return selected_questions
 
 
-async def select_exam_questions(limit: int | None = None) -> list[dict]:
-    questions = await select_questions()
+async def select_exam_questions(limit: int | None = None, exam: str = "clf") -> list[dict]:
+    questions = await select_questions(exam=exam)
     if not questions:
         return []
 
     target_count = min(limit or len(questions), len(questions))
+    if exam == "saa":
+        random.shuffle(questions)
+        return questions[:target_count]
+
     grouped_questions: dict[str, list[dict]] = {domain: [] for domain in EXAM_DOMAIN_WEIGHTS}
     unmatched_questions: list[dict] = []
 
@@ -170,12 +213,17 @@ async def select_exam_questions(limit: int | None = None) -> list[dict]:
     return selected_questions
 
 
-async def select_wrong_questions_for_user(user_id: str, limit: int | None = None) -> list[dict]:
+async def select_wrong_questions_for_user(
+    user_id: str,
+    limit: int | None = None,
+    exam: str = "clf",
+) -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
 
-    stats_url = f"{settings.supabase_url}/rest/v1/user_question_stats"
-    questions_url = f"{settings.supabase_url}/rest/v1/questions"
+    tables = quiz_tables(exam)
+    stats_url = f"{settings.supabase_url}/rest/v1/{tables.stats}"
+    questions_url = f"{settings.supabase_url}/rest/v1/{tables.questions}"
     headers = _service_headers()
     stats_params = {
         "select": "question_id,total_attempts,wrong_count,updated_at",
@@ -248,13 +296,15 @@ async def upsert_review_note(
     question_id: str,
     option_key: str,
     quiz_mode: str,
+    exam: str = "clf",
 ) -> dict:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")
 
+    tables = quiz_tables(exam)
     option_key = option_key.strip().upper()
-    questions_url = f"{settings.supabase_url}/rest/v1/questions"
-    notes_url = f"{settings.supabase_url}/rest/v1/review_notes"
+    questions_url = f"{settings.supabase_url}/rest/v1/{tables.questions}"
+    notes_url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
     headers = {
         **_service_headers(),
         "Content-Type": "application/json",
@@ -313,11 +363,12 @@ async def upsert_review_note(
     return notes[0] if notes else note_payload
 
 
-async def select_review_notes_for_user(user_id: str) -> list[dict]:
+async def select_review_notes_for_user(user_id: str, exam: str = "clf") -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
 
-    url = f"{settings.supabase_url}/rest/v1/review_notes"
+    tables = quiz_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
     params = {
         "select": "*",
         "user_id": f"eq.{user_id}",
@@ -330,11 +381,12 @@ async def select_review_notes_for_user(user_id: str) -> list[dict]:
         return response.json()
 
 
-async def delete_review_note_for_user(user_id: str, note_id: str) -> bool:
+async def delete_review_note_for_user(user_id: str, note_id: str, exam: str = "clf") -> bool:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")
 
-    url = f"{settings.supabase_url}/rest/v1/review_notes"
+    tables = quiz_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
     headers = {
         **_service_headers(),
         "Prefer": "return=representation",
@@ -436,22 +488,25 @@ async def create_quiz_session(
     mode: str,
     certification: str,
     question_count: int,
+    exam: str = "clf",
 ) -> dict:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")
 
-    url = f"{settings.supabase_url}/rest/v1/quiz_sessions"
+    tables = quiz_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.sessions}"
     headers = {
         **_service_headers(),
         "Content-Type": "application/json",
         "Prefer": "return=representation",
     }
-    payload = {
+    payload: dict = {
         "user_id": user_id,
         "mode": mode,
-        "certification": certification,
         "question_count": question_count,
     }
+    if tables.stores_certification:
+        payload["certification"] = certification
 
     async with httpx.AsyncClient(timeout=20) as client:
         response = await client.post(url, headers=headers, json=payload)
@@ -461,11 +516,12 @@ async def create_quiz_session(
     return session[0] if session else payload
 
 
-async def finish_quiz_session(user_id: str, session_id: str) -> dict:
+async def finish_quiz_session(user_id: str, session_id: str, exam: str = "clf") -> dict:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")
 
-    url = f"{settings.supabase_url}/rest/v1/quiz_sessions"
+    tables = quiz_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.sessions}"
     headers = {
         **_service_headers(),
         "Content-Type": "application/json",
@@ -492,13 +548,15 @@ async def record_question_attempt(
     selected_options: list[str],
     is_correct: bool,
     session_id: str | None = None,
+    exam: str = "clf",
 ) -> dict:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         raise RuntimeError("Supabase service role is not configured")
 
+    tables = quiz_tables(exam)
     now = datetime.now(UTC).isoformat()
-    attempts_url = f"{settings.supabase_url}/rest/v1/question_attempts"
-    stats_url = f"{settings.supabase_url}/rest/v1/user_question_stats"
+    attempts_url = f"{settings.supabase_url}/rest/v1/{tables.attempts}"
+    stats_url = f"{settings.supabase_url}/rest/v1/{tables.stats}"
     headers = {
         **_service_headers(),
         "Content-Type": "application/json",

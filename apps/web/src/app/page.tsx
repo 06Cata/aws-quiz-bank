@@ -23,6 +23,17 @@ type QuizQuestion = {
 };
 
 type QuizMode = "practice" | "wrong" | "exam";
+type ExamType = "clf" | "saa";
+
+type ExamConfig = {
+  name: string;
+  shortName: string;
+  apiPrefix: string;
+  certification: string;
+  mockQuestionCount: number;
+  durationSeconds: number;
+  resultNote: string;
+};
 
 type ExamResult = {
   correctCount: number;
@@ -85,7 +96,26 @@ const sampleQuestion: QuizQuestion = {
   }
 };
 
-const EXAM_DURATION_SECONDS = 90 * 60;
+const EXAMS: Record<ExamType, ExamConfig> = {
+  clf: {
+    name: "AWS Cloud Practitioner",
+    shortName: "Cloud Practitioner",
+    apiPrefix: "/api",
+    certification: "AWS Cloud Practitioner",
+    mockQuestionCount: 65,
+    durationSeconds: 90 * 60,
+    resultNote: "AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率"
+  },
+  saa: {
+    name: "AWS Solutions Architect Associate",
+    shortName: "Solutions Architect Associate",
+    apiPrefix: "/api/saa",
+    certification: "AWS Solutions Architect Associate",
+    mockQuestionCount: 65,
+    durationSeconds: 130 * 60,
+    resultNote: "SAA 模擬考每題難易度與權重可能不同，建議在練習時，將目標穩定設定在 80% 以上的正確率"
+  }
+};
 
 function formatExamTime(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -145,9 +175,10 @@ export default function Home() {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
+  const [selectedExam, setSelectedExam] = useState<ExamType>("clf");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [examEndsAt, setExamEndsAt] = useState<number | null>(null);
-  const [examSecondsRemaining, setExamSecondsRemaining] = useState(EXAM_DURATION_SECONDS);
+  const [examSecondsRemaining, setExamSecondsRemaining] = useState(EXAMS.clf.durationSeconds);
   const [examCorrectCount, setExamCorrectCount] = useState(0);
   const [examAnsweredCount, setExamAnsweredCount] = useState(0);
   const [examResult, setExamResult] = useState<ExamResult | null>(null);
@@ -161,6 +192,15 @@ export default function Home() {
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
   const isFinishingExam = useRef(false);
+  const currentExam = EXAMS[selectedExam];
+
+  useEffect(() => {
+    const storedExam = window.localStorage.getItem("aws-quiz-exam-type");
+    if (storedExam === "clf" || storedExam === "saa") {
+      setSelectedExam(storedExam);
+      setExamSecondsRemaining(EXAMS[storedExam].durationSeconds);
+    }
+  }, []);
 
   useEffect(() => {
     if (quizMode !== "exam" || !examEndsAt || examResult) {
@@ -364,6 +404,46 @@ export default function Home() {
     return data.session?.access_token ?? null;
   }
 
+  async function switchExam(nextExam: ExamType) {
+    if (nextExam === selectedExam) {
+      return;
+    }
+
+    if (quizMode === "exam" && activeSessionId && !examResult) {
+      const confirmed = window.confirm("目前有進行中的模擬考。切換題庫會提早結束本次模擬考，是否繼續？");
+      if (!confirmed) {
+        return;
+      }
+      try {
+        await finishActiveSession();
+      } catch {
+        setQuizMessage("切換題庫成功，但原模擬考回合結束紀錄寫入失敗");
+      }
+    }
+
+    const nextConfig = EXAMS[nextExam];
+    window.localStorage.setItem("aws-quiz-exam-type", nextExam);
+    setSelectedExam(nextExam);
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
+    setSelectedOptions([]);
+    setHasAnswered(false);
+    setHasStartedQuiz(false);
+    setQuizMode("practice");
+    setActiveSessionId(null);
+    setIsNotesOpen(false);
+    setReviewNotes([]);
+    setQuizMessage("");
+    setNotesMessage("");
+    setExamEndsAt(null);
+    setExamSecondsRemaining(nextConfig.durationSeconds);
+    setExamCorrectCount(0);
+    setExamAnsweredCount(0);
+    setExamResult(null);
+    setIsExamPaused(false);
+    isFinishingExam.current = false;
+  }
+
   function upsertNoteInState(note: ReviewNote) {
     setReviewNotes((notes) => {
       const noteQuestionId = note.question_id ?? "";
@@ -399,7 +479,7 @@ export default function Home() {
     setNotesMessage("");
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/notes`, {
+      const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/notes`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -449,7 +529,7 @@ export default function Home() {
     setNotesMessage("");
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/notes`, {
+      const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/notes`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -501,7 +581,7 @@ export default function Home() {
     setNotesMessage("");
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/notes/${noteId}`, {
+      const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/notes/${noteId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -577,7 +657,7 @@ export default function Home() {
 
       let nextSessionId: string | null = null;
       if (options.createSession) {
-        const sessionResponse = await fetch(`${apiBaseUrl}/api/sessions`, {
+        const sessionResponse = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/sessions`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -585,7 +665,7 @@ export default function Home() {
           },
           body: JSON.stringify({
             mode: options.mode,
-            certification: "AWS Cloud Practitioner",
+            certification: currentExam.certification,
             question_count: nextQuestions.length
           })
         });
@@ -613,8 +693,8 @@ export default function Home() {
       setExamResult(null);
       setIsExamPaused(false);
       if (options.mode === "exam") {
-        setExamSecondsRemaining(EXAM_DURATION_SECONDS);
-        setExamEndsAt(Date.now() + EXAM_DURATION_SECONDS * 1000);
+        setExamSecondsRemaining(currentExam.durationSeconds);
+        setExamEndsAt(Date.now() + currentExam.durationSeconds * 1000);
       } else {
         setExamEndsAt(null);
       }
@@ -628,7 +708,7 @@ export default function Home() {
 
   async function startQuiz() {
     await loadQuestionSet(
-      "/api/questions",
+      `${currentExam.apiPrefix}/questions`,
       "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
       "已載入",
       { mode: "practice" }
@@ -637,7 +717,7 @@ export default function Home() {
 
   async function startWrongReview() {
     await loadQuestionSet(
-      "/api/questions/wrong?limit=20",
+      `${currentExam.apiPrefix}/questions/wrong?limit=20`,
       "目前沒有錯題紀錄，先完成幾題後再回來複習",
       "已載入錯題複習",
       { mode: "wrong" }
@@ -646,7 +726,7 @@ export default function Home() {
 
   async function startMockExam() {
     await loadQuestionSet(
-      "/api/questions/exam?limit=65",
+      `${currentExam.apiPrefix}/questions/exam?limit=${currentExam.mockQuestionCount}`,
       "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
       "已建立模擬考回合",
       { mode: "exam", createSession: true }
@@ -712,7 +792,7 @@ export default function Home() {
 
     setIsSavingAttempt(true);
     try {
-      const response = await fetch(`${apiBaseUrl}/api/attempts`, {
+      const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/attempts`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -753,7 +833,7 @@ export default function Home() {
       return;
     }
 
-    const response = await fetch(`${apiBaseUrl}/api/sessions/${activeSessionId}/finish`, {
+    const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/sessions/${activeSessionId}/finish`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -886,9 +966,42 @@ export default function Home() {
 
       <section className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-center">
         <div className="space-y-8">
+          <div className="max-w-lg">
+            <label htmlFor="exam-selector" className="mb-2 block text-xs font-black tracking-[0.2em] text-zinc-500 md:hidden">
+              目前題庫
+            </label>
+            <select
+              id="exam-selector"
+              value={selectedExam}
+              onChange={(event) => void switchExam(event.target.value as ExamType)}
+              className="w-full border-2 border-zinc-700 bg-black px-4 py-3 text-sm font-black text-white outline-none focus:border-flashYellow md:hidden"
+            >
+              <option value="clf">AWS Cloud Practitioner</option>
+              <option value="saa">AWS Solutions Architect Associate</option>
+            </select>
+
+            <div className="hidden grid-cols-2 border-2 border-zinc-700 bg-black md:grid">
+              {(Object.entries(EXAMS) as [ExamType, ExamConfig][]).map(([examKey, exam]) => (
+                <button
+                  type="button"
+                  key={examKey}
+                  onClick={() => void switchExam(examKey)}
+                  aria-pressed={selectedExam === examKey}
+                  className={`min-h-14 px-4 py-3 text-sm font-black transition ${
+                    selectedExam === examKey
+                      ? "bg-flashYellow text-black"
+                      : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {exam.shortName}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="inline-flex items-center gap-3 border border-zinc-700 bg-darkroom px-4 py-2 text-xs font-black tracking-[0.3em] text-flashYellow">
             <span className="h-2 w-2 rounded-full bg-acidGreen" />
-            AWS Cloud Practitioner
+            {currentExam.name}
           </div>
 
           <div className="space-y-4">
@@ -1109,7 +1222,7 @@ export default function Home() {
                     : ""}
                 </p>
                 <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-6 text-zinc-400">
-                  AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率
+                  {currentExam.resultNote}
                 </p>
               </div>
             ) : (

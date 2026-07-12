@@ -6,6 +6,7 @@ from app.api.notes import router as notes_router
 from app.api.profiles import router as profiles_router
 from app.api.questions import router as questions_router
 from app.api.sessions import router as sessions_router
+from app.api.saa import router as saa_router
 from app.core.config import settings
 
 app = FastAPI(title="AWS Quiz Bank API")
@@ -23,6 +24,7 @@ app.include_router(profiles_router, prefix="/api")
 app.include_router(attempts_router, prefix="/api")
 app.include_router(sessions_router, prefix="/api")
 app.include_router(notes_router, prefix="/api")
+app.include_router(saa_router, prefix="/api")
 
 
 @app.get("/health")
