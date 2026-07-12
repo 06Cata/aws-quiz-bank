@@ -48,7 +48,8 @@ aws-quiz-bank/
 2. 安裝前端依賴：`npm install`
 3. 啟動前端：`npm run dev:web`
 4. 開啟 `http://localhost:3000` 測試 Google 登入。
-5. 手動同步題庫：`npm run sync:questions`
+5. 手動同步 CLF 題庫：`npm run sync:questions`
+6. 手動同步 SAA 題庫：`npm run sync:questions:saa`
 
 GitHub Actions 使用根目錄 `.github/workflows/sync-google-sheet.yml` 定期執行同一支同步程式。
 
@@ -66,6 +67,12 @@ docker compose --env-file .env.local up --build
 
 ```bash
 docker compose --env-file .env.local --profile jobs run --rm sync-questions
+```
+
+同步 SAA 題庫：
+
+```bash
+QUIZ_EXAM=saa docker compose --env-file .env.local --profile jobs run --rm sync-questions
 ```
 
 停止服務：

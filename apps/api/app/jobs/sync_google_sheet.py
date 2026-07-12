@@ -13,7 +13,38 @@ from app.services.google_sheet import fetch_sheet_rows
 
 
 SHEET_ID = settings.google_sheet_id
-SHEET_NAME = settings.google_sheet_name
+
+
+@dataclass(frozen=True)
+class SyncTarget:
+    exam: str
+    sheet_name: str
+    questions_table: str
+    sync_runs_table: str
+    certification: str | None = None
+
+
+def get_sync_target() -> SyncTarget:
+    exam = settings.quiz_exam.strip().lower()
+    targets = {
+        "clf": SyncTarget(
+            exam="clf",
+            sheet_name=settings.google_sheet_name,
+            questions_table="questions",
+            sync_runs_table="sync_runs",
+            certification="AWS Cloud Practitioner",
+        ),
+        "saa": SyncTarget(
+            exam="saa",
+            sheet_name=settings.saa_google_sheet_name,
+            questions_table="saa_questions",
+            sync_runs_table="saa_sync_runs",
+        ),
+    }
+    try:
+        return targets[exam]
+    except KeyError as exc:
+        raise RuntimeError("QUIZ_EXAM must be either 'clf' or 'saa'") from exc
 
 QUESTION_ALIASES = ("題目", "Question", "question", "question_text", "題目 (Question)")
 DOMAIN_ALIASES = (
@@ -167,7 +198,11 @@ def content_hash(payload: dict[str, Any]) -> str:
     return hashlib.sha256(stable.encode("utf-8")).hexdigest()
 
 
-def build_question_payload(row: dict[str, str], row_number: int) -> dict[str, Any] | None:
+def build_question_payload(
+    row: dict[str, str],
+    row_number: int,
+    target: SyncTarget,
+) -> dict[str, Any] | None:
     question_raw = pick(row, QUESTION_ALIASES)
     options_raw = pick(row, OPTIONS_ALIASES)
     answer_raw = pick(row, ANSWER_ALIASES)
@@ -193,13 +228,12 @@ def build_question_payload(row: dict[str, str], row_number: int) -> dict[str, An
         "correct_options": correct_options,
     }
 
-    return {
+    payload = {
         "source": "google_sheet",
         "source_sheet_id": SHEET_ID,
-        "source_sheet_name": SHEET_NAME,
+        "source_sheet_name": target.sheet_name,
         "source_row_number": row_number,
         "content_hash": content_hash(hash_source),
-        "certification": "AWS Cloud Practitioner",
         "question_no": int_or_none(pick(row, QUESTION_NO_ALIASES)),
         "exam_domain": pick(row, DOMAIN_ALIASES) or None,
         "question_text": question_text,
@@ -211,14 +245,18 @@ def build_question_payload(row: dict[str, str], row_number: int) -> dict[str, An
         "discussion": bilingual(parse_jsonish(pick(row, DISCUSSION_ALIASES))),
         "is_active": True,
     }
+    if target.certification:
+        payload["certification"] = target.certification
+    return payload
 
 
 class SupabaseRestClient:
-    def __init__(self) -> None:
+    def __init__(self, target: SyncTarget) -> None:
         if not settings.supabase_url or not settings.supabase_service_role_key:
             raise RuntimeError("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
 
         self.base_url = settings.supabase_url.rstrip("/")
+        self.target = target
         self.headers = {
             "apikey": settings.supabase_service_role_key,
             "Authorization": f"Bearer {settings.supabase_service_role_key}",
@@ -229,12 +267,12 @@ class SupabaseRestClient:
         payload = {
             "source": "google_sheet",
             "source_sheet_id": SHEET_ID,
-            "source_sheet_name": SHEET_NAME,
+            "source_sheet_name": self.target.sheet_name,
             "status": "running",
         }
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.post(
-                f"{self.base_url}/rest/v1/sync_runs",
+                f"{self.base_url}/rest/v1/{self.target.sync_runs_table}",
                 headers={**self.headers, "Prefer": "return=representation"},
                 json=payload,
             )
@@ -262,7 +300,7 @@ class SupabaseRestClient:
         }
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.patch(
-                f"{self.base_url}/rest/v1/sync_runs",
+                f"{self.base_url}/rest/v1/{self.target.sync_runs_table}",
                 headers=self.headers,
                 params={"id": f"eq.{sync_run_id}"},
                 json=payload,
@@ -272,7 +310,7 @@ class SupabaseRestClient:
     async def question_exists(self, question_hash: str) -> bool:
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.get(
-                f"{self.base_url}/rest/v1/questions",
+                f"{self.base_url}/rest/v1/{self.target.questions_table}",
                 headers=self.headers,
                 params={"select": "id", "content_hash": f"eq.{question_hash}", "limit": "1"},
             )
@@ -282,7 +320,7 @@ class SupabaseRestClient:
     async def insert_question(self, payload: dict[str, Any]) -> None:
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.post(
-                f"{self.base_url}/rest/v1/questions",
+                f"{self.base_url}/rest/v1/{self.target.questions_table}",
                 headers={**self.headers, "Prefer": "return=minimal"},
                 json=payload,
             )
@@ -290,16 +328,17 @@ class SupabaseRestClient:
 
 
 async def sync_google_sheet() -> SyncStats:
-    client = SupabaseRestClient()
+    target = get_sync_target()
+    client = SupabaseRestClient(target)
     stats = SyncStats()
     sync_run_id = await client.insert_sync_run()
 
     try:
-        rows = await fetch_sheet_rows(SHEET_ID, SHEET_NAME)
+        rows = await fetch_sheet_rows(SHEET_ID, target.sheet_name)
 
         for index, row in enumerate(rows, start=2):
             stats.scanned_count += 1
-            payload = build_question_payload(row, index)
+            payload = build_question_payload(row, index, target)
             if not payload:
                 stats.skipped_count += 1
                 continue
@@ -319,9 +358,10 @@ async def sync_google_sheet() -> SyncStats:
 
 
 def main() -> None:
+    target = get_sync_target()
     stats = asyncio.run(sync_google_sheet())
     print(
-        "Google Sheet sync completed: "
+        f"Google Sheet sync completed for {target.exam}: "
         f"scanned={stats.scanned_count}, "
         f"inserted={stats.inserted_count}, "
         f"skipped={stats.skipped_count}"

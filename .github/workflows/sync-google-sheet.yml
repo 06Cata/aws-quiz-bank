@@ -7,7 +7,14 @@ on:
 
 jobs:
   sync:
+    name: Sync ${{ matrix.exam }} questions
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        exam:
+          - clf
+          - saa
     defaults:
       run:
         working-directory: apps/api
@@ -29,5 +36,5 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-          GOOGLE_SHEET_NAME: ${{ secrets.GOOGLE_SHEET_NAME }}
+          QUIZ_EXAM: ${{ matrix.exam }}
         run: python -m app.jobs.sync_google_sheet
