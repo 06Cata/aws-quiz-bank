@@ -106,10 +106,13 @@ def parse_jsonish(value: str) -> Any:
     if not value:
         return {}
 
+    # 清除 Google Sheet 可能帶出的 HTML 包裹標籤
+    cleaned = re.sub(r"</?(?:pre|code)>", "", value).strip()
+
     try:
-        return json.loads(value)
+        return json.loads(cleaned)
     except json.JSONDecodeError:
-        return value
+        return {}
 
 
 def bilingual(value: Any) -> dict[str, str]:
