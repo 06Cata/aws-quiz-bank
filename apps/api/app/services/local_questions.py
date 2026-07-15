@@ -7,11 +7,18 @@ from pathlib import Path
 from typing import Any
 
 
-QUESTION_FILE_PATTERN = re.compile(r"^Q(?P<start>\d+)-Q(?P<end>\d+)\.json$", re.IGNORECASE)
+QUESTION_FILE_PATTERN = re.compile(
+    r"^(?P<exam>clf|saa)_Q(?P<start>\d+)-Q(?P<end>\d+)\.json$",
+    re.IGNORECASE,
+)
 OPTION_KEYS = set("ABCDEF")
 EXAM_NAMES = {
     "clf": {"AWS CLF-C02", "AWS Cloud Practitioner"},
     "saa": {"AWS SAA-C03", "AWS Solutions Architect Associate"},
+}
+MAX_QUESTIONS_PER_FILE = {
+    "clf": 30,
+    "saa": 15,
 }
 
 
@@ -159,19 +166,28 @@ def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
         raise FileNotFoundError(f"找不到 questions 資料夾：{directory}")
 
     files: list[tuple[int, int, Path]] = []
-    for path in directory.glob("*.json"):
+    for path in directory.glob(f"{normalized_exam}_Q*-Q*.json"):
         match = QUESTION_FILE_PATTERN.fullmatch(path.name)
         if not match:
+            continue
+        file_exam = match.group("exam").lower()
+        if file_exam != normalized_exam:
             continue
         start, end = int(match.group("start")), int(match.group("end"))
         if start > end:
             raise ValueError(f"{path.name} 的起始題號不可大於結束題號")
-        if end - start + 1 > 15:
-            raise ValueError(f"{path.name} 超過每個檔案最多 15 題的限制")
+        max_questions = MAX_QUESTIONS_PER_FILE[normalized_exam]
+        if end - start + 1 > max_questions:
+            raise ValueError(
+                f"{path.name} 超過 {normalized_exam.upper()} 每個檔案最多 "
+                f"{max_questions} 題的限制"
+            )
         files.append((start, end, path))
     files.sort(key=lambda item: (item[0], item[1], item[2].name.lower()))
     if not files:
-        raise ValueError(f"{directory} 中沒有符合 Qx-Qy.json 格式的題庫檔案")
+        raise ValueError(
+            f"{directory} 中沒有符合 {normalized_exam}_Qx-Qy.json 格式的題庫檔案"
+        )
 
     result: list[LocalQuestion] = []
     seen: dict[int, Path] = {}
@@ -183,7 +199,10 @@ def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
 
         document_exam = _required_text(document.get("exam"), f"{path.name}.exam")
         if document_exam not in EXAM_NAMES[normalized_exam]:
-            continue
+            raise ValueError(
+                f"{path.name}.exam 必須是 {normalized_exam.upper()}，"
+                f"目前為 {document_exam}"
+            )
 
         file_questions = [
             _normalize_question(question, path, index, normalized_exam)
@@ -217,7 +236,7 @@ def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="驗證本機 Qx-Qy.json 題庫")
+    parser = argparse.ArgumentParser(description="驗證本機 exam_Qx-Qy.json 題庫")
     parser.add_argument("directory", type=Path, help="questions 資料夾")
     parser.add_argument("--exam", choices=sorted(EXAM_NAMES), default="saa")
     args = parser.parse_args()

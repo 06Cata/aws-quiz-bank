@@ -1,7 +1,7 @@
 name: Sync Local JSON Questions
 
 concurrency:
-  group: sync-local-saa-questions
+  group: sync-local-questions
   cancel-in-progress: false
 
 on:
@@ -10,15 +10,23 @@ on:
     - cron: "0 16 * * *"
   push:
     paths:
-      - "questions/Q*-Q*.json"
+      - "questions/clf_Q*-Q*.json"
+      - "questions/saa_Q*-Q*.json"
       - "apps/api/app/jobs/sync_local_questions.py"
       - "apps/api/app/services/local_questions.py"
+      - ".github/workflows/sync-local-questions.yml"
   workflow_dispatch:
 
 jobs:
   sync:
-    name: Sync SAA questions
+    name: Sync ${{ matrix.exam }} questions
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        exam:
+          - clf
+          - saa
     defaults:
       run:
         working-directory: apps/api
@@ -35,10 +43,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check local question files
+        id: question-files
+        env:
+          QUIZ_EXAM: ${{ matrix.exam }}
+        run: |
+          if compgen -G "../../questions/${QUIZ_EXAM}_Q*-Q*.json" > /dev/null; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No ${QUIZ_EXAM} question files found; skipping."
+          fi
+
       - name: Sync local JSON questions
+        if: steps.question-files.outputs.found == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           QUESTIONS_DIR: ../../questions
-          QUIZ_EXAM: saa
+          QUIZ_EXAM: ${{ matrix.exam }}
         run: python -m app.jobs.sync_local_questions

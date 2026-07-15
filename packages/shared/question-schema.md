@@ -1,8 +1,8 @@
 # Question JSON Schema
 
-Supabase `questions` table keeps bilingual content in JSONB.
+Supabase `questions`（CLF）與 `saa_questions`（SAA）tables keep bilingual content in JSONB.
 
-Local question files use `question_no` as the integer question identifier. Files are named by an inclusive, contiguous range and contain at most 15 questions, such as `Q1-Q10.json`, `Q11-Q25.json`, and `Q26-Q40.json`.
+Local question files use `question_no` as the integer question identifier. Files are named by exam prefix plus an inclusive, contiguous range. CLF files contain at most 30 questions and use names such as `clf_Q1-Q30.json`; SAA files contain at most 15 questions and use names such as `saa_Q1-Q10.json` and `saa_Q11-Q25.json`.
 
 ## question_text
 
