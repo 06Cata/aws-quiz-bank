@@ -454,6 +454,24 @@ npm run validate:questions
 
 驗證失敗時，根據錯誤訊息回到對應題號修正，然後重新執行，直到成功。
 
+### 9.1 本機只更新 questions 時的同步方式
+
+如果只有新增 `questions/saa_Q*-Q*.json`，Web、API 與其他程式碼都沒有修改，不需要重新 build 或重啟 Web/API。依序執行：
+
+```bash
+npm run validate:questions:saa
+docker compose --env-file .env.local --profile jobs run --rm -e QUIZ_EXAM=saa sync-questions
+```
+
+本指令只執行一次性同步工作，不要為了同步題目執行 `docker compose up -d --build`。
+
+SAA 同步規則：
+
+- `saa_Q*-Q*.json` 只同步至 Supabase `saa_questions` table。
+- 同步程式只新增 Supabase 最大 `question_no` 後方的連續新題。
+- 不會覆寫或更新已同步的舊題號；若只是修改舊題內容，必須另外設計更新流程，不可假設增量同步會覆蓋。
+- 本機 JSON 或 Supabase 題號有缺漏時必須停止，先補齊缺號後再同步。
+
 另外人工檢查：
 
 - [ ] 題數、起始題號與結束題號正確。

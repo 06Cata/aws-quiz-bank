@@ -458,13 +458,25 @@ npm run validate:questions:clf
 
 驗證失敗時，根據錯誤訊息回到對應題號修正，然後重新執行，直到成功。
 
-驗證通過後，CLF JSON 會由 GitHub Actions 每日排程或檔案 push 觸發增量同步至 Supabase `questions` table。需要手動同步時使用：
+驗證通過後，CLF JSON 會由 GitHub Actions 每日排程或檔案 push 觸發增量同步至 Supabase `questions` table。
+
+### 9.1 本機只更新 questions 時的同步方式
+
+如果只有新增 `questions/clf_Q*-Q*.json`，Web、API 與其他程式碼都沒有修改，不需要重新 build 或重啟 Web/API。依序執行：
 
 ```bash
-npm run sync:questions:clf
+npm run validate:questions:clf
+docker compose --env-file .env.local --profile jobs run --rm -e QUIZ_EXAM=clf sync-questions
 ```
 
-同步程式只新增 Supabase 最大 `question_no` 後方的連續新題，不覆寫既有題目；缺號時必須停止並先補齊。
+本指令只執行一次性同步工作，不要為了同步題目執行 `docker compose up -d --build`。
+
+CLF 同步規則：
+
+- `clf_Q*-Q*.json` 只同步至 Supabase `questions` table。
+- 同步程式只新增 Supabase 最大 `question_no` 後方的連續新題。
+- 不會覆寫或更新已同步的舊題號；若只是修改舊題內容，必須另外設計更新流程，不可假設增量同步會覆蓋。
+- 本機 JSON 或 Supabase 題號有缺漏時必須停止，先補齊缺號後再同步。
 
 另外人工檢查：
 
