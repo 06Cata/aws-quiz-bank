@@ -1,0 +1,41 @@
+name: Sync Local JSON Questions
+
+concurrency:
+  group: sync-local-saa-questions
+  cancel-in-progress: false
+
+on:
+  push:
+    paths:
+      - "questions/Q*-Q*.json"
+      - "apps/api/app/jobs/sync_local_questions.py"
+      - "apps/api/app/services/local_questions.py"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync SAA questions
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Sync local JSON questions
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          QUESTIONS_DIR: ../../questions
+          QUIZ_EXAM: saa
+        run: python -m app.jobs.sync_local_questions

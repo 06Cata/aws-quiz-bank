@@ -9,6 +9,8 @@ aws-quiz-bank/
 ├── AWS_QUIZ_BUILD_GUIDE.md # 從 Supabase 建表、Google 登入到 Vercel 部署的實作指南
 ├── AWS_QUIZ_SITE_PLAN.md # 產品規劃、資料流、UI 規則與 Mermaid 架構圖
 ├── README.md # 專案入口說明
+├── question_sources/ # PDF 原始來源與產生 JSON 的 prompt
+├── questions/ # 正式題庫，只存放 Qx-Qy.json
 ├── package.json # monorepo npm scripts 與 workspace 設定
 ├── .env.example # 後端與同步工作需要的環境變數範例
 ├── .dockerignore # Docker build 排除本機依賴、快取與密鑰
@@ -40,7 +42,6 @@ aws-quiz-bank/
 │           └── services/supabase.py # CLF/SAA 白名單資料表與 Supabase REST 查詢服務
 ├── packages/ # 共用規格
 │   └── shared/question-schema.md # 題目 JSON 欄位格式
-└── scripts/ # 同步與維運腳本預留資料夾
 ```
 
 ## Next Step
@@ -49,10 +50,41 @@ aws-quiz-bank/
 2. 安裝前端依賴：`npm install`
 3. 啟動前端：`npm run dev:web`
 4. 開啟 `http://localhost:3000` 測試 Google 登入。
-5. 手動同步 CLF 題庫：`npm run sync:questions`
-6. 手動同步 SAA 題庫：`npm run sync:questions:saa`
+5. 將整理完成的題庫放入 `questions/Q1-Q10.json`、`questions/Q11-Q20.json` 等檔案。
+6. 安裝 API 依賴：`python3 -m pip install -r apps/api/requirements.txt`
+7. 手動增量同步 SAA 題庫：`npm run sync:questions:saa`
 
-GitHub Actions 使用根目錄 `.github/workflows/sync-google-sheet.yml` 定期執行同一支同步程式。
+GitHub Actions 會在 `questions/Q*-Q*.json` 變更時執行同一支增量同步程式。
+
+## JSON 題庫增量同步
+
+`questions` 是正式題庫來源。每個檔案必須命名為 `Q起始題號-Q結束題號.json`，且檔案內的 `question_no` 必須完整、連續並與檔名一致，例如：
+
+```text
+questions/
+├── Q1-Q10.json
+├── Q11-Q20.json
+└── Q21-Q30.json
+```
+
+執行同步時，程式會先驗證全部 JSON，再讀取 Supabase `saa_questions` 中最大的 `question_no`。只有比資料庫最大題號更大的連續題目會被新增；既有題目不會重新寫入。若資料庫最後是 Q20，但本機下一題從 Q22 開始，程式會停止並要求先補齊 Q21。若資料庫題號反而超過本機最後一題，也會停止，確保 `questions` 始終是完整的正式來源。
+
+```bash
+npm run sync:questions:saa
+```
+
+只驗證檔名、schema、題號連續性並查看本機最後一題，不連線 Supabase：
+
+```bash
+npm run validate:questions
+```
+
+需要自訂題庫資料夾時可設定 `QUESTIONS_DIR`：
+
+```bash
+cd apps/api
+QUESTIONS_DIR=/path/to/questions QUIZ_EXAM=saa python3 -m app.jobs.sync_local_questions
+```
 
 ## Docker
 
@@ -64,7 +96,7 @@ docker compose --env-file .env.local up --build
 
 開啟 `http://localhost:3000`，API 健康檢查是 `http://localhost:8000/health`。
 
-執行一次 Google Sheet 題庫同步：
+執行一次本機 JSON 題庫增量同步：
 
 ```bash
 docker compose --env-file .env.local --profile jobs run --rm sync-questions

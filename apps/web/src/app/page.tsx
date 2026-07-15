@@ -183,10 +183,10 @@ export default function Home() {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
-  const [selectedExam, setSelectedExam] = useState<ExamType>("clf");
+  const [selectedExam, setSelectedExam] = useState<ExamType>("saa");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [examEndsAt, setExamEndsAt] = useState<number | null>(null);
-  const [examSecondsRemaining, setExamSecondsRemaining] = useState(EXAMS.clf.durationSeconds);
+  const [examSecondsRemaining, setExamSecondsRemaining] = useState(EXAMS.saa.durationSeconds);
   const [examCorrectCount, setExamCorrectCount] = useState(0);
   const [examAnsweredCount, setExamAnsweredCount] = useState(0);
   const [examResult, setExamResult] = useState<ExamResult | null>(null);
@@ -720,7 +720,7 @@ export default function Home() {
   async function startQuiz() {
     await loadQuestionSet(
       `${currentExam.apiPrefix}/questions`,
-      "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
+      `目前 ${currentExam.shortName} 題庫沒有可用題目，請確認本機 JSON 增量同步結果`,
       "已載入",
       { mode: "practice" }
     );
@@ -738,7 +738,7 @@ export default function Home() {
   async function startMockExam() {
     await loadQuestionSet(
       `${currentExam.apiPrefix}/questions/exam?limit=${currentExam.mockQuestionCount}`,
-      "目前題庫沒有可用題目，請先確認 Google Sheet 同步結果",
+      `目前 ${currentExam.shortName} 題庫沒有可用題目，請確認本機 JSON 增量同步結果`,
       "已建立模擬考回合",
       { mode: "exam", createSession: true }
     );

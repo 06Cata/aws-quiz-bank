@@ -4,10 +4,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_role_key: str = ""
-    google_sheet_id: str = "1mvKqzfzS7qL69NRg6_6ER_DZdiyUP4LfFYkfCDab9po"
-    google_sheet_name: str = "考題_Cloud Practitioner"
-    saa_google_sheet_name: str = "考題_Solutions Architect Associate"
-    quiz_exam: str = "clf"
+    questions_dir: str = "../../questions"
+    quiz_exam: str = "saa"
     allowed_origins: str = "http://localhost:3000"
 
     @property
