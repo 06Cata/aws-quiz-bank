@@ -24,6 +24,7 @@ type QuizQuestion = {
 
 type QuizMode = "practice" | "wrong" | "exam";
 type ExamType = "clf" | "saa";
+type ReviewDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4";
 
 type ExamConfig = {
   name: string;
@@ -125,6 +126,31 @@ const EXAMS: Record<ExamType, ExamConfig> = {
   }
 };
 
+const REVIEW_DOMAINS: Record<ExamType, Array<{ key: Exclude<ReviewDomainKey, "all">; label: string }>> = {
+  clf: [
+    { key: "domain_1", label: "領域 1｜雲端概念" },
+    { key: "domain_2", label: "領域 2｜安全與合規" },
+    { key: "domain_3", label: "領域 3｜雲端技術與服務" },
+    { key: "domain_4", label: "領域 4｜計費、定價與支援" }
+  ],
+  saa: [
+    { key: "domain_1", label: "領域 1｜設計彈性架構" },
+    { key: "domain_2", label: "領域 2｜設計高性能架構" },
+    { key: "domain_3", label: "領域 3｜設計安全架構" },
+    { key: "domain_4", label: "領域 4｜設計成本優化架構" }
+  ]
+};
+
+function reviewDomainKey(domain: string | null | undefined): Exclude<ReviewDomainKey, "all"> | null {
+  const normalizedDomain = domain?.trim().toLowerCase() ?? "";
+  for (const domainNumber of [1, 2, 3, 4] as const) {
+    if (normalizedDomain.includes(`領域 ${domainNumber}`) || normalizedDomain.includes(`domain ${domainNumber}`)) {
+      return `domain_${domainNumber}`;
+    }
+  }
+  return null;
+}
+
 function formatExamTime(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
@@ -198,6 +224,7 @@ export default function Home() {
   const [isDeletingNoteId, setIsDeletingNoteId] = useState<string | null>(null);
   const [notesMessage, setNotesMessage] = useState("");
   const [reviewNotes, setReviewNotes] = useState<ReviewNote[]>([]);
+  const [selectedReviewDomain, setSelectedReviewDomain] = useState<ReviewDomainKey>("all");
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
   const isFinishingExam = useRef(false);
@@ -442,6 +469,7 @@ export default function Home() {
     setActiveSessionId(null);
     setIsNotesOpen(false);
     setReviewNotes([]);
+    setSelectedReviewDomain("all");
     setQuizMessage("");
     setNotesMessage("");
     setExamEndsAt(null);
@@ -942,6 +970,13 @@ export default function Home() {
   const currentOptions = currentQuestion ? optionEntries(currentQuestion) : [];
   const correctAnswerLabel = correctOptions.join(", ");
   const examDomain = currentQuestion?.exam_domain?.trim() || "尚未載入考試領域";
+  const reviewDomainOptions = REVIEW_DOMAINS[selectedExam];
+  const filteredReviewNotes = selectedReviewDomain === "all"
+    ? reviewNotes
+    : reviewNotes.filter((note) => reviewDomainKey(note.exam_domain) === selectedReviewDomain);
+  const selectedReviewDomainLabel = selectedReviewDomain === "all"
+    ? "全部"
+    : reviewDomainOptions.find((domain) => domain.key === selectedReviewDomain)?.label ?? "此領域";
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
@@ -1153,9 +1188,43 @@ export default function Home() {
                 </div>
               </div>
 
-              {reviewNotes.length > 0 ? (
+              <div className="mb-5 border-b border-zinc-800 pb-5" aria-label="卡牌考試領域篩選">
+                <p className="mb-3 text-xs font-black tracking-[0.18em] text-zinc-500">考試領域</p>
+                <div className="flex flex-wrap gap-2">
+                  {([
+                    { key: "all" as const, label: "全部" },
+                    ...reviewDomainOptions
+                  ]).map((domain) => {
+                    const count = domain.key === "all"
+                      ? reviewNotes.length
+                      : reviewNotes.filter((note) => reviewDomainKey(note.exam_domain) === domain.key).length;
+                    const isSelected = selectedReviewDomain === domain.key;
+
+                    return (
+                      <button
+                        key={domain.key}
+                        type="button"
+                        onClick={() => setSelectedReviewDomain(domain.key)}
+                        aria-pressed={isSelected}
+                        className={`border px-3 py-2 text-left text-xs font-black transition ${
+                          isSelected
+                            ? "border-flashYellow bg-flashYellow text-black"
+                            : "border-zinc-700 bg-black text-zinc-300 hover:border-flashYellow hover:text-flashYellow"
+                        }`}
+                      >
+                        {domain.label}
+                        <span className={`ml-2 ${isSelected ? "text-black/60" : "text-zinc-600"}`}>
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {filteredReviewNotes.length > 0 ? (
                 <div className="grid max-h-[70vh] gap-4 overflow-y-auto pr-2">
-                  {reviewNotes.map((note) => {
+                  {filteredReviewNotes.map((note) => {
                     const noteQuestionText = localizedText(note.question_text);
                     const noteOptionText = localizedText(note.option_text);
                     const noteExplanationText = localizedText(note.explanation_text);
@@ -1200,7 +1269,9 @@ export default function Home() {
                 <div className="border-l-4 border-zinc-700 bg-[#101010] p-4">
                   <p className="font-black text-zinc-200">目前還沒有卡牌</p>
                   <p className="mt-2 text-sm leading-6 text-zinc-500">
-                    回到題目，答題後在各選項解析旁按「存成筆記」。
+                    {reviewNotes.length > 0
+                      ? `目前在「${selectedReviewDomainLabel}」沒有卡牌，請切換其他領域。`
+                      : "回到題目，答題後在各選項解析旁按「存成筆記」。"}
                   </p>
                 </div>
               )}
