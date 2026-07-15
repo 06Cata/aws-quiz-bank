@@ -11,6 +11,7 @@ Supabase `questions` table keeps bilingual content in JSONB.
 }
 ```
 
+
 ## options
 
 ```json
