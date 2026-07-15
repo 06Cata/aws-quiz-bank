@@ -94,6 +94,27 @@ def _normalize_question(
     if not set(correct_options).issubset(options):
         raise ValueError(f"{location}.correct_answers 包含不存在的選項")
 
+    for key, explanation in explanations.items():
+        is_correct = key in correct_options
+        expected_zh = "正確。" if is_correct else "錯誤。"
+        expected_en = "Correct." if is_correct else "Incorrect."
+        if not explanation["zh"].startswith(expected_zh):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.zh 必須以「{expected_zh}」開頭"
+            )
+        if not explanation["en"].startswith(expected_en):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.en 必須以 {expected_en} 開頭"
+            )
+        if explanation["zh"][len(expected_zh):].lstrip().startswith(options[key]["zh"]):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.zh 不可先重複選項原文"
+            )
+        if explanation["en"][len(expected_en):].lstrip().startswith(options[key]["en"]):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.en 不可先重複選項原文"
+            )
+
     selection_type = _required_text(question.get("selection_type"), f"{location}.selection_type")
     expected_type = "單選" if len(correct_options) == 1 else "複選"
     if selection_type != expected_type:
@@ -145,6 +166,8 @@ def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
         start, end = int(match.group("start")), int(match.group("end"))
         if start > end:
             raise ValueError(f"{path.name} 的起始題號不可大於結束題號")
+        if end - start + 1 > 15:
+            raise ValueError(f"{path.name} 超過每個檔案最多 15 題的限制")
         files.append((start, end, path))
     files.sort(key=lambda item: (item[0], item[1], item[2].name.lower()))
     if not files:

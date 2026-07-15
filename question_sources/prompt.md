@@ -1,361 +1,467 @@
-# AWS SAA-C03 考題整理 Prompt
+# AWS SAA-C03 題庫整理操作手冊
 
-## PDF 切分對照表
+這份文件是給 AI 的完整工作指令。目標是從兩種 PDF 來源整理出可直接被專案驗證及同步的雙語 JSON 題庫。
 
-### with_aizh（含 AI 中文翻譯 + 選項解析，共 2124 頁）
-
-| 檔案 | 第一題 | 最後一題 |
-| :--- | :--- | :--- |
-| AWS_SAA-C03_with_aizh_part_01.pdf | Q1 | Q107 |
-| AWS_SAA-C03_with_aizh_part_02.pdf | Q104 | Q210 |
-| AWS_SAA-C03_with_aizh_part_03.pdf | Q207 | Q312 |
-| AWS_SAA-C03_with_aizh_part_04.pdf | Q309 | Q414 |
-| AWS_SAA-C03_with_aizh_part_05.pdf | Q411 | Q515 |
-| AWS_SAA-C03_with_aizh_part_06.pdf | Q512 | Q619 |
-| AWS_SAA-C03_with_aizh_part_07.pdf | Q616 | Q723 |
-| AWS_SAA-C03_with_aizh_part_08.pdf | Q720 | Q824 |
-| AWS_SAA-C03_with_aizh_part_09.pdf | Q821 | Q926 |
-| AWS_SAA-C03_with_aizh_part_10.pdf | Q923 | Q1019 |
-
-### with_discussion（含社群討論 + 投票結果，共 2479 頁）
-
-| 檔案 | 第一題 | 最後一題 |
-| :--- | :--- | :--- |
-| AWS_SAA-C03_with_discussion_1.pdf | Q1 | Q82 |
-| AWS_SAA-C03_with_discussion_2.pdf | Q79 | Q161 |
-| AWS_SAA-C03_with_discussion_3.pdf | Q158 | Q241 |
-| AWS_SAA-C03_with_discussion_4.pdf | Q238 | Q334 |
-| AWS_SAA-C03_with_discussion_5.pdf | Q331 | Q434 |
-| AWS_SAA-C03_with_discussion_6.pdf | Q431 | Q538 |
-| AWS_SAA-C03_with_discussion_7.pdf | Q535 | Q647 |
-| AWS_SAA-C03_with_discussion_8.pdf | Q644 | Q768 |
-| AWS_SAA-C03_with_discussion_9.pdf | Q765 | Q892 |
-| AWS_SAA-C03_with_discussion_10.pdf | Q889 | Q1019 |
+執行時必須從步驟 0 開始，依序完成所有步驟。不要詢問是否繼續，也不要只提供範例；必須實際建立檔案並完成驗證。
 
 ---
 
-## 整理流程
+## 0. 先了解資料夾用途
 
-### 目標
-
-將 PDF 考題提取並整理成結構化 JSON，同時參考兩種來源：
-- **with_aizh**（主）→ 題目、選項、中英文翻譯、各選項解析
-- **with_discussion**（輔）→ 社群投票百分比、討論觀點
-
-### 步驟
-
-```
-1. 查表 → 確認題號範圍對應哪些 PDF part 檔案
-2. 提取 → 執行腳本從 PDF 提取原始文字，儲存到 questions_XX-XX_raw/
-3. 整理 → AI 讀取原始檔案，整理成 JSON
-4. 輸出 → 產出 QXX-QXX.json
-   - 若超過 10 題，自動切分為多個檔案（每檔最多 10 題）
-   - 命名規則：Q111-Q120.json、Q121-Q130.json
-5. 檢查 → 題數完整、答案正確、解析合理
+```text
+aws-quiz-bank/
+├── question_sources/
+│   ├── prompt.md
+│   ├── AWS_SAA-C03_with_aizh_part_XX.pdf
+│   ├── AWS_SAA-C03_with_discussion_X.pdf
+│   └── questions_XX-XX_raw/        # 暫存的 PDF 提取文字，可選
+└── questions/
+    ├── Q1-Q10.json
+    ├── Q11-Q25.json
+    ├── Q26-Q40.json
+    └── ...                         # 只放整理完成的正式 JSON
 ```
 
-### 範例：整理 Q90-Q150
+強制規則：
 
-查表後需要的檔案：
-- `AWS_SAA-C03_with_aizh_part_01.pdf`（涵蓋 Q90~Q107）
-- `AWS_SAA-C03_with_aizh_part_02.pdf`（涵蓋 Q108~Q150）
-- `AWS_SAA-C03_with_discussion_2.pdf`（涵蓋 Q90~Q150）
+- 題目來源只使用 `question_sources` 中的 PDF 或從這些 PDF 提取的文字。
+- 正式題庫只輸出到 `questions/Q起始-Q結束.json`。
+- `questions` 資料夾只允許放完成整理的題庫 JSON。
+- 不產生 Markdown 題目表格、Excel、CSV 或其他中繼格式。
+- 每個 JSON 檔案最多 15 題。
 
 ---
 
-## 快速使用指令（複製貼上給 AI）
+## 1. 決定本次要從哪一題開始
 
+開始整理前，先掃描 `questions/Q*-Q*.json`，不能只依檔名猜測最後題號。
+
+依序執行：
+
+1. 讀取每個 JSON 的 `questions` 陣列。
+2. 收集所有 `question_no`。
+3. 確認題號從 Q1 開始、沒有重複、沒有跳號。
+4. 找出最大的 `question_no`。
+5. 下一題固定為「最大題號 + 1」。
+
+範例：
+
+- 資料夾最後一題是 Q10 → 下一批從 Q11 開始。
+- 資料夾最後一題是 Q20 → 下一批從 Q21 開始。
+- 資料夾是空的 → 從 Q1 開始。
+- 若現有檔案缺少 Q15 → 先停止產題並指出缺少 Q15，不可直接從 Q21 繼續。
+
+可執行以下指令驗證現有題庫：
+
+```bash
+npm run validate:questions
 ```
-讀取 prompt.md，幫我整理 Q___-Q___ 題成 JSON。
-參考檔案：
-- C:\Users\639657\Desktop\AI_Tool\aws_pdf\AWS_SAA-C03_with_aizh_part_XX.pdf
-- C:\Users\639657\Desktop\AI_Tool\aws_pdf\AWS_SAA-C03_with_discussion_X.pdf
-不能有缺漏。
+
+預期輸出範例：
+
+```text
+Local JSON validation completed for saa: questions=10, latest=Q10
 ```
 
 ---
 
-## 提取腳本（一鍵提取 + 儲存原始內容）
+## 2. 根據題號選擇 PDF
 
-**安裝：** `pip install pdfplumber`
+每題必須同時參考兩種來源：
 
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-AWS SAA-C03 考題提取腳本（含 OCR 亂碼自動修正）
-用法: python extract_pdf_questions.py
-修改下方設定區域的 pdf_path、start_num、end_num 即可
-"""
-import pdfplumber
-import re
-import os
+- `with_aizh` 是主要來源：英文題目、中文翻譯、選項、官方答案、選項解析。
+- `with_discussion` 是輔助來源：社群投票、熱門留言、爭議點與考點摘要。
 
-# ===== OCR 亂碼對照表 =====
-OCR_FIX_MAP = {
-    # 辶/辵 部首系列
-    '辜': '遷', '辴': '適', '迾': '錯', '辡': '運', '迀': '速',
-    '辥': '這', '迖': '部', '辦': '進', '辯': '連', '辧': '遠',
-    '迡': '重', '迗': '都', '迌': '還', '迧': '針', '迚': '配',
-    '辢': '近', '辪': '遲', '達': '通', '闢': '過', '輓': '間',
-    '輦': '限', '輐': '問', '輥': '降', '輵': '難', '輲': '障',
-    '輰': '隔', '畹': '離', '轠': '額', '轔': '邊', '轈': '靠',
-    '轇': '非', '軫': '高', '轀': '需', '迺': '銷', '迣': '量',
-    '輍': '門', '轄': '露', '迂': '邏', '辷': '選', '轒': '項',
-    '轞': '題',
-    # 木 部首系列
-    '栫': '球', '棕': '源', '棺': '然', '欒': '案', '栬': '理',
-    '梔': '沒', '桟': '模', '栺': '格', '械': '流', '桌': '檢',
-    '梳': '測', '棬': '靈', '梮': '活', '櫟': '特', '栞': '率',
-    '桯': '步', '椹': '生', '棯': '點', '棓': '潰', '櫨': '物',
-    '榿': '歡',
-    # 宀/子 部首系列
-    '孰': '家', '孀': '戶', '孂': '所', '孩': '實', '孥': '定',
-    '孍': '執', '孎': '擴', '宛': '展', '孞': '安', '宂': '將',
-    '宅': '小', '宆': '少', '宨': '工', '寈': '並', '寑': '庫',
-    '寡': '開', '寠': '建', '寰': '彈', '宔': '層', '孾': '導',
-    '宭': '己', '寳': '當', '寧': '引', '寢': '異', '寴': '適',
-    '寵': '審', '宮': '已', '宿': '幫', '寀': '常', '孠': '完',
-    '嬹': '成', '嬚': '穩', '嬦': '情', '寏': '式', '孆': '才',
-    '孚': '它',
-    # 田/疒 部首系列
-    '甠': '用', '畧': '確', '疥': '符', '疇': '移', '甤': '電',
-    '痡': '群', '痢': '細', '畿': '種', '昀': '最', '疫': '答',
-    '痺': '編', '痙': '係', '甅': '置', '甹': '的', '畉': '目',
-    '疨': '等', '疙': '立', '甪': '留', '疲': '管', '癧': '策',
-    # 其他
-    '害': '送', '軸': '驗', '框': '桶', '栆': '片', '邇': '鐘',
-    '宜': '屬', '梇': '匯', '甫': '略', '甉': '群', '畝': '知',
-    '甑': '者',
-}
+### 2.1 with_aizh 對照表
 
-def fix_ocr(text):
-    """套用 OCR 亂碼修正"""
-    for wrong, correct in OCR_FIX_MAP.items():
-        text = text.replace(wrong, correct)
-    return text
+| PDF | 題號範圍 |
+| :--- | :--- |
+| `AWS_SAA-C03_with_aizh_part_01.pdf` | Q1-Q107 |
+| `AWS_SAA-C03_with_aizh_part_02.pdf` | Q104-Q210 |
+| `AWS_SAA-C03_with_aizh_part_03.pdf` | Q207-Q312 |
+| `AWS_SAA-C03_with_aizh_part_04.pdf` | Q309-Q414 |
+| `AWS_SAA-C03_with_aizh_part_05.pdf` | Q411-Q515 |
+| `AWS_SAA-C03_with_aizh_part_06.pdf` | Q512-Q619 |
+| `AWS_SAA-C03_with_aizh_part_07.pdf` | Q616-Q723 |
+| `AWS_SAA-C03_with_aizh_part_08.pdf` | Q720-Q824 |
+| `AWS_SAA-C03_with_aizh_part_09.pdf` | Q821-Q926 |
+| `AWS_SAA-C03_with_aizh_part_10.pdf` | Q923-Q1019 |
 
-def main():
-    # ===== 設定區域（修改這裡即可） =====
-    pdf_path = r"C:\Users\639657\Desktop\AI_Tool\aws_pdf\AWS_SAA-C03_with_aizh_part_01.pdf"
-    start_num = 90
-    end_num = 100
-    # ===================================
+### 2.2 with_discussion 對照表
 
-    output_dir = f"questions_{start_num}-{end_num}_raw"
+| PDF | 題號範圍 |
+| :--- | :--- |
+| `AWS_SAA-C03_with_discussion_1.pdf` | Q1-Q82 |
+| `AWS_SAA-C03_with_discussion_2.pdf` | Q79-Q161 |
+| `AWS_SAA-C03_with_discussion_3.pdf` | Q158-Q241 |
+| `AWS_SAA-C03_with_discussion_4.pdf` | Q238-Q334 |
+| `AWS_SAA-C03_with_discussion_5.pdf` | Q331-Q434 |
+| `AWS_SAA-C03_with_discussion_6.pdf` | Q431-Q538 |
+| `AWS_SAA-C03_with_discussion_7.pdf` | Q535-Q647 |
+| `AWS_SAA-C03_with_discussion_8.pdf` | Q644-Q768 |
+| `AWS_SAA-C03_with_discussion_9.pdf` | Q765-Q892 |
+| `AWS_SAA-C03_with_discussion_10.pdf` | Q889-Q1019 |
 
-    print("=" * 60)
-    print("AWS SAA-C03 考題提取工具（含 OCR 亂碼修正）")
-    print("=" * 60)
-    print(f"來源: {pdf_path}")
-    print(f"範圍: Question #{start_num} ~ #{end_num}\n")
+範圍有重疊是正常的。若題目位於交界處，優先讀取文字最完整、沒有被截斷的那一份 PDF。
 
-    # 1. 提取 PDF 全文
-    text_content = []
-    with pdfplumber.open(pdf_path) as pdf:
-        total_pages = len(pdf.pages)
-        print(f"PDF 總頁數: {total_pages}")
-        for i, page in enumerate(pdf.pages, 1):
-            if i % 20 == 0:
-                print(f"  讀取進度: {i}/{total_pages}")
-            text = page.extract_text()
-            if text:
-                text_content.append(text)
+範例：整理 Q90-Q110 時需要：
 
-    content = '\n'.join(text_content)
-    print(f"提取完成，總字數: {len(content):,}")
-
-    # 2. 套用 OCR 亂碼修正
-    content = fix_ocr(content)
-    print(f"OCR 亂碼修正完成（{len(OCR_FIX_MAP)} 組替換規則）")
-
-    # 3. 搜尋題目位置
-    print(f"\n搜尋題目 #{start_num}-#{end_num}...")
-    questions = {}
-    for num in range(start_num, end_num + 1):
-        for pattern in [rf"Question\s*#\s*{num}\b", rf"Question\s+{num}\b"]:
-            match = re.search(pattern, content, re.IGNORECASE)
-            if match:
-                questions[num] = match.start()
-                print(f"  ✓ Q{num}")
-                break
-        if num not in questions:
-            print(f"  ✗ Q{num} 未找到")
-
-    # 4. 儲存修正後的原始內容
-    if questions:
-        os.makedirs(output_dir, exist_ok=True)
-        sorted_items = sorted(questions.items())
-        for idx, (q_num, start_pos) in enumerate(sorted_items):
-            end_pos = sorted_items[idx + 1][1] if idx + 1 < len(sorted_items) else start_pos + 3000
-            file_path = os.path.join(output_dir, f"question_{q_num:03d}.txt")
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(f"=== Question #{q_num} ===\n\n")
-                f.write(content[start_pos:end_pos])
-
-        print(f"\n{'=' * 60}")
-        print(f"找到: {len(questions)} 題 → {sorted(questions.keys())}")
-        missing = set(range(start_num, end_num + 1)) - set(questions.keys())
-        if missing:
-            print(f"缺少: {sorted(missing)}")
-        print(f"儲存: {output_dir}/（已修正 OCR 亂碼）")
-        print(f"\n下一步: 將原始內容交給 AI 整理成 JSON")
-    else:
-        print("\n錯誤: 未找到任何題目！請確認 PDF 檔案和題號範圍。")
-
-if __name__ == "__main__":
-    main()
-```
+- `with_aizh_part_01`：Q90-Q107
+- `with_aizh_part_02`：Q108-Q110
+- `with_discussion_2`：Q90-Q110
 
 ---
 
-## 輸出格式
+## 3. 從 PDF 擷取本批題目
 
-> 以下「JSON 輸出格式」是唯一允許的輸出格式。
+每批最多處理 15 題，例如 Q11-Q25。不要一次整理過多題目。
 
-### JSON 輸出格式
+擷取時依序完成：
 
-- 輸出必須是合法的 UTF-8 JSON，不要加 Markdown code fence 或說明文字。
-- 最外層固定為物件，題目放在 `questions` 陣列。
-- 雙語欄位固定使用 `zh`（繁體中文）與 `en`（英文）。
-- `options` 與 `option_explanations` 以 A-F 為 key，每個選項內含 `zh`、`en`。
-- `correct_answers` 只放答案代號陣列，例如 `["B"]` 或 `["A", "E"]`。
-- 所有字串值不可包含實際換行。
+1. 在兩份來源搜尋 `Question #題號` 或 `Question 題號`。
+2. 擷取從該題標題開始，到下一題標題之前的完整內容。
+3. 跨頁題目必須合併，不能因換頁漏掉選項、答案或討論。
+4. `Most Voted`、投票比例和留言不可混進題幹或選項。
+5. 淘寶、閒魚、微信、網站連結、帳號與其他廣告一律刪除。
+6. 若 PDF 文字解析不完整，可使用 `pdfplumber` 重新提取相關頁面。
 
-```json
-{
-  "exam": "AWS SAA-C03",
-  "questions": [
-    {
-      "question_no": 671,
-      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
-      "question_text": {
-        "zh": "一家計劃遷移至 AWS 雲端的公司……應選擇哪一項服務？",
-        "en": "A company is planning to migrate to the AWS Cloud... Which service should it choose?"
-      },
-      "options": {
-        "A": {"zh": "AWS Outposts", "en": "AWS Outposts"},
-        "B": {"zh": "AWS Snowball Edge", "en": "AWS Snowball Edge"},
-        "C": {"zh": "AWS Direct Connect", "en": "AWS Direct Connect"},
-        "D": {"zh": "AWS Local Zones", "en": "AWS Local Zones"}
-      },
-      "option_explanations": {
-        "A": {"zh": "錯誤。……", "en": "Incorrect. ..."},
-        "B": {"zh": "正確。……", "en": "Correct. ..."},
-        "C": {"zh": "錯誤。……", "en": "Incorrect. ..."},
-        "D": {"zh": "錯誤。……", "en": "Incorrect. ..."}
-      },
-      "selection_type": "單選",
-      "correct_answers": ["B"],
-      "answer_text": {"zh": "B. AWS Snowball Edge", "en": "B. AWS Snowball Edge"},
-      "discussion": {
-        "zh": "社群投票：B（72%）。考點關鍵字：離線本地處理。",
-        "en": "Community vote: B (72%). Key concept: offline local processing."
-      }
-    }
-  ]
-}
+可選擇把原始文字存到：
+
+```text
+question_sources/questions_11-25_raw/question_011.txt
 ```
 
-欄位規則：
+原始文字只是暫存資料，不能放進 `questions`。
 
-- `question_no` 是正整數，並且必須與 `Q起始-Q結束.json` 的檔名範圍一致；`domain` 必須是下方四個領域之一。
-- `question_text` 只放題幹，不得混入選項、答案或投票。
-- 每個選項及每個解析都必須同時有非空的 `zh`、`en`。
-- 中文解析以「正確。」或「錯誤。」開頭；英文以 `Correct.` 或 `Incorrect.` 開頭。
-- `selection_type` 只能是 `單選` 或 `複選`，並與 `correct_answers` 數量一致。
-- `answer_text` 放完整答案代號與文字；`discussion` 放投票資訊及考點摘要。
+---
 
-### 考試領域
+## 4. 逐題建立工作筆記
+
+在寫入 JSON 前，先為每題確認以下內容。這份工作筆記不需要輸出成正式檔案。
+
+```text
+題號：
+領域：
+英文題幹：
+繁中題幹：
+選項代號：
+官方答案：
+單選或複選：
+各選項技術判斷：
+社群投票：
+熱門討論重點：
+來源是否有缺字或衝突：
+```
+
+判斷順序：
+
+1. 以 `with_aizh` 的 `Correct Answer` 作為答案起點。
+2. 使用題目需求與 AWS 技術原理驗證答案是否合理。
+3. 使用 `with_discussion` 確認社群投票及爭議點。
+4. 若兩個來源衝突，不可盲目採用最高票；必須依 AWS 原理判斷，並在 `discussion` 說明爭議。
+5. 不得自行捏造來源沒有提供的投票百分比。
+
+---
+
+## 5. 選擇考試領域
+
+`domain` 必須完全使用以下四個值之一：
 
 - `領域 1：設計彈性架構 (Design Resilient Architectures)`
 - `領域 2：設計高性能架構 (Design High-Performing Architectures)`
 - `領域 3：設計安全架構 (Design Secure Architectures)`
 - `領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)`
 
-### 解析原則
+判斷提示：
 
-- 正確選項：技術原理 + 為何符合需求 + AWS 最佳實踐
-- 錯誤選項：不符哪些需求 + 缺陷 + 可能問題
+- 高可用性、容錯、備援、解耦、災難復原 → 領域 1
+- 效能、延遲、吞吐量、擴展、資料移轉速度 → 領域 2
+- IAM、加密、網路隔離、稽核、安全控制 → 領域 3
+- 成本、儲存分層、隨需計費、資源最佳化 → 領域 4
 
-### 內容完整性規則
-
-- **禁止出現空白或不完整的解析**：如果 PDF 提取的解析文字有缺漏（如服務名稱消失、句子中間斷裂、出現「保護、和。」這種明顯缺字），必須根據 AWS 專業知識自行補齊完整內容，不可原樣輸出殘缺文字。
-- **所有選項都必須有解析**：即使 PDF 中某個選項沒有提供解析（如 D 選項或 E 選項為空），也必須根據題目需求和 AWS 知識自行撰寫解析。
-- **禁止輸出空物件 `{}`**：解析欄位不可為空物件或空字串，每個選項都需要有實質內容。
-- **禁止內容重複**：如果選項文字出現重複（如 `"Amazon S3 Standard Amazon S3 Standard"`），必須去除重複只保留一次。正確答案同理。
-- **每個選項的解析必須獨立**：A 的解析只放 A 的分析，B 的解析只放 B 的分析，禁止把多個選項的分析混在同一個選項值裡。
-- **社群討論不可為空佔位**：如果 PDF 中沒有投票資料（如只有 `"社群投票：。"`），必須根據正確答案和選項特性撰寫考點關鍵字摘要，不可輸出空內容。
+若同時涉及多個領域，選擇題目主要考點，而不是只看出現的 AWS 服務名稱。
 
 ---
 
-## 質量檢查清單
+## 6. 產生正式 JSON
 
-- [ ] 題數完整，不缺漏
-- [ ] JSON 格式正確
-- [ ] 中英文內容完整（繁體中文）
-- [ ] 正確答案與解析一致
-- [ ] 社群投票百分比正確
-- [ ] 考試領域分類正確
+最外層固定為：
+
+```json
+{
+  "exam": "AWS SAA-C03",
+  "questions": []
+}
+```
+
+每題固定使用以下 schema：
+
+```json
+{
+  "question_no": 11,
+  "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+  "question_text": {
+    "zh": "完整繁體中文題幹",
+    "en": "Complete English question"
+  },
+  "options": {
+    "A": {"zh": "繁體中文選項 A", "en": "English option A"},
+    "B": {"zh": "繁體中文選項 B", "en": "English option B"},
+    "C": {"zh": "繁體中文選項 C", "en": "English option C"},
+    "D": {"zh": "繁體中文選項 D", "en": "English option D"}
+  },
+  "option_explanations": {
+    "A": {"zh": "錯誤。完整技術原因。", "en": "Incorrect. Complete technical reason."},
+    "B": {"zh": "正確。完整技術原因。", "en": "Correct. Complete technical reason."},
+    "C": {"zh": "錯誤。完整技術原因。", "en": "Incorrect. Complete technical reason."},
+    "D": {"zh": "錯誤。完整技術原因。", "en": "Incorrect. Complete technical reason."}
+  },
+  "selection_type": "單選",
+  "correct_answers": ["B"],
+  "answer_text": {
+    "zh": "B. 完整繁體中文選項",
+    "en": "B. Complete English option"
+  },
+  "discussion": {
+    "zh": "社群投票與考點摘要。",
+    "en": "Community vote and key concept summary."
+  }
+}
+```
+
+複選題使用相同 schema，但 `selection_type` 必須是 `複選`，`correct_answers` 必須列出全部正確選項。完整範本：
+
+```json
+{
+  "question_no": 12,
+  "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+  "question_text": {
+    "zh": "一家公司需要提升工作負載的安全性。解決方案架構師應選擇哪兩項措施？（選擇兩項。）",
+    "en": "A company needs to improve the security of its workload. Which TWO actions should a solutions architect take? (Choose two.)"
+  },
+  "options": {
+    "A": {"zh": "啟用靜態資料加密", "en": "Enable encryption at rest"},
+    "B": {"zh": "在安全群組中允許所有連入流量", "en": "Allow all inbound traffic in the security group"},
+    "C": {"zh": "使用 AWS Secrets Manager 管理憑證", "en": "Use AWS Secrets Manager to manage credentials"},
+    "D": {"zh": "將管理員憑證直接儲存在應用程式程式碼中", "en": "Store administrator credentials directly in the application code"}
+  },
+  "option_explanations": {
+    "A": {"zh": "正確。靜態資料加密可降低儲存媒體或資料快照外洩時的風險。", "en": "Correct. Encryption at rest reduces risk if storage media or data snapshots are exposed."},
+    "B": {"zh": "錯誤。允許所有連入流量違反最低權限原則，會增加工作負載的攻擊面。", "en": "Incorrect. Allowing all inbound traffic violates least privilege and increases the workload's attack surface."},
+    "C": {"zh": "正確。AWS Secrets Manager 可集中保護、擷取及輪替應用程式憑證。", "en": "Correct. AWS Secrets Manager centrally protects, retrieves, and rotates application credentials."},
+    "D": {"zh": "錯誤。將管理員憑證寫入程式碼可能造成憑證外洩，也難以安全輪替。", "en": "Incorrect. Embedding administrator credentials in code can expose the credentials and makes secure rotation difficult."}
+  },
+  "selection_type": "複選",
+  "correct_answers": ["A", "C"],
+  "answer_text": {
+    "zh": "A. 啟用靜態資料加密；C. 使用 AWS Secrets Manager 管理憑證",
+    "en": "A. Enable encryption at rest; C. Use AWS Secrets Manager to manage credentials"
+  },
+  "discussion": {
+    "zh": "社群投票與考點摘要：應同時保護靜態資料與應用程式憑證，並遵循最低權限原則。",
+    "en": "Community vote and key concept summary: Protect both data at rest and application credentials, and follow the principle of least privilege."
+  }
+}
+```
+
+### 6.1 通用 JSON 規則
+
+- 輸出必須是合法 UTF-8 JSON。
+- 不要在正式檔案外包 Markdown code fence。
+- 所有 key 必須與 schema 完全一致，不可自行改名。
+- 所有字串必須是單行，不可包含實際換行或 `\n`。
+- 不可輸出空字串、空物件、`null`、`N/A`、`TODO` 或省略號佔位。
+- 選項代號依原題使用 A-D；原題有 E/F 時必須完整保留。
+- `options` 與 `option_explanations` 的選項代號必須完全相同。
+
+### 6.2 `question_no`
+
+- 必須是正整數，不是字串。
+- 題號必須連續、不可重複或跳號。
+- 必須與檔名範圍一致。
+
+### 6.3 `question_text`
+
+- 只放情境描述與提問句。
+- 禁止混入選項、答案、投票、留言或 `Most Voted`。
+- `zh` 必須是完整繁體中文；`en` 必須是完整英文。
+- 若來源缺少其中一種語言，必須翻譯補齊。
+
+### 6.4 `options`
+
+- 只放選項本身，不放解析、答案標記或投票。
+- 每個選項都必須同時有非空的 `zh` 與 `en`。
+- `zh` 使用繁體中文；`en` 使用英文。
+- AWS 官方產品名稱、API、政策鍵與技術識別字可保留原文，例如 `Amazon S3`、`aws:PrincipalOrgID`。
+- 除必要的官方名稱與識別字外，`zh` 不可直接貼入完整英文句子。
+- 若來源只有一種語言，必須翻譯補齊另一種語言。
+
+### 6.5 `option_explanations`
+
+每個選項都必須有獨立、完整的雙語解析。
+
+1. `zh` 只能使用繁體中文解析。除 AWS 官方名稱、API 和技術識別字外，不可混入英文選項原句。
+2. `en` 只能使用完整英文解析，不可混入中文。
+3. `zh` 與 `en` 必須能各自獨立閱讀，不可只翻譯一半或互相依賴。
+4. 若來源缺少其中一種語言，必須依另一種語言翻譯補齊。
+5. `options` 出現的每個選項都必須有解析，兩種語言皆不可為空。
+6. 解析只放技術原理、需求符合度、缺陷與 AWS 最佳實踐。
+7. 不可先重複貼上選項原文，再開始解析。
+8. 不可混入投票、`Most Voted`、答案列表、留言帳號或廣告。
+9. 正確選項的 `zh` 必須以「正確。」開頭，`en` 必須以 `Correct.` 開頭。
+10. 錯誤選項的 `zh` 必須以「錯誤。」開頭，`en` 必須以 `Incorrect.` 開頭。
+
+解析內容要求：
+
+- 正確選項：說明技術原理、為何符合題目需求、對應的 AWS 最佳實踐。
+- 錯誤選項：明確說明不符合哪一項需求、技術限制及可能問題。
+- PDF 解析有缺字時，必須依題目、英文內容與 AWS 知識補成完整句子。
+- 不可把多個選項的分析合併到同一個選項。
+
+### 6.6 `selection_type` 與 `correct_answers`
+
+- 一個正確答案 → `selection_type` 為 `單選`。
+- 兩個以上正確答案 → `selection_type` 為 `複選`。
+- `correct_answers` 只放選項代號陣列，例如 `["B"]` 或 `["A", "E"]`。
+- 答案代號必須存在於 `options`，不可重複，並依字母順序排列。
+
+### 6.7 `answer_text`
+
+- 必須包含答案代號與完整選項文字。
+- `zh` 使用繁體中文選項；`en` 使用英文選項。
+- 複選題必須列出全部答案，例如 `A. ...，E. ...`。
+- 內容必須與 `correct_answers` 和 `options` 完全一致。
+
+### 6.8 `discussion`
+
+- 包含社群投票結果、熱門討論重點與考點摘要。
+- `zh` 是完整繁體中文；`en` 是完整英文。
+- 英文留言必須翻譯成繁體中文摘要，不能直接整段貼進 `zh`。
+- 投票百分比必須忠於 PDF；若頁面只顯示 `Other` 或加總不滿 100%，如實描述，不可自行補數字。
+- 沒有投票資料時，明確寫出來源未提供投票比例，再提供實質考點摘要。
+- 若社群答案與官方答案有爭議，簡要說明爭議原因與最終技術判斷。
 
 ---
 
-## 常見問題
+## 7. 修正 OCR 與清除雜訊
 
-| 問題 | 解法 |
-| :--- | :--- |
-| PDF 中文亂碼 | 用 pdfplumber（非 PyPDF2），輸出 UTF-8 |
-| 跨多頁題目 | pdfplumber 逐頁合併，自動連接 |
-| 找不到題號 | 可能在其他 part，或格式不同（Question #93 vs Question 93） |
-| 一次處理太多 | 建議每次 10-20 題，避免內容過長 |
-| 需要轉 docx | `pip install pdf2docx`，但 pdfplumber 直接讀 PDF 更推薦 |
+PDF 中文可能是簡體字、錯誤部件字或 OCR 缺字。輸出前必須對照英文修正為自然、完整的繁體中文。
+
+常見 OCR 修正：
+
+```text
+辜→遷  辴→適  迾→錯  辡→運  迀→速  辥→這  迖→部  辦→進
+辯→連  辧→遠  迡→重  迗→都  迌→還  迧→針  迚→配  辢→近
+辪→遲  達→通  闢→過  輓→間  輦→限  輐→問  輥→降  輵→難
+輲→障  輰→隔  畹→離  轠→額  轔→邊  轈→靠  轇→非  軫→高
+轀→需  迺→銷  迣→量  輍→門  轄→露  迂→邏  辷→選  轒→項
+轞→題
+
+栫→球  棕→源  棺→然  欒→案  栬→理  梔→沒  桟→模  栺→格
+械→流  桌→檢  梳→測  棬→靈  梮→活  櫟→特  栞→率  桯→步
+椹→生  棯→點  棓→潰  櫨→物  榿→歡
+
+孰→家  孀→戶  孂→所  孩→實  孥→定  孍→執  孎→擴  宛→展
+孞→安  宂→將  宅→小  宆→少  宨→工  寈→並  寑→庫  寡→開
+寠→建  寰→彈  宔→層  孾→導  宭→己  寳→當  寧→引  寢→異
+寴→適  寵→審  宮→已  宿→幫  寀→常  孠→完  嬹→成  嬚→穩
+嬦→情  寏→式  孆→才  孚→它
+
+甠→用  畧→確  疥→符  疇→移  甤→電  痡→群  痢→細  畿→種
+昀→最  疫→答  痺→編  痙→係  甅→置  甹→的  畉→目  疨→等
+疙→立  甪→留  疲→管  癧→策
+
+害→送  軸→驗  框→桶  栆→片  邇→鐘  宜→屬  梇→匯  甫→略
+甉→群  畝→知  甑→者
+```
+
+強制清除：
+
+- 淘寶、閒魚、鹹魚、微信、wechat、Taobao、xianyu、goofish.com。
+- 商店名稱、帳號、促銷文字、認證代考或題庫廣告。
+- 留言者名稱、發文時間、upvote 次數等不影響技術判斷的資訊。
+- 重複的選項文字、頁首頁尾與 PDF 日期浮水印。
+
+遇到不在對照表內的亂碼時，使用同題英文原文與上下文重建正確繁體中文，不能保留明顯亂碼。
 
 ---
 
-## 檔案命名規範
+## 8. 分檔與命名
 
-`Q[起始題號]-Q[結束題號].json`
+每個檔案最多 15 題，檔名必須精確反映內容範圍。
 
-範例：`Q90-Q110.json`
+範例：
 
-**超過 10 題或 context 太大時自動切分：**
-- 請求 Q111-Q140（30 題）→ 自動分為：
-  - `Q111-Q120.json`（10 題）
-  - `Q121-Q130.json`（10 題）
-  - `Q131-Q140.json`（10 題）
-- 每個檔案必須是可獨立解析的完整 JSON 物件
+```text
+Q1-Q15.json
+Q16-Q30.json
+Q31-Q45.json
+```
 
-### 增量產題規則
+若要求整理 Q111-Q140，必須拆成：
 
-1. 開始前先掃描專案根目錄 `questions/Q*-Q*.json`。
-2. 解析所有檔案的 `questions` 陣列，找出最大的 `question_no`；不可只依檔名猜測。
-3. 新題目必須從最大題號加 1 開始。例如最後一題是 Q20，下一個檔案必須從 `Q21-...json` 開始。
-4. 新檔案的題號必須連續、不可重複或跳號，且檔名範圍必須與內容完全一致。
-5. `questions` 資料夾只放整理完成的正式 JSON；PDF、原始文字與 prompt 一律放在 `question_sources`。
+```text
+questions/Q111-Q125.json
+questions/Q126-Q140.json
+```
+
+每個檔案都必須：
+
+- 是可獨立解析的完整 JSON 物件。
+- 包含正確的 `exam` 與 `questions`。
+- 題號與檔名完全一致。
+- 內部題號連續且升冪排列。
 
 ---
 
-## 執行規則
-- 一定要是繁體中文+英文，不能出現簡體中文
-- **PDF 提取的中文內容可能有亂碼字**（因 PDF 字型編碼問題），整理時必須根據上下文和對應英文修正為正確的繁體中文。已知亂碼對照表如下，提取後直接套用替換：
+## 9. 完成後執行驗證
 
-**辶/辵 部首系列：**
-`辜→遷`、`辴→適`、`迾→錯`、`辡→運`、`迀→速`、`辥→這`、`迖→部`、`辦→進`、`辯→連`、`辧→遠`、`迡→重`、`迗→都`、`迌→還`、`迧→針`、`迚→配`、`辢→近`、`辪→遲`、`達→通`、`闢→過`、`輓→間`、`輦→限`、`輐→問`、`輥→降`、`輵→難`、`輲→障`、`輰→隔`、`畹→離`、`轠→額`、`轔→邊`、`轈→靠`、`轇→非`、`軫→高`、`轀→需`、`迺→銷`、`迣→量`、`輍→門`、`轄→露`、`迂→邏`、`辷→選`、`轒→項`、`轞→題`
+全部檔案寫入後，執行：
 
-**木 部首系列：**
-`栫→球`、`棕→源`、`棺→然`、`欒→案`、`栬→理`、`梔→沒`、`桟→模`、`栺→格`、`械→流`、`桌→檢`、`梳→測`、`棬→靈`、`梮→活`、`櫟→特`、`栞→率`、`桯→步`、`椹→生`、`棯→點`、`棓→潰`、`櫨→物`、`榿→歡`
+```bash
+npm run validate:questions
+```
 
-**宀/子 部首系列：**
-`孰→家`、`孀→戶`、`孂→所`、`孩→實`、`孥→定`、`孍→執`、`孎→擴`、`宛→展`、`孞→安`、`宂→將`、`宅→小`、`宆→少`、`宨→工`、`寈→並`、`寑→庫`、`寡→開`、`寠→建`、`寰→彈`、`宔→層`、`孾→導`、`宭→己`、`寳→當`、`寧→引`、`寢→異`、`寴→適`、`寵→審`、`宮→已`、`宿→幫`、`寀→常`、`孠→完`、`嬹→成`、`嬚→穩`、`嬦→情`、`寏→式`、`孆→才`、`孚→它`
+驗證失敗時，根據錯誤訊息回到對應題號修正，然後重新執行，直到成功。
 
-**田/疒 部首系列：**
-`甠→用`、`畧→確`、`疥→符`、`疇→移`、`甤→電`、`痡→群`、`痢→細`、`畿→種`、`昀→最`、`疫→答`、`痺→編`、`痙→係`、`甅→置`、`甹→的`、`畉→目`、`疨→等`、`疙→立`、`甪→留`、`疲→管`、`癧→策`
+另外人工檢查：
 
-**其他：**
-`害→送`、`軸→驗`、`框→桶`、`栆→片`、`邇→鐘`、`宜→屬`、`梇→匯`、`甫→略`、`甉→群`、`畝→知`、`甑→者`
+- [ ] 題數、起始題號與結束題號正確。
+- [ ] 沒有重複或跳號。
+- [ ] JSON 可解析，沒有多餘文字。
+- [ ] 題幹、選項、解析、答案與討論都有 `zh`、`en`。
+- [ ] 繁體中文自然完整，沒有簡體字或 OCR 亂碼。
+- [ ] 英文內容完整，不是空字串或佔位。
+- [ ] 每個選項都有獨立解析。
+- [ ] 正確答案、解析開頭與 `correct_answers` 一致。
+- [ ] 投票比例忠於來源，沒有捏造缺失百分比。
+- [ ] 沒有廣告、帳號、網址或 `Most Voted` 混入正式內容。
 
-若遇到不在表中的亂碼字，參考同題的 English 欄位翻譯出正確中文。
-- **所有欄位內容必須移除廣告垃圾文**（如「鹹魚: IT認證輕鬆過」、Taobao shop、xianyu shop、wechat、goofish.com 等推銷連結或帳號資訊），僅保留與題目相關的技術解析內容
-- **不須詢問是否繼續下一步，直接做完所有要求，輸出多份檔案**
-- 若 context 接近上限，立即輸出當前已完成的檔案，再繼續處理下一份
-- 所有檔案完成後才算任務結束
+---
+
+## 10. AI 最終回報格式
+
+完成所有檔案與驗證後，只需簡潔回報：
+
+```text
+已完成 Q11-Q25。
+輸出：questions/Q11-Q25.json
+題數：15
+答案序列：A, C, ...
+驗證：通過，latest=Q20
+```
+
+若來源缺頁、找不到某題或兩份 PDF 都沒有足夠內容，必須指出確切題號與缺少的資料，不可用虛構內容填補。
+
+---
+
+## 快速任務指令
+
+需要 AI 自動接續整理時，可直接使用：
+
+```text
+完整讀取 question_sources/prompt.md，依照所有步驟執行。
+先掃描 questions 內全部 JSON，找出最後一個 question_no，接著從下一題開始整理 15 題。
+同時參考對應的 with_aizh 與 with_discussion PDF，輸出到 questions/Q起始-Q結束.json。
+修正繁體中文、OCR 亂碼與雙語解析，移除所有廣告，最後執行 npm run validate:questions，直到驗證通過。
+```

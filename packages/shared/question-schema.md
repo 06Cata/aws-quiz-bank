@@ -2,7 +2,7 @@
 
 Supabase `questions` table keeps bilingual content in JSONB.
 
-Local question files use `question_no` as the integer question identifier. Files are named by an inclusive, contiguous range, such as `Q1-Q10.json` and `Q11-Q20.json`.
+Local question files use `question_no` as the integer question identifier. Files are named by an inclusive, contiguous range and contain at most 15 questions, such as `Q1-Q10.json`, `Q11-Q25.json`, and `Q26-Q40.json`.
 
 ## question_text
 
