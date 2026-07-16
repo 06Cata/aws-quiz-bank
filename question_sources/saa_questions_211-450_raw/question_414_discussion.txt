@@ -1,0 +1,115 @@
+A company has a business system that generates hundreds of reports each day. The business system saves the reports to a
+network share in CSV format. The company needs to store this data in the AWS Cloud in near-real time for analysis.
+Which solution will meet these requirements with the LEAST administrative overhead?
+A. Use AWS DataSync to transfer the files to Amazon S3. Create a scheduled task that runs at the end of each day.
+B. Create an Amazon S3 File Gateway. Update the business system to use a new network share from the S3 File Gateway.
+Most Voted
+C. Use AWS DataSync to transfer the files to Amazon S3. Create an application that uses the DataSync API in the automation
+workflow.
+D. Deploy an AWS Transfer for SFTP endpoint. Create a script that checks for new files on the network share and uploads the
+new files by using SFTP.
+Comments
+TariqKipkemei Highly Voted 2 years, 1 month ago
+Selected Answer: B
+Both Amazon S3 File Gateway and AWS DataSync are suitable for this scenario.
+But there is a requirement for 'LEAST administrative overhead'.
+Option C involves the creation of an entirely new application to consume the DataSync API, this rules out this option.
+upvoted 16 times
+channn Highly Voted 2 years, 8 months ago
+Selected Answer: B
+Key words:
+1. near-real-time (A is out)
+2. LEAST administrative (C n D is out)
+upvoted 11 times
+zdi561 Most Recent 1 year, 4 months ago
+Selected Answer: D
+Firstly the requirement is not about hybrid cloud e.g. use the data migrated to aws from on-premise, so B is gone. Secondly it is near real time, A is
+gone. Thirdly less admistratively, C is one since an application is a headache. D is the best , it only involves a script. SFTP is good for light file transfer.
+Here there are only hundreds of files in a day.
+upvoted 1 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+This option has the least administrative overhead because:
+Using DataSync avoids having to rewrite the business system to use a new file gateway or SFTP endpoint.
+Calling the DataSync API from an application allows automating the data transfer instead of running scheduled tasks or scripts.
+DataSync directly transfers files from the network share to S3 without needing an intermediate server
+upvoted 2 times
+pentium75 1 year, 11 months ago
+"Create an application" hell no, the application must run somewhere etc., this is massive "administrative overhead".
+upvoted 5 times
+antropaws 2 years, 6 months ago
+Correct Answer: B
+Community vote distribution
+B (87%)
+11%
+Selected Answer: B
+B. Data Sync is better for one time migrations.
+upvoted 3 times
+kruasan 2 years, 7 months ago
+Selected Answer: B
+The correct solution here is:
+B. Create an Amazon S3 File Gateway. Update the business system to use a new network share from the S3 File Gateway.
+This option requires the least administrative overhead because:
+- It presents a simple network file share interface that the business system can write to, just like a standard network share. This requires minimal
+changes to the business system.
+- The S3 File Gateway automatically uploads all files written to the share to an S3 bucket in the background. This handles the transfer and upload to
+S3 without requiring any scheduled tasks, scripts or automation.
+- All ongoing management like monitoring, scaling, patching etc. is handled by AWS for the S3 File Gateway.
+upvoted 5 times
+kruasan 2 years, 7 months ago
+The other options would require more ongoing administrative effort:
+A) AWS DataSync would require creating and managing scheduled tasks and monitoring them.
+C) Using the DataSync API would require developing an application and then managing and monitoring it.
+D) The SFTP option would require creating scripts, managing SFTP access and keys, and monitoring the file transfer process.
+So overall, the S3 File Gateway requires the least amount of ongoing management and administration as it presents a simple file share interface but
+handles the upload to S3 in a fully managed fashion. The business system can continue writing to a network share as is, while the files are
+transparently uploaded to S3.
+The S3 File Gateway is the most hands-off, low-maintenance solution in this scenario.
+upvoted 4 times
+elearningtakai 2 years, 8 months ago
+Selected Answer: B
+A - creating a scheduled task is not near-real time.
+B - The S3 File Gateway caches frequently accessed data locally and automatically uploads it to Amazon S3, providing near-real-time access to the
+data.
+C - creating an application that uses the DataSync API in the automation workflow may provide near-real-time data access, but it requires additional
+development effort.
+D - it requires additional development effort.
+upvoted 5 times
+zooba72 2 years, 8 months ago
+Selected Answer: B
+It's B. DataSync has a scheduler and it runs on hour intervals, it cannot be used real-time
+upvoted 2 times
+Buruguduystunstugudunstuy 2 years, 8 months ago
+Selected Answer: C
+The correct answer is C. Use AWS DataSync to transfer the files to Amazon S3. Create an application that uses the DataSync API in the automation
+workflow.
+To store the CSV reports generated by the business system in the AWS Cloud in near-real time for analysis, the best solution with the least
+administrative overhead would be to use AWS DataSync to transfer the files to Amazon S3 and create an application that uses the DataSync API in
+the automation workflow.
+AWS DataSync is a fully managed service that makes it easy to automate and accelerate data transfer between on-premises storage systems and AWS
+Cloud storage, such as Amazon S3. With DataSync, you can quickly and securely transfer large amounts of data to the AWS Cloud, and you can
+automate the transfer process using the DataSync API.
+upvoted 4 times
+Buruguduystunstugudunstuy 2 years, 8 months ago
+Answer A, using AWS DataSync to transfer the files to Amazon S3 and creating a scheduled task that runs at the end of each day, is not the best
+solution because it does not meet the requirement of storing the CSV reports in near-real time for analysis.
+Answer B, creating an Amazon S3 File Gateway and updating the business system to use a new network share from the S3 File Gateway, is not the
+best solution because it requires additional configuration and management overhead.
+Answer D, deploying an AWS Transfer for the SFTP endpoint and creating a script to check for new files on the network share and upload the new
+files using SFTP, is not the best solution because it requires additional scripting and management overhead
+upvoted 3 times
+COTIT 2 years, 8 months ago
+Selected Answer: B
+I think B is the better answer, "LEAST administrative overhead"
+https://aws.amazon.com/storagegateway/file/?nc1=h_ls
+upvoted 5 times
+andyto 2 years, 8 months ago
+B - S3 File Gateway.
+C - this is wrong answer because data migration is scheduled (this is not continuous task), so condition "near-real time" is not fulfilled
+upvoted 4 times
+Thief 2 years, 8 months ago
+C is the best ans
+upvoted 1 times
+lizzard812 2 years, 8 months ago
+Why not A? There is no scheduled job?
+upvoted 2 times

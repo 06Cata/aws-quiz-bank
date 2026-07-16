@@ -1,0 +1,66 @@
+A company has a three-tier web application that processes orders from customers. The web tier consists of Amazon EC2 instances
+behind an Application Load Balancer. The processing tier consists of EC2 instances. The company decoupled the web tier and
+processing tier by using Amazon Simple Queue Service (Amazon SQS). The storage layer uses Amazon DynamoDB.
+At peak times, some users report order processing delays and halls. The company has noticed that during these delays, the EC2
+instances are running at 100% CPU usage, and the SQS queue fills up. The peak times are variable and unpredictable.
+The company needs to improve the performance of the application.
+Which solution will meet these requirements?
+A. Use scheduled scaling for Amazon EC2 Auto Scaling to scale out the processing tier instances for the duration of peak usage
+times. Use the CPU Utilization metric to determine when to scale.
+B. Use Amazon ElastiCache for Redis in front of the DynamoDB backend tier. Use target utilization as a metric to determine
+when to scale.
+C. Add an Amazon CloudFront distribution to cache the responses for the web tier. Use HTTP latency as a metric to determine
+when to scale.
+D. Use an Amazon EC2 Auto Scaling target tracking policy to scale out the processing tier instances. Use the
+ApproximateNumberOfMessages attribute to determine when to scale. Most Voted
+Comments
+ln2718 10 months ago
+Selected Answer: B
+In real life I would look at where the real bottleneck is, which as stated below may be the database that is causing the EC2 CPU thrashing, in which
+case an ELB may be the better solution. Again, a poorly written question, which I believe they want you to choose answer D, and would only do after
+a thorough investigation if the extra overhead and potential cost would justify answer D.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: D
+Just scale base on how many tasks left in the queue. CPU utilization is not an accurate metric. There could be just one task but it takes quite a while
+to process, in which case scaling is unnecessary.
+upvoted 2 times
+FlyingHawk 1 year, 5 months ago
+Selected Answer: D
+The bottleneck is at the processing tier, B and C are incorrect, processing tier instances are running at 100% CPU usage, and the SQS queue fills up.
+Because the peak times are variable and unpredictable, we should use the EC2 Auto Scaling target tracking policy to scale out the processing tier
+instances based on the size of the queue, A uses scheduled scaling for Amazon EC2 Auto Scaling is incorrect.
+upvoted 3 times
+GOTJ 1 year, 5 months ago
+Selected Answer: D
+Check this out:
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html
+Correct Answer: D
+Community vote distribution
+D (85%)
+B (15%)
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: D
+The bottleneck is from the processing tier.
+upvoted 3 times
+dragossky 1 year, 5 months ago
+Selected Answer: B
+Yes, ElastiCache can be used with DynamoDB to improve the performance and scalability of read-heavy or frequently accessed workloads. Amazon
+ElastiCache is a fully managed in-memory data store that supports popular caching engines such as Memcached and Redis.
+upvoted 1 times
+GOTJ 1 year, 5 months ago
+Agree. But this "SQS queue fill up" (remember, SQS is meant for decouple web and processing tiers) suggest that the bottleneck is produced by the
+processing CPU bottleneck because web servers are sending more requests to the queue than the processing servers are able to process from the
+queue. As the first approach, I would try option D
+upvoted 2 times
+Salilgen 1 year, 5 months ago
+The problem is from application tier
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+DynamoDB Accelerator is cache for dynamoDB
+upvoted 1 times
+aragon_saa 1 year, 7 months ago
+Selected Answer: D
+Answer is D
+upvoted 2 times

@@ -1,0 +1,119 @@
+A hospital needs to store patient records in an Amazon S3 bucket. The hospital’s compliance team must ensure that all protected
+health information (PHI) is encrypted in transit and at rest. The compliance team must administer the encryption key for data at
+rest.
+Which solution will meet these requirements?
+A. Create a public SSL/TLS certificate in AWS Certificate Manager (ACM). Associate the certificate with Amazon S3. Configure
+default encryption for each S3 bucket to use server-side encryption with AWS KMS keys (SSE-KMS). Assign the compliance
+team to manage the KMS keys.
+B. Use the aws:SecureTransport condition on S3 bucket policies to allow only encrypted connections over HTTPS (TLS).
+Configure default encryption for each S3 bucket to use server-side encryption with S3 managed encryption keys (SSE-S3).
+Assign the compliance team to manage the SSE-S3 keys.
+C. Use the aws:SecureTransport condition on S3 bucket policies to allow only encrypted connections over HTTPS (TLS).
+Configure default encryption for each S3 bucket to use server-side encryption with AWS KMS keys (SSE-KMS). Assign the
+compliance team to manage the KMS keys. Most Voted
+D. Use the aws:SecureTransport condition on S3 bucket policies to allow only encrypted connections over HTTPS (TLS). Use
+Amazon Macie to protect the sensitive data that is stored in Amazon S3. Assign the compliance team to manage Macie.
+Comments
+NolaHOla Highly Voted 2 years, 9 months ago
+Option C is correct because it allows the compliance team to manage the KMS keys used for server-side encryption, thereby providing the necessary
+control over the encryption keys. Additionally, the use of the "aws:SecureTransport" condition on the bucket policy ensures that all connections to the
+S3 bucket are encrypted in transit.
+option B might be misleading but using SSE-S3, the encryption keys are managed by AWS and not by the compliance team
+upvoted 31 times
+Lonojack 2 years, 9 months ago
+Perfect explanation. I Agree
+upvoted 5 times
+pentium75 Highly Voted 1 year, 11 months ago
+Selected Answer: C
+Not A, Certificate Manager has nothing to do with S3
+Not B, SSE-S3 does not allow compliance team to manage the key
+Not D, Macie is for identifying sensitive data, not protecting it
+upvoted 13 times
+Guru4Cloud Most Recent 2 years, 3 months ago
+Selected Answer: C
+Macie does not encrypt the data like the question is asking
+https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
+Also, SSE-S3 encryption is fully managed by AWS so the Compliance Team can't administer this.
+upvoted 3 times
+Yadav_Sanjay 2 years, 6 months ago
+Selected Answer: C
+Correct Answer: C
+Community vote distribution
+C (89%)
+9%
+D - Can't be because - Amazon Macie is a data security service that uses machine learning (ML) and pattern matching to discover and help protect
+your sensitive data.
+Macie discovers sensitive information, can help in protection but can't protect
+upvoted 3 times
+TariqKipkemei 2 years, 7 months ago
+Selected Answer: C
+B can work if they do not want control over encryption keys.
+upvoted 2 times
+Russs99 2 years, 8 months ago
+Selected Answer: A
+Option A proposes creating a public SSL/TLS certificate in AWS Certificate Manager and associating it with Amazon S3. This step ensures that data is
+encrypted in transit. Then, the default encryption for each S3 bucket will be configured to use server-side encryption with AWS KMS keys (SSE-KMS),
+which will provide encryption at rest for the data stored in S3. In this solution, the compliance team will manage the KMS keys, ensuring that they
+control the encryption keys for data at rest.
+upvoted 1 times
+Shrestwt 2 years, 7 months ago
+ACM cannot be integrated with Amazon S3 bucket directly.
+upvoted 3 times
+pentium75 1 year, 11 months ago
+ACM is for website certificates, has nothing to do with S3.
+upvoted 3 times
+Bofi 2 years, 8 months ago
+Selected Answer: C
+Option C seems to be the correct answer, option A is also close but ACM cannot be integrated with Amazon S3 bucket directly, hence, u can not
+attached TLS to S3. You can only attached TLS certificate to ALB, API Gateway and CloudFront and maybe Global Accelerator but definitely NOT EC2
+instance and S3 bucket
+upvoted 2 times
+CapJackSparrow 2 years, 8 months ago
+Selected Answer: C
+D makes no sense.
+upvoted 3 times
+Dody 2 years, 9 months ago
+Selected Answer: C
+Correct Answer is "C"
+“D” is not correct because Amazon Macie securely stores your data at rest using AWS encryption solutions. Macie encrypts data, such as findings,
+using an AWS managed key from AWS Key Management Service (AWS KMS). However, in the question there is a requirement that the compliance
+team must administer the encryption key for data at rest.
+https://docs.aws.amazon.com/macie/latest/user/data-protection.html
+upvoted 3 times
+cegama543 2 years, 9 months ago
+Selected Answer: C
+Option C will meet the requirements.
+Explanation:
+The compliance team needs to administer the encryption key for data at rest in order to ensure that protected health information (PHI) is encrypted
+in transit and at rest. Therefore, we need to use server-side encryption with AWS KMS keys (SSE-KMS). The default encryption for each S3 bucket can
+be configured to use SSE-KMS to ensure that all new objects in the bucket are encrypted with KMS keys.
+Additionally, we can configure the S3 bucket policies to allow only encrypted connections over HTTPS (TLS) using the aws:SecureTransport condition.
+This ensures that the data is encrypted in transit.
+upvoted 2 times
+Karlos99 2 years, 9 months ago
+Selected Answer: C
+We must provide encrypted in transit and at rest. Macie is needed to discover and recognize any PII or Protected Health Information. We already
+know that the hospital is working with the sensitive data ) so protect them witn KMS and SSL. Answer D is unnecessary
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: C
+Macie does not encrypt the data like the question is asking
+https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
+Also, SSE-S3 encryption is fully managed by AWS so the Compliance Team can't administer this.
+upvoted 3 times
+Abhineet9148232 2 years, 9 months ago
+Selected Answer: C
+C [Correct]: Ensures Https only traffic (encrypted transit), Enables compliance team to govern encryption key.
+D [Incorrect]: Misleading; PHI is required to be encrypted not discovered. Maice is a discovery service. (https://aws.amazon.com/macie/)
+upvoted 5 times
+Nel8 2 years, 9 months ago
+Selected Answer: D
+Correct answer should be D. "Use Amazon Macie to protect the sensitive data..."
+As requirement says "The hospitals's compliance team must ensure that all protected health information (PHI) is encrypted in transit and at rest."
+Macie protects personal record such as PHI. Macie provides you with an inventory of your S3 buckets, and automatically evaluates and monitors the
+buckets for security and access control. If Macie detects a potential issue with the security or privacy of your data, such as a bucket that becomes
+publicly accessible, Macie generates a finding for you to review and remediate as necessary.
+upvoted 4 times
+Drayen25 2 years, 9 months ago
+Option C should be
+upvoted 3 times

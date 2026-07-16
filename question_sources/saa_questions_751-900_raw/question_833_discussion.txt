@@ -1,0 +1,83 @@
+A company is designing an event-driven order processing system. Each order requires multiple validation steps after the order is
+created. An idempotent AWS Lambda function performs each validation step. Each validation step is independent from the other
+validation steps. Individual validation steps need only a subset of the order event information.
+The company wants to ensure that each validation step Lambda function has access to only the information from the order event
+that the function requires. The components of the order processing system should be loosely coupled to accommodate future
+business changes.
+Which solution will meet these requirements?
+A. Create an Amazon Simple Queue Service (Amazon SQS) queue for each validation step. Create a new Lambda function to
+transform the order data to the format that each validation step requires and to publish the messages to the appropriate SQS
+queues. Subscribe each validation step Lambda function to its corresponding SQS queue.
+B. Create an Amazon Simple Notification Service (Amazon SNS) topic. Subscribe the validation step Lambda functions to the
+SNS topic. Use message body filtering to send only the required data to each subscribed Lambda function.
+C. Create an Amazon EventBridge event bus. Create an event rule for each validation step. Configure the input transformer to
+send only the required data to each target validation step Lambda function. Most Voted
+D. Create an Amazon Simple Queue Service (Amazon SQS) queue. Create a new Lambda function to subscribe to the SQS
+queue and to transform the order data to the format that each validation step requires. Use the new Lambda function to
+perform synchronous invocations of the validation step Lambda functions in parallel on separate threads.
+Comments
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - Requires a separate Lambda function to preprocess and publish transformed data to multiple queues. Unnecessary.
+B - SNS filtering operates at the subscription level, not the event transformation level, making it harder to customize data subsets for specific Lambda
+functions.
+C - Amazon EventBridge: event-driven systems. Input Transformer: ensures each receives only the required subset of data.
+D - Synchronous invocation adds tighter coupling between Lambda functions and the validation steps.
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+SNS and Message Filtering
+- With SNS, message filtering allows you to control which subscribers receive messages based on attributes. However, the entire message is sent to
+each subscribed Lambda function; only those that match the filter criteria are processed.
+EventBridge and Input Transformation
+- EventBridge enables you to define rules that transform or modify events before they reach their targets. This allows you to customize the event
+payload, ensuring each validation step receives only the relevant information.
+"The company wants to ensure that each validation step Lambda function has access to only the information from the order event that the function
+requires."
+Therefore, C is the answer.
+upvoted 4 times
+Johnoppong101 1 year, 9 months ago
+Correct Answer: C
+Community vote distribution
+C (94%)
+6%
+Selected Answer: C
+Event-driven Architecture + Each validation step needs ONLY a subset of the order EVENT created. Best way to transform this order even is EB
+Transformer.
+upvoted 2 times
+Scheldon 2 years ago
+Selected Answer: C
+Answer C
+I wasn't sure but looks like EB with Input Transformation will allow for sending data which were choosed per destination
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes-input-transformation.html
+upvoted 3 times
+TwinSpark 2 years ago
+Selected Answer: C
+not B because SNS cannot make messages manipulation, the option "message body filtering" will make discard or forward the FULL message if there
+is a matching field:
+https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html
+C - eventbus instead can manipulate event:
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus.html
+D - Works, but too much operation IMO
+upvoted 4 times
+88f8032 2 years, 1 month ago
+Why can't it be B?
+upvoted 3 times
+BBR01 2 years, 1 month ago
+Selected Answer: D
+It is D. It is one order event, not "events from many sources"
+The main lambda parse the info to pieces, then makes synchronous invocations of the validation step Lambda functions on separate threads, and
+wait them to complete.
+upvoted 1 times
+waldirlsantos 2 years, 1 month ago
+Selected Answer: C
+IMO, C
+"An event bus is a router that receives events and delivers them to zero or more destinations, or targets. Event buses are well-suited for routing
+events from many sources to many targets, with optional transformation of events prior to delivery to a target."
+upvoted 2 times
+TruthWS 2 years, 2 months ago
+Option C
+upvoted 2 times
+Kaula 2 years, 2 months ago
+Selected Answer: C
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus.html
+upvoted 3 times

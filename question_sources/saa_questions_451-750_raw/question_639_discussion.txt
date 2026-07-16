@@ -1,0 +1,78 @@
+A company is building a new furniture inventory application. The company has deployed the application on a fleet ofAmazon EC2
+instances across multiple Availability Zones. The EC2 instances run behind an Application Load Balancer (ALB) in their VPC.
+A solutions architect has observed that incoming traffic seems to favor one EC2 instance, resulting in latency for some requests.
+What should the solutions architect do to resolve this issue?
+A. Disable session affinity (sticky sessions) on the ALB Most Voted
+B. Replace the ALB with a Network Load Balancer
+C. Increase the number of EC2 instances in each Availability Zone
+D. Adjust the frequency of the health checks on the ALB's target group
+Comments
+ln2718 10 months, 3 weeks ago
+Selected Answer: A
+This is a terrible question. You don't just remove sticky sessions because of this issue, especially if the application relies on sticky sessions in the first
+place! Unfortunately no other answer is adequate, and you would not replace a network load balancer because you would lose some functionality
+that only the application load balancer has. This may be one of the worst questions so far.
+upvoted 1 times
+KennethNg923 1 year, 11 months ago
+Selected Answer: A
+"favor one EC2 instance" it is because you enable the sticky session feature, so you have to disable it
+upvoted 2 times
+1Alpha1 2 years, 4 months ago
+Selected Answer: A
+Answer: *A*
+Enabling stickiness may bring imbalance to the load over the backend EC2 instances since sticky sessions help the same client to always redirect to
+the same instance behind a load balancer.
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: B
+The question is too vague. Doesn't say much about the application or EC2 instance setup. So:
+If you assume that application uses session management then A is correct.
+If you think application is crashing then D is correct for health checks
+If you don't assume anything about the application then B is also correct
+SMH, I'll go with B... happy to discuss
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+I'm not entirely happy with any choice but since others have chosen A, I'm just throwing B for discussion.
+upvoted 2 times
+MikeSWA 2 years, 5 months ago
+what about c?
+it actually helps distribute traffic equally across instances in all enabled AZs.
+upvoted 2 times
+Correct Answer: A
+Community vote distribution
+A (88%)
+13%
+mr123dd 2 years, 4 months ago
+nope, if the sticky season is on, no matter how many instances you have in AZ or region, it will only send traffic to you favor session
+upvoted 2 times
+evelynsun 2 years, 5 months ago
+it's A!!
+Session affinity is a feature of the Application Load Balancer that keeps client requests on the same EC2 instance for the duration of the session. This
+can cause latency issues if one EC2 instance is overloaded while others are not, as the overloaded instance will handle all subsequent requests until it
+is taken offline.
+To resolve this issue, the solutions architect should disable session affinity on the ALB. This can be done by setting the "Session affinity" parameter to
+"Off" in the ALB's configuration.
+Disabling session affinity will cause the ALB to distribute requests across all EC2 instances in the target group, rather than keeping them on a single
+instance. This will help to balance the load and reduce latency for all requests.
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+I agree with A but it assumes that ALB has session affinity enabled and app doesn't require it. What if the EC2 instances are running an application
+that requires session affinity? I think the question is missing some important context
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: A
+Disable session affinity (sticky sessions) on the ALB
+upvoted 2 times
+NickGordon 2 years, 7 months ago
+Selected Answer: A
+A
+https://repost.aws/knowledge-center/elb-fix-unequal-traffic-routing
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+The same article says to check health of instances. This makes D as a good candidate too.
+"Available healthy instances aren’t evenly distributed across Availability Zones."
+upvoted 4 times
+potomac 2 years, 7 months ago
+Selected Answer: A
+A makes more sense than others
+upvoted 3 times

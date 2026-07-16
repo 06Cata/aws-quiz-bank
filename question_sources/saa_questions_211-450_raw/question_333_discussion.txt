@@ -1,0 +1,60 @@
+A company’s application runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The instances run in an
+Amazon EC2 Auto Scaling group across multiple Availability Zones. On the first day of every month at midnight, the application
+becomes much slower when the month-end financial calculation batch runs. This causes the CPU utilization of the EC2 instances to
+immediately peak to 100%, which disrupts the application.
+What should a solutions architect recommend to ensure the application is able to handle the workload and avoid downtime?
+A. Configure an Amazon CloudFront distribution in front of the ALB.
+B. Configure an EC2 Auto Scaling simple scaling policy based on CPU utilization.
+C. Configure an EC2 Auto Scaling scheduled scaling policy based on the monthly schedule. Most Voted
+D. Configure Amazon ElastiCache to remove some of the workload from the EC2 instances.
+Comments
+TariqKipkemei Highly Voted 1 year, 8 months ago
+Selected Answer: C
+'On the first day of every month at midnight' = Scheduled scaling policy
+upvoted 6 times
+elearningtakai Most Recent 2 years, 2 months ago
+Selected Answer: C
+By configuring a scheduled scaling policy, the EC2 Auto Scaling group can proactively launch additional EC2 instances before the CPU utilization
+peaks to 100%. This will ensure that the application can handle the workload during the month-end financial calculation batch, and avoid any
+disruption or downtime.
+Configuring a simple scaling policy based on CPU utilization or adding Amazon CloudFront distribution or Amazon ElastiCache will not directly
+address the issue of handling the monthly peak workload.
+upvoted 4 times
+Steve_4542636 2 years, 3 months ago
+Selected Answer: C
+If the scaling were based on CPU or memory, it requires a certain amount of time above that threshhold, 5 minutes for example. That would mean
+the CPU would be at 100% for five minutes.
+upvoted 4 times
+LuckyAro 2 years, 3 months ago
+Selected Answer: C
+C: Configure an EC2 Auto Scaling scheduled scaling policy based on the monthly schedule is the best option because it allows for the proactive
+scaling of the EC2 instances before the monthly batch run begins. This will ensure that the application is able to handle the increased workload
+without experiencing downtime. The scheduled scaling policy can be configured to increase the number of instances in the Auto Scaling group a few
+hours before the batch run and then decrease the number of instances after the batch run is complete. This will ensure that the resources are
+available when needed and not wasted when not needed.
+The most appropriate solution to handle the increased workload during the monthly batch run and avoid downtime would be to configure an EC2
+Auto Scaling scheduled scaling policy based on the monthly schedule.
+upvoted 3 times
+LuckyAro 2 years, 3 months ago
+Scheduled scaling policies allow you to schedule EC2 instance scaling events in advance based on a specified time and date. You can use this
+feature to plan for anticipated traffic spikes or seasonal changes in demand. By setting up scheduled scaling policies, you can ensure that you have
+Correct Answer: C
+Community vote distribution
+C (100%)
+the right number of instances running at the right time, thereby optimizing performance and reducing costs.
+To set up a scheduled scaling policy in EC2 Auto Scaling, you need to specify the following:
+Start time and date: The date and time when the scaling event should begin.
+Desired capacity: The number of instances that you want to have running after the scaling event.
+Recurrence: The frequency with which the scaling event should occur. This can be a one-time event or a recurring event, such as daily or weekly.
+upvoted 2 times
+bdp123 2 years, 3 months ago
+Selected Answer: C
+C is the correct answer as traffic spike is known
+upvoted 2 times
+jennyka76 2 years, 3 months ago
+ANSWER - C
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scheduled-scaling.html
+upvoted 3 times
+Neha999 2 years, 3 months ago
+C as the schedule of traffic spike is known beforehand.
+upvoted 2 times

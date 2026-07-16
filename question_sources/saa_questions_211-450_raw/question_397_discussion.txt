@@ -1,0 +1,71 @@
+An ecommerce company needs to run a scheduled daily job to aggregate and filter sales records for analytics. The company stores
+the sales records in an Amazon S3 bucket. Each object can be up to 10 GB in size. Based on the number of sales events, the job
+can take up to an hour to complete. The CPU and memory usage of the job are constant and are known in advance.
+A solutions architect needs to minimize the amount of operational effort that is needed for the job to run.
+Which solution meets these requirements?
+A. Create an AWS Lambda function that has an Amazon EventBridge notification. Schedule the EventBridge event to run once a
+day.
+B. Create an AWS Lambda function. Create an Amazon API Gateway HTTP API, and integrate the API with the function. Create
+an Amazon EventBridge scheduled event that calls the API and invokes the function.
+C. Create an Amazon Elastic Container Service (Amazon ECS) cluster with an AWS Fargate launch type. Create an Amazon
+EventBridge scheduled event that launches an ECS task on the cluster to run the job. Most Voted
+D. Create an Amazon Elastic Container Service (Amazon ECS) cluster with an Amazon EC2 launch type and an Auto Scaling
+group with at least one EC2 instance. Create an Amazon EventBridge scheduled event that launches an ECS task on the cluster
+to run the job.
+Comments
+ktulu2602 Highly Voted 2 years, 9 months ago
+Selected Answer: C
+The requirement is to run a daily scheduled job to aggregate and filter sales records for analytics in the most efficient way possible. Based on the
+requirement, we can eliminate option A and B since they use AWS Lambda which has a limit of 15 minutes of execution time, which may not be
+sufficient for a job that can take up to an hour to complete.
+Between options C and D, option C is the better choice since it uses AWS Fargate which is a serverless compute engine for containers that eliminates
+the need to manage the underlying EC2 instances, making it a low operational effort solution. Additionally, Fargate also provides instant scale-up and
+scale-down capabilities to run the scheduled job as per the requirement.
+Therefore, the correct answer is:
+C. Create an Amazon Elastic Container Service (Amazon ECS) cluster with an AWS Fargate launch type. Create an Amazon EventBridge scheduled
+event that launches an ECS task on the cluster to run the job.
+upvoted 27 times
+imvb88 Highly Voted 2 years, 7 months ago
+Selected Answer: C
+"1-hour job" -> A, B out since max duration for Lambda is 15 min
+Between C and D, "minimize operational effort" means Fargate -> C
+upvoted 6 times
+awsgeek75 Most Recent 1 year, 11 months ago
+Selected Answer: C
+A&B are out due to Lambda 15 min limits
+C is less operationally complex than D so C is the right answer. Fargate is managed ECS cluster whereas EC2 based ECS will require more config
+overhead.
+upvoted 5 times
+Correct Answer: C
+Community vote distribution
+C (100%)
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C. Create an Amazon Elastic Container Service (Amazon ECS) cluster with an AWS Fargate launch type. Create an Amazon EventBridge scheduled
+event that launches an ECS task on the cluster to run the job
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: C
+The best option is C.
+'The job can take up to an hour to complete' rules out lambda functions as they only execute up to 15 mins. Hence option A and B are out.
+'The CPU and memory usage of the job are constant and are known in advance' rules out the need for autoscaling. Hence option D is out.
+upvoted 4 times
+klayytech 2 years, 8 months ago
+Selected Answer: C
+The solution that meets the requirements with the least operational overhead is to create a **Regional AWS WAF web ACL with a rate-based rule**
+and associate the web ACL with the API Gateway stage. This solution will protect the application from HTTP flood attacks by monitoring incoming
+requests and blocking requests from IP addresses that exceed the predefined rate.
+Amazon CloudFront distribution with Lambda@Edge in front of the API Gateway Regional API endpoint is also a good solution but it requires more
+operational overhead than the previous solution.
+Using Amazon CloudWatch metrics to monitor the Count metric and alerting the security team when the predefined rate is reached is not a solution
+that can protect against HTTP flood attacks.
+Creating an Amazon CloudFront distribution in front of the API Gateway Regional API endpoint with a maximum TTL of 24 hours is not a solution
+that can protect against HTTP flood attacks.
+upvoted 1 times
+klayytech 2 years, 8 months ago
+Selected Answer: C
+The solution that meets these requirements is C. Create an Amazon Elastic Container Service (Amazon ECS) cluster with an AWS Fargate launch type.
+Create an Amazon EventBridge scheduled event that launches an ECS task on the cluster to run the job. This solution will minimize the amount of
+operational effort that is needed for the job to run.
+AWS Lambda which has a limit of 15 minutes of execution time,
+upvoted 2 times

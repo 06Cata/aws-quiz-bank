@@ -1,0 +1,62 @@
+A social media company allows users to upload images to its website. The website runs on Amazon EC2 instances. During upload
+requests, the website resizes the images to a standard size and stores the resized images in Amazon S3. Users are experiencing
+slow upload requests to the website.
+The company needs to reduce coupling within the application and improve website performance. A solutions architect must
+design the most operationally efficient process for image uploads.
+Which combination of actions should the solutions architect take to meet these requirements? (Choose two.)
+一家社交媒体公司允许用户将图片上传到其网站。该网站运行在 Amazon EC2 实例上。在上传请求期间，网站将图片调整为标准尺
+寸，并将调整后的图片存储在 Amazon S3 中。用户在向网站上传图片时遇到上传请求缓慢的问题。
+该公司需要减少应用程序中的耦合并提高网站性能。解决方案架构师必须设计最具操作效率的图片上传流程。
+解决方案架构师应采取哪些组合操作来满足这些要求？（选择两项）
+A. Configure the application to upload images to S3 Glacier.
+将应用程序配置为将图片上传到 S3 Glacier。
+B. Configure the web server to upload the original images to Amazon S3.
+将 Web 服务器配置为将原始图片上传到 Amazon S3。
+C. Configure the application to upload images directly from each user's browser to Amazon S3 through the use of a presigned
+URL Most Voted
+将应用程序配置为通过使用 presigned URL 直接从每个用户的浏览器上传图片到 Amazon S3。
+D. Configure S3 Event Notifications to invoke an AWS Lambda function when an image is uploaded. Use the function to resize
+the image. Most Voted
+配置 S3 Event Notifications 以在图片上传时调用 AWS Lambda 函数。使用该函数调整图片大小。
+E. Create an Amazon EventBridge (Amazon CloudWatch Events) rule that invokes an AWS Lambda function on a schedule to
+resize uploaded images.
+创建一个 Amazon EventBridge（Amazon CloudWatch Events）规则，按计划调用 AWS Lambda 函数以调整上传的图片大小。
+Correct Answer: CD
+正确答案：CD
+Community vote distribution
+社区投票分布
+CD (53%)
+BD (45%)
+1%
+题目分析与解答
+1. 考察的知识点
+Amazon S3 的使用，包括预签名 URL 和事件通知。
+AWS Lambda 的使用，包括事件驱动的架构设计。
+如何设计解耦和高效的架构以提高性能。
+2. 选项分析
+A. Configure the application to upload images to S3 Glacier.
+错误原因：Amazon S3 Glacier 是用于长期存储的冷存储服务，适合存档数据，而不是实时处理上传的图片。此选项与题目要求的
+性能提升和解耦无关。
+B. Configure the web server to upload the original images to Amazon S3.
+错误原因：虽然将图片上传到 Amazon S3 是一个合理的步骤，但直接由 Web 服务器处理上传会增加服务器的负载，无法实现解耦
+和性能优化。
+C. Configure the application to upload images directly from each user's browser to Amazon S3 through the use of a
+presigned URL.
+正确原因：使用预签名 URL 允许用户直接将图片上传到 Amazon S3，而无需通过 Web 服务器。这种方式减少了服务器的负载，实
+现了解耦并提高了性能。
+D. Configure S3 Event Notifications to invoke an AWS Lambda function when an image is uploaded. Use the function to
+resize the image.
+正确原因：使用 S3 事件通知和 AWS Lambda 可以实现事件驱动的架构。当图片上传到 S3 时，自动触发 Lambda 函数进行图片处
+理。这种方式实现了解耦并提高了操作效率。
+E. Create an Amazon EventBridge (Amazon CloudWatch Events) rule that invokes an AWS Lambda function on a schedule
+to resize uploaded images.
+错误原因：使用 EventBridge 定时触发 Lambda 函数不适合实时处理图片上传的场景。此选项无法满足题目要求的性能优化。
+3. 我选的答案
+C
+D
+4. 官方答案
+C
+D
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因分析清晰，选项 C 和 D 是最符合题目要求的解决方案。

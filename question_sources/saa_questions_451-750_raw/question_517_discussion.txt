@@ -1,0 +1,129 @@
+A company wants to send all AWS Systems Manager Session Manager logs to an Amazon S3 bucket for archival purposes.
+Which solution will meet this requirement with the MOST operational efficiency?
+A. Enable S3 logging in the Systems Manager console. Choose an S3 bucket to send the session data to. Most Voted
+B. Install the Amazon CloudWatch agent. Push all logs to a CloudWatch log group. Export the logs to an S3 bucket from the
+group for archival purposes.
+C. Create a Systems Manager document to upload all server logs to a central S3 bucket. Use Amazon EventBridge to run the
+Systems Manager document against all servers that are in the account daily.
+D. Install an Amazon CloudWatch agent. Push all logs to a CloudWatch log group. Create a CloudWatch logs subscription that
+pushes any incoming log events to an Amazon Kinesis Data Firehose delivery stream. Set Amazon S3 as the destination.
+Comments
+master9 Highly Voted 2 years, 5 months ago
+Selected Answer: A
+send logs to Amazon S3 from AWS Systems Manager Session Manager. Here are the steps to do so:
+Enable S3 Logging: Open the AWS Systems Manager console. In the navigation pane, choose Session Manager. Choose the Preferences tab, and then
+choose Edit. Select the check box next to Enable under S3 logging.
+Create an S3 Bucket: To store the Session Manager logs, create an S3 bucket to hold the audit logs from the Session Manager interactive shell usage.
+Configure IAM Role: AWS Systems Manager Agent (SSM Agent) uses the same AWS Identity and Access Management (IAM) role to activate itself and
+upload logs to Amazon S3. You can use either an IAM instance profile that’s attached to an Amazon Elastic Compute Cloud (Amazon EC2) instance o
+the IAM role that’s configured for the Default Host Management Configuration.
+upvoted 8 times
+cloudenthusiast Highly Voted 3 years ago
+Selected Answer: A
+option A does not involve CloudWatch, while option D does. Therefore, in terms of operational overhead, option A would generally have less
+complexity and operational overhead compared to option D.
+Option A simply enables S3 logging in the Systems Manager console, allowing you to directly send session logs to an S3 bucket. This approach is
+straightforward and requires minimal configuration.
+On the other hand, option D involves installing and configuring the Amazon CloudWatch agent, creating a CloudWatch log group, setting up a
+CloudWatch Logs subscription, and configuring an Amazon Kinesis Data Firehose delivery stream to store logs in an S3 bucket. This requires
+additional setup and management compared to option A.
+So, if minimizing operational overhead is a priority, option A would be a simpler and more straightforward choice.
+upvoted 5 times
+pujithacg8 Most Recent 1 year, 10 months ago
+A, You can choose to store session log data in a specified Amazon Simple Storage Service (Amazon S3) bucket for debugging and troubleshooting
+purposes.
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html#session-manager-logging-s3
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (95%)
+5%
+Most efficient is A because it is a direct option in SM logging.
+B can work but is more operational overhead as you end up using CloudWatch (not sure how but making assumption based on language of option)
+C is definitely too much work
+D Way too many moving parts
+upvoted 3 times
+potomac 2 years, 7 months ago
+Selected Answer: A
+You can choose to store session log data in a specified Amazon Simple Storage Service (Amazon S3) bucket for debugging and troubleshooting
+purposes.
+upvoted 2 times
+deechean 2 years, 9 months ago
+Selected Answer: A
+You can config the log archived to S3 in the Session Manager - > preference tab. Another option is CloudWatch log.
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html#session-manager-logging-s3
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: A
+°Simplicity - Enabling S3 logging requires just a simple configuration in the Systems Manager console to specify the destination S3 bucket. No other
+services need to be configured.
+°Direct integration - Systems Manager has native support to send session logs to S3 through this feature. No need for intermediary services.
+°Automated flow - Once S3 logging is enabled, the session logs automatically flow to the S3 bucket without manual intervention.
+°Easy management - The S3 bucket can be managed independently for log storage and archival purposes without impacting Systems Manager.
+°Cost-effectiveness - No charges for intermediate CloudWatch or Kinesis services. Just basic S3 storage costs.
+°Minimal overhead - No ongoing management of complex pipeline of services. Direct logs to S3 minimizes overhead.
+upvoted 3 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: A
+With the MOST operational efficiency then option A is best.
+Otherwise B is also an option with a little bit more ops than option A.
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html
+upvoted 2 times
+Zox42 2 years, 11 months ago
+Selected Answer: A
+Answer A. https://aws-labs.net/winlab5-manageinfra/sessmgrlog.html
+upvoted 2 times
+Zuit 2 years, 11 months ago
+Selected Answer: A
+GPT argued for D.
+B could be an option, by installing a logging package on alle managed systems/ECs etc. https://docs.aws.amazon.com/systems-
+manager/latest/userguide/distributor-working-with-packages-deploy.html
+However, as it mentions the "Session manager logs" I would tend towards A.
+upvoted 2 times
+MrAWSAssociate 2 years, 11 months ago
+Selected Answer: A
+It should be "A".
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html
+upvoted 2 times
+secdgs 2 years, 12 months ago
+Selected Answer: A
+It have menu to Enable S3 Logging.
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html#session-manager-logging-s3
+upvoted 2 times
+Markie999 3 years ago
+Selected Answer: B
+BBBBBBBBB
+upvoted 1 times
+pentium75 2 years, 5 months ago
+"Install the CloudWatch agent" where?
+upvoted 2 times
+Bill1000 3 years ago
+Selected Answer: B
+The option 'A' says "Enable S3 logging in the Systems Manager console." This means that you will enable the logs !! FOR !! S3 events and its is not
+what the question asks. My vote is for Option B, based on this article: https://docs.aws.amazon.com/AmazonS3/latest/userguide/logging-with-
+S3.html
+upvoted 1 times
+baba365 2 years, 11 months ago
+To log session data using Amazon S3 (console)
+Open the AWS Systems Manager console at https://console.aws.amazon.com/systems-manager/.
+In the navigation pane, choose Session Manager.
+Choose the Preferences tab, and then choose Edit.
+Select the check box next to Enable under S3 logging.
+upvoted 3 times
+vrevkov 2 years, 11 months ago
+But where do you want to install the Amazon CloudWatch agent in case of B?
+upvoted 1 times
+omoakin 3 years ago
+DDDDDD
+upvoted 1 times
+Anmol_1010 3 years ago
+Option D is definetely not right,
+Its optiom B
+upvoted 2 times
+omoakin 3 years ago
+Chat GPT says option A is incorrect cos it requires enabling S3 logging in the system manager console only logs information about the systems
+manager service not the session logs
+Says correct answer is B
+upvoted 1 times

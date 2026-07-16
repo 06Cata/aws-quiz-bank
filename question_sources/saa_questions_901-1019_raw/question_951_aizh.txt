@@ -1,0 +1,58 @@
+Question #951
+A company has a custom application with embedded credentials that retrieves information from a database in an Amazon RDS for
+MySQL DB cluster. The company needs to make the application more secure with minimal programming effort. The company has
+created credentials on the RDS for MySQL database for the application user.
+Which solution will meet these requirements?
+一家公司有一个嵌入了凭证的自定义应用程序，该应用程序从 Amazon RDS for MySQL 数据库集群中检索信息。 公司需要以最少的
+编程工作使应用程序更加安全。 公司已经在 RDS for MySQL 数据库中为应用程序用户创建了凭证。
+哪种解决方案可以满足这些需求？
+A. Store the credentials in AWS Key Management Service (AWS KMS). Create keys in AWS KMS. Configure the application to
+load the database credentials from AWS KMS. Enable automatic key rotation
+将凭证存储在 AWS Key Management Service (AWS KMS) 中。 在 AWS KMS 中创建密钥。 配置应用程序从 AWS KMS 加载数据
+库凭证。 启用自动密钥轮换。
+B. Store the credentials in encrypted local storage. Configure the application to load the database credentials from the local
+storage. Set up a credentials rotation schedule by creating a cron job.
+将凭证存储在加密的本地存储中。 配置应用程序从本地存储加载数据库凭证。 通过创建 cron 作业设置凭证轮换计划。
+C. Store the credentials in AWS Secrets Manager. Configure the application to load the database credentials from Secrets
+Manager. Set up a credentials rotation schedule by creating an AWS Lambda function for Secrets Manager. Most Voted
+将凭证存储在 AWS Secrets Manager 中。 配置应用程序从 Secrets Manager 加载数据库凭证。 通过为 Secrets Manager 创建
+AWS Lambda 函数设置凭证轮换计划。
+D. Store the credentials in AWS Systems Manager Parameter Store. Configure the application to load the database credentials
+from Parameter Store. Set up a credentials rotation schedule in the RDS for MySQL database by using Parameter Store.
+将凭证存储在 AWS Systems Manager Parameter Store 中。 配置应用程序从 Parameter Store 加载数据库凭证。 通过使用
+Parameter Store 在 RDS for MySQL 数据库中设置凭证轮换计划。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+题目分析与解答
+1. 考察的知识点
+本题考察的是 AWS 服务中如何安全管理和轮换数据库凭证的最佳实践。
+涉及的服务包括 AWS Secrets Manager、AWS Key Management Service (KMS)、AWS Systems Manager Parameter Store 等。
+2. 选项分析
+A. Store the credentials in AWS Key Management Service (AWS KMS). Create keys in AWS KMS. Configure the application
+to load the database credentials from AWS KMS. Enable automatic key rotation.
+错误：AWS KMS 是用于加密密钥管理的服务，但它并不直接用于存储和轮换数据库凭证。
+虽然可以使用 KMS 加密凭证，但它不提供自动凭证轮换功能。
+B. Store the credentials in encrypted local storage. Configure the application to load the database credentials from the
+local storage. Set up a credentials rotation schedule by creating a cron job.
+错误：将凭证存储在本地存储中并使用 cron 作业进行轮换是一种手动且不安全的方式。
+这种方法需要额外的编程工作，并且不符合 AWS 的最佳实践。
+C. Store the credentials in AWS Secrets Manager. Configure the application to load the database credentials from Secrets
+Manager. Set up a credentials rotation schedule by creating an AWS Lambda function for Secrets Manager.
+正确：AWS Secrets Manager 是专门设计用于安全存储和轮换凭证的服务。
+它支持自动凭证轮换，并可以通过 AWS Lambda 函数实现无缝集成。
+这种方法需要最少的编程工作，同时提供了高安全性。
+D. Store the credentials in AWS Systems Manager Parameter Store. Configure the application to load the database
+credentials from Parameter Store. Set up a credentials rotation schedule in the RDS for MySQL database by using
+Parameter Store.
+错误：虽然 AWS Systems Manager Parameter Store 可以存储凭证，但它不支持自动凭证轮换。
+需要额外的编程工作来实现轮换功能，因此不符合题目要求的“最少编程工作”。
+3. 我的答案
+我选择的答案是：C
+4. 官方答案
+官方正确答案是：C
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：AWS Secrets Manager 是专门设计用于安全存储和轮换凭证的服务，符合题目要求的“最少编程工作”和“提高安全性”。
+C (100%)

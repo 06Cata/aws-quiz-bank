@@ -1,0 +1,55 @@
+A company's HTTP application is behind a Network Load Balancer (NLB). The NLB's target group is configured to use an Amazon
+EC2 Auto Scaling group with multiple EC2 instances that run the web service.
+The company notices that the NLB is not detecting HTTP errors for the application. These errors require a manual restart of the
+EC2 instances that run the web service. The company needs to improve the application's availability without writing custom scripts
+or code.
+What should a solutions architect do to meet these requirements?
+一家公司将其 HTTP 应用程序置于一个 Network Load Balancer (NLB) 后面。NLB 的目标组配置为使用一个 Amazon EC2 Auto
+Scaling 组，其中包含运行 Web 服务的多个 EC2 实例。
+该公司注意到 NLB 未检测到应用程序的 HTTP 错误。这些错误需要手动重启运行 Web 服务的 EC2 实例。公司需要在不编写自定义
+脚本或代码的情况下提高应用程序的可用性。
+解决方案架构师应该怎么做以满足这些需求？
+A. Enable HTTP health checks on the NLB, supplying the URL of the company's application.
+在 NLB 上启用 HTTP 健康检查，并提供公司应用程序的 URL。
+B. Add a cron job to the EC2 instances to check the local application's logs once each minute. If HTTP errors are detected. the
+application will restart.
+在 EC2 实例上添加一个 cron 作业，每分钟检查一次本地应用程序的日志。如果检测到 HTTP 错误，则重启应用程序。
+C. Replace the NLB with an Application Load Balancer. Enable HTTP health checks by supplying the URL of the company's
+application. Configure an Auto Scaling action to replace unhealthy instances. Most Voted
+将 NLB 替换为 Application Load Balancer。通过提供公司应用程序的 URL 启用 HTTP 健康检查。配置一个 Auto Scaling 操作以
+替换不健康的实例。
+D. Create an Amazon Cloud Watch alarm that monitors the UnhealthyHostCount metric for the NLB. Configure an Auto Scaling
+action to replace unhealthy instances when the alarm is in the ALARM state.
+创建一个 Amazon CloudWatch 警报，监控 NLB 的 UnhealthyHostCount 指标。当警报处于 ALARM 状态时，配置一个 Auto
+Scaling 操作以替换不健康的实例。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+题目分析与解答
+1. 考察的知识点
+了解不同类型的负载均衡器（NLB和ALB）的功能和适用场景。
+掌握健康检查机制的配置和作用。
+熟悉Auto Scaling组的自动替换不健康实例的功能。
+2. 选项分析
+A. Enable HTTP health checks on the NLB, supplying the URL of the company's application.
+错误：NLB不支持基于HTTP的健康检查。NLB的健康检查仅支持TCP级别的检查，无法检测HTTP错误。
+B. Add a cron job to the EC2 instances to check the local application's logs once each minute. If HTTP errors are detected,
+the application will restart.
+错误：虽然可以通过cron作业实现部分功能，但这需要编写自定义脚本，且无法自动替换不健康的实例，违背了题目要求“无需编写
+自定义脚本或代码”。
+C. Replace the NLB with an Application Load Balancer. Enable HTTP health checks by supplying the URL of the company's
+application. Configure an Auto Scaling action to replace unhealthy instances.
+正确：ALB支持基于HTTP的健康检查，可以检测HTTP错误。通过配置Auto Scaling组，可以自动替换不健康的实例，从而提高应用
+的可用性。
+D. Create an Amazon CloudWatch alarm that monitors the UnhealthyHostCount metric for the NLB. Configure an Auto
+Scaling action to replace unhealthy instances when the alarm is in the ALARM state.
+错误：虽然可以通过CloudWatch监控UnhealthyHostCount，但NLB无法检测HTTP级别的错误，因此无法满足题目要求。
+3. 我选的答案
+C
+4. 官方答案
+C
+5. 与官方答案比较
+我的答案与官方答案一致。
+C (90%)
+10%

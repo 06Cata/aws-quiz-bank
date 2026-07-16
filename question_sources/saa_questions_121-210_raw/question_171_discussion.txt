@@ -1,0 +1,119 @@
+A company provides an API to its users that automates inquiries for tax computations based on item prices. The company
+experiences a larger number of inquiries during the holiday season only that cause slower response times. A solutions architect
+needs to design a solution that is scalable and elastic.
+What should the solutions architect do to accomplish this?
+A. Provide an API hosted on an Amazon EC2 instance. The EC2 instance performs the required computations when the API
+request is made.
+B. Design a REST API using Amazon API Gateway that accepts the item names. API Gateway passes item names to AWS
+Lambda for tax computations. Most Voted
+C. Create an Application Load Balancer that has two Amazon EC2 instances behind it. The EC2 instances will compute the tax
+on the received item names.
+D. Design a REST API using Amazon API Gateway that connects with an API hosted on an Amazon EC2 instance. API Gateway
+accepts and passes the item names to the EC2 instance for tax computations.
+Comments
+bullrem Highly Voted 3 years, 4 months ago
+Selected Answer: B
+Option D is similar to option B in that it uses Amazon API Gateway to handle the API requests, but it also includes an EC2 instance to perform the tax
+computations. However, using an EC2 instance in this way is less scalable and less elastic than using AWS Lambda to perform the computations. An
+EC2 instance is a fixed resource and requires manual scaling and management, while Lambda is an event-driven, serverless compute service that
+automatically scales with the number of requests, making it more suitable for handling variable workloads and reducing response times during high
+traffic periods. Additionally, Lambda is more cost-efficient than EC2 instances, as you only pay for the compute time consumed by your functions,
+making it a more cost-effective solution.
+upvoted 29 times
+career360guru Highly Voted 3 years, 5 months ago
+Selected Answer: B
+Option B. Though D is also possible B is more scalable as Lambda will autoscale to meet the dynamic load.
+upvoted 6 times
+pentium75 2 years, 5 months ago
+Even though you can scale EC2 instances (which is less flexible as Lambda), D does not mention scaling but rather a single EC2 instance. Thus it's
+clearly out.
+upvoted 3 times
+satyaammm Most Recent 1 year, 4 months ago
+Selected Answer: B
+Both API Gateway and Lambda are suitable as they are scalable.
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: B
+Ans B - I was going for option D... but then I saw bullrem's response (1 year, 9 mth ago):
+"Option D is similar to option B in that it uses Amazon API Gateway to handle the API requests, but it also includes an EC2 instance to perform the
+tax computations. However, using an EC2 instance in this way is less scalable and less elastic than using AWS Lambda to perform the computations."
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+B (98%)
+3%
+lofzee 2 years ago
+Selected Answer: B
+b. easy
+upvoted 2 times
+TruthWS 2 years, 2 months ago
+Option B: Lamda = scalable and elastic
+upvoted 3 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: B
+Option B leverages AWS Lambda, which is a serverless compute service that automatically scales in response to incoming requests. When a request is
+made to the API hosted on Amazon API Gateway, API Gateway triggers the associated AWS Lambda function, passing the item names as input
+parameters. The Lambda function then performs the tax computations based on the provided item names. AWS Lambda automatically manages the
+compute capacity, ensuring that there is no need to provision or manage servers. This serverless architecture offers scalability and elasticity, as
+Lambda functions can scale out to handle a larger number of inquiries during the holiday season and scale in during periods of lower demand.
+Additionally, AWS Lambda is a fully managed service, reducing operational overhead for the company.
+upvoted 2 times
+app12 2 years, 4 months ago
+The thing that bothers me about B is that the request sends the name and then based on the name, the tax is calculated. How do you calculate a
+value e.g. tax if you just have a name...
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: B
+EC2 without autoscaling is not elastic so A, C & D won't be suitable. B uses AWS Lambda which is elastic and scalable by design.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+Though EC2 can scale (even if less flexible than Lambda), neither A, C nor D involve scaling. All these answers are about a single EC2 instance or a
+pair of EC2 instances. The only answer that includes scaling and elasticity is B.
+upvoted 5 times
+LoXoL 2 years, 4 months ago
+I agree.
+upvoted 1 times
+Ruffyit 2 years, 6 months ago
+scalable and elastic = serverless = API gateway and AWS Lambda
+upvoted 3 times
+paniya93 2 years, 8 months ago
+Selected Answer: B
+in 002 answer is B. Why is that?
+upvoted 1 times
+vijaykamal 2 years, 8 months ago
+Selected Answer: B
+Options A, C, and D involve EC2 instances, which are not as inherently scalable and elastic as serverless AWS Lambda functions, and they would
+require more manual management and operational overhead. Therefore, option B is the most appropriate choice for a scalable and elastic API
+solution.
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+REST API using Amazon API Gateway and integrating it with AWS Lambda (option B) is the recommended approach to achieve a scalable and elastic
+solution for the company's API during the holiday season.
+________
+No good EC2 in this case
+using an EC2 instance in this way is less scalable and less elastic than using AWS Lambda to perform the computations
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: B
+scalable and elastic = serverless = API gateway and AWS Lambda
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+B) Design a REST API using Amazon API Gateway that accepts the item names. API Gateway passes item names to AWS Lambda for tax computations
+This option provides the most scalable and elastic solution:
+API Gateway handles creating the REST API frontend to receive requests
+Lambda functions scale automatically to handle spikes in traffic during peak seasons
+No servers to manage for the computations, providing high scalability
+upvoted 3 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+Option A (hosting an API on an Amazon EC2 instance) would require manual management and scaling of the EC2 instances, making it less scalable
+and elastic compared to a serverless solution.
+Option C (creating an Application Load Balancer with EC2 instances for tax computations) also involves manual management of the instances and
+does not offer the same level of scalability and elasticity as a serverless solution.
+Option D (designing a REST API using API Gateway and connecting it with an API hosted on an EC2 instance) adds unnecessary complexity and
+management overhead. It is more efficient to directly integrate API Gateway with AWS Lambda for tax computations.
+Therefore, designing a REST API using Amazon API Gateway and integrating it with AWS Lambda (option B) is the recommended approach to achieve
+a scalable and elastic solution for the company's API during the holiday season.
+upvoted 3 times

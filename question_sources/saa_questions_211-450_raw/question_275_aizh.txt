@@ -1,0 +1,58 @@
+Question #275
+A company runs an internal browser-based application. The application runs on Amazon EC2 instances behind an Application
+Load Balancer. The instances run in an Amazon EC2 Auto Scaling group across multiple Availability Zones. The Auto Scaling group
+scales up to 20 instances during work hours, but scales down to 2 instances overnight. Staff are complaining that the application is
+very slow when the day begins, although it runs well by mid-morning.
+How should the scaling be changed to address the staff complaints and keep costs to a minimum?
+一家公司运行一个内部基于浏览器的应用程序。该应用程序运行在 Amazon EC2 实例上，并通过 Application Load Balancer 进行负
+载均衡。这些实例运行在跨多个可用区的 Amazon EC2 Auto Scaling 组中。Auto Scaling 组在工作时间内扩展到 20 个实例，但在夜
+间缩减到 2 个实例。员工抱怨在一天开始时应用程序运行非常慢，尽管到了上午中期运行良好。
+如何调整扩展以解决员工的投诉并将成本降到最低？
+A. Implement a scheduled action that sets the desired capacity to 20 shortly before the office opens.
+实施一个计划操作，在办公室开放前不久将目标容量设置为 20。
+B. Implement a step scaling action triggered at a lower CPU threshold, and decrease the cooldown period.
+实施一个在较低 CPU 阈值触发的步进扩展操作，并减少冷却时间。
+C. Implement a target tracking action triggered at a lower CPU threshold, and decrease the cooldown period. Most Voted
+实施一个在较低 CPU 阈值触发的目标跟踪操作，并减少冷却时间。
+D. Implement a scheduled action that sets the minimum and maximum capacity to 20 shortly before the office opens.
+实施一个计划操作，在办公室开放前不久将最小和最大容量设置为 20。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (65%)
+A (35%)
+Amazon EC2 Auto Scaling的工作原理，包括目标跟踪、步进扩展和计划操作。
+如何优化Auto Scaling以满足应用程序性能需求，同时控制成本。
+冷却时间（Cooldown period）的作用及其对扩展行为的影响。
+2. 选项分析
+A. 实施一个计划操作，在办公室开放前不久将目标容量设置为20。
+正确性分析：计划操作可以确保在特定时间点设置Auto Scaling组的容量，但它只设置目标容量，不能动态调整实例数量以应对实
+际负载。
+缺点：虽然可以解决早晨的性能问题，但可能会导致资源浪费，因为目标容量固定为20，即使负载较低也不会减少实例数量。
+结论：此选项不符合“保持成本最低”的要求。
+B. 实施一个在较低CPU阈值触发的步进扩展操作，并减少冷却时间。
+正确性分析：步进扩展基于预定义的阈值触发扩展操作，可以动态调整实例数量。但减少冷却时间可能导致频繁扩展，增加管理复
+杂性。
+缺点：步进扩展的触发条件可能无法及时响应早晨的负载高峰，导致性能问题仍然存在。
+结论：此选项无法完全解决问题。
+C. 实施一个在较低CPU阈值触发的目标跟踪操作，并减少冷却时间。
+正确性分析：目标跟踪扩展基于实时指标（如CPU利用率）动态调整实例数量，能够快速响应负载变化。减少冷却时间可以加快扩
+展速度。
+优点：此方法既能解决早晨的性能问题，又能在负载降低时减少实例数量，从而控制成本。
+结论：此选项是最佳选择。
+D. 实施一个计划操作，在办公室开放前不久将最小和最大容量设置为20。
+正确性分析：计划操作可以确保在特定时间点设置Auto Scaling组的最小和最大容量，但这会强制实例数量固定为20，无论负载如
+何变化。
+缺点：虽然解决了早晨的性能问题，但会导致资源浪费，因为实例数量无法动态调整以适应负载变化。
+结论：此选项不符合“保持成本最低”的要求。
+3. 我选的答案
+C. 实施一个在较低CPU阈值触发的目标跟踪操作，并减少冷却时间。
+4. 官方答案
+C. 实施一个在较低CPU阈值触发的目标跟踪操作，并减少冷却时间。
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：目标跟踪扩展能够动态调整实例数量以满足实时负载需求，同时减少冷却时间可以加快扩展速度，解决早晨的性能问题
+并控制成本。

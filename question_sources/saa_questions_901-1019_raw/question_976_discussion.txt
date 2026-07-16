@@ -1,0 +1,118 @@
+A company is implementing a new application on AWS. The company will run the application on multiple Amazon EC2 instances
+across multiple Availability Zones within multiple AWS Regions. The application will be available through the internet. Users will
+access the application from around the world.
+The company wants to ensure that each user who accesses the application is sent to the EC2 instances that are closest to the
+user’s location.
+Which solution will meet these requirements?
+A. Implement an Amazon Route 53 geolocation routing policy. Use an internet-facing Application Load Balancer to distribute
+the traffic across all Availability Zones within the same Region.
+B. Implement an Amazon Route 53 geoproximity routing policy. Use an internet-facing Network Load Balancer to distribute
+the traffic across all Availability Zones within the same Region. Most Voted
+C. Implement an Amazon Route 53 multivalue answer routing policy. Use an internet-facing Application Load Balancer to
+distribute the traffic across all Availability Zones within the same Region.
+D. Implement an Amazon Route 53 weighted routing policy. Use an internet-facing Network Load Balancer to distribute the
+traffic across all Availability Zones within the same Region.
+Comments
+dhewa Highly Voted 1 year, 9 months ago
+Selected Answer: B
+Keyword closest.
+Amazon Route 53 Geoproximity Routing: This routing policy directs traffic based on the geographic location of your users and your resources,
+ensuring that users are routed to the closest EC2 instances.
+upvoted 9 times
+nebajp Highly Voted 1 year, 10 months ago
+Selected Answer: A
+Correct answer is A
+Geo location is based on users location
+GeoProximity is based on the AWS services used by users.
+upvoted 8 times
+Sergantus 1 year, 6 months ago
+The main purpose of geolocation policy is to enforce regional restrictions, provide language-specific content, or balance load across regional
+endpoints. It doesn’t return “closest” records but only relevant (location) records.
+upvoted 4 times
+ln2718 Most Recent 10 months ago
+Selected Answer: B
+AI follow-up --- Geolocation routing directs traffic based on the user's location, while geoproximity routing considers both the user's location and
+the location of your resources
+upvoted 2 times
+ln2718 10 months ago
+Selected Answer: B
+Correct Answer: B
+Community vote distribution
+B (62%)
+A (38%)
+Another poorly written question... but I'll go with B for all the reasons stated.
+upvoted 1 times
+MortisG 1 year ago
+Selected Answer: A
+Geolocation routing ensures users are routed to their nearest region and is quite simpe to set up while geoproximity routing is more suited for
+custom routing control, requires traffic flow and is more complex to set up.
+upvoted 1 times
+bora4motion 1 year ago
+Selected Answer: A
+I am going with A. Its web, which translates to HTTP and therefore ALB.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geoproximity.html
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: B
+A - "geolocation" is simple and effective, but it might not always direct users to the physically closest Region. It’s more about their geographic "label"
+(country/region).
+B - "geoproximity" is better for ensuring actual closeness but adds a bit more complexity.
+Then, I don't think ALB or NLB should be an argument here. NLBs are generally preferred for applications that require high throughput and low
+latency, especially if they are not using HTTP/HTTPS. NLBs operate at Layer 4 (TCP/UDP), so suitable for a wider range of applications than ALBs
+(Layer 7, HTTP/HTTPS). Even if the application does use HTTP/HTTPS, NLBs can still be used if you don't need the advanced features of an ALB (like
+content-based routing or host-based routing).
+Then again, the question haven't explicitly stated the protocol so oh well, I'm gonna go with B.
+upvoted 4 times
+robotgeek 1 year, 4 months ago
+Agree, if the question does not state "web", "ALB", or something "layer 7 specific" we should not assume it
+upvoted 1 times
+deacon967 1 year, 5 months ago
+Selected Answer: A
+You can argue geolocation vs geoproximity all day but why would one use a NLB for an internet based app? The is the perfect use case for an ALB.
+A is the correct answer.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+It's not necessary that an internet based app is bound to use ALBs for traffic balancing. If you immediately go to ALBs when a question mentions
+web-based apps, you're gonna get so many questions wrong.
+upvoted 2 times
+dragossky 1 year, 5 months ago
+Selected Answer: B
+Which AWS Route 53 routing policy should be used to route traffic based on users' location?
+Geoproximity routing
+Geoproximity routing lets Amazon Route 53 route traffic to your resources based on the geographic location of your users and your resources.
+upvoted 1 times
+8621a7c 1 year, 7 months ago
+Selected Answer: A
+Go with A
+upvoted 2 times
+b3b5fdd 1 year, 7 months ago
+Selected Answer: B
+Correct answer is B!
+upvoted 4 times
+Bwhizzy 1 year, 8 months ago
+Selected Answer: A
+The answer is A. routing traffic to the user region. Also, it can't be B. It says using a Network Load Balancer. you can't use a network load balancer for
+internet traffic
+upvoted 4 times
+mk168898 1 year, 7 months ago
+TCP UDP traffic?
+upvoted 2 times
+kbgsgsgs 1 year, 8 months ago
+Selected Answer: A
+Correct answer is A
+upvoted 2 times
+blehbleh 1 year, 8 months ago
+Selected Answer: B
+It is B:
+Geolocation:
+Primarily focuses on the user's location, allowing you to serve different content based on their geographic region.
+Geoproximity:
+Considers both the user's location and the location of your resources, dynamically choosing the closest option based on network latency.
+upvoted 3 times
+komorebi 1 year, 10 months ago
+Selected Answer: B
+Answer is B
+upvoted 5 times

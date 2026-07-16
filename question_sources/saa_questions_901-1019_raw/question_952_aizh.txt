@@ -1,0 +1,81 @@
+Question #952
+A company wants to move its application to a serverless solution. The serverless solution needs to analyze existing data and new
+data by using SQL. The company stores the data in an Amazon S3 bucket. The data must be encrypted at rest and replicated to a
+different AWS Region.
+Which solution will meet these requirements with the LEAST operational overhead?
+一家公司希望将其应用程序迁移到无服务器解决方案。 无服务器解决方案需要使用 SQL 分析现有数据和新数据。 该公司将数据存
+储在 Amazon S3 bucket 中。 数据必须在静态时加密，并复制到不同的 AWS Region。
+哪种解决方案能够以最少的运营开销满足这些要求？
+A. Create a new S3 bucket that uses server-side encryption with AWS KMS multi-Region keys (SSE-KMS). Configure Cross-
+Region Replication (CRR). Load the data into the new S3 bucket. Use Amazon Athena to query the data.
+创建一个新的 S3 bucket，使用 AWS KMS multi-Region keys (SSE-KMS) 进行服务器端加密。 配置 Cross-Region Replication
+(CRR)。 将数据加载到新的 S3 bucket 中。 使用 Amazon Athena 查询数据。
+B. Create a new S3 bucket that uses server-side encryption with Amazon S3 managed keys (SSE-S3). Configure Cross-Region
+Replication (CRR). Load the data into the new S3 bucket. Use Amazon RDS to query the data.
+创建一个新的 S3 bucket，使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密。 配置 Cross-Region Replication (CRR)。
+将数据加载到新的 S3 bucket 中。 使用 Amazon RDS 查询数据。
+C. Configure Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with Amazon S3 managed
+keys (SSE-S3). Use Amazon Athena to query the data. Most Voted
+在现有的 S3 bucket 上配置 Cross-Region Replication (CRR)。 使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密。 使
+用 Amazon Athena 查询数据。
+D. Configure S3 Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with AWS KMS multi-
+Region keys (SSE-KMS). Use Amazon RDS to query the data.
+在现有的 S3 bucket 上配置 S3 Cross-Region Replication (CRR)。 使用 AWS KMS multi-Region keys (SSE-KMS) 进行服务器端加
+密。 使用 Amazon RDS 查询数据。
+Correct Answer: C
+正确答案：C
+题目分析与解答
+1. 考察的知识点
+Amazon S3 的加密机制，包括 SSE-S3 和 SSE-KMS。
+Amazon S3 的跨区域复制 (Cross-Region Replication, CRR)。
+Amazon Athena 的使用场景和功能。
+Amazon RDS 的使用场景和功能。
+如何设计低运营开销的无服务器架构。
+2. 独立思考与分析
+题目要求选择一个无服务器解决方案，能够分析数据（包括现有数据和新数据），并且数据需要加密且跨区域复制。需要重点关注
+以下几点：
+无服务器架构：Amazon Athena 是无服务器的查询服务，而 Amazon RDS 是托管数据库服务，需要管理实例，因此不符合无服务
+器的要求。
+数据加密：SSE-S3 和 SSE-KMS 都可以满足数据加密的要求，但 SSE-KMS 提供更高级的密钥管理功能，尤其是多区域密钥 (multi-
+Region keys)。
+跨区域复制：CRR 是实现数据跨区域复制的标准方法。
+低运营开销：无服务器架构和自动化的加密与复制机制可以降低运营开销。
+3. 选项逐个分析
+A. 创建一个新的 S3 bucket，使用 AWS KMS multi-Region keys (SSE-KMS) 进行服务器端加密，配置 CRR，使用 Amazon
+Athena 查询数据。
+优点：SSE-KMS 提供高级加密功能，CRR 实现跨区域复制，Amazon Athena 是无服务器查询服务，符合题目要求。
+缺点：创建新的 S3 bucket 会增加额外的操作步骤，而题目并未要求创建新的 bucket。
+结论：虽然满足要求，但创建新 bucket 增加了操作开销，不是最佳选择。
+B. 创建一个新的 S3 bucket，使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密，配置 CRR，使用 Amazon RDS 查询
+数据。
+优点：SSE-S3 提供基本的加密功能，CRR 实现跨区域复制。
+缺点：Amazon RDS 是托管服务，需要管理实例，不符合无服务器架构的要求；创建新 bucket 增加了操作开销。
+结论：不符合无服务器架构要求，且增加了操作开销。
+C. 在现有的 S3 bucket 上配置 CRR，使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密，使用 Amazon Athena 查询
+数据。
+优点：直接使用现有的 S3 bucket，避免额外的操作开销；SSE-S3 提供基本的加密功能；CRR 实现跨区域复制；Amazon Athena 是
+无服务器查询服务，符合题目要求。
+缺点：SSE-S3 的加密功能不如 SSE-KMS 高级，但仍然满足题目要求。
+结论：符合题目要求，且运营开销最低，是最佳选择。
+D. 在现有的 S3 bucket 上配置 CRR，使用 AWS KMS multi-Region keys (SSE-KMS) 进行服务器端加密，使用 Amazon RDS 查询
+数据。
+优点：SSE-KMS 提供高级加密功能，CRR 实现跨区域复制。
+缺点：Amazon RDS 是托管服务，需要管理实例，不符合无服务器架构的要求。
+结论：不符合无服务器架构要求。
+4. 我选的答案
+C. 在现有的 S3 bucket 上配置 CRR，使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密，使用 Amazon Athena 查询
+数据。
+5. 官方答案
+Community vote distribution
+社区投票分布
+C (50%)
+A (50%)
+C. 在现有的 S3 bucket 上配置 CRR，使用 Amazon S3 managed keys (SSE-S3) 进行服务器端加密，使用 Amazon Athena 查询
+数据。
+6. 与官方答案比较
+我的答案与官方答案一致。原因如下：
+Amazon Athena 是无服务器查询服务，符合无服务器架构的要求。
+直接使用现有的 S3 bucket，避免额外的操作开销。
+SSE-S3 提供基本的加密功能，满足题目要求。
+CRR 实现跨区域复制，满足题目要求。
+因此，答案是正确的，无需更改。

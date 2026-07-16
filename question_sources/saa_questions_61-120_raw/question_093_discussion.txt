@@ -1,0 +1,160 @@
+A company runs an on-premises application that is powered by a MySQL database. The company is migrating the application to
+AWS to increase the application's elasticity and availability.
+The current architecture shows heavy read activity on the database during times of normal operation. Every 4 hours, the
+company's development team pulls a full export of the production database to populate a database in the staging environment.
+During this period, users experience unacceptable application latency. The development team is unable to use the staging
+environment until the procedure completes.
+A solutions architect must recommend replacement architecture that alleviates the application latency issue. The replacement
+architecture also must give the development team the ability to continue using the staging environment without delay.
+Which solution meets these requirements?
+A. Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Populate the staging database by implementing a
+backup and restore process that uses the mysqldump utility.
+B. Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Use database cloning to create the staging
+database on-demand. Most Voted
+C. Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Use the standby instance for the
+staging database.
+D. Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Populate the staging database
+by implementing a backup and restore process that uses the mysqldump utility.
+Comments
+Buruguduystunstugudunstuy Highly Voted 2 years, 11 months ago
+Selected Answer: B
+The recommended solution is Option B: Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Use database cloning to create
+the staging database on-demand.
+To alleviate the application latency issue, the recommended solution is to use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production,
+and use database cloning to create the staging database on-demand. This allows the development team to continue using the staging environment
+without delay, while also providing elasticity and availability for the production application.
+Therefore, Options A, C, and D are not recommended
+upvoted 25 times
+Buruguduystunstugudunstuy 2 years, 11 months ago
+Option A: Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Populating the staging database by implementing a backup
+and restore process that uses the mysqldump utility is not the recommended solution because it involves taking a full export of the production
+database, which can cause unacceptable application latency.
+Option C: Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Using the standby instance for the staging
+database is not the recommended solution because it does not give the development team the ability to continue using the staging environment
+without delay. The standby instance is used for failover in case of a production instance failure, and it is not intended for use as a staging
+environment.
+upvoted 20 times
+Buruguduystunstugudunstuy 2 years, 11 months ago
+Option D: Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Populating the staging database by
+implementing a backup and restore process that uses the mysqqldump utility is not the recommended solution because it involves taking a full
+export of the production database, which can cause unacceptable application latency.
+upvoted 9 times
+Correct Answer: B
+Community vote distribution
+B (92%)
+8%
+MutiverseAgent 2 years, 5 months ago
+Agree, solution it seems to be the B)
+1) Because the company wants "elasticity and availability" as the question mentioned, so I think this leaves us in the two questions related to Aurora
+discarding the RDS Mysql solution.
+2) Accoding AWS documentation (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html)
+"Aurora cloning is especially useful for quickly setting up test environments using your production data, without risking data corruption"
+upvoted 9 times
+arashjs1993 Highly Voted 2 years, 1 month ago
+Selected Answer: B
+Aura MySQL is very fast in comparison to RDS for creating a clone of DB, you can create a even clone of a clone while you still work on your own
+clone, this will allow the dev team continue working during cloning step.
+https://aws.amazon.com/blogs/aws/amazon-aurora-fast-database-cloning/
+upvoted 12 times
+Rcosmos Most Recent 1 year, 5 months ago
+Selected Answer: B
+Conclusão:
+A configuração B com o Amazon Aurora MySQL oferece uma solução eficiente, escalável e de alto desempenho, eliminando o problema de latência
+do aplicativo e permitindo que a equipe de desenvolvimento use o ambiente de preparo sem atrasos. A clonagem de banco de dados Aurora é a
+chave para atender a esses requisitos com o mínimo impacto operacional.
+upvoted 1 times
+MehulKapadia 1 year, 8 months ago
+Selected Answer: B
+Answer B:
+Few Points about Aurora Database Cloning:
+• Create a new Aurora DB Cluster from an existing one
+• Faster than snapshot & restore
+• Uses copy-on-write protocol
+• Very fast & cost-effective
+• Useful to create a “staging” database from a “production” database without impacting the production database
+upvoted 3 times
+ronntsai127 1 year, 8 months ago
+When the question did not say about "cost efficient", always choose Aurora MySQL > RDS MySQL, because AWS can earn more money in Aurora
+upvoted 3 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: B
+I'll go for B
+AD: looks time consuming as mysqldump is like a table dump
+C: You cannot use a standby for anything apart from read-only database. This would be an option if dev team was specifically using it for read-only
+mode.
+https://aws.amazon.com/blogs/database/readable-standby-instances-in-amazon-rds-multi-az-deployments-a-new-high-availability-option/
+upvoted 2 times
+Ruffyit 2 years, 1 month ago
+B. With Aurora, you can create a clone of the production database quickly and efficiently, without the need for time-consuming backup and restore
+processes. The development team can spin up the staging database on-demand, eliminating delays and allowing them to continue using the staging
+environment without interruption.
+upvoted 2 times
+Modulopi 2 years, 2 months ago
+Selected Answer: B
+B is the correct
+upvoted 1 times
+TariqKipkemei 2 years, 3 months ago
+Selected Answer: C
+No mention of cost, so technically both options B & C would work.
+C. https://aws.amazon.com/blogs/database/readable-standby-instances-in-amazon-rds-multi-az-deployments-a-new-high-availability-
+option/#:~:text=read%20replicas.-,Amazon%20RDS,-now%20offers%20Multi
+B.https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.html#:~:text=cloning%20works.-,Aurora%20cloning,-
+is%20especially%20useful
+upvoted 2 times
+Guru4Cloud 2 years, 4 months ago
+Selected Answer: B
+Option B is the best solution that meets all the requirements:
+Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Use database cloning to create the staging database on-demand.
+The key requirements are to:
+Alleviate application latency caused by database exports
+Give development immediate access to a staging environment
+Aurora Multi-AZ replicas improves availability and provides fast failover.
+Database cloning creates an instantly available copy of the production database that can be used for staging. This avoids any export or restoration
+del
+upvoted 2 times
+cookieMr 2 years, 5 months ago
+Selected Answer: B
+A. Populating the staging database through a backup and restore process using the mysqldump utility would still result in delays and impact
+application latency.
+B. With Aurora, you can create a clone of the production database quickly and efficiently, without the need for time-consuming backup and restore
+processes. The development team can spin up the staging database on-demand, eliminating delays and allowing them to continue using the staging
+environment without interruption.
+C. Using the standby instance for the staging database would not provide the development team with the ability to use the staging environment
+without delay. The standby instance is designed for failover purposes and may not be readily available for immediate use.
+D. Relying on a backup and restore process using the mysqldump utility would still introduce delays and impact application latency during the data
+population phase.
+upvoted 3 times
+linux_admin 2 years, 8 months ago
+Selected Answer: B
+With Amazon Aurora MySQL, creating a staging database using database cloning is an easy process. Using database cloning will eliminate the
+performance issues that occur when a full export is done, and the new database is created. In addition, Amazon Aurora's high availability is provided
+through Multi-AZ deployment, and read replicas can be used to serve the heavy read traffic without affecting the production database. This solution
+provides better scalability, elasticity, and availability than the current architecture.
+upvoted 5 times
+alexiscloud 2 years, 8 months ago
+Answer B:
+upvoted 1 times
+bdp123 2 years, 9 months ago
+Selected Answer: B
+https://aws.amazon.com/blogs/aws/amazon-aurora-fast-database-cloning/
+upvoted 3 times
+john2323 2 years, 10 months ago
+Selected Answer: B
+Database cloning is the best answer
+upvoted 1 times
+techhb 2 years, 11 months ago
+Selected Answer: B
+Database cloning is right answer here.
+upvoted 1 times
+career360guru 2 years, 12 months ago
+Option B is right.
+You can not access Standby instance for Read in RDS Multi-AZ Deployments.
+upvoted 4 times
+aadi7 2 years, 11 months ago
+This is correct, stand by instances cannot be used for read/write and is for failover targets. Read Replicas can be used for that so B is correct.
+upvoted 3 times
+aadi7 2 years, 11 months ago
+In a RDS Multi-AZ deployment, you can use the standby instance for read-only purposes, such as running queries and reporting. This is known as a
+"read replica." You can create one or more read replicas of a DB instance and use them to offload read traffic from the primary instance.
+https://aws.amazon.com/about-aws/whats-new/2018/01/amazon-rds-read-replicas-now-support-multi-az-deployments/
+upvoted 4 times

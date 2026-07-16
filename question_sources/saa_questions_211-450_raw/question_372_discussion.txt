@@ -1,0 +1,145 @@
+A company wants to migrate an Oracle database to AWS. The database consists of a single table that contains millions of
+geographic information systems (GIS) images that are high resolution and are identified by a geographic code.
+When a natural disaster occurs, tens of thousands of images get updated every few minutes. Each geographic code has a single
+image or row that is associated with it. The company wants a solution that is highly available and scalable during such events.
+Which solution meets these requirements MOST cost-effectively?
+A. Store the images and geographic codes in a database table. Use Oracle running on an Amazon RDS Multi-AZ DB instance.
+B. Store the images in Amazon S3 buckets. Use Amazon DynamoDB with the geographic code as the key and the image S3
+URL as the value. Most Voted
+C. Store the images and geographic codes in an Amazon DynamoDB table. Configure DynamoDB Accelerator (DAX) during
+times of high load.
+D. Store the images in Amazon S3 buckets. Store geographic codes and image S3 URLs in a database table. Use Oracle running
+on an Amazon RDS Multi-AZ DB instance.
+Comments
+Wayne23Fang Highly Voted 2 years, 9 months ago
+Selected Answer: B
+Amazon prefers people to move from Oracle to its own services like DynamoDB and S3.
+upvoted 17 times
+Karlos99 Highly Voted 3 years, 3 months ago
+Selected Answer: D
+The company wants a solution that is highly available and scalable
+upvoted 10 times
+EllenLiu 1 year, 5 months ago
+another thing is the design of dynamoDB, "Use Amazon DynamoDB with the geographic code as the key and the image S3 URL as the value."
+geographic code can not be the only key for any image
+upvoted 2 times
+[Removed] 3 years, 2 months ago
+But DynamoDB is also highly available and scalable
+https://aws.amazon.com/dynamodb/faqs/#:~:text=DynamoDB%20automatically%20scales%20throughput%20capacity,high%20availability%20and
+%20data%20durability.
+upvoted 5 times
+pbpally 3 years, 1 month ago
+Yes but has a size limit at 400kb so theoretically it could store images but it's not a plausible solution.
+upvoted 2 times
+ruqui 3 years ago
+It doesn't matter the size limit of DynamoDB!!!! The images are saved in S3 buckets. Right answer is B
+upvoted 9 times
+jaydesai8 2 years, 11 months ago
+but would it be easy and cost-effective to migrate Oracle (relational db) to (Dynamodb)NoSQL?
+Correct Answer: B
+Community vote distribution
+B (71%)
+D (29%)
+upvoted 5 times
+pentium75 2 years, 5 months ago
+Yes because it's a single table with two records, for which Oracle or any relation database has been a bad choice in the first place.
+upvoted 6 times
+upliftinghut Most Recent 2 years, 4 months ago
+Selected Answer: B
+DynamoDB with its HA and built-in scalability. The nature of the table also resonates with NoSQL than SQL DB such as Oracle. Only 1 table so
+migration is just a script from Oracle to DynamoDB
+D is workable but more expensive with Oracle licenses and other setups for HA and scalability
+upvoted 3 times
+upliftinghut 2 years, 4 months ago
+HA & built-in scalability of Amazon DynamoDB :
+https://aws.amazon.com/dynamodb/features/#:~:text=Amazon%20DynamoDB%20is%20a%20fully,for%20the%20most%20demanding%20applicat
+ons.
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: B
+A puts images in Oracle, not a good idea
+C DAX is not going to help with images
+D It is doable but RDS on multi AZ does not give you more performance or write scalability. It gives more availability and read scalability which is not
+required here.
+B works as Geographic code is the key in DynamoDB and S3 image URL is the data so DynamoDB can handle tens of thousands such record and S3
+can scale for writing
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+They are currently using Oracle, but only for one simple table with a single key-value pair. This is a typical use case for a NoSQL database like
+DynamoDB (and whoever decided to use Oracle for this in the first place should be fired). Oracle is expensive as hell, so options A and D might work
+but are surely not cost-effective. C won't work because the images are too big for the database. Leaves B which would be the ideal solution and mee
+the availability and scalability requirements.
+upvoted 7 times
+wsdasdasdqwdaw 2 years, 7 months ago
+For D - Oracle is not cheap as well. RDS with Oracle vs DynamoDB, I would go for pure AWS provided option. In each exam there is a lot of marketing
+=> B
+upvoted 3 times
+jubolano 2 years, 7 months ago
+Selected Answer: D
+Cost effective, D
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+How is Oracle more cost effective than other options?
+upvoted 2 times
+wsdasdasdqwdaw 2 years, 7 months ago
+B or D, but the question is MOST cost-effectively DynamoDB is more expensive than RDS, I am going for D
+upvoted 3 times
+JA2018 1 year, 6 months ago
+Key in sTEM states that the customer's current Oracle DB table is setup with a single key-value pair.
+A typical use case for a NoSQL database like DynamoDB.
+upvoted 1 times
+gouranga45 2 years, 8 months ago
+Selected Answer: B
+Answer is B, DynamoDB is Highly available and scalable
+upvoted 2 times
+baba365 2 years, 8 months ago
+A single table in a relational db can have items that are related ? e.g. ‘select * from Faculty where department_id in (10, 20) and dept_name = AWS’.
+In the sql query example above, * means all and Faculty is name of the table.
+upvoted 2 times
+Eminenza22 2 years, 9 months ago
+Selected Answer: B
+B option offers a cost-effective solution for storing and accessing high-resolution GIS images during natural disasters. Storing the images in Amazon
+S3 buckets provides scalable and durable storage, while using Amazon DynamoDB allows for quick and efficient retrieval of images based on
+geographic codes. This solution leverages the strengths of both S3 and DynamoDB to meet the requirements of high availability, scalability, and
+cost-effectiveness.
+upvoted 2 times
+cd93 2 years, 9 months ago
+Selected Answer: B
+What were the company thinking using the most expensive DB on the planet FOR ONE SINGLE TABLE???
+Migrate a single table from SQL to NoSQL should be easy enough I guess...
+upvoted 3 times
+vini15 2 years, 10 months ago
+Should be D.
+the question says company wants to migrate oracle to AWS. Oracle is a relational db hence RDS makes more sense whereas Dynamodb is non
+relational db.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+But relational DB does not make sense for the use case. It's a single table.
+upvoted 2 times
+iBanan 2 years, 10 months ago
+I hate these questions:) I can’t choose between B and D
+upvoted 6 times
+ces_9999 2 years, 11 months ago
+Guys the answer is B the oracle database only has one table without any relationships so why we should use a relational database in the first place,
+second we are storing the images in S3 not in the database why not use this alongside dynamo
+upvoted 6 times
+Kp88 2 years, 10 months ago
+You can't do migration of Oracle to Dynmodb without SCT. I am not the DB guy but since its saying oracle I would go with D otherwise B makes
+more sense if a company is starting out from scratch.
+upvoted 2 times
+Kp88 2 years, 10 months ago
+Actually now that I think about it , B sounds ok as well. Company just need to use SCT and that would be more cost effective.
+upvoted 2 times
+joehong 2 years, 11 months ago
+Selected Answer: D
+"A company wants to migrate an Oracle database to AWS"
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Yeah, per my understanding that doesn't implicate that the destination must be an Oracle database.
+upvoted 2 times
+secdgs 2 years, 12 months ago
+D: Wrorng
+if you caluate License Oracle Database, It is not cost-effectively. Multi-AZ is not scalable and if you set scalable, you need more license for Oracle
+database.
+upvoted 2 times

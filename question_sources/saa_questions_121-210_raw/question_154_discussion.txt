@@ -1,0 +1,149 @@
+A company needs to save the results from a medical trial to an Amazon S3 repository. The repository must allow a few scientists to
+add new files and must restrict all other users to read-only access. No users can have the ability to modify or delete any files in the
+repository. The company must keep every file in the repository for a minimum of 1 year after its creation date.
+Which solution will meet these requirements?
+A. Use S3 Object Lock in governance mode with a legal hold of 1 year.
+B. Use S3 Object Lock in compliance mode with a retention period of 365 days. Most Voted
+C. Use an IAM role to restrict all users from deleting or changing objects in the S3 bucket. Use an S3 bucket policy to only
+allow the IAM role.
+D. Configure the S3 bucket to invoke an AWS Lambda function every time an object is added. Configure the function to track
+the hash of the saved object so that modified objects can be marked accordingly.
+Comments
+elmogy Highly Voted 3 years ago
+Selected Answer: B
+B,
+The key is "No users can have the ability to modify or delete any files" and compliance mode supports that.
+I remember it this way: ( governance is like government, they set the rules but they can allow some people to break it :D )
+upvoted 62 times
+Praewwara 2 years, 5 months ago
+Amazon S3 Object Lock
+1. Governance mode - Only users with special permissions can overwrite, delete, or alter object ock settings
+2. Compliance mode - No user, including the root user in an AWS account, can overwrite, delete, or alter object lock settings
+upvoted 13 times
+Burrito69 2 years, 2 months ago
+I liked that thought of yours.. can you do more of these please? Thank you
+upvoted 5 times
+Qjb8m9h Highly Voted 3 years, 6 months ago
+Answer : B
+Reason: Compliance Mode. The key difference between Compliance Mode and Governance Mode is that there are NO users that can override the
+retention periods set or delete an object, and that also includes your AWS root account which has the highest privileges.
+upvoted 22 times
+Zerotn3 3 years, 5 months ago
+How about: The repository must allow a few scientists to add new files
+upvoted 1 times
+JayBee65 3 years, 5 months ago
+Adding is not the same as changing :)
+upvoted 9 times
+abhishek2021 3 years ago
+Compliance mode controls the object life span after creation.
+how this option restricts all scientists from adding new file? please explain.
+upvoted 4 times
+Correct Answer: B
+Community vote distribution
+B (93%)
+7%
+satyaammm Most Recent 1 year, 4 months ago
+Selected Answer: B
+Compliance mode supports the feature of "No users can delete or modify the files".
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: B
+Ans B - Compliance mode... but not sure that answers "allow only a few scientists to add new files"...?
+upvoted 3 times
+toyaji 1 year, 10 months ago
+Selected Answer: B
+First of all, Regal hold has no expiration before you remove it. So A makes no sense.
+After that Governance mode is breakable with permission, but Compilance mode is not even for root user cannot delete it.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: B
+B for sure
+upvoted 1 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: B
+I almost chose A for this deciving line lol but it would be compliance mode as no user should be able to change objects:-
+The repository must allow a few scientists to add new files and must restrict all other users to read-only access.
+upvoted 2 times
+demigodnyi 2 years, 4 months ago
+Can someone please explain why the answer is not A. It said that The repository must allow a few scientists to add new files. So, i think some user
+must have permission to change it.
+upvoted 1 times
+ManikRoy 2 years, 1 month ago
+Write Once Read Many - in compliance mode there is no restriction in adding but only changing existing objects
+upvoted 2 times
+NSA_Poker 2 years ago
+Legal hold – A legal hold provides the same protection as a retention period, but it HAS NO EXPIRATION DATE. Instead, a legal hold remains in
+place until you explicitly remove it. Legal holds are independent from retention periods and are PLACED ON INDIVIDUAL OBJECT VERSIONS.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Unsure, B would meet the "must keep every file for a minimum of 1 year" requirement. (In theory C would too if you ignore the root user, but
+administrators could remove the policy.) But what about the 'a few scientists must be able to add new files'? None of the options mentions
+permissions for a special group.
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+agree that something is missing for "some users".
+ACD are not going to work flat out so B looks like right answer but with some language issues either in the question or the answer.
+upvoted 1 times
+LoXoL 2 years, 5 months ago
+Agree. It looks like it's missing sth here.
+upvoted 1 times
+Ruffyit 2 years, 6 months ago
+Both Compliance & Governance mode protect objects against being deleted or changed. But in Governance mode some people can have special
+permissions. In this question, no user can delete or modify files; so the answer is Compliance mode only. Neither of these modes restrict user from
+adding new files.
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: B
+Compliance Mode best suits this scenario because once an object is locked in compliance mode, its retention mode can't be changed, and its
+retention period can't be shortened.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+B) seems to be the right option, because: Both option A) & B) allow to:
+- Scientists add new files & other users read-only access.
+- Keep files for a minimum of 1 year
+Only option B allows to:
+- Disable all users the ability to modify or delete any file.
+If A) were the correct option some scientis will be able to modify files, as if they were in charge of put an object lock same permission would allow
+them to remove the lock and consequently delete the file.
+upvoted 2 times
+MutiverseAgent 2 years, 10 months ago
+Selected Answer: B
+B) seems to be the right option, because: Both option A) & B) allow to:
+- Scientists add new files & other users read-only access.
+- Keep files for a minimum of 1 year
+Only option B allows to:
+- Disable all users the ability to modify or delete any file.
+If A) were the correct option some scientis will be able to modify files, as if they were in charge of put an object lock same permission would allow
+them to remove the lock and consequently delete the file.
+upvoted 1 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+S3 Object Lock provides the necessary features to enforce immutability and retention of objects in an S3. Compliance mode ensures that the locked
+objects cannot be deleted or modified by any user, including those with write access. By setting a retention period of 365 days, the company can
+ensure that every file in the repository is kept for a minimum of 1 year after its creation date.
+A does not provide the same level of protection as compliance mode. In governance mode, there is a possibility for authorized users to remove the
+legal hold, potentially allowing objects to be modified or deleted.
+C can restrict users from deleting or changing objects, but it does not enforce the retention period requirement. It also does not provide the same
+level of immutability and protection against accidental or malicious modifications.
+D does not address the requirement of preventing users from modifying or deleting files. It provides a mechanism for tracking changes but does not
+enforce the desired access restrictions or retention period.
+upvoted 4 times
+norris81 3 years ago
+Am I the only one to worry about leap years ?
+upvoted 1 times
+cheese929 3 years, 1 month ago
+Selected Answer: B
+In compliance mode, a protected object version can't be overwritten or deleted by any user, including the root user in your AWS account. When an
+object is locked in compliance mode, its retention mode can't be changed, and its retention period can't be shortened. Compliance mode helps
+ensure that an object version can't be overwritten or deleted for the duration of the retention period.
+In governance mode, users can't overwrite or delete an object version or alter its lock settings unless they have special permissions. With governance
+mode, you protect objects against being deleted by most users, but you can still grant some users permission to alter the retention settings or delete
+the object if necessary.
+In Governance mode, Objects can be deleted by some users with special permissions, this is against the requirement.
+upvoted 2 times
+darn 3 years, 1 month ago
+Selected Answer: B
+its B, legal hold has no retention
+upvoted 3 times

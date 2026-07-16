@@ -1,0 +1,102 @@
+A media company has a multi-account AWS environment in the us-east-1 Region. The company has an Amazon Simple
+Notification Service (Amazon SNS) topic in a production account that publishes performance metrics. The company has an AWS
+Lambda function in an administrator account to process and analyze log data.
+The Lambda function that is in the administrator account must be invoked by messages from the SNS topic that is in the
+production account when significant metrics are reported.
+Which combination of steps will meet these requirements? (Choose two.)
+A. Create an IAM resource policy for the Lambda function that allows Amazon SNS to invoke the function. Most Voted
+B. Implement an Amazon Simple Queue Service (Amazon SQS) queue in the administrator account to buffer messages from
+the SNS topic that is in the production account. Configure the SQS queue to invoke the Lambda function.
+C. Create an IAM policy for the SNS topic that allows the Lambda function to subscribe to the topic. Most Voted
+D. Use an Amazon EventBridge rule in the production account to capture the SNS topic notifications. Configure the
+EventBridge rule to forward notifications to the Lambda function that is in the administrator account.
+E. Store performance metrics in an Amazon S3 bucket in the production account. Use Amazon Athena to analyze the metrics
+from the administrator account.
+Comments
+Anyio Highly Voted 1 year, 5 months ago
+Selected Answer: AB
+The correct answers are A,B.
+Explanation:
+Option A: Correct. Creating an IAM resource policy for the Lambda function that allows Amazon SNS to invoke the function is necessary for SNS to
+have permission to trigger Lambda. This policy ensures that the Lambda function can be invoked by a service principal from the SNS service.
+Option B: Correct. Using an Amazon Simple Queue Service (Amazon SQS) queue as an intermediary buffer allows for decoupling the SNS topic from
+the Lambda function, providing more reliability and handling burst traffic effectively. In this setup, the SNS topic can publish to the SQS queue, and
+the queue can then trigger the Lambda function to process the messages.
+upvoted 5 times
+Anyio 1 year, 5 months ago
+Sorry this is the wrong answer (or second best answer) :). The Correct answer is A,C.
+Using the Amazon SNS console, add a cross-account AWS Lambda subscription to an Amazon SNS topic.
+the Lambda function resource policy allows SNS to invoke the function.
+the SNS topic access policy allows Lambda to subscribe to the topic.
+Note: The SNS topic resides in account A and the Lambda function resides in account B.
+upvoted 4 times
+siheom Highly Voted 1 year, 10 months ago
+Selected Answer: AB
+VOTE A,B
+upvoted 5 times
+Anyio Most Recent 1 year, 5 months ago
+Correct Answer: AC
+Community vote distribution
+AC (48%)
+AB (40%)
+8%
+Selected Answer: AC
+The Correct answer is A,C.
+Using the Amazon SNS console, add a cross-account AWS Lambda subscription to an Amazon SNS topic.
+the Lambda function resource policy allows SNS to invoke the function.
+the SNS topic access policy allows Lambda to subscribe to the topic.
+Note: The SNS topic resides in account A and the Lambda function resides in account B.
+upvoted 2 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: AC
+A: resource-policy for Lambda: should grant SNS to access lambda permission
+C: resource-policy for SNS: should specify who can subscribe SNS topic
+upvoted 3 times
+JA2018 1 year, 6 months ago
+Selected Answer: AD
+#A: This is the most direct way to allow the SNS topic in the production account to trigger the Lambda function in the administrator account. By
+creating an IAM policy on the Lambda function that grants SNS permission to invoke it, you establish the necessary access control.
+#D: Using an EventBridge rule in the production account allows you to filter and route the SNS notifications specifically to the Lambda function in the
+administrator account, providing greater control and flexibility over the event delivery .
+upvoted 1 times
+agbor_tambe 1 year, 8 months ago
+Selected Answer: AC
+most reasonable
+upvoted 1 times
+mooondooo 1 year, 8 months ago
+Selected Answer: AC
+Probably A and C
+https://repost.aws/knowledge-center/sns-with-crossaccount-lambda-subscription
+upvoted 3 times
+progounick 1 year, 9 months ago
+Selected Answer: AC
+A and C seem to be the best answer
+upvoted 1 times
+dhewa 1 year, 9 months ago
+Selected Answer: AC
+No need to complicate stuff, AWS services already exist only permissions are missing. A&C will set up the necessary permissions and subscriptions
+for cross-account invocation of the Lambda function by the SNS topic.
+upvoted 2 times
+523db89 1 year, 9 months ago
+A,C correct - While using SQS could be a solution for buffering messages, it introduces additional complexity
+upvoted 1 times
+jamesukae 1 year, 9 months ago
+Selected Answer: BE
+For me AB is contradict , why we invoke lambda function by both SNS and SQS?
+I think BE is correct answer because question also need solution to analyze data.
+upvoted 2 times
+nebajp 1 year, 10 months ago
+correct answer is AD
+upvoted 4 times
+JA2018 1 year, 6 months ago
+- #A: This is the most direct way to allow the SNS topic in the production account to trigger the Lambda function in the administrator account. By
+creating an IAM policy on the Lambda function that grants SNS permission to invoke it, you establish the necessary access control [A, D].
+- #D: Using an EventBridge rule in the production account allows you to filter and route the SNS notifications specifically to the Lambda function in
+the administrator account, providing greater control and flexibility over the event delivery [D].
+upvoted 2 times
+GOTJ 1 year, 4 months ago
+I like your reasoning for option "D". However, with this setup, EventBridge should be the service that invoke the Lambda function:
+Perf Metrics --> SNS --> EventBridge (for filtering and routing "the significant metrics") --> Lambda
+Since you've detached Lambda from SNS adding a service in between, SNS should no longer invoke the Lambda Function and option "A" would
+be wrong, isn't it?
+upvoted 1 times

@@ -1,0 +1,115 @@
+A company has applications that run on Amazon EC2 instances in a VPC. One of the applications needs to call the Amazon S3 API
+to store and read objects. According to the company's security regulations, no traffic from the applications is allowed to travel
+across the internet.
+Which solution will meet these requirements?
+A. Configure an S3 gateway endpoint. Most Voted
+B. Create an S3 bucket in a private subnet.
+C. Create an S3 bucket in the same AWS Region as the EC2 instances.
+D. Configure a NAT gateway in the same subnet as the EC2 instances.
+Comments
+ArielSchivo Highly Voted 3 years, 7 months ago
+Selected Answer: A
+Gateway endpoints provide reliable connectivity to Amazon S3 and DynamoDB without requiring an internet gateway or a NAT device for your VPC.
+It should be option A.
+https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html
+upvoted 33 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: A
+***CORRECT***
+The correct solution is Option A (Configure an S3 gateway endpoint.)
+A gateway endpoint is a VPC endpoint that you can use to connect to Amazon S3 from within your VPC. Traffic between your VPC and Amazon S3
+never leaves the Amazon network, so it doesn't traverse the internet. This means you can access Amazon S3 without the need to use a NAT gateway
+or a VPN connection.
+***WRONG***
+Option B (creating an S3 bucket in a private subnet) is not a valid solution because S3 buckets do not have subnets.
+Option C (creating an S3 bucket in the same AWS Region as the EC2 instances) is not a requirement for meeting the given security regulations.
+Option D (configuring a NAT gateway in the same subnet as the EC2 instances) is not a valid solution because it would allow traffic to leave the VPC
+and travel across the Internet.
+upvoted 19 times
+PaulGa Most Recent 1 year, 8 months ago
+Selected Answer: A
+Ans A - S3 gateway endpoint: dedicated end-end and private
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: A
+A is the correct answer
+upvoted 1 times
+effiecancode 1 year, 11 months ago
+it's definitely A
+upvoted 1 times
+Correct Answer: A
+Community vote distribution
+A (100%)
+JohnZh 2 years, 2 months ago
+A. Configure an S3 gateway endpoint.
+Correct: https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
+With a gateway endpoint, you can access Amazon S3 from your VPC, without requiring an internet gateway or NAT device for your VPC.
+Additional you need to configure the route table for the subnet that EC2 stays, but we have the key word here.
+B. Create an S3 bucket in a private subnet.
+I am not aware that we can create S3 bucket in certain subnet.
+C. Create an S3 bucket in the same AWS Region as the EC2 instances.
+Not enough. Without VPC gateway endpoint, access will through go out to the internet.
+D. Configure a NAT gateway in the same subnet as the EC2 instances.
+NAT gateway outbound traffic should also go out to the internet.
+upvoted 2 times
+Charumathi 2 years, 4 months ago
+Selected Answer: A
+You can access Amazon S3 from your VPC using gateway VPC endpoints. After you create the gateway endpoint, you can add it as a target in your
+route table for traffic destined from your VPC to Amazon S3.
+There is no additional charge for using gateway endpoints.
+Amazon S3 supports both gateway endpoints and interface endpoints. With a gateway endpoint, you can access Amazon S3 from your VPC, without
+requiring an internet gateway or NAT device for your VPC, and with no additional cost. However, gateway endpoints do not allow access from on-
+premises networks, from peered VPCs in other AWS Regions, or through a transit gateway. For those scenarios, you must use an interface endpoint,
+which is available for an additional cost.
+https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: A
+EC2 to S3 without public interne = S3 gatewat
+B: Cannot be implemented
+C: Even if you create EC2 and S3 in same region, without a S3 gateway it will use the public internet
+D: Makes no sense, NAT gateway in the subnet as EC2 instance to do what?
+upvoted 2 times
+Ruffyit 2 years, 7 months ago
+A gateway endpoint is a VPC endpoint that you can use to connect to Amazon S3 from within your VPC. Traffic between your VPC and Amazon S3
+never leaves the Amazon network, so it doesn't traverse the internet. This means you can access Amazon S3 without the need to use a NAT gateway
+or a VPN connection
+upvoted 2 times
+David_Ang 2 years, 8 months ago
+Selected Answer: A
+Answer "A" is correct because an endpoint create a way for the data to travel in the VPC
+upvoted 2 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: A
+Prevent traffic from traversing the internet = Gateway VPC endpoint for S3.
+upvoted 2 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: A
+Configure an S3 gateway endpoint
+upvoted 1 times
+tamefi5512 2 years, 11 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+B. Creating an S3 in a private subnet restricts direct internet access to the bucket but does not provide a direct and secure connection between the
+EC2and the S3. The application would still need to traverse the internet to access the S3 API.
+C. Creating an S3 in the same Region as the EC2 does not inherently prevent traffic from traversing the internet.
+D. Configuring a NAT gateway allows outbound internet connectivity for resources in private subnets, but it does not provide a direct and secure
+connection to the S3 service. The traffic from the EC2 to the S3 API would still traverse the internet.
+The most suitable solution is to configure an S3 gateway endpoint (option A). It provides a secure and private connection between the VPC and the
+S3 service without requiring the traffic to traverse the internet. With an S3 gateway endpoint, the EC2 can access the S3 API directly within the VPC,
+meeting the security requirement of preventing traffic from traveling across the internet.
+upvoted 3 times
+Bmarodi 3 years ago
+Selected Answer: A
+Configure an S3 gateway endpoint is answer.
+upvoted 2 times
+gustavtd 3 years, 5 months ago
+Selected Answer: A
+S3 Gateway Endpoint is a VPC endpoint,
+upvoted 2 times
+langiac 3 years, 6 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html
+upvoted 2 times

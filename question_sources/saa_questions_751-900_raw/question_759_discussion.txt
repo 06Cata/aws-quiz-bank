@@ -1,0 +1,130 @@
+A media company stores movies in Amazon S3. Each movie is stored in a single video file that ranges from 1 GB to 10 GB in size.
+The company must be able to provide the streaming content of a movie within 5 minutes of a user purchase. There is higher
+demand for movies that are less than 20 years old than for movies that are more than 20 years old. The company wants to
+minimize hosting service costs based on demand.
+Which solution will meet these requirements?
+A. Store all media content in Amazon S3. Use S3 Lifecycle policies to move media data into the Infrequent Access tier when the
+demand for a movie decreases.
+B. Store newer movie video files in S3 Standard. Store older movie video files in S3 Standard-infrequent Access (S3 Standard-
+IA). When a user orders an older movie, retrieve the video file by using standard retrieval. Most Voted
+C. Store newer movie video files in S3 Intelligent-Tiering. Store older movie video files in S3 Glacier Flexible Retrieval. When a
+user orders an older movie, retrieve the video file by using expedited retrieval.
+D. Store newer movie video files in S3 Standard. Store older movie video files in S3 Glacier Flexible Retrieval. When a user
+orders an older movie, retrieve the video file by using bulk retrieval.
+Comments
+Freddie26 Highly Voted 2 years, 3 months ago
+Technically, expedited retrieval for files is not guaranteed within 1-5 minutes for files larger than 250 MB+. See
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects-retrieval-options.html.
+upvoted 17 times
+osmk Highly Voted 2 years, 3 months ago
+Selected Answer: B
+S3 Standard-IA is for data that is accessed less frequently, but requires rapid access when needed. S3 Standard-IA offers the high durability, high
+throughput, and low latency of S3 Standard, with a low per GB storage price and per GB retrieval chargehttps://aws.amazon.com/s3/storage-classes/
+upvoted 12 times
+JustEugen Most Recent 8 months, 1 week ago
+Selected Answer: B
+It is B because:
+- An AWS Glacier is used for archival purposes, which is not our case.
+- We have a known pattern, so there are no reason to use inteligent tearing
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: C
+S3 Standard-infrequent Access (S3 Standard-IA) do not come with retrieval options??
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects-retrieval-options.html
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: C
+Glacier flex expedited retrieval takes 1-5 min.
+upvoted 1 times
+Correct Answer: B
+Community vote distribution
+B (56%)
+C (35%)
+9%
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+S3 Glacier Flexible Retrieval cannot grant the retrieval within 5 minutes even with expedited retrieval. Intellgent-Tiering is for unknow pattern,
+however, we already know higher demand for movies that are less than 20 years old than for movies that are more than 20 years old.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: B
+A - Cost optimization for > 20-yr-old files is insufficient.
+B - Good. Although, S3 Standard-IA is still relatively expensive compared to archival classes.
+C - Glacier Flexible Retrieval may not consistently meet the 5-minute streaming requirement. Could be minutes, could be hours.
+D - Bulk retrieval typically takes hours, let alone 5 minutes.
+upvoted 3 times
+tch 1 year, 2 months ago
+this is the reason we choose C as answer! S3 Glacier Flexible Retrieval has option with 5 minutes time called expedited retrieval.
+S3 Standard-IA do not come with option to retrieve data.... please check .....
+https://aws.amazon.com/s3/storage-classes/glacier/
+upvoted 1 times
+Arad 1 year, 6 months ago
+Selected Answer: C
+C is the correct answer.
+upvoted 1 times
+Abdullah2004 1 year, 9 months ago
+A is most correct ✅
+upvoted 2 times
+EdricHoang 1 year, 11 months ago
+Selected Answer: B
+"Expedited Retrieval, you can retrieve small amounts of data (up to 250 MB per request) within 1-5 minutes."
+Cannot C
+upvoted 8 times
+NSA_Poker 1 year, 12 months ago
+Selected Answer: B
+(A) is eliminated. Demand metric is popularly based & cannot be configured with Lifecycle policies. Ex: an old movie can have resurgent demand 20
+years after it's sequel is released.
+(C) is eliminated. Expedited retrieval is for all but the largest archived objects (250 MB+).
+(D) is eliminated. Bulk retrieval takes hours.
+(B) is more expensive than S3 Glacier Flexible Retrieval but it's the only one that works.
+upvoted 6 times
+bujuman 2 years, 1 month ago
+Selected Answer: C
+AS the pattern is uncertain- Customer could not, in advance, segregate data, the pattern will be determined on the fly - and with regard of the
+following S3 feature:
+S3 Intelligent-Tiering is an additional storage class that provides flexibility for data with unknown or changing access patterns. It automates the
+movement of your objects between storage classes to optimize cost.
+C will be the most cost effective for this use case.
+upvoted 1 times
+bujuman 2 years, 1 month ago
+More insight:
+S3 Glacier Flexible Retrieval for the most flexible retrieval options that balance cost with access times ranging from minutes to hours. Your retrieval
+options permit you to access all the archives you need, when you need them, for one low storage price. This storage class comes with multiple
+retrieval options:
+- Expedited retrievals (restore in 1–5 minutes)
+- Standard retrievals (restore in 3–5 hours)
+- Bulk retrievals (restore in 5–12 hours). Bulk retrievals are available at no additional charge
+upvoted 3 times
+Sergiuss95 2 years, 1 month ago
+Selected Answer: C
+Expedited 1-5min and for new files intelligent tier is a good option
+upvoted 2 times
+mohammadthainat 2 years, 2 months ago
+Selected Answer: C
+All old files should be in--> Glacier Flexible Retrieval takes (1-5 minutes) to retrieve the file.
+New files should not stay in Standard Storage class forever --> Intelligent-Tiering
+upvoted 3 times
+JackyCCK 2 years, 2 months ago
+I don't think C is an option, S3 Glacier Flexible takes hour to retrieve the data.
+Option A is actually valid, but the way the option A describe it does not consider "demand patterns based on time"
+So it should be B
+upvoted 2 times
+JackyCCK 2 years, 2 months ago
+expedited retrieval should not be used in that way as well
+upvoted 1 times
+Drew3000 2 years, 2 months ago
+Selected Answer: A
+There is something I like about option A. It's the only one that deals with what happens with a movie that goes from "new" to "old". With other
+options, new movies will be new forever.
+upvoted 2 times
+dkw2342 2 years, 2 months ago
+Option B makes the most sense.
+Why not option C:
+1. This is not an archival use case, the company runs a video streaming service, so objects are still accessed regularly. Accelerated Retrieval is
+designed for "occasional urgent requests for a subset of archives".
+2. The 5 minute timeframe does not apply to items of 250+ MB.
+3. Even if the timeframe were valid, it's not guaranteed ("typically")
+4. Expedited retrieval is expensive if used frequently ($10.00 per 1,000 requests) - depending on access patterns, this may more than offset the
+savings in storage costs.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects-retrieval-options.html
+upvoted 4 times

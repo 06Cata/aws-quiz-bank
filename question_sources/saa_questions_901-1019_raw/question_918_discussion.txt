@@ -1,0 +1,151 @@
+A company is using AWS DataSync to migrate millions of files from an on-premises system to AWS. The files are 10 KB in size on
+average.
+The company wants to use Amazon S3 for file storage. For the first year after the migration, the files will be accessed once or twice
+and must be immediately available. After 1 year, the files must be archived for at least 7 years.
+Which solution will meet these requirements MOST cost-effectively?
+A. Use an archive tool to group the files into large objects. Use DataSync to migrate the objects. Store the objects in S3 Glacier
+Instant Retrieval for the first year. Use a lifecycle configuration to transition the files to S3 Glacier Deep Archive after 1 year
+with a retention period of 7 years. Most Voted
+B. Use an archive tool to group the files into large objects. Use DataSync to copy the objects to S3 Standard-Infrequent Access
+(S3 Standard-IA). Use a lifecycle configuration to transition the files to S3 Glacier Instant Retrieval after 1 year with a retention
+period of 7 years.
+C. Configure the destination storage class for the files as S3 Glacier Instant Retrieval. Use a lifecycle policy to transition the files
+to S3 Glacier Flexible Retrieval after 1 year with a retention period of 7 years.
+D. Configure a DataSync task to transfer the files to S3 Standard-Infrequent Access (S3 Standard-IA). Use a lifecycle
+configuration to transition the files to S3 Deep Archive after 1 year with a retention period of 7 years.
+Comments
+dhewa Highly Voted 1 year, 9 months ago
+Selected Answer: D
+D simplifies the process by directly using S3 Standard-IA and then transitioning to S3 Glacier Deep Archive, which aligns well with access patterns
+and cost requirements. Option A sounds right but using an archive tool to group files into large objects adds complexity and operational overhead.
+This step isn’t necessary if you can directly manage the files with S3 lifecycle policies.
+upvoted 13 times
+GOTJ 1 year, 4 months ago
+Correct during the first year (online period). Incorrect during years 2-8 (archive period). Go check the numbers in price calculator yourself with the
+following scenarios for the archive period (S3 Glacier Deep Archive):
+* For small files: 100,000,000 files of 10KB (1000GB aprox). Considering both, the transition cost of 100,000,000 files to the Glacier Deep Archive clas
+and the maintenance cost of 7 years for those 100,000,000 files: $6,940,34
+* For big files: 1000 files of 1000MB (1000GB aprox). Considering both, the transition cost of 1,000 files to the Glacier Deep Archive class and the
+maintenance cost of 7 years for those 1,000 files: $83,23
+upvoted 2 times
+blehbleh Highly Voted 1 year, 9 months ago
+Selected Answer: A
+Its A, took some research but A is correct Per Amazon S# glacier page: "Amazon S3 Glacier Instant Retrieval is an archive storage class that delivers
+the lowest-cost storage for long-lived data that is rarely accessed and requires retrieval in milliseconds. With S3 Glacier Instant Retrieval, you can save
+up to 68% on storage costs compared to using the S3 Standard-Infrequent Access (S3 Standard-IA) storage class, when your data is accessed once
+per quarter." After the one year move it to Deep archive.
+upvoted 6 times
+je33 Most Recent 8 months, 2 weeks ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+D (49%)
+A (49%)
+2%
+Group millions of small 10KB files into archives to optimize costs, and minimize long-term storage costs by transitioning from Glacier Instant
+Retrieval to Deep Archive.
+Option D's Standard-IA costs more than Glacier Instant Retrieval during the first year.
+upvoted 1 times
+0dd48f2 11 months ago
+Selected Answer: A
+With Amazon S3 Glacier Instant Retrieval, you can save up to 68% on storage costs compared to using the S3 Standard-Infrequent Access (S3
+Standard-IA) storage class, when your data is accessed once per quarter." After the one year move it to S3 Glacier Deep archive.
+upvoted 1 times
+TEC65 1 year, 1 month ago
+Selected Answer: D
+def d is the answer
+upvoted 2 times
+ad2dj28 1 year, 2 months ago
+Selected Answer: D
+10/10 TIMES STANDARD INFREQUENT ACCESS IS CHEAPER THAN USING GLACIER INSTANT RETRIEVAL WHEN COMPARING COSTS WITH PRICING
+CALCULATOR
+upvoted 3 times
+tch 1 year, 3 months ago
+Selected Answer: A
+B & C are out
+upvoted 1 times
+tch 1 year, 3 months ago
+Amazon S3 Glacier Instant Retrieval is an archive storage class that delivers the lowest-cost storage for long-lived data that is rarely accessed and
+requires retrieval in milliseconds.
+With Amazon S3 Glacier Instant Retrieval, you can save up to 68% on storage costs compared to using the S3 Standard-Infrequent Access (S3
+Standard-IA) storage class, when your data is accessed once per quarter." After the one year move it to S3 Glacier Deep archive.
+upvoted 1 times
+Mistwalker 1 year, 4 months ago
+Selected Answer: A
+10KB/file x millions of files = insane unnecessary cost when each is charged at 128KB/object
+No one is talking about operational overhead, they just want cost-effectiveness
+upvoted 2 times
+GOTJ 1 year, 4 months ago
+Correct, but they mention that the files must be "immediately available" during the first year. So any option involving archive tools should be
+discarded for this period, due to the extra steps needed to accessing the files: figuring out which archive contains the file you are looking for,
+download the archive file and extract the desired file. I think this simple requirement explains the almost 50%-50% consensus for this particular
+question.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: A
+- Each file is 10 KB in size.
+- S3 charges a minimum of 128 KB per object.
+-Total number of files: millions of files.
+- Files are accessed twice in the first year.
+- After 1 year, files are archived for 7 years
+- S3 Glacier: Minimum charge for 40 KB per object.
+S3 Standard-IA and S3 One Zone-IA storage have a minimum billable object size of 128 KB. Smaller objects may be stored but will be charged for
+128 KB of storage at the appropriate storage class rate Option D does not group those files into big object, so 1 million files will be charged as 1
+million objects(128KB).
+https://aws.amazon.com/s3/pricing/
+upvoted 3 times
+FlyingHawk 1 year, 4 months ago
+Note
+The S3 Standard-IA and S3 One Zone-IA storage classes are suitable for objects larger than 128 KB that you plan to store for at least 30 days. If an
+object is less than 128 KB, Amazon S3 charges you for 128 KB. If you delete an object before the end of the 30-day minimum storage duration
+period, you are charged for 30 days. Objects that are deleted, overwritten, or transitioned to a different storage class before 30 days will incur the
+normal storage usage charge plus a pro-rated charge for the remainder of the 30-day minimum. For pricing information, see Amazon S3 pricing.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: D
+About option A: For data stored in the S3 Glacier Instant Retrieval storage class, there is indeed a minimum object size of 128 KB. If the objects are
+smaller than 128 KB, AWS still charges for 128 KB per object, which can significantly impact cost efficiency when dealing with a large number of smal
+files, such as the 10 KB files in the given scenario.
+One more thing: once or twice a year is perfect for Infrequent Access. It also provides instant availability for the objects stored in it.
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+I believe Standard-IA remains the most straightforward and cost-effective choice for small files (10 KB average) that are accessed 1~2 times in the
+first year without aggregation.
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: A
+S3 Glacier Instant Retrieval is more expensive than S3 Standard-IA for the first year when immediate availability is required.
+upvoted 2 times
+EllenLiu 1 year, 5 months ago
+sorry, choose D
+upvoted 1 times
+dragossky 1 year, 5 months ago
+Selected Answer: A
+For sure A, has amazing retrieval - Store the objects in S3 Glacier Instant Retrieval
+upvoted 2 times
+jfedotov 1 year, 6 months ago
+Selected Answer: D
+D is correct.
+A is not correct, because Amazon S3 Glacier Instant Retrieval min object size is 128KB, in question 10KB
+upvoted 2 times
+AMEJack 1 year, 6 months ago
+Selected Answer: D
+There is no need to use archive tool to migrate small files, DataSync is enough.
+upvoted 2 times
+Ez1tap 1 year, 8 months ago
+Selected Answer: A
+correct answer is A you need 2 separate lifecycle policy
+upvoted 4 times
+Abhiiinav 1 year, 9 months ago
+Selected Answer: D
+answer is D. Storing the objects in S3 Glacier Instant Retrieval for the first year is more expensive than S3 Standard-IA for data that is accessed
+infrequently.
+upvoted 3 times
+blehbleh 1 year, 8 months ago
+Wrong, it says 1-2 times in the first year and Amazon states that s3 glacier isn’t at retrieval can save up to 68% compared to s3 infrequent access.
+upvoted 2 times
+Abdullah2004 1 year, 9 months ago
+Selected Answer: D
+D is most cost effective
+upvoted 3 times

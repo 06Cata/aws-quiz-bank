@@ -1,0 +1,64 @@
+Question #696
+A company needs to provide customers with secure access to its data. The company processes customer data and stores the
+results in an Amazon S3 bucket.
+All the data is subject to strong regulations and security requirements. The data must be encrypted at rest. Each customer must be
+able to access only their data from their AWS account. Company employees must not be able to access the data.
+Which solution will meet these requirements?
+一家公司需要为客户提供安全访问其数据的方式。该公司处理客户数据并将结果存储在一个 Amazon S3 bucket 中。
+所有数据都受到严格的法规和安全要求的约束。数据必须在静止状态下加密。每个客户必须能够仅从其 AWS 账户访问自己的数
+据。公司员工不得访问这些数据。
+哪种解决方案可以满足这些要求？
+A. Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the private
+certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides.
+为每个客户配置一个 AWS Certificate Manager (ACM) 证书。客户端加密数据。在私有证书策略中，拒绝所有主体访问证书，除
+了客户提供的 IAM 角色。
+B. Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In the
+S3 bucket policy, deny decryption of data for all principals except an IAM role that the customer provides.
+为每个客户配置一个单独的 AWS Key Management Service (AWS KMS) 密钥。服务器端加密数据。在 S3 bucket 策略中，拒绝
+所有主体解密数据，除了客户提供的 IAM 角色。
+C. Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In each
+KMS key policy, deny decryption of data for all principals except an IAM role that the customer provides. Most Voted
+为每个客户配置一个单独的 AWS Key Management Service (AWS KMS) 密钥。服务器端加密数据。在每个 KMS 密钥策略中，拒
+绝所有主体解密数据，除了客户提供的 IAM 角色。
+D. Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the public
+certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides.
+为每个客户配置一个 AWS Certificate Manager (ACM) 证书。客户端加密数据。在公共证书策略中，拒绝所有主体访问证书，除
+了客户提供的 IAM 角色。
+Correct Answer: C
+题目分析与解答
+1. 考察的知识点
+Amazon S3 数据加密（服务器端加密和客户端加密）
+AWS Key Management Service (KMS) 的使用和密钥策略
+IAM角色和权限管理
+数据安全性和合规性要求
+2. 选项分析
+A. Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the private
+certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides.
+错误：ACM 主要用于管理 SSL/TLS 证书，而不是用于加密 S3 数据。此选项提到的“客户端加密”与 ACM 的功能不匹配。
+错误：ACM 证书无法直接控制 S3 数据的访问权限。
+B. Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In
+the S3 bucket policy, deny decryption of data for all principals except an IAM role that the customer provides.
+部分正确：使用 AWS KMS 密钥进行服务器端加密是正确的做法。
+错误：S3 bucket policy 主要用于控制对 S3 bucket 的访问权限，而不是直接管理 KMS 密钥的解密权限。解密权限应通过 KMS 密钥
+策略来管理。
+C. Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In
+each KMS key policy, deny decryption of data for all principals except an IAM role that the customer provides.
+正确：为每个客户配置单独的 KMS 密钥，并使用服务器端加密符合题目要求。
+正确：通过 KMS 密钥策略控制解密权限是最佳实践，可以确保只有客户提供的 IAM 角色能够解密数据。
+D. Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the public
+certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides.
+错误：ACM 证书用于管理 SSL/TLS 证书，与 S3 数据加密无关。
+错误：“公共证书策略”并不是 AWS 中的概念，且无法满足题目要求。
+3. 我选的答案
+C
+4. 官方答案
+C
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因：选项 C 是唯一符合题目要求的解决方案，能够确保数据加密、权限隔离以及合规性要求。
+正确答案：C
+Community vote distribution
+社区投票分布
+C (75%)
+B (25%)
+嬄信: " Examtopics "

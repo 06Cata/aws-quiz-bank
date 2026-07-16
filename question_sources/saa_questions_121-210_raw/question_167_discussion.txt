@@ -1,0 +1,157 @@
+A company runs a production application on a fleet of Amazon EC2 instances. The application reads the data from an Amazon
+SQS queue and processes the messages in parallel. The message volume is unpredictable and often has intermittent traffic. This
+application should continually process messages without any downtime.
+Which solution meets these requirements MOST cost-effectively?
+A. Use Spot Instances exclusively to handle the maximum capacity required.
+B. Use Reserved Instances exclusively to handle the maximum capacity required.
+C. Use Reserved Instances for the baseline capacity and use Spot Instances to handle additional capacity.
+D. Use Reserved Instances for the baseline capacity and use On-Demand Instances to handle additional capacity. Most Voted
+Comments
+HayLLlHuK Highly Voted 3 years, 5 months ago
+Selected Answer: C
+"without any downtime" - Reserved Instances for the baseline capacity
+"MOST cost-effectively" - Spot Instances to handle additional capacity
+upvoted 51 times
+LuckyAro 3 years, 4 months ago
+Dude, read the question, cost consideration was not mentioned in the question.
+upvoted 3 times
+ShinobiGrappler 3 years, 4 months ago
+Dude, read the question, "Which solution meets these requirements MOST cost-effectively?"
+upvoted 48 times
+kraken21 3 years, 2 months ago
+I am leaning towards C because the idea of having a queue is to decouple the processing. If an instance goes down(spot) while processing will it
+not show up back after the visibility timeout? So using spot meets the cost-effective objective.
+upvoted 5 times
+Sutariya 2 years, 9 months ago
+Intermediate data stored in SQS queue so once free then it take data and process.
+upvoted 1 times
+MrSaint 3 years, 1 month ago
+cost-effectively means, Cheapest solution (cost) that achieve all the requirements (effectively). Its not cost-effectively if is just cheapest solution
+that fail to address all the requirements, in this case. (This application should continually process messages without any downtime) no matter the
+volume, since it is unpredictable. B for example, address the requirement but not the cheapest solution that achieve it. D is the cheaper choice
+that address the requirement (without any downtime). and C is cheaper than D but do not garantee that you wont have downtime since it is
+SPOT instances.
+upvoted 19 times
+kraken21 3 years, 2 months ago
+How can you have baseline capacity when your message volume is unpredictable and often has intermittent traffic?
+upvoted 4 times
+MutiverseAgent 2 years, 10 months ago
+For this reason I think correct answer is A
+Correct Answer: D
+Community vote distribution
+D (55%)
+C (44%)
+0
+upvoted 1 times
+Macadam 2 years, 7 months ago
+Spot instances cannot be an option as it is unreliable and the question requires the messages to be continuously processed
+upvoted 5 times
+allanm 10 months, 1 week ago
+No way you're considering Spot instances! What if an instance goes down? Then your job is ruined which is unacceptable for the requirement
+upvoted 1 times
+taer Highly Voted 3 years, 6 months ago
+Selected Answer: D
+D is the correct answer
+upvoted 28 times
+Drayen25 3 years, 4 months ago
+C is correct, read for cost effectiveness
+upvoted 7 times
+diabloexodia 2 years, 10 months ago
+AWS has stopped issuing spot instances so i think C
+upvoted 1 times
+diabloexodia 2 years, 10 months ago
+so i think C is incorrect*. the Correct ans is D.
+upvoted 2 times
+sezer 3 years, 2 months ago
+if you cannot find enough spot instance you will have downtime
+you cannot always find spot instance
+upvoted 14 times
+Kumaran1508 3 years ago
+Why downtime when there are baseline reserved instances?
+upvoted 3 times
+Sutariya 2 years, 9 months ago
+Baseline reserved instances and ondemand Spot instance is cost saver
+upvoted 2 times
+Neeraja2023 Most Recent 7 months, 1 week ago
+Selected Answer: C
+C. Use Reserved Instances for the baseline capacity and use Spot Instances to handle additional capacity.
+- Baseline capacity is handled by Reserved Instances, ensuring no downtime for the minimum required processing.
+- Spot Instances handle traffic spikes cost-effectively.
+Combines reliability (RIs) with cost savings (Spot) for unpredictable workloads.
+Recommended by AWS for workloads with variable traffic and parallel processing tasks.
+upvoted 1 times
+Darius_W 7 months, 4 weeks ago
+Selected Answer: C
+Answer: C
+Use Reserved Instances for the steady baseline and Spot Instances for burst capacity.
+Cost-effective: RIs cover always-on load at discounted rates; Spots are cheapest for intermittent spikes.
+Continuous processing: If Spot capacity is interrupted, baseline RIs keep consumers running; the SQS queue buffers until Spot capacity returns.
+upvoted 1 times
+Darius_W 8 months ago
+Selected Answer: C
+C. Use Reserved Instances for the baseline capacity and Spot Instances for burst capacity.
+Baseline (RIs): Guarantees steady, always-on processing so there’s no downtime during normal traffic.
+Bursts (Spot): Adds cheap, interruptible capacity for unpredictable spikes; if Spot is reclaimed, baseline RIs keep the system running and SQS buffers
+excess messages.
+upvoted 1 times
+Jarranymo 9 months ago
+Selected Answer: C
+Use Reserved Instances to handle predictable base load, and Spot Instances to handle unpredictable spikes — that's the most cost-effective way to
+ensure availability and performance.
+upvoted 1 times
+111380c 10 months ago
+Selected Answer: C
+no downtime
+upvoted 2 times
+lalaraj 11 months, 1 week ago
+Selected Answer: C
+Reserved capacity esnures no downtime and additional capacity can be handled with spot instances cost effectively
+upvoted 1 times
+network_enthusiast 1 year, 1 month ago
+Selected Answer: C
+C is the correct answer
+upvoted 1 times
+Yak_Yeti 1 year, 2 months ago
+Selected Answer: C
+"MOST cost-effectively" - Spot Instances to handle additional capacity
+The application will process the messages with the reserved instances - slowly - with no downtime.
+upvoted 1 times
+chest_jd 1 year, 2 months ago
+Selected Answer: C
+Cost-effective - C.
+upvoted 1 times
+Faraz999 1 year, 2 months ago
+Selected Answer: C
+I am leaning towards C because the idea of having a queue is to decouple the processing.
+upvoted 1 times
+triptimandal01 1 year, 2 months ago
+Selected Answer: C
+Spot Instances can be used to handle additional capacity to accommodate intermittent traffic. Spot Instances are ideal for variable and unpredictable
+workloads because they allow you to take advantage of unused EC2 capacity at a significantly lower cost than On-Demand Instances.
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: D
+baseline capacity" refers to the normal or expected capacity performance of a system or process, so use reserved instance - this to fulfil without any
+downtime and cost-effective
+if "additional capacity" refers to resources or capabilities beyond the standard or baseline capacity needed to handle normal operations, allowing for
+flexibility and the ability to handle surges in demand or unexpected events - then we should use on-demand instances
+upvoted 2 times
+iamroyalty_k 1 year, 4 months ago
+Selected Answer: C
+C is correct because it balances cost and reliability using a combination of:
+- Reserved Instances for steady-state traffic (ensuring continuous processing).
+- Spot Instances for handling spikes in traffic (reducing costs significantly).
+A - ❌ Not Reliable – Spot Instances can be interrupted at any time. Using them exclusively could cause processing delays or failures.
+B - ¸ Not Cost-Effective – RIs are best for predictable workloads, but over-provisioning for peak loads leads to unnecessary costs when traffic is
+low.
+D - ¸ More Expensive Than Spot Instances – On-Demand Instances are more costly than Spot Instances for handling additional capacity.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: D
+I believe the best fit for the scenario is D. D has a portion that is about 90% more expensive than C. However, Spot instances can be interrupted
+which means that some of the processes can be interrupted, which is not acceptable. So considering that I am choosing D.
+upvoted 4 times
+Mrigraj12 1 year, 4 months ago
+Selected Answer: C
+Easily the most cost effective
+upvoted 1 times

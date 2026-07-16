@@ -1,0 +1,53 @@
+Question #349
+A company stores confidential data in an Amazon Aurora PostgreSQL database in the ap-southeast-3 Region. The database is
+encrypted with an AWS Key Management Service (AWS KMS) customer managed key. The company was recently acquired and
+must securely share a backup of the database with the acquiring company’s AWS account in ap-southeast-3.
+What should a solutions architect do to meet these requirements?
+一家公司在 ap-southeast-3 区域的 Amazon Aurora PostgreSQL 数据库中存储机密数据。该数据库使用 AWS Key Management
+Service (AWS KMS) 客户管理密钥进行加密。该公司最近被收购，必须安全地与收购公司的 AWS 账户共享数据库的备份。
+解决方案架构师应该怎么做以满足这些要求？
+A. Create a database snapshot. Copy the snapshot to a new unencrypted snapshot. Share the new snapshot with the acquiring
+company’s AWS account.
+创建一个数据库快照。将快照复制到一个新的未加密快照。将新的快照共享给收购公司的 AWS 账户。
+B. Create a database snapshot. Add the acquiring company’s AWS account to the KMS key policy. Share the snapshot with the
+acquiring company’s AWS account. Most Voted
+创建一个数据库快照。将收购公司的 AWS 账户添加到 KMS 密钥策略中。将快照共享给收购公司的 AWS 账户。
+C. Create a database snapshot that uses a different AWS managed KMS key. Add the acquiring company’s AWS account to the
+KMS key alias. Share the snapshot with the acquiring company's AWS account.
+创建一个使用不同 AWS 管理 KMS 密钥的数据库快照。将收购公司的 AWS 账户添加到 KMS 密钥别名中。将快照共享给收购公
+司的 AWS 账户。
+D. Create a database snapshot. Download the database snapshot. Upload the database snapshot to an Amazon S3 bucket.
+Update the S3 bucket policy to allow access from the acquiring company’s AWS account.
+创建一个数据库快照。下载数据库快照。将数据库快照上传到一个 Amazon S3 bucket。更新 S3 bucket 策略以允许收购公司的
+AWS 账户访问。
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+题目分析与解答
+1. 考察的知识点
+Amazon Aurora数据库快照的加密与共享机制。
+AWS Key Management Service (KMS) 的密钥策略配置。
+跨账户资源共享的最佳实践。
+2. 选项分析
+A. 创建一个数据库快照。将快照复制到一个新的未加密快照。将新的快照共享给收购公司的 AWS 账户。
+错误：AWS Aurora数据库快照无法直接从加密状态复制为未加密状态。加密快照的加密状态无法更改。
+此外，未加密的快照可能会导致数据泄露风险，不符合安全要求。
+B. 创建一个数据库快照。将收购公司的 AWS 账户添加到 KMS 密钥策略中。将快照共享给收购公司的 AWS 账户。
+正确：加密的数据库快照可以通过修改KMS密钥策略来允许其他账户访问该密钥，从而实现跨账户共享。
+这是符合AWS最佳实践的安全共享方式。
+C. 创建一个使用不同 AWS 管理 KMS 密钥的数据库快照。将收购公司的 AWS 账户添加到 KMS 密钥别名中。将快照共享给收购公
+司的 AWS 账户。
+错误：AWS Aurora数据库快照无法直接使用不同的KMS密钥进行加密。
+此外，KMS别名仅是密钥的标识符，无法直接用于跨账户权限管理。
+D. 创建一个数据库快照。下载数据库快照。将数据库快照上传到一个 Amazon S3 bucket。更新 S3 bucket 策略以允许收购公司的
+AWS 账户访问。
+错误：Aurora数据库快照无法直接下载到本地或上传到S3。Aurora快照只能在AWS内进行管理和共享。
+此方法不适用于Aurora数据库快照的共享场景。
+3. 我的选择
+B
+4. 官方答案
+B
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+B (100%)

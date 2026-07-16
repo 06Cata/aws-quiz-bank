@@ -1,0 +1,111 @@
+A company uses an Amazon DynamoDB table to store data that the company receives from devices. The DynamoDB table
+supports a customer-facing website to display recent activity on customer devices. The company configured the table with
+provisioned throughput for writes and reads.
+The company wants to calculate performance metrics for customer device data on a daily basis. The solution must have minimal
+effect on the table's provisioned read and write capacity.
+Which solution will meet these requirements?
+A. Use an Amazon Athena SQL query with the Amazon Athena DynamoDB connector to calculate performance metrics on a
+recurring schedule.
+B. Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring
+schedule. Most Voted
+C. Use an Amazon Redshift COPY command to calculate performance metrics on a recurring schedule.
+D. Use an Amazon EMR job with an Apache Hive external table to calculate performance metrics on a recurring schedule.
+Comments
+toyaji Highly Voted 1 year, 9 months ago
+Selected Answer: B
+DynamoDB export connector literally "exports" table snapshot to s3 as dynamoDB-json object, then process on it. So it does not affect on read /
+write capacity on dynamoDB itself.
+But Athena query directly on dynamoDB so affects on read / write capacity
+upvoted 9 times
+GOTJ Most Recent 1 year, 4 months ago
+Selected Answer: B
+The trick here is to avoid, by any means, interact with the original DynamoDB table because doing so would affect the provisioned capacity. Option
+"B" is the only one that interacts with an EXPORTED COPY of the table. So, the question is: would provisioned capacity be affected by the DynamoDB
+export process? The answer is: NO! (https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect-dynamodb-home.html):
+"DynamoDB export to S3 allows you to export both full and incremental data from your DynamoDB table. Exports do not consume any read capacity
+units (RCUs) and have no impact on table performance and availability"
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: B
+A - Athena allows you to use standard SQL, but it doesn't guarantee minimal impact on the table.
+B - It minimizes direct read/write operations on the table because the exported data can be processed separately (for example, export to S3 then do
+the processing).
+C - Cool but there's no native connector to directly pull data from DynamoDB. You must export the data to S3 or another source first, adding
+complexity.
+D - EMR impacts throughput significantly.
+upvoted 4 times
+Anyio 1 year, 5 months ago
+Selected Answer: B
+The correct answer is B. Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring
+schedule.
+Correct Answer: B
+Community vote distribution
+B (90%)
+10%
+Explanation:
+Option B: Correct. AWS Glue offers an efficient method to extract, transform, and load (ETL) data from DynamoDB to Amazon S3, without affecting
+the table’s provisioned throughput as significantly. Once data is in S3, it can be further processed or queried using AWS Glue or other analytics
+services, without impacting DynamoDB's immediate R/W provisioning.
+upvoted 2 times
+rockyykrish 1 year, 6 months ago
+Selected Answer: A
+Explanation:
+Amazon Athena with DynamoDB Connector:
+Athena is a serverless interactive query service that allows you to run SQL queries directly on data in various storage systems, including DynamoDB,
+through the Athena DynamoDB connector.
+This setup minimizes the impact on the provisioned read and write capacity of the DynamoDB table because the connector reads data efficiently
+without directly querying the table.
+Performance Metrics Calculation:
+Athena provides SQL capabilities to compute performance metrics on the data fetched via the DynamoDB connector.
+The queries can be scheduled using Amazon EventBridge or other automation tools to run daily.
+Minimal Operational Overhead:
+Athena requires no infrastructure to manage, making it a low-maintenance solution.
+It is cost-effective since you pay only for the queries you run.
+upvoted 1 times
+tonybuivannghia 1 year, 7 months ago
+Selected Answer: A
+I think A is correct. We can query the data from DynamoDB by Amazon Athena DynamoDB connector directly, not via S3 Bucket.
+upvoted 2 times
+Salilgen 1 year, 5 months ago
+You can query the data from DynamoDB by Amazon Athena DynamoDB connector directly but this effect on the table's provisioned read and write
+capacity.
+upvoted 1 times
+tonybuivannghia 1 year, 7 months ago
+https://docs.aws.amazon.com/athena/latest/ug/connectors-dynamodb.html
+upvoted 1 times
+spoved 1 year, 8 months ago
+Selected Answer: B
+https://aws.amazon.com/blogs/big-data/accelerate-amazon-dynamodb-data-access-in-aws-glue-jobs-using-the-new-aws-glue-dynamodb-elt-
+connector/
+upvoted 3 times
+JoeTromundo 1 year, 8 months ago
+Selected Answer: B
+The DynamoDB export connector allows you to export data from DynamoDB to other storage solutions like Amazon S3 without consuming the
+table's provisioned read capacity, ensuring minimal impact on the performance of the table.
+upvoted 3 times
+Bogey 1 year, 9 months ago
+B.
+Instead, the new AWS Glue DynamoDB export connector reads DynamoDB data from the snapshot, which is exported from DynamoDB tables. This
+approach has following benefits:
+It doesn’t consume read capacity units of the source DynamoDB tables
+upvoted 2 times
+AbhiBK 1 year, 9 months ago
+To calculate performance metrics for customer device data on a daily basis with minimal effect on the table’s provisioned read and write capacity, the
+best solution would be:
+A. Use an Amazon Athena SQL query with the Amazon Athena DynamoDB connector to calculate performance metrics on a recurring schedule. This
+approach allows you to run SQL queries directly on the data stored in DynamoDB without impacting the provisioned throughput, as Athena queries
+are serverless and do not consume DynamoDB read or write capacity1.
+upvoted 2 times
+RealPro111 1 year, 9 months ago
+Selected Answer: B
+The right answer is B
+upvoted 3 times
+siheom 1 year, 9 months ago
+VOTE B
+upvoted 2 times
+ksdpmx 1 year, 9 months ago
+why is B wrong.. Glue DynamoDB export connector will read data from PITR instead of DynamoDB directly..
+upvoted 2 times
+dhewa 1 year, 9 months ago
+I go with A
+upvoted 2 times

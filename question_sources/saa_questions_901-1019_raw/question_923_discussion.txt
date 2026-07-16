@@ -1,0 +1,129 @@
+A company hosts a monolithic web application on an Amazon EC2 instance. Application users have recently reported poor
+performance at specific times. Analysis of Amazon CloudWatch metrics shows that CPU utilization is 100% during the periods of
+poor performance.
+The company wants to resolve this performance issue and improve application availability.
+Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)
+A. Use AWS Compute Optimizer to obtain a recommendation for an instance type to scale vertically. Most Voted
+B. Create an Amazon Machine Image (AMI) from the web server. Reference the AMI in a new launch template.
+C. Create an Auto Scaling group and an Application Load Balancer to scale vertically.
+D. Use AWS Compute Optimizer to obtain a recommendation for an instance type to scale horizontally.
+E. Create an Auto Scaling group and an Application Load Balancer to scale horizontally. Most Voted
+Comments
+rpmaws Highly Voted 1 year, 8 months ago
+Selected Answer: AE
+AWS Compute Optimizer analyzes your current EC2 instance usage and recommends the most cost-effective instance type. In this case, the current
+instance may not have enough CPU capacity, so scaling vertically (upgrading to a larger instance type) could provide immediate relief from the 100%
+CPU utilization.
+upvoted 6 times
+FlyingHawk Highly Voted 1 year, 4 months ago
+Selected Answer: BE
+The question asks for a combination of steps, meaning the selected answers should work together to form a complete solution rather than being two
+independent actions.
+B - prepared the instance for the scaling
+E - Implement Auto Scaling for performance improvement and high availability
+upvoted 5 times
+ln2718 Most Recent 10 months ago
+Selected Answer: DE
+Read JA2018's answer below
+upvoted 1 times
+bora4motion 1 year ago
+Selected Answer: BE
+You can't just scale vertically every single time you have a problem. I don't understand people who voted for A and E. You can't combine A and E. You
+can't stop the instance to improve memory/cpu of an instance and then add horizontal scaling to it. (spend even more). B and E
+upvoted 2 times
+7dcef09 1 year, 1 month ago
+Selected Answer: AE
+A: Using compute optimizer helps improve performance on the monolithic web application scale up
+E: Enhances availability and scalibiliy
+upvoted 1 times
+Correct Answer: AE
+Community vote distribution
+AE (49%)
+BE (46%)
+6%
+dfgdsfgfdgreg 1 year, 4 months ago
+Selected Answer: BE
+Since options C and D are irrelevant, let's disregard them. That leaves us with ABE. B is a prerequisite for E, so you cannot have E with B. AB will be
+two disjointed choices. So you have to choose B/E.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: BE
+The question talk about a "combination of steps" then IMO answer is BE.
+BE are steps of a solution that resolve performance issue and improve application availability.
+D is for improve the solution : https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-asg-recommendations.html
+A is a solution (not a step) but it is not the most cost effective
+C is wrong: autoscaling and ALB are horizontal scaling
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: AE
+What you should know:
+1. Horizontal Scaling (Scaling Out/In): Adding or removing instances to distribute the load across multiple servers, improving availability and fault
+tolerance. Example: Using an Auto Scaling group with a load balancer to add more EC2 instances dynamically as demand increases.
+2. Vertical Scaling (Scaling Up/Down): Increasing or decreasing the size (compute power, memory, etc) of a single instance, which is easier to
+implement for monolithic applications but has limitations (limited instance types). Example: Upgrading an instance from "t3.medium" to "m5.large".
+If you can understand above, then A & E are perfect choices.
+B - The performance issue is still there!
+C - Auto Scaling and Load Balancers are used for horizontal scaling, not vertical scaling.
+D - Horizontal scaling involves adding more instances, not changing the instance type.
+upvoted 2 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: AE
+it's truly difficult to answer as per the description.
+there are two requirement:
+1. resolve performance issue => A: use compute optimizer to scale vertically, it can provides an immediate fix for high CPU utilization
+2. improve availability => B + D, B is the prerequisite for D , I prefer autoscaling if must choose only one
+upvoted 1 times
+Anyio 1 year, 5 months ago
+Selected Answer: AE
+The correct answers are A,E.
+Option A: Correct. Using AWS Compute Optimizer to obtain a recommendation for an instance type to scale vertically is an effective first step. This
+service analyzes your specific application workload patterns and recommends an appropriate EC2 instance type that provides better performance for
+the given CPU load. This approach allows you to choose a more powerful instance that can handle peak loads more effectively without immediately
+shifting to a horizontal scaling architecture.
+Option B: Incorrect by itself. Creating an AMI and a launch template is useful in setting up an Auto Scaling group or new instances but does not
+address the issue of CPU utilization or availability on its own. This process would be part of preparing for scaling but doesn’t directly answer the
+requirement of resolving performance issues by itself.
+upvoted 2 times
+jfedotov 1 year, 6 months ago
+Selected Answer: BE
+horizontal scaling is a cost-effective solution
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: DE
+What about options D & E?
+# 1 Scaling horizontally is the most cost-effective solution for handling fluctuating traffic, especially when the bottleneck is CPU utilization reaching
+100% during peak times. This allows adding more instances to handle the increased load instead of upgrading to a larger instance (vertical scaling)
+which might be unnecessary during non-peak periods.
+# 2 Auto Scaling group and Application Load Balancer: These are essential components for horizontal scaling, where the Auto Scaling group
+automatically adjusts the number of instances based on demand, and the Application Load Balancer distributes traffic evenly across available
+instances.
+#3 AWS Compute Optimizer: This service can analyze your application usage and recommend the most cost-effective instance type for your specific
+needs, including suggesting options for horizontal scaling.
+upvoted 1 times
+Abdullah2004 1 year, 7 months ago
+Selected Answer: AE
+Due to monolithic application we can't scale horizontal, the scale will be vertical
+upvoted 2 times
+jfedotov 1 year, 6 months ago
+you can, you'll get for ex. 2 instances with the monolithic app, I see no issues here.
+upvoted 1 times
+Abdullah2004 1 year, 7 months ago
+I mean the instance
+upvoted 1 times
+XXXXXlNN 1 year, 8 months ago
+BE makes more sense to me. Vertical scaling increases cost continuously even when the instance is in low demand. for a long run, the cost would be
+higher than just scale horizontally. The questions says the 'poor performance at specific times', so we just need to scale up at specific times.
+Additionally, in order to scale up, we do need AMI and a launch template. Thus, a combination of B & E should be the correct answer
+upvoted 2 times
+Bwhizzy 1 year, 8 months ago
+Selected Answer: AE
+The answer is A and E. A for adding more CPU (Vertical scaling ) and E for adding more Servers (Horizontal scaling)
+upvoted 3 times
+komorebi 1 year, 10 months ago
+Selected Answer: BE
+Answer is BE
+upvoted 2 times
+flaviobrf 1 year, 10 months ago
+Selected Answer: BE
+BE is the right choice
+upvoted 3 times

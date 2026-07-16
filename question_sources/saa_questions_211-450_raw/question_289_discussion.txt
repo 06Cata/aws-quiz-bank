@@ -1,0 +1,67 @@
+A company has an AWS Lambda function that needs read access to an Amazon S3 bucket that is located in the same AWS
+account.
+Which solution will meet these requirements in the MOST secure manner?
+A. Apply an S3 bucket policy that grants read access to the S3 bucket.
+B. Apply an IAM role to the Lambda function. Apply an IAM policy to the role to grant read access to the S3 bucket. Most Voted
+C. Embed an access key and a secret key in the Lambda function’s code to grant the required IAM permissions for read access
+to the S3 bucket.
+D. Apply an IAM role to the Lambda function. Apply an IAM policy to the role to grant read access to all S3 buckets in the
+account.
+Comments
+kruasan Highly Voted 2 years, 7 months ago
+Selected Answer: B
+This solution satisfies the needs in the most secure manner:
+• An IAM role provides temporary credentials to the Lambda function to access AWS resources. The function does not have persistent credentials.
+• The IAM policy grants least privilege access by specifying read access only to the specific S3 bucket needed. Access is not granted to all S3 buckets
+• If the Lambda function is compromised, the attacker would only gain access to the one specified S3 bucket. They would not receive broad access to
+resources.
+upvoted 9 times
+kruasan 2 years, 7 months ago
+The other options are less secure:
+A. A bucket policy grants open access to a resource. It is a less granular way to provide access and grants more privilege than needed.
+C. Embedding access keys in code is extremely insecure and against best practices. The keys provide full access and are at major risk of compromise
+if the code leaks.
+D. Granting access to all S3 buckets provides far too much privilege if only one bucket needs access. It greatly expands the impact if compromised.
+upvoted 4 times
+Rido4good Most Recent 1 year, 10 months ago
+Has anyone passed this exam, choosing the wrong answers from ExamTopics? or what's the reason for the confusion???
+upvoted 1 times
+bbgun891404021 1 year, 11 months ago
+Selected Answer: B
+B is correct.
+upvoted 3 times
+TMabs 2 years, 2 months ago
+Answer=B
+upvoted 2 times
+antropaws 2 years, 6 months ago
+Selected Answer: B
+B is correct.
+upvoted 2 times
+Dr_Chomp 2 years, 8 months ago
+Correct Answer: B
+Community vote distribution
+B (100%)
+Selected Answer: B
+you dont want to grant access to all S3 buckets (which is answer D) - only the one identified (so answer A)
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: B
+B is only for one bucket and you want to use Role based security here.
+upvoted 2 times
+Ja13 2 years, 9 months ago
+Selected Answer: B
+C, it says MOST secure manner, so only to one bucket
+upvoted 1 times
+Joxtat 2 years, 9 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html
+upvoted 2 times
+kpato87 2 years, 9 months ago
+Selected Answer: B
+This is the most secure and recommended way to provide an AWS Lambda function with access to an S3 bucket. It involves creating an IAM role that
+the Lambda function assumes, and attaching an IAM policy to the role that grants the necessary permissions to read from the S3 bucket.
+upvoted 4 times
+Joan111edu 2 years, 9 months ago
+Selected Answer: B
+B. Least of privilege
+upvoted 3 times

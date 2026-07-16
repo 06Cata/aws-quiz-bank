@@ -1,0 +1,166 @@
+A company hosts its web applications in the AWS Cloud. The company configures Elastic Load Balancers to use certificates that are
+imported into AWS Certificate Manager (ACM). The company's security team must be notified 30 days before the expiration of
+each certificate.
+What should a solutions architect recommend to meet this requirement?
+A. Add a rule in ACM to publish a custom message to an Amazon Simple Notification Service (Amazon SNS) topic every day,
+beginning 30 days before any certificate will expire.
+B. Create an AWS Config rule that checks for certificates that will expire within 30 days. Configure Amazon EventBridge
+(Amazon CloudWatch Events) to invoke a custom alert by way of Amazon Simple Notification Service (Amazon SNS) when
+AWS Config reports a noncompliant resource. Most Voted
+C. Use AWS Trusted Advisor to check for certificates that will expire within 30 days. Create an Amazon CloudWatch alarm that is
+based on Trusted Advisor metrics for check status changes. Configure the alarm to send a custom alert by way of Amazon
+Simple Notification Service (Amazon SNS).
+D. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to detect any certificates that will expire within 30 days.
+Configure the rule to invoke an AWS Lambda function. Configure the Lambda function to send a custom alert by way of
+Amazon Simple Notification Service (Amazon SNS).
+Comments
+LeGloupier Highly Voted 3 years, 7 months ago
+B
+AWS Config has a managed rule
+named acm-certificate-expiration-check
+to check for expiring certificates
+(configurable number of days)
+upvoted 99 times
+LeGloupier 3 years, 7 months ago
+https://aws.amazon.com/premiumsupport/knowledge-center/acm-certificate-expiration/
+upvoted 15 times
+ChrisG1454 3 years, 3 months ago
+Answer B and answer D are possible according to this article.
+So, need to read B & D carefully to determine the most suitable answer.
+Reference: https://aws.amazon.com/premiumsupport/knowledge-center/acm-certificate-expiration/
+upvoted 9 times
+TTaws 2 years, 11 months ago
+Its B, simply because in option D - event bridge cannot "detect" anything.
+upvoted 9 times
+RupeC 2 years, 10 months ago
+My understanding is that the ACM sends a Cert Expiration event to EventBridge. Thus EB. does not need to detect anything.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+"ACM sends a Cert Expiration event to EventBridge" yes, but 45 (not 30) days before expiration.
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+D (49%)
+B (49%)
+2%
+mrkmtei 2 years, 1 month ago
+This can be configured to whatever you need in the Days to expiry box
+upvoted 2 times
+darekw 2 years, 9 months ago
+AWS Certificate Manager (ACM) now publishes certificate metrics and events through Amazon CloudWatch and Amazon EventBridge.
+https://aws.amazon.com/about-aws/whats-new/2021/03/aws-certificate-manager-provides-certificate-expiry-monitoring-through-amazon-
+cloudwatch/
+upvoted 4 times
+Bayebrymo 2 years, 1 month ago
+But from the link shared. It doesnt state that you should invoke lambda function as stated in option D. Option B is explicitly stated in the article as
+also worded in option B. So i think B should be the answer. My thought though. i stand to be corrected.
+upvoted 8 times
+824c449 2 years, 1 month ago
+It does not have a built-in rule for checking the expiration of ACM certificates directly.
+upvoted 2 times
+Mia2009687 2 years, 11 months ago
+B costs more than D
+To get a notification that your certificate is about to expire, use one of the following methods:
+Use the ACM API in Amazon EventBridge to configure the ACM Certificate Approaching Expiration event.
+Create a custom EventBridge rule to receive email notifications when certificates are nearing the expiration date.
+Use AWS Config to check for certificates that are nearing the expiration date.
+If you use AWS Config for this resolution, then be aware of the following:
+Before you set up the AWS Config rule, create the Amazon Simple Notification Service (Amazon SNS) topic and EventBridge rule. This makes sure
+that all non-compliant certificates invoke a notification before the expiration date.
+Activating AWS Config incurs an additional cost based on usage. For more information, see AWS Config pricing.
+https://repost.aws/knowledge-center/acm-certificate-expiration
+upvoted 5 times
+pentium75 2 years, 5 months ago
+Nobody asked for cost optimization.
+upvoted 15 times
+ManoAni Highly Voted 3 years, 7 months ago
+Selected Answer: B
+https://aws.amazon.com/premiumsupport/knowledge-center/acm-certificate-expiration/
+upvoted 20 times
+ln2718 Most Recent 9 months, 4 weeks ago
+Selected Answer: B
+Breaking the tie with Chat AI (even rhymes)) - Use the managed AWS Config rule acm-certificate-expiration-check with daysToExpiration = 30. When
+the rule flags a noncompliant certificate, have EventBridge trigger an SNS notification to the security team.
+upvoted 2 times
+OrLe 10 months, 1 week ago
+Selected Answer: B
+aws config provide a managed rule
+upvoted 1 times
+caca783 11 months, 3 weeks ago
+Selected Answer: B
+AWS Config provides a managed rule called acm-certificate-expiration-check. This rule checks if ACM certificates in your account are marked for
+expiration within a specified number of days (default is 30 days)
+upvoted 2 times
+kaleido 12 months ago
+Selected Answer: D
+I chose option D. Option B works, but is recommended for beyond 45 days.
+upvoted 2 times
+Charlesvg 1 year ago
+Selected Answer: D
+i asked ChatGPT about the best between B & D
+It said D because eventBridge is natively connected with ACM whereas AWS Config does not natively support certificates expiration
+upvoted 2 times
+sagarvh 1 year ago
+Selected Answer: D
+Answer is D
+upvoted 2 times
+network_enthusiast 1 year, 1 month ago
+Selected Answer: D
+Amazon Event Bridge can detect certificate expiry event for certificate managed by ACM.
+upvoted 1 times
+dattateja8 1 year, 2 months ago
+Selected Answer: B
+B
+AWS Config has a managed rule
+named acm-certificate-expiration-check
+to check for expiring certificates
+(configurable number of days)
+upvoted 1 times
+dattateja8 1 year, 2 months ago
+Selected Answer: D
+AWS Config does not have in-built feature to check certificate expiry and it has to use out of the box managed rule to check like AWS Lambda. In
+Answer B it is not mentioned to use AWS Lambda. So the best option here is D.
+upvoted 1 times
+gigilla 1 year, 3 months ago
+Selected Answer: B
+B
+AWS Config has a managed rule
+named acm-certificate-expiration-check
+to check for expiring certificates
+(configurable number of days)
+upvoted 1 times
+kg508 1 year, 3 months ago
+Selected Answer: D
+B와 헷갈렸는데, 알림에 대한 구체적인 방법이 D에 있어 이것으로 선택했습니다
+eventbridge만으로는 보안팀에게 알림을 전달하기에 부족하다고 생각합니다
+upvoted 1 times
+iamroyalty_k 1 year, 3 months ago
+Selected Answer: D
+Why Option D is Correct?
+✅ EventBridge can trigger an alert when an ACM certificate is about to expire.
+ Lambda can process the event and send a notification through Amazon SNS to notify the security team.
+ SNS ensures the notifications are delivered via email, SMS, or other means based on the team's preference.
+ This is an automated, scalable, and AWS-native solution.
+Why Not the Other Options?
+A - ❌ ACM does not support custom rules or direct SNS integration for expiring certificates.
+B - ¸ AWS Config does not have a built-in rule to check ACM certificate expiration. Creating a custom rule would add unnecessary complexity.
+C - ¸ Trusted Advisor does not check ACM certificates for expiration. It only monitors IAM certificate expiration.
+upvoted 2 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: B
+B or D both will work. Per the documentation:
+To get a notification that your certificate is about to expire, use one of the following methods:
+Use the ACM API in Amazon EventBridge to configure the ACM Certificate Approaching Expiration event.
+Create a custom EventBridge rule to receive email notifications when certificates are near the expiration date.
+Use AWS Config to check for certificates that are near the expiration date.
+Create an Amazon CloudWatch alarm based on a static threshold when certificates are near the expiration date.
+upvoted 1 times
+itsmeDiyan 1 year, 4 months ago
+Selected Answer: D
+Use EventBridge, Lambda, and SNS
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: C
+Based on this article it is C if the notification is within 45 days, otherwise use B
+https://repost.aws/knowledge-center/acm-certificate-expiration
+upvoted 1 times

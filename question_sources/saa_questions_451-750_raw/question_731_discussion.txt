@@ -1,0 +1,38 @@
+A company has an application that uses an Amazon DynamoDB table for storage. A solutions architect discovers that many
+requests to the table are not returning the latest data. The company's users have not reported any other issues with database
+performance. Latency is in an acceptable range.
+Which design change should the solutions architect recommend?
+A. Add read replicas to the table.
+B. Use a global secondary index (GSI).
+C. Request strongly consistent reads for the table. Most Voted
+D. Request eventually consistent reads for the table.
+Comments
+alawada Highly Voted 1 year, 8 months ago
+Selected Answer: C
+DynamoDB by default provides eventual consistency for read operations, which means that a query may not reflect the most recent data changes
+immediately after an update. Instead, it may take some time for the data to propagate across all replicas in the DynamoDB global table.
+To ensure that read operations return the latest data and address the issue of stale data being returned to users, the solutions architect should
+recommend switching the read consistency level from eventually consistent reads to strongly consistent reads.
+upvoted 7 times
+BillaRanga Most Recent 1 year, 9 months ago
+Selected Answer: C
+Both tables and LSIs provide two read consistency options: eventually consistent (default) and strongly consistent reads.
+1) Eventually Consistent Reads
+Eventually consistent is the default read consistent model for all read operations. When issuing eventually consistent reads to a DynamoDB table or
+an index, the responses may not reflect the results of a recently completed write operation. If you repeat your read request after a short time, the
+response should eventually return the more recent item.
+upvoted 4 times
+BillaRanga 1 year, 9 months ago
+2) Strongly Consistent Reads
+Read operations such as GetItem, Query, and Scan provide an optional ConsistentRead parameter. If you set ConsistentRead to true, DynamoDB
+returns a response with the most up-to-date data, reflecting the updates from all prior write operations that were successful.
+Hence it is C
+A) Read-replicas are Async again, Which will persist the same problem.
+B) Indexing will further cause latency, this has nothing to do with the question
+upvoted 5 times
+Andy_09 1 year, 10 months ago
+Option C
+upvoted 4 times
+Correct Answer: C
+Community vote distribution
+C (100%)

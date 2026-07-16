@@ -1,0 +1,67 @@
+Question #1008
+A company hosts a website analytics application on a single Amazon EC2 On-Demand Instance. The analytics application is highly
+resilient and is designed to run in stateless mode.
+The company notices that the application is showing signs of performance degradation during busy times and is presenting 5xx
+errors. The company needs to make the application scale seamlessly.
+Which solution will meet these requirements MOST cost-effectively?
+一家公司在单个 Amazon EC2 按需实例上托管一个网站分析应用程序。该分析应用程序具有高度的弹性，并设计为以无状态模式运
+行。
+该公司注意到应用程序在繁忙时段表现出性能下降的迹象，并出现 5xx 错误。公司需要使应用程序能够无缝扩展。
+哪种解决方案将以最具成本效益的方式满足这些需求？
+A. Create an Amazon Machine Image (AMI) of the web application. Use the AMI to launch a second EC2 On-Demand Instance.
+Use an Application Load Balancer to distribute the load across the two EC2 instances.
+创建一个该网站应用程序的 Amazon Machine Image (AMI)。使用该 AMI 启动第二个 EC2 按需实例。使用 Application Load
+Balancer 将负载分配到两个 EC2 实例之间。
+B. Create an Amazon Machine Image (AMI) of the web application. Use the AMI to launch a second EC2 On-Demand Instance.
+Use Amazon Route 53 weighted routing to distribute the load across the two EC2 instances.
+创建一个该网站应用程序的 Amazon Machine Image (AMI)。使用该 AMI 启动第二个 EC2 按需实例。使用 Amazon Route 53 加
+权路由将负载分配到两个 EC2 实例之间。
+C. Create an AWS Lambda function to stop the EC2 instance and change the instance type. Create an Amazon CloudWatch
+alarm to invoke the Lambda function when CPU utilization is more than 75%.
+创建一个 AWS Lambda 函数来停止 EC2 实例并更改实例类型。当 CPU 利用率超过 75% 时，创建一个 Amazon CloudWatch 警
+报来调用该 Lambda 函数。
+D. Create an Amazon Machine Image (AMI) of the web application. Apply the AMI to a launch template. Create an Auto
+Scaling group that includes the launch template. Configure the launch template to use a Spot Fleet. Attach an Application
+Load Balancer to the Auto Scaling group. Most Voted
+创建一个该网站应用程序的 Amazon Machine Image (AMI)。将该 AMI 应用于启动模板。创建一个包含该启动模板的 Auto
+Scaling 组。将启动模板配置为使用 Spot Fleet。将 Application Load Balancer 附加到 Auto Scaling 组。
+Correct Answer: D
+题目分析与解答
+1. 考察的知识点
+Amazon EC2的扩展性和高可用性。
+使用Auto Scaling组实现动态扩展。
+使用Application Load Balancer分配流量。
+Spot实例的成本优化。
+2. 选项分析
+A. Create an Amazon Machine Image (AMI) of the web application. Use the AMI to launch a second EC2 On-Demand
+Instance. Use an Application Load Balancer to distribute the load across the two EC2 instances.
+正确性：此选项可以解决性能问题，通过增加一个EC2实例和使用Application Load Balancer分配流量。
+缺点：使用On-Demand实例成本较高，且没有动态扩展能力。
+结论：虽然可行，但不是最具成本效益的解决方案。
+B. Create an Amazon Machine Image (AMI) of the web application. Use the AMI to launch a second EC2 On-Demand
+Instance. Use Amazon Route 53 weighted routing to distribute the load across the two EC2 instances.
+正确性：此选项使用Route 53加权路由分配流量，但Route 53不适合实时流量负载均衡。
+缺点：没有动态扩展能力，且使用On-Demand实例成本较高。
+结论：不是最佳解决方案。
+C. Create an AWS Lambda function to stop the EC2 instance and change the instance type. Create an Amazon CloudWatch
+alarm to invoke the Lambda function when CPU utilization is more than 75%.
+正确性：此选项通过更改实例类型来解决性能问题。
+缺点：无法实现动态扩展，且更改实例类型可能导致短暂的停机时间。
+结论：不适合需要无缝扩展的场景。
+D. Create an Amazon Machine Image (AMI) of the web application. Apply the AMI to a launch template. Create an Auto
+Scaling group that includes the launch template. Configure the launch template to use a Spot Fleet. Attach an Application
+Load Balancer to the Auto Scaling group.
+正确性：此选项使用Auto Scaling组实现动态扩展，使用Spot实例降低成本，并通过Application Load Balancer分配流量。
+优点：最具成本效益，支持无缝扩展和高可用性。
+结论：这是最佳解决方案。
+3. 我的答案
+D
+4. 官方答案
+D
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：选项D最符合题目要求，既解决了性能问题，又实现了成本优化和动态扩展。
+正确答案：D
+Community vote distribution
+社区投票分布
+D (100%)

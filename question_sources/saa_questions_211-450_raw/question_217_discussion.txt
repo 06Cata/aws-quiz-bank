@@ -1,0 +1,132 @@
+A company runs a global web application on Amazon EC2 instances behind an Application Load Balancer. The application stores
+data in Amazon Aurora. The company needs to create a disaster recovery solution and can tolerate up to 30 minutes of downtime
+and potential data loss. The solution does not need to handle the load when the primary infrastructure is healthy.
+What should a solutions architect do to meet these requirements?
+A. Deploy the application with the required infrastructure elements in place. Use Amazon Route 53 to configure active-passive
+failover. Create an Aurora Replica in a second AWS Region. Most Voted
+B. Host a scaled-down deployment of the application in a second AWS Region. Use Amazon Route 53 to configure active-
+active failover. Create an Aurora Replica in the second Region.
+C. Replicate the primary infrastructure in a second AWS Region. Use Amazon Route 53 to configure active-active failover.
+Create an Aurora database that is restored from the latest snapshot.
+D. Back up data with AWS Backup. Use the backup to create the required infrastructure in a second AWS Region. Use Amazon
+Route 53 to configure active-passive failover. Create an Aurora second primary instance in the second Region.
+Comments
+Parsons Highly Voted 3 years, 4 months ago
+Selected Answer: A
+A is correct.
+- "The solution does not need to handle the load when the primary infrastructure is healthy." => Should use Route 53 Active-Passive ==> Exclude B,
+C
+- D is incorrect because "Create an Aurora second primary instance in the second Region.", we need to create an Aurora Replica enough.
+upvoted 31 times
+Parsons 3 years, 4 months ago
+Ref link: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-types.html
+upvoted 6 times
+diabloexodia Highly Voted 2 years, 10 months ago
+Selected Answer: A
+Anything that is not instant recovery is active - passive.
+In active -passive we have :
+1. Aws Backup(least op overhead) - RTO/RPO = hours
+2. Pilot Light ( Basic Infra is already deployed, but needs to be fully implemented) -RTO/RPO = 10's of minutes.
+3. Warm Standby- (Basic infra + runs small loads ( might need to add auto scaling) -RTO/RPO= minutes
+4. ( ACTIVE -ACTIVE ) : Multi AZ option : instant
+here we can tolerate 30 mins
+hence B,D are incorrect. AWS backup is in hours, hence D is incorrect .
+therefore A
+upvoted 24 times
+pentium75 2 years, 5 months ago
+A does not create the infrastructure in the DR region though.
+upvoted 2 times
+bora4motion Most Recent 1 year, 1 month ago
+Selected Answer: A
+A seems logic to me. D seems legit as well but it does not guarantee everything will be live in 30 minutes.
+Correct Answer: A
+Community vote distribution
+A (72%)
+D (28%)
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: A
+The Aurora Global Database would be ideal for a production system requiring near-instantaneous failover, however, it was not in the options. Since
+the option D may not meet the 30-minute tolerance, I choose option A- Aurora Replica-based disaster recovery although replication is more
+designed for reading traffic, it can still be used for failover based on this doc
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html.
+upvoted 2 times
+ensbrvsnss 1 year, 9 months ago
+Selected Answer: D
+D is right
+upvoted 1 times
+jatric 1 year, 11 months ago
+Selected Answer: D
+confused with A and D but D looks more promising when it says doesn't need to handle the load when primary infrastructure is healthy
+upvoted 2 times
+lofzee 2 years ago
+Selected Answer: D
+I went for D as the wording of A is weird....
+D seems most plausible
+upvoted 2 times
+Jazz888 2 years ago
+A
+For those you are choosing D, I have a question for you. How do you guarantee the provisioning of resources will take less than 30 min through AWS
+Backup?
+upvoted 3 times
+ManikRoy 2 years, 1 month ago
+By excluding other options you can choose A but this option is incomplete as it doesn't mention deploying/recovering the application in secondary
+region.
+upvoted 1 times
+MrPCarrot 2 years, 4 months ago
+A is perfect - Active-Passive Failover: Use this failover configuration when you want a primary group of resources to be available the majority of the
+time and you want a secondary group of resources to be on standby in case all of the primary resources become unavailable.
+upvoted 2 times
+MrPCarrot 2 years, 4 months ago
+A is perfect
+upvoted 1 times
+farnamjam 2 years, 4 months ago
+Selected Answer: A
+Here's why the other options aren't as suitable:
+B. Active-active failover: Incur higher costs due to running both infrastructures simultaneously and introduces complexity in managing traffic
+distribution.
+C. Restoring from snapshot: Could take longer than 30 minutes to recover, exceeding the company's downtime tolerance.
+D. AWS Backup: Dependent on backup and restore times, potentially exceeding the 30-minute recovery window.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: D
+Not A - does not mention a second region for the infrastructure elements. Also, you cannot really "create an Aurora Replica in a second AWS
+Region", replicas must be in same region unless using Aurora Global Database (which is not mentioned)
+Not B - would send half of the traffic to the DR region
+Not C - this could send traffic to the DR instance even when the primary instance is healthy
+D - the wording "Aurora second primary instance" is a bit strange, but still a "primary instance" is what we would need in the other region. We would
+still need to establish replication between the databases (like binlog), or restore a snapshot before failover, but in general this option could meet the
+30 minute RTO/RPO requirement.
+upvoted 5 times
+lofzee 2 years ago
+the question doesnt state Aurora MySQL but you can set up cross-region replicas for Aurora MySQL, but not PostgreSQL. the question only says
+Amazon Aurora, so its left a bit open as Aurora is either MySql or PostgreSQL. this is without using Global Database.
+tbh i think this question and answers are well off... it is a dump after all.
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: D
+I agreed with D as the requirements of 30 min downtime and potential data loss and no load consideration when primary instance is healthy. It
+makes D more feasible than A. Aurora-Replica is normally used for active-active failovers. Be frugal!
+upvoted 4 times
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: A
+'Can tolerate up to 30 minutes of downtime and potential data loss' rules out any option with 'active-active'. Leaves D and A. D is convoluted.
+Leaving A.
+upvoted 6 times
+cookieMr 2 years, 11 months ago
+Selected Answer: A
+A. involves deploying the application and infrastructure elements in the primary Region. An Aurora Replica is created in a second Region to serve as
+the standby database. Route 53 is configured with active-passive failover, directing traffic to the primary Region by default. In the event of a disaster,
+Route 53 can automatically redirect traffic to the standby Region, minimizing downtime. Data loss may occur up to the point of the last replication to
+the standby Region, which can be within the defined tolerance of 30 minutes.
+Option B, is not necessary in this case as the solution does not need to handle the load when the primary infrastructure is healthy, and it may involve
+higher complexity and costs.
+Option C, may introduce additional complexity and potential data loss, as the standby database might not be up-to-date with the primary database.
+Option D, may be suitable for backup and recovery scenarios but may not provide the required failover and downtime tolerance specified in the
+requirements.
+upvoted 3 times
+antropaws 3 years ago
+Selected Answer: D
+I vote D, because option A is not highly available. In option A, you can't configure active-passive failover because you haven't created a backup
+infrastructure.
+upvoted 2 times

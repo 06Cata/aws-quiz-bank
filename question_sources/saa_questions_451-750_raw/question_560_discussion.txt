@@ -1,0 +1,96 @@
+A company's solutions architect is designing an AWS multi-account solution that uses AWS Organizations. The solutions architect
+has organized the company's accounts into organizational units (OUs).
+The solutions architect needs a solution that will identify any changes to the OU hierarchy. The solution also needs to notify the
+company's operations team of any changes.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Provision the AWS accounts by using AWS Control Tower. Use account drift notifications to identify the changes to the OU
+hierarchy. Most Voted
+B. Provision the AWS accounts by using AWS Control Tower. Use AWS Config aggregated rules to identify the changes to the
+OU hierarchy.
+C. Use AWS Service Catalog to create accounts in Organizations. Use an AWS CloudTrail organization trail to identify the
+changes to the OU hierarchy.
+D. Use AWS CloudFormation templates to create accounts in Organizations. Use the drift detection operation on a stack to
+identify the changes to the OU hierarchy.
+Comments
+Guru4Cloud Highly Voted 2 years, 9 months ago
+Selected Answer: A
+The key advantages you highlight of Control Tower are convincing:
+Fully managed service simplifies multi-account setup.
+Built-in account drift notifications detect OU changes automatically.
+More scalable and less complex than Config rules or CloudTrail.
+Better security and compliance guardrails than custom options.
+Lower operational overhead compared to other solution
+upvoted 12 times
+Bmaster Highly Voted 2 years, 10 months ago
+A is correct.
+https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html
+https://docs.aws.amazon.com/controltower/latest/userguide/prevention-and-notification.html
+upvoted 8 times
+ln2718 Most Recent 9 months, 3 weeks ago
+Selected Answer: C
+A. Control Tower drift detection is about accounts or resources drifting from guardrails/baselines, not OU hierarchy changes.
+B. Control Tower + AWS Config aggregated rules
+AWS Config can track certain resources, but AWS Config does not natively record OU hierarchy changes in AWS Organizations.
+upvoted 1 times
+ln2718 9 months, 3 weeks ago
+Selected Answer: C
+Chat ---
+C. Service Catalog + CloudTrail organization trail
+CloudTrail does log AWS Organizations events such as CreateOrganizationalUnit, MoveAccount, UpdateOrganizationalUnit, DeleteOrganizationalUnit
+Correct Answer: A
+Community vote distribution
+A (61%)
+B (22%)
+C (17%)
+Setting up an organization trail ensures these events are captured across all accounts automatically.
+Then you can use EventBridge rules to trigger notifications (e.g., to SNS → Ops team).
+This directly meets the requirement with the least overhead.
+upvoted 1 times
+111380c 10 months ago
+Selected Answer: B
+A for checking account drift ( account configuration & blueprint )
+upvoted 1 times
+1166ae3 1 year, 11 months ago
+Selected Answer: C
+Create Accounts using AWS Service Catalog:
+Utilize AWS Service Catalog to provision AWS accounts within AWS Organizations. This ensures standardized account creation and management.
+Enable AWS CloudTrail Organization Trail:
+Set up an AWS CloudTrail organization trail that records all API calls across all accounts in the organization.
+This trail will capture changes to the OU hierarchy, including any modifications to organizational units.
+upvoted 2 times
+chickenmf 2 years, 3 months ago
+Selected Answer: B
+AWS Config helps you maintain a detailed inventory of your resources and their configurations, track changes over time, and ensure compliance with
+your organization's policies and industry regulations.
+upvoted 4 times
+chickenmf 2 years, 3 months ago
+Furthermore, AWS Config Aggregated Rules are a feature within AWS Config that enables you to evaluate compliance with desired configurations o
+compliance standards across multiple AWS accounts and regions. They are particularly useful in scenarios where you want to enforce consistent
+rules and compliance checks across an entire organization with multiple AWS accounts.
+upvoted 1 times
+chickenmf 2 years, 3 months ago
+NVM - This is such a stupid question lol changing my answer to A due to the following:
+Account drift notifications in AWS are a feature provided by AWS Control Tower. These notifications help organizations identify and respond to
+changes made to an AWS account that deviate from the established baseline configuration created during the initial setup by AWS Control Tower.
+Drift refers to any configuration changes that have been made to an AWS account after it was provisioned by Control Tower.
+upvoted 6 times
+Avyay 2 years, 3 months ago
+This was in my exam today..I selected Answer A
+upvoted 3 times
+chickenmf 2 years, 3 months ago
+what percentage of all these questions would you say were in the exam?
+upvoted 2 times
+wizcloudifa 2 years, 1 month ago
+I read in one of the earlier questions, its around 75%, someone who gave the exam said so
+upvoted 2 times
+SHAAHIBHUSHANAWS 2 years, 6 months ago
+A
+https://docs.aws.amazon.com/controltower/latest/userguide/drift.html
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: A
+AWS Control Tower provides passive and active methods of drift monitoring protection for preventive controls.
+upvoted 2 times
+darekw 2 years, 9 months ago
+https://docs.aws.amazon.com/controltower/latest/userguide/prevention-and-notification.html
+upvoted 2 times

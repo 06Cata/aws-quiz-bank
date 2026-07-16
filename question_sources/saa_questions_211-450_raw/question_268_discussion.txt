@@ -1,0 +1,137 @@
+A gaming company has a web application that displays scores. The application runs on Amazon EC2 instances behind an
+Application Load Balancer. The application stores data in an Amazon RDS for MySQL database. Users are starting to experience
+long delays and interruptions that are caused by database read performance. The company wants to improve the user experience
+while minimizing changes to the application’s architecture.
+What should a solutions architect do to meet these requirements?
+A. Use Amazon ElastiCache in front of the database. Most Voted
+B. Use RDS Proxy between the application and the database.
+C. Migrate the application from EC2 instances to AWS Lambda.
+D. Migrate the database from Amazon RDS for MySQL to Amazon DynamoDB.
+Comments
+Steve_4542636 Highly Voted 3 years, 3 months ago
+Selected Answer: A
+Rds proxy is for too many connections, not for performance
+upvoted 36 times
+Yadav_Sanjay 3 years ago
+Can't use cache as score gates updated. If data would have been static then definitely can go with A. But here score is dynamic...
+upvoted 10 times
+rfelipem 3 years ago
+Users are starting to experience long delays and interruptions caused by the "read performance" of the database... While the score is dynamic,
+there is also read activity in the DB that is causing the delays and outages and this can be improved with Elastic Cache.
+upvoted 5 times
+Mkenya08 2 years, 4 months ago
+ElastiCache stores data in memory, which means it may not always have the most up-to-date information. This might be acceptable for certain use
+cases where slightly stale data is acceptable, but for applications like gaming scores, real-time accuracy is often crucial.
+upvoted 5 times
+Maru86 2 years, 3 months ago
+“Data in the cache is never stale.
+Because the data in the cache is updated every time it's written to the database, the data in the cache is always current and updated whenever
+data is written to the database.” https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html#Strategies.WriteThrough
+upvoted 4 times
+JackyCCK 2 years, 2 months ago
+RDS Proxy: It helps applications improve scalability and performance by managing database connections and pooling, which can significantly
+reduce the load on the database
+upvoted 3 times
+vipyodha 2 years, 11 months ago
+to use elasticache , you need to perform heavy code change ,aand also elasticache do chaching that can improve read perfromance but will not
+provide scalability
+upvoted 9 times
+pentium75 2 years, 5 months ago
+Correct Answer: A
+Community vote distribution
+A (60%)
+B (40%)
+We should "minimize", not "avoid", code changes.
+upvoted 3 times
+chickenmf 2 years, 2 months ago
+minimize *architectural changes, NOT code changes
+upvoted 3 times
+kraken21 Highly Voted 3 years, 2 months ago
+Selected Answer: B
+RDX proxy will :"improve the user experience while minimizing changes".
+upvoted 26 times
+pentium75 2 years, 5 months ago
+.. but not address issues with "database read performance".
+upvoted 3 times
+Charlesvg Most Recent 11 months, 3 weeks ago
+Selected Answer: A
+RDS proxy won't help for read performance issues
+upvoted 2 times
+thiahthura 1 year, 6 months ago
+Selected Answer: A
+users are experiencing long delays. This is the priority issue , so we need to use cache service urgently to solve this issues. If we need performence ,
+we can use proxy. But in this case , latency is our priority. So Answer is A.
+upvoted 2 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: A
+A: Correct. Not suitable for write-heavy applications though.
+B: Reduces pressure on the database by reusing connections, but cannot address the slow-read problem.
+C: Why? Who would do this?
+D: It completely changes the architecture.
+upvoted 1 times
+Mish 1 year, 7 months ago
+Selected Answer: A
+Use Amazon ElastiCache in front of the database.
+upvoted 2 times
+pujithacg8 1 year, 10 months ago
+A. Use Amazon ElastiCache in front of the database.
+Explanation:
+Amazon ElastiCache is a managed caching service that can be placed in front of the database to cache frequently accessed data. By caching the most
+common queries, it can significantly reduce the load on the database, leading to faster response times and an improved user experience.
+This solution minimizes changes to the existing architecture because it doesn't require modifications to the application's core logic or database
+schema. Instead, it optimizes performance by reducing the need for repetitive database reads.
+ElastiCache supports both Redis and Memcached, which are widely used for caching in web applications.
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: A
+A for sure
+upvoted 2 times
+Mayank0502 1 year, 11 months ago
+Selected Answer: B
+answer should be B
+upvoted 1 times
+Manjeet_Kumar 1 year, 11 months ago
+Selected Answer: A
+Not B because this can help with connection management and improve scalability and availability but won't directly address read performance issues
+caused by high read traffic.
+upvoted 2 times
+MomenAWS 1 year, 12 months ago
+Selected Answer: A
+Another vague question from AWS: I would prefer A over B
+upvoted 2 times
+rohitph 2 years ago
+Selected Answer: B
+ask is - minimum changes.
+RDS Proxy is a feature of Amazon RDS.
+This would be easiest option to try.
+upvoted 1 times
+MandAsh 2 years ago
+Selected Answer: A
+Elasticache - reduce load due to read operations
+RDS proxy - reduce load due to lot of connections
+Here problem is read operations thus A is solution
+upvoted 3 times
+hb0011 2 years ago
+Selected Answer: A
+I vote for Elasticache
+upvoted 2 times
+rjjkc 2 years ago
+Selected Answer: B
+B - "Use RDS Proxy between the application and the database."
+B because it improves the user experience while minimizing the changes.
+If A is used, you have to modify your application to get the data from the cache first, if it is not there, then get from db; and also to invalidate the
+cache if there is a db update.
+upvoted 1 times
+osmk 2 years, 2 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/Welcome.html
+upvoted 2 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: B
+RDS Proxy: It helps applications improve scalability and performance by managing database connections and pooling, which can significantly reduce
+the load on the database. By using RDS Proxy, you can offload connection management tasks from your application and optimize database access,
+thereby improving read performance without making significant changes to the application's architecture.
+Minimizing Changes: Implementing RDS Proxy does not require architectural changes to the application. It works as a proxy layer between the
+application and the RDS database, so the application code remains unchanged. This minimizes the effort and risk associated with making
+modifications to the application.
+upvoted 2 times

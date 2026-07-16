@@ -1,0 +1,56 @@
+Question #906
+A company runs a self-managed Microsoft SQL Server on Amazon EC2 instances and Amazon Elastic Block Store (Amazon EBS).
+Daily snapshots are taken of the EBS volumes.
+Recently, all the company’s EBS snapshots were accidentally deleted while running a snapshot cleaning script that deletes all
+expired EBS snapshots. A solutions architect needs to update the architecture to prevent data loss without retaining EBS snapshots
+indefinitely.
+Which solution will meet these requirements with the LEAST development effort?
+一家公司在 Amazon EC2 实例和 Amazon Elastic Block Store (Amazon EBS) 上运行自管理的 Microsoft SQL Server。每天都会对 EBS
+卷进行快照。
+最近，在运行一个删除所有过期 EBS 快照的清理脚本时，该公司的所有 EBS 快照被意外删除。解决方案架构师需要更新架构以防止
+数据丢失，同时避免无限期保留 EBS 快照。
+哪种解决方案可以以最少的开发工作量满足这些需求？
+A. Change the IAM policy of the user to deny EBS snapshot deletion.
+更改用户的 IAM 策略以拒绝 EBS 快照删除。
+B. Copy the EBS snapshots to another AWS Region after completing the snapshots daily.
+每天完成快照后，将 EBS 快照复制到另一个 AWS 区域。
+C. Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots. Most Voted
+在 Recycle Bin 中创建一个 7 天的 EBS 快照保留规则，并将该规则应用于所有快照。
+D. Copy EBS snapshots to Amazon S3 Standard-Infrequent Access (S3 Standard-IA).
+将 EBS 快照复制到 Amazon S3 Standard-Infrequent Access (S3 Standard-IA)。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (100%)
+题目分析与解答
+1. 考察的知识点
+Amazon EBS快照管理与数据保护机制。
+IAM策略的权限控制。
+跨区域复制与灾备策略。
+Recycle Bin功能的使用。
+Amazon S3存储类别的选择与成本优化。
+2. 选项分析
+A. Change the IAM policy of the user to deny EBS snapshot deletion.
+正确性分析：虽然更改IAM策略可以防止用户删除快照，但这并不能解决问题，因为脚本可能是由具有更高权限的用户或角色运行
+的。此外，IAM策略的修改需要精确控制，可能会影响其他操作。
+结论：此选项错误。
+B. Copy the EBS snapshots to another AWS Region after completing the snapshots daily.
+正确性分析：跨区域复制可以提供额外的灾备保护，但这需要额外的开发工作来实现自动化，并且无法解决快照被删除的问题，因
+为删除操作可能会影响所有区域的快照。
+结论：此选项错误。
+C. Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots.
+正确性分析：Recycle Bin是AWS提供的功能，用于防止意外删除快照。通过设置保留规则，可以确保快照在一定时间内不会被永久
+删除，从而有效防止数据丢失。
+结论：此选项正确。
+D. Copy EBS snapshots to Amazon S3 Standard-Infrequent Access (S3 Standard-IA).
+正确性分析：将EBS快照复制到S3需要额外的开发工作，并且S3存储快照的成本可能较高。此外，这种方法无法直接防止快照被删
+除的问题。
+结论：此选项错误。
+3. 我选的答案
+C. Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots.
+4. 官方答案
+C. Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots.
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：Recycle Bin功能是AWS提供的专门用于防止意外删除快照的解决方案，符合题目要求，并且开发工作量最小。

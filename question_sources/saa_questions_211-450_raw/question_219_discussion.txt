@@ -1,0 +1,90 @@
+A company’s application is having performance issues. The application is stateful and needs to complete in-memory tasks on
+Amazon EC2 instances. The company used AWS CloudFormation to deploy infrastructure and used the M5 EC2 instance family. As
+traffic increased, the application performance degraded. Users are reporting delays when the users attempt to access the
+application.
+Which solution will resolve these issues in the MOST operationally efficient way?
+A. Replace the EC2 instances with T3 EC2 instances that run in an Auto Scaling group. Make the changes by using the AWS
+Management Console.
+B. Modify the CloudFormation templates to run the EC2 instances in an Auto Scaling group. Increase the desired capacity and
+the maximum capacity of the Auto Scaling group manually when an increase is necessary.
+C. Modify the CloudFormation templates. Replace the EC2 instances with R5 EC2 instances. Use Amazon CloudWatch built-in
+EC2 memory metrics to track the application performance for future capacity planning.
+D. Modify the CloudFormation templates. Replace the EC2 instances with R5 EC2 instances. Deploy the Amazon CloudWatch
+agent on the EC2 instances to generate custom application latency metrics for future capacity planning. Most Voted
+Comments
+Parsons Highly Voted 3 years, 4 months ago
+Selected Answer: D
+D is the correct answer.
+"in-memory tasks" => need the "R" EC2 instance type to archive memory optimization. So we are concerned about C & D.
+Because EC2 instances don't have built-in memory metrics to CW by default. As a result, we have to install the CW agent to archive the purpose.
+upvoted 39 times
+Babba Highly Voted 3 years, 4 months ago
+Selected Answer: D
+It's D, EC2 do not provide by default memory metrics to CloudWatch and require the CloudWatch Agent to be installed on the monitored instances :
+https://aws.amazon.com/premiumsupport/knowledge-center/cloudwatch-memory-metrics-ec2/
+upvoted 14 times
+surajkrishnamurthy Most Recent 1 year, 3 months ago
+Selected Answer: D
+Answer is most likely "D" because of the following ...
+- T3 EC2 instances > low cost burstable general purpose instance type that provide a baseline level of CPU performance with the ability to burst CPU
+usage
+- M5 EC2 instance > M5 instances offer a balance of compute, memory, and networking resources for a broad range of workload.
+- R5 EC2 instances > Amazon EC2 R5 instances are the next generation of memory optimized instances for the Amazon Elastic Compute Cloud. R5
+instances are well suited for memory intensive applications such as high-performance databases etc
+M5 EC2 instance is already in use & having performance issues so there is no point in provisioning a lower cost , general purpose instance type like
+T3 EC2.
+So as per the given Answer option choice the best one is Answer D
+upvoted 1 times
+jatric 1 year, 11 months ago
+Selected Answer: A
+Correct Answer: D
+Community vote distribution
+D (94%)
+4%
+how future capacity planning and just do verticall scalling will improve the performance. Question doesn't specify if these EC2 are behind auto
+scalling so it means they are not. out of all A seems more close to the solution
+upvoted 3 times
+a7md0 1 year, 11 months ago
+Selected Answer: B
+B will reduce operational overhead and better solution than keep changing the family. Also, I don't think the exam will require you to remember
+instance families like M5 and R5
+upvoted 2 times
+lofzee 2 years ago
+Selected Answer: D
+D .....
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+R5 instances are better optimized for the in-memory workload than M5.
+Auto Scaling alone doesn't handle stateful applications well, manual capacity adjustments would still be needed.
+Custom latency metrics give better visibility than built-in metrics for capacity planning.
+upvoted 7 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+By replacing the M5 instances with R5 instances, which are optimized for memory-intensive workloads, the application can benefit from increased
+memory capacity and performance.
+In addition, deploying the CloudWatch agent on the EC2 instances allows for the generation of custom application latency metrics, which can provide
+valuable insights into the application's performance.
+This solution addresses the performance issues efficiently by leveraging the appropriate instance types and collecting custom application metrics for
+better monitoring and future capacity planning.
+A. Replacing with T3 instances may not provide enough memory capacity for in-memory tasks.
+B. Manually increasing the capacity of the ASG does not directly address the performance issues.
+C. Relying solely on built-in EC2 memory metrics may not provide enough granularity for optimizing in-memory tasks.
+The most efficient solution is to modify the CloudFormation templates, replace with R5 instances, and deploy the CloudWatch agent for custom
+metrics.
+upvoted 6 times
+Bmarodi 3 years ago
+Selected Answer: D
+Option D is the correct answer.
+upvoted 2 times
+BABU97 3 years, 2 months ago
+will go for C
+upvoted 1 times
+Aninina 3 years, 4 months ago
+Selected Answer: D
+Would go with D
+upvoted 2 times
+mhmt4438 3 years, 4 months ago
+Selected Answer: D
+ı think D
+upvoted 2 times

@@ -1,0 +1,107 @@
+A company has a regional subscription-based streaming service that runs in a single AWS Region. The architecture consists of web
+servers and application servers on Amazon EC2 instances. The EC2 instances are in Auto Scaling groups behind Elastic Load
+Balancers. The architecture includes an Amazon Aurora global database cluster that extends across multiple Availability Zones.
+The company wants to expand globally and to ensure that its application has minimal downtime.
+Which solution will provide the MOST fault tolerance?
+A. Extend the Auto Scaling groups for the web tier and the application tier to deploy instances in Availability Zones in a second
+Region. Use an Aurora global database to deploy the database in the primary Region and the second Region. Use Amazon
+Route 53 health checks with a failover routing policy to the second Region.
+B. Deploy the web tier and the application tier to a second Region. Add an Aurora PostgreSQL cross-Region Aurora Replica in
+the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region. Promote the
+secondary to primary as needed.
+C. Deploy the web tier and the application tier to a second Region. Create an Aurora PostgreSQL database in the second
+Region. Use AWS Database Migration Service (AWS DMS) to replicate the primary database to the second Region. Use Amazon
+Route 53 health checks with a failover routing policy to the second Region.
+D. Deploy the web tier and the application tier to a second Region. Use an Amazon Aurora global database to deploy the
+database in the primary Region and the second Region. Use Amazon Route 53 health checks with a failover routing policy to
+the second Region. Promote the secondary to primary as needed. Most Voted
+Comments
+TariqKipkemei Highly Voted 2 years, 10 months ago
+Selected Answer: D
+Auto Scaling groups can span Availability Zones, but not AWS regions.
+Hence the best option is to deploy the web tier and the application tier to a second Region. Use an Amazon Aurora global database to deploy the
+database in the primary Region and the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region.
+Promote the secondary to primary as needed.
+upvoted 22 times
+awsgeek75 Most Recent 2 years, 5 months ago
+Selected Answer: D
+A: Not possible for autoscaling across regions
+BC: Using PostgreSQL, not sure why?
+D: MOST fault tolerant != MOST scalable. This gives least downtime.
+upvoted 4 times
+potomac 2 years, 7 months ago
+Selected Answer: D
+EC2 Auto Scaling groups are regional constructs. They can span Availability Zones, but not AWS regions
+upvoted 3 times
+thanhnv142 2 years, 7 months ago
+527:
+D is correct:
+- B & C is not correct because it mentions Aurora PostgreSQL which is not mentioned in the question
+- A is not correct because Auto scaling group can not span regions
+Correct Answer: D
+Community vote distribution
+D (95%)
+2%
+upvoted 4 times
+wsdasdasdqwdaw 2 years, 7 months ago
+Simple as that.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+Using an Aurora global database that spans both the primary and secondary regions provides automatic replication and failover capabilities for the
+database tier.
+Deploying the web and application tiers to a second region provides fault tolerance for those components.
+Using Route53 health checks and failover routing will route traffic to the secondary region if the primary region becomes unavailable.
+This provides fault tolerance across all tiers of the architecture while minimizing downtime. Promoting the secondary database to primary ensures the
+second region can continue operating if needed.
+A is close, but doesn't provide an automatic database failover capability.
+B and C provide database replication, but not automatic failover.
+So D is the most comprehensive and fault tolerant architecture.
+upvoted 4 times
+JA2018 1 year, 6 months ago
+PostgreSQL in options b & C could be a distractor.... PostgreSQL not mentioned in stem
+upvoted 1 times
+Zox42 2 years, 11 months ago
+Selected Answer: D
+Answer D
+upvoted 2 times
+Zuit 2 years, 11 months ago
+Selected Answer: D
+D seems fitting: Global Databbase and deploying it in the new region
+upvoted 2 times
+MrAWSAssociate 2 years, 11 months ago
+Selected Answer: B
+B is correct!
+upvoted 1 times
+manuh 2 years, 11 months ago
+Replicated db doesnt mean they will act as a single db once the transfer is completed. Global db is the correct approach
+upvoted 2 times
+JA2018 1 year, 6 months ago
+PostgreSQL in options b & C could be a distractor.... PostgreSQL not mentioned in stem
+upvoted 1 times
+r3mo 2 years, 12 months ago
+"D" is the answer: because Aws Aurora Global Database allows you to read and write from any region in the global cluster. This enables you to
+distribute read and write workloads globally, improving performance and reducing latency. Data is replicated synchronously across regions, ensuring
+strong consistency.
+upvoted 4 times
+Henrytml 3 years ago
+Selected Answer: A
+A is the only answer remain using ELB, both Web/App/DB has been taking care with replicating in 2nd region, lastly route 53 for failover over
+multiple regions
+upvoted 1 times
+Henrytml 2 years, 12 months ago
+i will revoke my answer to standby web in 2nd region, instead of trigger to scale out
+upvoted 1 times
+manuh 2 years, 11 months ago
+also Asg cant span beyond a region
+upvoted 2 times
+alexandercamachop 3 years ago
+Selected Answer: D
+B&C are discarted.
+The answer is between A and D.
+I would go with D because it explicitley created this web / app tier in second region, instead A just autoscales into a secondary region, rather then
+always having resources in this second region.
+upvoted 4 times
+JA2018 1 year, 6 months ago
+as mentioned ASG cannot span across different AWS regions
+upvoted 1 times

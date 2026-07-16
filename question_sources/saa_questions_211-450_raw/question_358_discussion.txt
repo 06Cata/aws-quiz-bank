@@ -1,0 +1,57 @@
+A social media company runs its application on Amazon EC2 instances behind an Application Load Balancer (ALB). The ALB is the
+origin for an Amazon CloudFront distribution. The application has more than a billion images stored in an Amazon S3 bucket and
+processes thousands of images each second. The company wants to resize the images dynamically and serve appropriate formats
+to clients.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Install an external image management library on an EC2 instance. Use the image management library to process the images.
+B. Create a CloudFront origin request policy. Use the policy to automatically resize images and to serve the appropriate format
+based on the User-Agent HTTP header in the request.
+C. Use a Lambda@Edge function with an external image management library. Associate the Lambda@Edge function with the
+CloudFront behaviors that serve the images. Most Voted
+D. Create a CloudFront response headers policy. Use the policy to automatically resize images and to serve the appropriate
+format based on the User-Agent HTTP header in the request.
+Comments
+NolaHOla Highly Voted 2 years, 9 months ago
+Use a Lambda@Edge function with an external image management library. Associate the Lambda@Edge function with the CloudFront behaviors that
+serve the images.
+Using a Lambda@Edge function with an external image management library is the best solution to resize the images dynamically and serve
+appropriate formats to clients. Lambda@Edge is a serverless computing service that allows running custom code in response to CloudFront events,
+such as viewer requests and origin requests. By using a Lambda@Edge function, it's possible to process images on the fly and modify the CloudFront
+response before it's sent back to the client. Additionally, Lambda@Edge has built-in support for external libraries that can be used to process images
+This approach will reduce operational overhead and scale automatically with traffic.
+upvoted 21 times
+TariqKipkemei Highly Voted 2 years, 1 month ago
+Selected Answer: C
+The moment there is a need to implement some logic at the CDN think Lambda@Edge.
+upvoted 12 times
+Guru4Cloud Most Recent 2 years, 3 months ago
+Selected Answer: C
+The correct answer is C.
+A Lambda@Edge function is a serverless function that runs at the edge of the CloudFront network. This means that the function is executed close to
+the user, which can improve performance.
+An external image management library can be used to resize images and to serve the appropriate format.
+Associating the Lambda@Edge function with the CloudFront behaviors that serve the images ensures that the function is executed for all requests
+that are served by those behaviors.
+upvoted 4 times
+BrijMohan08 2 years, 3 months ago
+Selected Answer: B
+If the user asks for the most optimized image format (JPEG,WebP, or AVIF) using the directive format=auto, CloudFront Function will select the best
+format based on the Accept header present in the request.
+Correct Answer: C
+Community vote distribution
+C (89%)
+11%
+Latest documentation: https://aws.amazon.com/blogs/networking-and-content-delivery/image-optimization-using-amazon-cloudfront-and-aws-
+lambda/
+upvoted 3 times
+pentium75 1 year, 11 months ago
+But a policy alone cannot resize images.
+upvoted 1 times
+bdp123 2 years, 9 months ago
+Selected Answer: C
+https://aws.amazon.com/cn/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/
+upvoted 5 times
+everfly 2 years, 9 months ago
+Selected Answer: C
+https://aws.amazon.com/cn/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/
+upvoted 3 times

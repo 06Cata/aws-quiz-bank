@@ -1,0 +1,75 @@
+What should a solutions architect do to ensure that all objects uploaded to an Amazon S3 bucket are encrypted?
+A. Update the bucket policy to deny if the PutObject does not have an s3:x-amz-acl header set.
+B. Update the bucket policy to deny if the PutObject does not have an s3:x-amz-acl header set to private.
+C. Update the bucket policy to deny if the PutObject does not have an aws:SecureTransport header set to true.
+D. Update the bucket policy to deny if the PutObject does not have an x-amz-server-side-encryption header set. Most Voted
+Comments
+bdp123 Highly Voted 2 years, 9 months ago
+Selected Answer: D
+https://aws.amazon.com/blogs/security/how-to-prevent-uploads-of-unencrypted-objects-to-amazon-s3/#:~:text=Solution%20overview
+upvoted 16 times
+Grace83 2 years, 8 months ago
+Thank you!
+upvoted 1 times
+Sbbh Highly Voted 2 years, 8 months ago
+Confusing question. It doesn't state clearly if the object needs to be encrypted at-rest or in-transit
+upvoted 9 times
+Guru4Cloud 2 years, 3 months ago
+That's true
+upvoted 2 times
+awsgeek75 Most Recent 1 year, 11 months ago
+Selected Answer: D
+Related reading because (as of Jan 2023) S3 buckets have encryption enabled by default.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html
+"If you require your data uploads to be encrypted using only Amazon S3 managed keys, you can use the following bucket policy. For example, the
+following bucket policy denies permissions to upload an object unless the request includes the x-amz-server-side-encryption header to request
+server-side encryption:"
+upvoted 5 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: D
+The x-amz-server-side-encryption header is used to specify the encryption method that should be used to encrypt objects uploaded to an Amazon
+S3 bucket. By updating the bucket policy to deny if the PutObject does not have this header set, the solutions architect can ensure that all objects
+uploaded to the bucket are encrypted.
+upvoted 6 times
+kruasan 2 years, 7 months ago
+To encrypt an object at the time of upload, you need to add a header called x-amz-server-side-encryption to the request to tell S3 to encrypt the
+object using SSE-C, SSE-S3, or SSE-KMS. The following code example shows a Put request using SSE-S3.
+https://aws.amazon.com/blogs/security/how-to-prevent-uploads-of-unencrypted-objects-to-amazon-s3/
+upvoted 5 times
+kruasan 2 years, 7 months ago
+The other options would not enforce encryption:
+A) Requiring an s3:x-amz-acl header does not mandate encryption. This header controls access permissions.
+Correct Answer: D
+Community vote distribution
+D (100%)
+B) Requiring an s3:x-amz-acl header set to private also does not enforce encryption. It only enforces private access permissions.
+C) Requiring an aws:SecureTransport header ensures uploads use SSL but does not specify that objects must be encrypted. Encryption is not
+required when using SSL transport.
+upvoted 5 times
+kruasan 2 years, 7 months ago
+Selected Answer: D
+To encrypt an object at the time of upload, you need to add a header called x-amz-server-side-encryption to the request to tell S3 to encrypt the
+object using SSE-C, SSE-S3, or SSE-KMS. The following code example shows a Put request using SSE-S3.
+https://aws.amazon.com/blogs/security/how-to-prevent-uploads-of-unencrypted-objects-to-amazon-s3/
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: D
+I vote d
+upvoted 2 times
+LuckyAro 2 years, 9 months ago
+Selected Answer: D
+To ensure that all objects uploaded to an Amazon S3 bucket are encrypted, the solutions architect should update the bucket policy to deny any
+PutObject requests that do not have an x-amz-server-side-encryption header set. This will prevent any objects from being uploaded to the bucket
+unless they are encrypted using server-side encryption.
+upvoted 4 times
+jennyka76 2 years, 9 months ago
+answer - D
+upvoted 2 times
+zTopic 2 years, 9 months ago
+Selected Answer: D
+Answer is D
+upvoted 2 times
+Neorem 2 years, 9 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html
+upvoted 2 times

@@ -1,0 +1,56 @@
+A company is migrating a legacy application from an on-premises data center to AWS. The application relies on hundreds of cron
+jobs that run between 1 and 20 minutes on different recurring schedules throughout the day.
+The company wants a solution to schedule and run the cron jobs on AWS with minimal refactoring. The solution must support
+running the cron jobs in response to an event in the future.
+Which solution will meet these requirements?
+A. Create a container image for the cron jobs. Use Amazon EventBridge Scheduler to create a recurring schedule. Run the cron
+job tasks as AWS Lambda functions.
+B. Create a container image for the cron jobs. Use AWS Batch on Amazon Elastic Container Service (Amazon ECS) with a
+scheduling policy to run the cron jobs.
+C. Create a container image for the cron jobs. Use Amazon EventBridge Scheduler to create a recurring schedule. Run the cron
+job tasks on AWS Fargate. Most Voted
+D. Create a container image for the cron jobs. Create a workflow in AWS Step Functions that uses a Wait state to run the cron
+jobs at a specified time. Use the RunTask action to run the cron job tasks on AWS Fargate.
+Comments
+Kezuko Highly Voted 1 year, 8 months ago
+Give yourself a pat on the back when you reach this question, its been a long run
+upvoted 21 times
+Drew3000 1 year, 8 months ago
+I finally managed to get through the last question, then refreshed the page , and they have added more questions.
+upvoted 8 times
+LeonSauveterre 1 year, 5 months ago
+I know right. Where did they get so many questions? It's been a long run but too long now...
+upvoted 2 times
+Linuslin Highly Voted 1 year, 6 months ago
+Selected Answer: C
+Lambda has 15 mins limit, so A is out.
+B works, but you have to run highly-available virtual machines or containers waiting for the event to happen.
+C is the best answer in this question, with AWS Fargate allows you to pay for only what you use and free you from provisioning, configuring, and
+scaling clusters of Amazon EC2 instances.
+https://aws.amazon.com/blogs/containers/migrate-cron-jobs-to-event-driven-architectures-using-amazon-elastic-container-service-and-amazon-
+eventbridge/
+upvoted 5 times
+FlyingHawk Most Recent 1 year, 4 months ago
+Selected Answer: C
+As an example, one customer had hundreds of cron jobs configured on a single on-premise server. They chose to run these various cron jobs as
+separate scheduled tasks on Amazon Elastic Container Service (Amazon ECS) using AWS Fargate. They used Amazon EventBridge to schedule the
+tasks because it triggers an Amazon ECS task at scheduled times rather than having to run highly-available virtual machines or containers waiting for
+Correct Answer: C
+Community vote distribution
+C (100%)
+the event to happen. They chose Amazon ECS because of its simple container orchestration. And they chose AWS Fargate because it allows them to
+pay for only what they use and frees them from provisioning, configuring, and scaling clusters of Amazon EC2 instances.
+upvoted 1 times
+cvoiceip 1 year, 9 months ago
+Ans : C
+https://aws.amazon.com/blogs/containers/migrate-cron-jobs-to-event-driven-architectures-using-amazon-elastic-container-service-and-amazon-
+eventbridge/
+upvoted 1 times
+seetpt 1 year, 9 months ago
+Selected Answer: C
+C because lambda has 15min time limit.
+upvoted 2 times
+asdfcdsxdfc 1 year, 9 months ago
+Selected Answer: C
+its either A or C. C looks correct because lambda works for 15 mins and the question says between 1-20
+upvoted 4 times

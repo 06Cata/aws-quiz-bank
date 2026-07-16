@@ -1,0 +1,64 @@
+A company runs a web application on Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer that
+has sticky sessions enabled. The web server currently hosts the user session state. The company wants to ensure high availability
+and avoid user session state loss in the event of a web server outage.
+Which solution will meet these requirements?
+A. Use an Amazon ElastiCache for Memcached instance to store the session data. Update the application to use ElastiCache for
+Memcached to store the session state.
+B. Use Amazon ElastiCache for Redis to store the session state. Update the application to use ElastiCache for Redis to store the
+session state. Most Voted
+C. Use an AWS Storage Gateway cached volume to store session data. Update the application to use AWS Storage Gateway
+cached volume to store the session state.
+D. Use Amazon RDS to store the session state. Update the application to use Amazon RDS to store the session state.
+Comments
+Guru4Cloud Highly Voted 2 years, 9 months ago
+Selected Answer: B
+The key points are:
+ElastiCache Redis provides in-memory caching that can deliver microsecond latency for session data.
+Redis supports replication and multi-AZ which can provide high availability for the cache.
+The application can be updated to store session data in ElastiCache Redis rather than locally on the web servers.
+If a web server fails, the user can be routed via the load balancer to another web server which can retrieve their session data from the highly available
+ElastiCache Redis cluster.
+upvoted 9 times
+czyboi Highly Voted 2 years, 9 months ago
+Selected Answer: B
+high availability => use redis instead of Elastich memcache
+upvoted 5 times
+emakid Most Recent 1 year, 11 months ago
+Selected Answer: B
+Option B: Use Amazon ElastiCache for Redis to store the session state. Update the application to use ElastiCache for Redis to store the session state.
+Explanation: Amazon ElastiCache for Redis is suitable for session state storage because Redis provides both in-memory data storage and persistence
+options. Redis supports features like replication, persistence, and high availability (through Redis Sentinel or clusters). This ensures that session state
+is preserved and available even if individual web servers fail.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+As Memcached is not HA
+upvoted 4 times
+SHAAHIBHUSHANAWS 2 years, 6 months ago
+A
+As cache needs to be distributed as ALB is used.
+Correct Answer: B
+Community vote distribution
+B (91%)
+9%
+upvoted 1 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+B is correct
+upvoted 3 times
+franbarberan 2 years, 8 months ago
+Selected Answer: D
+Elastic cache is Only for RDS
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Since when?
+upvoted 4 times
+gispankaj 2 years, 9 months ago
+Selected Answer: B
+redis is correct since it provides high availability and data persistance
+upvoted 5 times
+Eminenza22 2 years, 9 months ago
+Selected Answer: B
+B is the correct answer. It suggests using Amazon ElastiCache for Redis to store the session state. Update the application to use ElastiCache for Redis
+to store the session state. This solution is cost-effective and requires minimal development effort.
+upvoted 4 times

@@ -1,0 +1,122 @@
+A company is migrating an application from on-premises servers to Amazon EC2 instances. As part of the migration design
+requirements, a solutions architect must implement infrastructure metric alarms. The company does not need to take action if CPU
+utilization increases to more than 50% for a short burst of time. However, if the CPU utilization increases to more than 50% and
+read IOPS on the disk are high at the same time, the company needs to act as soon as possible. The solutions architect also must
+reduce false alarms.
+What should the solutions architect do to meet these requirements?
+A. Create Amazon CloudWatch composite alarms where possible. Most Voted
+B. Create Amazon CloudWatch dashboards to visualize the metrics and react to issues quickly.
+C. Create Amazon CloudWatch Synthetics canaries to monitor the application and raise an alarm.
+D. Create single Amazon CloudWatch metric alarms with multiple metric thresholds where possible.
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: A
+Composite alarms determine their states by monitoring the states of other alarms. You can **use composite alarms to reduce alarm noise**. For
+example, you can create a composite alarm where the underlying metric alarms go into ALARM when they meet specific conditions. You then can set
+up your composite alarm to go into ALARM and send you notifications when the underlying metric alarms go into ALARM by configuring the
+underlying metric alarms never to take actions. Currently, composite alarms can take the following actions:
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Create_Composite_Alarm.html
+upvoted 32 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: A
+By creating composite alarms in CloudWatch, the solutions architect can combine multiple metrics, such as CPU utilization and read IOPS, into a
+single alarm. This allows the company to take action only when both conditions are met, reducing false alarms and focusing on meaningful alerts.
+B can help in monitoring the overall health and performance of the application. However, it does not directly address the specific requirement of
+triggering an action when CPU utilization and read IOPS exceed certain thresholds simultaneously.
+C. Creating CloudWatch Synthetics canaries is useful for actively monitoring the application's behavior and availability. However, it does not directly
+address the specific requirement of monitoring CPU utilization and read IOPS to trigger an action.
+D. Creating single CloudWatch metric alarms with multiple metric thresholds where possible can be an option, but it does not address the
+requirement of triggering an action only when both CPU utilization and read IOPS exceed their respective thresholds simultaneously.
+upvoted 11 times
+bishtr3 Most Recent 1 year, 3 months ago
+Selected Answer: A
+Rule : ALARM(CPUUtilizationTooHigh) AND ALARM(DiskReadOpsTooHigh)
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+Composite metric is required. multiple occurrences of the threshold breach can be configured with Cloudwatch.
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: D
+Correct Answer: A
+Community vote distribution
+A (99%)
+1
+A is not right because you do not need multiple composite alarms. You need a single one. Both A and D work if they are single
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: A
+Ans A - Cloudwatch composite alarms
+upvoted 2 times
+huaze_lei 1 year, 9 months ago
+Selected Answer: A
+With CloudWatch, you can combine several alarms into one composite alarm to create a summarized, aggregated health indicator over a whole
+application or group of resources. Composite alarms are alarms that determine their state by monitoring the states of other alarms. You define rules
+to combine the status of those monitored alarms using Boolean logic.
+upvoted 2 times
+NikuWithPakiya 2 years, 2 months ago
+composite alarms are suited for scenarios where we have to combine the alarms for different metrics or dimensions, rather than for multiple
+threshold of the same metric. It contradict with option A.
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: A
+Composite for multiple conditions like AND/OR combinations
+B: This option just made me laugh. Lol, will someone just sit and look at this dashboard?
+C: CW Synthetics canaries if for API
+D: Single won't monitor multiple metrics
+upvoted 3 times
+Modulopi 2 years, 8 months ago
+Selected Answer: A
+A: Composite alarms determine their states by monitoring the states of other alarms. You can use composite alarms to reduce alarm noise. For
+example, you can create a composite alarm where the underlying metric alarms go into ALARM when they meet specific conditions.
+upvoted 2 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: A
+Composite alarms was designed to handle this scenario.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: A
+The key reasons are:
+Composite alarms allow defining alarms with multiple metrics and conditions, like high CPU AND high read IOPS in this case.
+Composite alarms can avoid false positives triggered by a single metric spike.
+Dashboards help visualize but won't take automated action. Synthetics tests application availability but doesn't address the metrics.
+Single metric alarms with multiple thresholds can't correlate across metrics and may still trigger false positives.
+Composite alarms allow acting quickly when both CPU and IOPS are high, per the stated need.
+upvoted 5 times
+Abrar2022 3 years ago
+The composite alarm goes into ALARM state only if all conditions of the rule are met.
+upvoted 3 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Selected Answer: A
+Option A, creating Amazon CloudWatch composite alarms, is correct because it allows the solutions architect to create an alarm that is triggered only
+when both CPU utilization is above 50% and read IOPS on the disk are high at the same time. This meets the requirement to act as soon as possible i
+both conditions are met, while also reducing the number of false alarms by ensuring that the alarm is triggered only when both conditions are met.
+upvoted 6 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+The incorrect solutions are:
+In contrast, Option B, creating Amazon CloudWatch dashboards, would not directly address the requirement to trigger an alarm when both CPU
+utilization is high and read IOPS on the disk are high at the same time. Dashboards can be useful for visualizing metric data and identifying trends,
+but they do not have the capability to trigger alarms based on multiple metric thresholds.
+Option C, using Amazon CloudWatch Synthetics canaries, may not be the best choice for this scenario, as canaries are used for synthetic testing
+rather than for monitoring live traffic. Canaries can be useful for monitoring the availability and performance of an application, but they may not be
+the most effective way to monitor the specific metric thresholds and conditions described in this scenario.
+upvoted 4 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Option D, creating single Amazon CloudWatch metric alarms with multiple metric thresholds, would not allow the solutions architect to create an
+alarm that is triggered only when both CPU utilization and read IOPS on the disk are high at the same time. Instead, the alarm would be triggered
+whenever any of the specified metric thresholds are exceeded, which may result in a higher number of false alarms.
+upvoted 6 times
+BENICE 3 years, 5 months ago
+A is correct answer
+upvoted 1 times
+career360guru 3 years, 5 months ago
+Selected Answer: A
+Option A
+upvoted 1 times
+Qjb8m9h 3 years, 6 months ago
+The AWS::CloudWatch::CompositeAlarm type creates or updates a composite alarm. When you create a composite alarm, you specify a rule
+expression for the alarm that takes into account the alarm states of other alarms that you have created. The composite alarm goes into ALARM state
+only if all conditions of the rule are met.
+The alarms specified in a composite alarm's rule expression can include metric alarms and other composite alarms.Using composite alarms can
+reduce alarm noise.
+upvoted 3 times

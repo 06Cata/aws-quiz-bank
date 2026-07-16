@@ -1,0 +1,72 @@
+A company runs its legacy web application on AWS. The web application server runs on an Amazon EC2 instance in the public
+subnet of a VPC. The web application server collects images from customers and stores the image files in a locally attached
+Amazon Elastic Block Store (Amazon EBS) volume. The image files are uploaded every night to an Amazon S3 bucket for backup.
+A solutions architect discovers that the image files are being uploaded to Amazon S3 through the public endpoint. The solutions
+architect needs to ensure that traffic to Amazon S3 does not use the public endpoint.
+Which solution will meet these requirements?
+A. Create a gateway VPC endpoint for the S3 bucket that has the necessary permissions for the VPC. Configure the subnet
+route table to use the gateway VPC endpoint. Most Voted
+B. Move the S3 bucket inside the VPC. Configure the subnet route table to access the S3 bucket through private IP addresses.
+C. Create an Amazon S3 access point for the Amazon EC2 instance inside the VPConfigure the web application to upload by
+using the Amazon S3 access point.
+D. Configure an AWS Direct Connect connection between the VPC that has the Amazon EC2 instance and Amazon S3 to
+provide a dedicated network path.
+Comments
+FlyingHawk 1 year, 4 months ago
+Selected Answer: A
+A gateway VPC endpoint allows private connectivity between your VPC and Amazon S3. It ensures that traffic between the VPC and S3 stays within
+the AWS network and does not traverse the public internet.
+B- S3 buckets cannot be "moved inside the VPC." S3 is a regional service and does not reside within a VPC. This option is not valid.
+C - S3 access points are used to simplify access control for S3 buckets, but they do not provide private connectivity. Traffic to S3 access points still
+uses the public endpoint unless combined with a gateway VPC endpoint.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+D- Direct Connect provides a dedicated network connection between on-premises environments and AWS. It is not necessary for connecting
+resources within AWS (e.g., EC2 instances in a VPC to S3). This option is overkill and adds unnecessary cost and complexity.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: A
+A - Gateway VPC Endpoint provides private connectivity between resources in a VPC and AWS services like S3 without requiring an internet gateway,
+NAT gateway, or public IP address.
+B - This is just bull. Amazon S3 is a global service that cannot "move" into a VPC.
+C - This doesn't ensure private traffic between the EC2 instance and S3 at all. You still need VPC Endpoint.
+D - This may actually work but more expensive and complex compared to option A.
+upvoted 4 times
+LeonSauveterre 1 year, 5 months ago
+About connections:
+1. VPN Connection: For secure, encrypted traffic between on-premises and AWS over the public internet.
+2. Direct Connect: For dedicated private network connectivity between on-premises and AWS (like data centers with large workloads).
+3. PrivateLink: For secure private connectivity to AWS services or third-party services (like Salesforce) within AWS.
+4. VPC Peering: For direct connectivity between two AWS VPCs (like multi-account or region scenarios).
+upvoted 4 times
+Correct Answer: A
+Community vote distribution
+A (73%)
+C (27%)
+LeonSauveterre 1 year, 5 months ago
+5. VPC Endpoint (Gateway): Provides private connectivity between VPC and services like S3 and DynamoDB.
+6. VPC Endpoint (Interface): Connects to services over private IP using an ENI in your VPC. Suitable for services like SNS, SQS, or KMS.
+7. S3 Access Point: Simplifies access to S3 buckets with distinct policies for specific use cases.
+8. Internet Gateway: Allows resources in a VPC to connect to the internet.
+9. NAT Gateway/Instance: Allows private instances to connect to the internet or public AWS services. Aka, enables outbound internet access for
+instances in private subnets.
+upvoted 5 times
+dfgdsfgfdgreg 1 year, 4 months ago
+Correct. The S3 access point provides access management, but not a private connection. A VPC endpoint allows an instance to directly upload to
+the S3 whereas the S3 access point still requires the EC2 to travel over the internet.
+upvoted 2 times
+JA2018 1 year, 5 months ago
+Selected Answer: C
+I will choose Option C for the following reasons:
+Private access:
+S3 access points allow you to create a private endpoint within your VPC that can be used to access the S3 bucket without going through the public
+endpoint.
+Security best practice:
+Using an S3 access point is considered a secure way to manage access to your S3 buckets from within your VPC.
+Configuration simplicity:
+You only need to configure the web application to use the S3 access point, making it a relatively straightforward implementation.
+upvoted 3 times
+aragon_saa 1 year, 8 months ago
+Selected Answer: A
+Answer is A
+upvoted 3 times

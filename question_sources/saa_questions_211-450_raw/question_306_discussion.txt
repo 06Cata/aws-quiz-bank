@@ -1,0 +1,101 @@
+A company wants to run an in-memory database for a latency-sensitive application that runs on Amazon EC2 instances. The
+application processes more than 100,000 transactions each minute and requires high network throughput. A solutions architect
+needs to provide a cost-effective network design that minimizes data transfer charges.
+Which solution meets these requirements?
+A. Launch all EC2 instances in the same Availability Zone within the same AWS Region. Specify a placement group with cluster
+strategy when launching EC2 instances. Most Voted
+B. Launch all EC2 instances in different Availability Zones within the same AWS Region. Specify a placement group with
+partition strategy when launching EC2 instances.
+C. Deploy an Auto Scaling group to launch EC2 instances in different Availability Zones based on a network utilization target.
+D. Deploy an Auto Scaling group with a step scaling policy to launch EC2 instances in different Availability Zones.
+Comments
+kruasan Highly Voted 2 years, 7 months ago
+Selected Answer: A
+Reasons:
+• Launching instances within a single AZ and using a cluster placement group provides the lowest network latency and highest bandwidth between
+instances. This maximizes performance for an in-memory database and high-throughput application.
+• Communications between instances in the same AZ and placement group are free, minimizing data transfer charges. Inter-AZ and public IP traffic
+can incur charges.
+• A cluster placement group enables the instances to be placed close together within the AZ, allowing the high network throughput required.
+Partition groups span AZs, reducing bandwidth.
+• Auto Scaling across zones could launch instances in AZs that increase data transfer charges. It may reduce network throughput, impacting
+performance.
+upvoted 24 times
+kruasan 2 years, 7 months ago
+In contrast:
+Option B - A partition placement group spans AZs, reducing network bandwidth between instances and potentially increasing costs.
+Option C - Auto Scaling alone does not guarantee the network throughput and cost controls required for this use case. Launching across AZs could
+increase data transfer charges.
+Option D - Step scaling policies determine how many instances to launch based on metrics alone. They lack control over network connectivity and
+costs between instances after launch.
+upvoted 13 times
+Neha999 Highly Voted 2 years, 9 months ago
+A : Cluster placement group
+upvoted 5 times
+awsgeek75 Most Recent 1 year, 10 months ago
+Selected Answer: A
+Apart from the fact that BCD distribute the instances across AZ which is bad for inter-node network latency, I think the following article is really
+useful in understanding A:
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html
+upvoted 2 times
+Ruffyit 2 years ago
+Correct Answer: A
+Community vote distribution
+A (100%)
+• Launching instances within a single AZ and using a cluster placement group provides the lowest network latency and highest bandwidth between
+instances. This maximizes performance for an in-memory database and high-throughput application.
+• Communications between instances in the same AZ and placement group are free, minimizing data transfer charges. Inter-AZ and public IP traffic
+can incur charges.
+• A cluster placement group enables the instances to be placed close together within the AZ, allowing the high network throughput required.
+Partition groups span AZs, reducing bandwidth.
+upvoted 2 times
+TariqKipkemei 2 years, 2 months ago
+Selected Answer: A
+Cluster placement group packs instances close together inside an Availability Zone. This strategy enables workloads to achieve the low-latency
+network performance.
+upvoted 5 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: A
+Launch all EC2 instances in the same Availability Zone within the same AWS Region. Specify a placement group with cluster strategy when launching
+EC2 instances
+upvoted 2 times
+NoinNothing 2 years, 7 months ago
+Selected Answer: A
+Cluster - have low latency if its in same AZ and same region so Answer is "A"
+upvoted 3 times
+BeeKayEnn 2 years, 8 months ago
+Answer would be A - As part of selecting all the EC2 instances in the same availability zone, they all will be within the same DC and logically the
+latency will be very less as compared to the other Availability Zones..
+As all the autoscaling nodes will also be on the same availability zones, (as per Placement groups with Cluster mode), this would provide the low-
+latency network performance
+Reference is below:
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html
+upvoted 4 times
+elearningtakai 2 years, 8 months ago
+Selected Answer: A
+A placement group is a logical grouping of instances within a single Availability Zone, and it provides low-latency network connectivity between
+instances. By launching all EC2 instances in the same Availability Zone and specifying a placement group with cluster strategy, the application can
+take advantage of the high network throughput and low latency network connectivity that placement groups provide.
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: A
+Cluster placement groups improves throughput between the instances which means less EC2 instances would be needed thus reducing costs.
+upvoted 2 times
+maciekmaciek 2 years, 9 months ago
+Selected Answer: A
+A because Specify a placement group
+upvoted 2 times
+KZM 2 years, 9 months ago
+It is option A:
+To achieve low latency, high throughput, and cost-effectiveness, the optimal solution is to launch EC2 instances as a placement group with the cluste
+strategy within the same Availability Zone.
+upvoted 3 times
+ManOnTheMoon 2 years, 9 months ago
+Why not C?
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+You're thinking operational efficiency. The question asks for cost reduction.
+upvoted 4 times
+rrharris 2 years, 9 months ago
+Answer is A - Clustering
+upvoted 3 times

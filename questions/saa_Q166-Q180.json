@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 166,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "全球活動的組織者希望將每日報告作為靜態 HTML 頁面放在網路上。這些頁面預計將產生來自世界各地用戶的數百萬次瀏覽。這些檔案儲存在 Amazon S3 儲存桶中。解決方案架構師被要求設計一個高效且有效的解決方案。解決方案架構師應該採取哪些行動來實現這個目標？",
+        "en": "Organizers for a global event want to put daily reports online as static HTML pages. The pages are expected to generate millions of views from users around the world. The files are stored in an Amazon S3 bucket. A solutions architect has been asked to design an efficient and effective solution. Which action should the solutions architect take to accomplish this?"
+      },
+      "options": {
+        "A": {
+          "zh": "產生檔案的預簽名 URL。",
+          "en": "Generate presigned URLs for the files."
+        },
+        "B": {
+          "zh": "使用跨區域複製到所有區域。",
+          "en": "Use cross-Region replication to all Regions."
+        },
+        "C": {
+          "zh": "使用 Amazon Route 53 的地理位置鄰近功能。",
+          "en": "Use the geoproximity feature of Amazon Route 53."
+        },
+        "D": {
+          "zh": "使用以 S3 儲存桶作為來源的 Amazon CloudFront。",
+          "en": "Use Amazon CloudFront with the S3 bucket as its origin."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。預簽 URL 是臨時授權存取 S3 物件的解決方案。通常用於需要控制存取權限的場景。它們不是優化全域用戶存取效能的解決方案。",
+          "en": "Incorrect. Presigned URLs are a solution for temporarily authorizing access to S3 objects. They are usually used in scenarios where access permissions need to be controlled. They are not a solution for optimizing global user access performance."
+        },
+        "B": {
+          "zh": "錯誤。跨區域複製用於在多個區域之間複製S3數據，以實現容災或數據冗餘，但它不會直接優化用戶訪問性能，也無法解決全局用戶訪問的高效分配問題。",
+          "en": "Incorrect. Cross-Region Replication is used to replicate S3 data between multiple regions to achieve disaster recovery or data redundancy, but it will not directly optimize user access performance, nor can it solve the problem of efficient distribution of global user access."
+        },
+        "C": {
+          "zh": "錯誤。Amazon Route 53 的地理鄰近功能用於根據使用者位置選擇最近的資源，但它並不能直接優化靜態內容的交付效能，也不適合處理 S3 靜態檔案的全球分發需求。",
+          "en": "Incorrect. Amazon Route 53's geographic proximity feature is used to select the closest resource based on the user's location, but it does not directly optimize the delivery performance of static content, nor is it suitable for handling the global distribution needs of S3 static files."
+        },
+        "D": {
+          "zh": "正確。Amazon CloudFront 是 AWS 的內容傳遞網路 (CDN) 服務，可將 S3 中的靜態檔案分發到世界各地的遠端位置，從而顯著提高使用者存取速度並減少延遲。",
+          "en": "Correct. Amazon CloudFront is AWS's content distribution network (CDN) service that can distribute static files in S3 to remote locations around the world, significantly improving user access speeds and reducing latency."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用以 S3 儲存桶作為來源的 Amazon CloudFront。",
+        "en": "D. Use Amazon CloudFront with the S3 bucket as its origin."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：Amazon CloudFront 是 AWS 的內容傳遞網路 (CDN) 服務，可將 S3 中的靜態檔案分發到世界各地的遠端位置，從而顯著提高使用者存取速度並減少延遲。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Amazon CloudFront is AWS's content distribution network (CDN) service that can distribute static files in S3 to remote locations around the world, significantly improving user access speeds and reducing latency."
+      }
+    },
+    {
+      "question_no": 167,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在一組 Amazon EC2 執行個體上執行生產應用程式。該應用程式從 Amazon SQS 佇列讀取資料並並行處理訊息。訊息量無法預測，且經常出現間歇性流量。該應用程式應該持續處理訊息而不會造成任何停機。哪種解決方案最經濟有效率地滿足這些要求？",
+        "en": "A company runs a production application on a fleet of Amazon EC2 instances. The application reads the data from an Amazon SQS queue and processes the messages in parallel. The message volume is unpredictable and often has intermittent traffic. This application should continually process messages without any downtime. Which solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "僅使用 Spot 實例來處理所需的最大容量。",
+          "en": "Use Spot Instances exclusively to handle the maximum capacity required."
+        },
+        "B": {
+          "zh": "僅使用預留實例來處理所需的最大容量。",
+          "en": "Use Reserved Instances exclusively to handle the maximum capacity required."
+        },
+        "C": {
+          "zh": "使用預留實例作為基準容量，並使用 Spot 實例來處理額外容量。",
+          "en": "Use Reserved Instances for the baseline capacity and use Spot Instances to handle additional capacity."
+        },
+        "D": {
+          "zh": "使用預留實例作為基準容量，並使用按需實例來處理額外容量。",
+          "en": "Use Reserved Instances for the baseline capacity and use On-Demand Instances to handle additional capacity."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然 Spot 實例成本低廉，但它們可能隨時中斷，並且不能保證應用程式將繼續運作。這不符合問題「一致地處理資訊且無停機時間」的目的。",
+          "en": "Incorrect. Although Spot Instances are low-cost, they may be interrupted at any time, and there is no guarantee that the application will continue to run. This does not meet the purpose of the question \"process information consistently and with no downtime\"."
+        },
+        "B": {
+          "zh": "錯誤。預留實例適合長期固定負載，但對於間歇性流量，使用預留實例處理最大容量會造成資源消耗，成本最佳化不夠。",
+          "en": "Incorrect. Reserved Instances are suitable for long-term fixed loads, but for intermittent traffic, using Reserved Instances to handle the maximum capacity will cause resource consumption and the cost is not optimized enough."
+        },
+        "C": {
+          "zh": "錯誤。部分預留實例可以處理一定的基本容量，而 Spot 實例可以以較低的成本處理額外的間歇性流量。但是，Spot 實例的生產可能會中斷，並且不能保證「不停機」，因為它不完全滿足問題的要求。",
+          "en": "Incorrect. Partially Reserved Instances can handle a certain base capacity, and Spot Instances can handle additional intermittent traffic at a lower cost. However, production of Spot Instances may be interrupted and there is no guarantee of \"no downtime\" because it does not fully meet the requirements of the question."
+        },
+        "D": {
+          "zh": "正確。預留實例處理固定基本容量，按需實例處理額外的間歇性流量。按需執行個體不會中斷，確保應用程式持續運作不停機，在間歇性流量場景下更具成本效益。",
+          "en": "Correct. Reserved Instances handle fixed base capacity, and On-Demand Instances handle additional intermittent traffic. On-Demand Instances will not be interrupted, ensuring that applications continue to run without downtime, and are more cost-effective in intermittent traffic scenarios."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用預留實例作為基準容量，並使用按需實例來處理額外容量。",
+        "en": "D. Use Reserved Instances for the baseline capacity and use On-Demand Instances to handle additional capacity."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (55%)； C (44%)。熱門討論與考點摘要：預留實例處理固定基本容量，按需實例處理額外的間歇性流量。按需執行個體不會中斷，確保應用程式持續運作不停機，在間歇性流量場景下更具成本效益。",
+        "en": "Community vote as displayed: D (55%); C (44%). Popular discussion and key point summary: Reserved Instances handle fixed base capacity, and On-Demand Instances handle additional intermittent traffic. On-Demand Instances will not be interrupted, ensuring that applications continue to run without downtime, and are more cost-effective in intermittent traffic scenarios."
+      }
+    },
+    {
+      "question_no": 168,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "安全團隊希望限制對團隊所有 AWS 帳戶中特定服務或操作的存取。所有帳戶都屬於 AWS Organizations 中的一個大型組織。該解決方案必須是可擴展的，並且必須有一個可以維護權限的點。解決方案架構師應該做什麼來實現這個目標？",
+        "en": "A security team wants to limit access to specific services or actions in all of the team’s AWS accounts. All accounts belong to a large organization in AWS Organizations. The solution must be scalable and there must be a single point where permissions can be maintained. What should a solutions architect do to accomplish this?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 ACL 以提供對服務或操作的存取。",
+          "en": "Create an ACL to provide access to the services or actions."
+        },
+        "B": {
+          "zh": "建立一個安全群組以允許帳戶並將其附加到使用者群組。",
+          "en": "Create a security group to allow accounts and attach it to user groups."
+        },
+        "C": {
+          "zh": "在每個帳戶中建立跨帳戶角色以拒絕對服務或操作的存取。",
+          "en": "Create cross-account roles in each account to deny access to the services or actions."
+        },
+        "D": {
+          "zh": "在根組織單位中建立服務控制策略以拒絕對服務或操作的存取。",
+          "en": "Create a service control policy in the root organizational unit to deny access to the services or actions."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。ACL（存取控制清單）主要用於網路層的存取控制，例如Amazon S3嬻VPC的網路流量控制。由於ACL是無條件的，導致AWS服務作業的權限管理不正確。",
+          "en": "Incorrect. ACL (Access Control List) is mainly used for access control at the network layer, such as network traffic control of Amazon S3𪥿VPC. The ACL is unconditional and the permission management of AWS service operations is incorrect due to s."
+        },
+        "B": {
+          "zh": "錯誤。安全群組用於控制EC2實例的入站和出站流量，與使用者權限管理無關。由於ins原因，安全群組無條件限制對AWS服務作業的存取。",
+          "en": "Incorrect. Security groups are used to control inbound and outbound traffic of EC2 instances and have nothing to do with user rights management. The security group unconditionally restricts access to AWS service operations due to ins."
+        },
+        "C": {
+          "zh": "錯誤。跨帳戶角色可以跨帳戶存取資源，但沒有權限的集中管理。有必要在每個帳戶中單獨建立一個角色。無題問題所需的「單點維護權限」是因為選項錯誤。",
+          "en": "Incorrect. Cross-account roles can be used to access resources across accounts, but there is no centralized management of permissions. It is necessary to create a role in each account individually. The \"single point of maintenance authority\" required for the untitled question is because the option is wrong."
+        },
+        "D": {
+          "zh": "正確。SCP 是 AWS Organizations 中的一項策略，可集中管理和限制對組織內 AWS 服務作業的存取。將 SCP 與根組織單位（Root OU）結合使用，可以確保所有子帳戶都受到限制，滿足問題的「單點維護」要求。",
+          "en": "Correct. SCP is a policy in AWS Organizations that can centrally manage and restrict access to AWS service operations within an organization. Using SCP with the root organizational unit (Root OU) ensures that all sub-accounts are restricted, meeting the \"single point of maintenance\" requirement for the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在根組織單位中建立服務控制策略以拒絕對服務或操作的存取。",
+        "en": "D. Create a service control policy in the root organizational unit to deny access to the services or actions."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：SCP 是 AWS Organizations 中的一項策略，可集中管理和限制對組織內 AWS 服務作業的存取。將 SCP 與根組織單位（Root OU）結合使用，可以確保所有子帳戶都受到限制，滿足問題的「單點維護」要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: SCP is a policy in AWS Organizations that can centrally manage and restrict access to AWS service operations within an organization. Using SCP with the root organizational unit (Root OU) ensures that all sub-accounts are restricted, meeting the \"single point of maintenance\" requirement for the problem."
+      }
+    },
+    {
+      "question_no": 169,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "由於最近的網路攻擊，一家公司擔心其公共網路應用程式的安全性。該應用程式使用應用程式負載平衡器 (ALB)。解決方案架構師必須降低應用程式遭受 DDoS 攻擊的風險。解決方案架構師應該做什麼來滿足這個要求？",
+        "en": "A company is concerned about the security of its public web application due to recent web attacks. The application uses an Application Load Balancer (ALB). A solutions architect must reduce the risk of DDoS attacks against the application. What should the solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Amazon Inspector 代理程式新增至 ALB。",
+          "en": "Add an Amazon Inspector agent to the ALB."
+        },
+        "B": {
+          "zh": "設定 Amazon Macie 以防止攻擊。",
+          "en": "Configure Amazon Macie to prevent attacks."
+        },
+        "C": {
+          "zh": "啟用 AWS Shield Advanced 以防止攻擊。",
+          "en": "Enable AWS Shield Advanced to prevent attacks."
+        },
+        "D": {
+          "zh": "設定 Amazon GuardDuty 以監控 ALB。",
+          "en": "Configure Amazon GuardDuty to monitor the ALB."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon Inspector 是一項自動化安全評估服務，用於檢查應用程式是否有漏洞和錯誤配置。它不適合防止 DDoS 攻擊，並且不直接與 ALB 整合。原因 此選項與 DDoS 防護無關。",
+          "en": "Incorrect. Amazon Inspector is an automated security assessment service that checks applications for vulnerabilities and misconfigurations. It is not suitable for preventing DDoS attacks and does not integrate directly with ALB. Reason for This option has nothing to do with DDoS protection."
+        },
+        "B": {
+          "zh": "錯誤。Amazon Macie 是一種資料安全服務，用於識別和保護敏感資料。它不適合防止DDoS攻擊，也不能直接保護ALB。原因 此選項與 DDoS 防護無關。",
+          "en": "Incorrect. Amazon Macie is a data security service used to identify and protect sensitive data. It is not suitable for preventing DDoS attacks, nor does it protect ALB directly. Reason for This option has nothing to do with DDoS protection."
+        },
+        "C": {
+          "zh": "正確。原因：此選項直接解決問題要求並提供DDoS防護。",
+          "en": "Correct. reason: This option directly solves the question requirements and provides DDoS protection."
+        },
+        "D": {
+          "zh": "錯誤。Amazon GuardDuty 是一項威脅偵測服務，用於監控惡意活動和異常行為。雖然可以監控ALB，但不能直接阻止DDoS攻擊。原因 此選項僅提供監控功能，無法滿足問題所要求的保護要求。",
+          "en": "Incorrect. Amazon GuardDuty is a threat detection service that monitors for malicious activity and anomalous behavior. While it can monitor ALB, it cannot directly prevent DDoS attacks. Reason for the This option only provides monitoring functions and cannot meet the protection requirements required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 啟用 AWS Shield Advanced 以防止攻擊。",
+        "en": "C. Enable AWS Shield Advanced to prevent attacks."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：原因：此選項直接解決問題要求並提供DDoS防護。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: reason: This option directly solves the question requirements and provides DDoS protection."
+      }
+    },
+    {
+      "question_no": 170,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司的 Web 應用程式正在應用程式負載平衡器後面的 Amazon EC2 執行個體上執行。該公司最近改變了政策，現在要求只能從一個特定國家/地區存取該應用程式。哪種配置可以滿足這個要求？",
+        "en": "A company’s web application is running on Amazon EC2 instances behind an Application Load Balancer. The company recently changed its policy, which now requires the application to be accessed from one specific country only. Which configuration will meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "為 EC2 執行個體設定安全群組。",
+          "en": "Configure the security group for the EC2 instances."
+        },
+        "B": {
+          "zh": "在 Application Load Balancer 上設定安全群組。",
+          "en": "Configure the security group on the Application Load Balancer."
+        },
+        "C": {
+          "zh": "在 VPC 中的 Application Load Balancer 上設定 AWS WAF。",
+          "en": "Configure AWS WAF on the Application Load Balancer in a VPC."
+        },
+        "D": {
+          "zh": "為包含 EC2 執行個體的子網路設定網路 ACL。",
+          "en": "Configure the network ACL for the subnet that contains the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。安全群組不支援基於地理位置的存取控制。只能根據IP位址範圍設定允許和拒絕規則，無法滿足「只允許特定國家存取」的要求。",
+          "en": "Incorrect. Security Groups do not support geolocation-based access control. It can only set allow and deny rules based on IP address ranges, so it cannot meet the requirement of \"only allowing access from a specific country\"."
+        },
+        "B": {
+          "zh": "錯誤。與選項 A 類似，安全群組的功能限制阻止了基於地理位置的存取控制。",
+          "en": "Incorrect. Similar to Option A, the functional limitations of Security Groups prevent access control based on geographic location."
+        },
+        "C": {
+          "zh": "正確。AWS WAF 支援地理比對規則，根據訪客的地理位置（例如國家）允許或拒絕存取。在 Application Load Balancer 上設定 AWS WAF 可以實現特定於國家/地區的存取控制。",
+          "en": "Correct. AWS WAF supports geographic matching rules that allow or deny access based on the visitor's geographic location (such as country). Configuring AWS WAF on the Application Load Balancer can achieve country-specific access control."
+        },
+        "D": {
+          "zh": "錯誤。網路ACL是一種基於IP位址範圍的存取控制機制，無法直接依據地理位置設定規則。因此，無法滿足出題要求。",
+          "en": "Incorrect. Network ACLs are an access control mechanism based on IP address ranges, and rules cannot be set directly based on geographical location. Therefore, the question requirements cannot be met."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 VPC 中的 Application Load Balancer 上設定 AWS WAF。",
+        "en": "C. Configure AWS WAF on the Application Load Balancer in a VPC."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：AWS WAF 支援地理比對規則，根據訪客的地理位置（例如國家）允許或拒絕存取。在 Application Load Balancer 上設定 AWS WAF 可以實現特定於國家/地區的存取控制。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS WAF supports geographic matching rules that allow or deny access based on the visitor's geographic location (such as country). Configuring AWS WAF on the Application Load Balancer can achieve country-specific access control."
+      }
+    },
+    {
+      "question_no": 171,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司提供其使用者 API，可自動查詢基於商品價格的稅務計算。該公司在假期期間遇到大量詢問，導致回應時間變慢。解決方案架構師需要設計可擴展且有彈性的解決方案。解決方案架構師應該做什麼來實現這個目標？",
+        "en": "A company provides an API to its users that automates inquiries for tax computations based on item prices. The company experiences a larger number of inquiries during the holiday season only that cause slower response times. A solutions architect needs to design a solution that is scalable and elastic. What should the solutions architect do to accomplish this?"
+      },
+      "options": {
+        "A": {
+          "zh": "提供託管在 Amazon EC2 執行個體上的 API。當發出 API 請求時，EC2 執行個體執行所需的計算。",
+          "en": "Provide an API hosted on an Amazon EC2 instance. The EC2 instance performs the required computations when the API request is made."
+        },
+        "B": {
+          "zh": "使用接受專案名稱的 Amazon API Gateway 設計 REST API。 API Gateway 將專案名稱傳遞給 AWS Lambda 進行稅務運算。",
+          "en": "Design a REST API using Amazon API Gateway that accepts the item names. API Gateway passes item names to AWS Lambda for tax computations."
+        },
+        "C": {
+          "zh": "建立一個背後有兩個 Amazon EC2 執行個體的應用程式負載平衡器。 EC2 執行個體將計算收到的項目名稱的稅費。",
+          "en": "Create an Application Load Balancer that has two Amazon EC2 instances behind it. The EC2 instances will compute the tax on the received item names."
+        },
+        "D": {
+          "zh": "使用 Amazon API Gateway 設計 REST API，該閘道與 Amazon EC2 執行個體上所託管的 API 連線。 API Gateway 接受專案名稱並將其傳遞至 EC2 執行個體以進行稅務運算。",
+          "en": "Design a REST API using Amazon API Gateway that connects with an API hosted on an Amazon EC2 instance. API Gateway accepts and passes the item names to the EC2 instance for tax computations."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然 EC2 執行個體可以處理 API 請求，但它並不是彈性和可擴展性的最佳選擇。單一 EC2 執行個體條帶化自動擴展以處理假期期間的高峰流量。缺乏彈性：需要手動配置Auto Scaling組來實現彈性擴容，這不是最優方案。",
+          "en": "Incorrect. While an EC2 instance can handle API requests, it is not the best choice for elasticity and scalability. A single EC2 instance stripes automatically scales to handle peak traffic during holidays. Lack of elasticity: You need to manually configure the Auto Scaling group to achieve elastic expansion, which is not the optimal solution."
+        },
+        "B": {
+          "zh": "正確。API Gateway 和 AWS Lambda 的組合是無伺服器架構的一個很好的例子，可以自動擴展以處理流量峰值。彈性：Lambda 函數按需運行，支援動態負載，無需配置或管理伺服器。性價比高：無伺服器架構依使用付費，假日流量高峰後不會產生額外費用。",
+          "en": "Correct. The combination of API Gateway and AWS Lambda is a great example of a serverless architecture that automatically scales to handle traffic spikes. Elasticity: Lambda functions run on demand, supporting dynamic loads without provisioning or managing servers. Cost-effective: The serverless architecture pays according to use, and no additional charges will be incurred after traffic peaks during holidays."
+        },
+        "C": {
+          "zh": "錯誤。雖然ALB可以分配流量，但EC2實例的數量是固定的，並且條帶會自動縮放以應對流量峰值。缺乏彈性：需要手動配置Auto Scaling組來實現動態擴容。",
+          "en": "Incorrect. Although ALB can distribute traffic, the number of EC2 instances is fixed and stripes are automatically scaled to cope with traffic peaks. Lack of flexibility: You need to manually configure the Auto Scaling group to implement dynamic expansion."
+        },
+        "D": {
+          "zh": "錯誤。雖然 API Gateway 可以增強 API 管理，但 EC2 執行個體仍然是單點故障，沒有條帶自動擴充來處理流量峰值。缺乏彈性：EC2實例需要手動設定Auto Scaling群組才能實現動態擴充。",
+          "en": "Incorrect. Although API Gateway can supercharge API management, EC2 instances are still single points of failure, with no stripes automatically scaling to handle traffic spikes. Lack of elasticity: EC2 instances require manual configuration of Auto Scaling groups to achieve dynamic expansion."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用接受專案名稱的 Amazon API Gateway 設計 REST API。 API Gateway 將專案名稱傳遞給 AWS Lambda 進行稅務運算。",
+        "en": "B. Design a REST API using Amazon API Gateway that accepts the item names. API Gateway passes item names to AWS Lambda for tax computations."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (98%)。熱門討論與考點摘要：API Gateway 和 AWS Lambda 的組合是無伺服器架構的一個很好的例子，可以自動擴展以處理流量峰值。彈性：Lambda 函數按需運行，支援動態負載，無需配置或管理伺服器。性價比高：無伺服器架構依使用付費，假日流量高峰後不會產生額外費用。",
+        "en": "Community vote as displayed: B (98%). Popular discussion and key point summary: The combination of API Gateway and AWS Lambda is a great example of a serverless architecture that automatically scales to handle traffic spikes. Elasticity: Lambda functions run on demand, supporting dynamic loads without provisioning or managing servers. Cost-effective: The serverless architecture pays according to use, and no additional charges will be incurred after traffic peaks during holidays."
+      }
+    },
+    {
+      "question_no": 172,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在為應用程式建立新的 Amazon CloudFront 發行版。用戶提交的一些資訊屬於敏感資訊。該應用程式使用 HTTPS，但需要另一層安全性。敏感資訊應在整個應用程式堆疊中受到保護，並且對資訊的存取應僅限於某些應用程式。解決方案架構師應該採取哪些行動？",
+        "en": "A solutions architect is creating a new Amazon CloudFront distribution for an application. Some of the information submitted by users is sensitive. The application uses HTTPS but needs another layer of security. The sensitive information should.be protected throughout the entire application stack, and access to the information should be restricted to certain applications. Which action should the solutions architect take?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 CloudFront 簽章 URL。",
+          "en": "Configure a CloudFront signed URL."
+        },
+        "B": {
+          "zh": "設定 CloudFront 簽章 cookie。",
+          "en": "Configure a CloudFront signed cookie."
+        },
+        "C": {
+          "zh": "設定 CloudFront 欄位級加密設定檔。",
+          "en": "Configure a CloudFront field-level encryption profile."
+        },
+        "D": {
+          "zh": "設定 CloudFront 並將檢視器協定原則的來源協定原則設定為僅 HTTPS。",
+          "en": "Configure CloudFront and set the Origin Protocol Policy setting to HTTPS Only for the Viewer Protocol Policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。簽章 URL 用於限制對特定資源的訪問，例如限制某些使用者或應用程式存取特定檔案或檢視。雖然它可以限制訪問，但它不提供額外的加密層來保護敏感資訊。因此，該選項不符合題目要求。",
+          "en": "Incorrect. Signed URLs are used to restrict access to specific resources, such as restricting certain users or applications from accessing specific files or views. While it can restrict access, it does not provide an additional layer of encryption to protect sensitive information. Therefore, this option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。簽署cookie與簽署URL類似，用於限制存取權限，但適用於需要存取多個資源的場景。它還沒有提供額外的加密層來保護敏感訊息，因此此選項不滿足問題的要求。",
+          "en": "Incorrect. Signed cookies are similar to signed URLs and are used to restrict access rights, but they are suitable for scenarios where multiple resources need to be accessed. It also does not provide an additional layer of encryption to protect sensitive information, so this option does not meet the requirements of the question."
+        },
+        "C": {
+          "zh": "正確。欄位級加密是 CloudFront 提供的一項功能，用於加密特定欄位中的資料（例如表單中的敏感資訊）。它確保敏感資訊在整個應用程式堆疊中受到保護，並且可以限制存取。這正是問題所要求的解，所以這個選項是。",
+          "en": "Correct. Field-level encryption is a feature provided by CloudFront for encrypting data in specific fields (such as sensitive information in a form). It ensures that sensitive information is protected throughout the application stack and access can be restricted. This is exactly the solution required by the question, so this option is."
+        },
+        "D": {
+          "zh": "錯誤。將協定策略設為 HTTPS Only 可確保資料在傳輸過程中加密，但無法提供額外的加密層來保護特定欄位的數據，也無法限制對敏感資訊的存取。因此，該選項並不能完全滿足題目要求。",
+          "en": "Incorrect. Setting the protocol policy to HTTPS Only ensures that data is encrypted during transmission, but it cannot provide an additional layer of encryption to protect data in specific fields, nor can it restrict access to sensitive information. Therefore, this option does not fully meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 CloudFront 欄位級加密設定檔。",
+        "en": "C. Configure a CloudFront field-level encryption profile."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (83%)。熱門討論與考點摘要：欄位級加密是 CloudFront 提供的一項功能，用於加密特定欄位中的資料（例如表單中的敏感資訊）。它確保敏感資訊在整個應用程式堆疊中受到保護，並且可以限制存取。這正是問題所要求的解，所以這個選項是。",
+        "en": "Community vote as displayed: C (83%). Popular discussion and key point summary: Field-level encryption is a feature provided by CloudFront for encrypting data in specific fields (such as sensitive information in a form). It ensures that sensitive information is protected throughout the application stack and access can be restricted. This is exactly the solution required by the question, so this option is."
+      }
+    },
+    {
+      "question_no": 173,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家遊戲公司在 AWS 上託管基於瀏覽器的應用程式。該應用程式的用戶使用儲存在 Amazon S3 中的大量影片和圖像。該內容對於所有使用者都是相同的。該應用程式越來越受歡迎，全球有數百萬用戶存取這些媒體檔案。該公司希望向用戶提供文件，同時減少來源的負載。哪種解決方案最經濟有效率地滿足這些要求？",
+        "en": "A gaming company hosts a browser-based application on AWS. The users of the application consume a large number of videos and images that are stored in Amazon S3. This content is the same for all users. The application has increased in popularity, and millions of users worldwide accessing these media files. The company wants to provide the files to the users while reducing the load on the origin. Which solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Web 伺服器前面部署 AWS Global Accelerator 加速器。",
+          "en": "Deploy an AWS Global Accelerator accelerator in front of the web servers."
+        },
+        "B": {
+          "zh": "在 S3 儲存桶前面部署 Amazon CloudFront Web 指派。",
+          "en": "Deploy an Amazon CloudFront web distribution in front of the S3 bucket."
+        },
+        "C": {
+          "zh": "在 Web 伺服器前面部署 Amazon ElastiCache for Redis 執行個體。",
+          "en": "Deploy an Amazon ElastiCache for Redis instance in front of the web servers."
+        },
+        "D": {
+          "zh": "在 Web 伺服器前面部署 Amazon ElastiCache for Memcached 執行個體。",
+          "en": "Deploy an Amazon ElastiCache for Memcached instance in front of the web servers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Global Accelerator 主要用於加速 TCP/UDP 流量並最佳化網路路徑以減少延遲，但不適合分發靜態內容（例如影片和圖片）。此外，Global Accelerator 不會快取內容，因此無法減少來源負載。",
+          "en": "Incorrect. AWS Global Accelerator is mainly used to accelerate TCP/UDP traffic and optimize network paths to reduce latency, but it is not suitable for distributing static content (such as videos and pictures). Additionally, Global Accelerator does not cache content and therefore cannot reduce origin load."
+        },
+        "B": {
+          "zh": "正確。Amazon CloudFront 是一個內容傳遞網路 (CDN)，旨在快取和交付靜態和動態內容。它可以將內容快取到世界各地的邊緣位置，減少用戶存取延遲，同時顯著減少 S3 上的負載。 CloudFront與S3整合良好且經濟高效，使其成為分發靜態內容的最佳選擇。",
+          "en": "Correct. Amazon CloudFront is a content delivery network (CDN) designed to cache and deliver static and dynamic content. It can cache content to edge locations around the world, reducing user access latency while significantly reducing the load on S3. CloudFront integrates well with S3 and is cost-effective, making it the best choice for distributing static content."
+        },
+        "C": {
+          "zh": "錯誤。ElastiCache for Redis 主要用於快取資料庫查詢結果或其他動態數據，而不是分發靜態內容。它無法直接與S3整合並有效分發影片和圖片。",
+          "en": "Incorrect. ElastiCache for Redis is primarily used for caching database query results or other dynamic data, rather than for distributing static content. It cannot integrate directly with S3 and distribute videos and pictures efficiently."
+        },
+        "D": {
+          "zh": "錯誤。ElastiCache for Memcached 與 Redis 類似，主要用於快取動態資料而非分發靜態內容。它無法直接與S3整合並有效分發影片和圖片。",
+          "en": "Incorrect. ElastiCache for Memcached is similar to Redis and is mainly used to cache dynamic data rather than distribute static content. It cannot integrate directly with S3 and distribute videos and pictures efficiently."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 S3 儲存桶前面部署 Amazon CloudFront Web 指派。",
+        "en": "B. Deploy an Amazon CloudFront web distribution in front of the S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (93%)。熱門討論與考點摘要：Amazon CloudFront 是一個內容傳遞網路 (CDN)，旨在快取和交付靜態和動態內容。它可以將內容快取到世界各地的邊緣位置，減少用戶存取延遲，同時顯著減少 S3 上的負載。 CloudFront與S3整合良好且經濟高效，使其成為分發靜態內容的最佳選擇。",
+        "en": "Community vote as displayed: B (93%). Popular discussion and key point summary: Amazon CloudFront is a content delivery network (CDN) designed to cache and deliver static and dynamic content. It can cache content to edge locations around the world, reducing user access latency while significantly reducing the load on S3. CloudFront integrates well with S3 and is cost-effective, making it the best choice for distributing static content."
+      }
+    },
+    {
+      "question_no": 174,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個多層應用程序，該應用程式在應用程式負載平衡器 (ALB) 後面的單一可用區中的 Amazon EC2 Auto Scaling 群組中運行六個前端 Web 伺服器。解決方案架構師需要修改基礎架構以使其具有高可用性，而無需修改應用程式。解決方案架構師應該選擇哪種架構來提供高可用性？",
+        "en": "A company has a multi-tier application that runs six front-end web servers in an Amazon EC2 Auto Scaling group in a single Availability Zone behind an Application Load Balancer (ALB). A solutions architect needs to modify the infrastructure to be highly available without modifying the application. Which architecture should the solutions architect choose that provides high availability?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 Auto Scaling 群組，該群組在兩個區域中各使用三個實例。",
+          "en": "Create an Auto Scaling group that uses three instances across each of two Regions."
+        },
+        "B": {
+          "zh": "修改 Auto Scaling 群組以在兩個可用區中各使用三個實例。",
+          "en": "Modify the Auto Scaling group to use three instances across each of two Availability Zones."
+        },
+        "C": {
+          "zh": "建立一個 Auto Scaling 模板，可用於在另一個區域快速建立更多實例。",
+          "en": "Create an Auto Scaling template that can be used to quickly create more instances in another Region."
+        },
+        "D": {
+          "zh": "變更循環配置中 Amazon EC2 執行個體前面的 ALB，以平衡 Web 層的流量。",
+          "en": "Change the ALB in front of the Amazon EC2 instances in a round-robin configuration to balance traffic to the web tier."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然跨區域部署可以提高災難復原能力，但問題是需要高可用性，而不是跨區域容災。跨區域部署需要額外的配置，例如跨區域道路資產和資料同步，並且問題明確要求應用程式不得修改。",
+          "en": "Incorrect. Although cross-regional deployment can improve disaster recovery capabilities, the question requires high availability, not cross-region disaster recovery. Cross-region deployment requires additional configuration, such as cross-region road assets and data synchronization, and the question clearly requires that the application not be modified."
+        },
+        "B": {
+          "zh": "正確。跨越可用區是實現高可用性的最佳實務。透過在兩個可用區中執行實例，可以保證即使一個可用區發生故障，另一個可用區仍然可以提供服務。",
+          "en": "Correct. Spanning Availability Zones is a best practice for achieving high availability. By running instances in two Availability Zones, you ensure that even if one Availability Zone fails, the other Availability Zone can still provide services."
+        },
+        "C": {
+          "zh": "錯誤。建立範本雖然可以加快實例部署速度，但並不能直接提高高可用性。這個問題需要立即實現高可用性，而不是為未來的擴展做準備。",
+          "en": "Incorrect. Although creating a template can speed up instance deployment, it does not directly improve high availability. The question requires immediate implementation of high availability, not preparation for future expansion."
+        },
+        "D": {
+          "zh": "錯誤。ALB已經具有流量分發功能，更改為輪詢配置並不能解決高可用性問題。高可用性需要跨可用區部署，而不僅僅是改變流量分配策略。",
+          "en": "Incorrect. ALB already has traffic distribution function, changing to polling configuration will not solve the high availability problem. High availability requires deployment across Availability Zones, not just changing traffic distribution strategies."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 修改 Auto Scaling 群組以在兩個可用區中各使用三個實例。",
+        "en": "B. Modify the Auto Scaling group to use three instances across each of two Availability Zones."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：跨越可用區是實現高可用性的最佳實務。透過在兩個可用區中執行實例，可以保證即使一個可用區發生故障，另一個可用區仍然可以提供服務。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Spanning Availability Zones is a best practice for achieving high availability. By running instances in two Availability Zones, you ensure that even if one Availability Zone fails, the other Availability Zone can still provide services."
+      }
+    },
+    {
+      "question_no": 175,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家電子商務公司有一個使用 Amazon API Gateway 和 AWS Lambda 函數的訂單處理應用程式。該應用程式將資料儲存在 Amazon Aurora PostgreSQL 資料庫中。在最近的一次銷售活動中，客戶訂單突然激增。一些客戶遇到超時，應用程式無法處理這些客戶的訂單。解決方案架構師確定，由於存在大量開啟的連接，資料庫的 CPU 使用率和記憶體使用率很高。解決方案架構師需要防止逾時錯誤，同時對應用程式進行盡可能少的更改。哪種解決方案可以滿足這些要求？",
+        "en": "An ecommerce company has an order-processing application that uses Amazon API Gateway and an AWS Lambda function. The application stores data in an Amazon Aurora PostgreSQL database. During a recent sales event, a sudden surge in customer orders occurred. Some customers experienced timeouts, and the application did not process the orders of those customers. A solutions architect determined that the CPU utilization and memory utilization were high on the database because of a large number of open connections. The solutions architect needs to prevent the timeout errors while making the least possible changes to the application. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為 Lambda 函數配置預先配置並發。將資料庫修改為多個 AWS 區域的全域資料庫。",
+          "en": "Configure provisioned concurrency for the Lambda function. Modify the database to be a global database in multiple AWS Regions."
+        },
+        "B": {
+          "zh": "使用 Amazon RDS 代理程式為資料庫建立代理程式。修改 Lambda 函數以使用 RDS 代理端點而不是資料庫端點。",
+          "en": "Use Amazon RDS Proxy to create a proxy for the database. Modify the Lambda function to use the RDS Proxy endpoint instead of the database endpoint."
+        },
+        "C": {
+          "zh": "為不同 AWS 區域中的資料庫建立唯讀副本。使用 API Gateway 中的查詢字串參數將流量路由到唯讀副本。",
+          "en": "Create a read replica for the database in a different AWS Region. Use query string parameters in API Gateway to route traffic to the read replica."
+        },
+        "D": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 將資料從 Aurora PostgreSQL 移轉到 Amazon DynamoDB。修改 Lambda 函數以使用 DynamoDB 表。",
+          "en": "Migrate the data from Aurora PostgreSQL to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS). Modify the Lambda function to use the DynamoDB table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。修改資料庫為全庫並不能直接解決高並發連線問題，還會增加複雜度和成本。",
+          "en": "Incorrect. Modifying the database to a full database cannot directly solve the problem of high concurrent connections, and will increase complexity and cost."
+        },
+        "B": {
+          "zh": "正確。修改 Lambda 函數以使用 RDS 代理端點是一種低成本且有效的解決方案。",
+          "en": "Correct. Modifying the Lambda function to use the RDS Proxy endpoint is a low-cost and effective solution."
+        },
+        "C": {
+          "zh": "錯誤。使用 API Gateway 將流量路由至唯讀副本並不能解決資料庫連線過多的問題。",
+          "en": "Incorrect. Using API Gateway to route traffic to read-only replicas cannot solve the problem of too many database connections."
+        },
+        "D": {
+          "zh": "錯誤。DynamoDB適合處理非關聯式數據，但問題中使用的是Aurora PostgreSQL關係型資料庫。",
+          "en": "Incorrect. DynamoDB is suitable for processing non-relational data, but the Aurora PostgreSQL relational database is used in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon RDS 代理程式為資料庫建立代理程式。修改 Lambda 函數以使用 RDS 代理端點而不是資料庫端點。",
+        "en": "B. Use Amazon RDS Proxy to create a proxy for the database. Modify the Lambda function to use the RDS Proxy endpoint instead of the database endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：修改 Lambda 函數以使用 RDS 代理端點是一種低成本且有效的解決方案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Modifying the Lambda function to use the RDS Proxy endpoint is a low-cost and effective solution."
+      }
+    },
+    {
+      "question_no": 176,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "應用程式在私有子網路中的 Amazon EC2 執行個體上執行。應用程式需要存取 Amazon DynamoDB 表。在確保流量不會離開 AWS 網路的同時存取表的最安全方法是什麼？",
+        "en": "An application runs on Amazon EC2 instances in private subnets. The application needs to access an Amazon DynamoDB table. What is the MOST secure way to access the table while ensuring that the traffic does not leave the AWS network?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 DynamoDB 的 VPC 終端節點。",
+          "en": "Use a VPC endpoint for DynamoDB."
+        },
+        "B": {
+          "zh": "在公用子網路中使用 NAT 閘道。",
+          "en": "Use a NAT gateway in a public subnet."
+        },
+        "C": {
+          "zh": "在私有子網路中使用 NAT 實例。",
+          "en": "Use a NAT instance in a private subnet."
+        },
+        "D": {
+          "zh": "使用連接到 VPC 的網際網路閘道。",
+          "en": "Use the internet gateway attached to the VPC."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。VPC 終端節點允許私人子網路中的資源透過 AWS 網路直接存取 DynamoDB，而無需流量離開 AWS 網路。這是最安全的方法，因為流量不經過 Internet，且 VPC 終端節點支援安全通訊。",
+          "en": "Correct. VPC Endpoint allows resources in a private subnet to directly access DynamoDB through the AWS network without the traffic leaving the AWS network. This is the most secure method because the traffic does not pass through the Internet and the VPC Endpoint supports secure communication."
+        },
+        "B": {
+          "zh": "錯誤。NAT 閘道用於將私有子網路中的流量路由至 Internet，但此問題要求流量不會離開 AWS 網路。使用 NAT 網關將導致流量離開 AWS 網絡，違反問題要求。",
+          "en": "Incorrect. NAT Gateway is used to route traffic in a private subnet to the Internet, but this question requires that the traffic does not leave the AWS network. Using NAT Gateway will cause traffic to leave the AWS network, violating the problem requirements."
+        },
+        "C": {
+          "zh": "錯誤。NAT 實例的功能與 NAT 閘道類似，主要用於將私有子網路中的流量路由到 Internet。它還會導致流量離開AWS網絡，這不符合問題的要求。",
+          "en": "Incorrect. NAT Instance functions similarly to NAT Gateway and is mainly used to route traffic in a private subnet to the Internet. It will also cause traffic to leave the AWS network, which does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。Internet閘道用於將VPC中的流量路由至Internet。使用Internet Gateway會導致流量離開AWS網絡，這完全不符合問題要求。",
+          "en": "Incorrect. Internet Gateway is used to route traffic in the VPC to the Internet. Using Internet Gateway will cause traffic to leave the AWS network, which is completely inconsistent with the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 DynamoDB 的 VPC 終端節點。",
+        "en": "A. Use a VPC endpoint for DynamoDB."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：VPC 終端節點允許私人子網路中的資源透過 AWS 網路直接存取 DynamoDB，而無需流量離開 AWS 網路。這是最安全的方法，因為流量不經過 Internet，且 VPC 終端節點支援安全通訊。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: VPC Endpoint allows resources in a private subnet to directly access DynamoDB through the AWS network without the traffic leaving the AWS network. This is the most secure method because the traffic does not pass through the Internet and the VPC Endpoint supports secure communication."
+      }
+    },
+    {
+      "question_no": 177,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家娛樂公司正在使用 Amazon DynamoDB 來儲存媒體元資料。該應用程式是讀取密集型的並且遇到延遲。該公司沒有員工來處理額外的營運開銷，需要在不重新配置應用程式的情況下提高 DynamoDB 的效能效率。解決方案架構師應該建議什麼來滿足此要求？",
+        "en": "An entertainment company is using Amazon DynamoDB to store media metadata. The application is read intensive and experiencing delays. The company does not have staff to handle additional operational overhead and needs to improve the performance efficiency of DynamoDB without reconfiguring the application. What should a solutions architect recommend to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon ElastiCache for Redis。",
+          "en": "Use Amazon ElastiCache for Redis."
+        },
+        "B": {
+          "zh": "使用 Amazon DynamoDB 加速器 (DAX)。",
+          "en": "Use Amazon DynamoDB Accelerator (DAX)."
+        },
+        "C": {
+          "zh": "使用 DynamoDB 全域表複製資料。",
+          "en": "Replicate data by using DynamoDB global tables."
+        },
+        "D": {
+          "zh": "使用 Amazon ElastiCache for Memcached 並啟用自動發現。",
+          "en": "Use Amazon ElastiCache for Memcached with Auto Discovery enabled."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Redis 是一種高效能快取解決方案，可用於加速資料庫查詢。然而，使用Redis需要額外的配置和開發工作才能整合到現有應用程式中，這與問題中「無需重新配置應用程式」的要求不一致。因此，這個選項是錯誤的。",
+          "en": "Incorrect. Redis is a high-performance caching solution that can be used to speed up database queries. However, using Redis requires additional configuration and development work to integrate into existing applications, which is inconsistent with the requirement of \"no application reconfiguration\" in the question. Therefore, this option is wrong."
+        },
+        "B": {
+          "zh": "正確。DAX 是專為 DynamoDB 提供的記憶體快取服務，可顯著提高讀取效能。它與 DynamoDB 無縫集成，不需要對現有應用程式進行重大修改。符合題目要求，故此選項。",
+          "en": "Correct. DAX is an in-memory caching service specifically provided for DynamoDB that can significantly improve read performance. It integrates seamlessly with DynamoDB and does not require major modifications to existing applications. It meets the question requirements, so this option is."
+        },
+        "C": {
+          "zh": "錯誤。全域表用於跨區域複製數據，主要解決多區域可用性和延遲問題。雖然全域表可以提高效能，但它們並未專門針對讀取密集型場景進行最佳化，並且可能需要額外的配置工作。因此，這個選項是錯誤的。",
+          "en": "Incorrect. Global tables are used to replicate data across regions, mainly solving multi-region availability and latency issues. While global tables can improve performance, they are not specifically optimized for read-intensive scenarios and may require additional configuration work. Therefore, this option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。Memcached 是另一個支援自動發現的快取解決方案。與Redis類似，使用Memcached需要額外的開發工作才能整合到現有應用程式中，這與問題中「無需重新配置應用程式」的要求不一致。因此，這個選項是錯誤的。",
+          "en": "Incorrect. Memcached is another caching solution that supports auto-discovery. Similar to Redis, using Memcached requires additional development work to integrate into existing applications, which is inconsistent with the requirement of \"no application reconfiguration\" in the question. Therefore, this option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon DynamoDB 加速器 (DAX)。",
+        "en": "B. Use Amazon DynamoDB Accelerator (DAX)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：DAX 是專為 DynamoDB 提供的記憶體快取服務，可顯著提高讀取效能。它與 DynamoDB 無縫集成，不需要對現有應用程式進行重大修改。符合題目要求，故此選項。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: DAX is an in-memory caching service specifically provided for DynamoDB that can significantly improve read performance. It integrates seamlessly with DynamoDB and does not require major modifications to existing applications. It meets the question requirements, so this option is."
+      }
+    },
+    {
+      "question_no": 178,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司的基礎架構由單一 AWS 區域中的 Amazon EC2 執行個體和 Amazon RDS 資料庫執行個體組成。該公司希望在單獨的區域備份其資料。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company’s infrastructure consists of Amazon EC2 instances and an Amazon RDS DB instance in a single AWS Region. The company wants to back up its data in a separate Region. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Backup 將 EC2 備份和 RDS 備份複製到單獨的區域。",
+          "en": "Use AWS Backup to copy EC2 backups and RDS backups to the separate Region."
+        },
+        "B": {
+          "zh": "使用 Amazon Data Lifecycle Manager (Amazon DLM) 將 EC2 備份和 RDS 備份複製到單獨的區域。",
+          "en": "Use Amazon Data Lifecycle Manager (Amazon DLM) to copy EC2 backups and RDS backups to the separate Region."
+        },
+        "C": {
+          "zh": "建立 EC2 執行個體的 Amazon 系統映像 (AMI)。將 AMI 複製到單獨的區域。為單獨區域中的 RDS 資料庫執行個體建立唯讀副本。",
+          "en": "Create Amazon Machine Images (AMIs) of the EC2 instances. Copy the AMIs to the separate Region. Create a read replica for the RDS DB instance in the separate Region."
+        },
+        "D": {
+          "zh": "建立 Amazon Elastic Block Store (Amazon EBS) 快照。將 EBS 快照複製到單獨的區域。建立 RDS 快照。將 RDS 快照匯出到 Amazon S3。將 S3 跨區域複製 (CRR) 配置到單獨的區域。",
+          "en": "Create Amazon Elastic Block Store (Amazon EBS) snapshots. Copy the EBS snapshots to the separate Region. Create RDS snapshots. Export the RDS snapshots to Amazon S3. Configure S3 Cross-Region Replication (CRR) to the separate Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Backup 是一項集中式備份服務，支援跨區域備份，可自動執行備份任務並降低操作複雜性。最小的營運開銷：AWS Backup 可以直接配置跨區域備份策略，無需手動管理快照或其他資源。",
+          "en": "Correct. AWS Backup is a centralized backup service that supports cross-region backup, can automate backup tasks and reduce operational complexity. Minimal operational overhead: AWS Backup can directly configure cross-region backup strategies, eliminating the need to manually manage snapshots or other resources."
+        },
+        "B": {
+          "zh": "錯誤。Amazon DLM 主要用於管理 EBS 快照生命週期，不直接支援 RDS 備份或跨區域備份。操作複雜度高：RDS備份需單獨處理，無法一次管理。",
+          "en": "Incorrect. Amazon DLM is mainly used to manage the EBS snapshot life cycle and does not directly support RDS backup or cross-region backup. The operation complexity is high: RDS backup needs to be processed separately and cannot be managed in one go."
+        },
+        "C": {
+          "zh": "錯誤。雖然 AMI 可以跨區域複製，但這需要手動操作並增加運作開銷。 RDS 唯讀副本用於高可用性和效能最佳化，而不是作為備份解決​​方案。",
+          "en": "Incorrect. Although AMIs can be replicated across regions, this requires manual operation and increases operational overhead. RDS read replicas are used for high availability and performance optimization, not as a backup solution."
+        },
+        "D": {
+          "zh": "錯誤。此方案涉及手動管理EBS快照、RDS快照匯出、S3跨區域複製等多個步驟，操作複雜度較高。雖然目標實現了，但「最低營運開銷」要求並未滿足。",
+          "en": "Incorrect. This option involves multiple steps, including manual management of EBS snapshots, RDS snapshot export, and S3 cross-region replication, and the operation complexity is high. While the goal is achieved, the \"minimum operational overhead\" requirement is not met."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Backup 將 EC2 備份和 RDS 備份複製到單獨的區域。",
+        "en": "A. Use AWS Backup to copy EC2 backups and RDS backups to the separate Region."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (98%)。熱門討論與考點摘要：AWS Backup 是一項集中式備份服務，支援跨區域備份，可自動執行備份任務並降低操作複雜性。最小的營運開銷：AWS Backup 可以直接配置跨區域備份策略，無需手動管理快照或其他資源。",
+        "en": "Community vote as displayed: A (98%). Popular discussion and key point summary: AWS Backup is a centralized backup service that supports cross-region backup, can automate backup tasks and reduce operational complexity. Minimal operational overhead: AWS Backup can directly configure cross-region backup strategies, eliminating the need to manually manage snapshots or other resources."
+      }
+    },
+    {
+      "question_no": 179,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師需要安全地儲存應用程式用於存取 Amazon RDS 資料庫執行個體的資料庫使用者名稱和密碼。存取資料庫的應用程式在 Amazon EC2 執行個體上執行。解決方案架構師希望在 AWS Systems Manager Parameter Store 中建立安全參數。解決方案架構師應該做什麼來滿足這個要求？",
+        "en": "A solutions architect needs to securely store a database user name and password that an application uses to access an Amazon RDS DB instance. The application that accesses the database runs on an Amazon EC2 instance. The solutions architect wants to create a secure parameter in AWS Systems Manager Parameter Store. What should the solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個對 Parameter Store 參數具有讀取存取權的 IAM 角色。允許 Decrypt 存取用於加密參數的 AWS Key Management Service (AWS KMS) 金鑰。將此 IAM 角色指派給 EC2 執行個體。",
+          "en": "Create an IAM role that has read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM role to the EC2 instance."
+        },
+        "B": {
+          "zh": "建立允許對 Parameter Store 參數進行讀取存取的 IAM 策略。允許 Decrypt 存取用於加密參數的 AWS Key Management Service (AWS KMS) 金鑰。將此 IAM 策略指派給 EC2 執行個體。",
+          "en": "Create an IAM policy that allows read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM policy to the EC2 instance."
+        },
+        "C": {
+          "zh": "在 Parameter Store 參數和 EC2 執行個體之間建立 IAM 信任關係。將 Amazon RDS 指定為信任策略中的委託人。",
+          "en": "Create an IAM trust relationship between the Parameter Store parameter and the EC2 instance. Specify Amazon RDS as a principal in the trust policy."
+        },
+        "D": {
+          "zh": "在資料庫執行個體和 EC2 執行個體之間建立 IAM 信任關係。將 Systems Manager 指定為信任策略中的主體。",
+          "en": "Create an IAM trust relationship between the DB instance and the EC2 instance. Specify Systems Manager as a principal in the trust policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。此選項描述了最佳實務。透過建立 IAM 角色並授予其讀取 Parameter Store 參數的權限，同時允許解密 KMS 加密的參數，確保 EC2 執行個體可以安全地存取敏感資訊。 IAM 角色是指派給 EC2 執行個體的最佳方式，因為它避免了硬編碼憑證並允許動態管理權限。",
+          "en": "Correct. This option describes a best practice. Ensure EC2 instances can securely access sensitive information by creating an IAM role and giving it permission to read Parameter Store parameters while allowing decryption of KMS-encrypted parameters. IAM roles are the best way to assign to EC2 instances because it avoids hard-coding credentials and allows permissions to be managed dynamically."
+        },
+        "B": {
+          "zh": "錯誤。IAM 政策無法直接指派給 EC2 執行個體。 IAM策略需要附加到IAM角色或用戶，EC2實例只能透過IAM角色取得權限。",
+          "en": "Incorrect. IAM policies cannot be assigned directly to EC2 instances. IAM policies need to be attached to an IAM role or user, and EC2 instances can only obtain permissions through IAM roles."
+        },
+        "C": {
+          "zh": "錯誤。IAM 信任關係的主體應該是 EC2 執行個體或相關 IAM 角色，而不是 Amazon RDS。此選項的描述不符合AWS的權限管理邏輯。",
+          "en": "Incorrect. The principal of the IAM trust relationship should be the EC2 instance or related IAM role, not Amazon RDS. The description of this option does not conform to AWS's permissions management logic."
+        },
+        "D": {
+          "zh": "錯誤。資料庫執行個體和 EC2 執行個體之間不需要直接 IAM 信任關係。 Systems Manager Parameter Store 的權限管理是透過 IAM 角色和策略而不是透過信任關係來實現的。",
+          "en": "Incorrect. A direct IAM trust relationship is not required between the DB instance and the EC2 instance. Permission management for Systems Manager Parameter Store is achieved through IAM roles and policies, not through trust relationships."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立一個對 Parameter Store 參數具有讀取存取權的 IAM 角色。允許 Decrypt 存取用於加密參數的 AWS Key Management Service (AWS KMS) 金鑰。將此 IAM 角色指派給 EC2 執行個體。",
+        "en": "A. Create an IAM role that has read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM role to the EC2 instance."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (97%)。熱門討論與考點摘要：此選項描述了最佳實務。透過建立 IAM 角色並授予其讀取 Parameter Store 參數的權限，同時允許解密 KMS 加密的參數，確保 EC2 執行個體可以安全地存取敏感資訊。 IAM 角色是指派給 EC2 執行個體的最佳方式，因為它避免了硬編碼憑證並允許動態管理權限。",
+        "en": "Community vote as displayed: A (97%). Popular discussion and key point summary: This option describes a best practice. Ensure EC2 instances can securely access sensitive information by creating an IAM role and giving it permission to read Parameter Store parameters while allowing decryption of KMS-encrypted parameters. IAM roles are the best way to assign to EC2 instances because it avoids hard-coding credentials and allows permissions to be managed dynamically."
+      }
+    },
+    {
+      "question_no": 180,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在設計一個由 API 驅動的雲端通訊平臺。該應用程式託管在網路負載平衡器 (NLB) 後面的 Amazon EC2 執行個體上。該公司使用 Amazon API Gateway 為外部用戶提供透過 API 存取應用程式的權限。該公司希望保護平臺免受 SQL 注入等 Web 攻擊，還希望檢測和緩解大型、複雜的 DDoS 攻擊。哪種解決方案組合可提供最強的保護？ （選兩個。）",
+        "en": "A company is designing a cloud communications platform that is driven by APIs. The application is hosted on Amazon EC2 instances behind a Network Load Balancer (NLB). The company uses Amazon API Gateway to provide external users with access to the application through APIs. The company wants to protect the platform against web exploits like SQL injection and also wants to detect and mitigate large, sophisticated DDoS attacks. Which combination of solutions provides the MOST protection? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS WAF 保護 NLB。",
+          "en": "Use AWS WAF to protect the NLB."
+        },
+        "B": {
+          "zh": "將 AWS Shield Advanced 與 NLB 結合使用。",
+          "en": "Use AWS Shield Advanced with the NLB."
+        },
+        "C": {
+          "zh": "使用 AWS WAF 保護 Amazon API Gateway。",
+          "en": "Use AWS WAF to protect Amazon API Gateway."
+        },
+        "D": {
+          "zh": "將 Amazon GuardDuty 與 AWS Shield Standard 結合使用",
+          "en": "Use Amazon GuardDuty with AWS Shield Standard"
+        },
+        "E": {
+          "zh": "將 AWS Shield Standard 與 Amazon API Gateway 結合使用。",
+          "en": "Use AWS Shield Standard with Amazon API Gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS WAF 無法直接保護網路負載平衡器 (NLB)。 AWS WAF 主要用於保護 Amazon API Gateway、Application Load Balancer (ALB) 和 CloudFront。",
+          "en": "Incorrect. AWS WAF cannot protect Network Load Balancer (NLB) directly. AWS WAF is primarily used to protect Amazon API Gateway, Application Load Balancer (ALB), and CloudFront."
+        },
+        "B": {
+          "zh": "正確。AWS Shield Advanced 提供進階 DDoS 防護，可與 NLB 結合使用，協助偵測並緩解複雜的 DDoS 攻擊。",
+          "en": "Correct. AWS Shield Advanced provides advanced DDoS protection and can be used in conjunction with NLB to help detect and mitigate sophisticated DDoS attacks."
+        },
+        "C": {
+          "zh": "正確。AWS WAF 保護 Amazon API Gateway 免受 SQL 注入和跨站點腳本攻擊等 Web 漏洞的影響。",
+          "en": "Correct. AWS WAF protects Amazon API Gateway from web vulnerabilities such as SQL injection and cross-site scripting attacks."
+        },
+        "D": {
+          "zh": "錯誤。Amazon GuardDuty 是一項威脅偵測服務，但它不直接提供 DDoS 防護。 AWS Shield Standard 是預設啟用的基本 DDoS 防護，但不提供進階功能。",
+          "en": "Incorrect. Amazon GuardDuty is a threat detection service, but it does not provide DDoS protection directly. AWS Shield Standard is basic DDoS protection enabled by default, but it does not provide advanced features."
+        },
+        "E": {
+          "zh": "錯誤。AWS Shield Standard 是預設啟用的基本 DDoS 防護，但它不提供進階功能。該問題需要偵測和緩解「大型、複雜的 DDoS 攻擊」，並且需要使用 AWS Shield Advanced。",
+          "en": "Incorrect. AWS Shield Standard is basic DDoS protection enabled by default, but it does not provide advanced features. The question requires the detection and mitigation of \"large, complex DDoS attacks\" and requires the use of AWS Shield Advanced."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "B. 將 AWS Shield Advanced 與 NLB 結合使用。；C. 使用 AWS WAF 保護 Amazon API Gateway。",
+        "en": "B. Use AWS Shield Advanced with the NLB.; C. Use AWS WAF to protect Amazon API Gateway."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BC (93%)。熱門討論與考點摘要：AWS Shield Advanced 提供進階 DDoS 防護，可與 NLB 結合使用，協助偵測並緩解複雜的 DDoS 攻擊。；AWS WAF 保護 Amazon API Gateway 免受 SQL 注入和跨站點腳本攻擊等 Web 漏洞的影響。",
+        "en": "Community vote as displayed: BC (93%). Popular discussion and key point summary: AWS Shield Advanced provides advanced DDoS protection and can be used in conjunction with NLB to help detect and mitigate sophisticated DDoS attacks.; AWS WAF protects Amazon API Gateway from web vulnerabilities such as SQL injection and cross-site scripting attacks."
+      }
+    }
+  ]
+}

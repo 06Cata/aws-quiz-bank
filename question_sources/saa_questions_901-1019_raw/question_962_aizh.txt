@@ -1,0 +1,59 @@
+Question #962
+A company uses an Amazon DynamoDB table to store data that the company receives from devices. The DynamoDB table
+supports a customer-facing website to display recent activity on customer devices. The company configured the table with
+provisioned throughput for writes and reads.
+The company wants to calculate performance metrics for customer device data on a daily basis. The solution must have minimal
+effect on the table's provisioned read and write capacity.
+Which solution will meet these requirements?
+一家公司使用 Amazon DynamoDB 表来存储从设备接收到的数据。 该 DynamoDB 表支持一个面向客户的网站，用于显示客户设备
+的最近活动。 公司为该表配置了预置的写入和读取吞吐量。
+公司希望每天计算客户设备数据的性能指标。 解决方案必须对表的预置读取和写入容量影响最小。
+哪种解决方案可以满足这些要求？
+A. Use an Amazon Athena SQL query with the Amazon Athena DynamoDB connector to calculate performance metrics on a
+recurring schedule.
+使用 Amazon Athena SQL 查询与 Amazon Athena DynamoDB connector，按周期性计划计算性能指标。
+B. Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring
+schedule. Most Voted
+使用 AWS Glue 作业与 AWS Glue DynamoDB export connector，按周期性计划计算性能指标。
+C. Use an Amazon Redshift COPY command to calculate performance metrics on a recurring schedule.
+使用 Amazon Redshift COPY 命令，按周期性计划计算性能指标。
+D. Use an Amazon EMR job with an Apache Hive external table to calculate performance metrics on a recurring schedule.
+使用 Amazon EMR 作业与 Apache Hive 外部表，按周期性计划计算性能指标。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+Amazon DynamoDB的使用场景与性能优化。
+如何在不影响DynamoDB表的读写容量的情况下进行数据分析。
+AWS服务之间的集成，包括AWS Glue、Amazon Athena、Amazon Redshift和Amazon EMR。
+2. 选项分析
+A. Use an Amazon Athena SQL query with the Amazon Athena DynamoDB connector to calculate performance metrics on
+a recurring schedule.
+正确性分析：Amazon Athena可以通过DynamoDB connector直接查询DynamoDB表，但这种方法会直接读取表数据，可能会影响
+DynamoDB的读容量，违反了题目要求“对表的读写容量影响最小”。
+结论：错误。
+B. Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring
+schedule.
+正确性分析：AWS Glue DynamoDB export connector可以将DynamoDB表数据导出到其他存储（如S3），然后进行分析。这种方法
+不会直接影响DynamoDB表的读写容量，符合题目要求。
+结论：正确。
+C. Use an Amazon Redshift COPY command to calculate performance metrics on a recurring schedule.
+正确性分析：Amazon Redshift COPY命令需要将数据从DynamoDB导入到Redshift中，但导入过程可能会直接读取DynamoDB表数
+据，影响其读容量，违反题目要求。
+结论：错误。
+D. Use an Amazon EMR job with an Apache Hive external table to calculate performance metrics on a recurring schedule.
+正确性分析：Amazon EMR可以通过Hive外部表查询DynamoDB数据，但这种方法会直接读取DynamoDB表数据，可能会影响其读
+容量，违反题目要求。
+结论：错误。
+3. 我的答案
+我的选择：B
+4. 官方答案
+官方答案：B
+5. 答案比较与思考
+我的答案与官方答案一致。
+原因分析：AWS Glue DynamoDB export connector是专门设计用于导出DynamoDB数据的工具，可以避免直接读取表数据，从而最
+小化对表的读写容量的影响，完全符合题目要求。
+Community vote distribution
+社区投票分布
+B (89%)
+11%

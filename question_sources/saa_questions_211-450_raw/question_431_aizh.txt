@@ -1,0 +1,59 @@
+Question #431
+A company has developed a new video game as a web application. The application is in a three-tier architecture in a VPC with
+Amazon RDS for MySQL in the database layer. Several players will compete concurrently online. The game’s developers want to
+display a top-10 scoreboard in near-real time and offer the ability to stop and restore the game while preserving the current
+scores.
+What should a solutions architect do to meet these requirements?
+一家公司开发了一款新的视频游戏作为一个网络应用程序。该应用程序采用三层架构，运行在一个VPC中，数据库层使用Amazon
+RDS for MySQL。多个玩家将同时在线竞争。游戏开发者希望以近实时的方式显示前10名排行榜，并提供停止和恢复游戏的功能，
+同时保留当前的分数。
+解决方案架构师应该怎么做以满足这些需求？
+A. Set up an Amazon ElastiCache for Memcached cluster to cache the scores for the web application to display.
+设置一个Amazon ElastiCache for Memcached集群，用于缓存分数以供网络应用程序显示。
+B. Set up an Amazon ElastiCache for Redis cluster to compute and cache the scores for the web application to display.
+Most Voted
+设置一个Amazon ElastiCache for Redis集群，用于计算和缓存分数以供网络应用程序显示。
+C. Place an Amazon CloudFront distribution in front of the web application to cache the scoreboard in a section of the
+application.
+在网络应用程序前面放置一个Amazon CloudFront分发，用于在应用程序的某个部分缓存排行榜。
+D. Create a read replica on Amazon RDS for MySQL to run queries to compute the scoreboard and serve the read traffic to the
+web application.
+在Amazon RDS for MySQL上创建一个只读副本，用于运行查询以计算排行榜，并为网络应用程序提供读取流量。
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (92%)
+8%
+题目分析与解答
+1. 考察的知识点
+Amazon ElastiCache的使用场景和选择（Redis vs Memcached）。
+如何优化实时数据处理和缓存以提高性能。
+三层架构中数据库与缓存的协作。
+2. 选项分析
+A. Set up an Amazon ElastiCache for Memcached cluster to cache the scores for the web application to display.
+Memcached是一个高性能的分布式内存对象缓存系统，适合简单的键值存储和缓存场景。
+然而，题目要求“计算和缓存分数”，Memcached不支持复杂的数据结构和计算功能，因此不适合此场景。
+错误原因：Memcached无法满足计算需求。
+B. Set up an Amazon ElastiCache for Redis cluster to compute and cache the scores for the web application to display.
+Redis支持丰富的数据结构（如Sorted Sets），可以轻松实现排行榜功能。
+Redis还支持持久化功能，可以在游戏停止和恢复时保留当前分数。
+正确原因：Redis完全满足题目要求，包括计算、缓存和持久化功能。
+C. Place an Amazon CloudFront distribution in front of the web application to cache the scoreboard in a section of the
+application.
+CloudFront是一个内容分发网络（CDN），主要用于缓存静态内容以提高全球访问速度。
+题目要求的是“计算和缓存分数”，而不是静态内容的分发，因此CloudFront不适合此场景。
+错误原因：CloudFront无法处理动态计算需求。
+D. Create a read replica on Amazon RDS for MySQL to run queries to compute the scoreboard and serve the read traffic to
+the web application.
+RDS读副本可以分担读取压力，但它仍然需要通过SQL查询来计算排行榜，效率较低。
+题目要求“近实时”显示排行榜，使用数据库查询可能无法满足性能要求。
+错误原因：数据库查询效率较低，无法满足实时性需求。
+3. 我的答案
+B. Set up an Amazon ElastiCache for Redis cluster to compute and cache the scores for the web application to display.
+4. 官方答案
+B. Set up an Amazon ElastiCache for Redis cluster to compute and cache the scores for the web application to display.
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析完全符合题目要求，Redis是最佳选择，能够满足计算、缓存和持久化的需求。
+嬄信: " Examtopics "

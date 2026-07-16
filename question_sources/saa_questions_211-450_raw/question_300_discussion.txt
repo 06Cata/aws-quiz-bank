@@ -1,0 +1,132 @@
+A company needs to migrate a legacy application from an on-premises data center to the AWS Cloud because of hardware
+capacity constraints. The application runs 24 hours a day, 7 days a week. The application’s database storage continues to grow
+over time.
+What should a solutions architect do to meet these requirements MOST cost-effectively?
+A. Migrate the application layer to Amazon EC2 Spot Instances. Migrate the data storage layer to Amazon S3.
+B. Migrate the application layer to Amazon EC2 Reserved Instances. Migrate the data storage layer to Amazon RDS On-
+Demand Instances.
+C. Migrate the application layer to Amazon EC2 Reserved Instances. Migrate the data storage layer to Amazon Aurora Reserved
+Instances. Most Voted
+D. Migrate the application layer to Amazon EC2 On-Demand Instances. Migrate the data storage layer to Amazon RDS
+Reserved Instances.
+Comments
+LuckyAro Highly Voted 2 years, 9 months ago
+Selected Answer: C
+Amazon EC2 Reserved Instances allow for significant cost savings compared to On-Demand instances for long-running, steady-state workloads like
+this one. Reserved Instances provide a capacity reservation, so the instances are guaranteed to be available for the duration of the reservation period
+Amazon Aurora is a highly scalable, cloud-native relational database service that is designed to be compatible with MySQL and PostgreSQL. It can
+automatically scale up to meet growing storage requirements, so it can accommodate the application's database storage needs over time. By using
+Reserved Instances for Aurora, the cost savings will be significant over the long term.
+upvoted 24 times
+NolaHOla Highly Voted 2 years, 9 months ago
+Option B based on the fact that the DB storage will continue to grow, so on-demand will be a more suitable solution
+upvoted 15 times
+pentium75 1 year, 11 months ago
+Database STORAGE will grow, not performance need (and required instance size).
+upvoted 4 times
+NolaHOla 2 years, 9 months ago
+Since the application's database storage is continuously growing over time, it may be difficult to estimate the appropriate size of the Aurora cluster
+in advance, which is required when reserving Aurora.
+In this case, it may be more cost-effective to use Amazon RDS On-Demand Instances for the data storage layer. With RDS On-Demand Instances,
+you pay only for the capacity you use and you can easily scale up or down the storage as needed.
+upvoted 5 times
+Joxtat 2 years, 9 months ago
+The Answer is C.
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.AuroraMySQL.html
+upvoted 2 times
+hristni0 2 years, 6 months ago
+Answer is C. From Aurora Reserved Instances documentation:
+If you have a DB instance, and you need to scale it to larger capacity, your reserved DB instance is automatically applied to your scaled DB
+Correct Answer: C
+Community vote distribution
+C (86%)
+14%
+instance. That is, your reserved DB instances are automatically applied across all DB instance class sizes. Size-flexible reserved DB instances are
+available for DB instances with the same AWS Region and database engine.
+upvoted 2 times
+zdi561 Most Recent 1 year, 4 months ago
+Selected Answer: B
+RIs are best for steady-state database workloads.
+upvoted 1 times
+hro 1 year, 8 months ago
+cost-effectively - the answer is C.
+The application runs 24 hours a day, 7 days a week. The application’s database storage continues to grow over time.
+upvoted 3 times
+MrPCarrot 1 year, 9 months ago
+Answer is C: Amazon EC2 Reserved Instances and Amazon Aurora Reserved Instances = less expensive than RDS.
+upvoted 3 times
+andyngkh86 1 year, 10 months ago
+Amazon Aurora reserved instances is used for the work load on predictable, so answer should be B
+upvoted 1 times
+Priyapani 1 year, 11 months ago
+Selected Answer: B
+I think it's B as database storage will grow
+upvoted 2 times
+awsgeek75 1 year, 10 months ago
+Application runs 24x7 which means database is also used 24x7. The storage will grow and RDS On-Demand does not have auto-grow storage. You
+have to configure a storage size for RDS which means it will eventually run out of space. RDS On-Demand just scales CPU, not storage.
+Aurora has no storage limitation and can scale storage according to need which is what is required here
+upvoted 4 times
+Mikado211 2 years ago
+Selected Answer: C
+24/7 forbids spot instances , so A is excluded
+Cost efficience require reserved instances , so D is excluded
+Between RDS and Aurora, Aurora is less expensive thanks to the reserved instance, so B is finally excluded
+Answer is C
+upvoted 4 times
+cciesam 2 years, 1 month ago
+Selected Answer: B
+I hope it should be B considering Database growth
+upvoted 1 times
+pentium75 1 year, 11 months ago
+Reserved instance applies to the DB instance size (CPU, RAM etc.), not storage.
+upvoted 3 times
+Wayne23Fang 2 years, 2 months ago
+My research concludes that From pure price point of view Aurora Reserved might/ usually be slightly more expensive than On-demand RDS. But RDS
+has less Operation overhead. For the 24x7 nature, I would vote C. But for pure cost-effective, B is less costly.
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+This option involves migrating the application layer to Amazon EC2 Reserved Instances and migrating the data storage layer to Amazon Aurora
+Reserved Instances. Amazon EC2 Reserved Instances provide a significant discount (up to 75%) compared to On-Demand Instance pricing, making
+them a cost-effective choice for applications that have steady state or predictable usage. Similarly, Amazon Aurora Reserved Instances provide a
+significant discount (up to 69%) compared to On-Demand Instance pricing.
+upvoted 2 times
+ajchi1980 2 years, 5 months ago
+Selected Answer: C
+To meet the requirements of migrating a legacy application from an on-premises data center to the AWS Cloud in a cost-effective manner, the most
+suitable option would be:
+C. Migrate the application layer to Amazon EC2 Reserved Instances. Migrate the data storage layer to Amazon Aurora Reserved Instances.
+Explanation:
+Migrating the application layer to Amazon EC2 Reserved Instances allows you to reserve EC2 capacity in advance, providing cost savings compared
+to On-Demand Instances. This is especially beneficial if the application runs 24/7.
+Migrating the data storage layer to Amazon Aurora Reserved Instances provides cost optimization for the growing database storage needs. Amazon
+Aurora is a fully managed relational database service that offers high performance, scalability, and cost efficiency.
+upvoted 2 times
+cpen 2 years, 6 months ago
+nnascncnscnknkckl
+upvoted 1 times
+TariqKipkemei 2 years, 7 months ago
+Answer is C
+upvoted 2 times
+QuangPham810 2 years, 7 months ago
+Answer is C. Refer https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_WorkingWithReservedDBInstances.html => Size-flexible
+reserved DB instances
+upvoted 2 times
+Abhineet9148232 2 years, 9 months ago
+Selected Answer: C
+C: With Aurora Serverless v2, each writer and reader has its own current capacity value, measured in ACUs. Aurora Serverless v2 scales a writer or
+reader up to a higher capacity when its current capacity is too low to handle the load. It scales the writer or reader down to a lower capacity when its
+current capacity is higher than needed.
+This is sufficient to accommodate the growing data changes.
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.how-it-works.html#aurora-serverless-v2.how-it-
+works.scaling
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: C
+Typically Amazon RDS cost less than Aurora. But here, it's Aurora reserved.
+upvoted 2 times
+djgodzilla 1 year, 11 months ago
+although agree and AWS wants you to choose Answer C. You can't convince a cloud accounting analyst that Aurora is cheaper than RDS. no matter
+what
+upvoted 2 times

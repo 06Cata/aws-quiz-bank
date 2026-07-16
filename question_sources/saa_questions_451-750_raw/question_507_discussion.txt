@@ -1,0 +1,149 @@
+A company has a web application for travel ticketing. The application is based on a database that runs in a single data center in
+North America. The company wants to expand the application to serve a global user base. The company needs to deploy the
+application to multiple AWS Regions. Average latency must be less than 1 second on updates to the reservation database.
+The company wants to have separate deployments of its web platform across multiple Regions. However, the company must
+maintain a single primary reservation database that is globally consistent.
+Which solution should a solutions architect recommend to meet these requirements?
+A. Convert the application to use Amazon DynamoDB. Use a global table for the center reservation table. Use the correct
+Regional endpoint in each Regional deployment. Most Voted
+B. Migrate the database to an Amazon Aurora MySQL database. Deploy Aurora Read Replicas in each Region. Use the correct
+Regional endpoint in each Regional deployment for access to the database.
+C. Migrate the database to an Amazon RDS for MySQL database. Deploy MySQL read replicas in each Region. Use the correct
+Regional endpoint in each Regional deployment for access to the database.
+D. Migrate the application to an Amazon Aurora Serverless database. Deploy instances of the database to each Region. Use the
+correct Regional endpoint in each Regional deployment to access the database. Use AWS Lambda functions to process event
+streams in each Region to synchronize the databases.
+Comments
+cloudenthusiast Highly Voted 3 years ago
+Selected Answer: A
+Using DynamoDB's global tables feature, you can achieve a globally consistent reservation database with low latency on updates, making it suitable
+for serving a global user base. The automatic replication provided by DynamoDB eliminates the need for manual synchronization between Regions.
+upvoted 24 times
+FlyingHawk 1 year, 6 months ago
+DynamoDB Global Tables rely on eventual consistency for replication between Regions. This means that updates in one Region may take
+milliseconds to seconds to propagate to other Regions.
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html
+The requirement specifies global consistency, which DynamoDB cannot guarantee.
+upvoted 1 times
+upliftinghut Highly Voted 2 years, 4 months ago
+Selected Answer: B
+Aurora: less than 1 second: https://aws.amazon.com/rds/aurora/global-database/
+DynamoDB: from 0.5 to 2.5 second: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html
+upvoted 6 times
+TheLaPlanta 2 years, 2 months ago
+B doesn't say Aurora Global
+upvoted 13 times
+MatAlves 1 year, 9 months ago
+DynamoDB doesn't meet the <1s req though.
+upvoted 2 times
+Correct Answer: A
+Community vote distribution
+A (52%)
+B (48%)
+JustEugen Most Recent 8 months, 3 weeks ago
+Selected Answer: A
+I think the correct answer is A, as A and B are missing details.
+If you follow the answer, neither A nor B is a solution:
+- In A, it is not specified if the Aurora Global Database will be used
+- In B, it uses Dynamo DB global table with eventual consistency mode, which won't guarantee that data will be written, cause it can be rejected in
+case of conflict
+But if we think about details:
+- For A, use DynamoDB Multi-Region strong consistency (MRSC)
+- For B, use the Aurora Global Database
+The best option will be B, as it involves only a single writer, which aligns with our request for global consistency. With DynamoDB MRSC, we will have
+a significant overhead of handling possible write conflicts
+upvoted 1 times
+JustEugen 8 months, 3 weeks ago
+I am sorry, not A, the correct is B
+upvoted 1 times
+ln2718 9 months, 3 weeks ago
+Selected Answer: B
+Single primary, globally consistent writes: Aurora Global Database uses one writer Region and read-only secondary Regions, avoiding multi-writer
+conflicts.
+< 1s average update latency cross-Region: Storage-level replication typically delivers sub-second lag from the primary to secondary Regions—ideal
+for a global web tier reading locally while writing to the primary.
+Separate web stacks per Region: Point each Regional deployment to its local Aurora reader endpoint for reads; route writes to the primary Region.
+upvoted 1 times
+Charlesvg 11 months, 2 weeks ago
+Selected Answer: A
+Option B provides only READ replicas globally. Which does not satisfies the UPDATES in less that 1 seconds for the application deployed on every
+region
+upvoted 1 times
+eduvaldi 1 year ago
+Selected Answer: B
+just for latency Its B
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: A
+answer should be A.
+we can consider if B change to "Amazon Aurora Global Database"...
+upvoted 1 times
+tch 1 year, 3 months ago
+Global tables - multi-Region replication for DynamoDB
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.htmAmazon DynamoDB global tables are a fully managed,
+multi-Region, and multi-active database option that delivers fast and localized read and write performance for massively scaled global applications.
+upvoted 1 times
+Dantecito 1 year, 4 months ago
+Selected Answer: A
+A is the only option that allows you to write from any reagion. I understand the < 1 second latency, but DynamoDB global tables use a last-writer-
+wins reconciliation between concurrent updates.
+B and C only supports read scaling, not low-latency global writes. It will be much much much much than 1 second to write on the databse.
+D I stopped reading at lambda so NO!.
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: A
+Dynamodb is consistent and read/write in all node, Aurora db , only the master is writable. For reservation , writing is criticle.
+upvoted 1 times
+khatingarun 1 year, 4 months ago
+Selected Answer: A
+A is the correct answer
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: B
+dynamodb is not globally consistent. DynamoDB doesn't support strongly consistent reads across Regions.
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html
+upvoted 2 times
+hilker1983 1 year, 5 months ago
+Selected Answer: B
+correct answer bbbb
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: A
+A: dynamoDB global table preview strong consistent
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/multi-region-strong-consistency-gt.html
+upvoted 1 times
+Penjerla 1 year, 6 months ago
+Selected Answer: A
+Aurora replicas have to be in the same region as primary
+https://docs.aws.amazon.com/prescriptive-guidance/latest/aurora-replication-options/compare-solutions.html
+upvoted 2 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: B
+Since DynamoDB Global Tables allow writes in all Regions, conflicts can occur if the same item is updated simultaneously in multiple Regions.
+DynamoDB uses a "last writer wins" conflict resolution strategy, which may lead to data integrity issues:
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.conflict-
+resolution
+If you require less than 1-second latency for write updates across Regions, DynamoDB may not consistently meet this requirement due to the
+asynchronous nature of its replication.
+For this scenario, DynamoDB Global Tables do not fully meet the requirements due to their reliance on eventual consistency. If strong consistency is a
+must, go with Amazon Aurora Global Database.
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+Selected Answer: B
+The question asks "Average latency must be less than 1 second on updates to the reservation database."
+A is incorrect:
+" Changes to a DynamoDB global tables are replicated asynchronously, with typical latency of between 0.5 - 2.5 seconds between AWS Regions in the
+same geographic area."
+B is the answer:
+"All Aurora Replicas return the same data for query results with minimal replica lag. This lag is usually much less than 100 milliseconds after the
+primary instance has written an update."
+upvoted 2 times
+MatAlves 1 year, 9 months ago
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html
+https://community.aws/content/2drxEND7MtTOb2bWs2J0NlCGewP/ddb-globaltables-lag?lang=en
+upvoted 3 times
+SVDK 2 years, 4 months ago
+Selected Answer: A
+How can you update your database in the different regions with read replicas? You need to be able to read and write to the database from the
+different regions.
+upvoted 3 times

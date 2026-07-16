@@ -1,0 +1,113 @@
+A solutions architect is designing a two-tier web application. The application consists of a public-facing web tier hosted on
+Amazon EC2 in public subnets. The database tier consists of Microsoft SQL Server running on Amazon EC2 in a private subnet.
+Security is a high priority for the company.
+How should security groups be configured in this situation? (Choose two.)
+A. Configure the security group for the web tier to allow inbound traffic on port 443 from 0.0.0.0/0. Most Voted
+B. Configure the security group for the web tier to allow outbound traffic on port 443 from 0.0.0.0/0.
+C. Configure the security group for the database tier to allow inbound traffic on port 1433 from the security group for the web
+tier. Most Voted
+D. Configure the security group for the database tier to allow outbound traffic on ports 443 and 1433 to the security group for
+the web tier.
+E. Configure the security group for the database tier to allow inbound traffic on ports 443 and 1433 from the security group for
+the web tier.
+Comments
+Athena Highly Voted 3 years, 7 months ago
+Selected Answer: AC
+Web Server Rules: Inbound traffic from 443 (HTTPS) Source 0.0.0.0/0 - Allows inbound HTTPS access from any IPv4 address
+Database Rules : 1433 (MS SQL)The default port to access a Microsoft SQL Server database, for example, on an Amazon RDS instance
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
+upvoted 30 times
+ArielSchivo Highly Voted 3 years, 7 months ago
+Selected Answer: AC
+EC2 web on public subnets + EC2 SQL on private subnet + security is high priority. So, Option A to allow HTTPS from everywhere. Plus option C to
+allow SQL connection from the web instance.
+upvoted 19 times
+Errrrrrwin Most Recent 3 months, 3 weeks ago
+Selected Answer: CE
+What about outbound traffic, do we need to specify?
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: AC
+HTTPS (443) from the world
+MS SQL server sock connection in 1433 from the private interfaces of the public web tier servers.
+Security groups can be added to other security group rules. Hence A,C.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: AC
+A & C are the only correct options here.
+upvoted 1 times
+Correct Answer: AC
+Community vote distribution
+AC (97%)
+3%
+Himedere 1 year, 5 months ago
+Selected Answer: AC
+Web server is public: should allow all (0.0.0.0/0) inbound traffic from 443 (HTTPS)
+MSSQL Server is private: it should only allow inbound traffic from the web tier from 1433.
+443 is HTTPS port, so it's not necessary on MSSQL Server.
+upvoted 2 times
+PaulGa 1 year, 8 months ago
+Selected Answer: AC
+Ans A, C - allow public access for all input, but control access to database: source 0.0.0.0/0, control access on port 1433 (MS SQL)
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: AC
+SG are blocked by default and stateful so
+A: Allows inbound traffic from web to the HTTPS default port on web servers
+B: Outbound is not required if inbound is configured due to stateful nature of SG
+C: 1433 is SQL default so allow access from web-tier only
+D: Opens up the database to web on 1433 port
+E: opens up 443 port unnecessarily on the DB tier so less secure
+AC is the most secure config
+upvoted 5 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: AC
+Allow inbound traffic on port 443 from 0.0.0.0/0 on the web tier. Then allow inbound traffic on port 1433 from the security group for the web tier on
+the database tier.
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: AC
+The security group for the web tier should allow inbound traffic on port 443 from 0.0.0.0/0. This will allow clients to connect to the web tier using
+HTTPS. The security group for the web tier should also allow outbound traffic on port 443 to 0.0.0.0/0. This will allow the web tier to connect to the
+internet to download updates and other resources.
+The security group for the database tier should allow inbound traffic on port 1433 from the security group for the web tier. This will allow the web
+tier to connect to the database tier to access data. The security group for the database tier should not allow outbound traffic on ports 443 and 1433
+to the security group for the web tier. This will prevent the database tier from being exposed to the public internet.
+upvoted 4 times
+cookieMr 2 years, 11 months ago
+Selected Answer: AC
+A. This configuration allows external users to access the web tier over HTTPS (port 443). However, it's important to note that it is generally
+recommended to restrict the source IP range to a more specific range rather than allowing access from 0.0.0.0/0 (anywhere). This would limit access
+to only trusted sources.
+C. By allowing inbound traffic on port 1433 (default port for Microsoft SQL Server) from the security group associated with the web tier, you ensure
+that the database tier can only be accessed by the EC2 instances in the web tier. This provides a level of isolation and restricts direct access to the
+database tier from external sources.
+upvoted 3 times
+Abrar2022 3 years ago
+DB tier: Port 1433 is the known standard for SQL server and should be used.
+web tier on port 443 (HTTPS)
+upvoted 4 times
+beginnercloud 3 years ago
+Selected Answer: AC
+AC is correct
+upvoted 1 times
+WherecanIstart 3 years, 3 months ago
+A & C are the correct answer.
+Inbound traffic to the web tier on port 443 (HTTPS)
+The web tier will then access the Database tier on port 1433 - inbound.
+upvoted 1 times
+techhb 3 years, 5 months ago
+Selected Answer: AC
+AC 443-http inbound and 1433-sql server
+Security group => focus on inbound traffic since by default outboud traffic is allowed
+upvoted 2 times
+aba2s 3 years, 5 months ago
+Selected Answer: AC
+Security group => focus on inbound traffic since by default outboud traffic is allowed
+upvoted 2 times
+orionizzie 3 years, 5 months ago
+why both are inbound rules
+upvoted 2 times
+kraken21 3 years, 2 months ago
+Because security groups are stateful.
+upvoted 2 times

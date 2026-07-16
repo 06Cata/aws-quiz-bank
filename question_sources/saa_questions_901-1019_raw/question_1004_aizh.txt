@@ -1,0 +1,58 @@
+Question #1004
+A company hosts its enterprise resource planning (ERP) system in the us-east-1 Region. The system runs on Amazon EC2
+instances. Customers use a public API that is hosted on the EC2 instances to exchange information with the ERP system.
+International customers report slow API response times from their data centers.
+Which solution will improve response times for the international customers MOST cost-effectively?
+一家公司在 us-east-1 区域托管其企业资源规划 (ERP) 系统。该系统运行在 Amazon EC2 实例上。客户使用托管在 EC2 实例上的公
+共 API 与 ERP 系统交换信息。国际客户报告从其数据中心访问 API 时响应时间较慢。
+哪种解决方案能以最具成本效益的方式改善国际客户的响应时间？
+A. Create an AWS Direct Connect connection that has a public virtual interface (VIF) to provide connectivity from each
+customer's data center to us-east-1. Route customer API requests by using a Direct Connect gateway to the ERP system API.
+创建一个具有公共虚拟接口 (VIF) 的 AWS Direct Connect 连接，以提供从每个客户数据中心到 us-east-1 的连接。通过使用
+Direct Connect gateway 路由客户的 API 请求到 ERP 系统 API。
+B. Set up an Amazon CloudFront distribution in front of the API. Configure the CachingOptimized managed cache policy to
+provide improved cache efficiency.
+在 API 前设置一个 Amazon CloudFront 分发。配置 CachingOptimized 托管缓存策略，以提高缓存效率。
+C. Set up AWS Global Accelerator. Configure listeners for the necessary ports. Configure endpoint groups for the appropriate
+Regions to distribute traffic. Create an endpoint in the group for the API. Most Voted
+设置 AWS Global Accelerator。为必要的端口配置监听器。为适当的区域配置端点组以分发流量。在组中为 API 创建一个端点。
+D. Use AWS Site-to-Site VPN to establish dedicated VPN tunnels between Regions and customer networks. Route traffic to the
+API over the VPN connections.
+使用 AWS Site-to-Site VPN 在区域和客户网络之间建立专用 VPN 隧道。通过 VPN 连接路由流量到 API。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (61%)
+B (39%)
+题目分析与解答
+1. 考察的知识点
+本题主要考察的是如何优化国际客户访问 AWS 托管的 API 的响应时间，同时关注成本效益。
+涉及的服务包括 AWS Direct Connect、Amazon CloudFront、AWS Global Accelerator 和 AWS Site-to-Site VPN。
+2. 选项分析
+A. Create an AWS Direct Connect connection that has a public virtual interface (VIF)...
+Direct Connect 提供专线连接，适合需要高带宽和低延迟的场景，但成本较高，且需要客户在其数据中心设置 Direct Connect 连
+接。
+对于国际客户来说，设置 Direct Connect 可能不具备成本效益，尤其是需要多个客户分别设置连接。
+因此，此选项虽然可以改善性能，但不符合“最具成本效益”的要求。
+B. Set up an Amazon CloudFront distribution in front of the API...
+CloudFront 是一个内容分发网络 (CDN)，可以缓存静态内容以加速交付，但对于动态 API 请求，缓存效率有限。
+虽然可以通过 CloudFront 提供一定的性能提升，但动态 API 请求的响应时间改善有限，且无法解决国际客户的延迟问题。
+因此，此选项不完全适合解决问题。
+C. Set up AWS Global Accelerator...
+AWS Global Accelerator 是专门设计用于优化全球用户访问的服务，通过使用 AWS 全球网络来减少延迟。
+它可以为动态内容（如 API 请求）提供加速，并通过监听器和端点组分发流量到最近的区域，从而显著改善国际客户的响应时间。
+此选项符合“最具成本效益”的要求，同时解决了国际客户的延迟问题。
+D. Use AWS Site-to-Site VPN...
+Site-to-Site VPN 提供安全的连接，但它通常用于企业内部网络之间的通信，而不是优化国际客户访问公共 API 的场景。
+VPN 的性能可能受限于网络带宽和延迟，且需要客户在其数据中心设置 VPN 连接，成本较高。
+因此，此选项不适合解决问题。
+3. 我的选择
+我选择的答案是：C
+4. 官方答案
+官方正确答案是：C
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：AWS Global Accelerator 是专门设计用于优化全球用户访问的服务，能够显著改善国际客户的响应时间，同时具备成本
+效益。
+嬄信: " Examtopics "

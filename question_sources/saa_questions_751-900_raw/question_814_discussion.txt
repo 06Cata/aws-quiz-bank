@@ -1,0 +1,54 @@
+A company runs a container application on a Kubernetes cluster in the company's data center. The application uses Advanced
+Message Queuing Protocol (AMQP) to communicate with a message queue. The data center cannot scale fast enough to meet the
+company’s expanding business needs. The company wants to migrate the workloads to AWS.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Migrate the container application to Amazon Elastic Container Service (Amazon ECS). Use Amazon Simple Queue Service
+(Amazon SQS) to retrieve the messages.
+B. Migrate the container application to Amazon Elastic Kubernetes Service (Amazon EKS). Use Amazon MQ to retrieve the
+messages. Most Voted
+C. Use highly available Amazon EC2 instances to run the application. Use Amazon MQ to retrieve the messages.
+D. Use AWS Lambda functions to run the application. Use Amazon Simple Queue Service (Amazon SQS) to retrieve the
+messages.
+Comments
+Mikado211 Highly Voted 2 years, 2 months ago
+Selected Answer: B
+This question is a trap because A is definitely the answer for a Least overhead (ECS + SQS) and in a real life scenario could be good in 99% of cases.
+However SQS do not implement AMQP (SQS is only a simple queueing system very basic) so we have to use Amazon MQ.
+In terms of containers EKS will always be a better solution than a manual setup of Docker.
+Good solution would have been ECS+AmazonMQ not given here
+Lambda can work with containers, but since there are limitations like 15 minutes limit we can't really consider it as a good solution.
+So B is the least bad solution.
+upvoted 16 times
+Dantecito Most Recent 1 year, 3 months ago
+Selected Answer: B
+We were asked for the LEAST operational overhead, so the company already has a managed message broker and thats why we use Amazon MQ and
+they are already using Kubernetes.
+upvoted 1 times
+Scheldon 2 years ago
+Selected Answer: B
+AnswerB
+For me B is a correct solution. In question AMQP is mentioned and Amazon on his doc page about MQ is providing such information:
+"Amazon MQ is a managed message broker service that provides compatibility with many popular message brokers. We recommend Amazon MQ
+for migrating applications from existing message brokers that rely on compatibility with APIs such as JMS or protocols such as AMQP 0-9-1, AMQP
+1.0, MQTT, OpenWire, and STOMP."
+I cannot be coincidence that documentation is mentioning about AMQP.
+https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html
+upvoted 1 times
+Correct Answer: B
+Community vote distribution
+B (95%)
+5%
+sandordini 2 years, 1 month ago
+Selected Answer: A
+I'd go for A.
+Although the ideal solution and least modification would require B, with heavy rework the application can be (most likely) adopted to ECS+SQS. As it
+is an AWS exam, not a vendor-agnostic SA exam, A will be the correct answer.
+upvoted 1 times
+seetpt 2 years, 3 months ago
+Selected Answer: B
+B because only solution with Kubernetes
+upvoted 1 times
+asdfcdsxdfc 2 years, 3 months ago
+Selected Answer: B
+Should be B
+upvoted 2 times

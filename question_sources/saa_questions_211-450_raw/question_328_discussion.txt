@@ -1,0 +1,137 @@
+A company is hosting a three-tier ecommerce application in the AWS Cloud. The company hosts the website on Amazon S3 and
+integrates the website with an API that handles sales requests. The company hosts the API on three Amazon EC2 instances behind
+an Application Load Balancer (ALB). The API consists of static and dynamic front-end content along with backend workers that
+process sales requests asynchronously.
+The company is expecting a significant and sudden increase in the number of sales requests during events for the launch of new
+products.
+What should a solutions architect recommend to ensure that all the requests are processed successfully?
+A. Add an Amazon CloudFront distribution for the dynamic content. Increase the number of EC2 instances to handle the
+increase in traffic.
+B. Add an Amazon CloudFront distribution for the static content. Place the EC2 instances in an Auto Scaling group to launch
+new instances based on network traffic.
+C. Add an Amazon CloudFront distribution for the dynamic content. Add an Amazon ElastiCache instance in front of the ALB to
+reduce traffic for the API to handle.
+D. Add an Amazon CloudFront distribution for the static content. Add an Amazon Simple Queue Service (Amazon SQS) queue
+to receive requests from the website for later processing by the EC2 instances. Most Voted
+Comments
+Steve_4542636 Highly Voted 3 years, 3 months ago
+Selected Answer: B
+The auto-scaling would increase the rate at which sales requests are "processed", whereas a SQS will ensure messages don't get lost. If you were at a
+fast food restaurant with a long line with 3 cash registers, would you want more cash registers or longer ropes to handle longer lines? Same concept
+here.
+upvoted 22 times
+lizzard812 3 years, 2 months ago
+Hell true: I'd rather combine the both options: a SQS + auto-scaled bound to the length of the queue.
+upvoted 10 times
+joechen2023 2 years, 12 months ago
+As an architecture, it is not possible to add more backend workers (it is part of the HR and boss's job, not for architecture design the solution). So
+when the demand surge, the only correct choice is to buffer them using SQS so that workers can take their time to process it successfully
+upvoted 2 times
+rushi0611 3 years, 1 month ago
+"ensure that all the requests are processed successfully?"
+we want to ensure success not the speed, even in the auto-scaling, there is the chance for the failure of the request but not in SQS- if it is failed in
+sqs it is sent back to the queue again and new consumer will pick the request.
+upvoted 19 times
+Marco_St 2 years, 6 months ago
+eeeee... In the restaurant also here, the request in the line will be dropped in case of high-sudden volume flooding in so it will bring risk of missing
+request. while with SQS, it can ensure no lost but still slow processing with only 3 processor though so it is based on what is the question's concern
+So I still voted for D.
+upvoted 2 times
+Correct Answer: D
+Community vote distribution
+D (73%)
+B (27%)
+Abhineet9148232 Highly Voted 3 years, 1 month ago
+Selected Answer: D
+B doesn't fit because Auto Scaling alone does not guarantee that all requests will be processed successfully, which the question clearly asks for.
+D ensures that all messages are processed.
+upvoted 17 times
+ChhatwaniB Most Recent 1 year, 2 months ago
+Selected Answer: D
+There is no scaling based on network traffic. since the backend worker works asynchronously SQS should be right here
+upvoted 1 times
+samadal 1 year, 8 months ago
+The problem states that the application consists of "static and dynamic front-end content." Static content typically includes cacheable resources such
+as HTML, CSS, and image files. Therefore, from this statement, one can infer that caching static content using CloudFront would improve
+performance. In other words, the mention of "static content" in the problem itself leads to the conclusion that CloudFront should be added for static
+content.
+Additionally, the problem mentions "asynchronously processed backend workers." Asynchronous processing is well-suited for services like SQS,
+which can improve efficiency by handling dynamic requests that do not require immediate processing. The mention of "successfully processing all
+requests" also suggests that SQS is needed to ensure that all requests are handled properly.
+Therefore, the correct answer is D.
+upvoted 3 times
+Adinas_ 2 years, 3 months ago
+Selected Answer: B
+Important question to answer D. Can you connect the website with SQS directly? How do you control access to who can put messages to SQS? I have
+never seen such a situation it has to be at least behind API gateway. So that conclusion brings me to answer B, application also can process async
+everything without SQS.
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+I chose D because I love SQS! These questions are hammering SQS in every solution as a "protagonist" that saves the day.
+AC are clearly useless
+B can work but D is better because of SQS being better than EC2 scaling. The other part is that backend workers process the request asynchronously
+therefore a queue is better.
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: D
+A and C don't solve anything so ignore them.
+Between B and D, D guarantees the scaling via SQS and order processing. B can also do that but it is not guaranteed that EC2 scaling will work to
+process the order.
+As usual, I suspect that this "brain dump" may be missing critical wording to differentiate between the options so read carefully in the exam.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: D
+There are two components that we need
+* Frontend: Hosted on S3, performance can be increased with CloudFront
+* Backend: There's no reason to process all the orders instantly, so we should decouple the processing from the API which we do with SQS
+Thus D, CloudFront + SQS
+upvoted 8 times
+pentium75 2 years, 5 months ago
+And as others said, B might speed up the processing or reduce the number of lost orders, but we need to make sure that "ALL requests are
+processed successfully", NOT that "less requests are lost".
+upvoted 3 times
+Marco_St 2 years, 6 months ago
+Selected Answer: D
+I picked B before I read D option. Read the question again, it concerns:asynchronous processing of sales requests, Option D seems to align more
+closely with the requirements. So the requirement is ensuring all requests are processed successfully which means no request would be missed. So D
+is better option
+upvoted 4 times
+wsdasdasdqwdaw 2 years, 7 months ago
+Amazon SQS will make sure that the requests are stored and didn't get lost. After that the workers asynchronously will process the requests. I would
+go for D
+upvoted 4 times
+TariqKipkemei 2 years, 8 months ago
+Technically both option B and D would work. But, there's a need to process requests asynchronously, hence decoupling, hence Amazon SQS. I will
+settle with option D.
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+D is correct.
+upvoted 3 times
+antropaws 3 years ago
+Selected Answer: D
+D is correct.
+upvoted 2 times
+kruasan 3 years, 1 month ago
+Selected Answer: D
+An SQS queue acts as a buffer between the frontend (website) and backend (API). Web requests can dump messages into the queue at a high
+throughput, then the queue handles delivering those messages to the API at a controlled rate that it can sustain. This prevents the API from being
+overwhelmed.
+upvoted 3 times
+kruasan 3 years, 1 month ago
+Options A and B would help by scaling out more instances, however, this may not scale quickly enough and still risks overwhelming the API.
+Caching parts of the dynamic content (option C) may help but does not provide the buffering mechanism that a queue does.
+upvoted 1 times
+seifshendy99 3 years, 1 month ago
+Selected Answer: D
+D make sens
+upvoted 2 times
+kraken21 3 years, 2 months ago
+Selected Answer: D
+D makes more sense
+upvoted 2 times
+kraken21 3 years, 2 months ago
+There is no clarity on what the asynchronous process is but D makes more sense if we want to process all requests successfully. The way the question
+is worded it looks like the msgs->SQS>ELB/Ec2. This ensures that the messages are processed but may be delayed as the load increases.
+upvoted 1 times

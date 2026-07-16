@@ -1,0 +1,138 @@
+A solutions architect needs to design a new microservice for a company’s application. Clients must be able to call an HTTPS
+endpoint to reach the microservice. The microservice also must use AWS Identity and Access Management (IAM) to authenticate
+calls. The solutions architect will write the logic for this microservice by using a single AWS Lambda function that is written in Go
+1.x.
+Which solution will deploy the function in the MOST operationally efficient way?
+A. Create an Amazon API Gateway REST API. Configure the method to use the Lambda function. Enable IAM authentication on
+the API. Most Voted
+B. Create a Lambda function URL for the function. Specify AWS_IAM as the authentication type.
+C. Create an Amazon CloudFront distribution. Deploy the function to Lambda@Edge. Integrate IAM authentication logic into
+the Lambda@Edge function.
+D. Create an Amazon CloudFront distribution. Deploy the function to CloudFront Functions. Specify AWS_IAM as the
+authentication type.
+Comments
+mhmt4438 Highly Voted 3 years, 4 months ago
+Selected Answer: A
+A. Create an Amazon API Gateway REST API. Configure the method to use the Lambda function. Enable IAM authentication on the API.
+This option is the most operationally efficient as it allows you to use API Gateway to handle the HTTPS endpoint and also allows you to use IAM to
+authenticate the calls to the microservice. API Gateway also provides many additional features such as caching, throttling, and monitoring, which can
+be useful for a microservice.
+upvoted 23 times
+FlyingHawk 1 year, 4 months ago
+Simplicity:
+Lambda Function URLs provide a direct HTTPS endpoint with minimal configuration. You don’t need to set up API Gateway, which reduces
+complexity.
+IAM Authentication:
+Lambda Function URLs natively support IAM authentication, eliminating the need for custom logic or additional services.
+upvoted 2 times
+OlehKom Highly Voted 1 year, 9 months ago
+The question specifically asks for the solution that is most operationally efficient, not necessarily the one with the most features (which is A).
+Option B—using a Lambda function URL with AWS_IAM authentication—is indeed the most operationally efficient because:
+1) Minimal Configuration: Lambda function URLs are designed to quickly create HTTPS endpoints without the need for additional AWS services like
+API Gateway.
+2) Built-in IAM Authentication: You can easily specify AWS_IAM as the authentication type directly, fulfilling the requirement without extra setup.
+3) No Extra Overhead: Unlike API Gateway, there’s no need to manage complex API configurations, throttling settings, or additional API management
+features unless specifically required.
+upvoted 7 times
+DanRuggles Most Recent 1 month, 1 week ago
+Selected Answer: B
+Correct Answer: A
+Community vote distribution
+A (51%)
+B (49%)
+Lambda Function URL (with AWS_IAM authentication) is more operationally efficient than an Amazon API Gateway REST API (with Lambda proxy
+integration + IAM authorization enabled). docs.aws.amazon.com
+upvoted 1 times
+SH_ 3 months, 1 week ago
+Selected Answer: B
+Going with B. Lambda function would be most operationally efficient and does not need any additional service like API gateway or load balancers.
+upvoted 1 times
+Clouddon 11 months ago
+Selected Answer: B
+Correct Answer: B. Create a Lambda function URL for the function. Specify AWS_IAM as the authentication type.
+= Explanation:
+AWS Lambda Function URLs provide a dedicated HTTPS endpoint for your Lambda function with built-in AWS IAM authentication — no need for API
+Gateway, no extra cost, and low operational overhead.
+Key benefits:
+¨ Fastest deployment of a web-accessible microservice.
+B Built-in IAM-based authentication (AWS_IAM).
+8 Fully managed HTTPS endpoint — ideal for simple use cases like a single Lambda function.
+For a Go 1.x Lambda function that needs to be exposed via HTTPS and protected by IAM, this is the most operationally efficient approach.
+upvoted 2 times
+jagga82 11 months, 1 week ago
+Selected Answer: B
+As per Gemini
+upvoted 2 times
+Charlesvg 11 months, 3 weeks ago
+Selected Answer: A
+b is not suited for production so not operationnaly efficient
+upvoted 1 times
+Yak_Yeti 1 year, 1 month ago
+Selected Answer: B
+Lambda function URLs with AWS_IAM authentication provide the most streamlined and operationally efficient way to deploy a single Go Lambda
+function behind an HTTPS endpoint with IAM-based authentication for client calls. It minimizes the number of moving parts and configuration
+required, leading to easier management and lower potential for operational issues.
+upvoted 2 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: B
+Use Lambda Function URLs for simplicity, low cost, and direct integration with IAM for authentication. If your microservice evolves to require more
+complex features, you can later integrate with API Gateway as needed.
+API Gateway can integrate with Lambda and enable IAM authentication, but it introduces more operational overhead and cost compared to a
+Lambda Function URL. It's unnecessary unless the application requires additional features like request validation, throttling, or custom authorizers.
+upvoted 3 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: B
+Why is B better than A: Both options meet the requirements, but Lambda function URLs are simpler and involve less operational overhead compared
+to setting up and managing an API Gateway, so B for sure.
+upvoted 3 times
+maryam_sh 1 year, 10 months ago
+Selected Answer: B
+B is the most operationally efficient solution. It provides the necessary functionality with minimal setup and cost, directly supports IAM
+authentication, and avoids the additional complexity and overhead associated with other options. This approach is particularly suitable for scenarios
+where the API requirements are straightforward and do not need the advanced features provided by API Gateway or CloudFront.
+upvoted 4 times
+hro 2 years, 2 months ago
+I think from a decoupllng and separation of concerns A is the answer. You dont want to have a heavy reliance on the Lambda function with you have
+specific services for what is being required.
+there is operationally efficient incorrect and operationally efficient correct.
+So A is the best answer.
+upvoted 3 times
+bujuman 2 years, 3 months ago
+Selected Answer: B
+According to this statement "MOST operationally efficient way" and the following link related to Lambda Function URL security:
+https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+I originally voted B but after reading this article, I am not sure if A is wrong or is just badly worded.
+If A actually said "Configure the [authorization] method to use the Lambda function" then it would be way more logical than B but this could be
+intentional. Although I think this is AWS test not IELTS so picking right answers based on small word mistakes is not the intention!
+https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
+upvoted 3 times
+upliftinghut 2 years, 5 months ago
+Selected Answer: B
+A& B are all good. The requirement is most operationally efficient so B is faster. In real life, I won't risk B for production, dev & test makes sense but
+no production please
+upvoted 2 times
+upliftinghut 2 years, 5 months ago
+Reference link why B is here: https://aws.amazon.com/blogs/aws/announcing-aws-lambda-function-urls-built-in-https-endpoints-for-single-
+function-microservices/
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: B
+I think this question has 2 answers as both A and B will work. However, B is more operationally efficient due to Lambda function URL and direct
+support for AWS_IAM as the auth type for this setup.
+https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html#urls-auth-iam
+C, D are not operationally efficient and GO is not supported on Lambda@Edge or CloudFront functions. Even if AWS start supporting it, the
+operational efficiency with increase because of CloudFront
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+* meant to say "operational efficiency will decrease" because of CloudFront
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+We know that the application provides "an HTTPS endpoint" but we don't even know whether it is a REST API. The question is not mentioning any
+other requirements besides IAM authentication, which can be handled by Lambda alone.
+A would work, but would be an additional processing step (lowering operational efficiency). It would also provide benefits but none of those is asked
+for in the question.
+C and D is wrong because Lambda@Edge does not support Go.
+upvoted 3 times

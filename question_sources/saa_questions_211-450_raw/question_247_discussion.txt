@@ -1,0 +1,179 @@
+A company has deployed a database in Amazon RDS for MySQL. Due to increased transactions, the database support team is
+reporting slow reads against the DB instance and recommends adding a read replica.
+Which combination of actions should a solutions architect take before implementing this change? (Choose two.)
+A. Enable binlog replication on the RDS primary node.
+B. Choose a failover priority for the source DB instance.
+C. Allow long-running transactions to complete on the source DB instance. Most Voted
+D. Create a global table and specify the AWS Regions where the table will be available.
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0. Most Voted
+Comments
+fkie4 Highly Voted 3 years, 3 months ago
+Who would know this stuff man...
+upvoted 135 times
+presetacsing 3 years ago
+exactly
+upvoted 3 times
+MNotABot 2 years, 11 months ago
+"Allow long-running transactions to complete on the source DB instance." --. Makes sense / Also a backup before changing anything again made a
+sense.
+upvoted 3 times
+foha2012 2 years, 4 months ago
+Just take an intelligent guess. Eliminate 2 wrong answers and you will have a 50percent success chance.
+upvoted 3 times
+KelvinEM Highly Voted 3 years, 4 months ago
+C,E
+"An active, long-running transaction can slow the process of creating the read replica. We recommend that you wait for long-running transactions to
+complete before creating a read replica. If you create multiple read replicas in parallel from the same source DB instance, Amazon RDS takes only
+one snapshot at the start of the first create action.
+When creating a read replica, there are a few things to consider. First, you must enable automatic backups on the source DB instance by setting the
+backup retention period to a value other than 0. This requirement also applies to a read replica that is the source DB instance for another read
+replica"
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
+upvoted 52 times
+607d657 Most Recent 10 months, 2 weeks ago
+Selected Answer: AC
+A: Enable binlog replication on RDS primary,this is essential for MySQL read replicas:
+C: Allow long-running transactions to complete,this is a critical best practice
+upvoted 1 times
+c12ab95 1 year ago
+Selected Answer: CE
+Correct Answer: CE
+Community vote distribution
+CE (74%)
+AE (17%)
+8%
+C. Allow long-running transactions to complete on the source DB instance.
+Active long-running transactions can delay read replica creation. AWS recommends resolving these first to avoid replication delays or failures .
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0.
+Automatic backups are mandatory for read replica creation. Enabling backups activates binary logging (binlog) on the source, which is required for
+replication
+upvoted 1 times
+Yak_Yeti 1 year, 1 month ago
+Selected Answer: AE
+To create a read replica for Amazon RDS for MySQL, the following prerequisites must be met:
+A. Enable binlog replication on the RDS primary node
+Required. RDS read replicas rely on MySQL binary log (binlog) replication.
+This setting is not enabled by default. You must set the DB parameter binlog_format to ROW and enable binary logging by modifying the parameter
+group.
+E. Enable automatic backups
+Required. Enabling automatic backups by setting backup retention > 0 is necessary to support point-in-time recovery and to allow the creation of
+read replicas.
+RDS uses the backup snapshot as a baseline to create the initial read replica.
+Why not "C. Allow long-running transactions to complete"?
+Not a prerequisite for creating a read replica.
+Might improve performance temporarily, but it’s unrelated to read replica setup.
+upvoted 3 times
+Yak_Yeti 1 year, 1 month ago
+Moderator - please delete
+Enabling binary log replication on the RDS primary node is indeed automatically handled by Amazon RDS when you create a read replica for MySQ
+or MariaDB. You do not need to manually configure this beforehand.
+upvoted 1 times
+Rcosmos 1 year, 4 months ago
+Selected Answer: UE
+Opção A: Habilite a replicação de log binário no nó primário do RDS
+A replicação de log binário é necessária para habilitar réplicas de leitura no RDS for MySQL. O banco de dados de origem precisa capturar e
+armazenar logs binários que serão usados para replicar alterações para as réplicas de leitura,
+E: Habilite backups automáticos na instância de origem definindo o período de retenção de backup como um valor diferente de 0 Backups
+automáticos devem estar habilitados na instância de origem para criar réplicas de leitura. Isso garante que a réplica possa ser criada a partir de um
+ponto consistente do banco de dados de origem
+upvoted 1 times
+derekxxxxxxxx 1 year, 6 months ago
+Selected Answer: CE
+Allow long-running transactions to complete on the source DB instance.
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: CE
+Based on the official documentation, the correct steps to prepare for creating a read replica are:
+A. Enable binlog replication on the RDS primary node.
+C. Allow long-running transactions to complete on the source DB instance.
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0.
+These ensure smooth and efficient setup while adhering to AWS best practices.
+For more detailed information, you can refer to the AWS documentation:
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Create.html
+A (Enable binlog replication) is not a required manual step in Amazon RDS.
+Amazon RDS automatically manages this requirement during the creation of the read replica for MySQL and MariaDB.
+upvoted 3 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: CE
+Answer: CE.
+A: In Amazon RDS, binary logging is automatically enabled when creating a read replica. You don’t need to enable it manually.
+B: Read replicas are used for improving read performance, not for failover purposes.
+C: This ensures a clean state before replication begins.
+D: Global tables are part of Amazon DynamoDB, not Amazon RDS.
+E: RDS uses the automated backup feature to take a snapshot of the primary DB instance and initialize the replica.
+upvoted 2 times
+tonybuivannghia 1 year, 8 months ago
+Selected Answer: CE
+A isn't correct because binary log is just for external DB instance.
+upvoted 3 times
+ccceb01 1 year, 9 months ago
+Answer is C and E
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
+upvoted 2 times
+1166ae3 1 year, 11 months ago
+Selected Answer: AE
+A. Enable binlog replication on the RDS primary node:
+Direct Impact: Enabling binlog replication is crucial for setting up read replicas, which will directly help in distributing the read load and improving
+read performance.
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0:
+Direct Impact: Automatic backups are necessary to ensure data integrity when creating read replicas. This setup is critical for maintaining consistent
+and reliable replicas.
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: CE
+B and D don't have anything to do with the question.
+E is a must have before doing major architecture changes
+A is not something you need to do explicitly when creating read replicas as it is managed by RDS
+C makes sense
+* I think the options are really badly worded which makes it confusing. I doubt this is a real question.
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Also, to add, binlog replication is needed if you are replicating to a non RDS instance. This is why I think the question is badly phrased as it does no
+specify the location of read replica.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.External.Repl.html
+upvoted 1 times
+Ruffyit 2 years, 6 months ago
+An active, long-running transaction can slow the process of creating the read replica. We recommend that you wait for long-running transactions to
+complete before creating a read replica. If you create multiple read replicas in parallel from the same source DB instance, Amazon RDS takes only
+one snapshot at the start of the first create action.
+When creating a read replica, there are a few things to consider. First, you must enable automatic backups on the source DB instance by setting the
+backup retention period to a value other than 0. This requirement also applies to a read replica that is the source DB instance for another read replica
+upvoted 2 times
+meowruki 2 years, 6 months ago
+Selected Answer: AC
+To improve the read performance of a database in Amazon RDS for MySQL by adding a read replica, you should take the following actions:
+Enable binlog replication on the RDS primary node: This allows the primary node to stream its binary logs to the read replica, enabling data
+replication.
+A. Enable binlog replication on the RDS primary node.
+Allow long-running transactions to complete on the source DB instance: Before creating a read replica, it's advisable to let any long-running
+transactions complete to ensure consistency between the source and the replica.
+C. Allow long-running transactions to complete on the source DB instance.
+The other options are not directly related to setting up a read replica:
+upvoted 1 times
+meowruki 2 years, 6 months ago
+B. Choose a failover priority for the source DB instance: Failover priority is more relevant in a Multi-AZ setup where automatic failover might occur.
+It's not directly related to creating a read replica.
+D. Create a global table and specify the AWS Regions where the table will be available: Global tables are used for cross-region replication, but they
+are not directly related to setting up a read replica for improved read performance.
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0: While it's a good practice to
+have backups enabled, it is not a prerequisite for creating a read replica.
+Therefore, the most appropriate actions are A and C.
+upvoted 1 times
+xdkonorek2 2 years, 6 months ago
+Selected Answer: AE
+A - it's essential for continuous replication
+E - it's essential for setting up replication, initial data in replica is based on latest backup
+other options:
+B - we're not designing for HA, and it's related to mutli-AZ RDS deployments
+C - is this needed for adding read replica?
+D - it's not a dynamodb to create global table
+upvoted 5 times
+vijaykamal 2 years, 8 months ago
+Selected Answer: CE
+A. Enabling binlog replication is not something you need to do manually before creating a read replica. Amazon RDS for MySQL manages replication
+internally, and it's not necessary to enable binlog replication explicitly.
+B. Choosing a failover priority is related to Multi-AZ configurations and automatic failover, but it is not specifically required when adding a read
+replica.
+D. Creating a global table and specifying AWS Regions is related to Aurora Global Databases, which is not the same as creating a read replica for a
+standard RDS instance.
+upvoted 2 times

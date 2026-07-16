@@ -1,0 +1,135 @@
+A company runs workloads on AWS. The company needs to connect to a service from an external provider. The service is hosted in
+the provider's VPC. According to the company’s security team, the connectivity must be private and must be restricted to the
+target service. The connection must be initiated only from the company’s VPC.
+Which solution will mast these requirements?
+A. Create a VPC peering connection between the company's VPC and the provider's VPC. Update the route table to connect to
+the target service.
+B. Ask the provider to create a virtual private gateway in its VPC. Use AWS PrivateLink to connect to the target service.
+C. Create a NAT gateway in a public subnet of the company’s VPUpdate the route table to connect to the target service.
+D. Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the target service.
+Most Voted
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: D
+**AWS PrivateLink provides private connectivity between VPCs, AWS services, and your on-premises networks, without exposing your traffic to the
+public internet**. AWS PrivateLink makes it easy to connect services across different accounts and VPCs to significantly simplify your network
+architecture.
+Interface **VPC endpoints**, powered by AWS PrivateLink, connect you to services hosted by AWS Partners and supported solutions available in AWS
+Marketplace.
+https://aws.amazon.com/privatelink/
+upvoted 33 times
+remand Highly Voted 3 years, 4 months ago
+Selected Answer: D
+The solution that meets these requirements best is option D.
+By asking the provider to create a VPC endpoint for the target service, the company can use AWS PrivateLink to connect to the target service. This
+enables the company to access the service privately and securely over an Amazon VPC endpoint, without requiring a NAT gateway, VPN, or AWS
+Direct Connect. Additionally, this will restrict the connectivity only to the target service, as required by the company's security team.
+Option A VPC peering connection may not meet security requirement as it can allow communication between all resources in both VPCs.
+Option B, asking the provider to create a virtual private gateway in its VPC and use AWS PrivateLink to connect to the target service is not the
+optimal solution because it may require the provider to make changes and also you may face security issues.
+Option C, creating a NAT gateway in a public subnet of the company’s VPC can expose the target service to the internet, which would not meet the
+security requirements.
+upvoted 11 times
+PaulGa Most Recent 1 year, 8 months ago
+Selected Answer: D
+Ans D - create a unique, private only link: "Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the
+target service"
+upvoted 2 times
+lofzee 2 years ago
+Selected Answer: D
+no split decisions on this answer eh? not like the last one. lol
+upvoted 3 times
+Correct Answer: D
+Community vote distribution
+D (100%)
+RNess 2 years, 7 months ago
+Selected Answer: D
+AWS PrivateLink / VPC Endpoint Services:
+• Connect services privately from your service VPC to customers VPC
+• Doesn’t need VPC Peering, public Internet, NAT Gateway, Route Tables
+• Must be used with Network Load Balancer & ENI
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: D
+option D is correct
+upvoted 1 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+The best solution to meet the requirements is option D:
+Ask the provider to create a VPC endpoint for the target service
+Use AWS PrivateLink to connect to the target service
+The reasons are:
+PrivateLink provides private connectivity between VPCs without using public internet.
+The provider creates a VPC endpoint in their VPC for the target service.
+The company uses PrivateLink to securely access the endpoint from their VPC.
+Connectivity is restricted only to the target service.
+The connection is initiated only from the company's VPC.
+Options A, B, C would expose the connection to the public internet or require infrastructure changes in the provider's VPC.
+PrivateLink enables private, restricted connectivity to the target service without VPC peering or public exposure.
+upvoted 3 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+Option C meets the requirements of establishing a private and restricted connection to the service hosted in the provider's VPC. By asking the
+provider to create a VPC endpoint for the target service, you can establish a direct and private connection from your company's VPC to the target
+service. AWS PrivateLink ensures that the connectivity remains within the AWS network and does not require internet access. This ensures both
+privacy and restriction to the target service, as the connection can only be initiated from your company's VPC.
+A. VPC peering does not restrict access only to the target service.
+B. PrivateLink is typically used for accessing AWS services, not external services in a provider's VPC.
+C. NAT gateway does not provide a private and restricted connection to the target service.
+Option D is the correct choice as it uses AWS PrivateLink and VPC endpoint to establish a private and restricted connection from the company's VPC
+to the target service in the provider's VPC.
+upvoted 4 times
+Abrar2022 3 years ago
+VPC Endpoint (Target Service) - for specific services (not accessing whole vpc)
+VPC Peering - (accessing whole VPC)
+upvoted 4 times
+Abrar2022 3 years ago
+VPC Peering Connection:
+All resources in a VPC, such as ECSs and load balancers, can be accessed.
+VPC Endpoint:
+Allows access to a specific service or application. Only the ECSs and load balancers in the VPC for which VPC endpoint services are created can be
+accessed.
+upvoted 2 times
+eugene_stalker 3 years ago
+Selected Answer: D
+Option D, but seems that it is vise versa. Customer needs to create Privatelink and and you VPC endpoint to connect to Privatelink
+upvoted 2 times
+studynoplay 3 years, 1 month ago
+AWS PrivateLink / VPC Endpoint Services:
+• Connect services privately from your service VPC to customers VPC
+• Doesn’t need VPC Peering, public Internet, NAT Gateway, Route Tables
+• Must be used with Network Load Balancer & ENI
+upvoted 3 times
+Help2023 3 years, 3 months ago
+Selected Answer: D
+D. Here you are the one initiating the connection
+upvoted 2 times
+devonwho 3 years, 4 months ago
+Selected Answer: D
+PrivateLink is a more generalized technology for linking VPCs to other services. This can include multiple potential endpoints: AWS services, such as
+Lambda or EC2; Services hosted in other VPCs; Application endpoints hosted on-premises.
+https://www.tinystacks.com/blog-post/aws-vpc-peering-vs-privatelink-which-to-use-and-when/
+upvoted 2 times
+devonwho 3 years, 4 months ago
+Selected Answer: D
+While VPC peering enables you to privately connect VPCs, AWS PrivateLink enables you to configure applications or services in VPCs as endpoints
+that your VPC peering connections can connect to.
+upvoted 3 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Selected Answer: D
+The solution that meets these requirements is Option D:
+* Ask the provider to create a VPC endpoint for the target service.
+* Use AWS PrivateLink to connect to the target service.
+Option D involves asking the provider to create a VPC endpoint for the target service, which is a private connection to the service that is hosted in
+the provider's VPC. This ensures that the connection is private and restricted to the target service, as required by the company's security team. The
+company can then use AWS PrivateLink to connect to the target service over the VPC endpoint. AWS PrivateLink is a fully managed service that
+enables you to privately access services hosted on AWS, on-premises, or in other VPCs. It provides secure and private connectivity to services by
+using private IP addresses, which ensures that traffic stays within the Amazon network and does not traverse the public internet.
+Therefore, Option D is the solution that meets the requirements.
+upvoted 5 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+AWS PrivateLink documentation: https://docs.aws.amazon.com/privatelink/latest/userguide/what-is-privatelink.html
+upvoted 2 times
+techhb 3 years, 5 months ago
+D is right,if requirement was to be ok with public internet then option C was ok.
+upvoted 1 times

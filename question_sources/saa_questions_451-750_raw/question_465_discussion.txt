@@ -1,0 +1,117 @@
+A company is developing an application to support customer demands. The company wants to deploy the application on multiple
+Amazon EC2 Nitro-based instances within the same Availability Zone. The company also wants to give the application the ability
+to write to multiple block storage volumes in multiple EC2 Nitro-based instances simultaneously to achieve higher application
+availability.
+Which solution will meet these requirements?
+A. Use General Purpose SSD (gp3) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach
+B. Use Throughput Optimized HDD (st1) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach
+C. Use Provisioned IOPS SSD (io2) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach Most Voted
+D. Use General Purpose SSD (gp2) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach
+Comments
+potomac Highly Voted 2 years, 1 month ago
+Selected Answer: C
+Multi-Attach is supported exclusively on Provisioned IOPS SSD (io1 and io2) volumes.
+upvoted 13 times
+awsgeek75 Highly Voted 1 year, 10 months ago
+Selected Answer: C
+hdd<gp2<gp3<io2
+upvoted 7 times
+ln2718 Most Recent 11 months ago
+Selected Answer: A
+A follow-up as to why this is a terrible question - the application could either have throughput or IOPS as its weakest link. In a real-world meeting
+with the designer team, I would tell them that until you provide real numbers under load in UAT you are going to get gp3 as a best all-around
+solution.
+upvoted 1 times
+ln2718 11 months ago
+Selected Answer: A
+This is a terribly written question - there is no benchmark specifications for either IOPS or throughput. Because of this if you guess anything other
+than gp3 you would be guessing incorrectly. In real-life without such specifications, you would choose gp3. Terrible question.
+upvoted 1 times
+master9 1 year, 11 months ago
+Selected Answer: C
+AWS IO2 does support Multi-Attach. Multi-Attach allows you to share access to an EBS data volume between up to 16 Nitro-based EC2 instances
+within the same Availability Zone. Each attached instance has full read and write permission to the shared volume. This feature is intended to make it
+easier to achieve higher application availability for customers that want to deploy applications that manage storage consistency from multiple writers
+in shared storage infrastructure. However, please note that Multi-Attach on io2 is available in certain regions only.
+upvoted 7 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C. Use Provisioned IOPS SSD (io2) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach
+upvoted 5 times
+Correct Answer: C
+Community vote distribution
+C (92%)
+6%
+TariqKipkemei 2 years, 5 months ago
+Selected Answer: C
+Multi-Attach is supported exclusively on Provisioned IOPS SSD (io1 and io2) volumes.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-
+multi.html#:~:text=Multi%2DAttach%20is%20supported%20exclusively%20on%20Provisioned%20IOPS%20SSD%20(io1%20and%20io2)%20volumes
+upvoted 4 times
+Axeashes 2 years, 5 months ago
+Multi-Attach is supported exclusively on Provisioned IOPS SSD (io1 and io2) volumes.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html
+upvoted 4 times
+Uzi_m 2 years, 6 months ago
+The correct answer is A.
+Currently, Multi Attach EBS feature is supported by gp3 volumes also.
+Multi-Attach is supported for certain EBS volume types, including io1, io2, gp3, st1, and sc1 volumes.
+upvoted 2 times
+Kp88 2 years, 4 months ago
+No , Read this --> https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html#considerations
+upvoted 4 times
+AshishRocks 2 years, 6 months ago
+Answer should be D
+upvoted 1 times
+Kp88 2 years, 4 months ago
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html#considerations
+upvoted 2 times
+AshishRocks 2 years, 6 months ago
+By ChatGPT - Create General Purpose SSD (gp2) volumes: Provision multiple gp2 volumes with the required capacity for your application.
+upvoted 1 times
+Kp88 2 years, 4 months ago
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html#considerations
+upvoted 1 times
+AshishRocks 2 years, 6 months ago
+Multi-Attach does not support Provisioned IOPS SSD (io2) volumes. Multi-Attach is currently available only for General Purpose SSD (gp2),
+Throughput Optimized HDD (st1), and Cold HDD (sc1) EBS volumes.
+upvoted 1 times
+Abrar2022 2 years, 6 months ago
+Multi-Attach is supported exclusively on Provisioned IOPS SSD (io1 or io2) volumes.
+upvoted 2 times
+elmogy 2 years, 6 months ago
+Selected Answer: C
+only io1/io2 supports Multi-Attach
+upvoted 4 times
+Uzi_m 2 years, 6 months ago
+Multi-Attach is supported for certain EBS volume types, including io1, io2, gp3, st1, and sc1 volumes.
+upvoted 1 times
+Kp88 2 years, 4 months ago
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html#considerations
+upvoted 2 times
+examtopictempacc 2 years, 6 months ago
+Selected Answer: C
+only io1/io2 supports Multi-Attach
+upvoted 4 times
+VIad 2 years, 6 months ago
+Selected Answer: A
+Option D suggests using General Purpose SSD (gp2) EBS volumes with Amazon EBS Multi-Attach. While gp2 volumes support multi-attach, gp3
+volumes offer a more cost-effective solution with enhanced performance characteristics.
+upvoted 1 times
+VIad 2 years, 6 months ago
+I'm sorry :
+Multi-Attach enabled volumes can be attached to up to 16 instances built on the Nitro System that are in the same Availability Zone. Multi-Attach is
+supported exclusively on Provisioned IOPS SSD (io1 or io2) volumes.
+upvoted 3 times
+VIad 2 years, 6 months ago
+The answer is C:
+upvoted 2 times
+EA100 2 years, 6 months ago
+Answer - C
+C. Use Provisioned IOPS SSD (io2) EBS volumes with Amazon Elastic Block Store (Amazon EBS) Multi-Attach.
+While both option C and option D can support Amazon EBS Multi-Attach, using Provisioned IOPS SSD (io2) EBS volumes provides higher
+performance and lower latency compared to General Purpose SSD (gp2) volumes. This makes io2 volumes better suited for demanding and mission-
+critical applications where performance is crucial.
+If the goal is to achieve higher application availability and ensure optimal performance, using Provisioned IOPS SSD (io2) EBS volumes with Multi-
+Attach will provide the best results.
+upvoted 3 times

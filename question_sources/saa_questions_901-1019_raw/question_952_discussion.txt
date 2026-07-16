@@ -1,0 +1,122 @@
+A company wants to move its application to a serverless solution. The serverless solution needs to analyze existing data and new
+data by using SQL. The company stores the data in an Amazon S3 bucket. The data must be encrypted at rest and replicated to a
+different AWS Region.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create a new S3 bucket that uses server-side encryption with AWS KMS multi-Region keys (SSE-KMS). Configure Cross-
+Region Replication (CRR). Load the data into the new S3 bucket. Use Amazon Athena to query the data.
+B. Create a new S3 bucket that uses server-side encryption with Amazon S3 managed keys (SSE-S3). Configure Cross-Region
+Replication (CRR). Load the data into the new S3 bucket. Use Amazon RDS to query the data.
+C. Configure Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with Amazon S3 managed
+keys (SSE-S3). Use Amazon Athena to query the data. Most Voted
+D. Configure S3 Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with AWS KMS multi-
+Region keys (SSE-KMS). Use Amazon RDS to query the data.
+Comments
+LeonSauveterre Highly Voted 1 year, 5 months ago
+Selected Answer: C
+A - A new bucket + KMS multi-Region keys = Too much operational oversight.
+B - RDS is not a serverless solution
+C - By using the existing S3 bucket, you eliminate the need to create a new bucket and load data into it.
+D - Athena supports querying using SQL, so that rules out RDS.
+upvoted 9 times
+dhewa Highly Voted 1 year, 9 months ago
+Selected Answer: A
+A wins because it gives us encryption with AWS KMS multi-Region keys
+upvoted 7 times
+46a8566 Most Recent 4 months, 3 weeks ago
+Selected Answer: A
+S3 with SSE-KMS multi-Region keys + CRR + Athena meets all requirements with least overhead.
+upvoted 1 times
+Catlyn 5 months, 3 weeks ago
+Selected Answer: C
+corrfect
+upvoted 1 times
+ln2718 9 months, 2 weeks ago
+Selected Answer: C
+Chat AI -
+Answer C - Configure CRR on the existing S3 bucket with SSE-S3 and use Amazon Athena to query the data.
+Serverless SQL: Athena is fully serverless and queries data directly in S3.
+Encryption at rest: SSE-S3 (S3-managed keys) satisfies encryption with zero KMS key management.
+Cross-Region Replication: CRR works seamlessly with SSE-S3.
+Least overhead: No new bucket, no data reload/migration, no KMS key creation/policies, and no databases to manage (unlike RDS).
+Correct Answer: C
+Community vote distribution
+A (50%)
+C (50%)
+upvoted 2 times
+dce7e4b 1 year ago
+Selected Answer: A
+I would go on option A.
+Concidering this article: https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-config-for-kms-objects.html
+If we just activate the replication on the existing bucket, the unencrypted data will by replicate unencrypted.
+If there was an option for creating a new bucket with crr, sse-s3 AND Athena I would have chosen this one.
+But the nearest solution is Wright en with rds instead of Athena. So go for A
+upvoted 2 times
+Ell89 1 year, 2 months ago
+Selected Answer: A
+A is correct.
+everyone. voting for c i think isnt paying attention to the part where you need the data replicated to a different region. how are you meant to
+replicate it without a new bucket?
+everyone saying use the existing bucket.... urm what? how can you replicate into the same bucket thats in the same region and expect it to be in a
+different region?
+clearly A.
+upvoted 2 times
+tch 1 year, 2 months ago
+Selected Answer: C
+we don't need to create a policy specifically for Amazon S3-managed keys (SSE-S3) to encrypt objects in your S3 bucket... should be more easy and
+LEAST operational overhead
+upvoted 2 times
+yangbo 1 year, 3 months ago
+Selected Answer: C
+The default encryption for S3 is SSE-S3, and cross-region replication can be enabled normally.
+upvoted 2 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: A
+Amazon S3 managed keys is region specific, for CRR, we must use KMS mult-region keys.
+https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html
+upvoted 5 times
+FlyingHawk 1 year, 4 months ago
+I checked AI, ChatGPT, Gemini , Claudi AI and DeepSeek think A is correct, but meta AI thinks C is correct. SSE-S3 is the default encryption, it will be
+least operational effort for sure. but with SSE-S3 (server-side encryption with S3-managed keys), AWS manages the encryption keys, and each
+region will use its own region-specific encryption key.
+There is no shared key between the source and destination buckets. AWS handles encryption and decryption seamlessly in each region. This
+approach is operationally simple but lacks control and consistency for encryption keys across regions.
+upvoted 2 times
+trinh_le 1 year, 5 months ago
+Selected Answer: C
+It’s not require highly sensitive data or complexity gain permission. So it should use sse-s3 is suitable
+upvoted 2 times
+Anyio 1 year, 5 months ago
+Selected Answer: C
+The correct answer is C.
+Explanation:
+Option A: Incorrect. Although using AWS KMS multi-Region keys (SSE-KMS) and Amazon Athena to query the data meet the security and SQL
+querying requirements, creating a new S3 bucket and handling data migration increases operational overhead unnecessarily if the data already exists
+Option C: Correct. Configuring Cross-Region Replication (CRR) on the existing S3 bucket makes efficient use of existing infrastructure and leverages
+server-side encryption with Amazon S3 managed keys (SSE-S3) to ensure data encryption at rest with lower operational complexity and costs
+compared to using KMS keys. Using Amazon Athena allows querying the data directly in S3, offering serverless and flexible SQL querying capabilities
+with minimal setup and operational overhead.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Selected Answer: C
+I will chose Option C for the following reasons:
+#1: Least operational overhead: Choosing "SSE-S3" over "SSE-KMS" minimizes operational overhead as it automatically manages encryption keys
+within S3, eliminating the need for additional KMS key management.
+#2: Existing S3 bucket: Reusing the existing bucket avoids the extra step of creating a new one and migrating data.
+#3: Athena for querying: Athena is a serverless solution ideal for querying large datasets stored in S3, aligning with the requirement for a serverless
+architecture.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+For Option A: While using KMS multi-region keys provides more control, it adds extra management complexity compared to SSE-S3.
+upvoted 2 times
+Abdullah2004 1 year, 9 months ago
+Selected Answer: A
+A is correct
+upvoted 3 times
+komorebi 1 year, 10 months ago
+Selected Answer: A
+Answer is A
+upvoted 4 times
+JunsK1e 1 year, 10 months ago
+Selected Answer: C
+C is correct because it needs to replicate to different AWS region
+upvoted 2 times

@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 901,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在將其工作負載遷移到 AWS。該公司在 SQL Server 執行個體上執行的本地關係資料庫中擁有敏感和關鍵資料。該公司希望使用 AWS 雲端來提高安全性並減少資料庫的營運開銷。哪種解決方案可以滿足這些要求？",
+        "en": "A company is migrating its workloads to AWS. The company has sensitive and critical data in on-premises relational databases that run on SQL Server instances. The company wants to use the AWS Cloud to increase security and reduce operational overhead for the databases. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將資料庫移轉到 Amazon EC2 執行個體。使用 AWS Key Management Service (AWS KMS) AWS 託管金鑰進行加密。",
+          "en": "Migrate the databases to Amazon EC2 instances. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption."
+        },
+        "B": {
+          "zh": "將資料庫移轉到多可用區 Amazon RDS for SQL Server 資料庫執行個體。使用 AWS Key Management Service (AWS KMS) AWS 託管金鑰進行加密。",
+          "en": "Migrate the databases to a Multi-AZ Amazon RDS for SQL Server DB instance. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption."
+        },
+        "C": {
+          "zh": "將資料移轉到 Amazon S3 儲存桶。使用 Amazon Macie 確保資料安全。",
+          "en": "Migrate the data to an Amazon S3 bucket. Use Amazon Macie to ensure data security."
+        },
+        "D": {
+          "zh": "將資料庫移轉到 Amazon DynamoDB 表。使用 Amazon CloudWatch Logs 確保資料安全。",
+          "en": "Migrate the databases to an Amazon DynamoDB table. Use Amazon CloudWatch Logs to ensure data security."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然可以在 EC2 執行個體上執行 SQL Server 並使用 KMS 進行加密，但這種方法會增加營運開銷，因為它需要手動管理 EC2 執行個體的作業系統和資料庫軟體的安裝和維護。 「減少營運開銷」不符合問題的要求。",
+          "en": "Incorrect. Although it is possible to run SQL Server on an EC2 instance and use KMS for encryption, this method increases operational overhead because it requires manual management of the installation and maintenance of the EC2 instance's operating system and database software. \"Reducing operational overhead\" does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "正確。Amazon RDS 是一項託管服務，可減少營運開銷並支援多可用區部署以提高可用性。 RDS支援KMS進行資料加密，滿足問題中的安全需求。完全滿足「增加安全性」和「降低營運開銷」的問題要求。",
+          "en": "Correct. Amazon RDS is a managed service that reduces operational overhead and supports Multi-AZ deployment to improve availability. RDS supports KMS for data encryption, which meets the security requirements in the question. It fully meets the question requirements of \"increasing security\" and \"reducing operational overhead\"."
+        },
+        "C": {
+          "zh": "錯誤。Amazon S3 是一種物件儲存服務，不適合用於儲存關聯式資料庫資料。 Amazon Macie 主要用於識別敏感數據，而不是直接管理資料庫的安全性。 「遷移關係型資料庫」不符合問題的要求。",
+          "en": "Incorrect. Amazon S3 is an object storage service and is not suitable for storing relational database data. Amazon Macie is primarily used to identify sensitive data rather than directly manage the security of the database. \"Migrating a relational database\" does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。Amazon DynamoDB 是一項 NoSQL 資料庫服務，不適用於移轉 SQL Server 關聯式資料庫。 CloudWatch Logs用於監控和日誌記錄，不直接提供資料安全功能。 「遷移關係型資料庫」不符合問題的要求。",
+          "en": "Incorrect. Amazon DynamoDB is a NoSQL database service and is not suitable for migrating SQL Server relational databases. CloudWatch Logs is used for monitoring and logging and does not directly provide data security functions. \"Migrating a relational database\" does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 將資料庫移轉到多可用區 Amazon RDS for SQL Server 資料庫執行個體。使用 AWS Key Management Service (AWS KMS) AWS 託管金鑰進行加密。",
+        "en": "B. Migrate the databases to a Multi-AZ Amazon RDS for SQL Server DB instance. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：Amazon RDS 是一項託管服務，可減少營運開銷並支援多可用區部署以提高可用性。 RDS支援KMS進行資料加密，滿足問題中的安全需求。完全滿足「增加安全性」和「降低營運開銷」的問題要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon RDS is a managed service that reduces operational overhead and supports Multi-AZ deployment to improve availability. RDS supports KMS for data encryption, which meets the security requirements in the question. It fully meets the question requirements of \"increasing security\" and \"reducing operational overhead\"."
+      }
+    },
+    {
+      "question_no": 902,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司想要將應用程式遷移到 AWS。該公司希望提高該應用程式的當前可用性。該公司希望在應用程式架構中使用 AWS WAF。哪種解決方案可以滿足這些要求？",
+        "en": "A company wants to migrate an application to AWS. The company wants to increase the application's current availability. The company wants to use AWS WAF in the application's architecture. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 Auto Scaling 群組，其中包含跨兩個可用區託管應用程式的多個 Amazon EC2 執行個體。配置應用程式負載平衡器 (ALB) 並將 Auto Scaling 群組設定為目標。將WAF連接到ALB。",
+          "en": "Create an Auto Scaling group that contains multiple Amazon EC2 instances that host the application across two Availability Zones. Configure an Application Load Balancer (ALB) and set the Auto Scaling group as the target. Connect a WAF to the ALB."
+        },
+        "B": {
+          "zh": "建立一個叢集放置群組，其中包含託管應用程式的多個 Amazon EC2 執行個體。配置應用程式負載平衡器並將 EC2 執行個體設定為目標。將 WAF 連接到置放群組。",
+          "en": "Create a cluster placement group that contains multiple Amazon EC2 instances that hosts the application. Configure an Application Load Balancer and set the EC2 instances as the targets. Connect a WAF to the placement group."
+        },
+        "C": {
+          "zh": "建立兩個 Amazon EC2 實例，跨兩個可用區託管應用程式。將 EC2 執行個體配置為應用程式負載平衡器 (ALB) 的目標。將WAF連接到ALB。",
+          "en": "Create two Amazon EC2 instances that host the application across two Availability Zones. Configure the EC2 instances as the targets of an Application Load Balancer (ALB). Connect a WAF to the ALB."
+        },
+        "D": {
+          "zh": "建立一個 Auto Scaling 群組，其中包含跨兩個可用區託管應用程式的多個 Amazon EC2 執行個體。配置應用程式負載平衡器 (ALB) 並將 Auto Scaling 群組設定為目標。將 WAF 連接到 Auto Scaling 群組。",
+          "en": "Create an Auto Scaling group that contains multiple Amazon EC2 instances that host the application across two Availability Zones. Configure an Application Load Balancer (ALB) and set the Auto Scaling group as the target. Connect a WAF to the Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。此選項支援透過 Auto Scaling 群組進行動態擴展，並跨兩個可用區部署 EC2 執行個體以提高可用性。正確：使用應用程式負載平衡器分配流量並確保高效能和可靠性。正確：將 WAF 連接到 ALB 是保護應用程式的最佳實踐。",
+          "en": "Correct. This option enables dynamic scaling through Auto Scaling groups and deploys EC2 instances across two Availability Zones for increased availability. Correct: Use Application Load Balancer to distribute traffic and ensure high performance and reliability. Correct: Connecting a WAF to an ALB is a best practice for protecting your application."
+        },
+        "B": {
+          "zh": "錯誤。叢集放置組主要用於低延遲、高效能運算，而非提高可用性。錯誤：此選項不會跨多個可用區部署資源來滿足高可用性要求。正確：WAF可以接取ALB，但是該選項的架構設計不符合題目要求。",
+          "en": "Incorrect. Cluster placement group is mainly used for low-latency, high-performance computing, rather than improving availability. Error: This option does not deploy resources across multiple Availability Zones to meet high availability requirements. Correct: WAF can be connected to ALB, but the architectural design of this option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。跨兩個可用區部署 EC2 執行個體可以提高可用性。錯誤：僅使用兩個EC2實例不具備動態擴展以滿足需求變化的能力。正確：將 WAF 連接到 ALB 是保護應用程式的最佳實踐。",
+          "en": "Incorrect. Deploying EC2 instances across two Availability Zones can improve availability. Error: Using only two EC2 instances does not have the ability to dynamically expand to meet changes in demand. Correct: Connecting a WAF to an ALB is a best practice for protecting your application."
+        },
+        "D": {
+          "zh": "錯誤。跨兩個可用區的 Auto Scaling 群組和部署可以提高可用性。錯誤：WAF 無法直接連接到 Auto Scaling 群組，WAF 只能連接到 ALB。",
+          "en": "Incorrect. Auto Scaling groups and deployments across two Availability Zones can improve availability. Error: WAF cannot connect directly to Auto Scaling groups, WAF can only connect to ALB."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立一個 Auto Scaling 群組，其中包含跨兩個可用區託管應用程式的多個 Amazon EC2 執行個體。配置應用程式負載平衡器 (ALB) 並將 Auto Scaling 群組設定為目標。將WAF連接到ALB。",
+        "en": "A. Create an Auto Scaling group that contains multiple Amazon EC2 instances that host the application across two Availability Zones. Configure an Application Load Balancer (ALB) and set the Auto Scaling group as the target. Connect a WAF to the ALB."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：此選項支援透過 Auto Scaling 群組進行動態擴展，並跨兩個可用區部署 EC2 執行個體以提高可用性。正確：使用應用程式負載平衡器分配流量並確保高效能和可靠性。正確：將 WAF 連接到 ALB 是保護應用程式的最佳實踐。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This option enables dynamic scaling through Auto Scaling groups and deploys EC2 instances across two Availability Zones for increased availability. Correct: Use Application Load Balancer to distribute traffic and ensure high performance and reliability. Correct: Connecting a WAF to an ALB is a best practice for protecting your application."
+      }
+    },
+    {
+      "question_no": 903,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司管理 Amazon S3 儲存桶中的資料湖，可供眾多應用程式存取。 S3 儲存桶包含每個應用程式的唯一前綴。該公司希望將每個應用程式限制為其特定的前綴，並對每個前綴下的物件進行精細控制。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company manages a data lake in an Amazon S3 bucket that numerous applications access. The S3 bucket contains a unique prefix for each application. The company wants to restrict each application to its specific prefix and to have granular control of the objects under each prefix. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "為每個應用程式建立專用 S3 存取點和存取點策略。",
+          "en": "Create dedicated S3 access points and access point policies for each application."
+        },
+        "B": {
+          "zh": "建立 S3 批次操作作業以設定 S3 儲存桶中每個物件的 ACL 權限。",
+          "en": "Create an S3 Batch Operations job to set the ACL permissions for each object in the S3 bucket."
+        },
+        "C": {
+          "zh": "將 S3 儲存桶中的物件複製到每個應用程式的新 S3 儲存桶。按前綴建立複製規則。",
+          "en": "Replicate the objects in the S3 bucket to new S3 buckets for each application. Create replication rules by prefix."
+        },
+        "D": {
+          "zh": "將 S3 儲存桶中的物件複製到每個應用程式的新 S3 儲存桶。為每個應用程式建立專用的 S3 存取點。",
+          "en": "Replicate the objects in the S3 bucket to new S3 buckets for each application. Create dedicated S3 access points for each application."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 存取點允許為每個應用程式建立獨立的存取點，並透過存取點策略實施基於前綴的權限管理。這種欄可以直接限制應用程式對特定前綴的訪問，同時減少操作開銷。",
+          "en": "Correct. S3 Access Points allow the creation of independent access points for each application and implement prefix-based permission management through Access Point Policies. This kind of bar can directly restrict an application's access to a specific prefix while reducing operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。S3批次作業適合批次處理對象，但ACL權限管理是基於對象的，而暢通的權限控制是基於前綴的。另外，ACL管理更加複雜，需要更大的營運開銷。",
+          "en": "Incorrect. S3 Batch Operations is suitable for batch processing objects, but ACL permission management is based on objects, and unblocked permission control is based on prefixes. In addition, ACL management is more complex and requires greater operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。將每個前綴複製到單獨的儲存桶中會重複數據，增加儲存成本，並且需要許多複製規則，從而產生不必要的操作開銷。",
+          "en": "Incorrect. Replicating each prefix into a separate bucket duplicates data, increases storage cost, and requires many replication rules, creating unnecessary operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。將重複的目標儲存桶與存取點結合可增加儲存、複製和策略管理；現有儲存桶上的專用存取點更簡單。",
+          "en": "Incorrect. Combining duplicate destination buckets with access points adds storage, replication, and policy management; dedicated access points on the existing bucket are simpler."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 為每個應用程式建立專用 S3 存取點和存取點策略。",
+        "en": "A. Create dedicated S3 access points and access point policies for each application."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (85%)； B (15%)。熱門討論與考點摘要：S3 存取點允許為每個應用程式建立獨立的存取點，並透過存取點策略實施基於前綴的權限管理。這種欄可以直接限制應用程式對特定前綴的訪問，同時減少操作開銷。",
+        "en": "Community vote as displayed: A (85%); B (15%). Popular discussion and key point summary: S3 Access Points allow the creation of independent access points for each application and implement prefix-based permission management through Access Point Policies. This kind of bar can directly restrict an application's access to a specific prefix while reducing operational overhead."
+      }
+    },
+    {
+      "question_no": 904,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個應用程序，客戶可以使用該應用程式將圖像上傳到 Amazon S3 儲存桶。每天晚上，該公司都會啟動一個 Amazon EC2 Spot 佇列來處理該公司當天收到的所有影像。每個影像的處理需要 2 分鐘，需要 512 MB 記憶體。解決方案架構師需要更改應用程式以在上傳圖像時處理圖像。哪一種改變能夠最經濟有效地滿足這些要求？",
+        "en": "A company has an application that customers use to upload images to an Amazon S3 bucket. Each night, the company launches an Amazon EC2 Spot Fleet that processes all the images that the company received that day. The processing for each image takes 2 minutes and requires 512 MB of memory. A solutions architect needs to change the application to process the images when the images are uploaded. Which change will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 S3 事件通知將包含圖像詳細資訊的訊息寫入 Amazon Simple Queue Service (Amazon SQS) 佇列。配置 AWS Lambda 函數以從佇列讀取訊息並處理影像。",
+          "en": "Use S3 Event Notifications to write a message with image details to an Amazon Simple Queue Service (Amazon SQS) queue. Configure an AWS Lambda function to read the messages from the queue and to process the images."
+        },
+        "B": {
+          "zh": "使用 S3 事件通知將包含圖像詳細資訊的訊息寫入 Amazon Simple Queue Service (Amazon SQS) 佇列。配置 EC2 預留執行個體以從佇列讀取訊息並處理影像。",
+          "en": "Use S3 Event Notifications to write a message with image details to an Amazon Simple Queue Service (Amazon SQS) queue. Configure an EC2 Reserved Instance to read the messages from the queue and to process the images."
+        },
+        "C": {
+          "zh": "使用 S3 事件通知將包含影像詳細資訊的訊息發佈到 Amazon Simple Notification Service (Amazon SNS) 主題。在 Amazon Elastic Container Service (Amazon ECS) 中配置容器執行個體以訂閱主題並處理映像。",
+          "en": "Use S3 Event Notifications to publish a message with image details to an Amazon Simple Notification Service (Amazon SNS) topic. Configure a container instance in Amazon Elastic Container Service (Amazon ECS) to subscribe to the topic and to process the images."
+        },
+        "D": {
+          "zh": "使用 S3 事件通知將包含影像詳細資訊的訊息發佈到 Amazon Simple Notification Service (Amazon SNS) 主題。配置 AWS Elastic Beanstalk 應用程式以訂閱主題並處理映像。",
+          "en": "Use S3 Event Notifications to publish a message with image details to an Amazon Simple Notification Service (Amazon SNS) topic. Configure an AWS Elastic Beanstalk application to subscribe to the topic and to process the images."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 事件通知可以觸發訊息寫入 SQS 佇列。 AWS Lambda 可以無伺服器處理這些訊息，而 Lambda 函數的隨選計費模式非常適合耗時的處理任務（例如 2 分鐘）。經濟高效：Lambda 函數不需要預先配置資源，512 MB 記憶體需求完全在 Lambda 支援範圍內。",
+          "en": "Correct. S3 Event Notifications can trigger messages to be written to the SQS queue. AWS Lambda can process these messages serverless, and the on-demand billing mode of Lambda functions is very suitable for time-consuming processing tasks (such as 2 minutes). Cost-effective: Lambda functions do not require pre-configured resources, and the 512 MB memory requirement is fully within the scope of Lambda support."
+        },
+        "B": {
+          "zh": "錯誤。雖然 EC2 預留執行個體可以處理任務，但它需要預先配置資源並支付固定費用，即使沒有任務運行，也會產生成本。不經濟：EC2 預留實例比 Lambda 更昂貴且管理更複雜。",
+          "en": "Incorrect. While EC2 Reserved Instance can handle tasks, it requires provisioning resources and paying a fixed fee, which incurs costs even when no tasks are running. Not cost-effective: EC2 Reserved Instance is more expensive and more complex to manage than Lambda."
+        },
+        "C": {
+          "zh": "錯誤。SNS 無法觸發 ECS 容器實例。 ECS 需要額外的任務排程和管理，這增加了複雜性。成本效益較低：ECS容器執行個體需要持續運作或調度，可能會產生額外成本。",
+          "en": "Incorrect. SNS cannot trigger ECS container instances. ECS requires additional task scheduling and management, which increases complexity. Lower cost effectiveness: ECS container instances need to be run or scheduled continuously, which may incur additional costs."
+        },
+        "D": {
+          "zh": "錯誤。Elastic Beanstalk 適合運行複雜的應用程序，但對於簡單的圖像處理任務來說過於複雜且成本高昂。不經濟：Elastic Beanstalk 需要穩定的運作環境，可能會產生額外的成本。",
+          "en": "Incorrect. Elastic Beanstalk is suitable for running complex application programs, but is too complex and costly for simple image processing tasks. Not cost-effective: Elastic Beanstalk requires a stable running environment and may incur additional costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 S3 事件通知將包含圖像詳細資訊的訊息寫入 Amazon Simple Queue Service (Amazon SQS) 佇列。配置 AWS Lambda 函數以從佇列讀取訊息並處理影像。",
+        "en": "A. Use S3 Event Notifications to write a message with image details to an Amazon Simple Queue Service (Amazon SQS) queue. Configure an AWS Lambda function to read the messages from the queue and to process the images."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：S3 事件通知可以觸發訊息寫入 SQS 佇列。 AWS Lambda 可以無伺服器處理這些訊息，而 Lambda 函數的隨選計費模式非常適合耗時的處理任務（例如 2 分鐘）。經濟高效：Lambda 函數不需要預先配置資源，512 MB 記憶體需求完全在 Lambda 支援範圍內。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: S3 Event Notifications can trigger messages to be written to the SQS queue. AWS Lambda can process these messages serverless, and the on-demand billing mode of Lambda functions is very suitable for time-consuming processing tasks (such as 2 minutes). Cost-effective: Lambda functions do not require pre-configured resources, and the 512 MB memory requirement is fully within the scope of Lambda support."
+      }
+    },
+    {
+      "question_no": 905,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望提高其混合應用程式的可用性和效能。該應用程式由託管在不同 AWS 區域的 Amazon EC2 執行個體上的有狀態 TCP 工作負載和本地託管的無狀態基於 UDP 的工作負載組成。解決方案架構師應該採取哪些操作組合來提高可用性和效能？ （選兩個。）",
+        "en": "A company wants to improve the availability and performance of its hybrid application. The application consists of a stateful TCP- based workload hosted on Amazon EC2 instances in different AWS Regions and a stateless UDP-based workload hosted on premises. Which combination of actions should a solutions architect take to improve availability and performance? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Global Accelerator 建立加速器。新增負載平衡器作為端點。",
+          "en": "Create an accelerator using AWS Global Accelerator. Add the load balancers as endpoints."
+        },
+        "B": {
+          "zh": "建立一個 Amazon CloudFront 分配，其來源使用 Amazon Route 53 基於延遲的路由將請求路由到負載平衡器。",
+          "en": "Create an Amazon CloudFront distribution with an origin that uses Amazon Route 53 latency-based routing to route requests to the load balancers."
+        },
+        "C": {
+          "zh": "在每個區域中配置兩個應用程式負載平衡器。第一個將路由到 EC2 端點，第二個將路由到本地端點。",
+          "en": "Configure two Application Load Balancers in each Region. The first will route to the EC2 endpoints, and the second will route to the on-premises endpoints."
+        },
+        "D": {
+          "zh": "在每個區域中設定網路負載平衡器以定址 EC2 終端節點。在每個區域中設定路由到本地端節點的網路負載平衡器。",
+          "en": "Configure a Network Load Balancer in each Region to address the EC2 endpoints. Configure a Network Load Balancer in each Region that routes to the on-premises endpoints."
+        },
+        "E": {
+          "zh": "在每個區域中設定網路負載平衡器以定址 EC2 終端節點。在每個區域中配置路由到本地端點的應用程式負載平衡器。",
+          "en": "Configure a Network Load Balancer in each Region to address the EC2 endpoints. Configure an Application Load Balancer in each Region that routes to the on-premises endpoints."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。 AWS Global Accelerator 可以透過最佳化路由來提高跨區域應用程式的效能和可用性。使用負載平衡器作為端點支援跨區域流量管理。",
+          "en": "Correct. . AWS Global Accelerator can improve the performance and availability of cross-region applications by optimizing routing. Using load balancers as endpoints supports cross-region traffic management."
+        },
+        "B": {
+          "zh": "錯誤。。 CloudFront主要用於內容分發（CDN），問題中的應用程式基於TCP和UDP工作負載。 CloudFront 不適合處理此類流量。",
+          "en": "Incorrect. . CloudFront is mainly used for content distribution (CDN), and the application in the question is based on TCP and UDP workloads. CloudFront is not suitable for handling this type of traffic."
+        },
+        "C": {
+          "zh": "錯誤。。 Application Load Balancer主要用於HTTP/HTTPS流量，而問題中的工作負載是基於TCP和UDP的，因此不適合使用ALB。",
+          "en": "Incorrect. . Application Load Balancer is mainly used for HTTP/HTTPS traffic, and the workload in the question is based on TCP and UDP, so it is not appropriate to use ALB."
+        },
+        "D": {
+          "zh": "正確。。網路負載平衡器支援 TCP 和 UDP 流量，適合處理相關工作負載。配置 NLB 可以提高可用性和效能。",
+          "en": "Correct. . Network Load Balancer supports TCP and UDP traffic and is suitable for handling the workload in question. Configuring NLB can improve availability and performance."
+        },
+        "E": {
+          "zh": "錯誤。。雖然 NLB 適用於處理 EC2 端點的 TCP/UDP 流量，但 ALB 不適合處理本地端點的 TCP/UDP 流量。",
+          "en": "Incorrect. . While NLB is suitable for handling TCP/UDP traffic for EC2 endpoints, ALB is not suitable for handling TCP/UDP traffic for local endpoints."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Global Accelerator 建立加速器。新增負載平衡器作為端點。；D. 在每個區域中設定網路負載平衡器以定址 EC2 終端節點。在每個區域中設定路由到本地端節點的網路負載平衡器。",
+        "en": "A. Create an accelerator using AWS Global Accelerator. Add the load balancers as endpoints.; D. Configure a Network Load Balancer in each Region to address the EC2 endpoints. Configure a Network Load Balancer in each Region that routes to the on-premises endpoints."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AD (100%)。熱門討論與考點摘要：。 AWS Global Accelerator 可以透過最佳化路由來提高跨區域應用程式的效能和可用性。使用負載平衡器作為端點支援跨區域流量管理。；。網路負載平衡器支援 TCP 和 UDP 流量，適合處理相關工作負載。配置 NLB 可以提高可用性和效能。",
+        "en": "Community vote as displayed: AD (100%). Popular discussion and key point summary: . AWS Global Accelerator can improve the performance and availability of cross-region applications by optimizing routing. Using load balancers as endpoints supports cross-region traffic management.; . Network Load Balancer supports TCP and UDP traffic and is suitable for handling the workload in question. Configuring NLB can improve availability and performance."
+      }
+    },
+    {
+      "question_no": 906,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon EC2 執行個體和 Amazon Elastic Block Store (Amazon EBS) 上執行自行管理的 Microsoft SQL Server。每日為 EBS 卷拍攝快照。最近，在執行刪除所有過期 EBS 快照的快照清理腳本時，公司的所有 EBS 快照都被意外刪除。解決方案架構師需要更新架構以防止資料遺失，而無需無限期保留 EBS 快照。哪種解決方案能夠以最少的開發工作滿足這些要求？",
+        "en": "A company runs a self-managed Microsoft SQL Server on Amazon EC2 instances and Amazon Elastic Block Store (Amazon EBS). Daily snapshots are taken of the EBS volumes. Recently, all the company’s EBS snapshots were accidentally deleted while running a snapshot cleaning script that deletes all expired EBS snapshots. A solutions architect needs to update the architecture to prevent data loss without retaining EBS snapshots indefinitely. Which solution will meet these requirements with the LEAST development effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "變更使用者的 IAM 政策以拒絕 EBS 快照刪除。",
+          "en": "Change the IAM policy of the user to deny EBS snapshot deletion."
+        },
+        "B": {
+          "zh": "每天完成快照後將 EBS 快照複製到另一個 AWS 區域。",
+          "en": "Copy the EBS snapshots to another AWS Region after completing the snapshots daily."
+        },
+        "C": {
+          "zh": "在回收站中建立 7 天的 EBS 快照保留規則，並將該規則套用至所有快照。",
+          "en": "Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots."
+        },
+        "D": {
+          "zh": "將 EBS 快照複製到 Amazon S3 標準-不頻繁存取 (S3 標準-IA)。",
+          "en": "Copy EBS snapshots to Amazon S3 Standard-Infrequent Access (S3 Standard-IA)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：雖然更改 IAM 策略可以阻止使用者刪除快照，但這並不能解決問題，因為該腳本可能由具有更高權限的使用者或角色運行。此外，IAM策略的修改需要精確控制，並且可能會影響其他操作。",
+          "en": "Incorrect. Analysis: Although changing the IAM policy can prevent users from deleting snapshots, this does not solve the problem because the script may be run by a user or role with higher permissions. In addition, modifications to IAM policies require precise control and may affect other operations."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：跨區域複製可以提供額外的容災保護，但需要額外的開發工作來實現自動化，並且無法解決快照被刪除的問題，因為刪除操作可能會影響所有區域的快照。",
+          "en": "Incorrect. Performance analysis: Cross-region replication can provide additional disaster recovery protection, but it requires additional development work to implement automation, and cannot solve the problem of snapshots being deleted, because the deletion operation may affect snapshots in all regions."
+        },
+        "C": {
+          "zh": "正確。效能分析：回收站是AWS提供的防止快照誤刪除的功能。透過設定保留規則，可以確保快照在一定時間內不會永久刪除，從而有效防止資料遺失。這個選項是正確的。",
+          "en": "Correct. Performance analysis: Recycle Bin is a function provided by AWS to prevent accidental deletion of snapshots. By setting retention rules, you can ensure that snapshots will not be permanently deleted within a certain period of time, thus effectively preventing data loss. This option is correct."
+        },
+        "D": {
+          "zh": "錯誤。效能分析：將EBS快照複製到S3需要額外的開發工作，在S3中儲存快照的成本可能會更高。此外，此方法並不能直接防止快照被刪除。",
+          "en": "Incorrect. Performance analysis: Copying EBS snapshots to S3 requires additional development work, and the cost of storing snapshots in S3 may be higher. Additionally, this approach does not directly prevent snapshots from being deleted."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在回收站中建立 7 天的 EBS 快照保留規則，並將該規則套用至所有快照。",
+        "en": "C. Create a 7-day EBS snapshot retention rule in Recycle Bin and apply the rule for all snapshots."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：效能分析：回收站是AWS提供的防止快照誤刪除的功能。透過設定保留規則，可以確保快照在一定時間內不會永久刪除，從而有效防止資料遺失。這個選項是正確的。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Performance analysis: Recycle Bin is a function provided by AWS to prevent accidental deletion of snapshots. By setting retention rules, you can ensure that snapshots will not be permanently deleted within a certain period of time, thus effectively preventing data loss. This option is correct."
+      }
+    },
+    {
+      "question_no": 907,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望在測試環境中為其應用程式使用 AWS CloudFormation 堆疊。該公司將 CloudFormation 範本儲存在阻止公共存取的 Amazon S3 儲存桶中。該公司希望根據特定使用者請求授予 CloudFormation 對 S3 儲存桶中範本的存取權限，以建立測試環境。該解決方案必須遵循安全最佳實踐。哪種解決方案可以滿足這些要求？",
+        "en": "A company wants to use an AWS CloudFormation stack for its application in a test environment. The company stores the CloudFormation template in an Amazon S3 bucket that blocks public access. The company wants to grant CloudFormation access to the template in the S3 bucket based on specific user requests to create the test environment. The solution must follow security best practices. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為 Amazon S3 建立網關 VPC 終端節點。配置 CloudFormation 堆疊以使用 S3 物件 URL。",
+          "en": "Create a gateway VPC endpoint for Amazon S3. Configure the CloudFormation stack to use the S3 object URL."
+        },
+        "B": {
+          "zh": "建立一個以 S3 儲存桶作為目標的 Amazon API Gateway REST API。配置 CloudFormation 堆疊以使用 API 網關 URL。",
+          "en": "Create an Amazon API Gateway REST API that has the S3 bucket as the target. Configure the CloudFormation stack to use the API Gateway URL."
+        },
+        "C": {
+          "zh": "為範本物件建立預簽名 URL。配置 CloudFormation 堆疊以使用預簽名 URL。",
+          "en": "Create a presigned URL for the template object. Configure the CloudFormation stack to use the presigned URL."
+        },
+        "D": {
+          "zh": "允許公共存取 S3 儲存桶中的模板物件。測試環境創建完成後，禁止公眾訪問。",
+          "en": "Allow public access to the template object in the S3 bucket. Block the public access after the test environment is created."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然創建VPC節點可以增強安全性，但並不能解決基於使用者請求的存取控制問題。 VPC節點的主要功能是提供有限的訪問，而不是動態控制存取權限。",
+          "en": "Incorrect. Although creating VPC nodes can enhance security, it does not solve the problem of access control based on user requests. The main function of the VPC node is to provide limited access, but not to dynamically control access permissions."
+        },
+        "B": {
+          "zh": "錯誤。使用 API Gateway 來定位 S3 是一種複雜且不必要的解決方法。它增加了額外的管理開銷，並且不符合瘋狂訂單和安全的最佳實踐。",
+          "en": "Incorrect. Using API Gateway to target S3 is a complex and unnecessary workaround. It adds additional management overhead and does not comply with best practices for crazy orders and security."
+        },
+        "C": {
+          "zh": "正確。預先定義 URL 允許暫時存取 S3 對象，並且可以根據使用者請求動態產生。該條帶遵循 AWS 安全最佳實踐，因為它在提供靈活性的同時避免了公共存取。",
+          "en": "Correct. Predefined URLs allow temporary access to S3 objects and can be dynamically generated based on user requests. This strip adheres to AWS security best practices because it avoids public access while providing flexibility."
+        },
+        "D": {
+          "zh": "錯誤。允許公共存取違反了 AWS 安全最佳實踐，甚至臨時公共存取也可能會帶來安全風險。",
+          "en": "Incorrect. Allowing public access violates AWS security best practices and even temporary public access can pose security risks."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 為範本物件建立預簽名 URL。配置 CloudFormation 堆疊以使用預簽名 URL。",
+        "en": "C. Create a presigned URL for the template object. Configure the CloudFormation stack to use the presigned URL."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (71%)； A (29%)。熱門討論與考點摘要：預先定義 URL 允許暫時存取 S3 對象，並且可以根據使用者請求動態產生。該條帶遵循 AWS 安全最佳實踐，因為它在提供靈活性的同時避免了公共存取。",
+        "en": "Community vote as displayed: C (71%); A (29%). Popular discussion and key point summary: Predefined URLs allow temporary access to S3 objects and can be dynamically generated based on user requests. This strip adheres to AWS security best practices because it avoids public access while providing flexibility."
+      }
+    },
+    {
+      "question_no": 908,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有在 AWS Organizations 中的組織中運行的應用程式。該公司外包應用程式的營運支援。公司需要在不影響安全性的情況下為外部支援工程師提供存取權限。外部支援工程師需要存取 AWS 管理控制臺。外部支援工程師也需要作業系統存取公司在私有子網路中執行 Amazon Linux 的 Amazon EC2 執行個體佇列。哪一種解決方案將最安全地滿足這些要求？",
+        "en": "A company has applications that run in an organization in AWS Organizations. The company outsources operational support of the applications. The company needs to provide access for the external support engineers without compromising security. The external support engineers need access to the AWS Management Console. The external support engineers also need operating system access to the company’s fleet ofAmazon EC2 instances that run Amazon Linux in private subnets. Which solution will meet these requirements MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "確認所有實例上均安裝了 AWS Systems Manager 代理程式（SSM 代理程式）。為實例設定檔指派連線到 Systems Manager 所需的策略。使用 AWS IAM Identity Center 為外部支援工程師提供控制臺存取權限。使用 Systems Manager 會話管理器指派所需的權限。",
+          "en": "Confirm that AWS Systems Manager Agent (SSM Agent) is installed on all instances. Assign an instance profile with the necessary policy to connect to Systems Manager. Use AWS IAM Identity Center to provide the external support engineers console access. Use Systems Manager Session Manager to assign the required permissions."
+        },
+        "B": {
+          "zh": "確認所有實例上均安裝了 AWS Systems Manager 代理程式（SSM 代理程式）。為實例設定檔指派連線到 Systems Manager 所需的策略。使用 Systems Manager 會話管理器向外部支援工程師提供每個 AWS 帳戶中的本機 IAM 使用者憑證以進行控制臺存取。",
+          "en": "Confirm that AWS Systems Manager Agent (SSM Agent) is installed on all instances. Assign an instance profile with the necessary policy to connect to Systems Manager. Use Systems Manager Session Manager to provide local IAM user credentials in each AWS account to the external support engineers for console access."
+        },
+        "C": {
+          "zh": "確認所有執行個體都有一個安全性群組，僅允許從外部支援工程師的來源 IP 位址範圍進行 SSH 存取。向外部支援工程師提供每個 AWS 帳戶中的本機 IAM 使用者憑證以進行控制臺存取。為每個外部支援工程師提供一個 SSH 金鑰對以登入應用程式實例。",
+          "en": "Confirm that all instances have a security group that allows SSH access only from the external support engineers’ source IP address ranges. Provide local IAM user credentials in each AWS account to the external support engineers for console access. Provide each external support engineer an SSH key pair to log in to the application instances."
+        },
+        "D": {
+          "zh": "在公有子網路中建立堡壘主機。設定堡壘主機安全群組以僅允許外部工程師的 IP 位址範圍進行存取。確保所有實例都有允許從堡壘主機進行 SSH 存取的安全性群組。為每個外部支援工程師提供一個 SSH 金鑰對以登入應用程式實例。向工程師提供本機帳戶 IAM 使用者憑證以進行控制臺存取。",
+          "en": "Create a bastion host in a public subnet. Set up the bastion host security group to allow access from only the external engineers’ IP address ranges. Ensure that all instances have a security group that allows SSH access from the bastion host. Provide each external support engineer an SSH key pair to log in to the application instances. Provide local account IAM user credentials to the engineers for console access."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。此選項使用 AWS Systems Manager 會話管理器提供對 EC2 執行個體的作業系統訪問，避免直接暴露 SSH 連接埠並遵守安全最佳實務。正確：使用 IAM Identity Center 提供對外部支援專案的控制臺訪問，集中管理使用者身份，並避免建立本機 IAM 使用者的複雜性。正確：確保 SSM 代理程式已安裝並配置必要的權限，以支援透過會話管理器進行安全存取。",
+          "en": "Correct. This option uses AWS Systems Manager Session Manager to provide operating system access to the EC2 instance, avoiding direct exposure of the SSH port and complying with security best practices. Correct: Use IAM Identity Center to provide console access to external support projects, centrally manage user identities, and avoid the complexity of creating local IAM users. Correct: Ensure that the SSM Agent is installed and configured with the necessary permissions to support secure access through Session Manager."
+        },
+        "B": {
+          "zh": "錯誤。儘管使用了會話管理器，但向外部支援專案提供本機 IAM 使用者憑證會增加管理複雜性，且不符合集中式使用者身分管理的最佳實務。錯誤：使用本機 IAM 使用者可能會導致安全性問題，例如憑證外洩和難以撤銷存取。",
+          "en": "Incorrect. Although Session Manager is used, providing local IAM user credentials to external support projects adds administrative complexity and does not comply with best practices for centralized user identity management. Error: The use of local IAM users can lead to security issues, such as compromised credentials and difficulty revoking access."
+        },
+        "C": {
+          "zh": "錯誤。直接暴露SSH埠，即使IP位址範圍受到限制，也會增加潛在的安全風險。錯誤：使用本機 IAM 使用者和 SSH 金鑰會增加管理複雜性，且不符合現代安全最佳實務。",
+          "en": "Incorrect. Directly exposing the SSH port, even if the IP address range is restricted, increases potential security risks. Error: Using local IAM users and SSH keys adds administrative complexity and is inconsistent with modern security best practices."
+        },
+        "D": {
+          "zh": "錯誤。雖然使用堡壘主機是一種傳統方法，但它仍然依賴 SSH 訪問，這增加了安全風險。錯誤：使用本機 IAM 使用者和 SSH 金鑰會增加管理複雜性，且不符合集中管理使用者身分的最佳實務。",
+          "en": "Incorrect. Although using a bastion host is a traditional method, it still relies on SSH access, which increases security risks. Error: The use of local IAM users and SSH keys increases management complexity and does not comply with best practices for centrally managing user identities."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 確認所有實例上均安裝了 AWS Systems Manager 代理程式（SSM 代理程式）。為實例設定檔指派連線到 Systems Manager 所需的策略。使用 AWS IAM Identity Center 為外部支援工程師提供控制臺存取權限。使用 Systems Manager 會話管理器指派所需的權限。",
+        "en": "A. Confirm that AWS Systems Manager Agent (SSM Agent) is installed on all instances. Assign an instance profile with the necessary policy to connect to Systems Manager. Use AWS IAM Identity Center to provide the external support engineers console access. Use Systems Manager Session Manager to assign the required permissions."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：此選項使用 AWS Systems Manager 會話管理器提供對 EC2 執行個體的作業系統訪問，避免直接暴露 SSH 連接埠並遵守安全最佳實務。正確：使用 IAM Identity Center 提供對外部支援專案的控制臺訪問，集中管理使用者身份，並避免建立本機 IAM 使用者的複雜性。正確：確保 SSM 代理程式已安裝並配置必要的權限，以支援透過會話管理器進行安全存取。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This option uses AWS Systems Manager Session Manager to provide operating system access to the EC2 instance, avoiding direct exposure of the SSH port and complying with security best practices. Correct: Use IAM Identity Center to provide console access to external support projects, centrally manage user identities, and avoid the complexity of creating local IAM users. Correct: Ensure that the SSM Agent is installed and configured with the necessary permissions to support secure access through Session Manager."
+      }
+    },
+    {
+      "question_no": 909,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon RDS for PostgreSQL 在 us-east-1 區域運行其應用程式。該公司還使用機器學習 (ML) 模型根據近乎即時的報告來預測年收入。這些報告是使用相同的 RDS for PostgreSQL 資料庫產生的。資料庫效能在工作時間內會降低。公司需要提高資料庫效能。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company uses Amazon RDS for PostgreSQL to run its applications in the us-east-1 Region. The company also uses machine learning (ML) models to forecast annual revenue based on near real-time reports. The reports are generated by using the same RDS for PostgreSQL database. The database performance slows during business hours. The company needs to improve database performance. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立跨區域唯讀副本。配置要從唯讀副本產生的報告。",
+          "en": "Create a cross-Region read replica. Configure the reports to be generated from the read replica."
+        },
+        "B": {
+          "zh": "啟動 RDS for PostgreSQL 的多可用區資料庫執行個體部署。配置從備用資料庫產生的報告。",
+          "en": "Activate Multi-AZ DB instance deployment for RDS for PostgreSQL. Configure the reports to be generated from the standby database."
+        },
+        "C": {
+          "zh": "使用 AWS Data Migration Service (AWS DMS) 將資料邏輯複製到新資料庫。配置要從新資料庫產生的報告。",
+          "en": "Use AWS Data Migration Service (AWS DMS) to logically replicate data to a new database. Configure the reports to be generated from the new database."
+        },
+        "D": {
+          "zh": "在 us-east-1 中建立唯讀副本。配置要從唯讀副本產生的報告。",
+          "en": "Create a read replica in us-east-1. Configure the reports to be generated from the read replica."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：跨地域唯讀副本可以分擔讀取負載，但主要用於跨地域容災或跨地域存取場景，並不能解決同地域的效能問題。成本分析：跨地域的唯讀副本會產生額外的跨地域資料傳輸成本，成本相對較高。評論：這個選項不符合「最具成本效益的類固醇」的要求。",
+          "en": "Incorrect. Performance analysis: Cross-region read replicas can share the read load, but it is mainly used in cross-region disaster recovery or cross-region access scenarios, and does not solve performance problems in the same region. Cost analysis: Cross-region read replicas will incur additional cross-region data transmission costs, which is relatively expensive. Comment: This option does not meet the requirements of \"most cost effective steroid\"."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：多可用區主要用於可用性和故障轉移。備庫是同步複製的，不能用於讀取操作。成本分析：多AZ會增加成本，但不能解決效能問題。該選項不符合要求。",
+          "en": "Incorrect. Performance analysis: Multi-AZ is mainly used for availability and failover. The standby database is synchronously replicated and cannot be used for read operations. Cost analysis: Multi-AZ will increase the cost, but it cannot solve the performance problem. This option does not meet the requirements."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：AWS DMS 可用於資料複製，但設定和維護邏輯複製很複雜，並且需要額外的資料庫實例。成本分析：需要額外的資料庫執行個體和DMS服務費用，成本較高。評論：這個選項不符合「最具成本效益的類固醇」的要求。",
+          "en": "Incorrect. Performance analysis: AWS DMS can be used for data replication, but setting up and maintaining logical replication is complex and requires additional database instances. Cost analysis: Additional database instances and DMS service fees are required, and the cost is relatively high. Comment: This option does not meet the requirements of \"most cost effective steroid\"."
+        },
+        "D": {
+          "zh": "正確。效能分析：唯讀副本可以分擔讀取負載，適合報表產生場景。成本分析：唯讀副本的成本相對較低，且不需要額外的複雜配置。此選項滿足「最具成本效益的類固醇」的要求。",
+          "en": "Correct. Performance analysis: The read replica can share the read load and is suitable for report generation scenarios. Cost analysis: The cost of read replicas is relatively low, and no additional complex configuration is required. This option meets the requirements for \"most cost-effective steroid\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 us-east-1 中建立唯讀副本。配置要從唯讀副本產生的報告。",
+        "en": "D. Create a read replica in us-east-1. Configure the reports to be generated from the read replica."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：效能分析：唯讀副本可以分擔讀取負載，適合報表產生場景。成本分析：唯讀副本的成本相對較低，且不需要額外的複雜配置。此選項滿足「最具成本效益的類固醇」的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Performance analysis: The read replica can share the read load and is suitable for report generation scenarios. Cost analysis: The cost of read replicas is relatively low, and no additional complex configuration is required. This option meets the requirements for \"most cost-effective steroid\"."
+      }
+    },
+    {
+      "question_no": 910,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 雲端中託管其多層公用 Web 應用程式。 Web 應用程式在 Amazon EC2 執行個體上執行，其資料庫在 Amazon RDS 上運行。該公司預計在即將到來的周末假期期間銷售額將大幅成長。解決方案架構師需要建立一個解決方案來分析 Web 應用程式的效能，粒度不超過 2 分鐘。解決方案架構師應該做什麼來滿足這個要求？",
+        "en": "A company hosts its multi-tier, public web application in the AWS Cloud. The web application runs on Amazon EC2 instances, and its database runs on Amazon RDS. The company is anticipating a large increase in sales during an upcoming holiday weekend. A solutions architect needs to build a solution to analyze the performance of the web application with a granularity of no more than 2 minutes. What should the solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Amazon CloudWatch 日誌傳送至 Amazon Redshift。使用 Amazon QuickS ight 執行進一步分析。",
+          "en": "Send Amazon CloudWatch logs to Amazon Redshift. Use Amazon QuickS ght to perform further analysis."
+        },
+        "B": {
+          "zh": "對所有 EC2 執行個體啟用詳細監控。使用 Amazon CloudWatch 指標執行進一步分析。",
+          "en": "Enable detailed monitoring on all EC2 instances. Use Amazon CloudWatch metrics to perform further analysis."
+        },
+        "C": {
+          "zh": "建立 AWS Lambda 函數以從 Amazon CloudWatch Logs 取得 EC2 日誌。使用 Amazon CloudWatch 指標執行進一步分析。",
+          "en": "Create an AWS Lambda function to fetch EC2 logs from Amazon CloudWatch Logs. Use Amazon CloudWatch metrics to perform further analysis."
+        },
+        "D": {
+          "zh": "將 EC2 日誌傳送至 Amazon S3。使用 Amazon Redshift 從 S3 儲存桶取得日誌來處理原始數據，以便使用 Amazon QuickSight 進行進一步分析。",
+          "en": "Send EC2 logs to Amazon S3. Use Amazon Redshift to fetch logs from the S3 bucket to process raw data for further analysis with Amazon QuickSight."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然可以透過將CloudWatch日誌傳送到Redshift並使用QuickSight進行分析來實現資料分析，但這種方法不適合即時效能監控，尤其是在需要2分鐘粒度的情況下。 Redshift更適合處理大量資料而不是即時資料分析。",
+          "en": "Incorrect. Although data analysis can be achieved by sending CloudWatch logs to Redshift and using QuickSight for analysis, this method is not suitable for real-time performance monitoring, especially when the 2-minute granularity is required. Redshift is better suited for processing batch data rather than real-time data analysis."
+        },
+        "B": {
+          "zh": "正確。啟用 EC2 執行個體的詳細監控後，CloudWatch 可以提供更高粒度的指標（每分鐘一次），滿足 2 分鐘粒度要求。 CloudWatch Metrics 是專為即時效能監控而設計的工具。",
+          "en": "Correct. When detailed monitoring of EC2 instances is enabled, CloudWatch can provide higher-granularity metrics (once per minute), meeting the 2-minute granularity requirement. CloudWatch Metrics is a tool specifically designed for real-time performance monitoring."
+        },
+        "C": {
+          "zh": "錯誤。使用 Lambda 函數從 CloudWatch Logs 中提取日誌並對其進行分析是一種複雜且不必要的解決方案。 CloudWatch Metrics 已經可以直接提供所需的效能數據，無需額外的 Lambda 函數。",
+          "en": "Incorrect. Using Lambda functions to extract logs from CloudWatch Logs and analyze them is a complex and unnecessary solution. CloudWatch Metrics can already provide the required performance data directly, without the need for additional Lambda functions."
+        },
+        "D": {
+          "zh": "錯誤。將日誌傳送到 S3 並使用 Redshift 和 QuickSight 進行分析是適合長期資料分析的解決方案，但不適合即時效能監控。這種方法無法滿足2分鐘粒度的要求。",
+          "en": "Incorrect. Sending logs to S3 and analyzing them using Redshift and QuickSight is a solution suitable for long-term data analysis, but not for real-time performance monitoring. This approach cannot meet the requirement of 2 minute granularity."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 對所有 EC2 執行個體啟用詳細監控。使用 Amazon CloudWatch 指標執行進一步分析。",
+        "en": "B. Enable detailed monitoring on all EC2 instances. Use Amazon CloudWatch metrics to perform further analysis."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：啟用 EC2 執行個體的詳細監控後，CloudWatch 可以提供更高粒度的指標（每分鐘一次），滿足 2 分鐘粒度要求。 CloudWatch Metrics 是專為即時效能監控而設計的工具。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: When detailed monitoring of EC2 instances is enabled, CloudWatch can provide higher-granularity metrics (once per minute), meeting the 2-minute granularity requirement. CloudWatch Metrics is a tool specifically designed for real-time performance monitoring."
+      }
+    },
+    {
+      "question_no": 911,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司運行一個儲存和分享照片的應用程式。使用者將照片上傳到 Amazon S3 儲存桶。每天，用戶上傳約 150 張照片。該公司希望設計一種解決方案，為每張新照片建立縮圖並將該縮圖儲存在第二個 S3 儲存桶中。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company runs an application that stores and shares photos. Users upload the photos to an Amazon S3 bucket. Every day, users upload approximately 150 photos. The company wants to design a solution that creates a thumbnail of each new photo and stores the thumbnail in a second S3 bucket. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Amazon EventBridge 排程規則以在長時間執行的 Amazon EMR 叢集上每分鐘呼叫一個腳本。配置腳本為沒有縮圖的照片產生縮圖。配置腳本以將縮圖上傳到第二個 S3 儲存桶。",
+          "en": "Configure an Amazon EventBridge scheduled rule to invoke a script every minute on a long-running Amazon EMR cluster. Configure the script to generate thumbnails for the photos that do not have thumbnails. Configure the script to upload the thumbnails to the second S3 bucket."
+        },
+        "B": {
+          "zh": "設定 Amazon EventBridge 計畫規則，以便在始終開啟的記憶體最佳化型 Amazon EC2 執行個體上每分鐘呼叫一個腳本。配置腳本為沒有縮圖的照片產生縮圖。配置腳本以將縮圖上傳到第二個 S3 儲存桶。",
+          "en": "Configure an Amazon EventBridge scheduled rule to invoke a script every minute on a memory-optimized Amazon EC2 instance that is always on. Configure the script to generate thumbnails for the photos that do not have thumbnails. Configure the script to upload the thumbnails to the second S3 bucket."
+        },
+        "C": {
+          "zh": "設定 S3 事件通知，以便在使用者每次將新照片上傳到應用程式時呼叫 AWS Lambda 函數。配置 Lambda 函數以產生縮圖並將縮圖上傳到第二個 S3 儲存桶。",
+          "en": "Configure an S3 event notification to invoke an AWS Lambda function each time a user uploads a new photo to the application. Configure the Lambda function to generate a thumbnail and to upload the thumbnail to the second S3 bucket."
+        },
+        "D": {
+          "zh": "設定 S3 Storage Lens 以在使用者每次將新照片上傳到應用程式時呼叫 AWS Lambda 函數。配置 Lambda 函數以產生縮圖並將縮圖上傳到第二個 S3 儲存桶。",
+          "en": "Configure S3 Storage Lens to invoke an AWS Lambda function each time a user uploads a new photo to the application. Configure the Lambda function to generate a thumbnail and to upload the thumbnail to a second S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。設定 Amazon EventBridge 計畫規則呼叫腳本以在長時間運行的 Amazon EMR 叢集上執行：錯誤：Amazon EMR 專為大規模資料處理而設計。運行長期叢集成本高昂，且不適合每天僅處理 150 張照片的任務。錯誤：EventBridge定時規則每分鐘觸發一次腳本，由於任務量較小，可能造成資源浪費。",
+          "en": "Incorrect. Configure the Amazon EventBridge scheduled rule calling script to run on a long-running Amazon EMR cluster: Error: Amazon EMR is designed for large-scale data processing. Running a long-term cluster is expensive and is not suitable for processing tasks of only 150 photos per day. Error: The EventBridge timing rule triggers the script every minute, which may cause a waste of resources because the task volume is small."
+        },
+        "B": {
+          "zh": "錯誤。將 Amazon EventBridge 計畫規則呼叫腳本配置為在始終開啟、記憶體最佳化的 Amazon EC2 執行個體上執行：錯誤：最初啟動的 EC2 執行個體會產生持續成本，即使沒有任務執行也是如此。錯誤：EventBridge 計時規則每分鐘觸發一次腳本，這可能會導致資源浪費，並且對於記憶體最佳化實例來說是不必要的。",
+          "en": "Incorrect. Configuring the Amazon EventBridge scheduled rule call script to run on an always-on, memory-optimized Amazon EC2 instance: Error: EC2 instances that are initially powered on incur ongoing costs, even when no tasks are running. Error: EventBridge timing rules trigger scripts every minute, which may result in a waste of resources and are unnecessary for memory-optimized instances."
+        },
+        "C": {
+          "zh": "正確。設定 S3 事件通知以呼叫 AWS Lambda 函數： 正確：S3 事件通知可在使用者上傳新照片時自動觸發 Lambda 函數，而無需計時規則。正確：AWS Lambda 是一種無伺服器運算服務，按需運行，成本低廉，適合小規模任務。正確：Lambda函數可以直接產生縮圖並上傳到兩個S3桶，滿足要求。",
+          "en": "Correct. Configure S3 event notifications to invoke an AWS Lambda function: Correct: S3 event notifications can automatically trigger a Lambda function when a user uploads a new photo, without the need for timing rules. Correct: AWS Lambda is a serverless computing service that runs on demand, is low-cost, and is suitable for small-scale tasks. Correct: The Lambda function can directly generate a thumbnail and upload it to two S3 buckets, which meets the requirements."
+        },
+        "D": {
+          "zh": "錯誤。設定 S3 Storage Lens 以呼叫 AWS Lambda 函數：錯誤：S3 Storage Lens 是儲存分析工具，無法直接觸發 Lambda 函數。錯誤：此選項描述的功能與 S3 儲存鏡頭的實際用途不符。",
+          "en": "Incorrect. Configuring S3 Storage Lens to invoke an AWS Lambda function: Error: S3 Storage Lens is a tool for storage analysis and cannot directly trigger Lambda functions. Error: The functionality described by this option does not match the actual purpose of S3 Storage Lens."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 S3 事件通知，以便在使用者每次將新照片上傳到應用程式時呼叫 AWS Lambda 函數。配置 Lambda 函數以產生縮圖並將縮圖上傳到第二個 S3 儲存桶。",
+        "en": "C. Configure an S3 event notification to invoke an AWS Lambda function each time a user uploads a new photo to the application. Configure the Lambda function to generate a thumbnail and to upload the thumbnail to the second S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：設定 S3 事件通知以呼叫 AWS Lambda 函數： 正確：S3 事件通知可在使用者上傳新照片時自動觸發 Lambda 函數，而無需計時規則。正確：AWS Lambda 是一種無伺服器運算服務，按需運行，成本低廉，適合小規模任務。正確：Lambda函數可以直接產生縮圖並上傳到兩個S3桶，滿足要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Configure S3 event notifications to invoke an AWS Lambda function: Correct: S3 event notifications can automatically trigger a Lambda function when a user uploads a new photo, without the need for timing rules. Correct: AWS Lambda is a serverless computing service that runs on demand, is low-cost, and is suitable for small-scale tasks. Correct: The Lambda function can directly generate a thumbnail and upload it to two S3 buckets, which meets the requirements."
+      }
+    },
+    {
+      "question_no": 912,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon S3 Glacier Deep Archive 儲存類別在 Amazon S3 儲存桶中跨多個前綴儲存了數百萬個物件。除了必須保留的資料子集之外，公司需要刪除所有超過 3 年的資料。該公司已確定必須保留的數據，並希望實施無伺服器解決方案。哪種解決方案可以滿足這些要求？",
+        "en": "A company has stored millions of objects across multiple prefixes in an Amazon S3 bucket by using the Amazon S3 Glacier Deep Archive storage class. The company needs to delete all data older than 3 years except for a subset of data that must be retained. The company has identified the data that must be retained and wants to implement a serverless solution. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 S3 Inventory 列出所有物件。使用 AWS CLI 建立一個在 Amazon EC2 執行個體上執行的腳本，用於從清單清單中刪除物件。",
+          "en": "Use S3 Inventory to list all objects. Use the AWS CLI to create a script that runs on an Amazon EC2 instance that deletes objects from the inventory list."
+        },
+        "B": {
+          "zh": "使用 AWS Batch 刪除超過 3 年的對象，必須保留的資料除外。",
+          "en": "Use AWS Batch to delete objects older than 3 years except for the data that must be retained."
+        },
+        "C": {
+          "zh": "設定 AWS Glue 爬網程式以查詢 3 年以上的物件。保存舊物件的清單檔案。建立一個腳本來刪除清單中的物件。",
+          "en": "Provision an AWS Glue crawler to query objects older than 3 years. Save the manifest file of old objects. Create a script to delete objects in the manifest."
+        },
+        "D": {
+          "zh": "啟用 S3 清單。建立 AWS Lambda 函數來篩選和刪除物件。透過 S3 批次操作呼叫 Lambda 函數以使用清單報告刪除物件。",
+          "en": "Enable S3 Inventory. Create an AWS Lambda function to filter and delete objects. Invoke the Lambda function with S3 Batch Operations to delete objects by using the inventory reports."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 S3 Inventory 列出所有物件。使用 AWS CLI 建立在 Amazon EC2 執行個體上執行的腳本，以從清單清單中刪除物件。錯誤：雖然 S3 Inventory 可以列出所有對象，但使用 EC2 執行個體執行腳本並不是無伺服器解決方案，並且需要額外的管理和維護工作。",
+          "en": "Incorrect. Use S3 Inventory to list all objects. Use the AWS CLI to create a script that runs on an Amazon EC2 instance to remove objects from the inventory list. Error: Although S3 Inventory can list all objects, using an EC2 instance to run the script is not a serverless solution and requires additional management and maintenance work."
+        },
+        "B": {
+          "zh": "錯誤。使用 AWS Batch 刪除超過 3 年的數據，需要保留的數據除外。錯誤：AWS Batch 主要用於執行批次任務，並非直接用於管理 S3 物件。此選項不適合解決 S3 物件刪除問題。",
+          "en": "Incorrect. Use AWS Batch to delete data older than 3 years, except for data that needs to be retained. Error: AWS Batch is primarily used to run batch processing tasks and is not directly used to manage S3 objects. This option is not suitable for solving S3 object deletion issues."
+        },
+        "C": {
+          "zh": "錯誤。設定 AWS Glue 爬網程式以查詢 3 年以上的物件。保存舊物件的清單檔案。建立一個腳本以從清單中刪除物件。錯誤：AWS Glue 主要用於資料分析和 ETL 任務，而不是直接用於管理 S3 物件。此選項很複雜，並且不滿足無伺服器解決方案的要求。",
+          "en": "Incorrect. Configure an AWS Glue crawler to query objects older than 3 years. Save the old object's manifest file. Create a script to delete objects from the inventory. Error: AWS Glue is mainly used for data analysis and ETL tasks, not directly for managing S3 objects. This option is complex and does not meet the requirements of a serverless solution."
+        },
+        "D": {
+          "zh": "正確。啟用 S3 清單。建立 AWS Lambda 函數來篩選和刪除物件。使用 S3 批次操作呼叫 Lambda 函數以從清單報告中刪除物件。正確：此選項使用S3 Inventory產生物件列表，並結合S3 Batch Operations和AWS Lambda實作無伺服器解決方案，滿足問題的要求。",
+          "en": "Correct. Enable S3 Inventory. Create an AWS Lambda function to filter and delete objects. Use S3 Batch Operations to invoke a Lambda function to delete objects from an inventory report. Correct: This option uses S3 Inventory to generate an object list, and combines S3 Batch Operations and AWS Lambda to implement a serverless solution, which meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 啟用 S3 清單。建立 AWS Lambda 函數來篩選和刪除物件。透過 S3 批次操作呼叫 Lambda 函數以使用清單報告刪除物件。",
+        "en": "D. Enable S3 Inventory. Create an AWS Lambda function to filter and delete objects. Invoke the Lambda function with S3 Batch Operations to delete objects by using the inventory reports."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：啟用 S3 清單。建立 AWS Lambda 函數來篩選和刪除物件。使用 S3 批次操作呼叫 Lambda 函數以從清單報告中刪除物件。正確：此選項使用S3 Inventory產生物件列表，並結合S3 Batch Operations和AWS Lambda實作無伺服器解決方案，滿足問題的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Enable S3 Inventory. Create an AWS Lambda function to filter and delete objects. Use S3 Batch Operations to invoke a Lambda function to delete objects from an inventory report. Correct: This option uses S3 Inventory to generate an object list, and combines S3 Batch Operations and AWS Lambda to implement a serverless solution, which meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 913,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上建置應用程式。該應用程式使用多個 AWS Lambda 函數從單一 Amazon S3 儲存桶檢索敏感資料進行處理。公司必須確保只有授權的 Lambda 函數才能存取資料。解決方案必須符合最小特權原則。哪種解決方案可以滿足這些要求？",
+        "en": "A company is building an application on AWS. The application uses multiple AWS Lambda functions to retrieve sensitive data from a single Amazon S3 bucket for processing. The company must ensure that only authorized Lambda functions can access the data. The solution must comply with the principle of least privilege. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "透過共用 IAM 角色授予對所有 Lambda 函數的完整 S3 儲存桶存取權限。",
+          "en": "Grant full S3 bucket access to all Lambda functions through a shared IAM role."
+        },
+        "B": {
+          "zh": "配置 Lambda 函數以在 VPC 內運作。配置儲存桶策略以根據 Lambda 函數的 VPC 終端節點 IP 位址授予存取權限。",
+          "en": "Configure the Lambda functions to run within a VPC. Configure a bucket policy to grant access based on the Lambda functions' VPC endpoint IP addresses."
+        },
+        "C": {
+          "zh": "為每個 Lambda 函數建立單獨的 IAM 角色。授予 IAM 角色對 S3 儲存桶的存取權限。將每個 IAM 角色指派為其對應 Lambda 函數的 Lambda 執行角色。",
+          "en": "Create individual IAM roles for each Lambda function. Grant the IAM roles access to the S3 bucket. Assign each IAM role as the Lambda execution role for its corresponding Lambda function."
+        },
+        "D": {
+          "zh": "配置儲存桶策略，根據函數 ARN 授予對 Lambda 函數的存取權。",
+          "en": "Configure a bucket policy granting access to the Lambda functions based on their function ARNs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：此選項違反了最小權限原則，因為它授予所有 Lambda 函數完整的 S3 儲存桶存取權限，而不是根據每個函數的特定需求限制權限。",
+          "en": "Incorrect. Reason: this option violates the principle of least privilege because it grants all Lambda functions full S3 bucket access instead of restricting permissions based on the specific needs of each function."
+        },
+        "B": {
+          "zh": "錯誤。原因：基於VPC端點IP位址的存取控制不適合Lambda函數，因為Lambda函數的IP位址可能會動態變化。除了這種方法之外，這個方形條很複雜且不符合最佳實務。",
+          "en": "Incorrect. Reason: Access control based on the VPC endpoint IP address is not suitable for Lambda functions because the IP address of the Lambda function may change dynamically. Outside of the this approach, this square bar is complex and does not meet best practices."
+        },
+        "C": {
+          "zh": "正確。原因：此選項符合最小權限原則。為每個 Lambda 函數建立單獨的 IAM 角色，並根據需要授予存取權限，以確保只有授權的函數才能存取 S3 儲存桶。",
+          "en": "Correct. Reason: this option complies with the principle of least privilege. Create separate IAM roles for each Lambda function and grant access permissions as needed to ensure that only authorized functions can access the S3 bucket."
+        },
+        "D": {
+          "zh": "錯誤。原因：雖然可以透過儲存桶策略基於功能 ARN 授予存取權限，但這種方法不靈活且難以管理。 IAM 角色是更推薦的方法，因為它與 Lambda 函數的執行角色整合得更好。",
+          "en": "Incorrect. Reason: Although it is possible to grant access based on function ARNs through bucket policies, this approach is inflexible and difficult to manage. The IAM role is the more recommended approach because it integrates better with the execution role of the Lambda function."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 為每個 Lambda 函數建立單獨的 IAM 角色。授予 IAM 角色對 S3 儲存桶的存取權限。將每個 IAM 角色指派為其對應 Lambda 函數的 Lambda 執行角色。",
+        "en": "C. Create individual IAM roles for each Lambda function. Grant the IAM roles access to the S3 bucket. Assign each IAM role as the Lambda execution role for its corresponding Lambda function."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：原因：此選項符合最小權限原則。為每個 Lambda 函數建立單獨的 IAM 角色，並根據需要授予存取權限，以確保只有授權的函數才能存取 S3 儲存桶。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Reason: this option complies with the principle of least privilege. Create separate IAM roles for each Lambda function and grant access permissions as needed to ensure that only authorized functions can access the S3 bucket."
+      }
+    },
+    {
+      "question_no": 914,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司開發了一個非生產應用程序，該應用程式由公司每個業務部門的多個微服務組成。單一開發團隊維護所有微服務。目前的架構使用靜態 Web 前端和包含應用程式邏輯的基於 Java 的後端。該架構還使用該公司在 Amazon EC2 執行個體上託管的 MySQL 資料庫。公司需要確保應用程式在全球範圍內安全且可用。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company has developed a non-production application that is composed of multiple microservices for each of the company's business units. A single development team maintains all the microservices. The current architecture uses a static web frontend and a Java-based backend that contains the application logic. The architecture also uses a MySQL database that the company hosts on an Amazon EC2 instance. The company needs to ensure that the application is secure and available globally. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon CloudFront 和 AWS Amplify 來託管靜態 Web 前端。重構微服務以使用微服務透過 Amazon API Gateway 存取的 AWS Lambda 函數。將 MySQL 資料庫移轉到 Amazon EC2 預留執行個體。",
+          "en": "Use Amazon CloudFront and AWS Amplify to host the static web frontend. Refactor the microservices to use AWS Lambda functions that the microservices access by using Amazon API Gateway. Migrate the MySQL database to an Amazon EC2 Reserved Instance."
+        },
+        "B": {
+          "zh": "使用 Amazon CloudFront 和 Amazon S3 來託管靜態 Web 前端。重構微服務以使用微服務透過 Amazon API Gateway 存取的 AWS Lambda 函數。將 MySQL 資料庫移轉到 Amazon RDS for MySQL。",
+          "en": "Use Amazon CloudFront and Amazon S3 to host the static web frontend. Refactor the microservices to use AWS Lambda functions that the microservices access by using Amazon API Gateway. Migrate the MySQL database to Amazon RDS for MySQL."
+        },
+        "C": {
+          "zh": "使用 Amazon CloudFront 和 Amazon S3 來託管靜態 Web 前端。重構微服務以使用網路負載平衡器後面的目標群組中的 AWS Lambda 函數。將 MySQL 資料庫移轉到 Amazon RDS for MySQL。",
+          "en": "Use Amazon CloudFront and Amazon S3 to host the static web frontend. Refactor the microservices to use AWS Lambda functions that are in a target group behind a Network Load Balancer. Migrate the MySQL database to Amazon RDS for MySQL."
+        },
+        "D": {
+          "zh": "使用 Amazon S3 託管靜態 Web 前端。重構微服務以使用位於 Application Load Balancer 後面的目標群組中的 AWS Lambda 函數。將 MySQL 資料庫移轉到 Amazon EC2 預留執行個體。",
+          "en": "Use Amazon S3 to host the static web frontend. Refactor the microservices to use AWS Lambda functions that are in a target group behind an Application Load Balancer. Migrate the MySQL database to an Amazon EC2 Reserved Instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 Amazon CloudFront 和 AWS Amplify 來託管靜態 Web 前端。重構微服務以使用 AWS Lambda 函數並透過 Amazon API Gateway 存取這些微服務。將 MySQL 資料庫移轉到 Amazon EC2 預留執行個體。使用 Amazon CloudFront 提高全球可用性，使用 AWS Amplify 託管靜態頁面。將資料庫遷移到Amazon EC2預留執行個體仍然需要手動管理資料庫實例，這增加了營運開銷，不符合「最低營運開銷」的要求。",
+          "en": "Incorrect. Host a static web front-end using Amazon CloudFront and AWS Amplify. Refactor microservices to use AWS Lambda functions and access these microservices through Amazon API Gateway. Migrate MySQL database to Amazon EC2 Reserved Instance. Use Amazon CloudFront to increase global availability and AWS Amplify to host static pages. Migrating the database to Amazon EC2 Reserved Instance still requires manual management of the database instance, which increases operational overhead and does not meet the requirements of \"minimum operational overhead\"."
+        },
+        "B": {
+          "zh": "正確。使用 Amazon CloudFront 和 Amazon S3 來託管靜態 Web 前端。重構微服務以使用 AWS Lambda 函數並透過 Amazon API Gateway 存取這些微服務。將 MySQL 資料庫移轉到 Amazon RDS for MySQL。正確做法：使用 Amazon CloudFront 和 Amazon S3 託管靜態頁面伺服器是最佳實踐，可以減少營運開銷。 AWS Lambda 和 Amazon API Gateway 建置無伺服器架構，進一步降低管理複雜度。將資料庫移轉到 Amazon RDS for MySQL 是一項託管服務，可減少資料庫管理的營運開銷。錯誤點：無明顯錯誤。",
+          "en": "Correct. Host a static web front-end using Amazon CloudFront and Amazon S3. Refactor microservices to use AWS Lambda functions and access these microservices through Amazon API Gateway. Migrate MySQL database to Amazon RDS for MySQL. Get it right: Using Amazon CloudFront and Amazon S3 to host static page servers is a best practice and reduces operational overhead. AWS Lambda and Amazon API Gateway build a serverless architecture to further reduce management complexity. Migrating your database to Amazon RDS for MySQL is a managed service that reduces the operational overhead of database management. Error points: No obvious errors."
+        },
+        "C": {
+          "zh": "錯誤。此選項正確：使用 Amazon CloudFront 和 Amazon S3 託管靜態頁面是正確的。將資料庫移轉到 Amazon RDS for MySQL 也是正確的。錯誤點：AWS Lambda 通常與 API Gateway 集成，而不是網路負載平衡器。網路負載平衡器主要用於處理高吞吐量的TCP/UDP流量，不適合Lambda函數情境。",
+          "en": "Incorrect. Host a static web front-end using Amazon CloudFront and Amazon S3. Refactor the microservices to use AWS Lambda functions that are in target groups behind a Network Load Balancer. Migrate MySQL database to Amazon RDS for MySQL. Correct: It is correct to use Amazon CloudFront and Amazon S3 to host static pages. Migrating the database to Amazon RDS for MySQL is also correct. Point of error: AWS Lambda is usually integrated with API Gateway, not Network Load Balancer. Network Load Balancer is mainly used to process high-throughput TCP/UDP traffic and is not suitable for Lambda function scenarios."
+        },
+        "D": {
+          "zh": "錯誤。使用 Amazon S3 託管靜態 Web 前端。重構微服務以使用 AWS Lambda 函數，這些函數位於 Application Load Balancer 後面的目標群組中。將 MySQL 資料庫移轉到 Amazon EC2 預留執行個體。正確：使用 Amazon S3 託管靜態頁面是正確的。錯誤 儘管技術上可行，但將 Lambda 函數放置在應用程式負載平衡器後面通常不如 API 網關整合那麼有效率。將資料庫遷移到 Amazon EC2 預留執行個體會增加營運開銷，且不符合問題的要求。",
+          "en": "Incorrect. Use Amazon S3 to host the static web front-end. Refactor the microservices to use AWS Lambda functions, which are located in the target group behind the Application Load Balancer. Migrate MySQL database to Amazon EC2 Reserved Instance. Correct: It is correct to use Amazon S3 to host static pages. Mistake Although technically feasible, placing the Lambda function behind the Application Load Balancer is generally not as efficient as API Gateway integration. Migrating the database to Amazon EC2 Reserved Instance increases operational overhead and does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon CloudFront 和 Amazon S3 來託管靜態 Web 前端。重構微服務以使用微服務透過 Amazon API Gateway 存取的 AWS Lambda 函數。將 MySQL 資料庫移轉到 Amazon RDS for MySQL。",
+        "en": "B. Use Amazon CloudFront and Amazon S3 to host the static web frontend. Refactor the microservices to use AWS Lambda functions that the microservices access by using Amazon API Gateway. Migrate the MySQL database to Amazon RDS for MySQL."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：使用 Amazon CloudFront 和 Amazon S3 來託管靜態 Web 前端。重構微服務以使用 AWS Lambda 函數並透過 Amazon API Gateway 存取這些微服務。將 MySQL 資料庫移轉到 Amazon RDS for MySQL。正確做法：使用 Amazon CloudFront 和 Amazon S3 託管靜態頁面伺服器是最佳實踐，可以減少營運開銷。 AWS Lambda 和 Amazon API Gateway 建置無伺服器架構，進一步降低管理複雜度。將資料庫移轉到 Amazon RDS for MySQL 是一項託管服務，可減少資料庫管理的營運開銷。錯誤點：無明顯錯誤。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Host a static web front-end using Amazon CloudFront and Amazon S3. Refactor microservices to use AWS Lambda functions and access these microservices through Amazon API Gateway. Migrate MySQL database to Amazon RDS for MySQL. Get it right: Using Amazon CloudFront and Amazon S3 to host static page servers is a best practice and reduces operational overhead. AWS Lambda and Amazon API Gateway build a serverless architecture to further reduce management complexity. Migrating your database to Amazon RDS for MySQL is a managed service that reduces the operational overhead of database management. Error points: No obvious errors."
+      }
+    },
+    {
+      "question_no": 915,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家電玩公司正在為其全球用戶部署新的遊戲應用程式。該公司需要一種能夠提供近乎即時的玩家評論和排名的解決方案。解決方案架構師必須設計一個解決方案來提供對資料的快速存取。該解決方案還必須確保在公司重新啟動應用程式時資料仍保留在磁碟上。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A video game company is deploying a new gaming application to its global users. The company requires a solution that will provide near real-time reviews and rankings of the players. A solutions architect must design a solution to provide fast access to the data. The solution must also ensure the data persists on disks in the event that the company restarts the application. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置以 Amazon S3 儲存桶作為來源的 Amazon CloudFront 指派。將玩家資料儲存在S3儲存桶中。",
+          "en": "Configure an Amazon CloudFront distribution with an Amazon S3 bucket as the origin. Store the player data in the S3 bucket."
+        },
+        "B": {
+          "zh": "在多個 AWS 區域中建立 Amazon EC2 執行個體。將玩家資料儲存在 EC2 執行個體上。使用地理位置記錄配置 Amazon Route 53，以將使用者導向至最近的 EC2 執行個體。",
+          "en": "Create Amazon EC2 instances in multiple AWS Regions. Store the player data on the EC2 instances. Configure Amazon Route 53 with geolocation records to direct users to the closest EC2 instance."
+        },
+        "C": {
+          "zh": "部署 Amazon ElastiCache for Redis 除塵器。將玩家資料儲存在 ElastiCache 叢集中。",
+          "en": "Deploy an Amazon ElastiCache for Redis duster. Store the player data in the ElastiCache cluster."
+        },
+        "D": {
+          "zh": "部署 Amazon ElastiCache for Memcached 除塵器。將玩家資料儲存在 ElastiCache 叢集中。",
+          "en": "Deploy an Amazon ElastiCache for Memcached duster. Store the player data in the ElastiCache cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：Amazon S3 是一種物件儲存服務，適合儲存靜態文件，但不適合即時資料存取。 CloudFront可以加速內容分發，但無法滿足即時性和資料持久性要求。",
+          "en": "Incorrect. Reason: Amazon S3 is an object storage service, suitable for storing static files, but not suitable for real-time data access. CloudFront can accelerate content distribution, but it cannot meet real-time and data durability requirements."
+        },
+        "B": {
+          "zh": "錯誤。原因：EC2實例雖然可以透過Route 53儲存資料並實現地理位置路由，但實例的高可用和資料持久化需要手動管理，導致操作開銷較高，不符合「最小化操作開銷」的要求。",
+          "en": "Incorrect. Reason: Although EC2 instances can store data and implement geographical location routing through Route 53, the high availability and data persistence of the instance need to be manually managed, which results in high operational overhead and does not meet the requirement of \"minimizing operational overhead\"."
+        },
+        "C": {
+          "zh": "正確。原因：ElastiCache for Redis 支援高效能、低延遲的資料訪問，並且可以配置持久化，保證應用程式重新啟動時資料不會遺失。 Redis也支援複雜的資料結構，非常適合即時排名和評論功能。",
+          "en": "Correct. Reason: ElastiCache for Redis supports high-performance, low-latency data access, and persistence can be configured to ensure that data will not be lost when the application is restarted. Redis also supports complex data structures, which is ideal for real-time ranking and review functions."
+        },
+        "D": {
+          "zh": "錯誤。原因：Memcached雖然也支援高效能資料訪問，但不支援資料持久化，因此無法滿足「應用重新啟動時資料不會遺失」的要求。",
+          "en": "Incorrect. Reason: Although Memcached also supports high-performance data access, it does not support data persistence, so it cannot meet the requirement that \"data will not be lost when the application is restarted\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 部署 Amazon ElastiCache for Redis 除塵器。將玩家資料儲存在 ElastiCache 叢集中。",
+        "en": "C. Deploy an Amazon ElastiCache for Redis duster. Store the player data in the ElastiCache cluster."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：原因：ElastiCache for Redis 支援高效能、低延遲的資料訪問，並且可以配置持久化，保證應用程式重新啟動時資料不會遺失。 Redis也支援複雜的資料結構，非常適合即時排名和評論功能。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Reason: ElastiCache for Redis supports high-performance, low-latency data access, and persistence can be configured to ensure that data will not be lost when the application is restarted. Redis also supports complex data structures, which is ideal for real-time ranking and review functions."
+      }
+    }
+  ]
+}

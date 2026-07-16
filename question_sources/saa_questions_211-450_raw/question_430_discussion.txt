@@ -1,0 +1,93 @@
+A manufacturing company has machine sensors that upload .csv files to an Amazon S3 bucket. These .csv files must be converted
+into images and must be made available as soon as possible for the automatic generation of graphical reports.
+The images become irrelevant after 1 month, but the .csv files must be kept to train machine learning (ML) models twice a year.
+The ML trainings and audits are planned weeks in advance.
+Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)
+A. Launch an Amazon EC2 Spot Instance that downloads the .csv files every hour, generates the image files, and uploads the
+images to the S3 bucket.
+B. Design an AWS Lambda function that converts the .csv files into images and stores the images in the S3 bucket. Invoke the
+Lambda function when a .csv file is uploaded. Most Voted
+C. Create S3 Lifecycle rules for .csv files and image files in the S3 bucket. Transition the .csv files from S3 Standard to S3 Glacier
+1 day after they are uploaded. Expire the image files after 30 days. Most Voted
+D. Create S3 Lifecycle rules for .csv files and image files in the S3 bucket. Transition the .csv files from S3 Standard to S3 One
+Zone-Infrequent Access (S3 One Zone-IA) 1 day after they are uploaded. Expire the image files after 30 days.
+E. Create S3 Lifecycle rules for .csv files and image files in the S3 bucket. Transition the .csv files from S3 Standard to S3
+Standard-Infrequent Access (S3 Standard-IA) 1 day after they are uploaded. Keep the image files in Reduced Redundancy
+Storage (RRS).
+Comments
+vesen22 Highly Voted 2 years, 6 months ago
+Selected Answer: BC
+https://docs.aws.amazon.com/amazonglacier/latest/dev/introduction.html
+upvoted 5 times
+awsgeek75 Most Recent 1 year, 11 months ago
+Selected Answer: BC
+B for processing the images via Lambda as it's more cost efficient than EC2 spot instances
+C for expiring images after 30 days and because the ML trainings are planned weeks in advance so S3 glacier is ideal for slow retrieval and cheap
+storage.
+D and E uses S3 infrequent access which is more expensive than glacier
+upvoted 3 times
+pentium75 1 year, 11 months ago
+Selected Answer: BC
+Not A, we need the images "as soon as possible", A runs every hour
+"ML trainings and audits are planned weeks in advance" thus Glacier (C) is ok.
+upvoted 3 times
+Xin123 2 years, 2 months ago
+Selected Answer: BC
+Answer is B&C. For D, you must store data for 30 days in s3 standard before move to IA tiers, glacier is fine
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-
+Correct Answer: BC
+Community vote distribution
+BC (90%)
+10%
+considerations.html#:~:text=Before%20you%20transition%20objects%20to%20S3%20Standard%2DIA%20or%20S3%20One%20Zone%2DIA%2C%20
+you%20must%20store%20them%20for%20at%20least%2030%20days%20in%20Amazon%20S3
+upvoted 4 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: BC
+Definitely B & C
+upvoted 3 times
+jayce5 2 years, 4 months ago
+Selected Answer: BC
+A. Wrong, the .csv files must be processed asap.
+D and E are incorrect since Glacier is the most cost-effective option, and plans for using .csv files are known weeks in advance.
+upvoted 2 times
+james2033 2 years, 4 months ago
+Why need "These .csv files must be converted into images"?
+upvoted 1 times
+awsgeek75 1 year, 10 months ago
+Because they are being used in some graphical reports (probably fancy powerpoint presentations!)
+upvoted 2 times
+smartegnine 2 years, 5 months ago
+Selected Answer: BC
+the key word is Weeks in advance, even you save data in S3 Gracia will also OK to take couples days to retrieve the data
+upvoted 3 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: BC
+Definitely B & C
+upvoted 2 times
+Abrar2022 2 years, 6 months ago
+Selected Answer: BC
+A. Wrong because Lifecycle rule is not mentioned.
+B. CORRECT
+C. CORRECT
+D. Why Store on S3 One Zone-Infrequent Access (S3 One Zone-IA) when the files are going to irrelevant after 1 month? (Availability 99.99% -
+consider cost)
+E. again, Why use Reduced Redundancy Storage (RRS) when the files are irrelevant after 1 month? (Availability 99.99% - consider cost)
+upvoted 4 times
+RoroJ 2 years, 6 months ago
+Selected Answer: BE
+B: Serverless and fast responding
+E: will keep .csv file for a year, C and D expires the file after 30 days.
+upvoted 4 times
+RoroJ 2 years, 6 months ago
+B&C, misread the question, expires the image files after 30 days.
+upvoted 3 times
+hiroohiroo 2 years, 6 months ago
+Selected Answer: BC
+https://aws.amazon.com/jp/about-aws/whats-new/2021/11/amazon-s3-glacier-storage-class-amazon-s3-glacier-flexible-retrieval/
+upvoted 3 times
+nosense 2 years, 6 months ago
+Selected Answer: BC
+B severless and cost effective
+C corrctl rule to store
+upvoted 3 times

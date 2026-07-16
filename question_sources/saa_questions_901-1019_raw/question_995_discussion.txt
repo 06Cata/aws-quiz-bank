@@ -1,0 +1,86 @@
+A streaming media company is rebuilding its infrastructure to accommodate increasing demand for video content that users
+consume daily.
+The company needs to process terabyte-sized videos to block some content in the videos. Video processing can take up to 20
+minutes.
+The company needs a solution that will scale with demand and remain cost-effective.
+Which solution will meet these requirements?
+A. Use AWS Lambda functions to process videos. Store video metadata in Amazon DynamoDB. Store video content in Amazon
+S3 Intelligent-Tiering.
+B. Use Amazon Elastic Container Service (Amazon ECS) and AWS Fargate to implement microservices to process videos. Store
+video metadata in Amazon Aurora. Store video content in Amazon S3 Intelligent-Tiering. Most Voted
+C. Use Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer (ALB) to process videos. Store
+video content in Amazon S3 Standard. Use Amazon Simple Queue Service (Amazon SQS) for queuing and to decouple
+processing tasks.
+D. Deploy a containerized video processing application on Amazon Elastic Kubernetes Service (Amazon EKS) on Amazon EC2.
+Store video metadata in Amazon RDS in a single Availability Zone. Store video content in Amazon S3 Glacier Deep Archive.
+Comments
+kbgsgsgs Highly Voted 1 year, 8 months ago
+Selected Answer: B
+S3 Intelligent-Tiering is cost-effective for storing large amounts of video content, and since Lambda doesn't work, shouldn't we consider serverless?
+upvoted 8 times
+LeonSauveterre Highly Voted 1 year, 5 months ago
+Selected Answer: B
+A - Video processing can take up to 20 minutes. So lambda is not suitable here.
+B - Fargate allows running containers without managing EC2 instances, scaling automatically based on demand. Besides, S3 Intelligent-Tiering is
+cost-effective for storing large video files.
+C - I gotta say, the SQS is a really good choice here! It's just that S3 Standard is more expensive than S3 Intelligent-Tiering for large files, and that EC2
+(even with Auto Scaling) requires managing the underlying infrastructure.
+D - EKS is more complex to set up but the real issue is that RDS in a single Availability Zone introduces a single point of failure, so scalability and
+reliability can't be met. Also, S3 Glacier Deep Archive is designed for long-term archival storage with high latency and not suitable for frequently
+accessed video content.
+upvoted 6 times
+EllenLiu Most Recent 1 year, 5 months ago
+Selected Answer: B
+it is a tough question.
+terabyte-sized videos are difficult to process. we need to split the videos into chucks either with fargate or EC2.
+seems DB is essential in this scenario as I have no idea how to get the videos out from s3 without metadata which should be stored into DB. So I
+prefer B. SQS is used for peak clipping during burst periods.
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Correct Answer: B
+Community vote distribution
+B (85%)
+C (15%)
+this the whole work flow for a ideal solution:
+1.Upload: Users upload videos to CloudFront with origin S3.
+2.Trigger: S3 sends an event notification to SQS.
+3.EC2 instances poll the SQS queue and download and process Video files from S3
+4.The processed video is uploaded to another S3 bucket, metadata is saved into Aurora
+upvoted 1 times
+78b9037 1 year, 6 months ago
+Selected Answer: B
+B and C are both possible but i decided for B because:
+- Fargate provides serverless containers that scale automatically
+- No infrastructure management is required
+- Aurora provides high availability for metadata
+- S3 Intelligent-Tiering optimizes storage costs automatically
+- It is not tile limited like Lambda
+On the other hand C requires more management overhead it is less cost-effective than containerized solutions, and need to manage EC2 instances
+manually
+upvoted 2 times
+XXXXXlNN 1 year, 8 months ago
+This is a tough one I would say. I wish B and C can combine. but I vote for B.
+For B, it is more cost efficiency focus rather than decoupling the whole process for improving overall reliability.
+For C, the use of SQS is perferct solution for the downside of option B. But EC2 comes in picture which increases the cost and operational complexity
+How to pick then? lets go back to the question and see what it focuses - cost or operational compllexity and stability? It looks like it leans more on
+focusing scalibility and cost-efficiency. In that case, I would go for B because fargate provides cost-efficiency and store just metadata in DB and the
+rest data in S3 also provides a lower cost and improves its performance.
+upvoted 2 times
+XXXXXlNN 1 year, 8 months ago
+Additionally, C also introduced ALB service in the picture, that increases the cost as well.
+upvoted 2 times
+blehbleh 1 year, 8 months ago
+Selected Answer: C
+C makes the most sense out of the options and given requirements.
+upvoted 1 times
+hharbiordun85 1 year, 8 months ago
+Answer: C
+The question did not mention the application need to be containerized , i will choose C
+upvoted 1 times
+GOTJ 1 year, 4 months ago
+But it mentioned "rebuilding its infrastructure", opening the door to a re-engineering process in which micro services can be applied
+upvoted 2 times
+blehbleh 1 year, 8 months ago
+Selected Answer: C
+I personally think C, I could be wrong.
+upvoted 2 times

@@ -1,0 +1,119 @@
+A company runs its ecommerce application on AWS. Every new order is published as a massage in a RabbitMQ queue that runs on
+an Amazon EC2 instance in a single Availability Zone. These messages are processed by a different application that runs on a
+separate EC2 instance. This application stores the details in a PostgreSQL database on another EC2 instance. All the EC2 instances
+are in the same Availability Zone.
+The company needs to redesign its architecture to provide the highest availability with the least operational overhead.
+What should a solutions architect do to meet these requirements?
+A. Migrate the queue to a redundant pair (active/standby) of RabbitMQ instances on Amazon MQ. Create a Multi-AZ Auto
+Scaling group for EC2 instances that host the application. Create another Multi-AZ Auto Scaling group for EC2 instances that
+host the PostgreSQL database.
+B. Migrate the queue to a redundant pair (active/standby) of RabbitMQ instances on Amazon MQ. Create a Multi-AZ Auto
+Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon
+RDS for PostgreSQL. Most Voted
+C. Create a Multi-AZ Auto Scaling group for EC2 instances that host the RabbitMQ queue. Create another Multi-AZ Auto
+Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon
+RDS for PostgreSQL.
+D. Create a Multi-AZ Auto Scaling group for EC2 instances that host the RabbitMQ queue. Create another Multi-AZ Auto
+Scaling group for EC2 instances that host the application. Create a third Multi-AZ Auto Scaling group for EC2 instances that
+host the PostgreSQL database
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: B
+Migrating to Amazon MQ reduces the overhead on the queue management. C and D are dismissed.
+Deciding between A and B means deciding to go for an AutoScaling group for EC2 or an RDS for Postgress (both multi- AZ). The RDS option has less
+operational impact, as provide as a service the tools and software required. Consider for instance, the effort to add an additional node like a read
+replica, to the DB.
+https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/active-standby-broker-deployment.html
+https://aws.amazon.com/rds/postgresql/
+upvoted 29 times
+UWSFish 3 years, 7 months ago
+Yes but active/standby is fault tolerance, not HA. I would concede after thinking about it that B is probably the answer that will be marked correct
+but its not a great question.
+upvoted 4 times
+EKA_CloudGod 3 years, 6 months ago
+This also helps anyone in doubt; https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/active-standby-broker-deployment.html
+upvoted 2 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: B
+To meet the requirements of providing the highest availability with the least operational overhead, the solutions architect should take the following
+actions:
+* By migrating the queue to Amazon MQ, the architect can take advantage of the built-in high availability and failover capabilities of the service,
+which will help ensure that messages are delivered reliably and without interruption.
+Correct Answer: B
+Community vote distribution
+B (100%)
+* By creating a Multi-AZ Auto Scaling group for the EC2 instances that host the application, the architect can ensure that the application is highly
+available and able to handle increased traffic without the need for manual intervention.
+* By migrating the database to a Multi-AZ deployment of Amazon RDS for PostgreSQL, the architect can take advantage of the built-in high
+availability and failover capabilities of the service, which will help ensure that the database is always available and able to handle increased traffic.
+Therefore, the correct answer is Option B.
+upvoted 8 times
+zx9r Most Recent 1 year, 6 months ago
+Selected Answer: B
+B makes the most sense
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+Selected Answer: B
+B is the correct answer
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: B
+CD, you cannot have EC2 scaling work with RabbitMQ as only once instance can be active
+A: Is good but B is better
+B: Correct due to usage of RDS for PG so less overhead
+upvoted 3 times
+Gizmo2022 1 year, 6 months ago
+Thank you for explaining the answer
+upvoted 1 times
+chandu7024 2 years, 8 months ago
+Agree with B
+upvoted 1 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: B
+B offers high availability and low operational overheads.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+Option B is the best solution to meet the high availability and low overhead requirements:
+Migrate the queue to redundant Amazon MQ
+Use Auto Scaling groups across AZs for the application
+Migrate the database to Multi-AZ RDS PostgreSQL
+The reasons are:
+Amazon MQ provides a managed, highly available RabbitMQ cluster
+Multi-AZ Auto Scaling distributes the application across AZs
+RDS PostgreSQL is managed, multi-AZ capable database
+Together this architecture removes single points of failure
+RDS and MQ reduce operational overhead over self-managed
+upvoted 6 times
+MNotABot 2 years, 11 months ago
+B
+least operational overhead (Amazon RDS for PostgreSQL --> hence AD out / C says EC2 so out --> Hence B)
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+Option B provides the highest availability with the least operational overhead. By migrating the queue to a redundant pair of RabbitMQ instances on
+Amazon MQ, the messaging system becomes highly available. Creating a Multi-AZ Auto Scaling group for EC2 instances hosting the application
+ensures that it can automatically scale and maintain availability across multiple Availability Zones. Migrating the database to a Multi-AZ deployment
+of Amazon RDS for PostgreSQL provides automatic failover and data replication across multiple Availability Zones, enhancing availability and
+reducing operational overhead.
+A. Incorrect because it does not address the high availability requirement for the RabbitMQ queue and the PostgreSQL database.
+C. Incorrect because it does not provide redundancy for the RabbitMQ queue and does not address the high availability requirement for the
+PostgreSQL database.
+D. Incorrect because it does not address the high availability requirement for the RabbitMQ queue and does not provide redundancy for the
+application instances.
+upvoted 4 times
+Gary_Phillips_2007 3 years, 3 months ago
+Selected Answer: B
+B for me.
+upvoted 1 times
+techhb 3 years, 5 months ago
+Selected Answer: B
+B is right all explanations below are correct
+upvoted 1 times
+career360guru 3 years, 5 months ago
+Selected Answer: B
+Option B is right answer
+upvoted 1 times
+Wpcorgan 3 years, 6 months ago
+B for me
+upvoted 1 times

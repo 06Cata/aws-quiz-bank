@@ -1,0 +1,109 @@
+A company has an Amazon Elastic File System (Amazon EFS) file system that contains a reference dataset. The company has
+applications on Amazon EC2 instances that need to read the dataset. However, the applications must not be able to change the
+dataset. The company wants to use IAM access control to prevent the applications from being able to modify or delete the
+dataset.
+Which solution will meet these requirements?
+A. Mount the EFS file system in read-only mode from within the EC2 instances.
+B. Create a resource policy for the EFS file system that denies the elasticfilesystem:ClientWrite action to the IAM roles that are
+attached to the EC2 instances. Most Voted
+C. Create an identity policy for the EFS file system that denies the elasticfilesystem:ClientWrite action on the EFS file system.
+D. Create an EFS access point for each application. Use Portable Operating System Interface (POSIX) file permissions to allow
+read-only access to files in the root directory.
+Comments
+hajra313 Highly Voted 2 years, 4 months ago
+Create an EFS access point for each application. Use Portable Operating System Interface (POSIX) file permissions to allow read-only access to files in
+the root directory.
+Explanation:
+By creating an EFS access point for each application and configuring POSIX file permissions to allow read-only access, you can enforce the desired
+access control. This approach restricts write and delete actions on the dataset while allowing read access, aligning with the company's requirements.
+upvoted 6 times
+MatAlves 1 year, 8 months ago
+Resource policies are included in " IAM to control":
+"Using IAM to control file system data access
+NFS clients can identify themselves using an IAM role when connecting to an EFS file system. When a client connects to a file system, Amazon EFS
+evaluates the file system’s IAM resource policy, which is called a file system policy, along with any identity-based IAM policies to determine the
+appropriate file system access permissions to grant."
+https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html
+upvoted 2 times
+f07ed8f 2 years ago
+Please note that the question is asking "The company wants to use IAM access control to prevent the applications from being able to modify or
+delete the dataset."
+upvoted 5 times
+lenotc Highly Voted 2 years, 3 months ago
+Selected Answer: B
+B correct best solution best well architected
+C wrong because identity policies are typically associated with users or roles, not directly with the EFS file system
+D wrong because POSIX file permissions at the root directory level may not be sufficient to prevent modifications to other directories or files
+A is so far away
+upvoted 6 times
+MatAlves Most Recent 1 year, 8 months ago
+Correct Answer: B
+Community vote distribution
+B (73%)
+C (23%)
+5%
+Selected Answer: B
+- Identity-based policies are attached to an IAM user, group, or role.
+- Resource-based policies are attached to a resource.
+- elasticfilesystem:ClientWrite: Provides write permissions on a file system.
+EFS is a RESOURCE, so that excludes "C" (we need a resource policy).
+https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html
+upvoted 2 times
+elmyth 1 year, 9 months ago
+Selected Answer: B
+There is no such thing as an "identity policy" for EFS.
+upvoted 2 times
+sandordini 2 years, 1 month ago
+Selected Answer: B
+2 ways to prevent writing to the file system:
+1. The mount option in the /etc/fstab file is set to read-only access. > A
+2. IAM policy indicates read-only access, or root access disabled. > B
+The question clearly states they are looking to use IAM access control
+upvoted 3 times
+Ansuman_lucky 2 years, 2 months ago
+prevent the applications from being able to modify or delete the dataset.-- This means a role would be used. So answer is B
+upvoted 4 times
+xBUGx 2 years, 2 months ago
+IAM policies are used to control access to AWS resources, including Amazon EFS. By default, IAM policies control access to the EFS API actions, such
+as elasticfilesystem:ClientWrite, which allows clients to write to the file system. However, POSIX file permissions control access to files within the file
+system itself, which is independent of IAM policies.
+While using POSIX file permissions can restrict access to the files within the file system, it doesn't prevent a user or application with the appropriate
+IAM permissions from modifying or deleting those files directly through the EFS API.
+upvoted 4 times
+HarryLopez 2 years, 3 months ago
+Selected Answer: B
+B)
+IAM needs to be used, so A) & D) are out.
+So b/w B) and C), Resource policies are meant for specific aws service or resource while Identity policies are attached to an identity (user, group or
+role). C) attached identity policy to EFS, dont know how and why. Hence, B).
+upvoted 3 times
+osmk 2 years, 3 months ago
+Selected Answer: C
+company wants to use IAM access control to prevent https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html
+upvoted 3 times
+jaswantn 2 years, 3 months ago
+Selected Answer: D
+option D
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+You use IAM policy to control permissions with access points
+https://docs.aws.amazon.com/efs/latest/ug/access-points-iam-policy.html
+upvoted 1 times
+Oo_Cc 2 years, 4 months ago
+Selected Answer: C
+"The company wasn't to use IAM access control". Yes, it would deny writing action to everything .. but it's still the only one that uses IAM.
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+"Using IAM to control file system data access
+NFS clients can identify themselves using an IAM role when connecting to an EFS file system. When a client connects to a file system, Amazon EFS
+evaluates the file system’s IAM resource policy, which is called a file system policy, along with any identity-based IAM policies to determine the
+appropriate file system access permissions to grant."
+https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+What we need to change is the " IAM resource policy".
+upvoted 1 times
+Andy_09 2 years, 4 months ago
+Option B
+upvoted 5 times

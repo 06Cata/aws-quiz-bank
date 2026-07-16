@@ -1,0 +1,56 @@
+A solutions architect needs to securely store a database user name and password that an application uses to access an Amazon
+RDS DB instance. The application that accesses the database runs on an Amazon EC2 instance. The solutions architect wants to
+create a secure parameter in AWS Systems Manager Parameter Store.
+What should the solutions architect do to meet this requirement?
+解决方案架构师需要安全地存储应用程序用于访问 Amazon RDS DB 实例的数据库用户名和密码。访问数据库的应用程序运行在
+Amazon EC2 实例上。解决方案架构师希望在 AWS Systems Manager Parameter Store 中创建一个安全参数。
+解决方案架构师应该怎么做以满足此需求？
+A. Create an IAM role that has read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key
+Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM role to the EC2 instance.
+Most Voted
+创建一个具有读取 Parameter Store 参数权限的 IAM 角色。允许对用于加密参数的 AWS Key Management Service (AWS KMS)
+密钥进行解密访问。将此 IAM 角色分配给 EC2 实例。
+B. Create an IAM policy that allows read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key
+Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM policy to the EC2 instance.
+创建一个允许读取 Parameter Store 参数权限的 IAM 策略。允许对用于加密参数的 AWS Key Management Service (AWS KMS)
+密钥进行解密访问。将此 IAM 策略分配给 EC2 实例。
+C. Create an IAM trust relationship between the Parameter Store parameter and the EC2 instance. Specify Amazon RDS as a
+principal in the trust policy.
+在 Parameter Store 参数和 EC2 实例之间创建 IAM 信任关系。在信任策略中指定 Amazon RDS 作为主体。
+D. Create an IAM trust relationship between the DB instance and the EC2 instance. Specify Systems Manager as a principal in
+the trust policy.
+在 DB 实例和 EC2 实例之间创建 IAM 信任关系。在信任策略中指定 Systems Manager 作为主体。
+Correct Answer: A
+正确答案：A
+Community vote distribution
+社区投票分布
+题目分析与解答
+1. 考察的知识点
+本题考察的是如何使用 AWS Systems Manager Parameter Store 安全存储敏感信息（如数据库用户名和密码），以及如何通过 IAM
+角色和权限管理来确保安全访问。
+涉及的服务包括：AWS Systems Manager Parameter Store、IAM 角色与策略、AWS Key Management Service (KMS)。
+2. 选项分析
+A. Create an IAM role that has read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key
+Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM role to the EC2 instance.
+正确：此选项描述了最佳实践。通过创建 IAM 角色并赋予其读取 Parameter Store 参数的权限，同时允许解密 KMS 加密的参数，
+确保 EC2 实例能够安全访问敏感信息。
+IAM 角色是分配给 EC2 实例的最佳方式，因为它避免了硬编码凭证，并且可以动态管理权限。
+B. Create an IAM policy that allows read access to the Parameter Store parameter. Allow Decrypt access to an AWS Key
+Management Service (AWS KMS) key that is used to encrypt the parameter. Assign this IAM policy to the EC2 instance.
+错误：IAM 策略不能直接分配给 EC2 实例。IAM 策略需要附加到 IAM 角色或用户，而 EC2 实例只能通过 IAM 角色来获取权限。
+C. Create an IAM trust relationship between the Parameter Store parameter and the EC2 instance. Specify Amazon RDS as
+a principal in the trust policy.
+错误：IAM 信任关系的主体应该是 EC2 实例或相关的 IAM 角色，而不是 Amazon RDS。此选项的描述不符合 AWS 的权限管理逻
+辑。
+D. Create an IAM trust relationship between the DB instance and the EC2 instance. Specify Systems Manager as a principal
+in the trust policy.
+错误：DB 实例和 EC2 实例之间不需要直接的 IAM 信任关系。Systems Manager Parameter Store 的权限管理是通过 IAM 角色和策
+略来实现的，而不是通过信任关系。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致，没有差异。
+A (95%)
+5%

@@ -1,0 +1,72 @@
+A company uses Amazon EC2 instances to host its internal systems. As part of a deployment operation, an administrator tries to
+use the AWS CLI to terminate an EC2 instance. However, the administrator receives a 403 (Access Denied) error message.
+The administrator is using an IAM role that has the following IAM policy attached:
+What is the cause of the unsuccessful request?
+A. The EC2 instance has a resource-based policy with a Deny statement.
+B. The principal has not been specified in the policy statement.
+C. The "Action" field does not grant the actions that are required to terminate the EC2 instance.
+D. The request to terminate the EC2 instance does not originate from the CIDR blocks 192.0.2.0/24 or 203.0.113.0/24.
+Most Voted
+Comments
+TariqKipkemei Highly Voted 2 years, 11 months ago
+Selected Answer: D
+the command is coming from a source IP which is not in the allowed range.
+upvoted 5 times
+chasingsummer Most Recent 2 years, 5 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (100%)
+I ran a Policy Simulator and indeed, D is right answer.
+Here is the JSON policy:
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Action": "ec2:TerminateInstances",
+"Resource": "*"
+},
+{
+"Effect": "Deny",
+"Action": "ec2:TerminateInstances",
+"Condition": {
+"NotIpAddress": {
+"aws:SourceIp" : [
+"192.0.2.0/24",
+"203.0.113.0/24"
+]
+}
+},
+"Resource": "*"
+}
+]
+}
+upvoted 2 times
+chasingsummer 2 years, 5 months ago
+The condition operator is "NotIpAddress" so I am not sure about D as right answer.
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Deny when IP address is not in (NotIPAddress). AWS has a weird way of stating Deny and it almost sound like double negative meaning positive. Bu
+read this doc for more clarity:
+https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_deny-ip.html
+It has the exact same example! Good luck!
+upvoted 2 times
+LeonSauveterre 1 year, 6 months ago
+This is exactly what I need, thanks!
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: D
+If you want to read more about this, see how it works: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_deny-
+ip.html
+Same policy as in this question with almost same use case.
+D is correct answer.
+upvoted 4 times
+elmogy 3 years ago
+Selected Answer: D
+" aws:SourceIP " indicates the IP address that is trying to perform the action.
+upvoted 2 times
+nosense 3 years ago
+Selected Answer: D
+d for sure
+upvoted 3 times

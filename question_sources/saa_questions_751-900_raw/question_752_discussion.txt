@@ -1,0 +1,63 @@
+A company has a multi-tier payment processing application that is based on virtual machines (VMs). The communication between
+the tiers occurs asynchronously through a third-party middleware solution that guarantees exactly-once delivery.
+The company needs a solution that requires the least amount of infrastructure management. The solution must guarantee exactly-
+once delivery for application messaging.
+Which combination of actions will meet these requirements? (Choose two.)
+A. Use AWS Lambda for the compute layers in the architecture. Most Voted
+B. Use Amazon EC2 instances for the compute layers in the architecture.
+C. Use Amazon Simple Notification Service (Amazon SNS) as the messaging component between the compute layers.
+D. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues as the messaging component between the compute layers.
+Most Voted
+E. Use containers that are based on Amazon Elastic Kubernetes Service (Amazon EKS) for the compute layers in the
+architecture.
+Comments
+osmk Highly Voted 2 years, 3 months ago
+Selected Answer: AD
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html
+upvoted 6 times
+Scheldon Highly Voted 1 year, 11 months ago
+Selected Answer: AD
+AnswerAD,
+SQS FIFO will guarantee exactly one time execution for each operation. The problem is with processing as we do not know if whole process will be
+closed in 15 min (TTL for Lambda).
+I'm choosing Lambda as it is natural thing for Payment procesing in AWS but I'm not 100% sure
+upvoted 5 times
+tch Most Recent 1 year, 5 months ago
+Selected Answer: AD
+SQS is helpful for Asynchronous processing workflows.
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: AD
+"As its name suggests, exactly-once semantics means that each message is delivered precisely once. The message can neither be lost nor delivered
+twice (or more times)."
+- SNS doesn't provide exactly-once delivery. Thus, we need SQS.
+- To achieve "least amount of intra management", we go with Lambda for compute layer.
+upvoted 2 times
+Sivaeas 2 years, 3 months ago
+Selected Answer: AD
+Correct Answer: AD
+Community vote distribution
+AD (100%)
+Lamdba+SQS FIFO
+upvoted 4 times
+PolarFox 2 years, 3 months ago
+someone please explain why the combination of D and E is not the correct?
+upvoted 2 times
+stephensimudemy 2 years, 3 months ago
+because qn says 'least amount of infrastructure management'.
+E is not.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+While EKS can provide scalability, it still requires managing container infrastructure. This adds complexity (more overhead in infra mgmt than A) to
+the solution
+upvoted 1 times
+jaswantn 2 years, 3 months ago
+option A for payment processing.
+option D for exactly once delivery.
+upvoted 2 times
+Umuntu 2 years, 4 months ago
+CD IS THE BEST ANSWER
+upvoted 1 times
+hajra313 2 years, 4 months ago
+a and d
+upvoted 3 times

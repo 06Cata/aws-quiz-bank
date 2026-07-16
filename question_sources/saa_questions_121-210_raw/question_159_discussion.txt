@@ -1,0 +1,139 @@
+A company is running a publicly accessible serverless application that uses Amazon API Gateway and AWS Lambda. The
+application’s traffic recently spiked due to fraudulent requests from botnets.
+Which steps should a solutions architect take to block requests from unauthorized users? (Choose two.)
+A. Create a usage plan with an API key that is shared with genuine users only. Most Voted
+B. Integrate logic within the Lambda function to ignore the requests from fraudulent IP addresses.
+C. Implement an AWS WAF rule to target malicious requests and trigger actions to filter them out. Most Voted
+D. Convert the existing public API to a private API. Update the DNS records to redirect users to the new API endpoint.
+E. Create an IAM role for each user attempting to access the API. A user will assume the role when making the API call.
+Comments
+jdr75 Highly Voted 3 years, 2 months ago
+Selected Answer: CE
+C) WAF has bot identification and remedial tools, so it's CORRECT.
+A) remember the question : "...block requests from unauthorized users?" -- an api key is involved in a authorization process. It's not the more secure
+process, but it's better than an totoally anonymous process. If you don't know the key, you can't authenticate. So the bots, at least the first
+days/weeks could not access the service (at the end they'll do, cos' the key will be spread informally). So it's CORRECT.
+B) Implement a logic in the Lambda to detect fraudulent ip's is almost impossible, cos' it's a dynamic and changing pattern that you cannot handle
+easily.
+D) creating a rol is not going to imply be more protected from unauth. request, because a rol is a "principal", it's not involved in the authorization
+process.
+upvoted 10 times
+debasishdtta 2 years, 5 months ago
+Don't use API keys for authentication or authorization to control access to your APIs. If you have multiple APIs in a usage plan, a user with a valid
+API key for one API in that usage plan can access all APIs in that usage plan. Instead, to control access to your API, use an IAM role, a Lambda
+authorizer, or an Amazon Cognito user pool.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+E "An IAM role for EACH (!) user ATTEMPTING (!) to access the API"? Hello no.
+upvoted 5 times
+awashenko Highly Voted 2 years, 8 months ago
+Selected Answer: AC
+Agree A and C
+I don't see how E is feasible as its a public API. How would you create an IAM role for each user?
+upvoted 7 times
+90c3163 10 months, 1 week ago
+Cognito Identity Pools. But thats a lot of overhead.
+upvoted 2 times
+Mrigraj12 Most Recent 1 year, 4 months ago
+Correct Answer: AC
+Community vote distribution
+AC (72%)
+CE (21%)
+6%
+Selected Answer: AC
+Wrong choices: B-> Integrating logic in lambda is not feasable as you will have to feed data which will increase its size, execution time and therefore
+overall cost.
+D-> If it happens then the public will not be able to access it as it is private only clients inside VPC will be abe to access it.
+E-> You are just giving them access
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: AC
+Ans A, C -
+A: using API keys and usage plans restricts access to your API to users who have the key, limiting fraudulent access.
+C: designed to fight bots
+upvoted 2 times
+diddy99 1 year, 11 months ago
+Selected Answer: AC
+C) Everyone agrees on C
+B) Almost impossible cos how do you detect fraudulent IP address from a publicly accessible application
+D) It's a publicly accessible application, converting the API to a private one defeats the purpose
+E) IAM role for each user trying to access a publicly accessible API is impossible. It like creating an IAM for each user that tries to use google AUTH
+for their website
+A) By implementing API keys and usage plans, you can restrict access to your API to only those users who possess the key, helping to limit fraudulent
+access.
+upvoted 2 times
+jerryl 1 year, 2 months ago
+but i think both option A and E imply that the api access actually have a targeted user
+if A is possible, why cant E be an apporach?
+upvoted 1 times
+dragongoseki 1 year, 11 months ago
+Selected Answer: AC
+AC is right answer.
+upvoted 1 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: AC
+AC for sure
+upvoted 2 times
+hb0011 2 years ago
+Do the people voting E realize how insane that is? Creating a local IAM user in your account for every user that needs to access the API. No just... no.
+upvoted 3 times
+EMPERBACH 2 years, 1 month ago
+Selected Answer: BC
+B. Integrate logic within the Lambda function to ignore the requests from fraudulent IP addresses. -> you can think about CORS script write on
+Lambda to prevent fraudulent IP addresses.
+C. Implement an AWS WAF rule to target malicious requests and trigger actions to filter them out. -> No comment here as it can use to filter traffic
+upvoted 1 times
+MrPCarrot 2 years, 4 months ago
+C and D are the perfect answers
+upvoted 2 times
+debasishdtta 2 years, 5 months ago
+Don't use API keys for authentication or authorization to control access to your APIs. If you have multiple APIs in a usage plan, a user with a valid API
+key for one API in that usage plan can access all APIs in that usage plan. Instead, to control access to your API, use an IAM role, a Lambda authorizer,
+or an Amazon Cognito user pool.
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: CD
+I'll throw a curveball over here. "C" is a given as WAF rules can target malicious usage. For example:
+https://docs.aws.amazon.com/whitepapers/latest/aws-best-practices-ddos-resiliency/aws-waf-ip-reputation.html
+"D" Convert existing public API to a private API. This part is same as A. The additional bit over here is to change the DNS record to a new API
+endpoint which blocks the requests from unauthorised users also. The unauthorised users will not be redirected from public to private API endpoint. 
+am assuming that the public API endpoint will be used for authorisation and only authorised users will be redirected to private endpoint. This is more
+robust as the actual API (private endpoint) never gets hit with requests from unauthorised bots and WAF redirects it back to public URL.
+Happy to be corrected and challenged
+upvoted 4 times
+sidharthwader 2 years, 3 months ago
+It's a globally published API if you make it private how do other people access it ? A would be the better solution than D
+upvoted 2 times
+ale_brd_111 2 years, 6 months ago
+Selected Answer: AC
+The combination of using an API key and implementing an AWS WAF rule provides the most comprehensive and effective way to block requests
+from unauthorized users and protect the company's serverless application from botnet attacks.
+upvoted 4 times
+MiniYang 2 years, 6 months ago
+Selected Answer: CE
+A. Create plans using API keys shared only with real users: While using API keys is a standard way to control access to APIs, using API keys alone may
+not completely prevent attacks from botnets. Malicious request.
+B. Incorporate logic in the Lambda function to ignore requests from fraudulent IP addresses: This may be a solution, but filtering that relies more on
+IP addresses may not be as flexible as using AWS WAF.
+D. Convert an existing public API to a private API. Update DNS records to redirect users to the new API endpoint: This approach makes the API
+private, but requires user redirects and may inconvenience existing users.
+upvoted 1 times
+Ruffyit 2 years, 6 months ago
+C) WAF has bot identification and remedial tools, so it's CORRECT.
+A) remember the question : "...block requests from unauthorized users?" -- an api key is involved in a authorization process. It's not the more secure
+process, but it's better than an totoally anonymous process. If you don't know the key, you can't authenticate. So the bots, at least the first
+days/weeks could not access the service (at the end they'll do, cos' the key will be spread informally). So it's CORRECT.
+upvoted 2 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: AC
+AWS WAF rule to target and filter out malicious requests and API key to authorize users.
+upvoted 1 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: AC
+The reasons are:
+An API key with a usage plan limits access to only authorized apps and users. This prevents general public access.
+WAF rules can identify and block malicious bot traffic through pattern matching and IP reputation lists.
+Together, the API key and WAF provide preventative and detective controls against unauthorized requests.
+The other options add complexity or are reactive. IAM roles per user is not feasible for a public API.
+Ignoring requests in Lambda and changing DNS are response actions after an attack.
+upvoted 3 times

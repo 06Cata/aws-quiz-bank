@@ -1,0 +1,167 @@
+A company's containerized application runs on an Amazon EC2 instance. The application needs to download security certificates
+before it can communicate with other business applications. The company wants a highly secure solution to encrypt and decrypt
+the certificates in near real time. The solution also needs to store data in highly available storage after the data is encrypted.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create AWS Secrets Manager secrets for encrypted certificates. Manually update the certificates as needed. Control access to
+the data by using fine-grained IAM access.
+B. Create an AWS Lambda function that uses the Python cryptography library to receive and perform encryption operations.
+Store the function in an Amazon S3 bucket.
+C. Create an AWS Key Management Service (AWS KMS) customer managed key. Allow the EC2 role to use the KMS key for
+encryption operations. Store the encrypted data on Amazon S3. Most Voted
+D. Create an AWS Key Management Service (AWS KMS) customer managed key. Allow the EC2 role to use the KMS key for
+encryption operations. Store the encrypted data on Amazon Elastic Block Store (Amazon EBS) volumes.
+Comments
+Chunsli Highly Voted 3 years, 7 months ago
+C makes a better sense. Between C (S3) and D (EBS), S3 is highly available with LEAST operational overhead.
+upvoted 50 times
+MutiverseAgent 2 years, 11 months ago
+Agree, also the data in EBS will be accessible only to the EC2 instance and that is not as available as S3 would be.
+upvoted 8 times
+jerryl 1 year, 2 months ago
+agree on this, although the question did not mention where the EBS is attached to, but i assume should be the EC2, then your statement make
+sense
+upvoted 1 times
+MXB05 Highly Voted 3 years, 8 months ago
+Selected Answer: C
+Correct Answer is C: EBS is not highly available
+upvoted 23 times
+FNJ1111 3 years, 5 months ago
+Per AWS: "Amazon EBS volumes are designed to be highly available, reliable, and durable"
+https://aws.amazon.com/ebs/features/
+upvoted 2 times
+Ello2023 3 years, 4 months ago
+EBS is Highly Available as it stores in multi AZ and S3 is regional.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+S3 is also highly available. Within the region, but still. Multi-AZ = HA.
+upvoted 3 times
+Bayebrymo 2 years, 1 month ago
+This is false... S3 is Multi AZ and EBS is only replicated WITHIN an AZ by default.
+Correct Answer: C
+Community vote distribution
+C (80%)
+D (17%)
+2%
+upvoted 3 times
+oguz11 3 years, 4 months ago
+EBS also has Multi-AZ capability, but it does not replicate the data across multiple availability zones by default. When Multi-AZ is enabled, it
+creates a replica of the EBS volume in a different availability zone and automatically failover to the replica in case of a failure. However, this
+requires additional configuration and management. In comparison, Amazon S3 automatically replicates data across multiple availability zones
+without any additional configuration. Therefore, storing the data on Amazon S3 provides a simpler and more efficient solution for high availability.
+upvoted 11 times
+dkw2342 2 years, 3 months ago
+This is false. There is no AWS-provided functionality that will replicate EBS volumes across AZs. There are 3rd-party solutions to this, but that's no
+what's being asked here.
+EBS is only replicated WITHIN an AZ by default.
+upvoted 3 times
+JayBee65 3 years, 5 months ago
+Yes it is!
+upvoted 1 times
+TS1991 1 year, 8 months ago
+EBS volumes are not Multi-AZ. EBS io2 types are multi-attach within the same AZ. EFS is multi-AZ
+upvoted 2 times
+pabloveintimilla Most Recent 1 year, 3 months ago
+Selected Answer: C
+C. Correct, AWS KMS handles encryption with minimal effort and Amazon S3 offers durable and available storage vs D Incorrect. EBS is storage
+attached to an EC2 instance, which reduces availability compared to S3.
+upvoted 1 times
+sk1974 1 year, 3 months ago
+Selected Answer: C
+The answer is in LEAST operational overhead
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: C
+Of the given options, C makes most sense. Reason being the rest of the options do notmake as much sense due to A. Being not specific enough, B.
+being insufficient to achieve the objective, D, being on EBS, which needs to be attached to a EC2 instance.
+One thing with the questions is that there is many times, some data that is unclear or there is some ambiguity. I feel these scenarios makes one to
+assume things and perhaps even train the mind to evaluate ambiguous situations. This is valuable in my opinion.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: C
+S3 is highly available compared to EBS and using AWS KMS is more suitable for managing certificates here
+upvoted 1 times
+thiahthura 1 year, 6 months ago
+Selected Answer: C
+Both C and D are correct. C is suitable for this requirement. we've to use S3 because they want to save the data with H.A
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+Selected Answer: C
+C is the most efficient.
+upvoted 1 times
+Shub80 1 year, 11 months ago
+AWS KMS: Provides a managed service for secure key storage and encryption/decryption operations. This eliminates the need to manage
+encryption/decryption logic within the application itself.
+Customer Managed Key: The company maintains control over the key, ensuring security.
+EC2 Role Permissions: Granting permissions to the EC2 role allows the application to use KMS for encryption/decryption without managing individua
+credentials.
+Amazon S3: Offers highly available and scalable storage for the encrypted certificates. S3 is generally cheaper than EBS for data that is not frequently
+accessed.
+upvoted 4 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: C
+C for sure
+upvoted 1 times
+huangyou2003 2 years, 1 month ago
+Selected Answer: C
+S3: highly available
+EBS: lower latency
+upvoted 1 times
+f761d0e 2 years, 1 month ago
+"Amazon S3 is an object storage service that can store large volumes of unstructured data, whereas Amazon EBS is a block storage service that is
+ideally suited for durable, low-latency data storage associated with EC2 instances."
+https://www.tutorialspoint.com/difference-between-amazon-s3-and-amazon-
+ebs#:~:text=In%20conclusion%2C%20Amazon%20S3%20is,storage%20associated%20with%20EC2%20instances.
+Seems like D to me. S3 is for large data, EBS is ec2 specific.
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: C
+The language is confusing over here so I'm going by process of elimination
+A: Wrong because manual operation and fine grained IAM is overhead
+B: What?
+D: Between C and D S3 is more HA than EFS so C wins
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Sorry meant EBS, not EFS for D
+D: Between C and D, S3 is more HA than EBS. So C wins
+upvoted 2 times
+ignajtpolandstrong 2 years, 5 months ago
+Selected Answer: D
+I would select D.
+you can mount a single Amazon Elastic Block Store (EBS) volume to multiple Docker containers running on the same Amazon Elastic Compute Cloud
+(EC2) instance.
+.
+you can store data from a container running on Amazon Elastic Compute Cloud (EC2) to an Amazon Simple Storage Service (S3) bucket. One way to
+do this is to use the aws s3 cp command in the command line of the EC2 instance.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: C
+A - does not mention storing the encrypted data at all (though that is a requirement), also involves manual action which is surely NOT "least
+operational effort"
+B - Doesn't make any sense
+C - Yes, S3 meets the requirements and is easy to access from containerized app
+D - EBS volumes are mounted to the container host, but data is created on containers
+upvoted 3 times
+xdkonorek2 2 years, 7 months ago
+Selected Answer: A
+A is OK
+secrets manager:
+- is highly available
+- you can store custom secrets in it like certificate
+- automatically encrypts secrets at rest, and can be configured for encryption in transit
+- downloading certificate from it is less operational overhead than decrypting it manually with KMS key
+arguments againts it that this is more manual than C and D? this manual step is necessary measure and can't be omitted in other options
+C and D have this "store the encrypted data in..." to store encrypted certificate you have to: log in to instance, get kms key, get certificate, encrypt it,
+and load that data this is more operational overhead
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"Least operational overhead" and "manually" (as in A) usually don't go together. Also, A does not say anything about storing the data (which is a
+requirement).
+"C and D have this 'store the encrypted data in'" yes, exactly, the encrypted data, NOT the certificate. You encrypt data with the certificate, and you
+want to store THAT encrypted data.
+upvoted 3 times
+David_Ang 2 years, 8 months ago
+Selected Answer: C
+"C" is more correct because S3 is more efficient and cheaper to store data like certificates, like this case. Also Option D involves using Amazon Elastic
+Block Store (Amazon EBS) volumes, which is not typically used for storing certificates and may introduce unnecessary complexity and operational
+overhead.
+upvoted 2 times

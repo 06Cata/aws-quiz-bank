@@ -1,0 +1,88 @@
+A company operates a two-tier application for image processing. The application uses two Availability Zones, each with one public
+subnet and one private subnet. An Application Load Balancer (ALB) for the web tier uses the public subnets. Amazon EC2 instances
+for the application tier use the private subnets.
+Users report that the application is running more slowly than expected. A security audit of the web server log files shows that the
+application is receiving millions of illegitimate requests from a small number of IP addresses. A solutions architect needs to resolve
+the immediate performance problem while the company investigates a more permanent solution.
+What should the solutions architect recommend to meet this requirement?
+A. Modify the inbound security group for the web tier. Add a deny rule for the IP addresses that are consuming resources.
+B. Modify the network ACL for the web tier subnets. Add an inbound deny rule for the IP addresses that are consuming
+resources. Most Voted
+C. Modify the inbound security group for the application tier. Add a deny rule for the IP addresses that are consuming
+resources.
+D. Modify the network ACL for the application tier subnets. Add an inbound deny rule for the IP addresses that are consuming
+resources.
+Comments
+lucdt4 Highly Voted 2 years, 6 months ago
+Selected Answer: B
+A wrong because security group can't deny (only allow)
+upvoted 29 times
+cloudenthusiast Highly Voted 2 years, 6 months ago
+Selected Answer: B
+In this scenario, the security audit reveals that the application is receiving millions of illegitimate requests from a small number of IP addresses. To
+address this issue, it is recommended to modify the network ACL (Access Control List) for the web tier subnets.
+By adding an inbound deny rule specifically targeting the IP addresses that are consuming resources, the network ACL can block the illegitimate
+traffic at the subnet level before it reaches the web servers. This will help alleviate the excessive load on the web tier and improve the application's
+performance.
+upvoted 10 times
+awsgeek75 Most Recent 1 year, 10 months ago
+Selected Answer: B
+A: Wrong as SG cannot deny. By default everything is deny in SG and you allow stuff
+CD: App tier is not under attack so these are irrelevant options
+B: Correct as NACL is exactly for this access control list to define rules for CIDR or IP addresses
+upvoted 3 times
+Besisco 1 year, 4 months ago
+agree, even if an app tier was under attack, the block rule should be applied at a web tier ACL
+upvoted 1 times
+TariqKipkemei 2 years, 1 month ago
+Selected Answer: B
+Correct Answer: B
+Community vote distribution
+B (91%)
+9%
+Modify the network ACL for the web tier subnets. Add an inbound deny rule for the IP addresses that are consuming resources.
+upvoted 3 times
+potomac 2 years, 1 month ago
+Selected Answer: B
+A is wrong
+Security groups act at the network interface level, not the subnet level, and they support Allow rules only.
+upvoted 3 times
+Devsin2000 2 years, 2 months ago
+Selected Answer: A
+The security Group can be applied to an ALB at web tier.
+upvoted 1 times
+Goutham4981 2 years ago
+Security group can't deny.
+upvoted 3 times
+OSHOAIB 1 year, 11 months ago
+Security group rules are always permissive; you can't create rules that deny access.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html
+upvoted 3 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: B
+Since the bad requests are targeting the web tier, adding ACL deny rules for those IP addresses on the web subnets will block the traffic before it
+reaches the instances.
+Security group changes (Options A and C) would not be effective since the requests are not even reaching those resources.
+Modifying the application tier ACL (Option D) would not stop the bad traffic from hitting the web tier.
+upvoted 3 times
+fakrap 2 years, 6 months ago
+Selected Answer: B
+A is wrong because you cannot put any deny in security group
+upvoted 3 times
+Rob1L 2 years, 6 months ago
+Selected Answer: B
+You cannot Deny on SG, so it's B
+upvoted 6 times
+nosense 2 years, 6 months ago
+Selected Answer: A
+Option B is not as effective as option A
+upvoted 5 times
+cloudenthusiast 2 years, 6 months ago
+A and C out due to the fact that SG does not have deny on allow rules.
+upvoted 3 times
+y0 2 years, 6 months ago
+Security group only have allow rules
+upvoted 3 times
+nosense 2 years, 6 months ago
+yeah, my mistake. B should be
+upvoted 2 times

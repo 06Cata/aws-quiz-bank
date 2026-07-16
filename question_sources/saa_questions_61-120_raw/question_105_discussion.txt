@@ -1,0 +1,124 @@
+A company is preparing to deploy a new serverless workload. A solutions architect must use the principle of least privilege to
+configure permissions that will be used to run an AWS Lambda function. An Amazon EventBridge (Amazon CloudWatch Events)
+rule will invoke the function.
+Which solution meets these requirements?
+A. Add an execution role to the function with lambda:InvokeFunction as the action and * as the principal.
+B. Add an execution role to the function with lambda:InvokeFunction as the action and Service: lambda.amazonaws.com as the
+principal.
+C. Add a resource-based policy to the function with lambda:* as the action and Service: events.amazonaws.com as the
+principal.
+D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com
+as the principal. Most Voted
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: D
+Best way to check it... The question is taken from the example shown here in the documentation:
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-use-resource-based.html#eb-lambda-permissions
+upvoted 38 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: D
+The correct solution is D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com
+as the principal.
+The principle of least privilege requires that permissions are granted only to the minimum necessary to perform a task. In this case, the Lambda
+function needs to be able to be invoked by Amazon EventBridge (Amazon CloudWatch Events). To meet these requirements, you can add a resource-
+based policy to the function that allows the InvokeFunction action to be performed by the Service: events.amazonaws.com principal. This will allow
+Amazon EventBridge to invoke the function, but will not grant any additional permissions to the function.
+upvoted 30 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Why other options are wrong
+Option A is incorrect because it grants the lambda:InvokeFunction action to any principal (*), which would allow any entity to invoke the function
+and goes beyond the minimum permissions needed.
+Option B is incorrect because it grants the lambda:InvokeFunction action to the Service: lambda.amazonaws.com principal, which would allow any
+Lambda function to invoke the function and goes beyond the minimum permissions needed.
+Option C is incorrect because it grants the lambda:* action to the Service: events.amazonaws.com principal, which would allow Amazon EventBridge
+to perform any action on the function and goes beyond the minimum permissions needed.
+upvoted 23 times
+huaze_lei Most Recent 1 year, 9 months ago
+Selected Answer: D
+Following the principle of least privilege, you should not grant Events the * privilege. Just enough to perform its job will do.
+Also, you need a resource-based policy to attach to the function, for Events to be able to execute the function
+Correct Answer: D
+Community vote distribution
+D (97%)
+3%
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: D
+D is the correct answer
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+This is a good example article with nice learning material.
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-run-lambda-schedule.html
+upvoted 2 times
+chasingsummer 2 years, 6 months ago
+Selected Answer: D
+Good explanation from ChatGPT:
+In order to adhere to the principle of least privilege when configuring permissions for an AWS Lambda function invoked by an Amazon EventBridge
+(CloudWatch Events) rule, the most appropriate solution would be:
+D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com as the principal.
+This solution involves attaching a resource-based policy to the Lambda function. It specifies that the only entity allowed to invoke the Lambda
+function is the Amazon EventBridge service (represented by the principal events.amazonaws.com) and restricts the action to only invoking the
+function (lambda:InvokeFunction). This aligns with the principle of least privilege by granting the necessary permissions explicitly to the service that
+needs them, without providing overly permissive access.
+upvoted 3 times
+MiniYang 2 years, 6 months ago
+Selected Answer: B
+Is anyone can explain why B is can't be a good choice? The option adds the execution role to the function, with lambda:InvokeFunction as the action
+and Service: lambda.amazonaws.com as the body. This restricts the Lambda function to only the Lambda service, providing an effective layer of
+security. and fully complies with the principle of least privilege
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Because the question is about the permission 'to run the function' (permission for the administrator to invoke it), while B is about execution
+permissions (permission for the function to access resources).
+upvoted 1 times
+Evonne_HY 2 years, 8 months ago
+why not choose B, an execution role is attached to lambda and a policy is attached to an execution role
+upvoted 1 times
+Georgeyp 2 years, 8 months ago
+B would be the wrong choice as the both roles are granted to lambda, however the question requires Eventbridge to call the Lambda function.
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: D
+lambda:InvokeFunction is the action needed to invoke the Lambda function.
+Service: events.amazonaws.com is the principal (the AWS service) that is allowed to invoke the Lambda function. In this case, you're explicitly allowing
+CloudWatch Events to invoke the function.
+upvoted 2 times
+MNotABot 2 years, 11 months ago
+D
+* is BIG NO. And we are talking about policy --> hence D
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+In this solution, a resource-based policy is added to the Lambda function, which allows the specified principal (events.amazonaws.com) to invoke the
+function. The lambda:InvokeFunction action provides the necessary permission for the Amazon EventBridge rule to trigger the Lambda function.
+Option A is incorrect because it assigns the lambda:InvokeFunction action to all principals (*), which grants permission to invoke the function to any
+entity, which is broader than necessary.
+Option B is incorrect because it assigns the lambda:InvokeFunction action to the specific principal "lambda.amazonaws.com," which is the service
+principal for AWS Lambda. However, the requirement is for the EventBridge service principal to invoke the function.
+Option C is incorrect because it assigns the lambda:* action to the specific principal "events.amazonaws.com," which is the service principal for
+Amazon EventBridge. However, it grants broader permissions than necessary, allowing any Lambda function action, not just lambda:InvokeFunction.
+upvoted 4 times
+Abrar2022 3 years ago
+Option C is incorrect, the reason is that, firstly, lambda:* allows Amazon EventBridge to perform any action on the function and this is beyond the
+minimum permissions needed.
+upvoted 2 times
+Rahulbit34 3 years, 1 month ago
+Since its for Lamda which is a resource, resource policy is the trick
+upvoted 2 times
+bdp123 3 years, 4 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/eventbridge/latest/userguide/resource-based-policies-eventbridge.html#lambda-permissions
+upvoted 1 times
+gustavtd 3 years, 5 months ago
+Selected Answer: D
+The definition scope of D is the smallest, so is it
+upvoted 1 times
+techhb 3 years, 5 months ago
+Selected Answer: D
+events.amazonaws.com is principal for eventbridge
+upvoted 1 times
+career360guru 3 years, 5 months ago
+Selected Answer: D
+Option D
+upvoted 1 times

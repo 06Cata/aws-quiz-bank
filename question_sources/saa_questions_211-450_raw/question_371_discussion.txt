@@ -1,0 +1,158 @@
+A company needs to create an Amazon Elastic Kubernetes Service (Amazon EKS) cluster to host a digital media streaming
+application. The EKS cluster will use a managed node group that is backed by Amazon Elastic Block Store (Amazon EBS) volumes
+for storage. The company must encrypt all data at rest by using a customer managed key that is stored in AWS Key Management
+Service (AWS KMS).
+Which combination of actions will meet this requirement with the LEAST operational overhead? (Choose two.)
+A. Use a Kubernetes plugin that uses the customer managed key to perform data encryption.
+B. After creation of the EKS cluster, locate the EBS volumes. Enable encryption by using the customer managed key.
+C. Enable EBS encryption by default in the AWS Region where the EKS cluster will be created. Select the customer managed key
+as the default key. Most Voted
+D. Create the EKS cluster. Create an IAM role that has a policy that grants permission to the customer managed key. Associate
+the role with the EKS cluster. Most Voted
+E. Store the customer managed key as a Kubernetes secret in the EKS cluster. Use the customer managed key to encrypt the
+EBS volumes.
+Comments
+asoli Highly Voted 3 years, 2 months ago
+Selected Answer: CD
+https://docs.aws.amazon.com/eks/latest/userguide/managed-node-
+groups.html#:~:text=encrypted%20Amazon%20EBS%20volumes%20without%20using%20a%20launch%20template%2C%20encrypt%20all%20new%
+20Amazon%20EBS%20volumes%20created%20in%20your%20account.
+upvoted 17 times
+bujuman 2 years, 2 months ago
+If you want to encrypt Amazon EBS volumes for your nodes, you can deploy the nodes using a launch template. To deploy managed nodes with
+encrypted Amazon EBS volumes without using a launch template, encrypt all new Amazon EBS volumes created in your account. For more
+information, see Encryption by default in the Amazon EC2 User Guide for Linux Instances.
+upvoted 3 times
+imvb88 Highly Voted 3 years, 1 month ago
+Selected Answer: BD
+Quickly rule out A (which plugin? > overhead) and E because of bad practice
+Among B,C,D: B and C are functionally similar > choice must be between B or C, D is fixed
+Between B and C: C is out since it set default for all EBS volume in the region, which is more than required and even wrong, say what if other EBS
+volumes of other applications in the region have different requirement?
+upvoted 13 times
+NSA_Poker 2 years ago
+(C) is correct; the EBS volumes of other applications in the region will not be affected bc an IAM role will limit the encryption key to the EKS cluster.
+upvoted 2 times
+JustEugen Most Recent 9 months ago
+Selected Answer: CD
+D is easy because you have to add permission to use the KMS key
+C is better than anything else because it is recommended practice to secure your volumes
+Correct Answer: CD
+Community vote distribution
+CD (55%)
+BD (42%)
+2%
+https://aws.amazon.com/blogs/compute/must-know-best-practices-for-amazon-ebs-encryption/?utm_source=chatgpt.com
+upvoted 1 times
+srcntpc 1 year ago
+Selected Answer: CD
+Why C is Correct:
+Enabling EBS encryption by default in the Region ensures that all newly created EBS volumes are encrypted automatically.
+You can specify a customer managed KMS key as the default encryption key.
+Why D is Correct:
+The EKS cluster (and its nodes) will need IAM permissions to use the customer managed KMS key for encryption/decryption.
+Associating the correct IAM role with the EKS cluster ensures this access.
+upvoted 2 times
+Yak_Yeti 1 year, 1 month ago
+Selected Answer: CD
+D is clear and as to B vs C? The trade-off is the potential for encrypting other volumes in the Region, but the manual effort and complexity of Option
+B outweigh this concern when considering operational efficiency.
+upvoted 1 times
+babayomi 1 year, 7 months ago
+CD
+This options are wrongly stated in my understanding. B is wrong because you can not encrypt an unencrypted created ebs volume. You need to take
+a snapshot of the volume, encrypt the snapshot ,creat new ebs volume from snapshot. You can also enable encryption during creation. So the
+statement is wrong. The next available option can only be C, except that in that account all ebs volumes created would be encrypted, this is also
+questionable. Because if another person create a new ebs volumes it's automatically encrypted.
+upvoted 2 times
+scaredSquirrel 1 year, 9 months ago
+Selected Answer: CD
+A and E are obvious nos. D is a shoo-in.
+The difference between B&C is basicually EBS encrption by default vs encrption. Encryption by default is by region, and encrypt everything in that
+region going forward, versus simple encryption is volume by volume, C is less operational overhead. Check doc & chatGPT.
+upvoted 2 times
+jjcode 2 years, 3 months ago
+this one is going on my skip list
+upvoted 7 times
+Mahmouddddddddd 2 years, 2 months ago
+Don't it came for me in my exam today xd
+upvoted 4 times
+JA2018 1 year, 6 months ago
+Hi Mahmouddddddddd, can you share what were your chosen answers?
+upvoted 1 times
+jaswantn 2 years, 4 months ago
+If question is giving a requirement related to a particular case and asking to encrypt all data at rest; it is clear that encryption is for this case only and
+not for other projects in entire region. so option B is more appropriate along with option D.
+upvoted 2 times
+frmrkc 2 years, 4 months ago
+Selected Answer: CD
+It says: 'The company must encrypt ALL data at rest', so there is nothing wrong with 'enabling EBS encryption by default' . C & D
+upvoted 5 times
+LeonSauveterre 1 year, 6 months ago
+Exactly. Option B is out of the question. Not to mention option C barely has any operational overhead.
+upvoted 1 times
+upliftinghut 2 years, 5 months ago
+Selected Answer: BD
+B&D are correct. C is wrong because when you turn on encryption by defaul, AWS uses its own key while the requirement is using Customer key.
+Detail is here: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: BD
+Not A (avoid 3rd party plugins when there are native services)
+Not C ("encryption by default" would impact other services)
+Not E (Keys belong in KMS, not in EKS cluster)
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+"The company must encrypt all data at rest by using a customer managed key that is stored in AWS Key Management Service (AWS KMS)."
+I am just a bit concerned that the question does not put any limits on not encrypting all the EBS by default in the account. Both B and C can work. C
+is a hack but it is definitely LEAST operational overhead. Also, we don't know if there are other services or not that may be impacted. What do you
+think?
+upvoted 2 times
+Marco_St 2 years, 5 months ago
+Selected Answer: CD
+EBS encryption is set regionally. AWS account is global but it does not mean EBS encryption is enable by default at account level. default EBS
+encryption is a regional setting within your AWS account. Enabling it in a specific region ensures that all new EBS volumes created in that region are
+encrypted by default, using either the default AWS managed key or a customer managed key that you specify.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"Enabling it in a specific region ensures that all new EBS volumes created in that region are encrypted by default" which is not what we want. We
+want to encrypt the EBS volumes used by this EKS cluster, NOT "all new EBS volumes created in that region."
+upvoted 2 times
+maudsha 2 years, 7 months ago
+Selected Answer: CD
+IF you need to encrypt an unencrypted volume,
+• Create an EBS snapshot of the volume
+• Encrypt the EBS snapshot ( using copy )
+• Create new EBS volume from the snapshot ( the volume will also be encrypted )
+so it has an operational overhead.
+So assuming they won't use this account for anything else we can use C. Enable EBS encryption by default in the AWS Region where the EKS cluster
+will be created. Select the customer managed key as the default key.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+"Assuming they won't use this account for anything else" how could we assume that?
+upvoted 2 times
+TariqKipkemei 2 years, 7 months ago
+Selected Answer: CD
+Option D is required wither way.
+Technically both option B and C would work, but with B you would have to enable encryption node by node, while with option C provides a onetime
+action of enabling encryption on all nodes.
+The requirement is the option with LEAST operational overhead.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+B created some deployment work, but NOT "operational (!) overhead" once it's deployed. C enables encryption by default for all new EBS volumes
+which is not what we want.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: CD
+These options allow EBS encryption with the customer managed KMS key with minimal operational overhead:
+C) Setting the KMS key as the regional EBS encryption default automatically encrypts new EKS node EBS volumes.
+D) The IAM role grants the EKS nodes access to use the key for encryption/decryption operations.
+upvoted 1 times
+jaydesai8 2 years, 11 months ago
+Selected Answer: CD
+C - enable EBS encryption by default in a region -https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+D - Provides key access permission just to the EKS cluster without changing broader IAM permissions
+upvoted 1 times
+pentium75 2 years, 5 months ago
+We're not asked to enable EBS encryption by default.
+upvoted 2 times

@@ -1,0 +1,127 @@
+A company needs to retain its AWS CloudTrail logs for 3 years. The company is enforcing CloudTrail across a set of AWS accounts
+by using AWS Organizations from the parent account. The CloudTrail target S3 bucket is configured with S3 Versioning enabled.
+An S3 Lifecycle policy is in place to delete current objects after 3 years.
+After the fourth year of use of the S3 bucket, the S3 bucket metrics show that the number of objects has continued to rise.
+However, the number of new CloudTrail logs that are delivered to the S3 bucket has remained consistent.
+Which solution will delete objects that are older than 3 years in the MOST cost-effective manner?
+A. Configure the organization’s centralized CloudTrail trail to expire objects after 3 years.
+B. Configure the S3 Lifecycle policy to delete previous versions as well as current versions. Most Voted
+C. Create an AWS Lambda function to enumerate and delete objects from Amazon S3 that are older than 3 years.
+D. Configure the parent account as the owner of all objects that are delivered to the S3 bucket.
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: B
+This is the most cost-effective option because:
+• Versioning has caused the number of objects to increase over time, even as current objects are deleted after 3 years. By deleting previous versions
+as well, this will clean up old object versions and reduce storage costs.
+• An S3 Lifecycle policy incurs no additional charges and requires no additional resources to configure and run. It is a native S3 tool for managing
+object lifecycles cost-effectively.
+upvoted 11 times
+cookieMr Highly Voted 2 years, 5 months ago
+Selected Answer: B
+By configuring the S3 Lifecycle policy to delete previous versions as well as current versions, the older versions of the CloudTrail logs will be deleted.
+This ensures that objects older than 3 years are removed from the S3 bucket, reducing the object count and controlling storage costs.
+A. This option is not directly related to managing objects in the S3. It focuses on configuring the expiration of CloudTrail trails, which may not addres
+the need to delete objects from the S3 bucket.
+C. While it is technically possible to create a Lambda to delete objects older than 3 years, this approach would introduce additional complexity and
+operational overhead.
+D. Changing the ownership of the objects in the S3 bucket does not directly address the need to delete objects older than 3 years. Ownership does
+not affect the deletion behavior of the objects.
+upvoted 5 times
+Mikado211 Most Recent 2 years ago
+Selected Answer: B
+I did something similar recently : Lifecycle is triggered more or less each 24 hours, in my case it removed hundreds of gigabytes and millions of small
+files in one shot. Using another mechanism like a script would have taken days if not weeks.
+upvoted 3 times
+Ruffyit 2 years ago
+This is the most cost-effective option because:
+• Versioning has caused the number of objects to increase over time, even as current objects are deleted after 3 years. By deleting previous versions
+as well, this will clean up old object versions and reduce storage costs.
+Correct Answer: B
+Community vote distribution
+B (94%)
+6%
+• An S3 Lifecycle policy incurs no additional charges and requires no additional resources to configure and run. It is a native S3 tool for managing
+object lifecycles cost-effectively.
+upvoted 3 times
+TariqKipkemei 2 years, 2 months ago
+Selected Answer: B
+Ensure to delete previous versions as well.
+upvoted 2 times
+Bmarodi 2 years, 6 months ago
+Selected Answer: B
+I go for option B.
+upvoted 2 times
+ruqui 2 years, 6 months ago
+I don't think it's possible to configure an S3 lifecycle policy to delete all versions of an object, so B is wrong ... I think the question is improperly
+worded
+upvoted 3 times
+Rahulbit34 2 years, 7 months ago
+• Versioning has caused the number of objects to increase over time, even as current objects are deleted after 3 years. By deleting previous versions
+as well, this will clean up old object versions and reduce storage costs. • An S3 Lifecycle policy incurs no additional charges and requires no
+additional resources to configure and run. It is a native S3 tool for managing object lifecycles cost-effectively.
+upvoted 2 times
+kruasan 2 years, 7 months ago
+Selected Answer: B
+This is the most cost-effective option because:
+• Versioning has caused the number of objects to increase over time, even as current objects are deleted after 3 years. By deleting previous versions
+as well, this will clean up old object versions and reduce storage costs.
+• An S3 Lifecycle policy incurs no additional charges and requires no additional resources to configure and run. It is a native S3 tool for managing
+object lifecycles cost-effectively.
+upvoted 4 times
+kruasan 2 years, 7 months ago
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html
+upvoted 3 times
+bullrem 2 years, 10 months ago
+Selected Answer: C
+A more cost-effective solution would be to configure the organization's centralized CloudTrail trail to expire objects after 3 years. This would ensure
+that all objects, including previous versions, are deleted after the specified retention period.
+Another option would be to create an AWS Lambda function to enumerate and delete objects from Amazon S3 that are older than 3 years, this
+would allow you to have more control over the deletion process and to write a custom logic that best fits your use case.
+upvoted 3 times
+pentium75 1 year, 11 months ago
+As long as versioning on the S3 bucket is enabled, any deletion, whether performed by CloudTrail or by your custom Lambda function, will simply
+add a new version with a deletion market but will not delete the previous version.
+upvoted 3 times
+JayBee65 2 years, 10 months ago
+Selected Answer: B
+The question clearly says "An S3 Lifecycle policy is in place to delete current objects after 3 years". This implies that previous versions are not deleted
+since this is a separate setting, and since logs are constantly changed, it would seem to make sense to delete previous versions so, so B. D is wrong,
+since the parent account (the management account) will already be the owner of all objects delivered to the S3 bucket, "All accounts in the
+organization can see MyOrganizationTrail in their list of trails, but member accounts cannot remove or modify the organization trail. Only the
+management account or delegated administrator account can change or delete the trail for the organization.", see
+https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html
+upvoted 3 times
+John_Zhuang 2 years, 10 months ago
+Selected Answer: B
+B is the right answer. Ref: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-
+security.html#:~:text=The%20CloudTrail%20trail,time%20has%20passed.
+Option A is wrong. No way to expire the cloudtrail logs
+upvoted 4 times
+techhb 2 years, 10 months ago
+Selected Answer: B
+Configure the S3 Lifecycle policy to delete previous versions
+upvoted 3 times
+Aninina 2 years, 11 months ago
+Selected Answer: B
+B. Configure the S3 Lifecycle policy to delete previous versions as well as current versions.
+upvoted 2 times
+Aninina 2 years, 11 months ago
+B. Configure the S3 Lifecycle policy to delete previous versions as well as current versions.
+upvoted 2 times
+Parsons 2 years, 11 months ago
+Selected Answer: B
+B is correct answer
+upvoted 3 times
+AHUI 2 years, 11 months ago
+Ans: A
+https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html
+When you create an organization trail, a trail with the name that you give it is created in every AWS account that belongs to your organization. Users
+with CloudTrail permissions in member accounts can see this trail when they log into the AWS CloudTrail console from their AWS accounts, or when
+they run AWS CLI commands such as describe-trail. However, users in member accounts do not have sufficient permissions to delete the organization
+trail, turn logging on or off, change what types of events are logged, or otherwise change the organization trail in any way.
+upvoted 1 times
+AHUI 2 years, 11 months ago
+correction: Ans D is the answer.
+https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html
+upvoted 1 times

@@ -1,0 +1,169 @@
+A company runs demonstration environments for its customers on Amazon EC2 instances. Each environment is isolated in its own
+VPC. The company’s operations team needs to be notified when RDP or SSH access to an environment has been established.
+A. Configure Amazon CloudWatch Application Insights to create AWS Systems Manager OpsItems when RDP or SSH access is
+detected.
+B. Configure the EC2 instances with an IAM instance profile that has an IAM role with the AmazonSSMManagedInstanceCore
+policy attached.
+C. Publish VPC flow logs to Amazon CloudWatch Logs. Create required metric filters. Create an Amazon CloudWatch metric
+alarm with a notification action for when the alarm is in the ALARM state. Most Voted
+D. Configure an Amazon EventBridge rule to listen for events of type EC2 Instance State-change Notification. Configure an
+Amazon Simple Notification Service (Amazon SNS) topic as a target. Subscribe the operations team to the topic.
+Comments
+cookieMr Highly Voted 2 years, 5 months ago
+Selected Answer: C
+By publishing VPC flow logs to CloudWatch Logs and creating metric filters to detect RDP or SSH access, the operations team can configure an
+CloudWatch metric alarm to notify them when the alarm is triggered. This will provide the desired notification when RDP or SSH access to an
+environment is established.
+Option A is incorrect because CloudWatch Application Insights is not designed for detecting RDP or SSH access.
+Option B is also incorrect because configuring an IAM instance profile with the AmazonSSMManagedInstanceCore policy does not directly address
+the requirement of notifying the operations team when RDP or SSH access occurs.
+Option D is wrong beacuse configuring an EventBridge rule to listen for EC2 Instance State-change Notification events and using an SNS topic as a
+target will notify the operations team about changes in the instance state, such as starting or stopping instances. However, it does not specifically
+detect or notify when RDP or SSH access is established, which is the requirement stated in the question.
+upvoted 17 times
+Vickysss Highly Voted 2 years, 10 months ago
+Selected Answer: C
+https://aws.amazon.com/blogs/security/how-to-monitor-and-visualize-failed-ssh-access-attempts-to-amazon-ec2-linux-instances/
+upvoted 9 times
+NitiATOS 2 years, 10 months ago
+https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-records-examples.html#flow-log-example-accepted-rejected
+Adding this to support that VPC flow logs can be used to cvapture Accepted or Rejected SSH and RDP traffic.
+upvoted 4 times
+ruqui 2 years, 6 months ago
+I don't think C would be an acceptable solution ... the request is to be notified WHEN a SSH and/or RDP connection is established so it requires
+real-time monitoring and that is something the C solution does not provide ... I would select A as a correct answer
+upvoted 1 times
+pentium75 Most Recent 1 year, 11 months ago
+Selected Answer: C
+C sounds complex, but is the only answer that can work.
+Not A - Application Insights has nothing to do with SSH/RDP access to the OS; also we need a notification, not an OpsItem
+Correct Answer: C
+Community vote distribution
+C (86%)
+8%
+Not B - Just attaching a role does not create a notification
+Not D - Establishing SSH/RDP access is not a "state change" that would trigger this
+upvoted 3 times
+pentium75 1 year, 11 months ago
+Selected Answer: C
+A bit clueless here. AWS-recommended approach involves the CloudWatch Logs Agent on each EC2 instance, but that is not involved in any of the
+answers.
+A: Sounds good at first read, but "CloudWatch Application Insights" cannot detect RDP or SSH access.
+B: Would allow RDP or SSH access via Systems Manager, but would NOT prevent access without Systems Manager; also we'd need to configure
+notifications in Systems Manager which is not mentioned here.
+upvoted 3 times
+pentium75 1 year, 11 months ago
+C: Could work but it seems overkill to capture VPC flow logs just to detect SSH and RDP traffic. Also it is not real-time, and it's unclear how and
+when exactly the state transitions and notifications will be triggered. At best you'd get notification few minutes AFTER (not "when") "access has
+been established". Still, is has most similarity with the recommended approach to detect failed connections:
+https://aws.amazon.com/tr/blogs/security/how-to-monitor-and-visualize-failed-ssh-access-attempts-to-amazon-ec2-linux-instances/
+D: Won't work because establishment of a connection is not an instance state change.
+upvoted 3 times
+Ruffyit 2 years ago
+https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-records-examples.html#flow-log-example-accepted-rejected
+Adding this to support that VPC flow logs can be used to cvapture Accepted or Rejected SSH and RDP traffic.
+upvoted 2 times
+TariqKipkemei 2 years, 2 months ago
+Selected Answer: C
+Publish VPC flow logs to Amazon CloudWatch Logs. Create required metric filters. Create an Amazon CloudWatch metric alarm with a notification
+action for when the alarm is in the ALARM state
+upvoted 2 times
+Bmarodi 2 years, 6 months ago
+Selected Answer: C
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log
+data can be published to the following locations: Amazon CloudWatch Logs, Amazon S3, or Amazon Kinesis Data Firehose. After you create a flow
+log, you can retrieve and view the flow log records in the log group, bucket, or delivery stream that you configured.
+Flow logs can help you with a number of tasks, such as:
+Diagnosing overly restrictive security group rules
+Monitoring the traffic that is reaching your instance
+Determining the direction of the traffic to and from the network interfaces
+Ref link: https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+upvoted 4 times
+cokutan 2 years, 6 months ago
+Selected Answer: C
+seems like c:
+https://aws.amazon.com/tr/blogs/security/how-to-monitor-and-visualize-failed-ssh-access-attempts-to-amazon-ec2-linux-instances/
+upvoted 2 times
+pentium75 1 year, 11 months ago
+This link does not mention VPC flow logs at all.
+upvoted 1 times
+ChrisAn 2 years, 6 months ago
+Selected Answer: D
+D. Configure an Amazon EventBridge rule to listen for events of type EC2 Instance State-change Notification. Configure an Amazon Simple
+Notification Service (Amazon SNS) topic as a target. Subscribe the operations team to the topic. This setup allows the EventBridge rule to capture
+instance state change events, such as when RDP or SSH access is established. The rule can then send notifications to the specified SNS topic, which is
+subscribed by the operations team.
+upvoted 2 times
+markw92 2 years, 5 months ago
+D is wrong. EC2 instance state change is only for pending, running etc. https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-
+instance-state-changes.html you can't have state change of ssh or rdp.
+upvoted 1 times
+datz 2 years, 8 months ago
+Selected Answer: C
+C:
+https://www.youtube.com/watch?v=KAe3Eju59OU
+upvoted 2 times
+Abhineet9148232 2 years, 9 months ago
+Selected Answer: C
+https://aws.amazon.com/blogs/security/how-to-monitor-and-visualize-failed-ssh-access-attempts-to-amazon-ec2-linux-instances/
+upvoted 2 times
+bullrem 2 years, 10 months ago
+Selected Answer: A
+A. Configuring Amazon CloudWatch Application Insights to create AWS Systems Manager OpsItems when RDP or SSH access is detected would be
+the most appropriate solution in this scenario. This would allow the operations team to be notified when RDP or SSH access has been established
+and provide them with the necessary information to take action if needed. Additionally, Amazon CloudWatch Application Insights would allow for
+monitoring and troubleshooting of the system in real-time.
+upvoted 1 times
+Training4aBetterLife 2 years, 10 months ago
+Selected Answer: C
+EC2 Instance State-change Notifications are not the same as RDP or SSH established connection notifications. Use Amazon CloudWatch Logs to
+monitor SSH access to your Amazon EC2 Linux instances so that you can monitor rejected (or established) SSH connection requests and take action.
+upvoted 5 times
+alexleely 2 years, 10 months ago
+Selected Answer: A
+The Answer can be A or C depending on the requirement if it requires real-time notification.
+A: Allows the operations team to be notified in real-time when access is established, and also provides visibility into the access events through the
+OpsItems.
+C: The logs will need to be analyzed and metric filters applied to detect access, and then the alarm will trigger based on that analysis. This method
+could have a delay in providing notifications. Thus, not the best solution if real-time notification is required.
+Why not D: RDP or SSH access does not cause an EC2 instance to have a state change. The state change events that Amazon EventBridge can listen
+for include stopping, starting, and terminated instances, which do not apply to RDP or SSH access. But RDP or SSH connection to an EC2 instance
+does generate an event in the system, such as a log entry which can be used to notify the Operation team. Since its a log, you would require a service
+that monitors logs like CloudTrail, VPC Flow logs, or AWS Systems Manager Session Manager.
+upvoted 3 times
+JayBee65 2 years, 10 months ago
+I completely agree with the logic here, but I'm thinking C, since I believe you will need to "Create required metric filters" in order to detect RDP or
+SSH access, and this is not specified in the question, see https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-create-
+OpsItems-from-CloudWatch-Alarms.html
+upvoted 2 times
+owlminus 2 years, 10 months ago
+Selected Answer: C
+It's C fam. RDP or SSH connections won't change the state of the EC2 instance, so D doesn't make sense.
+upvoted 5 times
+forzadejan 2 years, 11 months ago
+D. Configure an Amazon EventBridge rule to listen for events of type EC2 Instance State-change Notification. Configure an Amazon Simple
+Notification Service (Amazon SNS) topic as a target. Subscribe the operations team to the topic.
+EC2 instances sends events to the EventBridge when state change occurs, such as when a new RDP or SSH connection is established, you can use
+EventBridge to configure a rule that listens for these events and trigger an action, like sending an email or SMS, when the connection is detected. The
+operations team can be notified by subscribing to the Amazon Simple Notification Service (Amazon SNS) topic, which can be configured as the
+target of the EventBridge rule.
+upvoted 3 times
+alanp 2 years, 11 months ago
+Are state changes pending:
+running
+stopping
+stopped
+shutting-down
+terminated
+https://aws.amazon.com/blogs/security/how-to-monitor-and-visualize-failed-ssh-access-attempts-to-amazon-ec2-linux-instances/
+upvoted 2 times
+mhmt4438 2 years, 11 months ago
+Selected Answer: D
+Configure an Amazon EventBridge rule to listen for events of type EC2 Instance State-change Notification. Configure an Amazon Simple Notification
+Service (Amazon SNS) topic as a target. Subscribe the operations team to the topic. This approach allows you to set up a rule that listens for state
+change events on the EC2 instances, specifically for when RDP or SSH access is established, and trigger a notification via Amazon SNS to the
+operations team. This way they will be notified when RDP or SSH access to an environment has been established.
+upvoted 3 times
+CapJackSparrow 2 years, 9 months ago
+um, isn't "EC2 Instance State-change" like running, terminated, or stopped?
+upvoted 2 times

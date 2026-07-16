@@ -1,0 +1,40 @@
+A company runs an application using Amazon ECS. The application creates resized versions of an original image and then makes
+Amazon S3 API calls to store the resized images in Amazon S3.
+How can a solutions architect ensure that the application has permission to access Amazon S3?
+一家公司使用 Amazon ECS 运行一个应用程序。该应用程序会创建原始图像的调整大小版本，然后调用 Amazon S3 API 将调整大小
+后的图像存储到 Amazon S3 中。
+解决方案架构师如何确保该应用程序有权限访问 Amazon S3？
+A. Update the S3 role in AWS IAM to allow read/write access from Amazon ECS, and then relaunch the container.
+更新 AWS IAM 中的 S3 角色以允许从 Amazon ECS 进行读/写访问，然后重新启动容器。
+B. Create an IAM role with S3 permissions, and then specify that role as the taskRoleArn in the task definition. Most Voted
+创建一个具有 S3 权限的 IAM 角色，然后在任务定义中将该角色指定为 taskRoleArn。
+C. Create a security group that allows access from Amazon ECS to Amazon S3, and update the launch configuration used by
+the ECS cluster.
+创建一个允许从 Amazon ECS 访问 Amazon S3 的安全组，并更新 ECS 集群使用的启动配置。
+D. Create an IAM user with S3 permissions, and then relaunch the Amazon EC2 instances for the ECS cluster while logged in as
+this account.
+创建一个具有 S3 权限的 IAM 用户，然后以该账户登录重新启动 ECS 集群的 Amazon EC2 实例。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)
+Amazon ECS任务如何通过IAM角色访问其他AWS服务（如Amazon S3）。
+IAM角色的使用和任务定义中的taskRoleArn属性。
+2. 选项分析
+A. 更新 AWS IAM 中的 S3 角色以允许从 Amazon ECS 进行读/写访问，然后重新启动容器。
+错误：IAM角色不能直接与Amazon ECS关联。需要通过任务定义中的taskRoleArn属性将IAM角色绑定到任务。
+B. 创建一个具有 S3 权限的 IAM 角色，然后在任务定义中将该角色指定为 taskRoleArn。
+正确：这是最佳实践。通过在任务定义中指定taskRoleArn，ECS任务可以使用该IAM角色访问Amazon S3。
+C. 创建一个允许从 Amazon ECS 访问 Amazon S3 的安全组，并更新 ECS 集群使用的启动配置。
+错误：安全组用于控制网络流量，而不是权限管理。无法通过安全组授予ECS任务对S3的访问权限。
+D. 创建一个具有 S3 权限的 IAM 用户，然后以该账户登录重新启动 ECS 集群的 Amazon EC2 实例。
+错误：IAM用户是为人类用户或应用程序设计的，而不是为ECS任务设计的。ECS任务应该使用IAM角色而不是IAM用户。
+3. 我的答案
+B
+4. 官方答案
+B
+5. 与官方答案的比较
+我的答案与官方答案一致，无需重新思考。

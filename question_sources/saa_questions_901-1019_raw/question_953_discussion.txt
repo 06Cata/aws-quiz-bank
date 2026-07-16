@@ -1,0 +1,123 @@
+A company has a web application that has thousands of users. The application uses 8-10 user-uploaded images to generate AI
+images. Users can download the generated AI images once every 6 hours. The company also has a premium user option that gives
+users the ability to download the generated AI images anytime.
+The company uses the user-uploaded images to run AI model training twice a year. The company needs a storage solution to
+store the images.
+Which storage solution meets these requirements MOST cost-effectively?
+A. Move uploaded images to Amazon S3 Glacier Deep Archive. Move premium user-generated AI images to S3 Standard.
+Move non-premium user-generated AI images to S3 Standard-Infrequent Access (S3 Standard-IA). Most Voted
+B. Move uploaded images to Amazon S3 Glacier Deep Archive Move all generated AI images to S3 Glacier Flexible Retrieval.
+C. Move uploaded images to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA). Move premium user-generated AI
+images to S3 Standard. Move non-premium user-generated AI images to S3 Standard-Infrequent Access (S3 Standard-IA).
+D. Move uploaded images to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA). Move all generated AI images to S3
+Glacier Flexible Retrieval.
+Comments
+dhewa Highly Voted 1 year, 9 months ago
+Selected Answer: A
+The company uses the user-uploaded images to run AI model training twice a year. So for this Deep Archive will be ncessary.
+upvoted 7 times
+JA2018 1 year, 6 months ago
+But moving uploaded images to Glacier Deep Archive is not ideal as it has a very high retrieval cost and long retrieval time, which is not suitable for
+the occasional access needed for AI model training.
+upvoted 2 times
+blehbleh Highly Voted 1 year, 8 months ago
+Selected Answer: A
+This is A. We care about cost effectiveness. In regards to images being used twice a year "For images accessed only twice a year, S3 Glacier Deep
+Archive would be the more cost-effective option compared to S3 One Zone Infrequent Access, as it is designed for extremely infrequent access and
+offers the lowest storage cost within AWS S3 storage classes; while S3 One Zone Infrequent Access is cheaper than standard Infrequent Access, it still
+might be slightly more expensive for data accessed as rarely as twice a year." In regards to premium users keep them standard. Non premium users
+can be in the infrequent since they have 6 hrs.
+Cost Effective!
+upvoted 5 times
+JA2018 1 year, 6 months ago
+But moving uploaded images to Glacier Deep Archive is not ideal as it has a very high retrieval cost and long retrieval time, which is not suitable for
+the occasional access needed for AI model training.
+upvoted 1 times
+tch Most Recent 1 year, 3 months ago
+Selected Answer: A
+S3 Glacier Deep Archive is Amazon S3’s lowest-cost storage class and supports long-term retention and digital preservation for data that may be
+accessed once or twice in a year
+Correct Answer: A
+Community vote distribution
+A (61%)
+C (32%)
+7%
+B& D are out.....
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - Deep Archive is designed for long-term cold storage and can spend hours to retrieve each object. For AI model training, you'd hate it if you must
+spend hundreds/thousands of hours before you can actually start training it.
+B - Premium users would be so mad if they had to wait for hours to get their generated images.
+C - S3 One Zone-IA reduces costs, and it's great now that we don't need high durability across multiple availability zones. Premium users will
+experience low latency to get their generated images.
+D - Glacier tiers are not designed for frequent access. This is bad practice.
+One more thing about option C, since training happens extremely infrequently and the images can be re-uploaded if necessary, One Zone IA's lower
+redundancy is an acceptable trade-off for cost savings.
+upvoted 3 times
+Cpso 1 year, 6 months ago
+Selected Answer: A
+I choose A. But it not best answer. for standard-ia you get data immediately but pay for request which not make sense for requirement. The best fit
+of non-premium user is Glacier Fleixble standard(1-5hour)
+upvoted 3 times
+JA2018 1 year, 6 months ago
+But moving uploaded images to Glacier Deep Archive is not ideal as it has a very high retrieval cost and long retrieval time, which is not suitable for
+the occasional access needed for AI model training.
+upvoted 1 times
+Oghare 1 year, 8 months ago
+this is A
+S3 Glacier Deep Archive is the most cost-effective storage for long-term infrequently accessed data, ideal for the user-uploaded images used twice a
+year for AI training.
+S3 Standard for premium user-generated AI images ensures fast access, which is needed for frequent downloads.
+S3 Standard-IA for non-premium user-generated AI images is cost-effective for less frequent access, as it charges lower for storage but slightly more
+for retrieval, which fits the 6-hour download frequency.
+Not C because, although S3 One Zone-IA is a lower-cost option as well it provides less durability because it stores data in only one Availability Zone.
+While it is cost-effective, it increases the risk of data loss for critical AI training data.
+B and D is out
+S3 Glacier Flexible Retrieval for all generated AI images would likely introduce unacceptable retrieval delays for premium users, as they require
+immediate access to download images
+upvoted 3 times
+JA2018 1 year, 6 months ago
+But moving uploaded images to Glacier Deep Archive is not ideal as it has a very high retrieval cost and long retrieval time, which is not suitable for
+the occasional access needed for AI model training.
+upvoted 1 times
+kbgsgsgs 1 year, 8 months ago
+Selected Answer: C
+S3 Glacier Deep Archive does not meet the 6-hour download requirement because it takes time to access data. User can download even if you are
+not a premium user
+upvoted 1 times
+blehbleh 1 year, 8 months ago
+it says "Users can download the generated AI images once every 6 hours." The upload images are used for training only 2 times a year which meets
+the s3 glacier deep dive. The standard users are put in infrequent access and premium users are put in standard. I don't understand how people are
+messing this up.
+upvoted 3 times
+[Removed] 1 year, 9 months ago
+Selected Answer: B
+B is correct
+Explanation:
+S3 Glacier Deep Archive is the most cost-effective storage option for data that is rarely accessed. Since the user-uploaded images are only used twice
+a year for AI model training, storing them in Glacier Deep Archive is ideal for minimizing costs. The longer retrieval time (up to 12 hours) is
+acceptable given the infrequent access.
+S3 Glacier Flexible Retrieval is suitable for storing the generated AI images because it balances cost and retrieval time. Regular users can download
+images every 6 hours, which Glacier Flexible Retrieval can accommodate with its flexible retrieval options (ranging from minutes to hours). This
+solution also works for premium users, who might need more frequent access. While S3 Standard or Standard-IA could be used, Glacier Flexible
+Retrieval offers significant cost savings while still meeting the access requirements.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Option B is using Glacier Flexible Retrieval.
+Storing all generated AI images in Glacier Flexible Retrieval is also not cost-effective as the premium users require faster access to their images.
+upvoted 1 times
+officedepotadmin 1 year, 9 months ago
+Selected Answer: C
+S3 One Zone-IA is a cost-effective storage option for images that are accessed infrequently but are still needed for AI model training twice a year.
+One Zone-IA stores data in a single Availability Zone, making it less expensive but still highly available within that zone. Premium users need frequen
+access to their AI-generated images so S3. Non-premium users access their AI-generated images less frequently (once every 6 hours) so S3
+Standard-IA
+upvoted 5 times
+pujithacg8 1 year, 10 months ago
+A is correct as Glacier deep archive provides the lowest-cost storage class.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+But moving uploaded images to Glacier Deep Archive is not ideal as it has a very high retrieval cost and long retrieval time, which is not suitable for
+the occasional access needed for AI model training.
+upvoted 1 times

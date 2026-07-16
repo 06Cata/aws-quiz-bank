@@ -1,0 +1,138 @@
+A company maintains an Amazon RDS database that maps users to cost centers. The company has accounts in an organization in
+AWS Organizations. The company needs a solution that will tag all resources that are created in a specific AWS account in the
+organization. The solution must tag each resource with the cost center ID of the user who created the resource.
+Which solution will meet these requirements?
+A. Move the specific AWS account to a new organizational unit (OU) in Organizations from the management account. Create a
+service control policy (SCP) that requires all existing resources to have the correct cost center tag before the resources are
+created. Apply the SCP to the new OU.
+B. Create an AWS Lambda function to tag the resources after the Lambda function looks up the appropriate cost center from
+the RDS database. Configure an Amazon EventBridge rule that reacts to AWS CloudTrail events to invoke the Lambda function.
+Most Voted
+C. Create an AWS CloudFormation stack to deploy an AWS Lambda function. Configure the Lambda function to look up the
+appropriate cost center from the RDS database and to tag resources. Create an Amazon EventBridge scheduled rule to invoke
+the CloudFormation stack.
+D. Create an AWS Lambda function to tag the resources with a default value. Configure an Amazon EventBridge rule that reacts
+to AWS CloudTrail events to invoke the Lambda function when a resource is missing the cost center tag.
+Comments
+1Alpha1 Highly Voted 2 years, 4 months ago
+Selected Answer: A
+I'm not sure, but I think this question is from professional solution architect question pool.
+Please have a look at this one as well.
+https://www.examtopics.com/discussions/amazon/view/112780-exam-aws-certified-solutions-architect-professional-sap-c02/
+upvoted 11 times
+JohnYu 1 year, 7 months ago
+SCPs cannot directly apply tags to resources; they can only restrict actions based on policies. They do not automatically tag resources. SCPs are also
+used to enforce policies across accounts but cannot look up values from an RDS database or dynamically assign tags.
+upvoted 3 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: B
+A policy cannot look up "the cost center ID of the user who created the resource", we need Lambda to do that. Thus A is out.
+C would work but runs on a schedule which doesn't make sense (and we would temporarily have untagged resources).
+D tags resources "with a default value" which is not what we want.
+upvoted 8 times
+Ernestokoro 2 years, 5 months ago
+Please how do you account for this part of the question with option B "The solution must tag each resource with the cost center ID of the user who
+created the resource." ? For me this typically what SCP would handle.
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+That SCP won't know the cost centre. "RDS database that maps users to cost centers"
+Unless the solution can read the RDS, it won't work and SCP cannot be programmed to read from RDS before applying the cost centre.
+Correct Answer: B
+Community vote distribution
+B (62%)
+A (38%)
+upvoted 3 times
+ln2718 Most Recent 10 months, 3 weeks ago
+Selected Answer: A
+I like the responses to answer A. That looks correct
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+A is incorrect : SCPs are used to enforce permissions and restrictions across accounts in an organization. They cannot be used to dynamically tag
+resources based on user information stored in an RDS database. This option does not meet the requirement to tag resources with the cost center ID
+of the user who created them. C incorrect as it only deploy the CF stack with Lambda, but no mention how lambda function will be triggered. D
+default value is incorrect.
+upvoted 2 times
+bujuman 1 year, 7 months ago
+Selected Answer: B
+SCP can not be used to Tag resources
+upvoted 2 times
+tonybuivannghia 1 year, 7 months ago
+Selected Answer: B
+B is my choice
+upvoted 2 times
+1e22522 1 year, 10 months ago
+Selected Answer: B
+The best solution that meets all the requirements is option B. Here's why:
+It can tag all resources created in a specific AWS account within the organization.
+It uses a Lambda function to look up the appropriate cost center from the RDS database, ensuring accurate tagging.
+The EventBridge rule reacting to CloudTrail events ensures that resources are tagged as they are created.
+This approach can dynamically tag each resource with the cost center ID of the user who created it.
+upvoted 5 times
+sheilawu 2 years ago
+Selected Answer: A
+I will vote for A
+upvoted 1 times
+sandordini 2 years, 1 month ago
+Selected Answer: B
+We need a solution, to automatically tag, also the existing resources. A,C, are more or less working solutions for new resources, but neither can do
+the tagging of existing resources. D would add a default tag instead of the specific CC.
+upvoted 2 times
+gsgdga 2 years, 2 months ago
+Selected Answer: A
+A is right
+https://docs.aws.amazon.com/ko_kr/organizations/latest/userguide/orgs_tagging_abac.html
+upvoted 4 times
+fea9bdf 2 years, 5 months ago
+Answer is A, SCP handles the assignment, no need for a Lambda function, that's unnecessary t seems like
+Service Control Policies (SCPs)
+SCPs are a policy type that you can utilize to manage permissions across accounts in your AWS Organization.
+Using SCPs lets you ensure that your accounts stay within your organization’s access control guidelines.
+SCPs can be used along-side tag policies to ensure that the tags are applied at the resource creation time and remain attached to the resource.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+How would an SCP look up the correct cost center in the database?
+upvoted 4 times
+ale_brd_111 2 years, 5 months ago
+Selected Answer: B
+the company still maintains the RDS, nowhere was asked to drop using it, therefore we shall use a solution that takes advantages of it.
+upvoted 4 times
+ftaws 2 years, 5 months ago
+Selected Answer: A
+I also choose A.
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+SCP cannot connect to RDS where the cost centre information is stored so A won't work.
+upvoted 2 times
+Oluwatosin09 2 years, 1 month ago
+Awsgeek75 and Pentium must be the same person.
+They always have the same answers with contributions always on point.
+Great Job!
+upvoted 2 times
+Cyberkayu 2 years, 5 months ago
+Selected Answer: A
+Company have Organization. A specific AWS account need to ensure all resources were tagged.
+Move this specific AWS account under the company OU, use SCP to enforce top down policies that every member account to adhere.
+Answer A.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+How would an SCP look up the correct cost center in the database?
+upvoted 2 times
+evelynsun 2 years, 5 months ago
+Selected Answer: B
+sorry, i would choose B.
+because it allows you to tag resources as they are created, without requiring you to move existing resources.
+upvoted 2 times
+evelynsun 2 years, 5 months ago
+Selected Answer: A
+This solution is the best way to meet the requirements of the company. It ensures that all resources in the specific AWS account are tagged with the
+cost center ID of the user who created the resource. It also allows the company to easily manage and enforce compliance with its tagging policies.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+How would an SCP look up the correct cost center in the database?
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+Create an AWS Lambda function to tag the resources after the Lambda function looks up the appropriate cost center from the RDS database.
+Configure an Amazon EventBridge rule that reacts to AWS CloudTrail events to invoke the Lambda function.
+upvoted 2 times

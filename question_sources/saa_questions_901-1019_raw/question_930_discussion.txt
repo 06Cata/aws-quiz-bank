@@ -1,0 +1,99 @@
+A company has an employee web portal. Employees log in to the portal to view payroll details. The company is developing a new
+system to give employees the ability to upload scanned documents for reimbursement. The company runs a program to extract
+text-based data from the documents and attach the extracted information to each employee’s reimbursement IDs for processing.
+The employee web portal requires 100% uptime. The document extract program runs infrequently throughout the day on an on-
+demand basis. The company wants to build a scalable and cost-effective new system that will require minimal changes to the
+existing web portal. The company does not want to make any code changes.
+Which solution will meet these requirements with the LEAST implementation effort?
+A. Run Amazon EC2 On-Demand Instances in an Auto Scaling group for the web portal. Use an AWS Lambda function to run
+the document extract program. Invoke the Lambda function when an employee uploads a new reimbursement document.
+Most Voted
+B. Run Amazon EC2 Spot Instances in an Auto Scaling group for the web portal. Run the document extract program on EC2
+Spot Instances. Start document extract program instances when an employee uploads a new reimbursement document.
+C. Purchase a Savings Plan to run the web portal and the document extract program. Run the web portal and the document
+extract program in an Auto Scaling group.
+D. Create an Amazon S3 bucket to host the web portal. Use Amazon API Gateway and an AWS Lambda function for the
+existing functionalities. Use the Lambda function to run the document extract program. Invoke the Lambda function when the
+API that is associated with a new document upload is called.
+Comments
+hpirnaj Highly Voted 1 year, 5 months ago
+Selected Answer: C
+i hate these types of questions . there is no perfect answer
+A:on demand "not cost-effective " , also , how do you want to invoke Lambda . there is no API call
+B: spot instance ("web portal requires 100% uptime")
+D:s3 is for static website . it can work but payroll needs to update every 2 weeks and require extensive code change
+C in my opinion is the only correct answer. it is scalable "ASG", no code change and cost effective "saving plan"
+upvoted 6 times
+Clouddon Most Recent 11 months ago
+Selected Answer: A
+It is not C. Purchase a Savings Plan to run both workloads
+Savings Plans reduce cost, but:
+You’re still running document extraction code on EC2, which is less cost-effective and less scalable than Lambda.
+Does not align with event-driven or on-demand execution needs.
+Increases operational overhead.
+upvoted 2 times
+7dcef09 1 year, 1 month ago
+Selected Answer: C
+is this supposed to be a confusing question? C is scalable and most cost effective.
+upvoted 1 times
+Correct Answer: A
+Community vote distribution
+A (60%)
+C (32%)
+8%
+Salilgen 1 year, 5 months ago
+Selected Answer: C
+Spot Instances are not suitable for workloads requiring 100% uptime then B is out.
+D is the best solution but it requires some implementation effort.
+Savings plan (that include Lambda too...) is cheaper than on-demand (option A).
+Moreover, C doesn't require any code change or other AWS services.
+upvoted 1 times
+tch 1 year, 3 months ago
+which saving plan to purchase ? Compute Savings Plans, EC2 Instance Savings Plans, and Amazon SageMaker Savings Plans???
+upvoted 1 times
+ckhemani 1 year, 6 months ago
+Selected Answer: A
+Answer: A
+This solution offers the most scalable and cost-effective approach with minimal changes to the existing web portal and no code modifications.
+Why Not Other Options?:
+Option B (Spot Instances): Spot Instances are not suitable for workloads requiring 100% uptime, as they can be terminated by AWS with short notice.
+Option C (Savings Plan): A Savings Plan could reduce costs but does not address the requirement for running the document extraction program
+efficiently or without code changes.
+Option D (S3 with API Gateway and Lambda): This would require significant changes to the existing web portal setup, including moving the portal to
+S3 and reconfiguring its architecture, which contradicts the requirement of minimal implementation effort and no code change.
+upvoted 4 times
+XXXXXlNN 1 year, 8 months ago
+D makes more sense if the company asks to redesign the whole thing to achieve better operational management, performance, cost effective, etc.
+However, it requires us to provide solution with MINIMUM change... thus A it is I guess.
+upvoted 3 times
+JoeTromundo 1 year, 8 months ago
+Selected Answer: A
+"The company does not want to make any code changes."
+Option D requires a complete re-architecture of the web portal to be hosted on Amazon S3 and API Gateway, which involves significant changes to
+the existing system. This does not align with the requirement of minimal changes to the current setup.
+upvoted 4 times
+rpmaws 1 year, 8 months ago
+Selected Answer: A
+because they don't want any change in code so A is correct.
+upvoted 3 times
+progounick 1 year, 9 months ago
+Selected Answer: A
+A ChatGPT agrees with me
+upvoted 2 times
+progounick 1 year, 9 months ago
+Selected Answer: D
+I think D is better choice. Even though A makes sense too, D seems the correct one
+upvoted 1 times
+RealPro111 1 year, 9 months ago
+Selected Answer: D
+Least effort, webportal is simply an interface: D
+upvoted 1 times
+744fdad 1 year, 10 months ago
+i think D
+upvoted 2 times
+komorebi 1 year, 10 months ago
+Answer is A
+upvoted 1 times
+swati1508 1 year, 10 months ago
+I thinks it’s D
+upvoted 3 times

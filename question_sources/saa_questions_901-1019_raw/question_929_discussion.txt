@@ -1,0 +1,132 @@
+A healthcare company is developing an AWS Lambda function that publishes notifications to an encrypted Amazon Simple
+Notification Service (Amazon SNS) topic. The notifications contain protected health information (PHI).
+The SNS topic uses AWS Key Management Service (AWS KMS) customer managed keys for encryption. The company must ensure
+that the application has the necessary permissions to publish messages securely to the SNS topic.
+Which combination of steps will meet these requirements? (Choose three.)
+A. Create a resource policy for the SNS topic that allows the Lambda function to publish messages to the topic. Most Voted
+B. Use server-side encryption with AWS KMS keys (SSE-KMS) for the SNS topic instead of customer managed keys.
+C. Create a resource policy for the encryption key that the SNS topic uses that has the necessary AWS KMS permissions.
+Most Voted
+D. Specify the Lambda function's Amazon Resource Name (ARN) in the SNS topic's resource policy.
+E. Associate an Amazon API Gateway HTTP API with the SNS topic to control access to the topic by using API Gateway resource
+policies.
+F. Configure a Lambda execution role that has the necessary IAM permissions to use a customer managed key in AWS KMS.
+Most Voted
+Comments
+Abbas_Abi_AWS Highly Voted 1 year, 10 months ago
+Selected Answer: ACF
+A C F is corrcet
+upvoted 8 times
+ln2718 Most Recent 9 months, 2 weeks ago
+Selected Answer: ACF
+When an encrypted SNS topic (with a customer managed KMS key) is used:
+Publishing permissions to the SNS topic
+The Lambda function needs explicit permission to publish messages to the SNS topic.
+This is done with an SNS topic resource policy.
+A. Create a resource policy for the SNS topic
+KMS key permissions
+Since the SNS topic is encrypted with a customer managed KMS key, the Lambda execution role must be allowed to use that key (kms:Encrypt,
+kms:GenerateDataKey*).
+This requires:
+IAM permissions on the Lambda role (so it can call KMS APIs).
+A KMS key policy allowing the Lambda role to use the key.
+C. Resource policy for the encryption key
+F. IAM execution role with KMS permissions
+upvoted 1 times
+GOTJ 1 year, 4 months ago
+Selected Answer: ADF
+Correct Answer: ACF
+Community vote distribution
+ACF (71%)
+ADF (29%)
+Does a SNS topic need to decrypt an encrypted message in order to deliver it to its subscribers? If so, option "C" should be in. If not, it should be out
+And I think is out, unless SNS topic needs to apply certain logic to the message prior to subscription deliver (filters).
+This question requires a CSE-KMS approach, which force the Lambda function to encrypt the message before publishing, so option "F" is a must (I
+think everybody here is on the same page with this one).
+Also, option "A" should be obvious by now. And even though option "D" is redundant, it's technically correct, so it's a better choice.
+upvoted 2 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: ACF
+For C - https://docs.aws.amazon.com/sns/latest/dg/sns-enable-encryption-for-topic.html
+Permissions for custom KMS keys – If using a custom KMS key, include the following in the key policy to allow Amazon SNS to encrypt and decrypt
+messages:
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+For A: https://repost.aws/knowledge-center/sns-topic-lambda and https://repost.aws/knowledge-center/sns-topics-iam-errors-subscriber
+For F: https://repost.aws/knowledge-center/lambda-kmsaccessdeniedexception-errors
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: ACF
+A - This is a must-do.
+B - As question stated, we have no reason to replace the keys.
+C - This ensures the function can encrypt messages when publishing.
+D - While specifying the Lambda function's ARN in the SNS topic's resource policy is part of the solution (it's how you grant the "sns:Publish"
+permission), it's not sufficient on its own. You also need the KMS key policy and the Lambda execution role permissions. This option is a part of
+option A, not a standalone answer.
+E - The Lambda function interacts directly with the SNS topic, and API Gateway is not relevant.
+F - Yes, so that this role will have policies that allow the "kms:Encrypt", "kms:GenerateDataKey," and "kms:Decrypt" actions on the specific KMS key
+used to encrypt the topic.
+upvoted 3 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: ACF
+I don't understand why lambda needs KMS to encrypt message.
+In this scenario, the Lambda function does not need direct permissions to use the KMS key because the encryption and decryption are fully managed
+by Amazon SNS as part of the SSE-KMS feature.
+SNS is the only service lambda will talk to, The Lambda interacts with SNS using HTTPS and does not directly deal with the encrypted data or the
+KMS key. so Lambda only needs the permission to publish messages to the SNS topic.
+I would like to choose F only if #F answer can be updated as below:
+F. Configure a Lambda execution role that has the necessary IAM permissions to publish to the SNS topic.
+A: Create a resource policy for the SNS topic => grants lambda the ability to publish messages to the topic
+C: The KMS key resource policy must allow SNS to use the key for encryption and decryption.
+F: Configure the Lambda Execution Role => SNS permissions to publish to the topic
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Selected Answer: ADF
+#A: This is essential because the resource policy on the SNS topic will define which entities (like the Lambda function) are allowed to publish
+messages to it.
+#D: By specifying the Lambda function's ARN in the SNS topic policy, you clearly grant access only to that specific Lambda function.
+#F: Since the SNS topic uses a customer-managed KMS key, the Lambda execution role must have the necessary permissions to use that key for
+encryption/decryption when publishing messages.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Why the other options are not correct:
+#B: The question already states that the SNS topic is using customer-managed KMS keys, so there's no need to switch to server-side encryption
+with AWS managed keys.
+#C: While technically you could create a resource policy on the encryption key itself, it's not the most secure approach as it would grant access to
+the key itself, not just the ability to use it for SNS encryption.
+#E: Introducing an API Gateway layer is unnecessary complexity for this scenario, as you can directly control access to the SNS topic using the
+Lambda execution role and its permissions.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Key takeaway:
+- To ensure the Lambda function can securely publish messages to an encrypted SNS topic, you need to properly configure the SNS topic resource
+policy to allow the Lambda function access and make sure the Lambda execution role has the necessary KMS permissions to use the customer-
+managed encryption key.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+C is correct since the SNS topic uses a customer managed key for encryption. The key's resource policy must allow the SNS service to use the key
+for encryption and decryption.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+D is redundant because Option A already covers the need to allow the Lambda function to publish to the SNS topic. The ARN of the Lambda
+function would be included in the resource policy created in Option A.
+upvoted 1 times
+elmyth 1 year, 7 months ago
+Selected Answer: ACF
+D is correct too and С is not clear, but seems like it is about KMS policy and adding permissions for sns service which has to be added in case of CMK
+upvoted 4 times
+agbor_tambe 1 year, 8 months ago
+Selected Answer: ADF
+my answer
+upvoted 1 times
+Sergantus 1 year, 6 months ago
+D is like a part of A, so it makes no sense to pick both, it should be A C F.
+upvoted 1 times
+progounick 1 year, 9 months ago
+Selected Answer: ACF
+ChatGPT agrees with me
+upvoted 3 times
+komorebi 1 year, 10 months ago
+Selected Answer: ADF
+Answer is ADF
+upvoted 4 times

@@ -1,0 +1,74 @@
+A company uses AWS to host its public ecommerce website. The website uses an AWS Global Accelerator accelerator for traffic
+from the internet. The Global Accelerator accelerator forwards the traffic to an Application Load Balancer (ALB) that is the entry
+point for an Auto Scaling group.
+The company recently identified a DDoS attack on the website. The company needs a solution to mitigate future attacks.
+Which solution will meet these requirements with the LEAST implementation effort?
+A. Configure an AWS WAF web ACL for the Global Accelerator accelerator to block traffic by using rate-based rules
+B. Configure an AWS Lambda function to read the ALB metrics to block attacks by updating a VPC network ACL
+C. Configure an AWS WAF web ACL on the ALB to block traffic by using rate-based rules Most Voted
+D. Configure an Amazon CloudFront distribution in front of the Global Accelerator accelerator
+Comments
+[Removed] Highly Voted 1 year, 9 months ago
+Selected Answer: C
+C as AWS WAF cannot be used directly on global accelerator
+upvoted 9 times
+dragossky 1 year, 5 months ago
+it can be used, but to block HTTP/HTTPS requests.
+upvoted 1 times
+nebajp Highly Voted 1 year, 10 months ago
+Selected Answer: C
+Correct answer C.
+Global Accelerator does not work with WAF as it is suitable for TCP/UDP where as WAF is integrates with Application Load Balancer which is on Layer
+7 on OSI model, suitable for Web app (Http/Https)
+upvoted 6 times
+rpmaws Most Recent 1 year, 9 months ago
+Selected Answer: C
+WAF can be applied on ALB, API gateway or cloud front.
+upvoted 5 times
+sOI852POL 1 year, 9 months ago
+Selected Answer: C
+Answer is C.
+Note: AWS Global Accelerator itself doesn't support AWS WAF.
+https://repost.aws/knowledge-center/globalaccelerator-aws-waf-filter-layer7-traffic
+upvoted 5 times
+dhewa 1 year, 9 months ago
+Selected Answer: A
+Configuring the WAF directly on the Global Accelerator ensures that malicious traffic is blocked before it reaches the Application Load Balancer,
+providing an additional layer of protection.
+upvoted 2 times
+Correct Answer: C
+Community vote distribution
+C (83%)
+A (17%)
+officedepotadmin 1 year, 9 months ago
+Selected Answer: A
+Global Accelerator can be integrated with AWS WAF to provide protection at the edge, meaning malicious traffic can be blocked before it reaches
+your Application Load Balancer (ALB) or other resources in your AWS environment.
+upvoted 2 times
+AWS_Debu 1 year, 9 months ago
+Answer is A
+AWS Global Accelerator (GA) can be used with AWS Web Application Firewall (WAF) to protect applications from web exploits and DDoS attacks:
+Block HTTP method and header attacks
+GA, WAF, and the Application Load Balancer can block access to Layer 7 HTTP method and headers. WAF uses web access control list (web ACL) rules
+with the load balancer to evaluate incoming traffic and only forward requests that comply with the rules to the endpoint.
+Detect and mitigate web application layer request floods
+GA can protect web applications running on Application Load Balancer, and when used with WAF, it can also detect and mitigate web application
+layer request floods.
+Prevent DDoS attacks
+upvoted 1 times
+GOTJ 1 year, 4 months ago
+Unfortunately, AWS WAF cannot protect such a resource, according to this link: https://docs.aws.amazon.com/waf/latest/developerguide/waf-
+chapter.html.
+Currently supported resources are:
+o Amazon CloudFront distribution
+o Amazon API Gateway REST API
+o Application Load Balancer
+o AWS AppSync GraphQL API
+o Amazon Cognito user pool
+o AWS App Runner service
+o AWS Verified Access instance
+upvoted 1 times
+komorebi 1 year, 10 months ago
+Selected Answer: A
+Answer is A
+upvoted 1 times

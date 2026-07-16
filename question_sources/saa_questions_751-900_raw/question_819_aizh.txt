@@ -1,0 +1,57 @@
+Question #819
+A company’s application is receiving data from multiple data sources. The size of the data varies and is expected to increase over
+time. The current maximum size is 700 KB. The data volume and data size continue to grow as more data sources are added.
+The company decides to use Amazon DynamoDB as the primary database for the application. A solutions architect needs to
+identify a solution that handles the large data sizes.
+Which solution will meet these requirements in the MOST operationally efficient way?
+一家公司的应用程序正在从多个数据源接收数据。数据大小各不相同，并预计会随着时间增加。目前的最大数据大小为700 KB。随
+着添加更多的数据源，数据量和数据大小将继续增长。
+该公司决定使用 Amazon DynamoDB 作为应用程序的主要数据库。解决方案架构师需要识别一个能够处理大数据大小的解决方案。
+哪个解决方案将以最具操作效率的方式满足这些要求？
+A. Create an AWS Lambda function to filter the data that exceeds DynamoDB item size limits. Store the larger data in an
+Amazon DocumentDB (with MongoDB compatibility) database.
+创建一个 AWS Lambda 函数来过滤超过 DynamoDB 项大小限制的数据。将较大的数据存储在 Amazon DocumentDB（与
+MongoDB 兼容）数据库中。
+B. Store the large data as objects in an Amazon S3 bucket. In a DynamoDB table, create an item that has an attribute that
+points to the S3 URL of the data. Most Voted
+将大数据作为对象存储在 Amazon S3 存储桶中。在 DynamoDB 表中创建一个项，该项具有指向数据的 S3 URL 的属性。
+C. Split all incoming large data into a collection of items that have the same partition key. Write the data to a DynamoDB table
+in a single operation by using the BatchWriteItem API operation.
+将所有接收到的大数据拆分为具有相同分区键的项集合。使用 BatchWriteItem API 操作在单次操作中将数据写入 DynamoDB
+表。
+D. Create an AWS Lambda function that uses gzip compression to compress the large objects as they are written to a
+DynamoDB table.
+创建一个 AWS Lambda 函数，在将大对象写入 DynamoDB 表时使用 gzip 压缩进行压缩。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+Amazon DynamoDB的限制：单个项的最大大小为400 KB。
+Amazon S3的使用场景：存储大规模数据对象。
+如何设计高效的解决方案以处理超出DynamoDB限制的数据。
+2. 选项分析
+A. Create an AWS Lambda function to filter the data that exceeds DynamoDB item size limits. Store the larger data in an
+Amazon DocumentDB (with MongoDB compatibility) database.
+错误：虽然DocumentDB可以存储大数据，但此解决方案增加了复杂性，因为需要额外的数据库管理和Lambda函数逻辑。
+不够高效：相比使用S3，DocumentDB的成本和操作复杂性更高。
+B. Store the large data as objects in an Amazon S3 bucket. In a DynamoDB table, create an item that has an attribute that
+points to the S3 URL of the data.
+正确：Amazon S3非常适合存储大数据对象，且成本低、扩展性高。
+高效：通过DynamoDB存储指向S3的URL，解决了DynamoDB的大小限制问题，同时保持了数据的可访问性。
+C. Split all incoming large data into a collection of items that have the same partition key. Write the data to a DynamoDB
+table in a single operation by using the BatchWriteItem API operation.
+错误：虽然可以通过拆分数据来绕过DynamoDB的大小限制，但这种方法会导致数据管理复杂性增加。
+不够高效：需要额外的逻辑来处理数据拆分和重组。
+D. Create an AWS Lambda function that uses gzip compression to compress the large objects as they are written to a
+DynamoDB table.
+错误：即使使用gzip压缩，数据仍可能超过DynamoDB的大小限制。
+不够高效：压缩和解压缩增加了额外的计算开销。
+3. 我选的答案
+B
+4. 官方答案
+B
+5. 与官方答案的比较
+我的答案与官方答案一致。选项B是最符合题目要求的解决方案，既解决了DynamoDB的大小限制问题，又保持了操作的高效性。
+Community vote distribution
+社区投票分布
+B (100%)

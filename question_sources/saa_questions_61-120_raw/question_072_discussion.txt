@@ -1,0 +1,105 @@
+A company runs a photo processing application that needs to frequently upload and download pictures from Amazon S3 buckets
+that are located in the same AWS Region. A solutions architect has noticed an increased cost in data transfer fees and needs to
+implement a solution to reduce these costs.
+How can the solutions architect meet this requirement?
+A. Deploy Amazon API Gateway into a public subnet and adjust the route table to route S3 calls through it.
+B. Deploy a NAT gateway into a public subnet and attach an endpoint policy that allows access to the S3 buckets.
+C. Deploy the application into a public subnet and allow it to route through an internet gateway to access the S3 buckets.
+D. Deploy an S3 VPC gateway endpoint into the VPC and attach an endpoint policy that allows access to the S3 buckets.
+Most Voted
+Comments
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: D
+***CORRECT***
+The correct answer is Option D. Deploy an S3 VPC gateway endpoint into the VPC and attach an endpoint policy that allows access to the S3 buckets
+By deploying an S3 VPC gateway endpoint, the application can access the S3 buckets over a private network connection within the VPC, eliminating
+the need for data transfer over the internet. This can help reduce data transfer fees as well as improve the performance of the application. The
+endpoint policy can be used to specify which S3 buckets the application has access to.
+upvoted 47 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+***WRONG***
+Option A, deploying Amazon API Gateway into a public subnet and adjusting the route table, would not address the issue of data transfer fees as
+the application would still be transferring data over the internet.
+Option B, deploying a NAT gateway into a public subnet and attaching an endpoint policy, would not address the issue of data transfer fees either
+as the NAT gateway is used to enable outbound internet access for instances in a private subnet, rather than for connecting to S3.
+Option C, deploying the application into a public subnet and allowing it to route through an internet gateway, would not reduce data transfer fees
+as the application would still be transferring data over the internet.
+upvoted 13 times
+KVK16 Highly Voted 3 years, 7 months ago
+Selected Answer: D
+To reduce costs get rid of NAT Gateway , VPC endpoint to S3
+upvoted 24 times
+Gizmo2022 Most Recent 1 year, 7 months ago
+D is the correct answer
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: D
+Ans D - remove the internet connection by using a more efficient private VPC direct to S3
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Correct Answer: D
+Community vote distribution
+D (100%)
+Selected Answer: D
+S3 VPC Gateway is the cheapest solution as it does not use any billable traffic within same region
+upvoted 3 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: D
+Prevent traffic from traversing the internet = Gateway VPC endpoint for S3.
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: D
+The best solution to reduce data transfer costs for an application frequently accessing S3 buckets in the same region is option D - Deploy an S3 VPC
+gateway endpoint into the VPC and attach an endpoint policy that allows access to the S3 buckets.
+The key points:
+- S3 gateway endpoints allow private connections between VPCs and S3 without going over the public internet.
+- This avoids data transfer fees for traffic between the VPC and S3 within the same region.
+- An endpoint policy controls access to specific S3 buckets.
+upvoted 4 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+A. API Gateway can serve as a proxy for S3 requests, it adds unnecessary complexity and additional costs compared to a direct VPC endpoint.
+B. Using a NAT gateway for accessing S3 introduces unnecessary data transfer costs as traffic would still flow over the internet.
+C. This approach would incur data transfer fees as the traffic would go through the public internet.
+In comparison, option D using an S3 VPC gateway endpoint provides a direct and cost-effective solution for accessing S3 buckets within the same
+Region. By keeping the data transfer within the AWS network infrastructure, it helps reduce data transfer fees and provides secure access to the S3
+resources.
+upvoted 4 times
+Bmarodi 3 years ago
+Selected Answer: D
+Option D is correct answer.
+upvoted 1 times
+Erbug 3 years, 4 months ago
+To answer this question, I need to know the comparison of the types of gateway of costs, please give me a tip about that issue.
+upvoted 1 times
+career360guru 3 years, 5 months ago
+Selected Answer: D
+Option D
+upvoted 1 times
+9014 3 years, 6 months ago
+Selected Answer: D
+The answer is D:- Actually, the Application (EC2) is running in the same region...instead of going to the internet, data can be copied through the VPC
+endpoint...so there will be no cost because data is not leaving the AWS infra
+upvoted 1 times
+JayBee65 3 years, 6 months ago
+Can somebody please explain this question? Are we assuming the application is running in AWS and that adding the gateway endpoint avoids the
+need for the EC2 instance to access the internet and thus avoid costs? Thanks a lot.
+upvoted 2 times
+SR0611 3 years, 6 months ago
+Yes correct
+upvoted 1 times
+Wpcorgan 3 years, 6 months ago
+D is correct
+upvoted 1 times
+yd_h 3 years, 7 months ago
+Selected Answer: D
+FYI :
+-There is no additional charge for using gateway endpoints.
+-Interface endpoints are priced at ~ $0.01/per AZ/per hour. Cost depends on the Region
+- S3 Interface Endpoints resolve to private VPC IP addresses and are routable from outside the VPC (e.g via VPN, Direct Connect, Transit Gateway,
+etc). S3 Gateway Endpoints use public IP ranges and are only routable from resources within the VPC.
+upvoted 5 times
+123jhl0 3 years, 7 months ago
+Selected Answer: D
+Close question to the Question #4, with same solution.
+upvoted 3 times

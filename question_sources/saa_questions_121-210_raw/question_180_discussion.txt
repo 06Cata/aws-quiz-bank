@@ -1,0 +1,203 @@
+A company is designing a cloud communications platform that is driven by APIs. The application is hosted on Amazon EC2
+instances behind a Network Load Balancer (NLB). The company uses Amazon API Gateway to provide external users with access to
+the application through APIs. The company wants to protect the platform against web exploits like SQL injection and also wants to
+detect and mitigate large, sophisticated DDoS attacks.
+Which combination of solutions provides the MOST protection? (Choose two.)
+A. Use AWS WAF to protect the NLB.
+B. Use AWS Shield Advanced with the NLB. Most Voted
+C. Use AWS WAF to protect Amazon API Gateway. Most Voted
+D. Use Amazon GuardDuty with AWS Shield Standard
+E. Use AWS Shield Standard with Amazon API Gateway.
+Comments
+babaxoxo Highly Voted 3 years ago
+Selected Answer: BC
+Shield - Load Balancer, CF, Route53
+AWF - CF, ALB, API Gateway
+upvoted 50 times
+Ouk 2 years, 11 months ago
+Thank u U meant WAF* - CloudFormation, right? haha
+upvoted 5 times
+YogK 2 years, 6 months ago
+Shield - Amazon Elastic Compute Cloud (EC2), Elastic Load Balancing (ELB), Amazon CloudFront, AWS Global Accelerator, and Route 53.
+WAF - Amazon CloudFront, the Application Load Balancer (ALB), Amazon API Gateway, and AWS AppSync
+upvoted 14 times
+rjam Highly Voted 3 years ago
+Selected Answer: BC
+AWS Shield Advanced - DDos attacks
+AWS WAF to protect Amazon API Gateway, because WAF sits before the API Gateway and then comes NLB.
+upvoted 8 times
+studynoplay 2 years, 7 months ago
+don't agree that NLB sits before API gateway. it should be other way around
+upvoted 3 times
+aadityaravi8 2 years, 5 months ago
+yes.. coming from outside to inside... first of all DDos protection is required so the outer most NLB with Shield Advanced and then filter particular
+request doing SQL injection and all i.e API Gateway with WAF
+upvoted 3 times
+satyaammm Most Recent 1 year, 4 months ago
+Selected Answer: BC
+AWS Shield protects against Layer 3 and 4 attacks through NLB and AWS WAF protects against Layer 7 attacks through API Gateway.
+Correct Answer: BC
+Community vote distribution
+BC (93%)
+2%
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: BC
+I did not get this right initially, but when I looked it up, it became clear.
+Basically any device that acts at network level - Shield (Layer 4 devices, maybe capable of layer 7 as well). For example, NLB, ELB, CF, Route 53.
+Any device that works on HTTP/HTTPS/SFTP level(Layer 7 services) ==> WAF , which is ALB, API Gateway.
+a Layer 7 device are not capable of layer 4 sevices, and they rely on underlying hardware/firmware(OR in this case of Software defined networking,
+Software) to do that.
+upvoted 2 times
+Dharmarajan 1 year, 4 months ago
+Definitely a very good question, to be noted for the exam.
+upvoted 2 times
+EMPERBACH 1 year, 7 months ago
+Selected Answer: BD
+B- (Shield Advance) PROTECT the platform against web exploits like SQL injection
+D- (GuardDuty) also wants to DETECT mitigate large, sophisticated DDoS attacks
+WAF use for filter traffic, not make sense here.
+upvoted 1 times
+lofzee 1 year, 6 months ago
+Shield advanced does not protect against SQL injection. That is what WAF is for.
+GuardDuty is not the right tool here.
+Answers are B and C bro.
+upvoted 3 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: BC
+B) Use AWS Shield Advanced with the NLB
+C) Use AWS WAF to protect Amazon API Gateway
+The key reasons are:
+AWS Shield Advanced provides expanded DDoS protection against larger and more sophisticated attacks
+Using it with the NLB helps protect against network floods
+WAF still provides critical protection against exploits at the API lay
+upvoted 7 times
+Sat897 2 years, 3 months ago
+Selected Answer: BC
+WAF - can't support NLB and its supports API Gateway
+AWS Shield Advanced - NLB - DDOS
+upvoted 2 times
+cookieMr 2 years, 5 months ago
+B. AWS Shield Advanced provides advanced DDoS protection for the NLB, making it the appropriate choice for protecting against large and
+sophisticated DDoS attacks at the network layer.
+C. AWS WAF is designed to provide protection at the application layer, making it suitable for securing the API Gateway against web exploits like SQL
+injection.
+A. AWS WAF is not compatible with NLB as it operates at the application layer, whereas NLB operates at the transport layer.
+D. While GuardDuty helps detect threats, it does not directly protect against web exploits or DDoS attacks. Shield Standard focuses on edge
+resources, not specifically NLBs.
+E. Shield Standard provides basic DDoS protection for edge resources, but it does not directly protect the NLB or address web exploits at the
+application layer.
+upvoted 8 times
+cheese929 2 years, 7 months ago
+Selected Answer: BC
+B and C is correct
+upvoted 2 times
+kruasan 2 years, 7 months ago
+Selected Answer: BC
+NLB is a Lyer 3/4 component while WAF is a Layer 7 protection component.
+That is why WAF is only available for Application Load Balancer in the ELB portfolio. NLB does not terminate the TLS session therefore WAF is not
+capable of acting on the content. I would consider using AWS Shield at Layer 3/4.
+https://repost.aws/questions/QU2fYXwSWUS0q9vZiWDoaEzA/nlb-need-to-attach-aws-waf
+upvoted 5 times
+jdr75 2 years, 8 months ago
+Selected Answer: C
+• A. Use AWS WAF to protect the NLB.
+INCORRECT, cos' WAF not integrate with network LB
+• B. Use AWS Shield Advanced with the NLB.
+YES. AWS Shield Advanced provides additional protections against more sophisticated and larger attacks for your applications running in AWS.
+The doubt is : why apply the protection in the NLB when the facing of the app. is the API Gateway?, because Shield shoud be in front of the
+communications, not behind.
+Nevertheless, this is the best option.
+• C. Use AWS WAF to protect Amazon API Gateway.
+YES, https://aws.amazon.com/es/waf/faqs/
+• D. Use Amazon GuardDuty with AWS Shield Standard
+INCORRECT, GuardDuty not prevent attacks.
+•E. Use AWS Shield Standard with Amazon API Gateway.
+INCORRECT. It could be, in principle, a good option, cos' it's in front of the gateway, but the questions said explicity:
+"wants to detect and mitigate large, sophisticated DDoS attacks",
+and Standard not provide this feature.
+upvoted 2 times
+kerl 2 years, 10 months ago
+for those who select A, it is wrong, WAF is Layer 7, it only support ABL, APIGateway, CloudFront,COgnito User Pool and AppSync graphQL API
+(https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html). NLB is NOT supported. Answer is BC
+upvoted 4 times
+bullrem 2 years, 10 months ago
+Selected Answer: AB
+A and B are the best options to provide the greatest protection for the platform against web vulnerabilities and large, sophisticated DDoS attacks.
+Option A: Use AWS WAF to protect the NLB. This will provide protection against common web vulnerabilities such as SQL injection.
+Option B: Use AWS Shield Advanced with the NLB. This will provide additional protection against large and sophisticated DDoS attacks.
+upvoted 2 times
+bullrem 2 years, 10 months ago
+The best protection for the platform would be to use A and C together because it will protect both the NLB and the API Gateway from web
+vulnerabilities and DDoS attacks.
+upvoted 1 times
+omoakin 2 years, 6 months ago
+correct
+upvoted 1 times
+bullrem 2 years, 10 months ago
+A and C are the best options for protecting the platform against web vulnerabilities and detecting and mitigating large and sophisticated DDoS
+attacks.
+A: AWS WAF can be used to protect the NLB from web vulnerabilities such as SQL injection.
+C: AWS WAF can be used to protect Amazon API Gateway and also provide protection against DDoS attacks.
+B: AWS Shield Advanced is used to protect resources from DDoS attacks, but it is not specific to the NLB and may not provide the same level of
+protection as using WAF specifically on the NLB.
+D and E: Amazon GuardDuty and AWS Shield Standard are primarily used for threat detection and may not provide the same level of protection as
+using WAF and Shield Advanced.
+upvoted 1 times
+Arifzefen 2 years, 5 months ago
+A is not correct as WAF doesn't support Network Load Balancer
+upvoted 2 times
+drabi 2 years, 11 months ago
+Selected Answer: BC
+WS Shield Advanced can help protect your Amazon EC2 instances and Network Load Balancers against infrastructure-layer Distributed Denial of
+Service (DDoS) attacks. Enable AWS Shield Advanced on an AWS Elastic IP address and attach the address to an internet-facing EC2 instance or
+Network Load Balancer.https://aws.amazon.com/blogs/security/tag/network-load-balancers/
+upvoted 2 times
+duriselvan 2 years, 11 months ago
+Regional resources
+You can protect regional resources in all Regions where AWS WAF is available. You can see the list at AWS WAF endpoints and quotas in the Amazon
+Web Services General Reference.
+You can use AWS WAF to protect the following regional resource types:
+Amazon API Gateway REST API
+Application Load Balancer
+AWS AppSync GraphQL API
+Amazon Cognito user pool
+You can only associate a web ACL to an Application Load Balancer that's within AWS Regions. For example, you cannot associate a web ACL to an
+Application Load Balancer that's on AWS Outposts.
+upvoted 1 times
+duriselvan 2 years, 11 months ago
+Ans:-a and C
+upvoted 1 times
+Buruguduystunstugudunstuy 2 years, 11 months ago
+Selected Answer: AC
+***CORRECT***
+A. Use AWS WAF to protect the NLB.
+C. Use AWS WAF to protect Amazon API Gateway.
+AWS WAF is a web application firewall that helps protect web applications from common web exploits such as SQL injection and cross-site scripting
+attacks. By using AWS WAF to protect the NLB and Amazon API Gateway, the company can provide an additional layer of protection for its cloud
+communications platform against these types of web exploits.
+upvoted 1 times
+PassNow1234 2 years, 11 months ago
+Your answer is wrong.
+Sophisticated DDOS = Shield Advanced (DD0S attacks the front!) What happens if your load balances goes down?
+Your API gateway is on the BACK further behind the NLB. SQL Protect that with the WAF
+B and C are right.
+upvoted 5 times
+jwu413 2 years, 10 months ago
+This guy just copies and pastes from ChatGPT.
+upvoted 5 times
+Buruguduystunstugudunstuy 2 years, 11 months ago
+About AWS Shield Advanced and Amazon GuardDuty
+AWS Shield Advanced is a managed DDoS protection service that provides additional protection for Amazon EC2 instances, Amazon RDS DB
+instances, Amazon Elastic Load Balancers, and Amazon CloudFront distributions. It can help detect and mitigate large, sophisticated DDoS attacks,
+"but it does not provide protection against web exploits like SQL injection."
+Amazon GuardDuty is a threat detection service that uses machine learning and other techniques to identify potentially malicious activity in your
+AWS accounts. It can be used in conjunction with AWS Shield Standard, which provides basic DDoS protection for Amazon EC2 instances, Amazon
+RDS DB instances, and Amazon Elastic Load Balancers. However, neither Amazon GuardDuty nor AWS Shield Standard provides protection against
+web exploits like SQL injection.
+Overall, the combination of using AWS WAF to protect the NLB and Amazon API Gateway provides the most protection against web exploits and
+large, sophisticated DDoS attacks.
+upvoted 1 times
+BENICE 2 years, 11 months ago
+Option B and C
+upvoted 1 times

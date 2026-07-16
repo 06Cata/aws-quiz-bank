@@ -1,0 +1,61 @@
+An online gaming company is transitioning user data storage to Amazon DynamoDB to support the company's growing user base.
+The current architecture includes DynamoDB tables that contain user profiles, achievements, and in-game transactions.
+The company needs to design a robust, continuously available, and resilient DynamoDB architecture to maintain a seamless
+gaming experience for users.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create DynamoDB tables in a single AWS Region. Use on-demand capacity mode. Use global tables to replicate data across
+multiple Regions.
+B. Use DynamoDB Accelerator (DAX) to cache frequently accessed data. Deploy tables in a single AWS Region and enable auto
+scaling. Configure Cross-Region Replication manually to additional Regions.
+C. Create DynamoDB tables in multiple AWS Regions. Use on-demand capacity mode. Use DynamoDB Streams for Cross-
+Region Replication between Regions.
+D. Use DynamoDB global tables for automatic multi-Region replication. Deploy tables in multiple AWS Regions. Use
+provisioned capacity mode. Enable auto scaling. Most Voted
+Comments
+trinh_le 1 year, 6 months ago
+Selected Answer: D
+Following keywords
+robust: provisioned capacity reduces cost
+continuously available: global tables
+resilient: multiple regions enhances available
+upvoted 3 times
+Cpso 1 year, 6 months ago
+Selected Answer: D
+c &d can do 2 ways rep. But C need user logic to handle conflict ,so it not robust
+upvoted 3 times
+78b9037 1 year, 6 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/capacity.html
+upvoted 2 times
+striker89 1 year, 7 months ago
+Selected Answer: C
+DynamoDB Streams for replication are less expensive than Global tables.
+On-demand capacity mode can be less expensive than provisionned mode.
+Multi region deployment ensure high availability.
+upvoted 1 times
+Bwhizzy 1 year, 7 months ago
+Selected Answer: D
+D. Use DynamoDB global tables for automatic multi-Region replication. Deploy tables in multiple AWS Regions. Use provisioned capacity mode.
+Enable auto scaling.
+Correct Answer: D
+Community vote distribution
+D (92%)
+8%
+Explanation:
+DynamoDB global tables automatically replicate data across multiple Regions, ensuring that the data is available and consistent across all Regions.
+This provides resilience and high availability by allowing users in different geographical locations to access data from the closest Region.
+Provisioned capacity mode allows you to pre-allocate read and write capacity units, which can result in cost savings over on-demand capacity mode
+if the traffic is predictable. Additionally, auto scaling can be enabled to dynamically adjust the capacity based on the actual traffic, ensuring that you
+only pay for the capacity that you need.
+Multi-Region deployment improves the resilience of the system. If a failure occurs in one Region, another Region can seamlessly take over, ensuring
+an uninterrupted gaming experience.
+upvoted 4 times
+GOTJ 1 year, 4 months ago
+"if the traffic is predictable". Good point, but how do you know this from the question?
+upvoted 1 times
+dce7e4b 1 year ago
+« Most cost efficiently »
+« Growing user base »
+The provisionned capacity is more cost effective but as the user base is growing you should enable auto scaling. Like this, predictable or not, you
+are « most cost efficient »
+upvoted 1 times

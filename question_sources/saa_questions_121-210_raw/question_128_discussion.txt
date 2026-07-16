@@ -1,0 +1,127 @@
+A company wants to run applications in containers in the AWS Cloud. These applications are stateless and can tolerate disruptions
+within the underlying infrastructure. The company needs a solution that minimizes cost and operational overhead.
+What should a solutions architect do to meet these requirements?
+A. Use Spot Instances in an Amazon EC2 Auto Scaling group to run the application containers.
+B. Use Spot Instances in an Amazon Elastic Kubernetes Service (Amazon EKS) managed node group. Most Voted
+C. Use On-Demand Instances in an Amazon EC2 Auto Scaling group to run the application containers.
+D. Use On-Demand Instances in an Amazon Elastic Kubernetes Service (Amazon EKS) managed node group.
+Comments
+bgsanata Highly Voted 3 years ago
+Selected Answer: A
+Requirement is "minimizes cost and operational overhead"
+A is better option than B as EKS add additional cost and operational overhead.
+upvoted 18 times
+EMPERBACH 2 years, 1 month ago
+Really ???
+You want more configuration efforts for container workload on EC2, instead of using EKS ::))
+upvoted 9 times
+MutiverseAgent 2 years, 11 months ago
+In my opinion option A) seems to be a reasonable at first because setting up AWS EKS might be seem as an operation overhead comparing to the
+option of running the containers inside the EC2 using docker just as you we do on your own machines. However, consider installing docker on
+multiple EC2 instances and manually manage docker instances and images will end up in chaos, so, as a conclusion, the operational cost of setting
+up AWS EKS will worth the effort.
+upvoted 6 times
+ruqui 3 years ago
+option A is the worst option in terms of operational overhead ... you have to install your own kubernetes cluster!!! B is a more suitable option
+upvoted 6 times
+MutiverseAgent 2 years, 11 months ago
+you do not necessary need to install K8S, in terms of plain containers you can run them using docker just as you do on your own machine.
+upvoted 1 times
+Lalo 3 years ago
+USING SPOT INSTANCES WITH EKS
+https://ec2spotworkshops.com/using_ec2_spot_instances_with_eks.html
+upvoted 11 times
+GalileoEC2 Highly Voted 3 years, 3 months ago
+Answer is A:
+Amazon ECS: ECS itself is free, you pay only for Amazon EC2 resources you use.
+Amazon EKS: The EKS management layer incurs an additional cost of $144 per month per cluster.
+Advantages of Amazon ECS include: Spot instances: Because containers are immutable, you can run many workloads using Amazon EC2 Spot
+Instances (which can be shut down with no advance notice) and save 90% on on-demand instance costs.
+upvoted 10 times
+46e1a46 Most Recent 1 month, 1 week ago
+Correct Answer: B
+Community vote distribution
+B (72%)
+A (26%)
+2%
+Selected Answer: D
+3 Storage needs 3 different solutions
+- Max I/O performance -> EC2 Instance Store. This is physically attached NVMe SSD on the host server, fasters possible I/O on AWS
+- Durable Storage for media content -> S3. S3 has 11 nines of durability
+- Archival storage -> S3 Glacier. Cheapest option for data that's "not in use anymore"
+D
+upvoted 1 times
+Maco 2 months, 2 weeks ago
+Selected Answer: A
+Spot Instances
+Up to 90% cheaper
+Perfect for:
+Stateless workloads
+Interruptible workloads
+upvoted 1 times
+Bhuvan_D 1 year ago
+Selected Answer: A
+Why Option A is best:
+Amazon EC2 Auto Scaling Group + Spot Instances:
+Spot Instances are highly cost-effective (up to 90% cheaper than On-Demand).
+Auto Scaling ensures automatic replacement of interrupted instances.
+Stateless nature of apps makes Spot a perfect fit.
+Operational overhead is low compared to running a full Kubernetes cluster (like EKS).
+upvoted 1 times
+MortisG 1 year ago
+Selected Answer: B
+Answer is B since it’s less operational overhead to run containers on EKS (managed service) than running on EC2 instances which implies installing
+dockers to orchestrate containers)
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: A
+ai response "Generally, an ECS EC2 Auto Scaling Group is considered cheaper than an EKS Managed Node Group because with ECS, you only pay for
+the EC2 instances used to run your containers, while EKS adds an additional cost per cluster hour on top of the compute costs for the managed
+nodes"
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: B
+Definitely B. running containers on spot EC2 instances means there has to be additional configuration requirements every time an instance comes up
+That means making a custom AMI with prepping the spot instance to launch the container = additional operational overhead in maintaining the AM
+- with EKS, that overhead is eliminated.
+upvoted 2 times
+satyaammm 1 year, 5 months ago
+Selected Answer: B
+Spot Instances are the cheapest and most suitable here along with EKS for automation and thereby reducing operational overhead.
+upvoted 2 times
+PaulGa 1 year, 8 months ago
+Selected Answer: A
+Ans A - hint: "stateless" and 'don't care' infrastructure - so Spot and containerisation
+upvoted 1 times
+huaze_lei 1 year, 9 months ago
+Spot instance is definitely the answer for interruptible process. It's between A and B now.
+I would reckon Option B requires lesser operational overheads than to maintain own fleet of EC2 servers with containers.
+upvoted 1 times
+SaurabhTiwari1 1 year, 9 months ago
+Selected Answer: B
+B is correct
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: B
+B for sure
+upvoted 2 times
+Anthony_Rodrigues 2 years ago
+IMHO, the option **B** is the right one.
+Breaking down the reasons for it:
+1 - Spot is much cheaper than on-demand, which already eliminates C&D for cost related.
+2 - Even though we can create a bootstrap script to install docker, managing this can be complicated, especially if any of the applications require
+more than one instance running.
+upvoted 4 times
+lofzee 2 years ago
+Container in ec2 or container on a container platform?
+B
+upvoted 3 times
+EMPERBACH 2 years, 1 month ago
+Selected Answer: B
+run applications in containers -> Container service not EC2 (no operational overhead to config container workload on EC2)
+Spot instance < On-demand cost
+upvoted 3 times
+vip2 2 years, 3 months ago
+Selected Answer: A
+Does A implicitly means run spot Instance on ECS?
+upvoted 2 times

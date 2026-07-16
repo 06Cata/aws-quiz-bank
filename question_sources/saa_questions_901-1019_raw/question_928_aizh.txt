@@ -1,0 +1,54 @@
+Question #928
+A company hosts a video streaming web application in a VPC. The company uses a Network Load Balancer (NLB) to handle TCP
+traffic for real-time data processing. There have been unauthorized attempts to access the application.
+The company wants to improve application security with minimal architectural change to prevent unauthorized attempts to access
+the application.
+Which solution will meet these requirements?
+一家公司在一个 VPC 中托管了一个视频流媒体 Web 应用程序。该公司使用 Network Load Balancer (NLB) 来处理实时数据处理的
+TCP 流量。最近出现了未经授权的访问尝试。
+该公司希望通过最小的架构更改来提高应用程序的安全性，以防止未经授权的访问尝试。
+哪种解决方案可以满足这些要求？
+A. Implement a series of AWS WAF rules directly on the NLB to filter out unauthorized traffic.
+在 NLB 上直接实施一系列 AWS WAF 规则以过滤掉未经授权的流量。
+B. Recreate the NLB with a security group to allow only trusted IP addresses.
+重新创建 NLB，并使用安全组仅允许受信任的 IP 地址。
+C. Deploy a second NLB in parallel with the existing NLB configured with a strict IP address allow list.
+并行部署第二个 NLB，并配置严格的 IP 地址允许列表。
+D. Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts. Most Voted
+使用 AWS Shield Advanced 提供增强的 DDoS 保护并防止未经授权的访问尝试。
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (54%)
+B (41%)
+5%
+题目分析与解答
+1. 考察的知识点
+本题主要考察AWS网络安全相关的服务，包括AWS Shield、AWS WAF、NLB的功能和限制，以及如何在不改变架构的情况下增强安
+全性。
+还涉及到对AWS服务的适用场景的理解，例如NLB不支持安全组和WAF规则的直接应用。
+2. 独立思考
+官方答案可能不正确，因此需要逐个分析选项的可行性和正确性。
+3. 选项分析
+A. Implement a series of AWS WAF rules directly on the NLB to filter out unauthorized traffic.
+错误：AWS WAF无法直接应用于NLB。AWS WAF只能与Application Load Balancer (ALB)、Amazon CloudFront、API Gateway或
+AppSync集成。
+因此此选项不可行。
+B. Recreate the NLB with a security group to allow only trusted IP addresses.
+错误：NLB不支持安全组。安全组只能应用于实例或ALB，而不能直接应用于NLB。
+重新创建NLB也不符合“最小架构变更”的要求。
+C. Deploy a second NLB in parallel with the existing NLB configured with a strict IP address allow list.
+错误：NLB本身不支持IP地址允许列表的配置。此选项不仅增加了架构复杂性，还无法实现所需的安全功能。
+并行部署第二个NLB也不符合“最小架构变更”的要求。
+D. Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts.
+正确：AWS Shield Advanced是专门设计用于增强DDoS保护的服务，可以帮助防止未经授权的访问尝试。
+此选项符合“最小架构变更”的要求，因为它可以直接应用于现有的NLB。
+4. 我选的答案
+D. Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts.
+5. 官方答案
+D. Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts.
+6. 比较与重新思考
+我的答案与官方答案一致。
+原因：AWS Shield Advanced是唯一符合题目要求的解决方案，能够在不改变架构的情况下增强安全性，并防止未经授权的访问尝
+试。

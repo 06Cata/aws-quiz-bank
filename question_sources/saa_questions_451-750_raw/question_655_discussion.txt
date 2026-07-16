@@ -1,0 +1,51 @@
+A company runs a web application on Amazon EC2 instances in an Auto Scaling group that has a target group. The company
+designed the application to work with session affinity (sticky sessions) for a better user experience.
+The application must be available publicly over the internet as an endpoint. A WAF must be applied to the endpoint for additional
+security. Session affinity (sticky sessions) must be configured on the endpoint.
+Which combination of steps will meet these requirements? (Choose two.)
+A. Create a public Network Load Balancer. Specify the application target group.
+B. Create a Gateway Load Balancer. Specify the application target group.
+C. Create a public Application Load Balancer. Specify the application target group. Most Voted
+D. Create a second target group. Add Elastic IP addresses to the EC2 instances.
+E. Create a web ACL in AWS WAF. Associate the web ACL with the endpoint Most Voted
+Comments
+ferdzcruz 2 years, 4 months ago
+CE.
+C. application = ALB
+E. WAF to endpoint
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: CE
+NLB and GLB cannot handle sticky sessions. It's an application level concept (Cookies) so ALB works.
+Elastic IP will negate sticky sessions and this combination won't work.
+E give proper permissions to WAF
+upvoted 4 times
+tonybuivannghia 1 year, 7 months ago
+I agree with you CE is correct but your explanation is wrong. NLB, ALB and CLB can handle sticky sessions. But the WAF is just only working with
+ALB, so ALB is correct.
+upvoted 1 times
+LeonSauveterre 1 year, 6 months ago
+After a little digging, turns out NLBs only offer IP-based stickiness, which is not ideal for web applications where many users might share the same
+public IP address (due to NAT oh well). Cookie-based stickiness offered by ALBs is more appropriate.
+PS. Sticky sessions are not supported if you are using TLS termination on NLB. If you need TLS termination and sticky sessions, you should use ALB
+as well.
+upvoted 1 times
+Mikado211 2 years, 5 months ago
+Selected Answer: CE
+- Make it accessible from the web + sticky session == Public ALB
+- Additional security == web ACL in WAF (and integrate the web ACL to the ALB)
+upvoted 2 times
+ZZZ_Sleep 2 years, 5 months ago
+Correct Answer: CE
+Community vote distribution
+CE (100%)
+Selected Answer: CE
+session affinity (sticky sessions) = Application Load Balancer
+WAF must be applied to the endpoint for additional security = web ACL in WAF
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: CE
+Session Affinity = Application Load Balancer
+Create a public Application Load Balancer. Specify the application target group then create a web ACL in AWS WAF. Associate the web ACL with the
+ALB endpoint.
+upvoted 3 times

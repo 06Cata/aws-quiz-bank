@@ -1,0 +1,85 @@
+A pharmaceutical company is developing a new drug. The volume of data that the company generates has grown exponentially
+over the past few months. The company's researchers regularly require a subset of the entire dataset to be immediately available
+with minimal lag. However, the entire dataset does not need to be accessed on a daily basis. All the data currently resides in on-
+premises storage arrays, and the company wants to reduce ongoing capital expenses.
+Which storage solution should a solutions architect recommend to meet these requirements?
+A. Run AWS DataSync as a scheduled cron job to migrate the data to an Amazon S3 bucket on an ongoing basis.
+B. Deploy an AWS Storage Gateway file gateway with an Amazon S3 bucket as the target storage. Migrate the data to the
+Storage Gateway appliance.
+C. Deploy an AWS Storage Gateway volume gateway with cached volumes with an Amazon S3 bucket as the target storage.
+Migrate the data to the Storage Gateway appliance. Most Voted
+D. Configure an AWS Site-to-Site VPN connection from the on-premises environment to AWS. Migrate data to an Amazon
+Elastic File System (Amazon EFS) file system.
+Comments
+Andy_09 Highly Voted 2 years, 4 months ago
+Option C
+upvoted 11 times
+hajra313 Highly Voted 2 years, 4 months ago
+B. Deploying an AWS Storage Gateway file gateway with an Amazon S3 bucket as the target storage would require the entire dataset to be stored in
+Amazon S3, which might not be cost-effective considering that only a subset of the data needs to be accessed regularly. Additionally, accessing data
+directly from S3 might introduce latency. so correct option is C bcz AWS Storage Gateway volume gateway with cached volumes allows the company
+to keep frequently accessed data locally on-premises while storing the entire dataset in Amazon S3. This solution provides immediate access to the
+subset of data with minimal lag, as frequently accessed data is cached locally. It also reduces ongoing capital expenses as it leverages Amazon S3
+storage, which is cost-effective.
+upvoted 8 times
+capepenguin 1 year, 11 months ago
+Both B and C store the entire data set in Amazon S3 and the AWS Storage Gateway file gateway also supports local caching. I do not know if it is B
+or C for me.
+upvoted 2 times
+e10c971 Most Recent 6 months ago
+Selected Answer: B
+Why B fits best
+from ai
+Immediate, low-latency access to a subset: File Gateway provides a local cache for recently accessed files, so researchers can work with hot data with
+minimal lag via standard NFS/SMB file protocols.
+Cost optimization: The entire dataset is stored durably and cost-effectively in Amazon S3, reducing on-premises storage CapEx. Only frequently
+accessed data stays cached on-prem.
+Operational simplicity: It integrates cleanly with existing file-based workflows and supports object-optimized storage in S3 with lifecycle policies (e.g.
+transitioning cold data to S3 Glacier).
+upvoted 1 times
+nadeerm 1 year, 3 months ago
+Selected Answer: B
+Correct Answer: C
+Community vote distribution
+C (83%)
+B (17%)
+Volume Gateway is designed for block storage (EBS volumes), not file storage. It is not the best fit for this use case, which involves file-based data
+access.
+upvoted 3 times
+Scheldon 1 year, 11 months ago
+Selected Answer: C
+AnswerC
+Deploying an AWS Storage Gateway volume gateway with cached volumes will allow to store all data in AWS but the most frequently accessed data
+will be stored/cached localy (on-premises) = low latency for most used data while all data will be stored in the cloud.
+https://docs.aws.amazon.com/storagegateway/latest/vgw/StorageGatewayConcepts.html#storage-gateway-cached-concepts
+upvoted 3 times
+BatVanyo 2 years, 1 month ago
+A storage guy here.. the question is not clear enough to give a definitive answer between B and C, as both can do the job.
+An "on-prem storage array" can be any of the three:
+- File array (serving any file protocol, e.g. NFS/SMB) -> requiring a file gateway (supports caching of the most recently used data)
+- Block array (iSCSI/Fibre Channel) -> requiring a volume gateway (supports cached volumes most recently used data)
+- Combo (providing both File and Block protocols)
+Something is clearly missing in the question in order to give a definitive answer between B and C.
+upvoted 5 times
+mohammadthainat 2 years, 2 months ago
+Selected Answer: C
+storage arrays = Volume Gateway
+upvoted 3 times
+lenotc 2 years, 2 months ago
+Selected Answer: C
+storage array, also known as a disk array so AWS Storage Gateway volume.
+its a trap
+upvoted 5 times
+MattBJ 2 years, 2 months ago
+Selected Answer: C
+C is correct. Using AWS Storage Gateway volume gateway with cached volumes provide local access to the file.
+upvoted 3 times
+ninasgx 2 years, 3 months ago
+Selected Answer: C
+require a subset of the entire dataset => cached volumes
+upvoted 4 times
+osmk 2 years, 3 months ago
+Selected Answer: C
+The company's researchers regularly require a subset of the entire dataset to be immediately available with minimal
+laghttps://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html
+upvoted 2 times

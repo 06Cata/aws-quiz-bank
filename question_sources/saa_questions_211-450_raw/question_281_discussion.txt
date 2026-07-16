@@ -1,0 +1,102 @@
+A company runs a fleet of web servers using an Amazon RDS for PostgreSQL DB instance. After a routine compliance check, the
+company sets a standard that requires a recovery point objective (RPO) of less than 1 second for all its production databases.
+Which solution meets these requirements?
+A. Enable a Multi-AZ deployment for the DB instance. Most Voted
+B. Enable auto scaling for the DB instance in one Availability Zone.
+C. Configure the DB instance in one Availability Zone, and create multiple read replicas in a separate Availability Zone.
+D. Configure the DB instance in one Availability Zone, and configure AWS Database Migration Service (AWS DMS) change data
+capture (CDC) tasks.
+Comments
+KZM Highly Voted 2 years, 9 months ago
+A:
+By using Multi-AZ deployment, the company can achieve an RPO of less than 1 second because the standby instance is always in sync with the
+primary instance, ensuring that data changes are continuously replicated.
+upvoted 24 times
+A1975 Highly Voted 2 years, 4 months ago
+Selected Answer: A
+Read Replicas:
+Read Replicas are asynchronous and support read scalability.
+It is uese to improve performance.
+Read Replicas can be in the same region or in a different region for disaster recovery purposes, but this involves manual intervention,
+which means Read Replicas do not provide automatic failover and requires DNS updates and application changes
+Multi-AZ:
+Multi-AZ maintains a synchronous standby replica of the primary instance in a different Availability Zone within the same region.
+Multi-AZ deployments provide high availability and automatic failover.
+Option A is better choice with respect to below statement,
+"the company sets a standard that requires a recovery point objective (RPO) of less than 1 second for all its production databases."
+upvoted 15 times
+Rcosmos Most Recent 1 year, 4 months ago
+Selected Answer: B
+Solução Detalhada:
+Configure o grupo de segurança do EC2 com uma regra de entrada para permitir conexões apenas do grupo de segurança do ALB.
+A AWS permite essa associação dinâmica, o que garante que apenas o tráfego legítimo roteado pelo ALB possa chegar às instâncias.
+Essa é uma prática recomendada e atende ao objetivo de restringir o acesso às instâncias do EC2.
+upvoted 1 times
+manoj6992 1 year, 8 months ago
+Correct answer is A
+upvoted 2 times
+Uzbekistan 1 year, 8 months ago
+Same question old from SAA-C02
+08.2021
+https://www.examtopics.com/discussions/amazon/view/61072-exam-aws-certified-solutions-architect-associate-saa-c02/
+Correct Answer: A
+Community vote distribution
+A (88%)
+6%
+upvoted 2 times
+Uzbekistan 1 year, 8 months ago
+Selected Answer: C
+C. Configure the DB instance in one Availability Zone, and create multiple read replicas in a separate Availability Zone.
+Here's why:
+Read Replicas: By configuring read replicas in a separate Availability Zone, you can leverage asynchronous replication to replicate data from the
+primary DB instance to the read replicas with minimal latency. This setup allows for near real-time data replication and can help achieve a low RPO.
+In contrast, Multi-AZ deployments (Option A) provide high availability by maintaining a standby replica but may not guarantee an RPO of less than 1
+second due to synchronous replication and failover considerations. Options B and D are not directly related to achieving a low RPO for the
+databases.
+upvoted 2 times
+pentium75 1 year, 11 months ago
+I'm unsure with A, because the term RPO is not only applied to datacenter outages. Say, an application error corrupts the database, or an
+administrator accidentally overwrites all records. With answer A, Multi-AZ, these changes would be instantly copied to the replica.
+Only reason why A might still be correct is that the other answers don't make much more sense.
+B has nothing to do with RPO at all
+C could lose more than 1 second since read replicas are asynchronous
+D could be part of a solution but the CDC ask alone won't help
+upvoted 7 times
+narddrer 2 years, 5 months ago
+Selected Answer: D
+option A doesn't provide Data integrity only achieved in Option D using CDC.
+upvoted 1 times
+FFO 2 years, 8 months ago
+Selected Answer: A
+Used for DR. Every single change is replicated in a standby AZ. If we lose the main AZ, (uses the same DNS name) standby becomes automatic
+failover and the new main DB.
+upvoted 4 times
+TariqKipkemei 2 years, 8 months ago
+Answer is A
+High availability = Multi AZ
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: A
+My vote is A
+upvoted 2 times
+ManOnTheMoon 2 years, 9 months ago
+Agree with A
+upvoted 2 times
+LuckyAro 2 years, 9 months ago
+Selected Answer: A
+Multi-AZ is a synchronous communication with the Master in "real time" and fail over will be almost instant.
+upvoted 4 times
+GwonLEE 2 years, 9 months ago
+Selected Answer: A
+correct is A
+upvoted 2 times
+Namrash 2 years, 9 months ago
+A should be correct
+upvoted 3 times
+Joan111edu 2 years, 9 months ago
+Selected Answer: A
+should be A
+upvoted 3 times
+rrharris 2 years, 9 months ago
+Correct Answer is A
+upvoted 8 times

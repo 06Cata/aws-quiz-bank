@@ -1,0 +1,56 @@
+A gaming company wants to launch a new internet-facing application in multiple AWS Regions. The application will use the TCP
+and UDP protocols for communication. The company needs to provide high availability and minimum latency for global users.
+Which combination of actions should a solutions architect take to meet these requirements? (Choose two.)
+A. Create internal Network Load Balancers in front of the application in each Region. Most Voted
+B. Create external Application Load Balancers in front of the application in each Region.
+C. Create an AWS Global Accelerator accelerator to route traffic to the load balancers in each Region. Most Voted
+D. Configure Amazon Route 53 to use a geolocation routing policy to distribute the traffic.
+E. Configure Amazon CloudFront to handle the traffic and route requests to the application in each Region
+Comments
+Andy_09 Highly Voted 1 year, 10 months ago
+Correct answer should be AC
+upvoted 10 times
+mestule 1 year, 10 months ago
+Agreed.
+When you add an internal Load Balancer or an Amazon EC2 instance endpoint in AWS Global Accelerator, you enable internet traffic to flow directly
+to and from the endpoint in Virtual Private Clouds (VPCs) by targeting it in a private subnet. The VPC that contains the load balancer or EC2
+instance must have an internet gateway attached to it, to indicate that the VPC accepts internet traffic. However, you don't need public IP addresses
+on the load balancer or EC2 instance. You also don't need an associated internet gateway route for the subnet.
+upvoted 8 times
+ogerber Highly Voted 1 year, 10 months ago
+Selected Answer: AC
+Gaming + TCP / UDP => always think NLB and global accelerator
+upvoted 5 times
+yangbo Most Recent 1 year, 3 months ago
+Selected Answer: CD
+A is wrong . AWS Global Accelerator cannot directly connect to Internal Network Load Balancers (NLBs). It can only connect to Internet-facing NLBs
+or Application Load Balancers (ALBs), and cannot connect to Internal NLBs because Internal NLBs are designed to serve traffic within the VPC and are
+not exposed to the internet.
+upvoted 3 times
+yangbo 1 year, 3 months ago
+client - dns - AWS Global Accelerator - NLB -EC2
+upvoted 1 times
+sandordini 1 year, 7 months ago
+Selected Answer: AC
+Gaming, TCP&UDP, HA, Low latency >> NLB + AWS Global Accelerator
+upvoted 2 times
+waldirlsantos 1 year, 8 months ago
+Selected Answer: AC
+Global Accelerator is a good fit for non-HTTP use cases, such as gaming (UDP), IoT (MQTT), or Voice over IP. NLB + GA for UDP, TCP
+Correct Answer: AC
+Community vote distribution
+AC (84%)
+CD (16%)
+upvoted 2 times
+Kezuko 1 year, 8 months ago
+Selected Answer: AC
+UDP -> NLB and Global Accelerator
+upvoted 4 times
+1Alpha1 1 year, 10 months ago
+Selected Answer: AC
+*AC* - the app is using TCP & UDP
+upvoted 3 times
+jaswantn 1 year, 10 months ago
+For global user where TCP and UDP protocols are used and HA with minimum latency is needed.... Global Accelerator with NLB is the solution
+combination .
+upvoted 3 times

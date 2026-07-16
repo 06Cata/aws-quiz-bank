@@ -1,0 +1,126 @@
+A company’s web application consists of an Amazon API Gateway API in front of an AWS Lambda function and an Amazon
+DynamoDB database. The Lambda function handles the business logic, and the DynamoDB table hosts the data. The application
+uses Amazon Cognito user pools to identify the individual users of the application. A solutions architect needs to update the
+application so that only users who have a subscription can access premium content.
+Which solution will meet this requirement with the LEAST operational overhead?
+A. Enable API caching and throttling on the API Gateway API.
+B. Set up AWS WAF on the API Gateway API. Create a rule to filter users who have a subscription.
+C. Apply fine-grained IAM permissions to the premium content in the DynamoDB table.
+D. Implement API usage plans and API keys to limit the access of users who do not have a subscription. Most Voted
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: D
+Implementing API usage plans and API keys is a straightforward way to restrict access to specific users or groups based on subscriptions. It allows
+you to control access at the API level and doesn't require extensive changes to your existing architecture. This solution provides a clear and
+manageable way to enforce access restrictions without complicating other parts of the application
+upvoted 13 times
+Rcosmos Most Recent 1 year, 4 months ago
+Selected Answer: C
+Segurança robusta:
+A lógica de controle de acesso é aplicada no nível do banco de dados, garantindo que usuários não autorizados não consigam acessar os dados
+premium, mesmo que tentem burlar o aplicativo.
+upvoted 1 times
+Uzbekistan 1 year, 9 months ago
+Selected Answer: C
+Chat GPT said:
+Option C, "Apply fine-grained IAM permissions to the premium content in the DynamoDB table," would likely involve the least operational overhead.
+Here's why:
+Granular Control: IAM permissions allow you to control access at a very granular level, including specific actions (e.g., GetItem, PutItem) on individual
+resources (e.g., DynamoDB tables).
+Integration with Cognito: IAM policies can be configured to allow access based on the identity of the user authenticated through Cognito. You can
+create IAM roles or policies that grant access to users with specific attributes or conditions, such as having a subscription.
+Minimal Configuration Changes: This solution primarily involves configuring IAM policies for access control in DynamoDB, which can be done with
+minimal changes to the existing application architecture.
+upvoted 2 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: C
+C is correct as per the link and doc:
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html#apigateway-usage-plans-best-practices
+D: API keys cannot be used to limit access and this can only be done via methods defined in above link
+upvoted 2 times
+Correct Answer: D
+Community vote distribution
+D (86%)
+14%
+awsgeek75 1 year, 10 months ago
+I had to chose D but must have clicked C incorrectly. It is D as my explanation is about D not C! C is the wrong answer.
+upvoted 2 times
+awsgeek75 1 year, 11 months ago
+Also, option A is for performance and not for security
+option B, WAF cannot control access based on subscription without massive custom coding which will be a big operational overhead
+upvoted 2 times
+lipi0035 2 years ago
+In the same document https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html if you scroll down, it says
+`Don't use API keys for authentication or authorization to control access to your APIs. If you have multiple APIs in a usage plan, a user with a valid AP
+key for one API in that usage plan can access all APIs in that usage plan. Instead, to control access to your API, use an IAM role, a Lambda authorizer,
+or an Amazon Cognito user pool.`
+In the same document at the bottom, it says "If you're using a developer portal to publish your APIs, note that all APIs in a given usage plan are
+subscribable, even if you haven't made them visible to your customers."
+I go with C
+upvoted 2 times
+awsgeek75 1 year, 11 months ago
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html#apigateway-usage-plans-best-practices
+Correct link
+upvoted 2 times
+TariqKipkemei 2 years, 1 month ago
+Selected Answer: D
+After you create, test, and deploy your APIs, you can use API Gateway usage plans to make them available as product offerings for your customers.
+You can configure usage plans and API keys to allow customers to access selected APIs, and begin throttling requests to those APIs based on defined
+limits and quotas. These can be set at the API, or API method level.
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-
+plans.html#:~:text=Creating%20and%20using-,usage%20plans,-with%20API%20keys
+upvoted 2 times
+marufxplorer 2 years, 5 months ago
+D
+Option D involves implementing API usage plans and API keys. By associating specific API keys with users who have a valid subscription, you can
+control access to the premium content.
+upvoted 2 times
+kruasan 2 years, 7 months ago
+Selected Answer: D
+A. This would not actually limit access based on subscriptions. It helps optimize and control API usage, but does not address the core requirement.
+B. This could work by checking user subscription status in the WAF rule, but would require ongoing management of WAF and increases operational
+overhead.
+C. This is a good approach, using IAM permissions to control DynamoDB access at a granular level based on subscriptions. However, it would require
+managing IAM permissions which adds some operational overhead.
+D. This option uses API Gateway mechanisms to limit API access based on subscription status. It would require the least amount of ongoing
+management and changes, minimizing operational overhead. API keys could be easily revoked/changed as subscription status changes.
+upvoted 4 times
+imvb88 2 years, 7 months ago
+CD both possible but D is more suitable since it mentioned in https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-
+usage-plans.html
+A,B not relevant.
+upvoted 3 times
+elearningtakai 2 years, 8 months ago
+Selected Answer: D
+The solution that will meet the requirement with the least operational overhead is to implement API Gateway usage plans and API keys to limit
+access to premium content for users who do not have a subscription.
+Option A is incorrect because API caching and throttling are not designed for authentication or authorization purposes, and it does not provide
+access control.
+Option B is incorrect because although AWS WAF is a useful tool to protect web applications from common web exploits, it is not designed for
+authorization purposes, and it might require additional configuration, which increases the operational overhead.
+Option C is incorrect because although IAM permissions can restrict access to data stored in a DynamoDB table, it does not provide a mechanism for
+limiting access to specific content based on the user subscription. Moreover, it might require a significant amount of additional IAM permissions
+configuration, which increases the operational overhead.
+upvoted 3 times
+klayytech 2 years, 8 months ago
+Selected Answer: D
+To meet the requirement with the least operational overhead, you can implement API usage plans and API keys to limit the access of users who do
+not have a subscription. This way, you can control access to your API Gateway APIs by requiring clients to submit valid API keys with requests. You
+can associate usage plans with API keys to configure throttling and quota limits on individual client accounts.
+upvoted 3 times
+techhb 2 years, 9 months ago
+answer is D ,if looking for least overhead
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html
+C will achieve it but operational overhead is high.
+upvoted 3 times
+quentin17 2 years, 9 months ago
+Selected Answer: D
+Both C&D are valid solution
+According to ChatGPT:
+"Applying fine-grained IAM permissions to the premium content in the DynamoDB table is a valid approach, but it requires more effort in managing
+IAM policies and roles for each user, making it more complex and adding operational overhead."
+upvoted 2 times
+Karlos99 2 years, 9 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html
+upvoted 4 times

@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 631,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家社群媒體公司希望將其使用者個人資料、關係和互動的資料庫儲存在 AWS 雲端。該公司需要一個應用程式來監視資料庫中的任何變更。應用程式需要分析資料實體之間的關係並向使用者提供建議。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A social media company wants to store its database of user profiles, relationships, and interactions in the AWS Cloud. The company needs an application to monitor any changes in the database. The application needs to analyze the relationships between the data entities and to provide recommendations to users. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Neptune 儲存資訊。使用 Amazon Kinesis Data Streams 處理資料庫中的變更。",
+          "en": "Use Amazon Neptune to store the information. Use Amazon Kinesis Data Streams to process changes in the database."
+        },
+        "B": {
+          "zh": "使用 Amazon Neptune 儲存資訊。使用 Neptune Streams 處理資料庫中的變更。",
+          "en": "Use Amazon Neptune to store the information. Use Neptune Streams to process changes in the database."
+        },
+        "C": {
+          "zh": "使用 Amazon Quantum Ledger 資料庫 (Amazon QLDB) 儲存資訊。使用 Amazon Kinesis Data Streams 處理資料庫中的變更。",
+          "en": "Use Amazon Quantum Ledger Database (Amazon QLDB) to store the information. Use Amazon Kinesis Data Streams to process changes in the database."
+        },
+        "D": {
+          "zh": "使用 Amazon Quantum Ledger Database (Amazon QLDB) 儲存資訊。使用 Neptune Streams 處理資料庫中的變更。",
+          "en": "Use Amazon Quantum Ledger Database (Amazon QLDB) to store the information. Use Neptune Streams to process changes in the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：Amazon Neptune 適合儲存關係數據，但使用 Amazon Kinesis Data Streams 處理資料庫變更會增加額外的操作開銷。錯誤原因：Kinesis 需要額外的配置和管理，並且不是最低營運開銷的解決方案。",
+          "en": "Incorrect. Performance analysis: Amazon Neptune is suitable for storing relational data, but using Amazon Kinesis Data Streams to process database changes will add additional operational overhead. Reason for the error: Kinesis requires additional configuration and management and is not the lowest operational overhead solution."
+        },
+        "B": {
+          "zh": "正確。效能分析：Amazon Neptune 是圖資料庫的最佳選擇。 Neptune Streams 可以直接處理資料庫變更並提供最低的操作開銷。此選項完全滿足題目要求，且運行開銷最低。",
+          "en": "Correct. Performance analysis: Amazon Neptune is the best choice for graph databases. Neptune Streams can directly handle database changes and provide the lowest operational overhead. This option fully meets the question requirements and has the lowest operating overhead."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：Amazon QLDB適合儲存不可變的交易記錄，但不適合圖資料庫場景。錯誤原因：QLDB不適合儲存使用者關係和互動數據，Kinesis增加了營運開銷。",
+          "en": "Incorrect. Performance analysis: Amazon QLDB is suitable for storing immutable transaction records, but it is not suitable for graph database scenarios. Reason for the error: QLDB is not suitable for storing user relationship and interaction data, and Kinesis increases operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。效能分析：Amazon QLDB 不適合圖資料庫場景，Neptune Streams 無法直接處理 QLDB 的變更。錯誤原因：這個選項在技術上不可行，不符合問題的要求。",
+          "en": "Incorrect. Performance analysis: Amazon QLDB is not suitable for graph database scenarios, and Neptune Streams cannot directly handle changes to QLDB. Reason for the error: This option is not technically feasible and does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon Neptune 儲存資訊。使用 Neptune Streams 處理資料庫中的變更。",
+        "en": "B. Use Amazon Neptune to store the information. Use Neptune Streams to process changes in the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (88%)。熱門討論與考點摘要：效能分析：Amazon Neptune 是圖資料庫的最佳選擇。 Neptune Streams 可以直接處理資料庫變更並提供最低的操作開銷。此選項完全滿足題目要求，且運行開銷最低。",
+        "en": "Community vote as displayed: B (88%). Popular discussion and key point summary: Performance analysis: Amazon Neptune is the best choice for graph databases. Neptune Streams can directly handle database changes and provide the lowest operational overhead. This option fully meets the question requirements and has the lowest operating overhead."
+      }
+    },
+    {
+      "question_no": 632,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在創建一個將儲存大量資料的新應用程式。資料將每小時進行一次分析，並由跨多個可用區部署的多個 Amazon EC2 Linux 執行個體進行修改。未來 6 個月所需的儲存空間量將持續成長。解決方案架構師應該推薦哪種儲存解決方案來滿足這些要求？",
+        "en": "A company is creating a new application that will store a large amount of data. The data will be analyzed hourly and will be modified by several Amazon EC2 Linux instances that are deployed across multiple Availability Zones. The needed amount of storage space will continue to grow for the next 6 months. Which storage solution should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將資料儲存在 Amazon S3 Glacier 中。更新 S3 Glacier 檔案庫策略以允許存取應用程式實例。",
+          "en": "Store the data in Amazon S3 Glacier. Update the S3 Glacier vault policy to allow access to the application instances."
+        },
+        "B": {
+          "zh": "將資料儲存在 Amazon Elastic Block Store (Amazon EBS) 磁碟區中。在應用程式實例上掛載 EBS 磁碟區。",
+          "en": "Store the data in an Amazon Elastic Block Store (Amazon EBS) volume. Mount the EBS volume on the application instances."
+        },
+        "C": {
+          "zh": "將資料儲存在 Amazon Elastic File System (Amazon EFS) 檔案系統中。在應用程式實例上掛載檔案系統。",
+          "en": "Store the data in an Amazon Elastic File System (Amazon EFS) file system. Mount the file system on the application instances."
+        },
+        "D": {
+          "zh": "將資料儲存在應用程式實例之間共用的 Amazon Elastic Block Store (Amazon EBS) 預置 IOPS 磁碟區中。",
+          "en": "Store the data in an Amazon Elastic Block Store (Amazon EBS) Provisioned IOPS volume shared between the application instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon S3 Glacier 主要用於長期儲存和返回資料。訪問時延較高，不適合頻繁分析和修改資料的場景。",
+          "en": "Incorrect. Amazon S3 Glacier is mainly used for long-term storage and return data. The access latency is high and is not suitable for scenarios where data is frequently analyzed and modified."
+        },
+        "B": {
+          "zh": "錯誤。Amazon EBS 磁碟區通常只能安裝到單一 EC2 執行個體。雖然透過Quantum配置可以支援多實例共享，但不適合跨多個可用區的場景。",
+          "en": "Incorrect. Amazon EBS volumes can usually only be mounted to a single EC2 instance. Although multi-instance sharing can be supported through Quantum configuration, it is not suitable for scenarios across multiple availability zones."
+        },
+        "C": {
+          "zh": "正確。Amazon EFS 支援跨多個 EC2 執行個體的共用檔案系統，並支援多可用區部署，可滿足頻繁的資料分析和修改的需求。",
+          "en": "Correct. Amazon EFS supports shared file systems across multiple EC2 instances and supports multi-availability zone deployment, which can meet the needs of frequent data analysis and modification."
+        },
+        "D": {
+          "zh": "錯誤。儘管預先配置 IOPS EBS 磁碟區可以提供高效能，但 EBS 磁碟區的共用功能有限，且不支援跨多個可用區的場景。",
+          "en": "Incorrect. Although Provisioned IOPS EBS volumes can provide high performance, EBS volumes have limited sharing capabilities and do not support scenarios across multiple Availability Zones."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將資料儲存在 Amazon Elastic File System (Amazon EFS) 檔案系統中。在應用程式實例上掛載檔案系統。",
+        "en": "C. Store the data in an Amazon Elastic File System (Amazon EFS) file system. Mount the file system on the application instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：Amazon EFS 支援跨多個 EC2 執行個體的共用檔案系統，並支援多可用區部署，可滿足頻繁的資料分析和修改的需求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon EFS supports shared file systems across multiple EC2 instances and supports multi-availability zone deployment, which can meet the needs of frequent data analysis and modification."
+      }
+    },
+    {
+      "question_no": 633,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司管理一個在 Amazon RDS for PostgreSQL 多可用區資料庫執行個體上儲存資料的應用程式。流量的增加導致效能問題。該公司確定資料庫查詢是效能緩慢的主要原因。解決方案架構師應該做什麼來提高應用程式的效能？",
+        "en": "A company manages an application that stores data on an Amazon RDS for PostgreSQL Multi-AZ DB instance. Increases in traffic are causing performance problems. The company determines that database queries are the primary reason for the slow performance. What should a solutions architect do to improve the application's performance?"
+      },
+      "options": {
+        "A": {
+          "zh": "提供多可用區備用副本的讀取流量。",
+          "en": "Serve read traffic from the Multi-AZ standby replica."
+        },
+        "B": {
+          "zh": "配置資料庫實例以使用傳輸加速。",
+          "en": "Configure the DB instance to use Transfer Acceleration."
+        },
+        "C": {
+          "zh": "從來源資料庫執行個體建立唯讀副本。提供來自唯讀副本的讀取流量。",
+          "en": "Create a read replica from the source DB instance. Serve read traffic from the read replica."
+        },
+        "D": {
+          "zh": "在應用程式和 Amazon RDS 之間使用 Amazon Kinesis Data Firehose 來提高資料庫請求的並發性。",
+          "en": "Use Amazon Kinesis Data Firehose between the application and Amazon RDS to increase the concurrency of database requests."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。多可用區架構的備副本僅用於故障轉移，不支援直接處理讀取流量。多可用區的主要目的是提高可用性，而不是效能優化。",
+          "en": "Incorrect. The standby replica of the Multi-AZ architecture is only used for failover and does not support direct processing of read traffic. The main purpose of Multi-AZ is to improve availability, not performance optimization."
+        },
+        "B": {
+          "zh": "錯誤。傳輸加速是用於加速跨區域資料傳輸的功能，與資料庫效能最佳化無關。此選項與問題中編織的性能問題無關。",
+          "en": "Incorrect. Transfer Acceleration is a function used to accelerate cross-region data transfer and has nothing to do with database performance optimization. This option is not related to the performance issue of braiding in the question."
+        },
+        "C": {
+          "zh": "正確。建立唯讀副本（Read Replica）可以共用主資料庫的讀取流量，從而提高效能。只讀副本是專門為處理讀取流量而設計的，適合解決問題中的效能問題。",
+          "en": "Correct. Creating a read replica (Read Replica) can share the read traffic of the primary database, thereby improving performance. Read-only replicas are specially designed to handle read traffic and are suitable for solving the performance problems in the question."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Kinesis Data Firehose 用於資料流處理，與資料庫請求的並發性沒有直接關係。此選項不適合解決資料庫查詢引起的效能問題。",
+          "en": "Incorrect. Amazon Kinesis Data Firehose is used for data stream processing and is not directly related to the concurrency of database requests. This option is not suitable for resolving performance issues caused by database queries."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 從來源資料庫執行個體建立唯讀副本。提供來自唯讀副本的讀取流量。",
+        "en": "C. Create a read replica from the source DB instance. Serve read traffic from the read replica."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：建立唯讀副本（Read Replica）可以共用主資料庫的讀取流量，從而提高效能。只讀副本是專門為處理讀取流量而設計的，適合解決問題中的效能問題。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Creating a read replica (Read Replica) can share the read traffic of the primary database, thereby improving performance. Read-only replicas are specially designed to handle read traffic and are suitable for solving the performance problems in the question."
+      }
+    },
+    {
+      "question_no": 634,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司每天從各種機器收集 10 GB 的遙測資料。該公司將資料儲存在來源資料帳戶的 Amazon S3 儲存桶中。該公司已聘請多家諮詢機構使用這些數據進行分析。每個機構都需要其分析師讀取資料。公司必須透過選擇能夠最大限度提高安全性和營運效率的解決方案來共享來源資料帳戶中的資料。哪種解決方案可以滿足這些要求？",
+        "en": "A company collects 10 GB of telemetry data daily from various machines. The company stores the data in an Amazon S3 bucket in a source data account. The company has hired several consulting agencies to use this data for analysis. Each agency needs read access to the data for its analysts. The company must share the data from the source data account by choosing a solution that maximizes security and operational efficiency. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 S3 全域表以複製每個機構的資料。",
+          "en": "Configure S3 global tables to replicate data for each agency."
+        },
+        "B": {
+          "zh": "在有限時間內公開 S3 儲存桶。僅通知機構。",
+          "en": "Make the S3 bucket public for a limited time. Inform only the agencies."
+        },
+        "C": {
+          "zh": "設定 S3 儲存桶對機構擁有的帳戶的跨帳戶存取。",
+          "en": "Configure cross-account access for the S3 bucket to the accounts that the agencies own."
+        },
+        "D": {
+          "zh": "為來源資料帳戶中的每個分析師設定一個 IAM 使用者。授予每個使用者對 S3 儲存桶的存取權限。",
+          "en": "Set up an IAM user for each analyst in the source data account. Grant each user access to the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。設定 S3 全域表以複製每個組織的資料。錯誤：Amazon S3 不支援「全域表」功能。全域表格是 Amazon DynamoDB 的功能，而不是 S3 的功能。錯誤：即使有類似的複製功能，將資料複製到每個機構的帳戶也會增加管理複雜性，無法滿足「最大化安全性和營運效率」的要求。",
+          "en": "Incorrect. Configure S3 global tables to replicate data for each organization. Error: Amazon S3 does not support the \"Global Tables\" feature. Global tables are a feature of Amazon DynamoDB, not S3. Wrong: Even if similar replication capabilities were available, replicating data to each institution's accounts would increase administrative complexity and would not meet the requirements of \"maximizing security and operational efficiency.\"."
+        },
+        "B": {
+          "zh": "錯誤。在有限時間內公開存取 S3 儲存桶，僅通知這些組織。錯誤：使 S3 儲存桶公開存取會嚴重降低安全性，允許任何人存取數據，而不僅僅是指定的組織。錯誤：即使是限時公開存取也不能保證資料的安全，並且違反了最佳實踐。",
+          "en": "Incorrect. Make the S3 bucket publicly accessible for a limited time, notifying only these organizations. Error: Making an S3 bucket publicly accessible severely reduces security, allowing anyone to access the data, not just designated organizations. Error: Even limited-time public access does not guarantee the security of data and violates best practices."
+        },
+        "C": {
+          "zh": "正確。為機構擁有的帳戶配置對 S3 儲存桶的跨帳戶存取。正確：跨帳戶存取允許您安全地將 S3 儲存桶的存取權限授予指定帳戶。正確：此方法符合 AWS 最佳實踐，並最大限度地提高安全性和營運效率。",
+          "en": "Correct. Configure cross-account access to S3 buckets for institutionally owned accounts. Correct: Cross-account access allows you to securely grant access to an S3 bucket to a specified account. Correct: This approach is consistent with AWS best practices and maximizes security and operational efficiency."
+        },
+        "D": {
+          "zh": "錯誤。為每位分析師建立 IAM 使用者會增加管理複雜性，尤其是當分析師數量較多時。錯誤：這種做法不符合「營運效率最大化」的要求。",
+          "en": "Incorrect. Creating IAM users for each analyst increases management complexity, especially when the number of analysts is large. Error: This approach does not meet the requirement of \"maximizing operational efficiency\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 S3 儲存桶對機構擁有的帳戶的跨帳戶存取。",
+        "en": "C. Configure cross-account access for the S3 bucket to the accounts that the agencies own."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (96%)。熱門討論與考點摘要：為機構擁有的帳戶配置對 S3 儲存桶的跨帳戶存取。正確：跨帳戶存取允許您安全地將 S3 儲存桶的存取權限授予指定帳戶。正確：此方法符合 AWS 最佳實踐，並最大限度地提高安全性和營運效率。",
+        "en": "Community vote as displayed: C (96%). Popular discussion and key point summary: Configure cross-account access to S3 buckets for institutionally owned accounts. Correct: Cross-account access allows you to securely grant access to an S3 bucket to a specified account. Correct: This approach is consistent with AWS best practices and maximizes security and operational efficiency."
+      }
+    },
+    {
+      "question_no": 635,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在其主要 AWS 區域中使用 Amazon FSx for NetApp ONTAP 進行 CIFS 和 NFS 檔案共用。在 Amazon EC2 執行個體上執行的應用程式存取檔案共用。該公司需要在次要區域提供儲存災難復原 (DR) 解決方案。需要使用與主 Region 相同的協定來存取輔助 Region 中複製的資料。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company uses Amazon FSx for NetApp ONTAP in its primary AWS Region for CIFS and NFS file shares. Applications that run on Amazon EC2 instances access the file shares. The company needs a storage disaster recovery (DR) solution in a secondary Region. The data that is replicated in the secondary Region needs to be accessed by using the same protocols as the primary Region. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 AWS Lambda 函數以將資料複製到 Amazon S3 儲存桶。將 S3 儲存桶複製到輔助區域。",
+          "en": "Create an AWS Lambda function to copy the data to an Amazon S3 bucket. Replicate the S3 bucket to the secondary Region."
+        },
+        "B": {
+          "zh": "使用 AWS Backup 建立 FSx for ONTAP 磁碟區的備份。將磁碟區複製到輔助區域。從備份建立新的 FSx for ONTAP 實例。",
+          "en": "Create a backup of the FSx for ONTAP volumes by using AWS Backup. Copy the volumes to the secondary Region. Create a new FSx for ONTAP instance from the backup."
+        },
+        "C": {
+          "zh": "在次要區域中建立 FSx for ONTAP 實例。使用 NetApp SnapMirror 將資料從主要區域複製到次要區域。",
+          "en": "Create an FSx for ONTAP instance in the secondary Region. Use NetApp SnapMirror to replicate data from the primary Region to the secondary Region."
+        },
+        "D": {
+          "zh": "建立 Amazon Elastic File System (Amazon EFS) 磁碟區。將目前資料遷移到磁碟區。將磁碟區複製到輔助區域。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) volume. Migrate the current data to the volume. Replicate the volume to the secondary Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然S3支援跨區域複製，但S3不支援CIFS和NFS協議，無法滿足問題要求。",
+          "en": "Incorrect. Although S3 supports cross-region replication, S3 does not support CIFS and NFS protocols and cannot meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。此方法需要手動建立備份和恢復，複雜且不支援資料即時同步。它無法滿足最低營運費用要求。",
+          "en": "Incorrect. This method requires manual creation of backup and recovery, which is complex and does not support real-time data synchronization. It cannot meet the minimum operating overhead requirements."
+        },
+        "C": {
+          "zh": "正確。NetApp SnapMirror 是專為 FSx for ONTAP 設計的跨區域資料複製解決方案，支援 CIFS 和 NFS 協議，且營運開銷極低。",
+          "en": "Correct. NetApp SnapMirror is a cross-region data replication solution designed for FSx for ONTAP, supporting CIFS and NFS protocols with minimal operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。EFS不支援CIFS協議，僅支援NFS協議，無法滿足問題要求。",
+          "en": "Incorrect. EFS does not support the CIFS protocol and only supports the NFS protocol, which cannot meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在次要區域中建立 FSx for ONTAP 實例。使用 NetApp SnapMirror 將資料從主要區域複製到次要區域。",
+        "en": "C. Create an FSx for ONTAP instance in the secondary Region. Use NetApp SnapMirror to replicate data from the primary Region to the secondary Region."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：NetApp SnapMirror 是專為 FSx for ONTAP 設計的跨區域資料複製解決方案，支援 CIFS 和 NFS 協議，且營運開銷極低。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: NetApp SnapMirror is a cross-region data replication solution designed for FSx for ONTAP, supporting CIFS and NFS protocols with minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 636,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "開發團隊正在建立一個使用 AWS Lambda 函數的事件為基礎的應用程式。將檔案新增至 Amazon S3 儲存桶時將產生事件。開發團隊目前已將 Amazon Simple Notification Service (Amazon SNS) 設定為 Amazon S3 的事件目標。解決方案架構師應該怎麼做才能以可擴展的方式處理來自 Amazon S3 的事件？",
+        "en": "A development team is creating an event-based application that uses AWS Lambda functions. Events will be generated when files are added to an Amazon S3 bucket. The development team currently has Amazon Simple Notification Service (Amazon SNS) configured as the event target from Amazon S3. What should a solutions architect do to process the events from Amazon S3 in a scalable way?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 SNS 訂閱，以便在事件在 Lambda 中運行之前在 Amazon Elastic Container Service (Amazon ECS) 中處理該事件。",
+          "en": "Create an SNS subscription that processes the event in Amazon Elastic Container Service (Amazon ECS) before the event runs in Lambda."
+        },
+        "B": {
+          "zh": "建立一個 SNS 訂閱，以便在事件在 Lambda 中運行之前在 Amazon Elastic Kubernetes Service (Amazon EKS) 中處理該事件",
+          "en": "Create an SNS subscription that processes the event in Amazon Elastic Kubernetes Service (Amazon EKS) before the event runs in Lambda"
+        },
+        "C": {
+          "zh": "建立將事件傳送至 Amazon Simple Queue Service (Amazon SQS) 的 SNS 訂閱。配置 SOS 佇列以觸發 Lambda 函數。",
+          "en": "Create an SNS subscription that sends the event to Amazon Simple Queue Service (Amazon SQS). Configure the SOS queue to trigger a Lambda function."
+        },
+        "D": {
+          "zh": "建立將事件傳送至 AWS Server Migration Service (AWS SMS) 的 SNS 訂閱。配置 Lambda 函數以從 SMS 事件進行輪詢。",
+          "en": "Create an SNS subscription that sends the event to AWS Server Migration Service (AWS SMS). Configure the Lambda function to poll from the SMS event."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon ECS 可以處理事件，但問題需要「可擴展方法」。直接使用ECS來處理事件會增加複雜性和管理負擔。另外，ECS並不是事件驅動的最佳選擇，Lambda更適合處理事件。",
+          "en": "Incorrect. Amazon ECS can handle events, but the question requires a \"scalable method.\" Directly using ECS ​​to handle events will increase complexity and management burden. In addition, ECS is not the best choice for event-driven, Lambda is more suitable for handling events."
+        },
+        "B": {
+          "zh": "錯誤。Amazon EKS 是一項容器編排服務。雖然它可以處理事件，但需要額外的配置和管理，從而增加了複雜性。這個問題需要「可擴展的方法」，而 EKS 並不是最佳選擇。",
+          "en": "Incorrect. Amazon EKS is a container orchestration service. Although it can handle events, it requires additional configuration and management, adding complexity. The question requires a \"scalable approach\", and EKS is not the best choice."
+        },
+        "C": {
+          "zh": "正確。Amazon SQS 是一種完全託管的訊息佇列服務，可與 SNS 整合以將事件儲存在佇列中。透過SQS觸發Lambda函數，可以實現事件的非同步處理，確保高擴展性和可靠性。這是AWS推薦的事件驅動架構設計模式。",
+          "en": "Correct. Amazon SQS is a fully managed message queuing service that can be integrated with SNS to store events in queues. By triggering Lambda functions through SQS, asynchronous processing of events can be achieved to ensure high scalability and reliability. This is the event-driven architecture design pattern recommended by AWS."
+        },
+        "D": {
+          "zh": "錯誤。AWS Server Migration Service (AWS SMS) 是一項用於遷移伺服器的服務，與事件處理無關。該選項不符合題目要求。",
+          "en": "Incorrect. AWS Server Migration Service (AWS SMS) is a service for migrating servers and has nothing to do with event handling. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立將事件傳送至 Amazon Simple Queue Service (Amazon SQS) 的 SNS 訂閱。配置 SOS 佇列以觸發 Lambda 函數。",
+        "en": "C. Create an SNS subscription that sends the event to Amazon Simple Queue Service (Amazon SQS). Configure the SOS queue to trigger a Lambda function."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：Amazon SQS 是一種完全託管的訊息佇列服務，可與 SNS 整合以將事件儲存在佇列中。透過SQS觸發Lambda函數，可以實現事件的非同步處理，確保高擴展性和可靠性。這是AWS推薦的事件驅動架構設計模式。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon SQS is a fully managed message queuing service that can be integrated with SNS to store events in queues. By triggering Lambda functions through SQS, asynchronous processing of events can be achieved to ensure high scalability and reliability. This is the event-driven architecture design pattern recommended by AWS."
+      }
+    },
+    {
+      "question_no": 637,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在 Amazon API Gateway 背後設計一項新服務。服務的請求模式將是不可預測的，並且可能會突然從每秒 0 個請求變為超過 500 個請求。目前後端資料庫需要持久化的資料總大小不到1GB，且未來成長無法預測。可以使用簡單的鍵值請求來查詢資料。哪種 AWS 服務組合可以滿足這些要求？ （選兩個。）",
+        "en": "A solutions architect is designing a new service behind Amazon API Gateway. The request patterns for the service will be unpredictable and can change suddenly from 0 requests to over 500 per second. The total size of the data that needs to be persisted in a backend database is currently less than 1 GB with unpredictable future growth. Data can be queried using simple key-value requests. Which combination ofAWS services would meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "AWS Fargate",
+          "en": "AWS Fargate"
+        },
+        "B": {
+          "zh": "AWS Lambda",
+          "en": "AWS Lambda"
+        },
+        "C": {
+          "zh": "亞馬遜 DynamoDB",
+          "en": "Amazon DynamoDB"
+        },
+        "D": {
+          "zh": "Amazon EC2 Auto Scaling",
+          "en": "Amazon EC2 Auto Scaling"
+        },
+        "E": {
+          "zh": "與 MySQL 相容的 Amazon Aurora",
+          "en": "MySQL-compatible Amazon Aurora"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。。 AWS Fargate是一個用於運行容器化應用程式的無伺服器運算引擎，但問題中沒有提到需要運行容器化服務，也沒有需要容器支援的複雜應用程式邏輯。因此不適合這種場景。",
+          "en": "Incorrect. . AWS Fargate is a serverless computing engine used to run containerized applications, but the question does not mention the need to run containerized services, and there is no complex application logic that requires container support. Therefore it is not suitable for this scenario."
+        },
+        "B": {
+          "zh": "正確。。 AWS Lambda 是一種無伺服器運算服務，可處理突發請求模式（每秒 0 到 500 個），並且與 Amazon API Gateway 良好集成，適合處理動態請求。",
+          "en": "Correct. . AWS Lambda is a serverless computing service that can handle burst request patterns (from 0 to 500 per second) and is well integrated with Amazon API Gateway and is suitable for handling dynamic requests."
+        },
+        "C": {
+          "zh": "正確。。 Amazon DynamoDB 是一款無伺服器 NoSQL 資料庫，支援簡單的鍵值查詢模式，可處理小於 1GB 的資料並且具有良好的可擴充性，適合未來的成長需求。",
+          "en": "Correct. . Amazon DynamoDB is a serverless NoSQL database that supports a simple key-value query mode, can handle data less than 1GB and has good scalability, suitable for future growth needs."
+        },
+        "D": {
+          "zh": "錯誤。。 Amazon EC2 Auto Scaling 雖然可以處理突發流量，但需要管理執行個體和作業系統，複雜度很高，不符合問題中的 Serverless 架構的要求。",
+          "en": "Incorrect. . Although Amazon EC2 Auto Scaling can handle burst traffic, it requires management of instances and operating systems, which is highly complex and does not meet the requirements of the serverless architecture in the question."
+        },
+        "E": {
+          "zh": "錯誤。。 Amazon Aurora 是一種關聯式資料庫，適用於複雜的查詢和事務處理。但該題只需要簡單的鍵值查詢，資料量較小（小於1GB）。 Aurora 太複雜而且昂貴。",
+          "en": "Incorrect. . Amazon Aurora is a relational database that is suitable for complex queries and transaction processing. However, the question only requires simple key-value queries, and the amount of data is small (less than 1GB). Aurora is too complex and expensive."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "B. AWS Lambda；C. 亞馬遜 DynamoDB",
+        "en": "B. AWS Lambda; C. Amazon DynamoDB"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BC (100%)。熱門討論與考點摘要：。 AWS Lambda 是一種無伺服器運算服務，可處理突發請求模式（每秒 0 到 500 個），並且與 Amazon API Gateway 良好集成，適合處理動態請求。；。 Amazon DynamoDB 是一款無伺服器 NoSQL 資料庫，支援簡單的鍵值查詢模式，可處理小於 1GB 的資料並且具有良好的可擴充性，適合未來的成長需求。",
+        "en": "Community vote as displayed: BC (100%). Popular discussion and key point summary: . AWS Lambda is a serverless computing service that can handle burst request patterns (from 0 to 500 per second) and is well integrated with Amazon API Gateway and is suitable for handling dynamic requests.; . Amazon DynamoDB is a serverless NoSQL database that supports a simple key-value query mode, can handle data less than 1GB and has good scalability, suitable for future growth needs."
+      }
+    },
+    {
+      "question_no": 638,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司收集研究數據並與該公司世界各地的員工分享。該公司希望收集資料並將其儲存在 Amazon S3 儲存桶中，並在 AWS 雲端中處理資料。公司將與公司員工分享數據。該公司需要 AWS 雲端中的安全解決方案來最大限度地減少營運開銷。哪種解決方案可以滿足這些要求？",
+        "en": "A company collects and shares research data with the company's employees all over the world. The company wants to collect and store the data in an Amazon S3 bucket and process the data in the AWS Cloud. The company will share the data with the company's employees. The company needs a secure solution in the AWS Cloud that minimizes operational overhead. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Lambda 函數建立 S3 預簽名 URL。指導員工使用該 URL。",
+          "en": "Use an AWS Lambda function to create an S3 presigned URL. Instruct employees to use the URL."
+        },
+        "B": {
+          "zh": "為每位員工建立一個 IAM 使用者。為每個員工建立 IAM 策略以允許 S3 存取。指導員工使用 AWS 管理主控臺。",
+          "en": "Create an IAM user for each employee. Create an IAM policy for each employee to allow S3 access. Instruct employees to use the AWS Management Console."
+        },
+        "C": {
+          "zh": "建立 S3 檔案閘道。建立用於上傳的共享和用於下載的共享。允許員工在本機電腦上安裝共用以使用 S3 檔案閘道。",
+          "en": "Create an S3 File Gateway. Create a share for uploading and a share for downloading. Allow employees to mount shares on their local computers to use S3 File Gateway."
+        },
+        "D": {
+          "zh": "設定 AWS Transfer Family SFTP 終端節點。選擇自訂身分識別提供者選項。使用 AWS Secrets Manager 管理使用者憑證 指導員工使用 Transfer Family。",
+          "en": "Configure AWS Transfer Family SFTP endpoints. Select the custom identity provider options. Use AWS Secrets Manager to manage the user credentials Instruct employees to use Transfer Family."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3預簽名URL允許暫時存取S3對象，並且可以設定過期時間以確保安全。正確：使用AWS Lambda自動產生URL，減少手動操作，降低營運開銷。正確：員工只需透過URL即可存取數據，無需複雜的權限配置。",
+          "en": "Correct. S3 presigned URL allows temporary access to S3 objects, and the expiration time can be set to ensure security. Correct: Use AWS Lambda to automatically generate URLs, reducing manual operations and reducing operational overhead. Correct: Employees can access data simply by using the URL, without complex permission configuration."
+        },
+        "B": {
+          "zh": "錯誤。為每位員工建立 IAM 使用者和策略會增加管理複雜性和營運開銷。錯誤：使用 AWS 管理主控臺存取資料可能無法滿足便利性要求。",
+          "en": "Incorrect. Creating IAM users and policies for each employee increases management complexity and operational overhead. Error: Using the AWS Management Console to access data may not meet convenience requirements."
+        },
+        "C": {
+          "zh": "錯誤。S3檔案閘道主要用於本地與S3之間的檔案同步，不適合連接全球員工的共享資料。錯誤：需要額外的配置和維護，增加營運開銷。",
+          "en": "Incorrect. S3 File Gateway is mainly used for file synchronization between local and S3, and is not suitable for connecting shared data to global employees. Error: Requires additional configuration and maintenance, increasing operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。AWS Transfer Family適合使用SFTP/FTP協定進行檔案傳輸，相對複雜。 Bug：需要管理使用者憑證和身分提供者，增加了營運開銷。",
+          "en": "Incorrect. AWS Transfer Family is suitable for file transfer using the SFTP/FTP protocol and is relatively complex. Bug: Requires management of user credentials and identity providers, adding operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Lambda 函數建立 S3 預簽名 URL。指導員工使用該 URL。",
+        "en": "A. Use an AWS Lambda function to create an S3 presigned URL. Instruct employees to use the URL."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (38%)； C (38%)； D (24%)。熱門討論與考點摘要：S3預簽名URL允許暫時存取S3對象，並且可以設定過期時間以確保安全。正確：使用AWS Lambda自動產生URL，減少手動操作，降低營運開銷。正確：員工只需透過URL即可存取數據，無需複雜的權限配置。",
+        "en": "Community vote as displayed: A (38%); C (38%); D (24%). Popular discussion and key point summary: S3 presigned URL allows temporary access to S3 objects, and the expiration time can be set to ensure security. Correct: Use AWS Lambda to automatically generate URLs, reducing manual operations and reducing operational overhead. Correct: Employees can access data simply by using the URL, without complex permission configuration."
+      }
+    },
+    {
+      "question_no": 639,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在建立一個新的家具庫存應用程式。該公司已將該應用程式部署在跨多個可用區的一組 Amazon EC2 執行個體上。 EC2 執行個體在其 VPC 中的應用程式負載平衡器 (ALB) 後面執行。一位解決方案架構師觀察到，傳入流量似乎有利於一個 EC2 實例，從而導致某些請求出現延遲。解決方案架構師應該做什麼來解決這個問題？",
+        "en": "A company is building a new furniture inventory application. The company has deployed the application on a fleet ofAmazon EC2 instances across multiple Availability Zones. The EC2 instances run behind an Application Load Balancer (ALB) in their VPC. A solutions architect has observed that incoming traffic seems to favor one EC2 instance, resulting in latency for some requests. What should the solutions architect do to resolve this issue?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 ALB 上停用會話關聯性（黏性會話）",
+          "en": "Disable session affinity (sticky sessions) on the ALB"
+        },
+        "B": {
+          "zh": "將 ALB 替換為網路負載平衡器",
+          "en": "Replace the ALB with a Network Load Balancer"
+        },
+        "C": {
+          "zh": "增加每個可用區中的 EC2 執行個體數量",
+          "en": "Increase the number of EC2 instances in each Availability Zone"
+        },
+        "D": {
+          "zh": "調整ALB目標組的健康檢查頻率",
+          "en": "Adjust the frequency of the health checks on the ALB's target group"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。會話親和性（黏滯性會話）會導致流量傾向於分佈到某些實例，而不是均勻分佈到所有實例。這可能會導致某些實例過載，從而導致延遲問題。停用會話親和性允許ALB根據流量負載動態分配請求，解決流量傾斜問題。",
+          "en": "Correct. Session affinity (Sticky Sessions) will cause traffic to tend to be distributed to certain instances, rather than evenly distributed to all instances. This can cause some instances to be overloaded, causing latency issues. Disabling session affinity allows ALB to dynamically allocate requests based on traffic load, solving the traffic skew problem."
+        },
+        "B": {
+          "zh": "錯誤。網路負載平衡器（NLB）主要用於處理低延遲、高吞吐量的流量，但它不具有像ALB這樣的高階功能（例如HTTP/HTTPS層的負載平衡）。問題的根本原因是黏性會話，而不是負載平衡器類型選擇。",
+          "en": "Incorrect. Network Load Balancer (NLB) is mainly used to handle low-latency, high-throughput traffic, but it does not have advanced functions like ALB (such as load balancing of the HTTP/HTTPS layer). The root cause of the problem is Sticky Sessions, not the load balancer type selection."
+        },
+        "C": {
+          "zh": "錯誤。增加 EC2 執行個體的數量可能會緩解負載問題，但並不能解決流量傾斜的根本原因。流量傾斜是由黏性會話引起的，而不是實例數量不足。",
+          "en": "Incorrect. Increasing the number of EC2 instances may alleviate the load problem, but it does not address the root cause of traffic skew. Traffic skew is caused by Sticky Sessions, not an insufficient number of instances."
+        },
+        "D": {
+          "zh": "錯誤。調整健康檢查頻率並不能解決流量傾斜問題。健康檢查的主要目的是確保實例可用性，而不是優化流量分配。",
+          "en": "Incorrect. Adjusting the health check frequency will not resolve the traffic skew issue. The main purpose of health checks is to ensure instance availability, not to optimize traffic distribution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 ALB 上停用會話關聯性（黏性會話）",
+        "en": "A. Disable session affinity (sticky sessions) on the ALB"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (87%)。熱門討論與考點摘要：會話親和性（黏滯性會話）會導致流量傾向於分佈到某些實例，而不是均勻分佈到所有實例。這可能會導致某些實例過載，從而導致延遲問題。停用會話親和性允許ALB根據流量負載動態分配請求，解決流量傾斜問題。",
+        "en": "Community vote as displayed: A (87%). Popular discussion and key point summary: Session affinity (Sticky Sessions) will cause traffic to tend to be distributed to certain instances, rather than evenly distributed to all instances. This can cause some instances to be overloaded, causing latency issues. Disabling session affinity allows ALB to dynamically allocate requests based on traffic load, solving the traffic skew problem."
+      }
+    },
+    {
+      "question_no": 640,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司的應用程式工作流程使用 AWS Lambda 函數從 Amazon S3 下載和解密檔案。這些檔案使用 AWS Key Management Service (AWS KMS) 金鑰進行加密。解決方案架構師需要設計一個解決方案，以確保正確設定所需的權限。哪種行動組合可以實現這個目標？ （選兩個。）",
+        "en": "A company has an application workflow that uses an AWS Lambda function to download and decrypt files from Amazon S3. These files are encrypted using AWS Key Management Service (AWS KMS) keys. A solutions architect needs to design a solution that will ensure the required permissions are set correctly. Which combination of actions accomplish this? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將 kms:decrypt 權限附加到 Lambda 函數的資源策略",
+          "en": "Attach the kms:decrypt permission to the Lambda function’s resource policy"
+        },
+        "B": {
+          "zh": "授予 KMS 金鑰策略中 Lambda IAM 角色的解密權限",
+          "en": "Grant the decrypt permission for the Lambda IAM role in the KMS key's policy"
+        },
+        "C": {
+          "zh": "授予 KMS 金鑰策略中 Lambda 資源策略的解密權限。",
+          "en": "Grant the decrypt permission for the Lambda resource policy in the KMS key's policy."
+        },
+        "D": {
+          "zh": "使用 kms:decrypt 權限建立新的 IAM 策略並將該策略附加到 Lambda 函數。",
+          "en": "Create a new IAM policy with the kms:decrypt permission and attach the policy to the Lambda function."
+        },
+        "E": {
+          "zh": "建立具有 kms:decrypt 權限的新 IAM 角色，並將執行角色附加到 Lambda 函數。",
+          "en": "Create a new IAM role with the kms:decrypt permission and attach the execution role to the Lambda function."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。。 Lambda 函數資源策略不支援直接附加權限。需要透過 IAM 角色或 KMS 金鑰策略授予權限。",
+          "en": "Incorrect. . Lambda function resource policies do not support directly attaching permissions. Permissions need to be granted through an IAM role or KMS key policy."
+        },
+        "B": {
+          "zh": "正確。。 KMS 金鑰策略需要明確向 Lambda 的 IAM 角色授予解密權限，以便 Lambda 函數可以使用 KMS 金鑰解密檔案。",
+          "en": "Correct. . The KMS key policy needs to explicitly grant decrypt permission to Lambda's IAM role so that the Lambda function can decrypt the file using the KMS key."
+        },
+        "C": {
+          "zh": "錯誤。。 Lambda 函數的資源策略不會直接與 KMS 金鑰策略交互，因此無法透過這種方式授予權限。",
+          "en": "Incorrect. . The Lambda function's resource policy does not interact directly with the KMS key policy, so permissions cannot be granted this way."
+        },
+        "D": {
+          "zh": "錯誤。。儘管可以建立 IAM 策略並將其附加到 Lambda 函數，但這不足以讓 Lambda 函數存取 KMS 金鑰。還需要在 KMS 金鑰策略中明確授予權限。",
+          "en": "Incorrect. . Although it is possible to create an IAM policy and attach it to a Lambda function, this is not enough to give the Lambda function access to the KMS key. Permissions also need to be explicitly granted in the KMS key policy."
+        },
+        "E": {
+          "zh": "正確。。 Lambda 函數需要執行角色，角色必須包含 kms:decrypt 權限才能解密檔案。",
+          "en": "Correct. . The Lambda function requires an execution role, which must contain kms:decrypt permissions to be able to decrypt files."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 授予 KMS 金鑰策略中 Lambda IAM 角色的解密權限；E. 建立具有 kms:decrypt 權限的新 IAM 角色，並將執行角色附加到 Lambda 函數。",
+        "en": "B. Grant the decrypt permission for the Lambda IAM role in the KMS key's policy; E. Create a new IAM role with the kms:decrypt permission and attach the execution role to the Lambda function."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BE (83%)。熱門討論與考點摘要：。 KMS 金鑰策略需要明確向 Lambda 的 IAM 角色授予解密權限，以便 Lambda 函數可以使用 KMS 金鑰解密檔案。；。 Lambda 函數需要執行角色，角色必須包含 kms:decrypt 權限才能解密檔案。",
+        "en": "Community vote as displayed: BE (83%). Popular discussion and key point summary: . The KMS key policy needs to explicitly grant decrypt permission to Lambda's IAM role so that the Lambda function can decrypt the file using the KMS key.; . The Lambda function requires an execution role, which must contain kms:decrypt permissions to be able to decrypt files."
+      }
+    },
+    {
+      "question_no": 641,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望監控其 AWS 成本以進行財務審查。雲端營運團隊正在 AWS Organizations 管理帳戶中設計一個架構，以查詢所有成員帳戶的 AWS 成本和使用情況報告。團隊必須每月執行此查詢並提供帳單的詳細分析。哪一種解決方案是滿足這些要求的最具可擴展性和成本效益的方式？",
+        "en": "A company wants to monitor its AWS costs for financial review. The cloud operations team is designing an architecture in the AWS Organizations management account to query AWS Cost and Usage Reports for all member accounts. The team must run this query once a month and provide a detailed analysis of the bill. Which solution is the MOST scalable and cost-effective way to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在管理帳戶中啟用成本和使用情況報告。向 Amazon Kinesis 發送報告。使用 Amazon EMR 進行分析。",
+          "en": "Enable Cost and Usage Reports in the management account. Deliver reports to Amazon Kinesis. Use Amazon EMR for analysis."
+        },
+        "B": {
+          "zh": "在管理帳戶中啟用成本和使用情況報告。將報告傳送至 Amazon S3 使用 Amazon Athena 進行分析。",
+          "en": "Enable Cost and Usage Reports in the management account. Deliver the reports to Amazon S3 Use Amazon Athena for analysis."
+        },
+        "C": {
+          "zh": "為成員帳戶啟用成本和使用情況報告。將報告傳送至 Amazon S3 使用 Amazon Redshift 進行分析。",
+          "en": "Enable Cost and Usage Reports for member accounts. Deliver the reports to Amazon S3 Use Amazon Redshift for analysis."
+        },
+        "D": {
+          "zh": "為成員帳戶啟用成本和使用情況報告。將報告發送給 Amazon Kinesis。使用 Amazon QuickSight 進行分析。",
+          "en": "Enable Cost and Usage Reports for member accounts. Deliver the reports to Amazon Kinesis. Use Amazon QuickSight tor analysis."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：Amazon Kinesis 是一種即時資料流服務，不適合處理靜態月報。雖然使用 Amazon EMR 進行分析功能強大，但它成本高且複雜，而且並不是最具成本效益的。",
+          "en": "Incorrect. Reason: Amazon Kinesis is a real-time data streaming service and is not suitable for processing static monthly reports. While using Amazon EMR for analysis is powerful, it is costly and complex and does not qualify as the most cost-effective."
+        },
+        "B": {
+          "zh": "正確。原因：Amazon S3 是儲存成本和使用情況報告的最佳選擇，支援高可擴充性和低成本儲存。 Amazon Athena 是一種無伺服器查詢服務，支援直接查詢 S3 中儲存的資料。它成本低且易於使用，非常適合定期分析。",
+          "en": "Correct. Reason: Amazon S3 is the best choice for storing Cost and Usage Reports, supporting high scalability and low-cost storage. Amazon Athena is a serverless query service that enables direct querying of data stored in S3. It is low-cost and easy to use, making it ideal for periodic analysis."
+        },
+        "C": {
+          "zh": "錯誤。原因：為每個成員帳戶單獨啟用成本和使用情況報告會增加管理複雜性。 Amazon Redshift 是一種資料倉儲服務，雖然功能強大，但價格昂貴，而且不適合處理簡單的月度報告分析。",
+          "en": "Incorrect. Reason: Enabling Cost and Usage Reports individually for each member account increases administrative complexity. Amazon Redshift is a data warehouse service that, while powerful, is expensive and not suitable for handling simple monthly report analysis."
+        },
+        "D": {
+          "zh": "錯誤。原因：與選項 A 類似，Amazon Kinesis 不適合處理靜態月報。 Amazon QuickSight 是一種視覺化工具，雖然它適合顯示數據，但不適合直接分析成本和使用情況報告。",
+          "en": "Incorrect. Cause: Similar to option A, Amazon Kinesis is not suitable for processing static monthly reports. Amazon QuickSight is a visualization tool, and although it is suitable for displaying data, it is not suitable for direct analysis of Cost and Usage Reports."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在管理帳戶中啟用成本和使用情況報告。將報告傳送至 Amazon S3 使用 Amazon Athena 進行分析。",
+        "en": "B. Enable Cost and Usage Reports in the management account. Deliver the reports to Amazon S3 Use Amazon Athena for analysis."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：原因：Amazon S3 是儲存成本和使用情況報告的最佳選擇，支援高可擴充性和低成本儲存。 Amazon Athena 是一種無伺服器查詢服務，支援直接查詢 S3 中儲存的資料。它成本低且易於使用，非常適合定期分析。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Reason: Amazon S3 is the best choice for storing Cost and Usage Reports, supporting high scalability and low-cost storage. Amazon Athena is a serverless query service that enables direct querying of data stored in S3. It is low-cost and easy to use, making it ideal for periodic analysis."
+      }
+    },
+    {
+      "question_no": 642,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望在屬於 AWS 雲端 Auto Scaling 群組的 Amazon EC2 執行個體上執行遊戲應用程式。應用程式將使用UDP資料包傳輸資料。該公司希望確保應用程式可以隨著流量的增加和減少而橫向擴展和收縮。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company wants to run a gaming application on Amazon EC2 instances that are part of an Auto Scaling group in the AWS Cloud. The application will transmit data by using UDP packets. The company wants to ensure that the application can scale out and in as traffic increases and decreases. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將網路負載平衡器附加到 Auto Scaling 群組。",
+          "en": "Attach a Network Load Balancer to the Auto Scaling group."
+        },
+        "B": {
+          "zh": "將 Application Load Balancer 連接到 Auto Scaling 群組。",
+          "en": "Attach an Application Load Balancer to the Auto Scaling group."
+        },
+        "C": {
+          "zh": "使用加權策略部署 Amazon Route 53 記錄集以適當路由流量。",
+          "en": "Deploy an Amazon Route 53 record set with a weighted policy to route traffic appropriately."
+        },
+        "D": {
+          "zh": "將配置了連接埠轉送的 NAT 執行個體部署到 Auto Scaling 群組中的 EC2 執行個體。",
+          "en": "Deploy a NAT instance that is configured with port forwarding to the EC2 instances in the Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。網路負載平衡器 (NLB) 支援 UDP 協議，這是問題中所述的關鍵要求。 NLB可與Auto Scaling結合，支援流量的動態擴縮容。此選項完全滿足題目要求。",
+          "en": "Correct. Network Load Balancer (NLB) supports UDP protocol, which is a key requirement stated in the question. NLB can be combined with Auto Scaling to support dynamic expansion and contraction of traffic. This option fully meets the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。應用程式負載平衡器 (ALB) 主要用於 HTTP 和 HTTPS 流量，不支援 UDP 協定。此選項不符合問題中對 UDP 的要求。",
+          "en": "Incorrect. Application Load Balancer (ALB) is primarily used for HTTP and HTTPS traffic and does not support the UDP protocol. This option does not meet the requirements for UDP in the question."
+        },
+        "C": {
+          "zh": "錯誤。Route 53 是一項 DNS 服務，可用於流量路由，但無法直接處理 UDP 封包。此選項無法滿足問題中負載平衡和Auto Scaling的要求。",
+          "en": "Incorrect. Route 53 is a DNS service that can be used for traffic routing, but it cannot handle UDP packets directly. This option cannot meet the requirements for load balancing and Auto Scaling in the question."
+        },
+        "D": {
+          "zh": "錯誤。NAT 執行個體主要用於處理出站流量，而非負載平衡。此選項無法滿足問題中負載平衡和UDP的要求。",
+          "en": "Incorrect. NAT instances are primarily used to handle outbound traffic, not load balancing. This option cannot meet the requirements of load balancing and UDP in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將網路負載平衡器附加到 Auto Scaling 群組。",
+        "en": "A. Attach a Network Load Balancer to the Auto Scaling group."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：網路負載平衡器 (NLB) 支援 UDP 協議，這是問題中所述的關鍵要求。 NLB可與Auto Scaling結合，支援流量的動態擴縮容。此選項完全滿足題目要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Network Load Balancer (NLB) supports UDP protocol, which is a key requirement stated in the question. NLB can be combined with Auto Scaling to support dynamic expansion and contraction of traffic. This option fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 643,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上為其不同品牌經營多個網站。每個網站每天都會產生數十 GB 的網路流量日誌。解決方案架構師需要設計一個可擴展的解決方案，使公司的開發人員能夠分析公司所有網站的流量模式。開發人員將在幾個月內根據需要每週進行一次分析。此解決方案必須支援使用標準 SQL 的查詢。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company runs several websites on AWS for its different brands. Each website generates tens of gigabytes of web traffic logs each day. A solutions architect needs to design a scalable solution to give the company's developers the ability to analyze traffic patterns across all the company's websites. This analysis by the developers will occur on demand once a week over the course of several months. The solution must support queries with standard SQL. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "將日誌儲存在 Amazon S3 中。使用 Amazon Athena 分析。",
+          "en": "Store the logs in Amazon S3. Use Amazon Athena tor analysis."
+        },
+        "B": {
+          "zh": "將日誌儲存在 Amazon RDS 中。使用資料庫客戶端進行分析。",
+          "en": "Store the logs in Amazon RDS. Use a database client for analysis."
+        },
+        "C": {
+          "zh": "將日誌儲存在 Amazon OpenSearch Service 中。使用 OpenSearch Service 進行分析。",
+          "en": "Store the logs in Amazon OpenSearch Service. Use OpenSearch Service for analysis."
+        },
+        "D": {
+          "zh": "將日誌儲存在 Amazon EMR 叢集中 使用受支援的開源框架進行基於 SQL 的分析。",
+          "en": "Store the logs in an Amazon EMR cluster Use a supported open-source framework for SQL-based analysis."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon S3 是一種經濟高效的儲存解決方案，用於儲存大量日誌資料。正確：Amazon Athena 是一種無伺服器查詢服務，支援標準 SQL 並且按查詢付費，非常適合按需分析。此選項滿足成本效益和按需分析的要求。",
+          "en": "Correct. Amazon S3 is a cost-effective storage solution for storing large amounts of log data. Correct: Amazon Athena is a serverless query service that supports standard SQL and is pay-per-query, making it ideal for on-demand analytics. This option meets the requirements for cost-effectiveness and on-demand analysis."
+        },
+        "B": {
+          "zh": "錯誤。Amazon RDS是集中式資料庫服務，適合結構化數據，但儲存大量日誌資料的成本較高。錯誤：資料庫執行個體需要預配，無法按需擴容，維護成本高。",
+          "en": "Incorrect. Amazon RDS is a centralized database service that is suitable for structured data, but the cost of storing large amounts of log data is high. Error: A database instance needs to be provisioned, cannot be expanded on demand, and maintenance costs are high."
+        },
+        "C": {
+          "zh": "錯誤。Amazon OpenSearch Service 主要用於搜尋和分析日誌數據，但不支援標準 SQL 查詢。錯誤：此選項不符合問題所需的SQL查詢要求。",
+          "en": "Incorrect. Amazon OpenSearch Service is primarily used for searching and analyzing log data, but does not support standard SQL queries. Error: This option does not meet the SQL query requirements required by the question."
+        },
+        "D": {
+          "zh": "錯誤。Amazon EMR 是一種適合複雜分析的大數據處理服務，但成本高且需要叢集維護。錯誤：此選項不符合高性價比類固醇的要求。",
+          "en": "Incorrect. Amazon EMR is a big data processing service suitable for complex analysis, but it is costly and requires cluster maintenance. Error: This option does not meet the requirements for a cost-effective steroid."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將日誌儲存在 Amazon S3 中。使用 Amazon Athena 分析。",
+        "en": "A. Store the logs in Amazon S3. Use Amazon Athena tor analysis."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (95%)。熱門討論與考點摘要：Amazon S3 是一種經濟高效的儲存解決方案，用於儲存大量日誌資料。正確：Amazon Athena 是一種無伺服器查詢服務，支援標準 SQL 並且按查詢付費，非常適合按需分析。此選項滿足成本效益和按需分析的要求。",
+        "en": "Community vote as displayed: A (95%). Popular discussion and key point summary: Amazon S3 is a cost-effective storage solution for storing large amounts of log data. Correct: Amazon Athena is a serverless query service that supports standard SQL and is pay-per-query, making it ideal for on-demand analytics. This option meets the requirements for cost-effectiveness and on-demand analysis."
+      }
+    },
+    {
+      "question_no": 644,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "國際公司針對該公司營運所在的每個國家/地區都有一個子域。子網域的格式為 example.com、country1.example.com 和country2.example.com。該公司的工作負載由應用程式負載平衡器支援。該公司希望對傳輸中的網站資料進行加密。哪一種步驟組合可以滿足這些要求？ （選兩個。）",
+        "en": "An international company has a subdomain for each country that the company operates in. The subdomains are formatted as example.com, country1.example.com, and country2.example.com. The company's workloads are behind an Application Load Balancer. The company wants to encrypt the website data that is in transit. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Certificate Manager (ACM) 控制臺要求頂級網域 example com 的公用憑證和 *.example.com 的通配符憑證。",
+          "en": "Use the AWS Certificate Manager (ACM) console to request a public certificate for the apex top domain example com and a wildcard certificate for *.example.com."
+        },
+        "B": {
+          "zh": "使用 AWS Certificate Manager (ACM) 控制臺要求頂級網域 example.com 的私有憑證和 *.example.com 的通配符憑證。",
+          "en": "Use the AWS Certificate Manager (ACM) console to request a private certificate for the apex top domain example.com and a wildcard certificate for *.example.com."
+        },
+        "C": {
+          "zh": "使用 AWS Certificate Manager (ACM) 控制臺為頂層網域 example.com 要求公有和私有憑證。",
+          "en": "Use the AWS Certificate Manager (ACM) console to request a public and private certificate for the apex top domain example.com."
+        },
+        "D": {
+          "zh": "透過電子郵件地址驗證網域所有權。透過將所需的 DNS 記錄新增至 DNS 提供者來切換到 DNS 驗證。",
+          "en": "Validate domain ownership by email address. Switch to DNS validation by adding the required DNS records to the DNS provider."
+        },
+        "E": {
+          "zh": "透過將所需的 DNS 記錄新增至 DNS 提供者來驗證網域的網域所有權。",
+          "en": "Validate domain ownership for the domain by adding the required DNS records to the DNS provider."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。公共憑證適用於可公開存取的域名，合格憑證可以覆蓋所有子網域（例如country1.example.com和country2.example.com）。這是滿足問題要求的正確步驟。",
+          "en": "Correct. . Public certificates are suitable for publicly accessible domain names, and qualified certificates can cover all subdomains (such as country1.example.com and country2.example.com). This is the correct step to meet the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。。私有憑證通常用於內部應用程式服務，而不是可公開存取的網域名稱。題目要求添加網站數據，需要公共證書。",
+          "en": "Incorrect. . Private certificates are often used for internal application services rather than publicly accessible domain names. The question requires adding website data, which requires a public certificate."
+        },
+        "C": {
+          "zh": "錯誤。。標題沒有提到需要私有證書，需要相符的證書（*.example.com）。僅申請高級網域憑證不足以覆蓋子網域。",
+          "en": "Incorrect. . The title does not mention the need for a private certificate, and the matching certificate (*.example.com) is required. Applying for a high-level domain name certificate alone is not enough to cover the subdomain name."
+        },
+        "D": {
+          "zh": "錯誤。。儘管電子近零件軸認證是可選的，但問題並未提及需要切換軸認證方法。直接使用DNS軸更符合問題要求。",
+          "en": "Incorrect. . Although electronic near-part shaft certification is optional, the question does not mention the need to switch the shaft certification method. Directly using the DNS axis is more in line with the question requirements."
+        },
+        "E": {
+          "zh": "正確。。 DNS認證是AWS推薦的網域名稱所有權認證方式，適合公共憑證申請。",
+          "en": "Correct. . DNS certification is the domain name ownership certification method recommended by AWS and is suitable for public certificate applications."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Certificate Manager (ACM) 控制臺要求頂級網域 example com 的公用憑證和 *.example.com 的通配符憑證。；E. 透過將所需的 DNS 記錄新增至 DNS 提供者來驗證網域的網域所有權。",
+        "en": "A. Use the AWS Certificate Manager (ACM) console to request a public certificate for the apex top domain example com and a wildcard certificate for *.example.com.; E. Validate domain ownership for the domain by adding the required DNS records to the DNS provider."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AE (100%)。熱門討論與考點摘要：。公共憑證適用於可公開存取的域名，合格憑證可以覆蓋所有子網域（例如country1.example.com和country2.example.com）。這是滿足問題要求的正確步驟。；。 DNS認證是AWS推薦的網域名稱所有權認證方式，適合公共憑證申請。",
+        "en": "Community vote as displayed: AE (100%). Popular discussion and key point summary: . Public certificates are suitable for publicly accessible domain names, and qualified certificates can cover all subdomains (such as country1.example.com and country2.example.com). This is the correct step to meet the requirements of the question.; . DNS certification is the domain name ownership certification method recommended by AWS and is suitable for public certificate applications."
+      }
+    },
+    {
+      "question_no": 645,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要在其本機金鑰管理器中使用加密金鑰。由於監管和合規性要求，金鑰管理器位於 AWS 雲端之外。該公司希望使用保留在 AWS 雲端外部並支援來自不同供應商的各種外部金鑰管理器的加密金鑰來管理加密和解密。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is required to use cryptographic keys in its on-premises key manager. The key manager is outside of the AWS Cloud because of regulatory and compliance requirements. The company wants to manage encryption and decryption by using cryptographic keys that are retained outside of the AWS Cloud and that support a variety of external key managers from different vendors. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用由 CloudHSM 叢集支援的 AWS CloudHSM 金鑰儲存。",
+          "en": "Use AWS CloudHSM key store backed by a CloudHSM cluster."
+        },
+        "B": {
+          "zh": "使用由外部金鑰管理員支援的 AWS Key Management Service (AWS KMS) 外部金鑰儲存。",
+          "en": "Use an AWS Key Management Service (AWS KMS) external key store backed by an external key manager."
+        },
+        "C": {
+          "zh": "使用預設的 AWS Key Management Service (AWS KMS) 託管金鑰儲存。",
+          "en": "Use the default AWS Key Management Service (AWS KMS) managed key store."
+        },
+        "D": {
+          "zh": "使用由 AWS CloudHSM 叢集支援的自訂金鑰儲存。",
+          "en": "Use a custom key store backed by an AWS CloudHSM cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項CloudHSM 是一項託管硬體安全模組 (HSM) 服務，可協助使用者管理自己的加密金鑰。但是，此問題需要使用外部金鑰管理器，而CloudHSM是AWS的內部服務，不符合問題要求。錯誤原因：不符合「密鑰儲存在AWS外部」的要求。",
+          "en": "Incorrect. Use AWS CloudHSM key storage backed by a CloudHSM cluster. CloudHSM is a managed hardware security module (HSM) service that helps users manage their own encryption keys. However, the question requires the use of an external key manager, and CloudHSM is an internal service of AWS and does not meet the question requirements. Reason for the error: The requirement \"Keys are stored outside of AWS\" is not met."
+        },
+        "B": {
+          "zh": "正確。AWS KMS 外部金鑰儲存 (XKS) 允許使用者將加密金鑰儲存在 AWS 外部的外部金鑰管理員中。此選項完全滿足問題的要求：支援外部金鑰管理器、滿足合規性要求並且具有最小的營運開銷。完全滿足題目要求，是AWS推薦的解決方案。",
+          "en": "Correct. AWS KMS External Key Store (XKS) allows users to store encryption keys in an external key manager outside of AWS. This option does exactly what the question requires: supports external key managers, meets compliance requirements, and has minimal operational overhead. It fully meets the question requirements and is a solution recommended by AWS."
+        },
+        "C": {
+          "zh": "錯誤。預設 AWS KMS 託管金鑰儲存是 AWS 託管的金鑰儲存服務，金鑰儲存在 AWS 中。該問題要求密鑰儲存在AWS之外，因此該選項不符合要求。錯誤原因：金鑰儲存在AWS內部，不符合問題要求。",
+          "en": "Incorrect. The default AWS KMS managed key store is an AWS-managed key storage service, and the keys are stored within AWS. The question requires that the keys be stored outside of AWS, so this option does not meet the requirements. Reason for the error: The key is stored inside AWS and does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。自訂金鑰儲存允許使用者使用 CloudHSM 叢集管理自己的金鑰。不過，CloudHSM仍然是AWS的內部服務，不符合問題要求。錯誤原因：金鑰儲存在AWS內部，不符合問題要求。",
+          "en": "Incorrect. Custom key storage allows users to manage their own keys using a CloudHSM cluster. However, CloudHSM is still an internal service of AWS and does not meet the question requirements. Reason for the error: The key is stored inside AWS and does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用由外部金鑰管理員支援的 AWS Key Management Service (AWS KMS) 外部金鑰儲存。",
+        "en": "B. Use an AWS Key Management Service (AWS KMS) external key store backed by an external key manager."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (95%)。熱門討論與考點摘要：AWS KMS 外部金鑰儲存 (XKS) 允許使用者將加密金鑰儲存在 AWS 外部的外部金鑰管理員中。此選項完全滿足問題的要求：支援外部金鑰管理器、滿足合規性要求並且具有最小的營運開銷。完全滿足題目要求，是AWS推薦的解決方案。",
+        "en": "Community vote as displayed: B (95%). Popular discussion and key point summary: AWS KMS External Key Store (XKS) allows users to store encryption keys in an external key manager outside of AWS. This option does exactly what the question requires: supports external key managers, meets compliance requirements, and has minimal operational overhead. It fully meets the question requirements and is a solution recommended by AWS."
+      }
+    }
+  ]
+}

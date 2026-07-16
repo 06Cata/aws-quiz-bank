@@ -1,0 +1,184 @@
+A company wants to back up its on-premises virtual machines (VMs) to AWS. The company's backup solution exports on-premises
+backups to an Amazon S3 bucket as objects. The S3 backups must be retained for 30 days and must be automatically deleted after
+30 days.
+Which combination of steps will meet these requirements? (Choose three.)
+A. Create an S3 bucket that has S3 Object Lock enabled. Most Voted
+B. Create an S3 bucket that has object versioning enabled.
+C. Configure a default retention period of 30 days for the objects. Most Voted
+D. Configure an S3 Lifecycle policy to protect the objects for 30 days.
+E. Configure an S3 Lifecycle policy to expire the objects after 30 days. Most Voted
+F. Configure the backup solution to tag the objects with a 30-day retention period
+Comments
+te1973 Highly Voted 2 years ago
+This is a good example for a completely non-sense AWS exam question. In order to delete the object like requested in the question you need (E). Thi
+is required in either versioned or non-versioned buckets. Basically the task is done here. But let's assume we want to make it extra secure and retain
+the files for 30 days. Then we need object lock (A). You cannot have object lock without versioning (B). You also need to set a retention period then
+(C). So you either have A,B,C,E or you have E. Choosing exactly 3 options is completely nonsense here. But what do i know.
+upvoted 9 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: ACE
+In theory, E alone would be enough because the objects are "retained for 30 days" without any configuration as long as no one deletes them. But
+let's assume that they want us to prevent deletion.
+A: Yes, required to prevent deletion. Object Lock requires Versioning, so if we 'create an S3 bucket that has S3 Object Lock enabled' that this also has
+object versioning enabled, otherwise we would not be able to create it.
+B: No. We need versioning, but we cannot "create" the bucket twice. If we create it "with object lock enabled" then versioning is enabled too, but
+NOT the other way round (creating it with versioning enabled will not automatically enable object lock).
+upvoted 5 times
+pentium75 2 years, 5 months ago
+C: Yes, "default retention period" specifies how long object lock will be applied to new objects by default, we need this to protect objects from
+deletion.
+D: No, S3 Lifecycle Policy can "transition" or "expire" but not "protect".
+E: Yes, this will delete the objects after 30 days (C just removes the object lock after 30 days but does not delete the objects).
+F: No, 'tag with a retention period' is not common AWS wording, "tags" are something different in AWS context
+upvoted 4 times
+andreea10 Most Recent 10 months, 1 week ago
+Selected Answer: BDE
+A (S3 Object Lock) is used for legal/compliance needs to prevent deletion — not for automatic deletion. Since you want backups to be deleted after
+30 days, Object Lock is not needed and would actually get in the way.
+upvoted 1 times
+Correct Answer: ACE
+Community vote distribution
+ACE (60%)
+ADE (23%)
+Other
+ln2718 10 months, 2 weeks ago
+Selected Answer: ABE
+The correct answer is A, B, E - the answer from another question bank and ChatGPT, --- S3 Object Lock requires S3 Versioning to be enabled on the
+bucket.
+upvoted 1 times
+Dz1990 1 year ago
+Selected Answer: ACE
+After analyzing the community debate, I'm sticking with ACE.
+AWS Logic: They wouldn't give you two "create bucket" options (A and B) if both were needed. When you "Create bucket with Object Lock enabled"
+(A), versioning is automatically included - you can't have Object Lock without it.
+The sneaky part: AWS is testing if you understand Object Lock includes versioning, not if you'll pick redundant options. If they wanted both A and B,
+they'd phrase them as separate configuration steps, not both as "create bucket" actions.
+Most experienced test-takers chose ACE recognizing this pattern. AWS tests concepts, not redundant configurations.
+ACE is correct.
+upvoted 2 times
+tch 1 year, 2 months ago
+Selected Answer: ACE
+To manage the lifecycle of your objects, create an S3 Lifecycle configuration for your bucket. An S3 Lifecycle configuration is a set of rules that define
+actions that Amazon S3 applies to a group of objects. There are two types of actions:
+• Transition actions – These actions define when objects transition to another storage class. For example, you might choose to transition objects to
+the S3 Standard-IA storage class 30 days after creating them, or archive objects to the S3 Glacier Flexible Retrieval storage class one year after
+creating them.
+•
+• Expiration actions – These actions define when objects expire. Amazon S3 deletes expired objects on your behalf. For example, you might to choose
+to expire objects after they have been stored for a regulatory compliance period.
+upvoted 1 times
+tch 1 year, 2 months ago
+To use S3 Object Lock with a bucket (or objects within a bucket), you must first enable versioning for the bucket, as you won’t be able to turn
+versioning on later. Retention periods and legal holds apply to individual object versions
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: ABE
+C is not right becasue A standard S3 object has no default retention period, meaning it can be deleted at any time unless you specifically configure a
+retention period using the "S3 Object Lock" feature, which allows you to set a custom retention period for individual objects or an entire bucket, with
+the minimum retention period being one day, B is right because you have to do it , it does not matter you have to do it to lock a object or do it
+yourself. D is a general description of action A.
+upvoted 1 times
+omega_coaching 1 year, 5 months ago
+Selected Answer: ABE
+For enabling S3 object lock we need to enable Bucket versioning.. SO and must be ABE
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+Selected Answer: ACE
+"Object Lock works only in buckets that have S3 Versioning enabled"
+However, we can't have 2 options (A and B) telling to create the bucket. So, A is only possible if versioning is already enabled.
+We need retention period (C), since this is not a case for legal holds:
+"Object Lock provides two ways to manage object retention: retention periods and legal holds."
+E - obvious reasons.
+Ref. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
+upvoted 1 times
+chwieobjom 1 year, 9 months ago
+this is shit
+upvoted 2 times
+mohammadthainat 2 years, 2 months ago
+Selected Answer: ACE
+1- The S3 backups must be retained for 30 days -->
+For that you must enable S3 Object Lock (versioning must be enabled) in Compliance Mode and set Retention Period to 30 days. Thus, to achieve thi
+you need 3 options <A, B and C>
+2- The S3 backups must be automatically deleted after 30 days. -->
+For that you must Create Lifecycle Rule with action Expire current versions of objects (versioning must be enabled) and set Expiration Period to 30
+days. Thus to achieve this you need 2 options <B and E>
+<B> is a must here as both locking the objects and deleting them can't be achieved without it. But, when choosing "A.Create an S3 bucket that has
+S3 Object Lock enabled." this explicitly indicated that versioning is enabled in your bucket.
+upvoted 4 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: ADE
+B: No versioning is required
+D: Lifecycle is for transitioning or expiring. There is no protection lifecycle policy
+F: No such tag
+Enable object lock, retain for 30 days (https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-retention-date.html) and expire after 30
+days.
+upvoted 5 times
+MatAlves 1 year, 8 months ago
+"Object Lock works only in buckets that have S3 Versioning enabled"
+However, I still agree with ACE, since the bucket has already been created, so we can't have 2 answers telling to create the bucket.
+And yes, for this case, we need retention period:
+"Object Lock provides two ways to manage object retention: retention periods and legal holds."
+Ref. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+I meant ACE! not ADE!
+upvoted 3 times
+PegasusForever 2 years, 5 months ago
+ABE -> https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
+A. Create an S3 bucket that has S3 Object Lock enabled. -> You set a Retention period of 30 days with this feature.
+B. Create an S3 bucket that has object versioning enabled -> Object Lock works only in buckets that have S3 Versioning enabled
+E. Configure an S3 Lifecycle policy to expire the objects after 30 days. -> It is valid using the lifecicle policy.
+upvoted 2 times
+PegasusForever 2 years, 5 months ago
+After analyzing the question deeply and reading: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html, I keep A and B,
+change E per C.
+A. Create an S3 bucket that has S3 Object Lock enabled.
+B. Create an S3 bucket that has object versioning enabled.
+Change E must be automatically deleted after 30 days(objects will be marked as expired not deleted). per C. Configure a default retention period of
+30 days for the objects. It feature delete the object.
+upvoted 2 times
+PegasusForever 2 years, 5 months ago
+Selected Answer: ACE
+A. Create an S3 bucket that has S3 Object Lock enabled. Enable the S3 Object Lock feature on S3.
+C. Configure a default retention period of 30 days for the objects. To lock the objects for 30 days.
+E. Configure an S3 Lifecycle policy to expire the objects after 30 days. -> to delete the objects after 30 days.
+upvoted 2 times
+cciesam 2 years, 5 months ago
+Selected Answer: ACE
+ACE is the correct ans.
+upvoted 5 times
+Riajul 2 years, 5 months ago
+Selected Answer: ADE
+ADE should be correct
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Why?
+S3 Lifecycle Policy can "transition" or "expire" but not "protect"
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html
+upvoted 2 times
+Naijaboy99 2 years, 5 months ago
+Correct Answer is A C E
+upvoted 2 times
+meenkaza 2 years, 5 months ago
+Selected Answer: ADE
+A. Create an S3 bucket that has S3 Object Lock enabled.
+S3 Object Lock provides the ability to enforce retention periods on objects, preventing deletion or modification for a specified duration.
+D. Configure an S3 Lifecycle policy to protect the objects for 30 days.
+By configuring a lifecycle policy, you can define a transition action to move objects to the S3 Glacier storage class (or any other storage class) after 30
+days.
+E. Configure an S3 Lifecycle policy to expire the objects after 30 days.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+S3 Lifecycle Policy can "transition" or "expire" but not "protect"
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html
+upvoted 3 times
+tch 1 year, 2 months ago
+To manage the lifecycle of your objects, create an S3 Lifecycle configuration for your bucket. An S3 Lifecycle configuration is a set of rules that
+define actions that Amazon S3 applies to a group of objects. There are two types of actions:
+• Transition actions – These actions define when objects transition to another storage class. For example, you might choose to transition objects to
+the S3 Standard-IA storage class 30 days after creating them, or archive objects to the S3 Glacier Flexible Retrieval storage class one year after
+creating them.
+•
+• Expiration actions – These actions define when objects expire. Amazon S3 deletes expired objects on your behalf. For example, you might to
+choose to expire objects after they have been stored for a regulatory compliance period.
+upvoted 1 times

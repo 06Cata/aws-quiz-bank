@@ -1,0 +1,109 @@
+A company is building a game system that needs to send unique events to separate leaderboard, matchmaking, and
+authentication services concurrently. The company needs an AWS event-driven system that guarantees the order of the events.
+Which solution will meet these requirements?
+A. Amazon EventBridge event bus
+B. Amazon Simple Notification Service (Amazon SNS) FIFO topics Most Voted
+C. Amazon Simple Notification Service (Amazon SNS) standard topics
+D. Amazon Simple Queue Service (Amazon SQS) FIFO queues
+Comments
+bella Highly Voted 3 years, 1 month ago
+Selected Answer: B
+I don't honestly / can't understand why people go to ChapGPT to ask for the answers.... if I recall correctly they only consolidated their DB until
+2021...
+upvoted 19 times
+LeonSauveterre 1 year, 6 months ago
+Yes, it used to be just like that. Fortunately things have changed as of today - Nov 29 2024 in my timezone. Personally I find ChatGPT + Amazon Q
+to be quite awesome for SAA tests
+upvoted 2 times
+aaroncelestin 2 years, 9 months ago
+Yup, ChatGPT doesn't //know// anything about AWS services. It only repeats what other people have said about it, which could be nonsense or
+hyperbole or some combination thereof.
+upvoted 5 times
+LazyTs Highly Voted 2 years, 9 months ago
+Selected Answer: B
+The answer is B la. SNS FIFO topics queue should be used combined with SQS FIFO queue in this case. The question asked for correct order to
+different event, so asking for SNS fan out here to send to individual SQS.
+https://docs.aws.amazon.com/sns/latest/dg/fifo-example-use-case.html
+upvoted 14 times
+Po_chih 2 years, 8 months ago
+The best answer!
+upvoted 1 times
+dkw2342 2 years, 3 months ago
+B is correct, but this is not about SNS -> SQS fan-out, it's not necessary. Just SNS FIFO for ordered pub/sub messaging.
+upvoted 3 times
+FlyingHawk Most Recent 1 year, 6 months ago
+Selected Answer: B
+Base on this doc https://docs.aws.amazon.com/sns/latest/dg/fifo-topic-message-ordering.html, the answer should B and D, however, if you can only
+select one, then B.
+upvoted 1 times
+MatAlves 1 year, 9 months ago
+Correct Answer: B
+Community vote distribution
+B (79%)
+D (16%)
+5%
+Selected Answer: B
+SNS can have many-to-many relations, while SQS supports only one consumer at a time (many-to-one).
+upvoted 5 times
+1e22522 1 year, 10 months ago
+First time in my life that the answer is actually SNS
+upvoted 6 times
+richiexamaws 2 years ago
+Selected Answer: D
+AWS does not currently offer FIFO topics for SNS. SNS only supports standard topics, which do not guarantee message order.
+upvoted 1 times
+elmyth 1 year, 9 months ago
+I'm creating a topic right now and I have both types to choose.
+upvoted 3 times
+Darshan07 2 years, 3 months ago
+Selected Answer: B
+Even chat gpt said B
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: B
+Yes, you can technically do this with SQS FIFO partitioned queue by giving separate group ID's to leaderboard, matchmaking etc but this is not as
+useful as SNS FIFO and is overkill as no need for storage etc. B is more elegant and concise solution,
+upvoted 5 times
+foha2012 2 years, 5 months ago
+Guys, ChatGPT sucks !. Try removing [most voted] from choice B and it will choose D. And if you put [most voted] in front of A, it will select A. LOL !
+upvoted 3 times
+Marco_St 2 years, 5 months ago
+Selected Answer: B
+just know SNS FIFO also can send events or messages cocurrently to many subscribers while maintaining the order it receives. SNS fanout pattern is
+set in standard SNS which is commonly used to fan out events to large number of subscribers and usually for duplicated messages.
+upvoted 2 times
+Mikado211 2 years, 6 months ago
+Selected Answer: B
+SQS looks like a good idea first, but since we have to send the same message to multiple destination, even if SQS could do it, SNS is much more
+dedicated to this kind of usage.
+upvoted 5 times
+sparun1607 2 years, 6 months ago
+My Answer is B
+https://docs.aws.amazon.com/sns/latest/dg/sns-fifo-topics.html
+You can use Amazon SNS FIFO (first in, first out) topics with Amazon SQS FIFO queues to provide strict message ordering and message
+deduplication. The FIFO capabilities of each of these services work together to act as a fully managed service to integrate distributed applications
+that require data consistency in near-real time. Subscribing Amazon SQS standard queues to Amazon SNS FIFO topics provides best-effort ordering
+and at least once delivery.
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+bbbbbbbbbbbbbbb
+upvoted 2 times
+jaydesai8 2 years, 11 months ago
+Selected Answer: D
+SQS FIFO maintains the order of the events - Answer is D
+upvoted 2 times
+jayce5 3 years ago
+Selected Answer: B
+It should be the fan-out pattern, and the pattern starts with Amazon SNS FIFO for the orders.
+upvoted 3 times
+danielklein09 3 years ago
+Selected Answer: D
+Answer is D. You are so lazy because instead of searching in documentation or your notes, you are asking ChatGPT. Do you really think you will take
+this exam ? Hint: ask ChatGPT
+upvoted 5 times
+lucdt4 3 years ago
+Selected Answer: D
+D is correct (SQS FIFO)
+Because B can't send event concurrently though it can send in the order of the events
+upvoted 1 times

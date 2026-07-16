@@ -1,0 +1,106 @@
+A data analytics company wants to migrate its batch processing system to AWS. The company receives thousands of small data
+files periodically during the day through FTP. An on-premises batch job processes the data files overnight. However, the batch job
+takes hours to finish running.
+The company wants the AWS solution to process incoming data files as soon as possible with minimal changes to the FTP clients
+that send the files. The solution must delete the incoming data files after the files have been processed successfully. Processing for
+each file needs to take 3-8 minutes.
+Which solution will meet these requirements in the MOST operationally efficient way?
+A. Use an Amazon EC2 instance that runs an FTP server to store incoming files as objects in Amazon S3 Glacier Flexible
+Retrieval. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the objects nightly
+from S3 Glacier Flexible Retrieval. Delete the objects after the job has processed the objects.
+B. Use an Amazon EC2 instance that runs an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS)
+volume. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the files nightly from
+the EBS volume. Delete the files after the job has processed the files.
+C. Use AWS Transfer Family to create an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS)
+volume. Configure a job queue in AWS Batch. Use an Amazon S3 event notification when each file arrives to invoke the job in
+AWS Batch. Delete the files after the job has processed the files.
+D. Use AWS Transfer Family to create an FTP server to store incoming files in Amazon S3 Standard. Create an AWS Lambda
+function to process the files and to delete the files after they are processed. Use an S3 event notification to invoke the Lambda
+function when the files arrive. Most Voted
+Comments
+pentium75 Highly Voted 1 year, 11 months ago
+Selected Answer: D
+Obviously we choose AWS Transfer Family over hosting the FTP server ourselves on an EC2 instance. And "process incoming data files as soon as
+possible" -> trigger Lambda when files arrive. Lambda functions can run up to 15 minutes, it takes "3-8 minutes" per file -> works.
+AWS Batch just schedules jobs, but these still need to run somewhere (Lambda, Fargate, EC2).
+upvoted 5 times
+wizcloudifa 1 year, 7 months ago
+well if you opt for unmanaged compute option in AWS Batch in that case you dont have to worry about the compute, AWS batch automatically
+provisions it for you
+upvoted 2 times
+wsdasdasdqwdaw Most Recent 2 years, 1 month ago
+FTP => AWS Transfer Family, => C or D, but in C is used EBS not S3 which needs EC2 and in general is more complex => very clear D.
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: D
+The key points:
+Use AWS Transfer Family for the FTP server to receive files directly into S3. This avoids managing FTP servers.
+Correct Answer: D
+Community vote distribution
+D (96%)
+4%
+Process each file as soon as it arrives using Lambda triggered by S3 events. Lambda provides fast processing time per file.
+Lambda can also delete files after processing succeeds.
+Options A, B, C involve more operational overhead of managing FTP servers and batch jobs. Processing latency would be higher waiting for batch
+windows.
+Storing files in Glacier (Option A) adds latency for retrieving files.
+upvoted 2 times
+hsinchang 2 years, 4 months ago
+Selected Answer: D
+Processing for each file needs to take 3-8 minutes clearly indicates Lambda functions.
+upvoted 2 times
+TariqKipkemei 2 years, 4 months ago
+Selected Answer: D
+Process incoming data files with minimal changes to the FTP clients that send the files = AWS Transfer Family.
+Process incoming data files as soon as possible = S3 event notification.
+Processing for each file needs to take 3-8 minutes = AWS Lambda function.
+Delete file after processing = AWS Lambda function.
+upvoted 4 times
+antropaws 2 years, 5 months ago
+Selected Answer: D
+Most likely D.
+upvoted 2 times
+r3mo 2 years, 6 months ago
+"D" Since each file takes 3-8 minutes to process the lambda function can process the data file whitout a problem.
+upvoted 2 times
+maver144 2 years, 6 months ago
+Selected Answer: D
+You cannot setup AWS Transfer Family to save files into EBS.
+upvoted 3 times
+oras2023 2 years, 5 months ago
+https://aws.amazon.com/aws-transfer-family/
+upvoted 2 times
+secdgs 2 years, 6 months ago
+Selected Answer: D
+D. Because
+1. process immediate when file transfer to S3 not wait for process several file in one time.
+2. takes 3-8 can use Lamda.
+C. Wrong because AWS Batch is use for run large-scale or large amount of data in one time.
+upvoted 2 times
+Aymanovitchy 2 years, 6 months ago
+To meet the requirements of processing incoming data files as soon as possible with minimal changes to the FTP clients, and deleting the files after
+successful processing, the most operationally efficient solution would be:
+D. Use AWS Transfer Family to create an FTP server to store incoming files in Amazon S3 Standard. Create an AWS Lambda function to process the
+files and delete them after processing. Use an S3 event notification to invoke the Lambda function when the files arrive.
+upvoted 2 times
+bajwa360 2 years, 6 months ago
+Selected Answer: D
+It should be D as lambda is more operationally viable solution given the fact each processing takes 3-8 minutes that lambda can handle
+upvoted 2 times
+alexandercamachop 2 years, 6 months ago
+Selected Answer: C
+Answer has to be between C or D.
+Because Transfer Family is obvious do to FTP.
+Now i would go with C because it uses AWS Batch, which makes more sense for Batch processing rather then AWS Lambda.
+upvoted 1 times
+pentium75 1 year, 11 months ago
+Also Batch just triggers jobs, they still need to run somewhere (like in Lambda).
+upvoted 2 times
+pentium75 1 year, 11 months ago
+Why? "Process incoming data files as soon as possible", by triggering the Lambda function when files arrive. Batch is for scheduled jobs.
+upvoted 2 times
+Bill1000 2 years, 6 months ago
+I am between C and D. My reason is:
+"The company wants the AWS solution to process incoming data files <b>as soon as possible</b> with minimal changes to the FTP clients that send
+the files."
+upvoted 3 times

@@ -1,0 +1,51 @@
+A company is developing machine learning (ML) models on AWS. The company is developing the ML models as independent
+microservices. The microservices fetch approximately 1 GB of model data from Amazon S3 at startup and load the data into
+memory. Users access the ML models through an asynchronous API. Users can send a request or a batch of requests.
+The company provides the ML models to hundreds of users. The usage patterns for the models are irregular. Some models are not
+used for days or weeks. Other models receive batches of thousands of requests at a time.
+Which solution will meet these requirements?
+A. Direct the requests from the API to a Network Load Balancer (NLB). Deploy the ML models as AWS Lambda functions that
+the NLB will invoke. Use auto scaling to scale the Lambda functions based on the traffic that the NLB receives.
+B. Direct the requests from the API to an Application Load Balancer (ALB). Deploy the ML models as Amazon Elastic Container
+Service (Amazon ECS) services that the ALB will invoke. Use auto scaling to scale the ECS cluster instances based on the traffic
+that the ALB receives.
+C. Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the ML models as
+AWS Lambda functions that SQS events will invoke. Use auto scaling to increase the number of vCPUs for the Lambda
+functions based on the size of the SQS queue.
+D. Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the ML models as
+Amazon Elastic Container Service (Amazon ECS) services that read from the queue. Use auto scaling for Amazon ECS to scale
+both the cluster capacity and number of the services based on the size of the SQS queue. Most Voted
+Comments
+FlyingHawk 1 year, 4 months ago
+Selected Answer: D
+Given that the problem statement does not specify the processing time, Option D (ECS) is the safer choice because it does not have the same
+limitations as Lambda(cold start and 15 ,minutes execution). However, if the processing time is short and cold starts are acceptable, Option C
+(Lambda) could also be a cost-effective solution.
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: D
+A - Lambda has a cold start latency. There are ways to optimize that (like the environment variable config which I actually did when I used Lambda
+once), but loading 1GB into memory is still too much.
+B - Using ALB makes handling sudden bursts of traffic even more challenging.
+C - Just like A if I'm correct.
+D - Each ML model needs to load 1 GB of model data at startup ==> Containers in ECS are well-suited for this because they provide persistent
+execution environments that avoid the overhead of reloading the model data frequently.
+upvoted 1 times
+RamanAgarwal 1 year, 5 months ago
+Selected Answer: C
+Since AWS Lambda supports 1GB of memory and can be scaled seamlessly, the ans should be C. Question says a lot of APIs are not used frequently
+so keeping them in ECS will result in higher costs. Also these are async operations means the response is not time bound hence we can wait for
+lambda to startup and scale up based on the size of the SQS queue.
+upvoted 2 times
+kbgsgsgs 1 year, 8 months ago
+Correct Answer: D
+Community vote distribution
+D (43%)
+B (29%)
+C (29%)
+Selected Answer: B
+Why should I use SQS in option D? Wouldn't ALB be enough?
+upvoted 2 times
+Sergantus 1 year, 6 months ago
+It's talking about accessing models through an asynchronous API, so decoupling is needed (SQS)
+upvoted 1 times

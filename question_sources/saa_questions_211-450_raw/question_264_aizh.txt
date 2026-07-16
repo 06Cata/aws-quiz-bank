@@ -1,0 +1,55 @@
+Question #264
+A company has a web application hosted over 10 Amazon EC2 instances with traffic directed by Amazon Route 53. The company
+occasionally experiences a timeout error when attempting to browse the application. The networking team finds that some DNS
+queries return IP addresses of unhealthy instances, resulting in the timeout error.
+What should a solutions architect implement to overcome these timeout errors?
+一家公司有一个通过 10 个 Amazon EC2 实例托管的 Web 应用程序，并通过 Amazon Route 53 引导流量。 该公司偶尔会在尝试浏
+览该应用程序时遇到超时错误。 网络团队发现一些 DNS 查询返回了不健康实例的 IP 地址，导致了超时错误。
+解决方案架构师应该实施什么来解决这些超时错误？
+A. Create a Route 53 simple routing policy record for each EC2 instance. Associate a health check with each record.
+为每个 EC2 实例创建一个 Route 53 简单路由策略记录。为每个记录关联一个健康检查。
+B. Create a Route 53 failover routing policy record for each EC2 instance. Associate a health check with each record.
+为每个 EC2 实例创建一个 Route 53 故障转移路由策略记录。为每个记录关联一个健康检查。
+C. Create an Amazon CloudFront distribution with EC2 instances as its origin. Associate a health check with the EC2 instances.
+创建一个 Amazon CloudFront 分配，并将 EC2 实例作为其源。为 EC2 实例关联一个健康检查。
+D. Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from Route 53.
+Most Voted
+在 EC2 实例前创建一个带有健康检查的 Application Load Balancer (ALB)。从 Route 53 路由到 ALB。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (72%)
+B (20%)
+4%
+Amazon Route 53的路由策略及健康检查功能。
+Application Load Balancer (ALB)的健康检查和流量分发功能。
+如何设计高可用性和容错的架构。
+2. 选项分析
+A. Create a Route 53 simple routing policy record for each EC2 instance. Associate a health check with each record.
+正确性分析：Route 53的简单路由策略无法动态检测实例的健康状态并自动移除不健康的实例。虽然可以手动关联健康检查，但这
+不是最佳实践。
+结论：错误。
+B. Create a Route 53 failover routing policy record for each EC2 instance. Associate a health check with each record.
+正确性分析：故障转移路由策略主要用于主备架构，而不是用于分发流量到多个实例。此选项不适合当前场景。
+结论：错误。
+C. Create an Amazon CloudFront distribution with EC2 instances as its origin. Associate a health check with the EC2
+instances.
+正确性分析：CloudFront主要用于内容分发网络（CDN），而不是直接解决实例健康检查和流量分发问题。此选项与题目需求不匹
+配。
+结论：错误。
+D. Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from
+Route 53.
+正确性分析：ALB可以动态检测实例的健康状态，并自动将流量分发到健康的实例。结合Route 53，可以实现高可用性和容错架
+构。
+结论：正确。
+3. 我选的答案
+D. Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from Route 53.
+4. 官方答案
+D. Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from Route 53.
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：ALB是AWS推荐的解决方案，可以动态检测实例健康状态并分发流量，符合题目需求。
+嬄信: " Examtopics "

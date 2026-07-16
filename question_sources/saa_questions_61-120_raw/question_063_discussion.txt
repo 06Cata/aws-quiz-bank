@@ -1,0 +1,126 @@
+A company runs its infrastructure on AWS and has a registered base of 700,000 users for its document management application.
+The company intends to create a product that converts large .pdf files to .jpg image files. The .pdf files average 5 MB in size. The
+company needs to store the original files and the converted files. A solutions architect must design a scalable solution to
+accommodate demand that will grow rapidly over time.
+Which solution meets these requirements MOST cost-effectively?
+A. Save the .pdf files to Amazon S3. Configure an S3 PUT event to invoke an AWS Lambda function to convert the files to .jpg
+format and store them back in Amazon S3. Most Voted
+B. Save the .pdf files to Amazon DynamoDUse the DynamoDB Streams feature to invoke an AWS Lambda function to convert
+the files to .jpg format and store them back in DynamoDB.
+C. Upload the .pdf files to an AWS Elastic Beanstalk application that includes Amazon EC2 instances, Amazon Elastic Block Store
+(Amazon EBS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the files to .jpg format. Save
+the .pdf files and the .jpg files in the EBS store.
+D. Upload the .pdf files to an AWS Elastic Beanstalk application that includes Amazon EC2 instances, Amazon Elastic File System
+(Amazon EFS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the file to .jpg format. Save
+the .pdf files and the .jpg files in the EBS store.
+Comments
+ArielSchivo Highly Voted 3 years, 7 months ago
+Selected Answer: A
+Option A. Elastic BeanStalk is expensive, and DocumentDB has a 400KB max to upload files. So Lambda and S3 should be the one.
+upvoted 52 times
+raffaello44 3 years, 7 months ago
+is lambda scalable as an EC2 ?
+upvoted 5 times
+EtherealBagel 2 years, 6 months ago
+lambda has near inifinite scale
+upvoted 6 times
+rob74 3 years, 7 months ago
+In addition to this Lambda is paid only when used....
+upvoted 7 times
+mrbottomwood 3 years, 5 months ago
+I'm thinking when you wrote DocumentDB you meant it as DynamoDB...yes?
+upvoted 6 times
+benjl 3 years, 5 months ago
+Yes, DynamoDB has 400KB limit for the item.
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html
+upvoted 8 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (99%)
+1
+B. Using DynamoDB for storing and processing large .pdf files would not be cost-effective due to storage and throughput costs associated with
+DynamoDB.
+C. Using Elastic Beanstalk with EC2 and EBS storage can work, but it may not be most cost-effective solution. It involves managing the underlying
+infrastructure and scaling manually.
+D. Similar to C, using Elastic Beanstalk with EC2 and EFS storage can work, but it may not be most cost-effective solution. EFS is a shared file storage
+service and may not provide optimal performance for conversion process, especially as demand and file sizes increase.
+A. leverages Lambda and the scalable and cost-effective storage of S3. With Lambda, you only pay for actual compute time used during the file
+conversion, and S3 provides durable and scalable storage for both .pdf files and .jpg files. The S3 PUT event triggers Lambda to perform conversion,
+eliminating need to manage infrastructure and scaling, making it most cost-effective solution for this scenario.
+upvoted 10 times
+Clouddon Most Recent 11 months, 1 week ago
+Selected Answer: A
+S3 + Lambda provides event-driven, scalable, and serverless file processing.
+Best choice for large-scale file upload and transformation workflows.
+upvoted 1 times
+PaulGa 1 year, 9 months ago
+Selected Answer: A
+Ans A - a simple get and PUT back to S3 bucket. At "...average 5 MB" the returned .jpeg files should be smaller than standard S3
+upvoted 1 times
+shasi07 1 year, 11 months ago
+BeanStack is expensive solution, and dynamoDB have a limitation of 400KB max to upload files. So Lambda an S3 should be the one.
+upvoted 1 times
+Uzbekistan 2 years, 2 months ago
+Given the company's requirement for access to both AWS and on-premises file storage with minimum latency and no significant changes to existing
+file access patterns, the most suitable option is:
+A. Deploy and configure Amazon FSx for Windows File Server on AWS. Move the on-premises file data to FSx for Windows File Server. Reconfigure
+the workloads to use FSx for Windows File Server on AWS.
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: A
+S3 is the only scalable option for such a large user base in cost effective way.
+BCD can work but will be extremely costly
+upvoted 1 times
+Ruffyit 2 years, 7 months ago
+B. Using DynamoDB for storing and processing large .pdf files would not be cost-effective due to storage and throughput costs associated with
+DynamoDB.
+C. Using Elastic Beanstalk with EC2 and EBS storage can work, but it may not be most cost-effective solution. It involves managing the underlying
+infrastructure and scaling manual
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: A
+Option A is the most cost-effective solution that meets the requirements. Here is why:
+Storing the PDFs in Amazon S3 is inexpensive and scalable storage.
+Using S3 events to trigger Lambda functions to do the file conversion is a serverless approach that scales automatically. No need to manage EC2
+instances.
+Lambda usage is charged only for compute time used, which is cost-efficient for spiky workloads like this.
+Storing the converted JPGs back in S3 keeps the storage scalable and cost-effective.
+upvoted 4 times
+RDX19 2 years, 10 months ago
+Selected Answer: A
+Option A is right answer since Dynamo DB has size limitations.
+upvoted 2 times
+miki111 2 years, 10 months ago
+Option A is the right answer.
+upvoted 1 times
+Bmarodi 3 years ago
+Selected Answer: A
+The solution meets these requirements most cost-effectively is option A.
+upvoted 1 times
+Bmarodi 3 years ago
+Selected Answer: A
+I think the best solution is A.
+Ref. https://s3.amazonaws.com/doc/s3-developer-guide/RESTObjectPUT.html
+upvoted 1 times
+Abrar2022 3 years ago
+Since this requires a cost-effect solution then you can use Lambda to convert pdf files to jpeg and store them on S3. Lambda is serverless, so only
+pay when you use it and automatically scales to cope with demand.
+upvoted 1 times
+srirajav 3 years, 1 month ago
+if Option A is correct, however storing the data back to the same S3, wont it cause infinite looping, it's not best practice right storing a object that is
+processed by Lambda function to the same S3 bucket, it has chances to cause infinite Loop and then if the option B cant we increase the limits of
+Dynamo DB requesting AWS?
+upvoted 3 times
+bedwal2020 3 years, 1 month ago
+In question, it is never mentioned that the jpg files will also be stored in same s3 bucket. We can have different s3 buckets right ?
+upvoted 2 times
+cheese929 3 years, 1 month ago
+Selected Answer: A
+Answer A is the most cost effective solution that meets the requirement
+upvoted 1 times
+channn 3 years, 2 months ago
+Selected Answer: A
+Key words: MOST cost-effectively, so S3 + Lambda
+upvoted 1 times

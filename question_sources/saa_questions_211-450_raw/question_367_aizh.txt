@@ -1,0 +1,79 @@
+Question #367
+A company is using Amazon Route 53 latency-based routing to route requests to its UDP-based application for users around the
+world. The application is hosted on redundant servers in the company's on-premises data centers in the United States, Asia, and
+Europe. The company’s compliance requirements state that the application must be hosted on premises. The company wants to
+improve the performance and availability of the application.
+What should a solutions architect do to meet these requirements?
+一家公司正在使用 Amazon Route 53 基于延迟的路由，将请求路由到其面向全球用户的基于 UDP 的应用程序。该应用程序托管在
+公司位于美国、亚洲和欧洲的本地数据中心的冗余服务器上。公司的合规性要求规定，该应用程序必须托管在本地。公司希望改善
+该应用程序的性能和可用性。
+解决方案架构师应该怎么做以满足这些要求？
+A. Configure three Network Load Balancers (NLBs) in the three AWS Regions to address the on-premises endpoints. Create an
+accelerator by using AWS Global Accelerator, and register the NLBs as its endpoints. Provide access to the application by using
+a CNAME that points to the accelerator DNS. Most Voted
+在三个 AWS 区域中配置三个 Network Load Balancers (NLBs) 来处理本地端点。使用 AWS Global Accelerator 创建一个加速器，
+并将 NLBs 注册为其端点。通过使用指向加速器 DNS 的 CNAME 提供对应用程序的访问。
+B. Configure three Application Load Balancers (ALBs) in the three AWS Regions to address the on-premises endpoints. Create
+an accelerator by using AWS Global Accelerator, and register the ALBs as its endpoints. Provide access to the application by
+using a CNAME that points to the accelerator DNS.
+在三个 AWS 区域中配置三个 Application Load Balancers (ALBs) 来处理本地端点。使用 AWS Global Accelerator 创建一个加速
+器，并将 ALBs 注册为其端点。通过使用指向加速器 DNS 的 CNAME 提供对应用程序的访问。
+C. Configure three Network Load Balancers (NLBs) in the three AWS Regions to address the on-premises endpoints. In Route
+53, create a latency-based record that points to the three NLBs, and use it as an origin for an Amazon CloudFront distribution.
+Provide access to the application by using a CNAME that points to the CloudFront DNS.
+在三个 AWS 区域中配置三个 Network Load Balancers (NLBs) 来处理本地端点。在 Route 53 中创建一个基于延迟的记录，该记
+录指向三个 NLBs，并将其用作 Amazon CloudFront 分配的源。通过使用指向 CloudFront DNS 的 CNAME 提供对应用程序的访
+问。
+D. Configure three Application Load Balancers (ALBs) in the three AWS Regions to address the on-premises endpoints. In Route
+53, create a latency-based record that points to the three ALBs, and use it as an origin for an Amazon CloudFront distribution.
+Provide access to the application by using a CNAME that points to the CloudFront DNS.
+在三个 AWS 区域中配置三个 Application Load Balancers (ALBs) 来处理本地端点。在 Route 53 中创建一个基于延迟的记录，该
+记录指向三个 ALBs，并将其用作 Amazon CloudFront 分配的源。通过使用指向 CloudFront DNS 的 CNAME 提供对应用程序的
+访问。
+题目分析与解答
+1. 考察的知识点
+Amazon Route 53的延迟路由功能
+AWS Global Accelerator的使用场景
+Network Load Balancer (NLB)与Application Load Balancer (ALB)的区别
+如何优化跨区域的性能和可用性
+2. 选项分析
+A. Configure three Network Load Balancers (NLBs) in the three AWS Regions to address the on-premises endpoints.
+Create an accelerator by using AWS Global Accelerator, and register the NLBs as its endpoints. Provide access to the
+application by using a CNAME that points to the accelerator DNS.
+分析：
+使用NLB可以处理UDP流量，符合题目要求。
+AWS Global Accelerator可以优化跨区域的性能和可用性，并支持UDP协议。
+通过CNAME指向加速器DNS是正确的配置方式。
+此选项完全符合题目要求。
+B. Configure three Application Load Balancers (ALBs) in the three AWS Regions to address the on-premises endpoints.
+Create an accelerator by using AWS Global Accelerator, and register the ALBs as its endpoints. Provide access to the
+application by using a CNAME that points to the accelerator DNS.
+分析：
+ALB不支持UDP流量，仅支持HTTP/HTTPS协议，因此不符合题目要求。
+虽然Global Accelerator可以优化性能，但ALB的协议限制使此选项错误。
+C. Configure three Network Load Balancers (NLBs) in the three AWS Regions to address the on-premises endpoints. In
+Route 53, create a latency-based record that points to the three NLBs, and use it as an origin for an Amazon CloudFront
+distribution. Provide access to the application by using a CNAME that points to the CloudFront DNS.
+分析：
+虽然NLB支持UDP流量，但CloudFront仅支持HTTP/HTTPS协议，不支持UDP流量。
+Route 53的延迟路由可以优化性能，但结合CloudFront的使用不符合题目要求。
+此选项错误。
+D. Configure three Application Load Balancers (ALBs) in the three AWS Regions to address the on-premises endpoints. In
+Route 53, create a latency-based record that points to the three ALBs, and use it as an origin for an Amazon CloudFront
+distribution. Provide access to the application by using a CNAME that points to the CloudFront DNS.
+分析：
+ALB不支持UDP流量，仅支持HTTP/HTTPS协议，因此不符合题目要求。
+CloudFront也不支持UDP流量，因此此选项错误。
+3. 我选的答案
+A
+4. 官方答案
+Correct Answer: A
+正确答案：A
+Community vote distribution
+社区投票分布
+A (98%)
+2%
+A
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：选项A完全符合题目要求，使用NLB处理UDP流量，并通过AWS Global Accelerator优化性能和可用性。

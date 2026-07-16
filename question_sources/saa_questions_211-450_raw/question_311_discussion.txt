@@ -1,0 +1,93 @@
+A company is using AWS to design a web application that will process insurance quotes. Users will request quotes from the
+application. Quotes must be separated by quote type, must be responded to within 24 hours, and must not get lost. The solution
+must maximize operational efficiency and must minimize maintenance.
+Which solution meets these requirements?
+A. Create multiple Amazon Kinesis data streams based on the quote type. Configure the web application to send messages to
+the proper data stream. Configure each backend group of application servers to use the Kinesis Client Library (KCL) to pool
+messages from its own data stream.
+B. Create an AWS Lambda function and an Amazon Simple Notification Service (Amazon SNS) topic for each quote type.
+Subscribe the Lambda function to its associated SNS topic. Configure the application to publish requests for quotes to the
+appropriate SNS topic.
+C. Create a single Amazon Simple Notification Service (Amazon SNS) topic. Subscribe Amazon Simple Queue Service (Amazon
+SQS) queues to the SNS topic. Configure SNS message filtering to publish messages to the proper SQS queue based on the
+quote type. Configure each backend application server to use its own SQS queue. Most Voted
+D. Create multiple Amazon Kinesis Data Firehose delivery streams based on the quote type to deliver data streams to an
+Amazon OpenSearch Service cluster. Configure the application to send messages to the proper delivery stream. Configure
+each backend group of application servers to search for the messages from OpenSearch Service and process them accordingly.
+Comments
+LuckyAro Highly Voted 3 years, 3 months ago
+Selected Answer: C
+Quote types need to be separated: SNS message filtering can be used to publish messages to the appropriate SQS queue based on the quote type,
+ensuring that quotes are separated by type.
+Quotes must be responded to within 24 hours and must not get lost: SQS provides reliable and scalable queuing for messages, ensuring that quotes
+will not get lost and can be processed in a timely manner. Additionally, each backend application server can use its own SQS queue, ensuring that
+quotes are processed efficiently without any delay.
+Operational efficiency and minimizing maintenance: Using a single SNS topic and multiple SQS queues is a scalable and cost-effective approach,
+which can help to maximize operational efficiency and minimize maintenance. Additionally, SNS and SQS are fully managed services, which means
+that the company will not need to worry about maintenance tasks such as software updates, hardware upgrades, or scaling the infrastructure.
+upvoted 19 times
+VIad Highly Voted 3 years, 3 months ago
+C is the best option
+upvoted 9 times
+akshay243007 Most Recent 1 year, 10 months ago
+Selected Answer: C
+SQS + SNS = fanout
+upvoted 3 times
+Uzbekistan 2 years, 3 months ago
+Option C would be the most suitable solution to meet the requirements while maximizing operational efficiency and minimizing maintenance.
+Explanation:
+Amazon SNS (Simple Notification Service) allows for the creation of a single topic to which multiple subscribers can be attached. In this scenario,
+each quote type can be considered a subscriber. Amazon SQS (Simple Queue Service) queues can be subscribed to the SNS topic, and SNS message
+Correct Answer: C
+Community vote distribution
+C (100%)
+filtering can be used to direct messages to the appropriate SQS queue based on the quote type. This setup ensures that quotes are separated by
+quote type and that they are not lost. Each backend application server can then poll its own SQS queue to retrieve and process messages. This
+architecture is efficient, scalable, and requires minimal maintenance, as it leverages managed AWS services without the need for complex custom
+code or infrastructure setup.
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: C
+I originally went for D due to searching requirements but Open Search is for analytics and logs and nothing to do with data coming from streams as
+in this question.
+upvoted 2 times
+Ruffyit 2 years, 7 months ago
+Quote types need to be separated: SNS message filtering can be used to publish messages to the appropriate SQS queue based on the quote type,
+ensuring that quotes are separated by type.
+Quotes must be responded to within 24 hours and must not get lost: SQS provides reliable and scalable queuing for messages, ensuring that quotes
+will not get lost and can be processed in a timely manner. Additionally, each backend application server can use its own SQS queue, ensuring that
+quotes are processed efficiently without any delay.
+Operational efficiency and minimizing maintenance: Using a single SNS topic and multiple SQS queues is a scalable and cost-effective approach,
+which can help to maximize operational efficiency and minimize maintenance. Additionally, SNS and SQS are fully managed services, which means
+that the company will not need to worry about maintenance tasks such as software updates, hardware upgrades, or scaling the
+upvoted 3 times
+tekjm 2 years, 8 months ago
+Keyword is "..and must not get lost" = SQS
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: C
+Create a single SNS topic
+Subscribe separate SQS queues per quote type
+Use SNS message filtering to send messages to proper queue
+Backend servers poll their respective SQS queue
+The key points:
+Quote requests must be processed within 24 hrs without loss
+Need to maximize efficiency and minimize maintenance
+Requests separated by quote type
+upvoted 2 times
+lexotan 3 years, 1 month ago
+Selected Answer: C
+This wrong answers from examtopic are getting me so frustrated. Which one is the correct answer then?
+upvoted 6 times
+Steve_4542636 3 years, 3 months ago
+Selected Answer: C
+This is the SNS fan-out technique where you will have one SNS service to many SQS services
+https://docs.aws.amazon.com/sns/latest/dg/sns-sqs-as-subscriber.html
+upvoted 7 times
+UnluckyDucky 3 years, 2 months ago
+SNS Fan-out fans message to all subscribers, this uses SNS filtering to publish the message only to the right SQS queue (not all of them).
+upvoted 3 times
+Yechi 3 years, 3 months ago
+Selected Answer: C
+https://aws.amazon.com/getting-started/hands-on/filter-messages-published-to-topics/
+upvoted 8 times

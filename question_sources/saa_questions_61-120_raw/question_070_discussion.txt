@@ -1,0 +1,146 @@
+A company's HTTP application is behind a Network Load Balancer (NLB). The NLB's target group is configured to use an Amazon
+EC2 Auto Scaling group with multiple EC2 instances that run the web service.
+The company notices that the NLB is not detecting HTTP errors for the application. These errors require a manual restart of the
+EC2 instances that run the web service. The company needs to improve the application's availability without writing custom scripts
+or code.
+What should a solutions architect do to meet these requirements?
+A. Enable HTTP health checks on the NLB, supplying the URL of the company's application.
+B. Add a cron job to the EC2 instances to check the local application's logs once each minute. If HTTP errors are detected. the
+application will restart.
+C. Replace the NLB with an Application Load Balancer. Enable HTTP health checks by supplying the URL of the company's
+application. Configure an Auto Scaling action to replace unhealthy instances. Most Voted
+D. Create an Amazon Cloud Watch alarm that monitors the UnhealthyHostCount metric for the NLB. Configure an Auto Scaling
+action to replace unhealthy instances when the alarm is in the ALARM state.
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: C
+I would choose A, as NLB supports HTTP and HTTPS Health Checks, BUT you can't put any URL (as proposed), only the node IP addresses.
+So, the solution is C.
+upvoted 32 times
+Ack3rman 3 years, 6 months ago
+can you elaborate more pls
+upvoted 3 times
+BlueVolcano1 3 years, 4 months ago
+NLBs support HTTP, HTTPS and TCP health checks:
+https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html (check HealthCheckProtocol)
+But NLBs only accept either selecting EC2 instances or IP addresses directly as targets. You can't provide a URL to your endpoints, only a health
+check path (if you're using HTTP or HTTPS health checks).
+upvoted 11 times
+km142646 3 years, 1 month ago
+What's the difference between endpoint URL and health check path?
+upvoted 2 times
+majubmo 3 years ago
+A URL includes the hostname. The health check path is only the path portion. For example,
+URL = https://i-0123456789abcdef.us-west-2.compute.internal/index.html
+health check path= /index.html
+upvoted 15 times
+jerryl 1 year, 2 months ago
+I think even http health check is feasible, option A does not provide any suggestion when health check fails
+upvoted 1 times
+ArielSchivo Highly Voted 3 years, 7 months ago
+Correct Answer: C
+Community vote distribution
+C (90%)
+10%
+Selected Answer: C
+Option C. NLB works at Layer 4 so it does not support HTTP/HTTPS. The replacement for the ALB is the best choice.
+upvoted 20 times
+BlueVolcano1 3 years, 4 months ago
+That's incorrect. NLB does support HTTP and HTTPS (and TCP) health checks.
+https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html
+There just isn't an answer option that reflects that. My guess is that the question and/or answer options are outdated.
+upvoted 8 times
+Agatsume 1 year ago
+NLB doesnt support HTTP health checks..only TCP
+upvoted 1 times
+Clouddon Most Recent 11 months, 1 week ago
+Selected Answer: C
+Switching to an ALB with HTTP health checks enables application-level monitoring and automated recovery, making it the best solution with minimal
+operational overhead.
+upvoted 2 times
+AwsAbhiKumar 1 year, 4 months ago
+Selected Answer: C
+NLB only supports TCP-level health checks, it cannot detect HTTP errors
+upvoted 2 times
+satyaammm 1 year, 5 months ago
+Selected Answer: C
+ALB is more suitable for HTTP requests.
+upvoted 3 times
+PaulGa 1 year, 9 months ago
+Selected Answer: C
+Ans C - Yup, somethings happening at the Application level so replace NLB with ALB
+upvoted 4 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: C
+NLB is for network errors and low level traffic stuff
+ALB is for application so C is the only realistic option here
+upvoted 9 times
+kel2023 2 years, 5 months ago
+Selected Answer: A
+NLB does support HTTP/HTTPS Health Checks.
+I saw other people comments, it seems like the question were rephrased. The comments were highlighting "application URL", but I don't see words
+on the question.
+upvoted 3 times
+ignajtpolandstrong 2 years, 5 months ago
+Selected Answer: C
+You can use HTTP/HTTPS ONLY when Target is ALB.
+By default it is TCP.
+https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html#health-check-settings
+HealthCheckProtocol
+The protocol the load balancer uses when performing health checks on targets. The possible protocols are HTTP, HTTPS, and TCP. The default is the
+TCP protocol. If the target type is ALB, the supported health check protocols are HTTP and HTTPS.
+upvoted 4 times
+tom_cruise 2 years, 8 months ago
+Selected Answer: C
+ALB allows you to specify the path which helps to check the error. NLB cannot do that.
+upvoted 4 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: C
+The key points are:
+Use an Application Load Balancer (ALB) instead of a Network Load Balancer (NLB) since ALBs support HTTP health checks.
+Configure HTTP health checks on the ALB to monitor the application health.
+Use an Auto Scaling action triggered by the ALB health checks to automatically replace unhealthy instances.
+upvoted 4 times
+miki111 2 years, 10 months ago
+Option C is the right answer.
+upvoted 1 times
+cookieMr 2 years, 11 months ago
+Selected Answer: C
+A. NLB, but NLB's health checks are designed for TCP/UDP protocols and lack the advanced features specific to HTTP applications provided by ALB.
+B. This approach involves custom scripting and manual intervention, which contradicts the requirement of not writing custom scripts or code.
+D. Since the NLB does not detect HTTP errors, relying solely on the UnhealthyHostCount metric may not accurately capture the health of the
+application instances.
+Therefore, C is the recommended choice for improving the application's availability without custom scripting or code. By replacing the NLB with an
+ALB, enabling HTTP health checks, and configuring Auto Scaling to replace unhealthy instances, the company can ensure that only healthy instances
+are serving traffic, enhancing the application's availability automatically.
+upvoted 10 times
+Gizmo2022 1 year, 6 months ago
+Thank you for explaining this, I'm currently studying for the exam and your explanation was helpful.
+upvoted 1 times
+Abrar2022 3 years ago
+Replace the NLB (layer 4 udp and tcp) with an Application Load Balancer - ALB (layer 7) supports http and https requests.
+upvoted 1 times
+datz 3 years, 2 months ago
+Selected Answer: C
+must be C
+Application availability: NLB cannot assure the availability of the application. This is because it bases its decisions solely on network and TCP-layer
+variables and has no awareness of the application at all. Generally, NLB determines availability based on the ability of a server to respond to ICMP
+ping or to correctly complete the three-way TCP handshake. ALB goes much deeper and is capable of determining availability based on not only a
+successful HTTP GET of a particular page but also the verification that the content is as was expected based on the input parameters.
+upvoted 1 times
+datz 3 years, 2 months ago
+Also A doesn't offer what bellow in C offers...
+Configure an Auto Scaling action to replace unhealthy instances
+upvoted 1 times
+Tony1980 3 years, 4 months ago
+Answer is C
+A solution architect can use Amazon EC2 Auto Scaling health checks to automatically detect and replace unhealthy instances in the EC2 Auto Scaling
+group. The health checks can be configured to check the HTTP errors returned by the application and terminate the unhealthy instances. This will
+ensure that the application's availability is improved, without requiring custom scripts or code.
+upvoted 1 times
+aakashkumar1999 3 years, 4 months ago
+I will go with A as Network load balancer supports HTTP and HTTPS health checks, maybe the answer is outdated.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+But you'd need to check the health of the individual nodes, NOT "the URL of the company's application" which points to the Load Balancer.
+upvoted 2 times

@@ -1,0 +1,49 @@
+A solutions architect must design a solution that uses Amazon CloudFront with an Amazon S3 origin to store a static website. The
+company’s security policy requires that all website traffic be inspected by AWS WAF.
+How should the solutions architect comply with these requirements?
+解决方案架构师必须设计一个使用 Amazon CloudFront 和 Amazon S3 作为源来存储静态网站的解决方案。公司的安全策略要求所
+有网站流量都必须经过 AWS WAF 检查。
+解决方案架构师应该如何满足这些要求？
+A. Configure an S3 bucket policy to accept requests coming from the AWS WAF Amazon Resource Name (ARN) only.
+配置一个 S3 bucket policy，仅接受来自 AWS WAF Amazon Resource Name (ARN) 的请求。
+B. Configure Amazon CloudFront to forward all incoming requests to AWS WAF before requesting content from the S3 origin.
+配置 Amazon CloudFront，将所有传入请求转发到 AWS WAF，然后再向 S3 源请求内容。
+C. Configure a security group that allows Amazon CloudFront IP addresses to access Amazon S3 only. Associate AWS WAF to
+CloudFront.
+配置一个安全组，仅允许 Amazon CloudFront IP 地址访问 Amazon S3。将 AWS WAF 关联到 CloudFront。
+D. Configure Amazon CloudFront and Amazon S3 to use an origin access identity (OAI) to restrict access to the S3 bucket.
+Enable AWS WAF on the distribution. Most Voted
+配置 Amazon CloudFront 和 Amazon S3 使用一个 origin access identity (OAI) 来限制对 S3 bucket 的访问。在分发上启用 AWS
+WAF。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (68%)
+B (32%)
+Amazon CloudFront的功能与配置
+Amazon S3的访问控制（如Origin Access Identity, OAI）
+AWS WAF的集成与使用
+安全性最佳实践（如限制直接访问S3）
+2. 选项分析
+A. 配置一个 S3 bucket policy，仅接受来自 AWS WAF Amazon Resource Name (ARN) 的请求。
+错误：AWS WAF无法直接与S3交互。AWS WAF是一个Web应用防火墙，通常与CloudFront或API Gateway集成，而不是直接与S3通
+信。
+B. 配置 Amazon CloudFront，将所有传入请求转发到 AWS WAF，然后再向 S3 源请求内容。
+错误：CloudFront并不会“转发”请求到AWS WAF。AWS WAF是直接与CloudFront集成的，所有传入请求会自动通过WAF进行检查。
+C. 配置一个安全组，仅允许 Amazon CloudFront IP 地址访问 Amazon S3。将 AWS WAF 关联到 CloudFront。
+部分正确：限制CloudFront IP地址访问S3是一个安全性最佳实践，但安全组无法直接应用于S3。S3使用的是基于资源的访问控制
+（如Bucket Policy或OAI）。
+错误：虽然AWS WAF可以关联到CloudFront，但此选项未提到如何限制直接访问S3。
+D. 配置 Amazon CloudFront 和 Amazon S3 使用一个 origin access identity (OAI) 来限制对 S3 bucket 的访问。在分发上启用
+AWS WAF。
+正确：OAI是用于限制直接访问S3的最佳实践。通过OAI，只有CloudFront可以访问S3内容。
+正确：AWS WAF可以直接与CloudFront集成，用于检查所有传入请求。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案比较
+我的答案与官方答案一致。

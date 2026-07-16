@@ -1,0 +1,58 @@
+A company stores text files in Amazon S3. The text files include customer chat messages, date and time information, and customer
+personally identifiable information (PII).
+The company needs a solution to provide samples of the conversations to an external service provider for quality control. The
+external service provider needs to randomly pick sample conversations up to the most recent conversation. The company must
+not share the customer PII with the external service provider. The solution must scale when the number of customer conversations
+increases.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create an Object Lambda Access Point. Create an AWS Lambda function that redacts the PII when the function reads the file.
+Instruct the external service provider to access the Object Lambda Access Point. Most Voted
+B. Create a batch process on an Amazon EC2 instance that regularly reads all new files, redacts the PII from the files, and writes
+the redacted files to a different S3 bucket. Instruct the external service provider to access the bucket that does not contain the
+PII.
+B. Create a web application on an Amazon EC2 instance that presents a list of the files, redacts the PII from the files, and allows
+the external service provider to download new versions of the files that have the PII redacted.
+D. Create an Amazon DynamoDB table. Create an AWS Lambda function that reads only the data in the files that does not
+contain PII. Configure the Lambda function to store the non-PII data in the DynamoDB table when a new file is written to
+Amazon S3. Grant the external service provider access to the DynamoDB table.
+Comments
+osmk Highly Voted 2 years, 3 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/tutorial-s3-object-lambda-redact-pii.html
+upvoted 13 times
+Sergiuss95 2 years, 1 month ago
+thanks
+upvoted 2 times
+Andy_09 Highly Voted 2 years, 4 months ago
+Option A
+upvoted 5 times
+LeonSauveterre Most Recent 1 year, 5 months ago
+Selected Answer: A
+If you want to achieve the goal stipulated in the question, all 4 options work, but only option A minimizes operational overhead and ensures
+scalability while redacting PII dynamically.
+upvoted 1 times
+trinh_le 1 year, 11 months ago
+Selected Answer: A
+Use AWS Lambda functions to change the Object before it is retrieved by the caller application. Only one S3 bucket is needed, on top of which we
+create S3 Access Point And S3 Object Lambda Access Points
+Use case:
+1. Redact PII for analytics or non-production environment
+Correct Answer: A
+Community vote distribution
+A (94%)
+6%
+2. Convert across data formats ex: XML to Json
+3. Resizing and watermaking images on fly using caller-specific details ex: user who requested the object
+upvoted 3 times
+zinabu 2 years, 1 month ago
+Selected Answer: D
+Creating a RAID 0 array allows you to achieve a higher level of performance for a file system than you can provision on a single Amazon EBS volume.
+Use RAID 0 when I/O performance is of the utmost importance. With RAID 0, I/O is distributed across the volumes in a stripe.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html
+upvoted 1 times
+VIad 2 years, 4 months ago
+A is the correct choice.
+upvoted 3 times
+Umuntu 2 years, 4 months ago
+A is the best choice
+upvoted 3 times

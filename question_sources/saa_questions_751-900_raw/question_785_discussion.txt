@@ -1,0 +1,103 @@
+A solutions architect is designing a payment processing application that runs on AWS Lambda in private subnets across multiple
+Availability Zones. The application uses multiple Lambda functions and processes millions of transactions each day.
+The architecture must ensure that the application does not process duplicate payments.
+Which solution will meet these requirements?
+A. Use Lambda to retrieve all due payments. Publish the due payments to an Amazon S3 bucket. Configure the S3 bucket with
+an event notification to invoke another Lambda function to process the due payments.
+B. Use Lambda to retrieve all due payments. Publish the due payments to an Amazon Simple Queue Service (Amazon SQS)
+queue. Configure another Lambda function to poll the SQS queue and to process the due payments.
+C. Use Lambda to retrieve all due payments. Publish the due payments to an Amazon Simple Queue Service (Amazon SQS)
+FIFO queue. Configure another Lambda function to poll the FIFO queue and to process the due payments. Most Voted
+D. Use Lambda to retrieve all due payments. Store the due payments in an Amazon DynamoDB table. Configure streams on
+the DynamoDB table to invoke another Lambda function to process the due payments.
+Comments
+hajra313 Highly Voted 2 years, 4 months ago
+Standard queues provide at-least-once delivery, which means that each message is delivered at least once.
+FIFO queues provide exactly-once processing , which means that each message is delivered once and remains available until a consumer processes it
+and deletes it. Duplicates are not introduced into the queue. OPTION C
+upvoted 18 times
+Scheldon Most Recent 1 year, 11 months ago
+Selected Answer: C
+AnswerC
+SQS FIFO was created for such tasks
+Unlike standard queues, FIFO queues don't introduce duplicate messages. FIFO queues help you avoid sending duplicates to a queue. If you retry the
+SendMessage action within the 5-minute deduplication interval, Amazon SQS doesn't introduce any duplicates into the queue.
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html
+upvoted 3 times
+escalibran 2 years, 3 months ago
+Selected Answer: C
+C over D, because
+https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html Processing dynamo streams with lambda can cause duplication.
+SQS FIFO can be configured for High Throughput to exceed the 3000/s (batched) limit
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/high-throughput-fifo.html
+I previously worked with payments and would argue that either option doesn't fully solve duplications. Events might be sent multiple times from
+source, you definitely want to perform de-duplication and have some sort of idempotent processing for them, instead of just blindly processing each
+thing you're given.
+upvoted 3 times
+asdfcdsxdfc 2 years, 3 months ago
+Selected Answer: C
+Correct Answer: C
+Community vote distribution
+C (82%)
+D (18%)
+c is correct
+upvoted 2 times
+shahreh1 2 years, 3 months ago
+Option C:
+FIFO queues
+Exactly-Once Processing – A message is delivered once and remains available until a consumer processes and deletes it. Duplicates aren't introduced
+into the queue.
+First-In-First-Out Delivery – The order in which messages are sent and received is strictly preserved.
+upvoted 2 times
+FZA24 2 years, 3 months ago
+Selected Answer: C
+Option C Fifo
+upvoted 3 times
+Mikado211 2 years, 3 months ago
+SQS can have duplicate messages in case of problems with the timeout window.
+upvoted 2 times
+haci 2 years, 3 months ago
+Selected Answer: C
+"The application does not process duplicate payments" is the key point, which leads us directly to SQS FIFO
+upvoted 3 times
+Cali182 2 years, 4 months ago
+Selected Answer: D
+Option D
+DynamoDB Streams helps ensure the following:
+Each stream record appears exactly once in the stream.
+For each item that is modified in a DynamoDB table, the stream records appear in the same sequence as the actual modifications to the item.
+DynamoDB Streams writes stream records in near-real time so that you can build applications that consume these streams and take action based on
+the contents.
+upvoted 3 times
+jaswantn 2 years, 3 months ago
+Option D...If you need to handle millions of transactions each day, you might need to consider other approach instead of SQS FIFO. And amongst
+the given options, we have DynmamoDB that maintains order in the streams.
+upvoted 1 times
+NayeraB 2 years, 3 months ago
+I'm not sure if the answer is DynamoDB as well, but answering your question, SQS Fifo can handle 300 messages/second without batching, 3,000
+messages/second with batching. Assuming we're using the 300/sec option, with 86,400 seconds in a day, that gives you 25,920,000 messages, so
+in short, yes SQS can handle millions of requests each day.
+Not to mention DynamoDB doesn't provide the exactly-once processing the SQS offer and clearly requested in the question. That's just my train o
+thought, I'm happy to be corrected.
+upvoted 3 times
+jaswantn 2 years, 3 months ago
+Dynamodb streams with partition key can be used to implement exactly once processing. There are many options with dynamodb to check for
+already processed item, and can be filtered out so that they are processed only once.
+upvoted 1 times
+jaswantn 2 years, 3 months ago
+This calculation limits the number of transactions to 25 million a day. What if there are transactions exceeding this limit? As question say ....
+millions of transactions a day; that could be 70,80 or 90 millions also. In that case how SQS FIFO would perform?
+Happy to be corrected with more convincing facts
+upvoted 1 times
+c3c7e62 1 year, 1 month ago
+It seems that DynamoDB Streams deduplication is not guaranteed -
+"A Lambda consumer for a DynamoDB stream doesn't guarantee exactly once delivery and may lead to occasional duplicates. Make sure your
+Lambda function code is idempotent to prevent unexpected issues from arising because of duplicate processing."
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.BestPracticesWithDynamoDB.html
+upvoted 1 times
+kempes 2 years, 4 months ago
+Option c
+upvoted 2 times
+Andy_09 2 years, 4 months ago
+Option B
+upvoted 1 times

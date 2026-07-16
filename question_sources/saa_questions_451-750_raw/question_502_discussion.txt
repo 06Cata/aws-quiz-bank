@@ -1,0 +1,142 @@
+A company runs a website that uses a content management system (CMS) on Amazon EC2. The CMS runs on a single EC2 instance
+and uses an Amazon Aurora MySQL Multi-AZ DB instance for the data tier. Website images are stored on an Amazon Elastic Block
+Store (Amazon EBS) volume that is mounted inside the EC2 instance.
+Which combination of actions should a solutions architect take to improve the performance and resilience of the website? (Choose
+two.)
+A. Move the website images into an Amazon S3 bucket that is mounted on every EC2 instance
+B. Share the website images by using an NFS share from the primary EC2 instance. Mount this share on the other EC2
+instances.
+C. Move the website images onto an Amazon Elastic File System (Amazon EFS) file system that is mounted on every EC2
+instance. Most Voted
+D. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind an
+Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum of two
+instances. Configure an accelerator in AWS Global Accelerator for the website
+E. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind an
+Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum of two
+instances. Configure an Amazon CloudFront distribution for the website. Most Voted
+Comments
+cloudenthusiast Highly Voted 3 years ago
+Selected Answer: CE
+By combining the use of Amazon EFS for shared file storage and Amazon CloudFront for content delivery, you can achieve improved performance
+and resilience for the website.
+upvoted 14 times
+Abrar2022 Highly Voted 3 years ago
+You don't mount S3
+upvoted 7 times
+wizcloudifa Most Recent 2 years, 1 month ago
+Selected Answer: CE
+First of all you should understand, a website using CMS is a dynamic one not static, so A is out, B is more complicated than C, so C, and between
+global accelerator and cloudfront, Cloudfront suits better as there is no legacy protocols data(UDP, etc) that needs to be accessed, hence E
+upvoted 5 times
+foha2012 2 years, 5 months ago
+I choose AE. Although I don't know if s3 can be mounted on ec2 ?? Maybe wrong wording. Efs is a better choice but its not a natural selection for
+strong images.
+upvoted 2 times
+allanm 10 months ago
+Read the question - it asks for a combination of 2 solutions. S3 is out because the architecture is AMI/EC2 driven and doesn't state that it needs S3
+to drive the storage layer, rather EFS so A is out
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Correct Answer: CE
+Community vote distribution
+CE (75%)
+AE (25%)
+I made the same mistake but mounting S3 on EC2 is a painful operation so EFS makes more sense (C).
+Option E takes care of caching static images on CDN so that problem is solved along with resilience etc.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: CE
+Not A because you can't mount an S3 bucket on an EC2 instance. You could use a file gateway and share an S3 bucket via NFS and mount that on
+EC2, but that is not mentioned here and would also not make sense.
+upvoted 4 times
+seldiora 1 year, 8 months ago
+it is possible to mount s3 to EC2, just quite difficult: https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-
+using-a-private-connection-to-s3-file-gateway/
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: CE
+You can mount EFS file systems to multiple Amazon EC2 instances remotely and securely without having to log in to the instances by using the AWS
+Systems Manager Run Command.
+upvoted 3 times
+wsdasdasdqwdaw 2 years, 7 months ago
+A is out of the game for sure. Mount S3 to EC2 ... madness. The question is CE or DE, but it is CE because of AWS Global Accelerator is match with
+NLB, not ALB as it is staded in option D, thus CE as many of all here noted.
+upvoted 5 times
+thanhnv142 2 years, 7 months ago
+A and E is correct. We have a cloud fromt + S3 combo
+upvoted 1 times
+wsdasdasdqwdaw 2 years, 7 months ago
+S3 can't be mounted on EC2 it is not A for sure!
+upvoted 4 times
+NickGordon 2 years, 7 months ago
+https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file-gateway/
+upvoted 3 times
+pentium75 2 years, 5 months ago
+"Using a ... S3 file gateway"
+upvoted 2 times
+thanhnv142 2 years, 7 months ago
+A and E.
+C is not correct because You dont mount a new EFS onto existing EC2. If you do that, you have to migrate all exising data in EBS into EFS. Then
+remove all the EBS. Should never do this.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+I can't follow. EFS provides NFS mount points, how can you not mount those onto existing EC2?
+upvoted 2 times
+franbarberan 2 years, 8 months ago
+Selected Answer: CE
+https://bluexp.netapp.com/blog/ebs-efs-amazons3-best-cloud-storage-system
+upvoted 2 times
+Smart 2 years, 9 months ago
+Selected Answer: CE
+Not A - S3 cannot be mounted (up until few months ago). Exam does not test for the updates in last 6 months.
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: AE
+You have summarized the reasons why options A and E are the best choices very well.
+Migrating static website assets like images to Amazon S3 enables high scalability, durability and shared access across instances. This improves
+performance.
+Using Auto Scaling with load balancing provides elasticity and resilience. Adding a CloudFront distribution further boosts performance through
+caching and content delivery.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+You can't directly mount an S3 bucket on EC2.
+upvoted 2 times
+Ale1973 2 years, 10 months ago
+Selected Answer: AE
+Both options AE and CE would work, but I choose AE, because, on my opinion, S3 is best suited for performance and resilience.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+You can't directly mount an S3 bucket on EC2
+upvoted 2 times
+MicketyMouse 2 years, 10 months ago
+Selected Answer: CE
+EFS, unlike EBS, can be mounted across multiple EC2 instances and hence C over A.
+upvoted 2 times
+TariqKipkemei 2 years, 11 months ago
+Selected Answer: AE
+Technically both options AE and CE would work. But S3 is best suited for unstructured data, and the key benefit of mounting S3 on EC2 is that it
+provides a cost-effective alternative of using object storage for applications dealing with large files, as compared to expensive file or block storage.
+At the same time it provides more performant, scalable and highly available storage for these applications.
+Even though there is no mention of 'cost efficient' in this question, in the real world cost is the no.1 factor.
+In the exam I believe both options would be a pass.
+https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file-gateway/
+upvoted 4 times
+pentium75 2 years, 5 months ago
+You can't directly mount an S3 bucket on EC2, only through file gateway
+upvoted 1 times
+AshutoshSingh1923 2 years, 11 months ago
+Selected Answer: CE
+Option C provides moving the website images onto an Amazon EFS file system that is mounted on every EC2 instance. Amazon EFS provides a
+scalable and fully managed file storage solution that can be accessed concurrently from multiple EC2 instances. This ensures that the website images
+can be accessed efficiently and consistently by all instances, improving performance
+In Option E The Auto Scaling group maintains a minimum of two instances, ensuring resilience by automatically replacing any unhealthy instances.
+Additionally, configuring an Amazon CloudFront distribution for the website further improves performance by caching content at edge locations
+closer to the end-users, reducing latency and improving content delivery.
+Hence combining these actions, the website's performance is improved through efficient image storage and content delivery
+upvoted 3 times
+Vadbro7 2 years, 11 months ago
+Which answe is correct?the most voted ones or the Suggested answers?
+upvoted 1 times
+9be0170 1 year, 11 months ago
+the most voted always
+upvoted 2 times

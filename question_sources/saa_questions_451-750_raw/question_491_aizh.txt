@@ -1,0 +1,68 @@
+Question #491
+A solutions architect is designing an asynchronous application to process credit card data validation requests for a bank. The
+application must be secure and be able to process each request at least once.
+Which solution will meet these requirements MOST cost-effectively?
+解决方案架构师正在设计一个异步应用程序，用于处理银行的信用卡数据验证请求。该应用程序必须是安全的，并且能够至少处理
+每个请求一次。
+哪种解决方案将最具成本效益地满足这些要求？
+A. Use AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the event
+source. Use AWS Key Management Service (SSE-KMS) for encryption. Add the kms:Decrypt permission for the Lambda
+execution role. Most Voted
+使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) 标准队列设置为事件源。使用 AWS Key
+Management Service (SSE-KMS) 进行加密。为 Lambda 执行角色添加 kms:Decrypt 权限。
+B. Use AWS Lambda event source mapping. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues as the event
+source. Use SQS managed encryption keys (SSE-SQS) for encryption. Add the encryption key invocation permission for the
+Lambda function.
+使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) FIFO 队列设置为事件源。使用 SQS 托管加密
+密钥 (SSE-SQS) 进行加密。为 Lambda 函数添加加密密钥调用权限。
+C. Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) FIFO queues as the event
+source. Use AWS KMS keys (SSE-KMS). Add the kms:Decrypt permission for the Lambda execution role.
+使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) FIFO 队列设置为事件源。使用 AWS KMS 密
+钥 (SSE-KMS)。为 Lambda 执行角色添加 kms:Decrypt 权限。
+D. Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the
+event source. Use AWS KMS keys (SSE-KMS) for encryption. Add the encryption key invocation permission for the Lambda
+function.
+使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) 标准队列设置为事件源。使用 AWS KMS 密钥
+(SSE-KMS) 进行加密。为 Lambda 函数添加加密密钥调用权限。
+Correct Answer: A
+正确答案：A
+题目分析与解答
+1. 考察的知识点
+Amazon SQS队列类型（标准队列 vs FIFO队列）的特性。
+AWS Lambda事件源映射的工作原理。
+加密机制（SSE-KMS vs SSE-SQS）的使用和权限配置。
+如何设计异步应用以确保消息至少处理一次。
+2. 选项分析
+A. Use AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the
+event source. Use AWS Key Management Service (SSE-KMS) for encryption. Add the kms:Decrypt permission for the
+Lambda execution role.
+正确：SQS标准队列支持“至少一次”消息处理，符合题目要求。
+正确：使用SSE-KMS加密可以确保数据安全，且需要为Lambda执行角色添加kms:Decrypt权限。
+成本较低：标准队列比FIFO队列成本更低，适合成本敏感的场景。
+B. Use AWS Lambda event source mapping. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues as the event
+source. Use SQS managed encryption keys (SSE-SQS) for encryption. Add the encryption key invocation permission for
+the Lambda function.
+错误：FIFO队列支持“恰好一次”消息处理，但题目要求“至少一次”，因此不符合要求。
+正确：SSE-SQS是SQS托管的加密机制，适合加密需求。
+成本较高：FIFO队列的成本高于标准队列，不是最具成本效益的选择。
+C. Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) FIFO queues as the
+event source. Use AWS KMS keys (SSE-KMS). Add the kms:Decrypt permission for the Lambda execution role.
+错误：FIFO队列支持“恰好一次”消息处理，但题目要求“至少一次”，因此不符合要求。
+正确：使用SSE-KMS加密可以确保数据安全，且需要为Lambda执行角色添加kms:Decrypt权限。
+成本较高：FIFO队列的成本高于标准队列，不是最具成本效益的选择。
+D. Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the
+event source. Use AWS KMS keys (SSE-KMS) for encryption. Add the encryption key invocation permission for the
+Lambda function.
+正确：SQS标准队列支持“至少一次”消息处理，符合题目要求。
+错误：加密权限描述不准确，应该是为Lambda执行角色添加kms:Decrypt权限，而不是“加密密钥调用权限”。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+Community vote distribution
+社区投票分布
+A (77%)
+B (21%)
+2%

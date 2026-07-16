@@ -1,0 +1,101 @@
+A company runs multiple Amazon EC2 Linux instances in a VPC across two Availability Zones. The instances host applications that
+use a hierarchical directory structure. The applications need to read and write rapidly and concurrently to shared storage.
+What should a solutions architect do to meet these requirements?
+A. Create an Amazon S3 bucket. Allow access from all the EC2 instances in the VPC.
+B. Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system from each EC2 instance.
+Most Voted
+C. Create a file system on a Provisioned IOPS SSD (io2) Amazon Elastic Block Store (Amazon EBS) volume. Attach the EBS
+volume to all the EC2 instances.
+D. Create file systems on Amazon Elastic Block Store (Amazon EBS) volumes that are attached to each EC2 instance.
+Synchronize the EBS volumes across the different EC2 instances.
+Comments
+Josantru Highly Voted 2 years, 10 months ago
+Correct B.
+How is Amazon EFS different than Amazon S3?
+Amazon EFS provides shared access to data using a traditional file sharing permissions model and hierarchical directory structure via the NFSv4
+protocol. Applications that access data using a standard file system interface provided through the operating system can use Amazon EFS to take
+advantage of the scalability and reliability of file storage in the cloud without writing any new code or adjusting applications.
+Amazon S3 is an object storage platform that uses a simple API for storing and accessing data. Applications that do not require a file system
+structure and are designed to work with object storage can use Amazon S3 as a massively scalable, durable, low-cost object storage solution.
+upvoted 13 times
+Gape4 Most Recent 1 year, 11 months ago
+Selected Answer: B
+https://aws.amazon.com/efs/when-to-choose-efs/
+upvoted 2 times
+zinabu 2 years, 2 months ago
+hierarchical structure =EFS
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+Not A because S3 does not allow a "hierarchical directory structure"
+Not C because Multi-attach does not work "across two Availability Zones"
+Not D because we need "shared", not synchronized, storage.
+upvoted 4 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+hierarchical directory structure, read and write rapidly and concurrently to shared storage = Amazon Elastic File System
+upvoted 2 times
+zits88 1 year, 10 months ago
+Best and most concise explanation here. All true.
+Correct Answer: B
+Community vote distribution
+B (96%)
+4%
+upvoted 1 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+Amazon EFS simultaneously supports on-premises servers using a traditional file permissions model, file locking, and hierarchical directory structure
+through the NFS v4 protocol.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+The key reasons:
+EFS provides a scalable, high performance NFS file system that can be concurrently accessed from multiple EC2 instances.
+It supports the hierarchical directory structure needed by the applications.
+EFS is elastic, growing and shrinking automatically as needed.
+It can be accessed from instances across AZs, meeting the shared storage requirement.
+S3 object storage (option A) lacks the file system semantics needed by the apps.
+EBS volumes (options C and D) are attached to a single instance and would require replication and syncing to share across instances.
+EFS is purpose-built for this use case of a shared file system across Linux instances and aligns best with the performance, concurrency, and availability
+needs.
+upvoted 4 times
+barracouto 2 years, 10 months ago
+Selected Answer: B
+Going with b
+upvoted 2 times
+Bennyboy789 2 years, 10 months ago
+Selected Answer: B
+C and D involve using Amazon EBS volumes, which are block storage. While they can be attached to EC2 instances, they might not provide the same
+level of shared concurrent access as Amazon EFS. Additionally, synchronizing EBS volumes across different EC2 instances (as in option D) can be
+complex and error-prone.
+Therefore, for a scenario where multiple EC2 instances need to rapidly and concurrently access shared storage with a hierarchical directory structure,
+Amazon EFS is the best solution.
+upvoted 3 times
+ukivanlamlpi 2 years, 10 months ago
+Selected Answer: B
+s3 is flat structure. EBS multi mount only for same available zone
+upvoted 2 times
+Dana12345 2 years, 10 months ago
+Selected Answer: B
+Because Amazon EBS Multi-Attach enables you to attach a single Provisioned IOPS SSD (io1 or io2) volume to multiple instances that are in the same
+Availability Zone. The infra contains 2 AZ's.
+upvoted 2 times
+mrsoa 2 years, 10 months ago
+Selected Answer: B
+B is the correct answer
+https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html
+upvoted 2 times
+mrsoa 2 years, 10 months ago
+B is the correct answer
+https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html
+upvoted 2 times
+RazSteel 2 years, 10 months ago
+Selected Answer: C
+I think that C is the best option coz io2 can share storage and multi attach.
+upvoted 1 times
+PLN6302 2 years, 9 months ago
+hierarchial directory structure is present in EFS
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Multi-attach does not work "across two Availability Zones".
+upvoted 3 times

@@ -1,0 +1,141 @@
+A company has an application that places hundreds of .csv files into an Amazon S3 bucket every hour. The files are 1 GB in size.
+Each time a file is uploaded, the company needs to convert the file to Apache Parquet format and place the output file into an S3
+bucket.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create an AWS Lambda function to download the .csv files, convert the files to Parquet format, and place the output files in
+an S3 bucket. Invoke the Lambda function for each S3 PUT event.
+B. Create an Apache Spark job to read the .csv files, convert the files to Parquet format, and place the output files in an S3
+bucket. Create an AWS Lambda function for each S3 PUT event to invoke the Spark job.
+C. Create an AWS Glue table and an AWS Glue crawler for the S3 bucket where the application places the .csv files. Schedule an
+AWS Lambda function to periodically use Amazon Athena to query the AWS Glue table, convert the query results into Parquet
+format, and place the output files into an S3 bucket.
+D. Create an AWS Glue extract, transform, and load (ETL) job to convert the .csv files to Parquet format and place the output
+files into an S3 bucket. Create an AWS Lambda function for each S3 PUT event to invoke the ETL job. Most Voted
+Comments
+Parsons Highly Voted 3 years, 4 months ago
+Selected Answer: D
+No, D should be correct.
+"LEAST operational overhead" => Should you fully manage service like Glue instead of manually like the answer A.
+upvoted 16 times
+awsgeek75 2 years, 5 months ago
+I also think it's D but remember that D requires writing ETL logic in AWS Glue (nothing in question says how complex it will be). AWS Lambda for
+CSV could be simple also (imagine NodeJS and millions of libraries support or Python's parsing) so both could be operationally on par to each
+other. Logically D makes more sense but in practice, AWS Glue rarely works with out of the box ETL and becomes a maintenance overhead in itself.
+upvoted 1 times
+Guru4Cloud Highly Voted 2 years, 9 months ago
+Selected Answer: D
+This solution meets the requirements with the least operational overhead because AWS Glue is a fully managed ETL service that makes it easy to
+move data between data stores. AWS Glue can read .csv files from an S3 bucket and write the data into Parquet format in another S3 bucket. The
+AWS Lambda function can be triggered by an S3 PUT event when a new .csv file is uploaded, and it can start the AWS Glue ETL job to convert the file
+to Parquet format. This solution does not require managing any servers or clusters, which reduces operational overhead.
+upvoted 6 times
+DanRuggles Most Recent 1 month, 1 week ago
+Selected Answer: D
+How It Works (Typical Architecture)A .csv file is uploaded to an S3 bucket.
+An S3 Event triggers a Lambda function.
+Lambda:Downloads the CSV from S3.
+Converts it to Parquet using libraries like pandas + PyArrow.
+Uploads the Parquet file to another S3 location (or the same bucket with a different prefix).
+(Optional) Updates AWS Glue Data Catalog so the data is queryable via Athena.
+upvoted 1 times
+Correct Answer: D
+Community vote distribution
+D (92%)
+8%
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: D
+AWS Glue can run your extract, transform, and load (ETL) jobs as new data arrives. For example, you can configure AWS Glue to initiate your ETL jobs
+to run as soon as new data becomes available in Amazon Simple Storage Service (S3).
+Clearly you don't need a lambda function to initiate the ETL job.
+https://aws.amazon.com/glue/#:~:text=to%20initiate%20your-,ETL,-jobs%20to%20run
+Option A requires writing code to perform the file conversion.
+In the exam option D would the best answer.
+upvoted 4 times
+cookieMr 2 years, 11 months ago
+D is correct
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+A. introduces significant operational overhead. This approach requires managing the Lambda, handling concurrency, and ensuring proper error
+handling for large file sizes, which can be challenging.
+B. adds unnecessary complexity and operational overhead. Managing the Spark job, handling scalability, and coordinating the Lambda invocations
+for each file upload can be cumbersome.
+C. introduces additional complexity and may not be the most efficient solution. It involves managing Glue resources, scheduling Lambda, and
+querying data even when no new files are uploaded.
+Option D leverages AWS Glue's ETL capabilities, allowing you to define and execute a data transformation job at scale. By invoking the ETL job using
+an Lambda function for each S3 PUT event, you can ensure that files are efficiently converted to Parquet format without the need for manual
+intervention. This approach minimizes operational overhead and provides a streamlined and scalable solution.
+upvoted 5 times
+F629 2 years, 11 months ago
+Selected Answer: A
+Both A and D can works, but A is more simple. It's more close to the "Least Operational effort".
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Creating, maintaining and supporting custom code that does the same as a ready-made serverless service is NEVER "least operational effort".
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Oh, and A can't handle 1 GB files.
+upvoted 1 times
+jaswantn 2 years, 4 months ago
+Now Lambda support 1 GB to 10 GB.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+But what if the file conversion process exceeds more than 15 minutes for each file? How does Lambda fits into this picture?
+upvoted 2 times
+shanwford 3 years, 2 months ago
+Selected Answer: D
+The maximum size for a Lambda event payload is 256 KB - so (A) didn't work with 1GB Files. Glue is recommended for the Parquet Transformation of
+AWS.
+upvoted 3 times
+jennyka76 3 years, 4 months ago
+ANS - d
+https://aws.amazon.com/blogs/database/how-to-extract-transform-and-load-data-for-analytic-processing-using-aws-glue-part-2/
+- READ ARTICLE -
+upvoted 3 times
+aws4myself 3 years, 4 months ago
+Here A is the correct answer. The reason here is the least operational overhead.
+A ==> S3 - Lambda - S3
+D ==> S3 - Lambda - Glue - S3
+Also, glue cannot convert on fly automatically, you need to write some code there. If you write the same code in lambda it will convert the same and
+push the file to S3
+Lambda has max memory of 128 MB to 10 GB. So, it can handle it easily.
+And we need to consider cost also, glue cost is more. Hope many from this forum realize these differences.
+upvoted 5 times
+LuckyAro 3 years, 4 months ago
+We also need to stay with the question, cost was not a consideration in the question.
+upvoted 2 times
+nder 3 years, 3 months ago
+Cost is not a factor. AWS Glue is a fully managed service therefore, it's the least operational overhead
+upvoted 5 times
+JA2018 1 year, 6 months ago
+But what if the file conversion process exceeds more than 15 minutes for each file? How does Lambda fits into this picture?
+upvoted 1 times
+JA2018 1 year, 6 months ago
+IIRC, many folks on this forum mentioned that, rule of thumbs for AWS exams, opt for AWS managed services...
+upvoted 1 times
+JayBee65 3 years, 4 months ago
+A is unlikely to work as Lambda may struggle with 1GB size: "< 64 MB, beyond which lambda is likely to hit memory caps", see
+https://stackoverflow.com/questions/41504095/creating-a-parquet-file-on-aws-lambda-function
+upvoted 3 times
+jainparag1 3 years, 4 months ago
+Should be D as Glue is self managed service and provides tel job for converting cab files to parquet off the shelf.
+upvoted 2 times
+Joxtat 3 years, 4 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/three-aws-glue-etl-job-types-for-converting-data-to-apache-parquet.html
+upvoted 2 times
+techhb 3 years, 4 months ago
+AWS Glue is right solution here.
+upvoted 2 times
+mp165 3 years, 4 months ago
+Selected Answer: D
+I am thinking D.
+A says lambda will download the .csv...but to where? that seem manual based on that
+upvoted 2 times
+mhmt4438 3 years, 4 months ago
+Selected Answer: A
+I think A
+upvoted 1 times
+bamishr 3 years, 4 months ago
+Selected Answer: A
+https://www.examtopics.com/discussions/amazon/view/83201-exam-aws-certified-solutions-architect-associate-saa-c02/
+upvoted 1 times

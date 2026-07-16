@@ -1,0 +1,50 @@
+Question #938
+A company is running a media store across multiple Amazon EC2 instances distributed across multiple Availability Zones in a
+single VPC. The company wants a high-performing solution to share data between all the EC2 instances, and prefers to keep the
+data within the VPC only.
+What should a solutions architect recommend?
+一家公司在一个单一的VPC中，通过多个可用区运行多个Amazon EC2实例来管理一个媒体存储。该公司希望有一个高性能的解决方
+案来在所有EC2实例之间共享数据，并且倾向于将数据仅保留在VPC内。
+解决方案架构师应该推荐什么？
+A. Create an Amazon S3 bucket and call the service APIs from each instance's application
+创建一个Amazon S3 bucket，并从每个实例的应用程序调用服务API
+B. Create an Amazon S3 bucket and configure all instances to access it as a mounted volume
+创建一个Amazon S3 bucket，并将所有实例配置为以挂载卷的方式访问它
+C. Configure an Amazon Elastic Block Store (Amazon EBS) volume and mount it across all instances
+配置一个Amazon Elastic Block Store (Amazon EBS)卷，并将其挂载到所有实例
+D. Configure an Amazon Elastic File System (Amazon EFS) file system and mount it across all instances Most Voted
+配置一个Amazon Elastic File System (Amazon EFS)文件系统，并将其挂载到所有实例
+题目分析与解答
+1. 考察的知识点
+本题考察的是AWS存储服务的选择，包括Amazon S3、Amazon EBS和Amazon EFS的适用场景。
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (100%)
+重点关注如何在多个EC2实例之间共享数据，同时保持高性能和数据存储在VPC内。
+2. 选项分析
+A. Create an Amazon S3 bucket and call the service APIs from each instance's application
+Amazon S3是对象存储服务，适合存储静态文件或数据，但不支持直接挂载到EC2实例。
+通过API访问S3可能会增加延迟，且数据存储在区域级别，而不是VPC内。
+此选项不符合题目要求的“高性能”和“数据存储在VPC内”的条件。
+错误
+B. Create an Amazon S3 bucket and configure all instances to access it as a mounted volume
+Amazon S3不支持直接挂载为文件系统，无法作为共享文件系统使用。
+此选项技术上不可行，因此不符合题目要求。
+错误
+C. Configure an Amazon Elastic Block Store (Amazon EBS) volume and mount it across all instances
+Amazon EBS是块存储服务，设计为单个EC2实例使用，不能直接跨多个实例共享。
+虽然可以通过某些技术（如EBS多附加）实现共享，但性能和管理复杂性不符合题目要求的“高性能”条件。
+错误
+D. Configure an Amazon Elastic File System (Amazon EFS) file system and mount it across all instances
+Amazon EFS是文件存储服务，支持跨多个EC2实例共享文件系统。
+EFS提供高性能和低延迟，且数据存储在VPC内，完全符合题目要求。
+正确
+3. 我的答案
+D. Configure an Amazon Elastic File System (Amazon EFS) file system and mount it across all instances
+4. 官方答案
+D. Configure an Amazon Elastic File System (Amazon EFS) file system and mount it across all instances
+5. 答案比较与分析
+我的答案与官方答案一致。
+原因：Amazon EFS是专为跨多个EC2实例共享文件系统设计的服务，完全符合题目要求的“高性能”和“数据存储在VPC内”的条件。

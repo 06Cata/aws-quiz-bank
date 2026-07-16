@@ -1,0 +1,124 @@
+A company containerized a Windows job that runs on .NET 6 Framework under a Windows container. The company wants to run
+this job in the AWS Cloud. The job runs every 10 minutes. The job’s runtime varies between 1 minute and 3 minutes.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create an AWS Lambda function based on the container image of the job. Configure Amazon EventBridge to invoke the
+function every 10 minutes.
+B. Use AWS Batch to create a job that uses AWS Fargate resources. Configure the job scheduling to run every 10 minutes.
+C. Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate to run the job. Create a scheduled task based on the
+container image of the job to run every 10 minutes. Most Voted
+D. Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate to run the job. Create a standalone task based on the
+container image of the job. Use Windows task scheduler to run the job every
+10 minutes.
+Comments
+baba365 Highly Voted 2 years, 8 months ago
+Lambda supports only Linux-based container images.
+https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
+upvoted 16 times
+awsgeek75 2 years, 5 months ago
+Not really. Lambda supports .Net 6 directly: https://aws.amazon.com/blogs/compute/introducing-the-net-6-runtime-for-aws-lambda/
+upvoted 7 times
+AmrFawzy93 Highly Voted 3 years ago
+Selected Answer: C
+By using Amazon ECS on AWS Fargate, you can run the job in a containerized environment while benefiting from the serverless nature of Fargate,
+where you only pay for the resources used during the job's execution. Creating a scheduled task based on the container image of the job ensures
+that it runs every 10 minutes, meeting the required schedule. This solution provides flexibility, scalability, and cost-effectiveness.
+upvoted 8 times
+bora4motion 1 year, 1 month ago
+why not lambda?
+upvoted 1 times
+zdi561 Most Recent 1 year, 4 months ago
+Selected Answer: A
+Lambda is the best for cost , the job is kicked off every 10min and it only takes several min.Set 10min timeout , there is no cost for idling . Batch and
+ECS cost more for sure.
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: A
+Lambda can be in .net container, and it is the cheaper than any other options.
+upvoted 1 times
+LeonSauveterre 1 year, 6 months ago
+Correct Answer: C
+Community vote distribution
+C (51%)
+B (29%)
+A (20%)
+Selected Answer: C
+For B: Even though AWS Batch is free, I think it's more suitable for large-scale or relatively complex workloads, not lightweight periodic jobs. So B is
+not cost-effective (The cost depends on the compute resources you provision to execute the jobs, and maybe "cost-effective" somewhat involves les
+operational overhead because you have spent your money)
+If you require queueing for task prioritization or processing a backlog of tasks, or work on data processing over datasets where Batch excels, AWS
+Batch would be better!
+upvoted 1 times
+muhammadahmer36 1 year, 10 months ago
+A A A A A A
+upvoted 2 times
+zinabu 2 years, 2 months ago
+selected answer : A
+AWS Lambda now supports .NET 6 as both a managed runtime and a container base image
+upvoted 5 times
+xBUGx 2 years, 2 months ago
+Selected Answer: A
+https://aws.amazon.com/about-aws/whats-new/2022/02/aws-lambda-adds-support-net6/
+upvoted 3 times
+awsgeek75 2 years, 5 months ago
+The question is weirdly phrased for .Net based containers. "A company containerized a Windows job that runs on .NET 6 Framework under a
+Windows container." This could mean that the job requires .Net 6 Framework OR it could mean the job requires Windows and .Net Framework 6. If
+the job is just based on .Net 6 then Lambda can run it. I am just a bit cautious about language because other parameters fall under Lambda.
+Question may have been wrongly quoted here.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: C
+I guess this is an old question from before August 2023, when AWS Batch did not support Windows containers, while ECS already did since
+September 2021. Thus it would be C, though now B does also work. Since both Batch and ECS are free, we'd pay only for the Fargate resources
+(which are identical in both cases), now B and C would be correct.
+A doesn't work because Lambda still does not support Windows containeres.
+D doesn't make sense because the container would have to run 24/7
+upvoted 7 times
+ftaws 2 years, 5 months ago
+I think that Batch with Fargate is more cheaper than ECS.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Both Batch and ECS are free.
+https://aws.amazon.com/de/ecs/pricing/
+https://aws.amazon.com/de/batch/pricing/
+upvoted 2 times
+kt7 2 years, 6 months ago
+Selected Answer: B
+Batch supports fargate now
+upvoted 6 times
+ccmc 2 years, 7 months ago
+Selected Answer: B
+aws batch supports fargate
+upvoted 3 times
+deechean 2 years, 9 months ago
+Selected Answer: C
+C works. For A, the lambda support container image, but the container image much implement the Lambda Runtime API.
+upvoted 1 times
+markoniz 2 years, 9 months ago
+Absolutely agree with this one ... Lambda do not support Windows container, on the other hand ECS is adequate solution
+upvoted 3 times
+Hades2231 2 years, 9 months ago
+Selected Answer: B
+As they support Batch on Fargate now (Aug 2023), the correct answer should be B?
+upvoted 3 times
+RDM10 2 years, 8 months ago
+that's exactly my question too.
+In one of the discussions, they same lambda is for jobs for 15 min. But for other question, they same batch is the best. I do not understand why we
+cant use batch?
+upvoted 1 times
+Smart 2 years, 9 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/lambda/latest/dg/csharp-image.html#csharp-image-clients
+upvoted 1 times
+pentium75 2 years, 5 months ago
+But it's clearly "a Windows job". Lambda does not support Windows containers. (.NET 6 could also run under Linux, but they'd need to modify the
+container in any case.)
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: C
+C is the most cost-effective solution for running a short-lived Windows container job on a schedule.
+Using Amazon ECS scheduled tasks on Fargate eliminates the need to provision EC2 resources. You pay only for the duration the task runs.
+Scheduled tasks handle scheduling the jobs and scaling resources automatically. This is lower cost than managing your own scaling via Lambda or
+Batch.
+ECS also supports Windows containers natively unlike Lambda (option A).
+Option D still requires provisioning and paying for full time EC2 resources to run a task scheduler even when tasks are not running.
+upvoted 2 times

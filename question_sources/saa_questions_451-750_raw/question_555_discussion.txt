@@ -1,0 +1,62 @@
+A company runs an application in a VPC with public and private subnets. The VPC extends across multiple Availability Zones. The
+application runs on Amazon EC2 instances in private subnets. The application uses an Amazon Simple Queue Service (Amazon
+SQS) queue.
+A solutions architect needs to design a secure solution to establish a connection between the EC2 instances and the SQS queue.
+Which solution will meet these requirements?
+A. Implement an interface VPC endpoint for Amazon SQS. Configure the endpoint to use the private subnets. Add to the
+endpoint a security group that has an inbound access rule that allows traffic from the EC2 instances that are in the private
+subnets. Most Voted
+B. Implement an interface VPC endpoint for Amazon SQS. Configure the endpoint to use the public subnets. Attach to the
+interface endpoint a VPC endpoint policy that allows access from the EC2 instances that are in the private subnets.
+C. Implement an interface VPC endpoint for Amazon SQS. Configure the endpoint to use the public subnets. Attach an
+Amazon SQS access policy to the interface VPC endpoint that allows requests from only a specified VPC endpoint.
+D. Implement a gateway endpoint for Amazon SQS. Add a NAT gateway to the private subnets. Attach an IAM role to the EC2
+instances that allows access to the SQS queue.
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: A
+An interface VPC endpoint is a private way to connect to AWS services without having to expose your VPC to the public internet. This is the most
+secure way to connect to Amazon SQS from the private subnets.
+Configuring the endpoint to use the private subnets ensures that the traffic between the EC2 instances and the SQS queue is only within the VPC.
+This helps to protect the traffic from being intercepted by a malicious actor.
+Adding a security group to the endpoint that has an inbound access rule that allows traffic from the EC2 instances that are in the private subnets
+further restricts the traffic to only the authorized sources. This helps to prevent unauthorized access to the SQS queue.
+upvoted 12 times
+Bmaster Highly Voted 2 years, 4 months ago
+A is correct.
+B,C: 'Configuring endpoints to use public subnets' --> Invalid
+D: No Gateway Endpoint for SQS.
+upvoted 6 times
+awsgeek75 Most Recent 1 year, 11 months ago
+Selected Answer: A
+BC are using public subnets so not useful for security
+D uses gateway endpoint which is not useful to connect to SQS
+A: https://docs.aws.amazon.com/vpc/latest/privatelink/aws-services-privatelink-support.html
+upvoted 2 times
+awsgeek75 1 year, 10 months ago
+Sorry, the link is wrong for A. Please ignore it!
+upvoted 2 times
+ShawnTang 1 year, 12 months ago
+Correct Answer: A
+Community vote distribution
+A (100%)
+A seems the most suitable,
+but security group can't add to the endpoint derectly, right?
+upvoted 2 times
+TariqKipkemei 2 years ago
+Selected Answer: A
+Answer is A
+upvoted 2 times
+TariqKipkemei 2 years ago
+Interface endpoints enable connectivity to services over AWS PrivateLink. It is a collection of one or more elastic network interfaces with a private IP
+address that serves as an entry point for traffic destined to a supported service.
+Implement an interface VPC endpoint for Amazon SQS. Configure the endpoint to use the private subnets. Add to the endpoint a security group that
+has an inbound access rule that allows traffic from the EC2 instances that are in the private subnets.
+upvoted 2 times
+potomac 2 years, 1 month ago
+A is correct
+upvoted 2 times
+mrsoa 2 years, 4 months ago
+Selected Answer: A
+I think its A
+upvoted 2 times

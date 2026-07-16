@@ -1,0 +1,119 @@
+A company hosts its enterprise resource planning (ERP) system in the us-east-1 Region. The system runs on Amazon EC2
+instances. Customers use a public API that is hosted on the EC2 instances to exchange information with the ERP system.
+International customers report slow API response times from their data centers.
+Which solution will improve response times for the international customers MOST cost-effectively?
+A. Create an AWS Direct Connect connection that has a public virtual interface (VIF) to provide connectivity from each
+customer's data center to us-east-1. Route customer API requests by using a Direct Connect gateway to the ERP system API.
+B. Set up an Amazon CloudFront distribution in front of the API. Configure the CachingOptimized managed cache policy to
+provide improved cache efficiency.
+C. Set up AWS Global Accelerator. Configure listeners for the necessary ports. Configure endpoint groups for the appropriate
+Regions to distribute traffic. Create an endpoint in the group for the API. Most Voted
+D. Use AWS Site-to-Site VPN to establish dedicated VPN tunnels between Regions and customer networks. Route traffic to the
+API over the VPN connections.
+Comments
+TewatiaAmit Highly Voted 1 year, 8 months ago
+Selected Answer: C
+CloudFront can reduce response times by caching API responses, but if the API is dynamic and not cacheable, it may not be as effective. Global
+Accelerator is better for improving latency when caching is not an option.
+upvoted 12 times
+Sergantus 1 year, 6 months ago
+While dynamic content typically has low caching potential, CloudFront reduces latency by routing requests to the nearest edge location. There is
+also TCP Connection Reuse, which is also beneficial for low latency.
+upvoted 4 times
+8621a7c Highly Voted 1 year, 7 months ago
+Selected Answer: B
+CloudFront for Dynamic content (such as API acceleration and dynamic site delivery)
+upvoted 10 times
+SBoksh Most Recent 10 months, 3 weeks ago
+Selected Answer: B
+https://aws.amazon.com/cloudfront/dynamic-content/
+upvoted 1 times
+Clouddon 11 months ago
+Selected Answer: C
+Why other options are less ideal:
+A. AWS Direct Connect
+Very expensive and complex to set up for each international customer.
+Designed for private, dedicated connections, typically for a single customer, not multiple public API users.
+Not scalable or cost-effective in this scenario.
+B. Amazon CloudFront
+Correct Answer: C
+Community vote distribution
+C (60%)
+B (40%)
+CloudFront is ideal for static content (e.g., images, scripts, web pages), not dynamic APIs.
+CachingOptimized policy works best for cacheable responses, not for dynamic ERP APIs, which likely serve real-time data.
+D. AWS Site-to-Site VPN
+Requires customer coordination to set up VPN tunnels.
+Adds network complexity and operational overhead.
+Not cost-effective or scalable for public API access by many international users.
+upvoted 1 times
+eduvaldi 1 year ago
+Selected Answer: B
+CloudFront is bettet for https
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: B
+How is AWS Global Accelerator different from Amazon CloudFront?
+AWS Global Accelerator and Amazon CloudFront are separate services that use the AWS global network and its edge locations around the world.
+CloudFront improves performance for both cacheable content (such as images and videos) and dynamic content (such as API acceleration and
+dynamic site delivery). Global Accelerator improves performance for a wide range of applications over TCP or UDP by proxying packets at the edge to
+applications running in one or more AWS Regions. Global Accelerator is a good fit for non-HTTP use cases, such as gaming (UDP), IoT (MQTT), or
+Voice over IP, as well as for HTTP use cases that specifically require static IP addresses or deterministic, fast regional failover. Both services integrate
+with AWS Shield for DDoS protection
+upvoted 1 times
+tch 1 year, 3 months ago
+MOST cost-effectively.. this is another reason to use CloudFont...
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+Given that the ERP system is hosted in us-east-1 and the API is likely HTTP/HTTPS-based, Option B (Amazon CloudFront) is the best solution.
+CloudFront’s global edge network and caching capabilities will significantly improve response times for international customers while reducing the
+load on the backend EC2 instances.
+upvoted 1 times
+joanna91 1 year, 4 months ago
+Selected Answer: C
+C. AWS global accelerator is more suitable for cost-effective solutions to improve API respons time for int'l users by using AWS global network to
+optimize traffic routing. Whereas, D. AWS Cloudfront is less effective for dynamic, real-time API interactions like this ERP system.
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - Direct Connect requires dedicated connections for each customer, making it expensive and impractical for a public API.
+B - CloudFront improves performance but caching efficiency depends on the API use case. Dynamic & personalized API responses may not benefit
+significantly from caching. CloudFront is best suited for static content or APIs with predictable responses.
+C - Global Accelerator provides a global static IP address and uses the AWS global network to route traffic optimally, reducing latency for
+geographically distant users. Unlike CloudFront, it works well in this case because it doesn't rely on caching contents.
+D - VPNs are not ideal for public APIs because they require specific setup for each customer, so high operational overhead.
+upvoted 2 times
+GOTJ 1 year, 5 months ago
+Selected Answer: C
+I think that the following quote "to exchange information with the ERP system" suggest that the clients use the api not only to get, but to add and/o
+update ERP data. If this is the case, using a Cloudfront distribution for caching should be useless as the add/update operations must be performed
+by the ERP system itself.
+Option "C" approach is different: it's "forcing" users to access API ERP via AWS routing optimised networks by configuring the current API as an
+endpoint for the globally distributed endpoints groups (no need to duplicate current infrastructure or setup replication)
+upvoted 3 times
+Anyio 1 year, 5 months ago
+Selected Answer: C
+The correct answer is C.
+Explanation:
+Option C: Correct. AWS Global Accelerator provides access via the AWS global network, reducing latency and improving performance for globally
+distributed users. By using Global Accelerator, you can direct global traffic to optimal AWS endpoints, offering lower latency and better connectivity
+compared to standard internet routing. It achieves this without modifying the API infrastructure, making it a highly cost-effective solution for
+improving API response times for international users.
+upvoted 1 times
+tch 1 year, 5 months ago
+Selected Answer: B
+MOST cost-effectively -
+(ERP) system in the us-east-1 Region (one region only)
+will be B
+AWS Global Accelerator use case for one or multiple AWS regions!
+upvoted 1 times
+dragossky 1 year, 5 months ago
+Selected Answer: C
+C. Set up AWS Global Accelerator. Configure listeners for the necessary ports. Configure endpoint groups for the appropriate Regions to distribute
+traffic. Create an endpoint in the group for the API.
+upvoted 3 times
+DhirajBansal 1 year, 6 months ago
+Selected Answer: B
+Cloudfront used for API acceleration and Dynamic content delivery
+upvoted 1 times

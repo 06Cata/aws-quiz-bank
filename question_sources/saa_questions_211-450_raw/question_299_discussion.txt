@@ -1,0 +1,102 @@
+A research laboratory needs to process approximately 8 TB of data. The laboratory requires sub-millisecond latencies and a
+minimum throughput of 6 GBps for the storage subsystem. Hundreds of Amazon EC2 instances that run Amazon Linux will
+distribute and process the data.
+Which solution will meet the performance requirements?
+A. Create an Amazon FSx for NetApp ONTAP file system. Sat each volume’ tiering policy to ALL. Import the raw data into the
+file system. Mount the fila system on the EC2 instances.
+B. Create an Amazon S3 bucket to store the raw data. Create an Amazon FSx for Lustre file system that uses persistent SSD
+storage. Select the option to import data from and export data to Amazon S3. Mount the file system on the EC2 instances.
+Most Voted
+C. Create an Amazon S3 bucket to store the raw data. Create an Amazon FSx for Lustre file system that uses persistent HDD
+storage. Select the option to import data from and export data to Amazon S3. Mount the file system on the EC2 instances.
+D. Create an Amazon FSx for NetApp ONTAP file system. Set each volume’s tiering policy to NONE. Import the raw data into
+the file system. Mount the file system on the EC2 instances.
+Comments
+Bhawesh Highly Voted 2 years, 9 months ago
+Selected Answer: B
+Keyword here is a minimum throughput of 6 GBps. Only the FSx for Lustre with SSD option gives the sub-milli response and throughput of 6 GBps or
+more.
+B. Create an Amazon S3 bucket to store the raw data. Create an Amazon FSx for Lustre file system that uses persistent SSD storage. Select the option
+to import data from and export data to Amazon S3. Mount the file system on the EC2 instances.
+Refrences:
+https://aws.amazon.com/fsx/when-to-choose-fsx/
+upvoted 21 times
+bdp123 Highly Voted 2 years, 9 months ago
+Selected Answer: B
+Create an Amazon S3 bucket to store the raw data Create an Amazon FSx for Lustre file system that
+uses persistent SSD storage Select the option to import data from and export data to Amazon S3
+Mount the file system on the EC2 instances. Amazon FSx for Lustre uses SSD storage for submillisecond latencies and up to 6 GBps throughput, and
+can import data from and export data to
+Amazon S3. Additionally, the option to select persistent SSD storage will ensure that the data is stored on the disk and not lost if the file system is
+stopped.
+upvoted 8 times
+MrPCarrot Most Recent 1 year, 9 months ago
+Answer is B : FSx for Lustre with SSD option gives the sub-milli response and throughput of 6 GBps or more
+upvoted 3 times
+Pangian 1 year, 10 months ago
+I dont even think that NetApp comes for Linux
+upvoted 1 times
+djgodzilla 1 year, 11 months ago
+Selected Answer: B
+Correct Answer: B
+Community vote distribution
+B (100%)
+Amazon FSx for Lustre for compute-intensive workloads.
+- allows file-based applications to access data with hundreds of gigabytes per second of data, millions of IOPS, and sub millisecond latencies.
+- supports file access to thousands of EC2 instances
+and well SSD always wins ;)
+upvoted 3 times
+Mikado211 2 years ago
+Selected Answer: B
+sub-millisecondes == Lustre
+HDD vs SSD == for performance use SSD
+upvoted 4 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: B
+Amazon FSx for Lustre with SSD: Amazon FSx for Lustre is designed for high-performance, parallel file processing workloads. Choosing SSD storage
+ensures fast I/O and meets the sub-millisecond latency requirement.
+upvoted 4 times
+rolervengador 2 years, 3 months ago
+Voto por la B
+upvoted 2 times
+Gooniegoogoo 2 years, 5 months ago
+So many of these are wrong, its good we have people that vote so we can get to the right answer!!
+upvoted 2 times
+kruasan 2 years, 7 months ago
+Selected Answer: B
+• Amazon FSx for Lustre with SSD storage can provide up to 260 GB/s of aggregate throughput and sub-millisecond latencies needed for this
+workload.
+• Persistent SSD storage ensures data durability in the file system. Data is also exported to S3 for backup storage.
+• The file system will import the initial 8 TB of raw data from S3, providing a fast storage tier for processing while retaining the data in S3.
+• The file system is mounted to the EC2 compute instances to distribute processing.
+• FSx for Lustre is optimized for high-performance computing workloads running on Linux, matching the EC2 environment.
+upvoted 3 times
+kruasan 2 years, 7 months ago
+Option A - FSx for NetApp ONTAP with ALL tiering policy would not provide fast enough storage tier for sub-millisecond latency. HDD tiers have
+higher latency.
+Option C - FSx for Lustre with HDD storage would not provide the throughput, IOPS or low latency needed.
+Option D - FSx for NetApp ONTAP with NONE tiering policy would require much more expensive SSD storage to meet requirements, increasing
+cost.
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: B
+I vote B
+upvoted 2 times
+AlmeroSenior 2 years, 9 months ago
+Selected Answer: B
+FSX Lusture is 1000mbs per TB provisioned and we have 8TBs so gives us 8GBs . The netapp FSX appears a hard limit of 4gbs .
+https://aws.amazon.com/fsx/lustre/faqs/?nc=sn&loc=5
+https://aws.amazon.com/fsx/netapp-ontap/faqs/
+upvoted 6 times
+LuckyAro 2 years, 9 months ago
+Selected Answer: B
+B is the best choice as it utilizes Amazon S3 for data storage, which is cost-effective and durable, and Amazon FSx for Lustre for high-performance
+file storage, which provides the required sub-millisecond latencies and minimum throughput of 6 GBps. Additionally, the option to import and expor
+data to and from Amazon S3 makes it easier to manage and move data between the two services.
+B is the best option as it meets the performance requirements for sub-millisecond latencies and a minimum throughput of 6 GBps.
+upvoted 2 times
+everfly 2 years, 9 months ago
+Selected Answer: B
+Amazon FSx for Lustre provides fully managed shared storage with the scalability and performance of the popular Lustre file system. It can deliver
+sub-millisecond latencies and hundreds of gigabytes per second of throughput.
+upvoted 4 times

@@ -1,0 +1,166 @@
+A company has an on-premises server that uses an Oracle database to process and store customer information. The company
+wants to use an AWS database service to achieve higher availability and to improve application performance. The company also
+wants to offload reporting from its primary database system.
+Which solution will meet these requirements in the MOST operationally efficient way?
+A. Use AWS Database Migration Service (AWS DMS) to create an Amazon RDS DB instance in multiple AWS Regions. Point the
+reporting functions toward a separate DB instance from the primary DB instance.
+B. Use Amazon RDS in a Single-AZ deployment to create an Oracle database. Create a read replica in the same zone as the
+primary DB instance. Direct the reporting functions to the read replica.
+C. Use Amazon RDS deployed in a Multi-AZ cluster deployment to create an Oracle database. Direct the reporting functions to
+use the reader instance in the cluster deployment.
+D. Use Amazon RDS deployed in a Multi-AZ instance deployment to create an Amazon Aurora database. Direct the reporting
+functions to the reader instances. Most Voted
+Comments
+mrsoa Highly Voted 2 years, 10 months ago
+Selected Answer: D
+Its D
+Multi-AZ DB clusters aren't available with the following engines:
+RDS for MariaDB
+RDS for Oracle
+RDS for SQL Server
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RDS_Fea_Regions_DB-eng.Feature.MultiAZDBClusters.html
+upvoted 37 times
+alexandercamachop Highly Voted 3 years ago
+Selected Answer: C
+C. Use Amazon RDS deployed in a Multi-AZ cluster deployment to create an Oracle database. Direct the reporting functions to use the reader
+instance in the cluster deployment.
+A and B discarted.
+The answer is between C and D
+D says use an Amazon RDS to build an Amazon Aurora, makes no sense.
+C is the correct one, high availability in multi az deployment.
+Also point the reporting to the reader replica.
+upvoted 14 times
+1rob 2 years, 6 months ago
+Multi-AZ DB clusters aren't available with the following engines:
+RDS for MariaDB
+RDS for Oracle
+RDS for SQL Server
+upvoted 8 times
+bogobob 2 years, 6 months ago
+using RDS to build Aurora from an Oracle DB https://aws.amazon.com/tutorials/break-free-from-legacy-databases/migrate-oracle-to-amazon-
+aurora/
+Correct Answer: D
+Community vote distribution
+D (72%)
+C (28%)
+upvoted 3 times
+KarlosRC Most Recent 3 months ago
+Selected Answer: D
+The correct answer is: RDS Oracle Multi-AZ instance + Read Replica. But that option isn't listed in the answers. Conclusion: the question is either
+incomplete or written by idiots.
+upvoted 1 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: D
+In the MOST operationally efficient way, D is better, and A is too much. HOWEVER, Aurora is not Oracle, so this would require migrating from Oracle
+to Aurora (potentially requiring significant changes to the application, schema, and queries). The question did not say anything about not wanting to
+migrate.
+B - 100% wrong. Single-AZ deployment does not meet the higher availability requirement.
+C - 100% wrong. There's no way to create an Oracle db using RDS.
+upvoted 1 times
+chest_jd 1 year, 7 months ago
+Unfortunately ALL ANSWERS ARE NOT CORRECT.
+A. Use AWS Database Migration Service (AWS DMS) to create an Amazon RDS DB instance in multiple AWS Regions.
+How can I create RDS using DMS ?
+B. Single-Zone is not suitable for high available solution.
+C. RDS cluster deployment are not available for DBs: RDS for Db2, RDS for MariaDB, RDS for Oracle, RDS for SQL Server
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RDS_Fea_Regions_DB-eng.Feature.MultiAZDBClusters.html
+D. Use Amazon RDS deployed in a Multi-AZ instance deployment to create an Amazon Aurora database.
+Aurora DOES NOT support Oracle DB. Only MySQL and PostgreSQL
+upvoted 2 times
+Ravan 2 years, 3 months ago
+Selected Answer: D
+Multi-AZ (Availability Zone) deployments are not available for the following Amazon RDS database engines:
+1. Amazon Aurora with MySQL compatibility
+2. Amazon Aurora with PostgreSQL compatibility
+3. Amazon RDS for SQL Server Express Edition
+4. Amazon RDS for Oracle Standard Edition One
+5. Amazon RDS for Oracle Standard Edition
+6. Amazon RDS for Oracle SE2 (Standard Edition 2)
+For these database engines, Amazon RDS provides high availability using other mechanisms specific to each engine, such as Read Replicas or
+different standby configurations. However, Multi-AZ deployments, which automatically provision and maintain a synchronous standby replica in a
+different Availability Zone for failover support, are not supported for these engines.
+upvoted 4 times
+noircesar25 2 years, 3 months ago
+this link expalins why the answer is C and confirms that rds for oracle supports multi-AZ
+https://aws.amazon.com/blogs/aws/multi-az-option-for-amazon-rds-oracle/
+upvoted 2 times
+osmk 2 years, 3 months ago
+Selected Answer: D
+requiring high availability and performance.https://aws.amazon.com/rds/aurora/
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: D
+Between C&D, D is correct as C is not possible:
+https://aws.amazon.com/blogs/aws/multi-az-option-for-amazon-rds-oracle/
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: D
+Not A - Creating multiple instances and keeping them in sync in DMS is surely not "operationally efficient"
+Not B - "replica in the same zone" -> does not provide "higher availability"
+Not C - "Multi-AZ cluster" does not support Oracle engine
+Thus D. Question does not mention that the app would use Oracle-specific features; we're also not asked to minimize application changes. Ideal
+solution from AWS point of view is to move from Oracle to Aurora.
+upvoted 2 times
+XXXXXlNN 1 year, 8 months ago
+but Aurora doesnt support oracle db though
+upvoted 1 times
+aws94 2 years, 6 months ago
+Selected Answer: C
+i am sure just look here
+https://aws.amazon.com/ar/blogs/aws/amazon-rds-multi-az-db-cluster/
+upvoted 1 times
+aws94 2 years, 6 months ago
+sorry this is the right link:
+https://aws.amazon.com/ar/blogs/aws/multi-az-option-for-amazon-rds-oracle/
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"Multi-AZ cluster (!)" does not support Oracle. Multi-AZ instance would.
+upvoted 2 times
+EEK2k 2 years, 7 months ago
+Selected Answer: C
+It should be C. Oracle DB is supported in RDS Multi-AZ with one standby for HA. https://aws.amazon.com/rds/features/multi-az/. Additionally, a
+reader instance/replica could be added to RDS Multi-AZ with one standby setup to offload the read requests. Aurora is only supported MySQL and
+Postgres compatible DB so "D" is out.
+upvoted 2 times
+1rob 2 years, 6 months ago
+https://aws.amazon.com/rds/features/multi-az/ gives:Amazon RDS Multi-AZ is available for RDS for PostgreSQL, RDS for MySQL, RDS for MariaDB,
+RDS for SQL Server, RDS for Oracle, and RDS for Db2. Amazon RDS Multi-AZ with two readable standbys is available for RDS for PostgreSQL and
+RDS for MySQL.
+So no reader instance.
+upvoted 1 times
+potomac 2 years, 7 months ago
+Selected Answer: D
+Multi-AZ DB clusters are NOT available with the following engines:
+RDS for MariaDB
+RDS for Oracle
+RDS for SQL Server
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RDS_Fea_Regions_DB-eng.Feature.MultiAZDBClusters.html
+upvoted 2 times
+danielmakita 2 years, 7 months ago
+It is C. Aurora database doesn't support Oracle.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+as pentium75 had pointed out, the stem does not mention that the app would use Oracle-specific features; we're also not asked to minimize
+application changes. Ideal solution from AWS point of view is to move from Oracle to Aurora.
+upvoted 1 times
+wsdasdasdqwdaw 2 years, 7 months ago
+You can use Aurora instead of Oracle. There are tutorials how to migrate Oracle to Aurora. On top C is not supported. The is not Multi-AZ DB
+CLUSTER for Oracle.
+upvoted 3 times
+wsdasdasdqwdaw 2 years, 7 months ago
+It is D
+upvoted 1 times
+thanhnv142 2 years, 7 months ago
+None options seems valid. Not C because it is not supported. But not D as well. RDS is not Aurora. They are two separate services. Additionally, In
+multi AZ instance deployment, it only provides fault tolerance, not High avai.
+upvoted 2 times
+Nikki013 2 years, 9 months ago
+Selected Answer: D
+Multi-AZ Cluster does not support Oracle as engine:
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RDS_Fea_Regions_DB-eng.Feature.MultiAZDBClusters.html
+upvoted 2 times
+Bennyboy789 2 years, 9 months ago
+Selected Answer: D
+D is my choice.
+Multi-AZ DB cluster does not support Oracle DB.
+upvoted 3 times

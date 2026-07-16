@@ -1,0 +1,108 @@
+A company runs its critical database on an Amazon RDS for PostgreSQL DB instance. The company wants to migrate to Amazon
+Aurora PostgreSQL with minimal downtime and data loss.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create a DB snapshot of the RDS for PostgreSQL DB instance to populate a new Aurora PostgreSQL DB cluster.
+B. Create an Aurora read replica of the RDS for PostgreSQL DB instance. Promote the Aurora read replicate to a new Aurora
+PostgreSQL DB cluster. Most Voted
+C. Use data import from Amazon S3 to migrate the database to an Aurora PostgreSQL DB cluster.
+D. Use the pg_dump utility to back up the RDS for PostgreSQL database. Restore the backup to a new Aurora PostgreSQL DB
+cluster.
+Comments
+Guru4Cloud Highly Voted 2 years, 8 months ago
+Selected Answer: B
+The key reasons are:
+Aurora read replicas allow setting up replication from RDS PostgreSQL to Aurora PostgreSQL with minimal downtime.
+Once replication is set up, the read replica can be promoted to a full standalone Aurora DB cluster with little to no downtime.
+This approach leverages AWS's managed replication between the source RDS PostgreSQL instance and Aurora. It avoids having to manually create
+backups and restore data.
+Using DB snapshots or pg_dump backups requires manually restoring data which increases downtime and operational overhead.
+Data import from S3 would require exporting, uploading and then importing data which adds overhead.
+upvoted 7 times
+JA2018 1 year, 6 months ago
+can share the link? thanks
+upvoted 1 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: B
+Not A: Would work but have some (though minor) downtime
+B: "The Aurora read replica option minimizes downtime during a migration"
+Not C: "If your data is stored using Amazon Simple Storage Service (Amazon S3)" ... in this case it is not
+Not D: "If ... you don't have downtime considerations, you can use this option"
+https://repost.aws/knowledge-center/aurora-postgresql-migrate-from-rds
+upvoted 5 times
+Firdous586 Most Recent 2 years, 4 months ago
+B is correct as the question says least down time and data loss
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: B
+"Use an RDS for PostgreSQL DB instance as the basis for a new Aurora PostgreSQL DB cluster by using an Aurora read replica. The Aurora read
+replica is available for migrating only within the same AWS Region and account. The Aurora read replica option minimizes downtime during a
+migration. You can promote the new cluster when you have zero (0) replication lag between the primary RDS instance and the Aurora read replica."
+https://repost.aws/knowledge-center/aurora-postgresql-migrate-from-rds
+upvoted 3 times
+Correct Answer: B
+Community vote distribution
+B (88%)
+12%
+Cyberkayu 2 years, 5 months ago
+Selected Answer: B
+ACD will have delta changes issue. Which means, RDS snapshot/export at 2pm, upload/import the table into Aurora, configure and populated
+completed by 6pm. This created a 4-hour gap of delta changes
+upvoted 2 times
+aws94 2 years, 6 months ago
+Selected Answer: A
+please focus, we have RDS not Aurora, I don't know how you vote to create an Aurora read replica to migrate an RDS to Aurora.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+I thought that too but B is correct: https://repost.aws/knowledge-center/aurora-postgresql-migrate-from-rds
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+LEAST operational overhead = read replica
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+A,B,C are all valid option.
+But B: The Aurora read replica option minimizes downtime during a migration.
+upvoted 2 times
+thanhnv142 2 years, 7 months ago
+B is correct guys. Lets see what we got here:
+C and D is not correct of course. We have to consider A and B.
+A: migration using a snapshot: this would, of course, introduce heavy data loss and down time
+B: migration using read replica: nearly no dataloss and downtime.
+upvoted 4 times
+RRya 2 years, 7 months ago
+Selected Answer: A
+RDS PostgreSQL to Aurora PostgreSQL:
+• Option 1: DB Snapshots from RDS PostgreSQL restored as PostgreSQL Aurora DB
+• Option 2: Create an Aurora Read Replica from your RDS PostgreSQL, and when the replication lag is 0, promote it as its own DB cluster (can take
+time and cost $)
+upvoted 1 times
+pentium75 2 years, 5 months ago
+"The Aurora read replica option minimizes downtime during a migration"
+https://repost.aws/knowledge-center/aurora-postgresql-migrate-from-rds
+upvoted 2 times
+Jay2k23 2 years, 8 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html
+upvoted 1 times
+Sugarbear_01 2 years, 8 months ago
+Answer [B]
+There are five options for migrating data from your existing Amazon RDS for PostgreSQL database to an Amazon Aurora PostgreSQL-Compatible DB
+cluster.
+1-Using a snapshot
+2-Using an Aurora read replica
+3-Using a pg_dump utility
+4-Using logical replication
+5-Using a data import from Amazon S3
+(2-Using an Aurora read replica)
+The Aurora read replica option minimizes downtime during a migration. Which is what the question demand so answer B; is the correct ;
+https://repost.aws/knowledge-center/aurora-postgresql-migrate-from-rds
+upvoted 5 times
+Sugarbear_01 2 years, 8 months ago
+Using ( 4 - using logical replication) RDS for PostgreSQL and Aurora PostgreSQL instance to migrate data off minimal downtime. But is not part of
+the option in the answer. Which makes answer B the best solution.
+upvoted 2 times
+taustin2 2 years, 8 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html
+upvoted 2 times

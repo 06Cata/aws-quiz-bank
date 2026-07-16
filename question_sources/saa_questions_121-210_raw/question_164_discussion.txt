@@ -1,0 +1,158 @@
+A company has two applications: a sender application that sends messages with payloads to be processed and a processing
+application intended to receive the messages with payloads. The company wants to implement an AWS service to handle
+messages between the two applications. The sender application can send about 1,000 messages each hour. The messages may
+take up to 2 days to be processed: If the messages fail to process, they must be retained so that they do not impact the
+processing of any remaining messages.
+Which solution meets these requirements and is the MOST operationally efficient?
+A. Set up an Amazon EC2 instance running a Redis database. Configure both applications to use the instance. Store, process,
+and delete the messages, respectively.
+B. Use an Amazon Kinesis data stream to receive the messages from the sender application. Integrate the processing
+application with the Kinesis Client Library (KCL).
+C. Integrate the sender and processor applications with an Amazon Simple Queue Service (Amazon SQS) queue. Configure a
+dead-letter queue to collect the messages that failed to process. Most Voted
+D. Subscribe the processing application to an Amazon Simple Notification Service (Amazon SNS) topic to receive notifications
+to process. Integrate the sender application to write to the SNS topic.
+Comments
+aba2s Highly Voted 3 years, 5 months ago
+Selected Answer: C
+Amazon SQS supports dead-letter queues (DLQ), which other queues (source queues) can target for messages that can't be processed (consumed)
+successfully.
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
+upvoted 13 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: C
+By integrating both the sender and processor applications with an SQS, messages can be reliably sent from the sender to the processor application
+for processing. SQS provides at-least-once delivery, ensuring that messages are not lost in transit. If a message fails to process, it can be retained in
+the queue and retried without impacting the processing of other messages. Configuring a DLQ allows for the collection of messages that repeatedly
+fail to process, providing visibility into failed messages for troubleshooting and analysis.
+A is not the optimal choice as it involves managing and configuring an EC2 instance running a Redis, which adds operational overhead and
+maintenance requirements.
+B is not the most operationally efficient solution as it introduces additional complexity by using Amazon Kinesis data streams and integrating with
+the Kinesis Client Library for message processing.
+D, using SNS, is not the best fit for the scenario as it is more suitable for pub/sub messaging and broadcasting notifications rather than the specific
+requirement of message processing between two applications.
+upvoted 7 times
+Bmarodi 2 years, 11 months ago
+Nice exlanations always, thanks a lot!
+upvoted 1 times
+Bmarodi 2 years, 10 months ago
+Nice explanations always, thanks a lot
+Correct Answer: C
+Community vote distribution
+C (90%)
+10%
+upvoted 1 times
+satyaammm Most Recent 1 year, 4 months ago
+Selected Answer: C
+Dead Letter queues are the most suitable here.
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: B
+Ans C - Use SQS and dead letter queue.
+Not ideal because max visibility timeout for SQS is 12h and can't extended by user.
+I did consider B: KInesis which is for real-time processing - altho' the question doesn't say its not real-time. Anyway, SQS is basic and fits.
+upvoted 2 times
+dkw2342 2 years, 3 months ago
+C) This option works. There is a 12h maximum visibility timeout, but:
+"If you don't know how long it takes to process a message, create a heartbeat for your consumer process: Specify the initial visibility timeout (for
+example, 2 minutes) and then—as long as your consumer still works on the message—keep extending the visibility timeout by 2 minutes every
+minute."
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/working-with-messages.html
+upvoted 4 times
+dkw2342 2 years, 3 months ago
+None of the options fit.
+A) Not operationally efficient
+B) Kinesis is for real-time processing
+D) SNS is not suitable for work queuing.
+C) While this may be the "correct" answer, it also doesn't really fit the problem statement.
+Maximum visibility timeout for SQS is 12h, also can't be extended by the consumer.
+"If your consumer needs longer than 12 hours, consider using Step Functions."
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
+upvoted 2 times
+MatAlves 1 year, 9 months ago
+It doesn't seem to be the case though:
+" For example, assume that a message spends 1 day in the original queue before it's moved to a dead-letter queue. If the dead-letter queue's
+retention period is 4 days, the message is deleted from the dead-letter queue after 3 days and the ApproximateAgeOfOldestMessage is 3 days."
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html#understanding-message-
+retention-periods
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: C
+C is the only option with dead letter que which meets the requirement of retaining messages that fail to process without impacting other messages.
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: C
+Implement an AWS service to handle messages between the two applications = Amazon Simple Queue Service
+If the messages fail to process, they must be retained = a dead-letter queue
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: C
+SQS provides a fully managed message queuing service that meets all the requirements:
+SQS can handle the sending and processing of 1,000 messages per hour
+Messages can be retained for up to 14 days to allow the full 2 days for processing
+Using a dead-letter queue will retain failed messages without impacting other processing
+SQS requires minimal operational overhead compared to running your own message queue server
+upvoted 3 times
+MutiverseAgent 2 years, 10 months ago
+Selected Answer: B
+Answer is B), the reason is:
+- Because messages might up to 2 days to be processed. Visibility timeout of SQS is 12 hours, so after 12 hours another consumer might take a
+message from the queue which is currently being processed.
+upvoted 1 times
+Jeeva28 3 years ago
+Selected Answer: C
+Answer C, In Question if Keyword have Processing Failed >> SQS
+upvoted 2 times
+Bmarodi 3 years ago
+Selected Answer: C
+solution that meets these requirements and is the MOST operationally efficient will be option C. SQS is buffer between 2 APPs.
+upvoted 2 times
+norris81 3 years ago
+The visibility timeout must not be more than 12 hours. ( For SQS )
+Jobs may take 2 days to process
+upvoted 2 times
+studynoplay 3 years ago
+Selected Answer: C
+operationally efficient = Serverless
+SQS is serverless
+upvoted 2 times
+studynoplay 3 years ago
+SNS too is serverless, but it is obvious that it is not the correct answer in this case
+upvoted 1 times
+apchandana 3 years, 1 month ago
+Selected Answer: C
+more realistic option is C.
+only problem with this is the limit of the visibility timeout is 12H max. as the second application take 2 days to process, there will be a duplicate of
+processing messages in the queue. this might complicate things.
+upvoted 3 times
+nilandd44gg 2 years, 10 months ago
+Amazon SQS automatically deletes messages that have been in a queue for more than the maximum message retention period. The default
+message retention period is 4 days. However, you can set the message retention period to a value from 60 seconds to 1,209,600 seconds (14 days)
+using the SetQueueAttributes action.
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-architecture.html
+upvoted 2 times
+vherman 3 years, 3 months ago
+SQS has a limit 12h for visibility time out
+upvoted 1 times
+bullrem 3 years, 4 months ago
+Selected Answer: B
+Option C, using Amazon SQS, is a valid solution that meets the requirements of the company. However, it may not be the most operationally efficien
+solution because SQS is a managed message queue service that requires additional operational overhead to handle the retention of messages that
+failed to process. Option B, using Amazon Kinesis Data Streams, is more operationally efficient for this use case because it can handle the retention o
+messages that failed to process automatically and provides the ability to process and analyze streaming data in real-time.
+upvoted 1 times
+UnluckyDucky 3 years, 3 months ago
+Kinesis stream save data for up to 24 hours, doesn't meet the 2 day requirement.
+Kinesis streams don't have fail-safe for failed processing, unlike SQS.
+The correct answer is C - SQS.
+upvoted 4 times
+apchandana 3 years, 1 month ago
+this is not a correct statement.
+A data stream is a logical grouping of shards. There are no bounds on the number of shards within a data stream (request a limit increase if you
+need more). A data stream will retain data for 24 hours by default, or optionally up to 365 days.
+Shard
+https://aws.amazon.com/kinesis/data-streams/getting-started/
+upvoted 1 times
+LuckyAro 3 years, 4 months ago
+There's no way for kinesis to know whether the message processing failed.
+upvoted 1 times

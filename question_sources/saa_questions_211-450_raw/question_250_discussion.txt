@@ -1,0 +1,108 @@
+A company’s security team requests that network traffic be captured in VPC Flow Logs. The logs will be frequently accessed for 90
+days and then accessed intermittently.
+What should a solutions architect do to meet these requirements when configuring the logs?
+A. Use Amazon CloudWatch as the target. Set the CloudWatch log group with an expiration of 90 days
+B. Use Amazon Kinesis as the target. Configure the Kinesis stream to always retain the logs for 90 days.
+C. Use AWS CloudTrail as the target. Configure CloudTrail to save to an Amazon S3 bucket, and enable S3 Intelligent-Tiering.
+D. Use Amazon S3 as the target. Enable an S3 Lifecycle policy to transition the logs to S3 Standard-Infrequent Access (S3
+Standard-IA) after 90 days. Most Voted
+Comments
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: D
+A. suggests using CloudWatch as the target for VPC Flow Logs. However, it does not provide a mechanism for managing the retention of the logs for
+90 days and then accessing them intermittently.
+B. suggests using Kinesis as the target for VPC Flow Logs. While it can retain the logs for 90 days, it does not address the requirement for intermitten
+access to the logs.
+C. suggests using CloudTrail as the target for VPC Flow Logs. However, CloudTrail is designed for auditing and monitoring API activity, not for
+capturing network traffic logs. It does not meet the requirement of capturing VPC Flow Logs.
+D. suggests using S3 as the target for VPC Flow Logs and leveraging S3 Lifecycle policies to transition the logs to a cost-effective storage class after
+90 days. It meets the requirement of retaining the logs for 90 days and provides the flexibility for intermittent access while optimizing storage costs.
+upvoted 10 times
+LuckyAro Highly Voted 3 years, 4 months ago
+Selected Answer: D
+D is the correct answer.
+upvoted 6 times
+manabpokhrel7 Most Recent 1 year, 7 months ago
+Selected Answer: D
+D is the correct answer
+upvoted 2 times
+RicardoD 2 years, 3 months ago
+Selected Answer: A
+A is correct
+You can change the log data retention setting for CloudWatch logs. By default, logs are kept indefinitely and never expire. You can adjust the
+retention policy for each log group, keeping the indefinite retention, or choosing a retention period between 10 years and one day.
+https://docs.aws.amazon.com/managedservices/latest/userguide/log-customize-retention.html
+upvoted 1 times
+jerryl 1 year, 2 months ago
+you need random access after 90 days but option A is removing the logs
+upvoted 1 times
+Correct Answer: D
+Community vote distribution
+D (94%)
+6%
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: D
+Use Amazon S3 as the target. Enable an S3 Lifecycle policy to transition the logs to S3 Standard-Infrequent Access (S3 Standard-IA) after 90 days
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+D. Use Amazon S3 as the target. Enable an S3 Lifecycle policy to transition the logs to S3 Standard-Infrequent Access (S3 Standard-IA) after 90 days.
+upvoted 2 times
+animefan1 2 years, 11 months ago
+Selected Answer: D
+S3 will store logs. With life cycle, we can move it to different class. With Option A, log groups expiration will simply remove the logs and failing the
+2nd request in question
+upvoted 3 times
+markw92 2 years, 11 months ago
+A doesn't solve "90 days and then accessed intermittently" this statement. It sets expire after 90. Not sure otherwise A seems to be right choice since
+you can create dashboards etc.
+upvoted 2 times
+Bmarodi 3 years ago
+Selected Answer: A
+Option A meets these requirements.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+"Expiration of 90 days", but you need to access the log AFTER 90 days, just "intermittently".
+upvoted 4 times
+ocbn3wby 3 years, 4 months ago
+Selected Answer: D
+There's a table here that specifies that VPC Flow logs can go directly to S3. Does not need to go via CloudTrail and then to S3. Nor via CW.
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-infrastructure-S3
+upvoted 4 times
+techhb 3 years, 4 months ago
+Selected Answer: D
+we need to preserve logs hence D
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogsConcepts.html
+upvoted 3 times
+mp165 3 years, 4 months ago
+Selected Answer: D
+D...agree that retention is the key word
+upvoted 3 times
+swolfgang 3 years, 4 months ago
+Selected Answer: D
+a is not,retantion means delete after 90 days but questions say rarely access.
+upvoted 3 times
+mhmt4438 3 years, 4 months ago
+Selected Answer: D
+D. Use Amazon S3 as the target. Enable an S3 Lifecycle policy to transition the logs to S3 Standard-Infrequent Access (S3 Standard-IA) after 90 days.
+By using Amazon S3 as the target for the VPC Flow Logs, the logs can be easily stored and accessed by the security team. Enabling an S3 Lifecycle
+policy to transition the logs to S3 Standard-Infrequent Access (S3 Standard-IA) after 90 days will automatically move the logs to a storage class that i
+optimized for infrequent access, reducing the storage costs for the company. The security team will still be able to access the logs as needed, even
+after they have been transitioned to S3 Standard-IA, but the storage cost will be optimized.
+upvoted 5 times
+laicos 3 years, 4 months ago
+Selected Answer: D
+I prefer D
+"accessed intermittently" need logs after 90 days
+upvoted 2 times
+Parsons 3 years, 4 months ago
+Selected Answer: D
+No, D should be is correct.
+"The logs will be frequently accessed for 90 days and then accessed intermittently." => We still need to store instead of deleting as the answer A.
+upvoted 3 times
+Aninina 3 years, 4 months ago
+Selected Answer: D
+D looks correct. This will meet the requirements of frequently accessing the logs for the first 90 days and then intermittently accessing them after
+that. S3 standard-IA is a storage class that is less expensive than S3 standard for infrequently accessed data, so it would be a more cost-effective
+option for storing the logs after the first 90 days.
+upvoted 2 times

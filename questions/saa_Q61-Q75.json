@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 61,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上開發一個兩層 Web 應用程式。該公司的開發人員已將該應用程式部署在直接連接到後端 Amazon RDS 資料庫的 Amazon EC2 執行個體上。本公司不得在應用程式中對資料庫憑證進行硬編碼。該公司還必須實施一種解決方案來定期自動輪換資料庫憑證。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is developing a two-tier web application on AWS. The company's developers have deployed the application on an Amazon EC2 instance that connects directly to a backend Amazon RDS database. The company must not hardcode database credentials in the application. The company must also implement a solution to automatically rotate the database credentials on a regular basis. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "將資料庫憑證儲存在實例元資料中。使用 Amazon EventBridge (Amazon CloudWatch Events) 規則執行計畫的 AWS Lambda 函數，該函數會同時更新 RDS 憑證和執行個體元資料。",
+          "en": "Store the database credentials in the instance metadata. Use Amazon EventBridge (Amazon CloudWatch Events) rules to run a scheduled AWS Lambda function that updates the RDS credentials and instance metadata at the same time."
+        },
+        "B": {
+          "zh": "將資料庫憑證儲存在加密的 Amazon S3 儲存桶的設定檔中。使用 Amazon EventBridge (Amazon CloudWatch Events) 規則執行計畫的 AWS Lambda 函數，該函數會同時更新 RDS 憑證和設定檔中的憑證。使用 S3 版本控制來確保能夠回退到先前的值。",
+          "en": "Store the database credentials in a configuration file in an encrypted Amazon S3 bucket. Use Amazon EventBridge (Amazon CloudWatch Events) rules to run a scheduled AWS Lambda function that updates the RDS credentials and the credentials in the configuration file at the same time. Use S3 Versioning to ensure the ability to fall back to previous values."
+        },
+        "C": {
+          "zh": "將資料庫憑證儲存在 AWS Secrets Manager 中作為金鑰。打開秘密的自動旋轉。將所需的權限附加到 EC2 角色以授予對金鑰的存取權限。",
+          "en": "Store the database credentials as a secret in AWS Secrets Manager. Turn on automatic rotation for the secret. Attach the required permission to the EC2 role to grant access to the secret."
+        },
+        "D": {
+          "zh": "將資料庫憑證作為加密參數儲存在 AWS Systems Manager Parameter Store 中。開啟加密參數的自動輪換。將所需的權限附加到 EC2 角色以授予對加密參數的存取權限。",
+          "en": "Store the database credentials as encrypted parameters in AWS Systems Manager Parameter Store. Turn on automatic rotation for the encrypted parameters. Attach the required permission to the EC2 role to grant access to the encrypted parameters."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Lambda函數和EventBridge規則需要手動編寫，增加了維運複雜度。",
+          "en": "Incorrect. Lambda functions and EventBridge rules need to be written manually, which increases operation and maintenance complexity."
+        },
+        "B": {
+          "zh": "錯誤。Lambda函數和EventBridge規則需要手動編寫，增加了維運複雜度。雖然S3 Versioning提供了回滾功能，但它不能直接支援自動輪換。",
+          "en": "Incorrect. Lambda functions and EventBridge rules need to be written manually, which increases operation and maintenance complexity. Although S3 Versioning provides a rollback function, it cannot directly support automatic rotation."
+        },
+        "C": {
+          "zh": "正確。透過將適當的 IAM 權限附加到 EC2 實例，可以安全地存取儲存的憑證。此解決方案的營運開銷最低，因為自動輪換功能完全由 AWS 管理。",
+          "en": "Correct. Stored credentials can be accessed securely by attaching the appropriate IAM permissions to the EC2 instance. This solution has the lowest operational overhead because the automatic rotation feature is fully managed by AWS."
+        },
+        "D": {
+          "zh": "錯誤。輪換邏輯需要手動實現，增加了運維的複雜度。",
+          "en": "Incorrect. The rotation logic needs to be implemented manually, which increases the complexity of operation and maintenance."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將資料庫憑證儲存在 AWS Secrets Manager 中作為金鑰。打開秘密的自動旋轉。將所需的權限附加到 EC2 角色以授予對金鑰的存取權限。",
+        "en": "C. Store the database credentials as a secret in AWS Secrets Manager. Turn on automatic rotation for the secret. Attach the required permission to the EC2 role to grant access to the secret."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：透過將適當的 IAM 權限附加到 EC2 實例，可以安全地存取儲存的憑證。此解決方案的營運開銷最低，因為自動輪換功能完全由 AWS 管理。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Stored credentials can be accessed securely by attaching the appropriate IAM permissions to the EC2 instance. This solution has the lowest operational overhead because the automatic rotation feature is fully managed by AWS."
+      }
+    },
+    {
+      "question_no": 62,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在將新的公共 Web 應用程式部署到 AWS。該應用程式將在應用程式負載平衡器 (ALB) 後面運行。應用程式需要使用外部憑證授權單位 (CA) 頒發的 SSL/TLS 憑證在邊緣進行加密。每年在證書到期前必須輪換證書。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company is deploying a new public web application to AWS. The application will run behind an Application Load Balancer (ALB). The application needs to be encrypted at the edge with an SSL/TLS certificate that is issued by an external certificate authority (CA). The certificate must be rotated each year before the certificate expires. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Certificate Manager (ACM) 頒發 SSL/TLS 憑證。將證書應用到 ALB。使用託管續約功能自動輪換憑證。",
+          "en": "Use AWS Certificate Manager (ACM) to issue an SSL/TLS certificate. Apply the certificate to the ALB. Use the managed renewal feature to automatically rotate the certificate."
+        },
+        "B": {
+          "zh": "使用 AWS Certificate Manager (ACM) 頒發 SSL/TLS 憑證。從憑證中匯入密鑰材料。將憑證套用到 AL 使用託管續約功能自動輪換憑證。",
+          "en": "Use AWS Certificate Manager (ACM) to issue an SSL/TLS certificate. Import the key material from the certificate. Apply the certificate to the ALUse the managed renewal feature to automatically rotate the certificate."
+        },
+        "C": {
+          "zh": "使用 AWS Certificate Manager (ACM) 私有憑證授權單位從根 CA 頒發 SSL/TLS 憑證。將證書應用到 ALB。使用託管續約功能自動輪換憑證。",
+          "en": "Use AWS Certificate Manager (ACM) Private Certificate Authority to issue an SSL/TLS certificate from the root CA. Apply the certificate to the ALB. Use the managed renewal feature to automatically rotate the certificate."
+        },
+        "D": {
+          "zh": "使用 AWS Certificate Manager (ACM) 匯入 SSL/TLS 憑證。將證書應用到 ALB。使用 Amazon EventBridge (Amazon CloudWatch Events) 在憑證即將過期時發送通知。手動輪換證書。",
+          "en": "Use AWS Certificate Manager (ACM) to import an SSL/TLS certificate. Apply the certificate to the ALB. Use Amazon EventBridge (Amazon CloudWatch Events) to send a notification when the certificate is nearing expiration. Rotate the certificate manually."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。問題明確要求證書由外部證書頒發機構（CA）頒發，但ACM頒發的證書是AWS內部CA提供的，不符合問題要求。",
+          "en": "Incorrect. The question clearly requires that the certificate be issued by an external certificate authority (CA), but the certificate issued by ACM is provided by AWS's internal CA, which does not meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。ACM頒發的證書仍然是AWS內部CA提供的，不符合問題要求。可惜的是，ACM 的託管續約功能僅適用於 ACM 所核發的證書，不適用於匯入的證書。",
+          "en": "Incorrect. The certificate issued by ACM is still provided by AWS's internal CA and does not meet the question requirements. Unfortunately, ACM's managed renewal feature only works with certificates issued by ACM, not imported certificates."
+        },
+        "C": {
+          "zh": "錯誤。ACM 私有憑證授權單位 (PCA) 是 AWS 提供的私有 CA 服務。頒發的證書仍然是內部證書，不符合問題所要求的「外部證書頒發機構」。",
+          "en": "Incorrect. ACM Private Certificate Authority (PCA) is a private CA service provided by AWS. The certificate issued is still an internal certificate and does not meet the \"external certificate authority\" required by the question."
+        },
+        "D": {
+          "zh": "正確。ACM 支援匯入外部 CA 所頒發的憑證並將其套用到 ALB。由於匯入的憑證是無條件的並使用 ACM 的託管續約功能，因此您需要透過 Amazon EventBridge 設定通知機制並手動輪替憑證。",
+          "en": "Correct. ACM supports importing certificates issued by external CAs and applying them to ALB. Since the imported certificate is unconditional and uses ACM's managed renewal function, you need to set up a notification mechanism through Amazon EventBridge and manually rotate the certificate."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 AWS Certificate Manager (ACM) 匯入 SSL/TLS 憑證。將證書應用到 ALB。使用 Amazon EventBridge (Amazon CloudWatch Events) 在憑證即將過期時發送通知。手動輪換證書。",
+        "en": "D. Use AWS Certificate Manager (ACM) to import an SSL/TLS certificate. Apply the certificate to the ALB. Use Amazon EventBridge (Amazon CloudWatch Events) to send a notification when the certificate is nearing expiration. Rotate the certificate manually."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (94%)。熱門討論與考點摘要：ACM 支援匯入外部 CA 所頒發的憑證並將其套用到 ALB。由於匯入的憑證是無條件的並使用 ACM 的託管續約功能，因此您需要透過 Amazon EventBridge 設定通知機制並手動輪替憑證。",
+        "en": "Community vote as displayed: D (94%). Popular discussion and key point summary: ACM supports importing certificates issued by external CAs and applying them to ALB. Since the imported certificate is unconditional and uses ACM's managed renewal function, you need to set up a notification mechanism through Amazon EventBridge and manually rotate the certificate."
+      }
+    },
+    {
+      "question_no": 63,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上運行其基礎設施，其文件管理應用程式擁有 700,000 名註冊用戶。該公司打算創建一種將大型 .pdf 檔案轉換為 .jpg 圖像檔案的產品。 .pdf 檔案平均大小為 5 MB。公司需要儲存原始文件和轉換後的文件。解決方案架構師必須設計可擴展的解決方案來滿足隨著時間的推移而快速增長的需求。哪種解決方案最經濟有效率地滿足這些要求？",
+        "en": "A company runs its infrastructure on AWS and has a registered base of 700,000 users for its document management application. The company intends to create a product that converts large .pdf files to .jpg image files. The .pdf files average 5 MB in size. The company needs to store the original files and the converted files. A solutions architect must design a scalable solution to accommodate demand that will grow rapidly over time. Which solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 .pdf 檔案儲存到 Amazon S3。配置 S3 PUT 事件以呼叫 AWS Lambda 函數將檔案轉換為 .jpg 格式並將其儲存回 Amazon S3。",
+          "en": "Save the .pdf files to Amazon S3. Configure an S3 PUT event to invoke an AWS Lambda function to convert the files to .jpg format and store them back in Amazon S3."
+        },
+        "B": {
+          "zh": "將 .pdf 檔案儲存到 Amazon DynamoD 使用 DynamoDB Streams 功能呼叫 AWS Lambda 函數將檔案轉換為 .jpg 格式並將其儲存回 DynamoDB。",
+          "en": "Save the .pdf files to Amazon DynamoDUse the DynamoDB Streams feature to invoke an AWS Lambda function to convert the files to .jpg format and store them back in DynamoDB."
+        },
+        "C": {
+          "zh": "將 .pdf 檔案上傳至包含 Amazon EC2 執行個體、Amazon Elastic Block Store (Amazon EBS) 儲存體和 Auto Scaling 群組的 AWS Elastic Beanstalk 應用程式。使用 EC2 執行個體中的程式將檔案轉換為 .jpg 格式。將 .pdf 檔案和 .jpg 檔案保存在 EBS 儲存中。",
+          "en": "Upload the .pdf files to an AWS Elastic Beanstalk application that includes Amazon EC2 instances, Amazon Elastic Block Store (Amazon EBS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the files to .jpg format. Save the .pdf files and the .jpg files in the EBS store."
+        },
+        "D": {
+          "zh": "將 .pdf 檔案上傳至包含 Amazon EC2 執行個體、Amazon Elastic File System (Amazon EFS) 儲存與 Auto Scaling 群組的 AWS Elastic Beanstalk 應用程式。使用 EC2 執行個體中的程式將檔案轉換為 .jpg 格式。將 .pdf 檔案和 .jpg 檔案保存在 EBS 儲存中。",
+          "en": "Upload the .pdf files to an AWS Elastic Beanstalk application that includes Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the file to .jpg format. Save the .pdf files and the .jpg files in the EBS store."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。.jpg 格式並將其儲存回 Amazon S3。分析：Amazon S3是一種高度可擴充、低成本的儲存服務，適合儲存大量文件。 S3 PUT 事件可以觸發 AWS Lambda 函數，而無需額外的伺服器資源。 AWS Lambda 可有效率地處理檔案轉換任務，並以使用量計費，成本低廉。此解決方案完美滿足要求，是最具成本效益的解決方案。結論：。",
+          "en": "Correct. .jpg format and store them back in Amazon S3. Analysis: Amazon S3 is a highly scalable, low-cost storage service suitable for storing large amounts of files. S3 PUT events can trigger AWS Lambda functions without requiring additional server resources. AWS Lambda can handle file conversion tasks efficiently and is billed based on usage at low cost. This solution perfectly meets the requirements and is the most cost-effective solution. Conclusion:."
+        },
+        "B": {
+          "zh": "錯誤。將檔案轉換為 .jpg 格式並將其儲存回 DynamoDB。分析：Amazon DynamoDB是NoSQL資料庫，適合儲存結構化數據，但不適合儲存大檔案。雖然使用 DynamoDB Streams 觸發 Lambda 函數有效，但在 DynamoDB 中儲存大型檔案成本高昂，且不符合最佳實務。這種場景不適合儲存和處理大檔案。結論：錯誤。",
+          "en": "Incorrect. convert the files to .jpg format and store them back in DynamoDB. Analysis: Amazon DynamoDB is a NoSQL database suitable for storing structured data, but not suitable for storing large files. While using DynamoDB Streams to trigger Lambda functions works, storing large files in DynamoDB is expensive and not in line with best practices. This scenario is not suitable for storing and processing large files. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "錯誤。Store (Amazon EBS) 儲存與 Auto Scaling 群組。使用 EC2 執行個體中的程式將檔案轉換為 .jpg 格式。將 .pdf 檔案和 .jpg 檔案保存在 EBS 儲存中。分析：Elastic Beanstalk可以管理EC2實例，但需要維護底層基礎設施，這增加了複雜性。使用EBS儲存檔案成本較高，且不具備S3的高擴充性。這種方案成本高、管理複雜，不是最優選擇。結論：錯誤。",
+          "en": "Incorrect. Store (Amazon EBS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the files to .jpg format. Save the .pdf files and the .jpg files in the EBS store. Analysis: Elastic Beanstalk can manage EC2 instances, but it requires maintaining the underlying infrastructure, which increases complexity. Using EBS to store files is more expensive and does not have the high scalability of S3. This option has high cost and management complexity and is not the optimal choice. Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "錯誤。系統 (Amazon EFS) 儲存與 Auto Scaling 群組。使用 EC2 執行個體中的程式將檔案轉換為 .jpg 格式。將 .pdf 檔案和 .jpg 檔案保存在 EBS 儲存中。分析：Elastic Beanstalk 和 EFS 的組合增加了複雜性和成本。 EFS適合共享文件存儲，但其成本高於S3，且不具備S3的事件觸發功能。這種方案成本高、管理複雜，不是最優選擇。結論：錯誤。",
+          "en": "Incorrect. System (Amazon EFS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the file to .jpg format. Save the .pdf files and the .jpg files in the EBS store. Analysis: The combination of Elastic Beanstalk and EFS adds complexity and cost. EFS is suitable for shared file storage, but its cost is higher than S3, and it does not have the event triggering function of S3. This option has high cost and management complexity and is not the optimal choice. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將 .pdf 檔案儲存到 Amazon S3。配置 S3 PUT 事件以呼叫 AWS Lambda 函數將檔案轉換為 .jpg 格式並將其儲存回 Amazon S3。",
+        "en": "A. Save the .pdf files to Amazon S3. Configure an S3 PUT event to invoke an AWS Lambda function to convert the files to .jpg format and store them back in Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (99%)。熱門討論與考點摘要：.jpg 格式並將其儲存回 Amazon S3。分析：Amazon S3是一種高度可擴充、低成本的儲存服務，適合儲存大量文件。 S3 PUT 事件可以觸發 AWS Lambda 函數，而無需額外的伺服器資源。 AWS Lambda 可有效率地處理檔案轉換任務，並以使用量計費，成本低廉。此解決方案完美滿足要求，是最具成本效益的解決方案。結論：。",
+        "en": "Community vote as displayed: A (99%). Popular discussion and key point summary: .jpg format and store them back in Amazon S3. Analysis: Amazon S3 is a highly scalable, low-cost storage service suitable for storing large amounts of files. S3 PUT events can trigger AWS Lambda functions without requiring additional server resources. AWS Lambda can handle file conversion tasks efficiently and is billed based on usage at low cost. This solution perfectly meets the requirements and is the most cost-effective solution. Conclusion:."
+      }
+    },
+    {
+      "question_no": 64,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在本地運行的 Windows 檔案伺服器上擁有超過 5 TB 的檔案資料。用戶和應用程式每天都與數據互動。該公司正在將其 Windows 工作負載遷移到 AWS。隨著公司繼續這一流程，公司需要以最小的延遲存取 AWS 和本地文件儲存。該公司需要一種能夠最大限度地減少營運開銷並且不需要對現有文件存取模式進行重大更改的解決方案。該公司使用 AWS 站點到站點 VPN 連線來連接到 AWS。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company has more than 5 TB of file data on Windows file servers that run on premises. Users and applications interact with the data each day. The company is moving its Windows workloads to AWS. As the company continues this process, the company requires access to AWS and on-premises file storage with minimum latency. The company needs a solution that minimizes operational overhead and requires no significant changes to the existing file access patterns. The company uses an AWS Site-to-Site VPN connection for connectivity to AWS. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS 上部署並設定 Amazon FSx for Windows File Server。將本機檔案資料移至 FSx for Windows File Server。重新配置工作負載以使用 FSx for Windows File Server on AWS。",
+          "en": "Deploy and configure Amazon FSx for Windows File Server on AWS. Move the on-premises file data to FSx for Windows File Server. Reconfigure the workloads to use FSx for Windows File Server on AWS."
+        },
+        "B": {
+          "zh": "在本機部署和設定 Amazon S3 檔案閘道。將本機檔案資料移至 S3 檔案網關。重新配置本機工作負載和雲端工作負載以使用 S3 檔案閘道。",
+          "en": "Deploy and configure an Amazon S3 File Gateway on premises. Move the on-premises file data to the S3 File Gateway. Reconfigure the on-premises workloads and the cloud workloads to use the S3 File Gateway."
+        },
+        "C": {
+          "zh": "在本機部署和設定 Amazon S3 檔案閘道。將本機檔案資料移至 Amazon S3。重新配置工作負載以直接使用 Amazon S3 或 S3 檔案閘道。取決於每個工作負載的位置。",
+          "en": "Deploy and configure an Amazon S3 File Gateway on premises. Move the on-premises file data to Amazon S3. Reconfigure the workloads to use either Amazon S3 directly or the S3 File Gateway. depending on each workload's location."
+        },
+        "D": {
+          "zh": "在 AWS 上部署並設定 Amazon FSx for Windows File Server。在本機部署和設定 Amazon FSx 檔案閘道。將本機檔案資料移至 FSx 檔案閘道。配置雲端工作負載以使用 FSx for Windows File Server on AWS。設定本機工作負載以使用 FSx 檔案閘道。",
+          "en": "Deploy and configure Amazon FSx for Windows File Server on AWS. Deploy and configure an Amazon FSx File Gateway on premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File Server on AWS. Configure the on-premises workloads to use the FSx File Gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Windows 檔案伺服器。重新配置工作負載以使用 FSx for Windows File Server on AWS。此問題可能會導致本地工作負載存取AWS檔案儲存時出現較高的延遲，不符合「最小延遲」要求。",
+          "en": "Incorrect. Windows File Server. Reconfigure the workloads to use FSx for Windows File Server on AWS. This problem may result in higher latency when local workloads access AWS file storage, which does not meet the \"minimum latency\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。重新配置本機工作負載和雲端工作負載以使用 S3 檔案閘道。 Windows 檔案伺服器工作負載通常需要檔案級儲存而不是物件儲存。",
+          "en": "Incorrect. Reconfigure the on-premises workloads and the cloud workloads to use the S3 File Gateway. Windows file server workloads typically require file-level storage rather than object storage."
+        },
+        "C": {
+          "zh": "錯誤。重新配置工作負載以直接使用 Amazon S3 或 S3 檔案網關，取決於每個工作負載的位置。與選項 B 類似，S3 是物件存儲，不適合 Windows 檔案伺服器的工作負載需求。",
+          "en": "Incorrect. Reconfigure the workloads to use either Amazon S3 directly or the S3 File Gateway, depending on each workload's location. Similar to option B, S3 is object storage and is not suitable for the workload needs of Windows file servers."
+        },
+        "D": {
+          "zh": "正確。在場所。將本機檔案資料移至 FSx 檔案閘道。配置雲端工作負載以使用 FSx for Windows File Server on AWS。 FSx 檔案閘道允許本機工作負載以最小的延遲存取 AWS 上的 FSx 檔案存儲，而無需對現有檔案存取模式進行重大變更。",
+          "en": "Correct. on premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File Server on AWS. FSx File Gateway allows on-premises workloads to access FSx file storage on AWS with minimal latency without requiring significant changes to existing file access patterns."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 AWS 上部署並設定 Amazon FSx for Windows File Server。在本機部署和設定 Amazon FSx 檔案閘道。將本機檔案資料移至 FSx 檔案閘道。配置雲端工作負載以使用 FSx for Windows File Server on AWS。設定本機工作負載以使用 FSx 檔案閘道。",
+        "en": "D. Deploy and configure Amazon FSx for Windows File Server on AWS. Deploy and configure an Amazon FSx File Gateway on premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File Server on AWS. Configure the on-premises workloads to use the FSx File Gateway."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (76%)； A (22%)。熱門討論與考點摘要：在場所。將本機檔案資料移至 FSx 檔案閘道。配置雲端工作負載以使用 FSx for Windows File Server on AWS。 FSx 檔案閘道允許本機工作負載以最小的延遲存取 AWS 上的 FSx 檔案存儲，而無需對現有檔案存取模式進行重大變更。",
+        "en": "Community vote as displayed: D (76%); A (22%). Popular discussion and key point summary: on premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File Server on AWS. FSx File Gateway allows on-premises workloads to access FSx file storage on AWS with minimal latency without requiring significant changes to existing file access patterns."
+      }
+    },
+    {
+      "question_no": 65,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家醫院最近使用 Amazon API Gateway 和 AWS Lambda 部署了 RESTful API。醫院使用 API Gateway 和 Lambda 上傳 PDF 格式和 JPEG 格式的報告。醫院需要修改 Lambda 代碼以識別報告中的受保護健康資訊 (PHI)。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A hospital recently deployed a RESTful API with Amazon API Gateway and AWS Lambda. The hospital uses API Gateway and Lambda to upload reports that are in PDF format and JPEG format. The hospital needs to modify the Lambda code to identify protected health information (PHI) in the reports. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用現有的 Python 程式庫從報告中提取文字並從提取的文本中識別 PHI。",
+          "en": "Use existing Python libraries to extract the text from the reports and to identify the PHI from the extracted text."
+        },
+        "B": {
+          "zh": "使用 Amazon Textract 從報告中擷取文字。使用 Amazon SageMaker 從擷取的文字中識別 PHI。",
+          "en": "Use Amazon Textract to extract the text from the reports. Use Amazon SageMaker to identify the PHI from the extracted text."
+        },
+        "C": {
+          "zh": "使用 Amazon Textract 從報告中擷取文字。使用 Amazon Comprehend Medical 從提取的文本中識別 PHI。",
+          "en": "Use Amazon Textract to extract the text from the reports. Use Amazon Comprehend Medical to identify the PHI from the extracted text."
+        },
+        "D": {
+          "zh": "使用 Amazon Rekognition 從報告中擷取文字。使用 Amazon Comprehend Medical 從提取的文本中識別 PHI。",
+          "en": "Use Amazon Rekognition to extract the text from the reports. Use Amazon Comprehend Medical to identify the PHI from the extracted text."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然可以使用 Python 程式庫提取文字並識別 PHI，但這需要開發和維護額外的程式碼，從而增加了操作複雜性。",
+          "en": "Incorrect. While it is possible to use a Python library to extract text and identify PHI, this requires developing and maintaining additional code, increasing operational complexity."
+        },
+        "B": {
+          "zh": "錯誤。Amazon Textract 可以提取文本，但使用 Amazon SageMaker 識別 PHI 需要建立和訓練自訂機器學習模型，這會增加操作複雜性。",
+          "en": "Incorrect. Amazon Textract can extract text, but using Amazon SageMaker to identify PHI requires building and training a custom machine learning model, which increases operational complexity."
+        },
+        "C": {
+          "zh": "正確。Amazon Textract 旨在從文件中提取文本，Amazon Comprehend Medical 可以直接識別敏感的醫療相關資訊（例如 PHI），無需額外的開發工作，並且營運開銷極低。",
+          "en": "Correct. Amazon Textract is designed to extract text from documents, and Amazon Comprehend Medical can directly identify sensitive medical-related information (such as PHI) with no additional development work and minimal operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Rekognition 主要用於影像和視訊分析，不適合從 PDF 或 JPEG 文件中提取文字。",
+          "en": "Incorrect. Amazon Rekognition is primarily used for image and video analysis and is not suitable for extracting text from PDF or JPEG documents."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 Amazon Textract 從報告中擷取文字。使用 Amazon Comprehend Medical 從提取的文本中識別 PHI。",
+        "en": "C. Use Amazon Textract to extract the text from the reports. Use Amazon Comprehend Medical to identify the PHI from the extracted text."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：Amazon Textract 旨在從文件中提取文本，Amazon Comprehend Medical 可以直接識別敏感的醫療相關資訊（例如 PHI），無需額外的開發工作，並且營運開銷極低。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon Textract is designed to extract text from documents, and Amazon Comprehend Medical can directly identify sensitive medical-related information (such as PHI) with no additional development work and minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 66,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司的應用程式會產生大量文件，每個文件大小約為 5 MB。這些檔案儲存在 Amazon S3 中。公司政策要求文件保存 4 年才能刪除。由於文件包含不易複製的關鍵業務數據，因此始終需要立即可存取。這些文件在物件創建後的前 30 天內存取頻繁，但在前 30 天後很少存取。哪種儲存解決方案最具成本效益？",
+        "en": "A company has an application that generates a large number of files, each approximately 5 MB in size. The files are stored in Amazon S3. Company policy requires the files to be stored for 4 years before they can be deleted. Immediate accessibility is always required as the files contain critical business data that is not easy to reproduce. The files are frequently accessed in the first 30 days of the object creation but are rarely accessed after the first 30 days. Which storage solution is MOST cost-effective?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 S3 儲存桶生命週期策略，以便在物件建立後 30 天將檔案從 S3 Standard 移至 S3 Glacier。物件建立 4 年後刪除檔案。",
+          "en": "Create an S3 bucket lifecycle policy to move files from S3 Standard to S3 Glacier 30 days from object creation. Delete the files 4 years after object creation."
+        },
+        "B": {
+          "zh": "建立 S3 儲存桶生命週期策略，以便在物件建立後 30 天將檔案從 S3 Standard 移至 S3 One Zone-Infrequent Access (S3 One Zone-IA)。物件建立 4 年後刪除檔案。",
+          "en": "Create an S3 bucket lifecycle policy to move files from S3 Standard to S3 One Zone-Infrequent Access (S3 One Zone-IA) 30 days from object creation. Delete the files 4 years after object creation."
+        },
+        "C": {
+          "zh": "建立 S3 儲存桶生命週期策略，以便在物件建立後 30 天將檔案從 S3 Standard 移至 S3 Standard-Infrequent Access (S3 Standard-IA)。物件建立 4 年後刪除檔案。",
+          "en": "Create an S3 bucket lifecycle policy to move files from S3 Standard to S3 Standard-Infrequent Access (S3 Standard-IA) 30 days from object creation. Delete the files 4 years after object creation."
+        },
+        "D": {
+          "zh": "建立 S3 儲存桶生命週期策略，以便在物件建立後 30 天將檔案從 S3 Standard 移至 S3 Standard-Infrequent Access (S3 Standard-IA)。物件建立 4 年後將檔案移至 S3 Glacier。",
+          "en": "Create an S3 bucket lifecycle policy to move files from S3 Standard to S3 Standard-Infrequent Access (S3 Standard-IA) 30 days from object creation. Move the files to S3 Glacier 4 years after object creation."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。S3 Glacier 是長期儲存的低成本選項，但它不支援立即存取。該問題要求可以立即存取該文件，因此此選項不符合條件。",
+          "en": "Incorrect. S3 Glacier is a low-cost option for long-term storage, but it does not support immediate access. The question requires that the file be immediately accessible, so this option is not eligible."
+        },
+        "B": {
+          "zh": "錯誤。雖然S3 One Zone-IA成本較低，但由於資料僅儲存在一個可用區中，因此儲存可靠性較低。對於業務關鍵數據，這種類型的儲存不適合。",
+          "en": "Incorrect. Although S3 One Zone-IA is lower cost, it has lower storage reliability because data is only stored in one Availability Zone. For business-critical data, this type of storage is not suitable."
+        },
+        "C": {
+          "zh": "正確。S3 Standard-IA是適合不頻繁存取但要求高可用性和即時存取的儲存類別。其成本低於S3標準，並且符合問題所需的存取方式和儲存可靠性。",
+          "en": "Correct. S3 Standard-IA is a storage category suitable for infrequent access but requiring high availability and instant access. Its cost is lower than S3 Standard, and it meets the access mode and storage reliability required by the question."
+        },
+        "D": {
+          "zh": "錯誤。雖然此選項可以透過在 4 年後將文件移至 S3 Glacier 來進一步降低成本，但問題要求文件可以立即訪問，因此此選項不滿足要求。",
+          "en": "Incorrect. Although this option can further reduce costs by moving the files to S3 Glacier after 4 years, the question requires that the files be accessible immediately, so this option does not meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 S3 儲存桶生命週期策略，以便在物件建立後 30 天將檔案從 S3 Standard 移至 S3 Standard-Infrequent Access (S3 Standard-IA)。物件建立 4 年後刪除檔案。",
+        "en": "C. Create an S3 bucket lifecycle policy to move files from S3 Standard to S3 Standard-Infrequent Access (S3 Standard-IA) 30 days from object creation. Delete the files 4 years after object creation."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (65%)； B (19%)； A (17%)。熱門討論與考點摘要：S3 Standard-IA是適合不頻繁存取但要求高可用性和即時存取的儲存類別。其成本低於S3標準，並且符合問題所需的存取方式和儲存可靠性。",
+        "en": "Community vote as displayed: C (65%); B (19%); A (17%). Popular discussion and key point summary: S3 Standard-IA is a storage category suitable for infrequent access but requiring high availability and instant access. Its cost is lower than S3 Standard, and it meets the access mode and storage reliability required by the question."
+      }
+    },
+    {
+      "question_no": 67,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在多個 Amazon EC2 執行個體上託管應用程式。該應用程式處理來自 Amazon SQS 佇列的訊息、寫入 Amazon RDS 表以及從佇列中刪除訊息。 RDS表中偶爾會發現重複記錄。 SQS 佇列不包含任何重複訊息。解決方案架構師應該做什麼來確保訊息只被處理一次？",
+        "en": "A company hosts an application on multiple Amazon EC2 instances. The application processes messages from an Amazon SQS queue, writes to an Amazon RDS table, and deletes the message from the queue. Occasional duplicate records are found in the RDS table. The SQS queue does not contain any duplicate messages. What should a solutions architect do to ensure messages are being processed once only?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 CreateQueue API 呼叫建立新佇列。",
+          "en": "Use the CreateQueue API call to create a new queue."
+        },
+        "B": {
+          "zh": "使用 AddPermission API 呼叫新增適當的權限。",
+          "en": "Use the AddPermission API call to add appropriate permissions."
+        },
+        "C": {
+          "zh": "使用 ReceiveMessage API 呼叫設定適當的等待時間。",
+          "en": "Use the ReceiveMessage API call to set an appropriate wait time."
+        },
+        "D": {
+          "zh": "使用 ChangeMes​​ageVisibility API 呼叫來增加可見性逾時。",
+          "en": "Use the ChangeMessageVisibility API call to increase the visibility timeout."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。建立新佇列並不能解決重複記錄的問題，因為問題的根源在於資訊處理邏輯，而不是佇列本身。",
+          "en": "Incorrect. Creating a new queue does not solve the problem of duplicate records, because the root of the problem lies in the information processing logic, not the queue itself."
+        },
+        "B": {
+          "zh": "錯誤。新增權限與重複處理資訊無關。權限設定主要是用來控制佇列的訪問，而不是解決資訊處理邏輯的問題。",
+          "en": "Incorrect. Adding permissions has nothing to do with repeated processing of information. Permission settings are mainly used to control queue access, not to solve the problem of information processing logic."
+        },
+        "C": {
+          "zh": "錯誤。設定等待時間（Wait Time）僅影響訊息的接收延遲，並不能解決重複處理的問題。",
+          "en": "Incorrect. Setting the waiting time (Wait Time) only affects the reception delay of information and does not solve the problem of repeated processing."
+        },
+        "D": {
+          "zh": "正確。增加可見度逾時（Visibility Timeout）可以確保一個消費者處理過的資訊不會被其他消費者再次處理，從而避免重複記錄的產生。",
+          "en": "Correct. Increasing the visibility timeout (Visibility Timeout) can ensure that information processed by one consumer will not be processed again by other consumers, thereby avoiding the generation of duplicate records."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 ChangeMes​​ageVisibility API 呼叫來增加可見性逾時。",
+        "en": "D. Use the ChangeMessageVisibility API call to increase the visibility timeout."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：增加可見度逾時（Visibility Timeout）可以確保一個消費者處理過的資訊不會被其他消費者再次處理，從而避免重複記錄的產生。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Increasing the visibility timeout (Visibility Timeout) can ensure that information processed by one consumer will not be processed again by other consumers, thereby avoiding the generation of duplicate records."
+      }
+    },
+    {
+      "question_no": 68,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在設計新的混合架構，以將公司的本地基礎架構擴展到 AWS。該公司需要與 AWS 區域建立高度可用且始終保持低延遲的連線。該公司需要最大限度地降低成本，並願意在主連接發生故障時接受較慢的流量。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A solutions architect is designing a new hybrid architecture to extend a company's on-premises infrastructure to AWS. The company requires a highly available connection with consistent low latency to an AWS Region. The company needs to minimize costs and is willing to accept slower traffic if the primary connection fails. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "預置到某個區域的 AWS Direct Connect 連線。如果主要 Direct Connect 連線失敗，則設定 VPN 連線作為備份。",
+          "en": "Provision an AWS Direct Connect connection to a Region. Provision a VPN connection as a backup if the primary Direct Connect connection fails."
+        },
+        "B": {
+          "zh": "提供到區域的 VPN 隧道連線以進行專用連線。為專用連線配置第二個 VPN 隧道，並在主 VPN 連線失敗時作為備份。",
+          "en": "Provision a VPN tunnel connection to a Region for private connectivity. Provision a second VPN tunnel for private connectivity and as a backup if the primary VPN connection fails."
+        },
+        "C": {
+          "zh": "設定與區域的 AWS Direct Connect 連線。如果主 Direct Connect 連線失敗，則向相同區域設定第二個 Direct Connect 連線作為備份。",
+          "en": "Provision an AWS Direct Connect connection to a Region. Provision a second Direct Connect connection to the same Region as a backup if the primary Direct Connect connection fails."
+        },
+        "D": {
+          "zh": "設定與區域的 AWS Direct Connect 連線。如果主 Direct Connect 連線失敗，請使用 AWS CLI 中的 Direct Connect 故障轉移屬性自動建立備份連線。",
+          "en": "Provision an AWS Direct Connect connection to a Region. Use the Direct Connect failover attribute from the AWS CLI to automatically create a backup connection if the primary Direct Connect connection fails."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Direct Connect 提供高效能、低延遲的專線連接，非常適合需要穩定連接的場景。 VPN 作為備份連線的成本較低，雖然其效能不如 Direct Connect，但可以滿足故障轉移的需求。滿足問題的要求：高可用、低延遲、成本最佳化。",
+          "en": "Correct. AWS Direct Connect provides high-performance, low-latency dedicated line connections, which is very suitable for scenarios that require stable connections. VPN is less expensive as a backup connection, and although its performance is not as good as Direct Connect, it can meet the needs of failover. Meets the requirements of the question: high availability, low latency, and cost optimization."
+        },
+        "B": {
+          "zh": "錯誤。VPN連線的效能和延遲不如Direct Connect，無法滿足問題所要求的「低延遲」要求。錯誤：雖然成本較低，但兩個 VPN 隧道無法提供 Direct Connect 的高效能連線。",
+          "en": "Incorrect. The performance and latency of the VPN connection are not as good as Direct Connect and cannot meet the \"low latency\" requirement required by the question. Wrong: Although less expensive, two VPN tunnels cannot provide the high-performance connection of Direct Connect."
+        },
+        "C": {
+          "zh": "錯誤。兩條專線連接雖然可以提供高可用性，但成本較高，不符合問題所要求的「成本優化」。錯誤：問題明確指出該公司願意接受較慢的備份連接，因此不需要兩個 Direct Connect 連接。",
+          "en": "Incorrect. Although two Direct Connect connections can provide high availability, the cost is high and does not meet the \"cost optimization\" required by the question. Wrong: The question clearly states that the company is willing to accept a slower backup connection, so two Direct Connect connections are not required."
+        },
+        "D": {
+          "zh": "錯誤。Direct Connect 故障轉移屬性不會自動建立備份連接，它僅用於設定現有連接的故障轉移。問題要求明確提到備份連線需要成本優化，但該選項並未提及 VPN 作為備份。",
+          "en": "Incorrect. The Direct Connect failover property does not automatically create a backup connection, it is only used to configure failover of an existing connection. The question requirement clearly mentions that backup connections require cost optimization, but this option does not mention VPN as a backup."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 預置到某個區域的 AWS Direct Connect 連線。如果主要 Direct Connect 連線失敗，則設定 VPN 連線作為備份。",
+        "en": "A. Provision an AWS Direct Connect connection to a Region. Provision a VPN connection as a backup if the primary Direct Connect connection fails."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (93%)。熱門討論與考點摘要：AWS Direct Connect 提供高效能、低延遲的專線連接，非常適合需要穩定連接的場景。 VPN 作為備份連線的成本較低，雖然其效能不如 Direct Connect，但可以滿足故障轉移的需求。滿足問題的要求：高可用、低延遲、成本最佳化。",
+        "en": "Community vote as displayed: A (93%). Popular discussion and key point summary: AWS Direct Connect provides high-performance, low-latency dedicated line connections, which is very suitable for scenarios that require stable connections. VPN is less expensive as a backup connection, and although its performance is not as good as Direct Connect, it can meet the needs of failover. Meets the requirements of the question: high availability, low latency, and cost optimization."
+      }
+    },
+    {
+      "question_no": 69,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在應用程式負載平衡器後面的 Amazon EC2 執行個體上執行業務關鍵型 Web 應用程式。 EC2 執行個體位於 Auto Scaling 群組中。該應用程式使用部署在單一可用區中的 Amazon Aurora PostgreSQL 資料庫。該公司希望應用程式具有高可用性，同時最大限度地減少停機時間和資料遺失。哪種解決方案能夠以最少的操作工作滿足這些要求？",
+        "en": "A company is running a business-critical web application on Amazon EC2 instances behind an Application Load Balancer. The EC2 instances are in an Auto Scaling group. The application uses an Amazon Aurora PostgreSQL database that is deployed in a single Availability Zone. The company wants the application to be highly available with minimum downtime and minimum loss of data. Which solution will meet these requirements with the LEAST operational effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 EC2 執行個體放置在不同的 AWS 區域。使用 Amazon Route 53 運作狀況檢查來重定向流量。使用 Aurora PostgreSQL 跨區域複製。",
+          "en": "Place the EC2 instances in different AWS Regions. Use Amazon Route 53 health checks to redirect traffic. Use Aurora PostgreSQL Cross-Region Replication."
+        },
+        "B": {
+          "zh": "設定 Auto Scaling 群組以使用多個可用區。將資料庫配置為多可用區。為資料庫配置 Amazon RDS 代理執行個體。",
+          "en": "Configure the Auto Scaling group to use multiple Availability Zones. Configure the database as Multi-AZ. Configure an Amazon RDS Proxy instance for the database."
+        },
+        "C": {
+          "zh": "將 Auto Scaling 群組配置為使用一個可用區。產生資料庫的每小時快照。發生故障時從快照還原資料庫。",
+          "en": "Configure the Auto Scaling group to use one Availability Zone. Generate hourly snapshots of the database. Recover the database from the snapshots in the event of a failure."
+        },
+        "D": {
+          "zh": "配置 Auto Scaling 群組以使用多個 AWS 區域。將資料從應用程式寫入 Amazon S3。使用 S3 事件通知啟動 AWS Lambda 函數以將資料寫入資料庫。",
+          "en": "Configure the Auto Scaling group to use multiple AWS Regions. Write the data from the application to Amazon S3. Use S3 Event Notifications to launch an AWS Lambda function to write the data to the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：將 EC2 執行個體放置在不同的 AWS 區域會增加複雜性和延遲，且不符合「最小營運工作量」要求。跨區域複製雖然可以提供災難恢復，但不適合解決單一可用區故障的問題。",
+          "en": "Incorrect. reason: Placing EC2 instances in different AWS regions increases complexity and latency and does not meet the \"minimum operational effort\" requirement. Although cross-region replication can provide disaster recovery, it is not suitable for solving the problem of single availability zone failure."
+        },
+        "B": {
+          "zh": "正確。原因：使用具有多個可用區的 Auto Scaling 群組可確保 EC2 執行個體的高可用性。將 Aurora 資料庫配置為多可用區可以提供資料冗餘和快速故障恢復，從而減少資料遺失和停機時間。 Amazon RDS Proxy 可以優化資料庫連線管理，進一步提高效能和可靠性。 發生故障時快照中的",
+          "en": "Correct. Reason: Using an Auto Scaling group with multiple Availability Zones ensures high availability of the EC2 instance. Configuring Aurora database as Multi-AZ can provide data redundancy and fast fault recovery, reducing data loss and downtime. Amazon RDS Proxy can optimize database connection management to further improve performance and reliability."
+        },
+        "C": {
+          "zh": "錯誤。資料庫。原因：僅使用一個可用區的Auto Scaling群組無法提供高可用性。依賴快照來復原資料庫會導致復原時間較長，不符合「最短停機時間」的要求。",
+          "en": "Incorrect. database from the snapshots in the event of a failure. Cause of the An Auto Scaling group using only one availability zone cannot provide high availability. Relying on snapshots to restore the database will result in long recovery times and does not meet the \"minimum downtime\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。原因：跨區域配置 Auto Scaling 組會增加複雜性和成本，且不符合「最小營運工作量」要求。使用 S3 和 Lambda 函數寫入資料庫是一種非同步方法，可能會導致資料延遲和一致性問題。",
+          "en": "Incorrect. reason: Configuring Auto Scaling groups across regions increases complexity and cost and does not meet the \"minimum operational effort\" requirement. Writing to the database using S3 and Lambda functions is an asynchronous method that can cause data latency and consistency issues."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 設定 Auto Scaling 群組以使用多個可用區。將資料庫配置為多可用區。為資料庫配置 Amazon RDS 代理執行個體。",
+        "en": "B. Configure the Auto Scaling group to use multiple Availability Zones. Configure the database as Multi-AZ. Configure an Amazon RDS Proxy instance for the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (96%)。熱門討論與考點摘要：原因：使用具有多個可用區的 Auto Scaling 群組可確保 EC2 執行個體的高可用性。將 Aurora 資料庫配置為多可用區可以提供資料冗餘和快速故障恢復，從而減少資料遺失和停機時間。 Amazon RDS Proxy 可以優化資料庫連線管理，進一步提高效能和可靠性。 發生故障時快照中的",
+        "en": "Community vote as displayed: B (96%). Popular discussion and key point summary: Reason: Using an Auto Scaling group with multiple Availability Zones ensures high availability of the EC2 instance. Configuring Aurora database as Multi-AZ can provide data redundancy and fast fault recovery, reducing data loss and downtime. Amazon RDS Proxy can optimize database connection management to further improve performance and reliability."
+      }
+    },
+    {
+      "question_no": 70,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的 HTTP 應用程式位於網路負載平衡器 (NLB) 後面。 NLB 的目標群組配置為使用具有多個執行 Web 服務的 EC2 執行個體的 Amazon EC2 Auto Scaling 群組。該公司注意到 NLB 沒有偵測到應用程式的 HTTP 錯誤。這些錯誤需要手動重新啟動執行 Web 服務的 EC2 執行個體。該公司需要在不編寫自訂腳本或程式碼的情況下提高應用程式的可用性。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company's HTTP application is behind a Network Load Balancer (NLB). The NLB's target group is configured to use an Amazon EC2 Auto Scaling group with multiple EC2 instances that run the web service. The company notices that the NLB is not detecting HTTP errors for the application. These errors require a manual restart of the EC2 instances that run the web service. The company needs to improve the application's availability without writing custom scripts or code. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 NLB 上啟用 HTTP 執行狀況檢查，提供公司應用程式的 URL。",
+          "en": "Enable HTTP health checks on the NLB, supplying the URL of the company's application."
+        },
+        "B": {
+          "zh": "在 EC2 執行個體中新增一個 cron 作業，每分鐘檢查一次本機應用程式的日誌。如果偵測到 HTTP 錯誤。應用程式將重新啟動。",
+          "en": "Add a cron job to the EC2 instances to check the local application's logs once each minute. If HTTP errors are detected. the application will restart."
+        },
+        "C": {
+          "zh": "將 NLB 替換為應用程式負載平衡器。透過提供公司應用程式的 URL 啟用 HTTP 運行狀況檢查。配置 Auto Scaling 操作以取代不健康的實例。",
+          "en": "Replace the NLB with an Application Load Balancer. Enable HTTP health checks by supplying the URL of the company's application. Configure an Auto Scaling action to replace unhealthy instances."
+        },
+        "D": {
+          "zh": "建立一個 Amazon Cloud Watch 警報來監控 NLB 的 UnhealthyHostCount 指標。配置 Auto Scaling 操作以在警報處於 ALARM 狀態時取代不健康的實例。",
+          "en": "Create an Amazon Cloud Watch alarm that monitors the UnhealthyHostCount metric for the NLB. Configure an Auto Scaling action to replace unhealthy instances when the alarm is in the ALARM state."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。NLB 不支援基於 HTTP 的運作狀況檢查。 NLB的健康檢查僅支援TCP等級的檢查，無法檢測HTTP錯誤。",
+          "en": "Incorrect. NLB does not support HTTP-based health checks. NLB's health check only supports TCP-level checks and cannot detect HTTP errors."
+        },
+        "B": {
+          "zh": "錯誤。雖然可以透過cron作業實現一些功能，但這需要編寫自訂腳本，並且無法自動替換不健康的實例，這違反了問題要求「無需編寫自訂腳本或程式碼」。",
+          "en": "Incorrect. Although some functions can be implemented through cron jobs, this requires writing custom scripts, and unhealthy instances cannot be automatically replaced, which violates the question requirement \"No need to write custom scripts or codes.\"."
+        },
+        "C": {
+          "zh": "正確。ALB 支援基於 HTTP 的運行狀況檢查，並且可以偵測 HTTP 錯誤。透過配置Auto Scaling群組，可以自動替換不健康的實例，從而提高應用程式的可用性。",
+          "en": "Correct. ALB supports HTTP-based health checks and can detect HTTP errors. By configuring an Auto Scaling group, unhealthy instances can be automatically replaced, thereby improving application availability."
+        },
+        "D": {
+          "zh": "錯誤。雖然可以透過CloudWatch監控UnhealthyHostCount，但NLB無法偵測HTTP等級的錯誤，因此無法滿足問題要求。",
+          "en": "Incorrect. Although UnhealthyHostCount can be monitored through CloudWatch, NLB cannot detect HTTP-level errors and therefore cannot meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將 NLB 替換為應用程式負載平衡器。透過提供公司應用程式的 URL 啟用 HTTP 運行狀況檢查。配置 Auto Scaling 操作以取代不健康的實例。",
+        "en": "C. Replace the NLB with an Application Load Balancer. Enable HTTP health checks by supplying the URL of the company's application. Configure an Auto Scaling action to replace unhealthy instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (90%)。熱門討論與考點摘要：ALB 支援基於 HTTP 的運行狀況檢查，並且可以偵測 HTTP 錯誤。透過配置Auto Scaling群組，可以自動替換不健康的實例，從而提高應用程式的可用性。",
+        "en": "Community vote as displayed: C (90%). Popular discussion and key point summary: ALB supports HTTP-based health checks and can detect HTTP errors. By configuring an Auto Scaling group, unhealthy instances can be automatically replaced, thereby improving application availability."
+      }
+    },
+    {
+      "question_no": 71,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司運行一個購物應用程序，該應用程式使用 Amazon DynamoDB 來儲存客戶資訊。如果發生資料損壞，解決方案架構師需要設計一個滿足 15 分鐘恢復點目標 (RPO) 和 1 小時復原時間目標 (RTO) 的解決方案。解決方案架構師應該建議什麼來滿足這些要求？",
+        "en": "A company runs a shopping application that uses Amazon DynamoDB to store customer information. In case of data corruption, a solutions architect needs to design a solution that meets a recovery point objective (RPO) of 15 minutes and a recovery time objective (RTO) of 1 hour. What should the solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 DynamoDB 全域表。對於 RPO 恢復，請將應用程式指向不同的 AWS 區域。",
+          "en": "Configure DynamoDB global tables. For RPO recovery, point the application to a different AWS Region."
+        },
+        "B": {
+          "zh": "設定 DynamoDB 時間點復原。對於RPO恢復，恢復到所需的時間點。",
+          "en": "Configure DynamoDB point-in-time recovery. For RPO recovery, restore to the desired point in time."
+        },
+        "C": {
+          "zh": "每天將 DynamoDB 資料匯出到 Amazon S3 Glacier。對於 RPO 恢復，請將資料從 S3 Glacier 匯入到 DynamoDB。",
+          "en": "Export the DynamoDB data to Amazon S3 Glacier on a daily basis. For RPO recovery, import the data from S3 Glacier to DynamoDB."
+        },
+        "D": {
+          "zh": "每 15 分鐘為 DynamoDB 表格安排一次 Amazon Elastic Block Store (Amazon EBS) 快照。對於 RPO 恢復，請使用 EBS 快照還原 DynamoDB 表。",
+          "en": "Schedule Amazon Elastic Block Store (Amazon EBS) snapshots for the DynamoDB table every 15 minutes. For RPO recovery, restore the DynamoDB table by using the EBS snapshot."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：DynamoDB全域表雖然可以實現跨區域複製，但主要用於高可用和低延遲訪問，而不是備份和復原。全域表無法滿足資料恢復到特定時間點的需求，因此無法滿足15分鐘的RPO要求。",
+          "en": "Incorrect. reason: Although DynamoDB global table can achieve cross-region replication, it is mainly used for high availability and low-latency access, rather than backup and recovery. Global tables cannot meet the demand for data recovery to a specific point in time, and therefore cannot meet the RPO requirement of 15 minutes."
+        },
+        "B": {
+          "zh": "正確。原因：時間點復原是DynamoDB的內建功能，可讓使用者將表格還原到過去35天內的任意時間點。這完全滿足15分鐘的RPO要求，恢復時間目標（RTO）也可以在1小時內完成。",
+          "en": "Correct. reason: Point-in-Time Recovery is a built-in function of DynamoDB that allows users to restore tables to any point in time within the past 35 days. This fully meets the RPO requirement of 15 minutes, and the recovery time objective (RTO) can also be completed within 1 hour."
+        },
+        "C": {
+          "zh": "錯誤。原因：將資料匯出到 S3 Glacier 是一種冷儲存解決方案。資料恢復時間較長，無法滿足1小時的RTO要求。另外，數據導出是每天進行，無法滿足15分鐘的RPO要求。",
+          "en": "Incorrect. reason: Exporting data to S3 Glacier is a cold storage solution. Data recovery takes a long time and cannot meet the RTO requirement of 1 hour. In addition, data export is performed daily and cannot meet the RPO requirement of 15 minutes."
+        },
+        "D": {
+          "zh": "錯誤。原因：Amazon DynamoDB 不使用 EBS 存儲，因此無法在 DynamoDB 表上拍攝 EBS 快照。這種方法在技術上不可行。",
+          "en": "Incorrect. reason: Amazon DynamoDB does not use EBS storage, so EBS snapshot cannot be taken on the DynamoDB table. This approach is not technically feasible."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 設定 DynamoDB 時間點復原。對於RPO恢復，恢復到所需的時間點。",
+        "en": "B. Configure DynamoDB point-in-time recovery. For RPO recovery, restore to the desired point in time."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：原因：時間點復原是DynamoDB的內建功能，可讓使用者將表格還原到過去35天內的任意時間點。這完全滿足15分鐘的RPO要求，恢復時間目標（RTO）也可以在1小時內完成。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: reason: Point-in-Time Recovery is a built-in function of DynamoDB that allows users to restore tables to any point in time within the past 35 days. This fully meets the RPO requirement of 15 minutes, and the recovery time objective (RTO) can also be completed within 1 hour."
+      }
+    },
+    {
+      "question_no": 72,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司運行一個照片處理應用程序，需要經常從位於同一 AWS 區域的 Amazon S3 儲存桶上傳和下載圖片。解決方案架構師注意到資料傳輸費用的成本增加，需要實施解決方案來降低這些成本。解決方案架構師如何滿足這項要求？",
+        "en": "A company runs a photo processing application that needs to frequently upload and download pictures from Amazon S3 buckets that are located in the same AWS Region. A solutions architect has noticed an increased cost in data transfer fees and needs to implement a solution to reduce these costs. How can the solutions architect meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Amazon API Gateway 部署到公有子網路並調整路由表以透過它路由 S3 呼叫。",
+          "en": "Deploy Amazon API Gateway into a public subnet and adjust the route table to route S3 calls through it."
+        },
+        "B": {
+          "zh": "將 NAT 閘道部署到公有子網路中，並附加允許存取 S3 儲存桶的端點原則。",
+          "en": "Deploy a NAT gateway into a public subnet and attach an endpoint policy that allows access to the S3 buckets."
+        },
+        "C": {
+          "zh": "將應用程式部署到公共子網路中，並允許其透過網際網路閘道路由以存取 S3 儲存桶。",
+          "en": "Deploy the application into a public subnet and allow it to route through an internet gateway to access the S3 buckets."
+        },
+        "D": {
+          "zh": "將 S3 VPC 閘道端點部署到 VPC 中，並附加允許存取 S3 儲存桶的端點策略。",
+          "en": "Deploy an S3 VPC gateway endpoint into the VPC and attach an endpoint policy that allows access to the S3 buckets."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。API Gateway 主要用於建立 RESTful API 嬻 WebSocket API，與 S3 的直接資料傳輸無關。 API Gateway並不能降低資料傳輸成本，也不能直接優化S3存取路由。",
+          "en": "Incorrect. API Gateway is mainly used to build RESTful API 𪥿 WebSocket API and has nothing to do with S3's direct data transmission. API Gateway does not reduce data transfer costs and cannot directly optimize S3 access routes."
+        },
+        "B": {
+          "zh": "錯誤。NAT網關用於允許網路中的資源相互訪問，但會產生額外的傳輸費用。使用 NAT 閘道存取 S3 不會降低資料傳輸成本，反而會增加資料傳輸成本。",
+          "en": "Incorrect. NAT Gateway is used to allow resources in the network to access each other, but it incurs additional transfer charges. Using a NAT Gateway to access S3 will not reduce data transfer costs, but will increase them."
+        },
+        "C": {
+          "zh": "錯誤。Internet 閘道存取 S3 會產生額外的相互資料傳輸費用。這種做法不符合降低成本的要求。",
+          "en": "Incorrect. Internet Gateway access to S3 incurs additional mutual data transfer charges. This approach does not meet the requirements of cost reduction."
+        },
+        "D": {
+          "zh": "正確。S3 VPC 閘道端點是專為使用 S3 進行最佳化而設計的 Marsh 解決方案。透過 VPC 閘道端點，資料流量在 AWS 內部傳輸，消除了相互的資料傳輸費用。您可以建立特定策略來控制對 S3 儲存桶的存取。",
+          "en": "Correct. The S3 VPC Gateway Endpoint is a Marsh solution specifically designed to be optimized with S3. With the VPC Gateway Endpoint, data traffic is transmitted internally within AWS, eliminating mutual data transmission fees. You can create a specific policy to control access to the S3 bucket."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將 S3 VPC 閘道端點部署到 VPC 中，並附加允許存取 S3 儲存桶的端點策略。",
+        "en": "D. Deploy an S3 VPC gateway endpoint into the VPC and attach an endpoint policy that allows access to the S3 buckets."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：S3 VPC 閘道端點是專為使用 S3 進行最佳化而設計的 Marsh 解決方案。透過 VPC 閘道端點，資料流量在 AWS 內部傳輸，消除了相互的資料傳輸費用。您可以建立特定策略來控制對 S3 儲存桶的存取。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The S3 VPC Gateway Endpoint is a Marsh solution specifically designed to be optimized with S3. With the VPC Gateway Endpoint, data traffic is transmitted internally within AWS, eliminating mutual data transmission fees. You can create a specific policy to control access to the S3 bucket."
+      }
+    },
+    {
+      "question_no": 73,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司最近在私有子網路中的 Amazon EC2 上啟動了基於 Linux 的應用程式實例，並在 VPC 公有子網路中的 Amazon EC2 執行個體上啟動了基於 Linux 的堡壘主機。解決方案架構師需要透過公司的 Internet 連接從本地網路連接到堡壘主機和應用程式伺服器。解決方案架構師必須確保所有 EC2 執行個體的安全性群組都允許該存取。解決方案架構師應該採取哪些步驟組合來滿足這些要求？ （選兩個。）",
+        "en": "A company recently launched Linux-based application instances on Amazon EC2 in a private subnet and launched a Linux-based bastion host on an Amazon EC2 instance in a public subnet of a VPC. A solutions architect needs to connect from the on-premises network, through the company's internet connection, to the bastion host, and to the application servers. The solutions architect must make sure that the security groups of all the EC2 instances will allow that access. Which combination of steps should the solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將堡壘主機的目前安全群組替換為僅允許來自應用程式實例的入站存取的安全群組。",
+          "en": "Replace the current security group of the bastion host with one that only allows inbound access from the application instances."
+        },
+        "B": {
+          "zh": "將堡壘主機的目前安全群組替換為僅允許來自公司內部 IP 範圍的入站存取的安全群組。",
+          "en": "Replace the current security group of the bastion host with one that only allows inbound access from the internal IP range for the company."
+        },
+        "C": {
+          "zh": "將堡壘主機的目前安全群組替換為僅允許來自公司外部 IP 範圍的入站存取的安全群組。",
+          "en": "Replace the current security group of the bastion host with one that only allows inbound access from the external IP range for the company."
+        },
+        "D": {
+          "zh": "將應用程式執行個體的目前安全群組替換為僅允許從堡壘主機的私有 IP 位址進行入站 SSH 存取的安全群組。",
+          "en": "Replace the current security group of the application instances with one that allows inbound SSH access from only the private IP address of the bastion host."
+        },
+        "E": {
+          "zh": "將應用程式執行個體的目前安全群組替換為僅允許從堡壘主機的公用 IP 位址進行入站 SSH 存取的安全性群組。",
+          "en": "Replace the current security group of the application instances with one that allows inbound SSH access from only the public IP address of the bastion host."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。堡壘主機的目的是允許外部用戶透過 Internet 進行訪問，因此其安全群組需要允許來自公司外部 IP 範圍的入站訪問，而不是只允許來自冷應用程式實例的存取。",
+          "en": "Incorrect. The purpose of the bastion host is to allow external users access over the Internet, so its security group needs to allow inbound access from the company's external IP range, rather than only allowing access from cold application instances."
+        },
+        "B": {
+          "zh": "錯誤。堡壘主機需要允許來自公司外部IP範圍的訪問，而不是內部IP範圍。內部 IP 範圍通常用於私有子網路中的資源，而不是透過 Internet 存取的資源。",
+          "en": "Incorrect. The bastion host needs to allow access from the company's external IP range, not the internal IP range. Internal IP ranges are typically used for resources in private subnets, rather than resources accessible over the Internet."
+        },
+        "C": {
+          "zh": "正確。堡壘主機的安全群組需要配置為允許公司外部IP範圍的入站訪問，以便公司員工可以透過Internet連接到堡壘主機。",
+          "en": "Correct. The bastion host's security group needs to be configured to allow inbound access from the company's external IP range so that company employees can connect to the bastion host over the Internet."
+        },
+        "D": {
+          "zh": "正確。應用程式實例的安全群組需要配置為僅允許堡壘主機私網IP位址的SSH訪問，以確保安全性並限制存取來源。",
+          "en": "Correct. The security group for the application instance needs to be configured to only allow SSH access from the bastion host private IP address to ensure security and limit the source of access."
+        },
+        "E": {
+          "zh": "錯誤。堡壘主機的公網IP位址用於外部訪問，但應用程式實例位於私有子網路中，應透過堡壘主機的私有IP位址進行存取。",
+          "en": "Incorrect. The public IP address of the bastion host is used for external access, but the application instance is in a private subnet and should be accessed through the bastion host's private IP address."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "C",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "C. 將堡壘主機的目前安全群組替換為僅允許來自公司外部 IP 範圍的入站存取的安全群組。；D. 將應用程式執行個體的目前安全群組替換為僅允許從堡壘主機的私有 IP 位址進行入站 SSH 存取的安全群組。",
+        "en": "C. Replace the current security group of the bastion host with one that only allows inbound access from the external IP range for the company.; D. Replace the current security group of the application instances with one that allows inbound SSH access from only the private IP address of the bastion host."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：CD (93%)。熱門討論與考點摘要：堡壘主機的安全群組需要配置為允許公司外部IP範圍的入站訪問，以便公司員工可以透過Internet連接到堡壘主機。；應用程式實例的安全群組需要配置為僅允許堡壘主機私網IP位址的SSH訪問，以確保安全性並限制存取來源。",
+        "en": "Community vote as displayed: CD (93%). Popular discussion and key point summary: The bastion host's security group needs to be configured to allow inbound access from the company's external IP range so that company employees can connect to the bastion host over the Internet.; The security group for the application instance needs to be configured to only allow SSH access from the bastion host private IP address to ensure security and limit the source of access."
+      }
+    },
+    {
+      "question_no": 74,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在設計一個兩層 Web 應用程式。該應用程式由託管在公有子網路中的 Amazon EC2 上的面向公眾的 Web 層組成。資料庫層由在私有子網路中的 Amazon EC2 上執行的 Microsoft SQL Server 所組成。安全是公司的重中之重。這種情況應該如何配置安全群組呢？ （選兩個。）",
+        "en": "A solutions architect is designing a two-tier web application. The application consists of a public-facing web tier hosted on Amazon EC2 in public subnets. The database tier consists of Microsoft SQL Server running on Amazon EC2 in a private subnet. Security is a high priority for the company. How should security groups be configured in this situation? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Web 層的安全群組以允許連接埠 443 上來自 0.0.0.0/0 的入站流量。",
+          "en": "Configure the security group for the web tier to allow inbound traffic on port 443 from 0.0.0.0/0."
+        },
+        "B": {
+          "zh": "設定 Web 層的安全群組以允許連接埠 443 上來自 0.0.0.0/0 的出站流量。",
+          "en": "Configure the security group for the web tier to allow outbound traffic on port 443 from 0.0.0.0/0."
+        },
+        "C": {
+          "zh": "設定資料庫層的安全性群組，以允許連接埠 1433 上來自 Web 層安全群組的入站流量。",
+          "en": "Configure the security group for the database tier to allow inbound traffic on port 1433 from the security group for the web tier."
+        },
+        "D": {
+          "zh": "設定資料庫層的安全性群組，以允許連接埠 443 和 1433 上的出站流量到達 Web 層的安全性群組。",
+          "en": "Configure the security group for the database tier to allow outbound traffic on ports 443 and 1433 to the security group for the web tier."
+        },
+        "E": {
+          "zh": "設定資料庫層的安全性群組，以允許來自 Web 層安全群組的連接埠 443 和 1433 上的入站流量。",
+          "en": "Configure the security group for the database tier to allow inbound traffic on ports 443 and 1433 from the security group for the web tier."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Web層需要允許來自Internet（連接埠443）的HTTPS流量，因此需要將其配置為允許來自0.0.0.0/0的入站流量。",
+          "en": "Correct. The web layer needs to allow HTTPS traffic from the Internet (port 443), so it needs to be configured to allow inbound traffic from 0.0.0.0/0."
+        },
+        "B": {
+          "zh": "錯誤。Web層一般不需要傳送HTTPS流量到網路。出站流量的預設規則已允許所有流量，因此無需明確配置。",
+          "en": "Incorrect. The web layer generally does not need to send HTTPS traffic to the Internet. The default rules for outbound traffic already allow all traffic, so no explicit configuration is required."
+        },
+        "C": {
+          "zh": "正確。資料庫層需要允許來自 Web 層的 SQL Server 通訊（連接埠 1433），因此需要將其設定為允許來自 Web 層安全性群組的入站流量。",
+          "en": "Correct. The database tier needs to allow SQL Server communication (port 1433) from the web tier, so it needs to be configured to allow inbound traffic from the web tier security group."
+        },
+        "D": {
+          "zh": "錯誤。資料庫層一般不需要向Web層發送HTTPS流量（連接埠443），且出站流量的預設規則已經允許所有流量，因此不需要明確設定。",
+          "en": "Incorrect. The database tier generally does not need to send HTTPS traffic (port 443) to the web tier, and the default rules for outbound traffic already allow all traffic, so no explicit configuration is required."
+        },
+        "E": {
+          "zh": "錯誤。資料庫層只需要允許來自 Web 層（連接埠 1433）的 SQL Server 流量，而不是 HTTPS 流量（連接埠 443）。",
+          "en": "Incorrect. The database tier only needs to allow SQL Server traffic from the web tier (port 1433), not HTTPS traffic (port 443)."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 設定 Web 層的安全群組以允許連接埠 443 上來自 0.0.0.0/0 的入站流量。；C. 設定資料庫層的安全性群組，以允許連接埠 1433 上來自 Web 層安全群組的入站流量。",
+        "en": "A. Configure the security group for the web tier to allow inbound traffic on port 443 from 0.0.0.0/0.; C. Configure the security group for the database tier to allow inbound traffic on port 1433 from the security group for the web tier."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AC (97%)。熱門討論與考點摘要：Web層需要允許來自Internet（連接埠443）的HTTPS流量，因此需要將其配置為允許來自0.0.0.0/0的入站流量。；資料庫層需要允許來自 Web 層的 SQL Server 通訊（連接埠 1433），因此需要將其設定為允許來自 Web 層安全性群組的入站流量。",
+        "en": "Community vote as displayed: AC (97%). Popular discussion and key point summary: The web layer needs to allow HTTPS traffic from the Internet (port 443), so it needs to be configured to allow inbound traffic from 0.0.0.0/0.; The database tier needs to allow SQL Server communication (port 1433) from the web tier, so it needs to be configured to allow inbound traffic from the web tier security group."
+      }
+    },
+    {
+      "question_no": 75,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將多層應用程式從本地遷移到 AWS 雲，以提高應用程式的效能。該應用程式由透過 RESTful 服務相互通訊的應用程式層組成。當一層超載時，事務將被丟棄。解決方案架構師必須設計一個解決方案來解決這些問題並使應用程式現代化。哪種解決方案滿足這些要求且營運效率最高？",
+        "en": "A company wants to move a multi-tiered application from on premises to the AWS Cloud to improve the application's performance. The application consists of application tiers that communicate with each other by way of RESTful services. Transactions are dropped when one tier becomes overloaded. A solutions architect must design a solution that resolves these issues and modernizes the application. Which solution meets these requirements and is the MOST operationally efficient?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon API Gateway 並將交易直接傳送至 AWS Lambda 函數作為應用程式層。使用 Amazon Simple Queue Service (Amazon SQS) 作為應用程式服務之間的通訊層。",
+          "en": "Use Amazon API Gateway and direct transactions to the AWS Lambda functions as the application layer. Use Amazon Simple Queue Service (Amazon SQS) as the communication layer between application services."
+        },
+        "B": {
+          "zh": "使用 Amazon CloudWatch 指標分析應用程式效能歷史記錄，以確定效能故障期間伺服器的峰值使用率。增加應用程式伺服器的 Amazon EC2 執行個體的大小以滿足峰值要求。",
+          "en": "Use Amazon CloudWatch metrics to analyze the application performance history to determine the servers' peak utilization during the performance failures. Increase the size of the application server's Amazon EC2 instances to meet the peak requirements."
+        },
+        "C": {
+          "zh": "使用 Amazon Simple Notification Service (Amazon SNS) 處理 Auto Scaling 群組中 Amazon EC2 上執行的應用程式伺服器之間的訊息傳遞。使用 Amazon CloudWatch 監控 SNS 佇列長度並根據需要進行擴展和縮減。",
+          "en": "Use Amazon Simple Notification Service (Amazon SNS) to handle the messaging between application servers running on Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SNS queue length and scale up and down as required."
+        },
+        "D": {
+          "zh": "使用 Amazon Simple Queue Service (Amazon SQS) 處理 Auto Scaling 群組中 Amazon EC2 上執行的應用程式伺服器之間的訊息傳遞。使用 Amazon CloudWatch 監控 SQS 佇列長度並在偵測到通訊故障時進行擴充。",
+          "en": "Use Amazon Simple Queue Service (Amazon SQS) to handle the messaging between application servers running on Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SQS queue length and scale up when communication failures are detected."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Simple Queue Service (Amazon SQS) 作為應用程式服務之間的通訊層。分析：Amazon API Gateway 提供了高效的 RESTful API 管理解決方案，適合現代應用程式。 AWS Lambda 是一種無伺服器運算服務，可動態擴充以避免過載問題。 Amazon SQS 是一種託管訊息佇列服務，可解耦應用程式層之間的通訊並防止交易遺失。",
+          "en": "Correct. Simple Queue Service (Amazon SQS) as the communication layer between application services. Analysis: Amazon API Gateway provides an efficient RESTful API management solution, suitable for modern applications. AWS Lambda is a serverless computing service that can be dynamically scaled to avoid overload problems. Amazon SQS is a managed message queue service that decouples communication between application layers and prevents transaction loss."
+        },
+        "B": {
+          "zh": "錯誤。效能故障期間的使用率。增加應用程式伺服器的 Amazon EC2 執行個體的大小以滿足峰值要求。分析：此選項依賴 EC2 執行個體的手動分析和規模調整，缺乏自動化和現代化。增加 EC2 執行個體大小可能會解決過載問題，但會不繫統地解耦應用程式層之間的通訊。它不符合問題的「現代應用」目標。 Auto Scaling 組中 Amazon EC2 上的",
+          "en": "Incorrect. utilization during the performance failures. Increase the size of the application server's Amazon EC2 instances to meet the peak requirements. Analysis: This option relies on manual analysis and sizing of EC2 instances and lacks automation and modernization. Increasing the EC2 instance size may solve the overload problem, but unsystematically decouples communication between application tiers. It does not meet the \"modern application\" goal of the question."
+        },
+        "C": {
+          "zh": "錯誤。。使用 Amazon CloudWatch 監控 SNS 佇列長度並根據需要進行擴展和縮減。分析：Amazon SNS是一種發布/訂閱資訊服務，適合廣播訊息，但不適合應用層之間的解耦通訊。它不符合問題的「現代應用」目標。",
+          "en": "Incorrect. on Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SNS queue length and scale up and down as required. Analysis: Amazon SNS is a publish/subscribe information service, suitable for broadcasting information, but not suitable for decoupling communication between application layers. It does not meet the \"modern application\" goal of the question."
+        },
+        "D": {
+          "zh": "錯誤。Auto Scaling 組中的 Amazon EC2。使用 Amazon CloudWatch 監控 SQS 佇列長度並在偵測到通訊故障時進行擴充。分析：Amazon SQS可以解耦應用層之間的通信，解決過載問題。儘管過載問題得到了解決，但應用程式的現代化目標並未實現。",
+          "en": "Incorrect. Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SQS queue length and scale up when communication failures are detected. Analysis: Amazon SQS can decouple the communication between application layers and solve the overload problem. Although the overload problem was solved, the application's modernization goal was not implemented."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon API Gateway 並將交易直接傳送至 AWS Lambda 函數作為應用程式層。使用 Amazon Simple Queue Service (Amazon SQS) 作為應用程式服務之間的通訊層。",
+        "en": "A. Use Amazon API Gateway and direct transactions to the AWS Lambda functions as the application layer. Use Amazon Simple Queue Service (Amazon SQS) as the communication layer between application services."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (82%)。熱門討論與考點摘要：Simple Queue Service (Amazon SQS) 作為應用程式服務之間的通訊層。分析：Amazon API Gateway 提供了高效的 RESTful API 管理解決方案，適合現代應用程式。 AWS Lambda 是一種無伺服器運算服務，可動態擴充以避免過載問題。 Amazon SQS 是一種託管訊息佇列服務，可解耦應用程式層之間的通訊並防止交易遺失。",
+        "en": "Community vote as displayed: A (82%). Popular discussion and key point summary: Simple Queue Service (Amazon SQS) as the communication layer between application services. Analysis: Amazon API Gateway provides an efficient RESTful API management solution, suitable for modern applications. AWS Lambda is a serverless computing service that can be dynamically scaled to avoid overload problems. Amazon SQS is a managed message queue service that decouples communication between application layers and prevents transaction loss."
+      }
+    }
+  ]
+}

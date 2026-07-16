@@ -1,0 +1,161 @@
+A company uses Amazon EC2 instances and Amazon Elastic Block Store (Amazon EBS) to run its self-managed database. The
+company has 350 TB of data spread across all EBS volumes. The company takes daily EBS snapshots and keeps the snapshots for 1
+month. The daily change rate is 5% of the EBS volumes.
+Because of new regulations, the company needs to keep the monthly snapshots for 7 years. The company needs to change its
+backup strategy to comply with the new regulations and to ensure that data is available with minimal administrative effort.
+Which solution will meet these requirements MOST cost-effectively?
+A. Keep the daily snapshot in the EBS snapshot standard tier for 1 month. Copy the monthly snapshot to Amazon S3 Glacier
+Deep Archive with a 7-year retention period.
+B. Continue with the current EBS snapshot policy. Add a new policy to move the monthly snapshot to Amazon EBS Snapshots
+Archive with a 7-year retention period. Most Voted
+C. Keep the daily snapshot in the EBS snapshot standard tier for 1 month. Keep the monthly snapshot in the standard tier for 7
+years. Use incremental snapshots.
+D. Keep the daily snapshot in the EBS snapshot standard tier. Use EBS direct APIs to take snapshots of all the EBS volumes
+every month. Store the snapshots in an Amazon S3 bucket in the Infrequent Access tier for 7 years.
+Comments
+Scheldon Highly Voted 2 years ago
+Selected Answer: B
+AnswerB
+The problem is that we need to choose best solution which is most cost-effective and have minimal administrative effort.
+Glacier is the best choice for 1st look, but there is one problem with that solution. From what I know there is no easy way to copy from EBS to Glacier
+and additionally curent strategy is to make incremental snapshots. To copy file from EBS to (s3) Glacier we would need to run linux to which we will
+mount EBS and we will need copy everything to S3 and then move to glaceir deep archive. And what is more you will have only incremental
+snapshot. Hence every solution which will say copy/move to S3 is not minimal administrative effort. Not mentionig that you will not have full
+snapshot
+https://repost.aws/questions/QUsaCoBAfbR6WMOz6BH3vqHA/move-ebs-to-glacier
+upvoted 9 times
+MatAlves 1 year, 8 months ago
+I first thought the same, but NO: "Which solution will meet these requirements MOST cost-effectively?" There is no mention to "operational
+overhead" or "minimal changes", etc. The question is asking purely "what is cheaper". So, A is the answer.
+"We charge you $0.0125 per GB-month of stored data and $0.03 per GB retrieved. "
+"All Storage / Month $0.0036 per GB
+S3 Glacier Deep Archive *** - For long-term data archiving that is accessed once or twice in a year and can be restored within 12 hours"
+upvoted 2 times
+elmyth 1 year, 7 months ago
+"to ensure that data is available with minimal administrative effort." - there are 2 conditions
+upvoted 4 times
+rondelldell Highly Voted 2 years, 2 months ago
+Selected Answer: A
+Correct Answer: B
+Community vote distribution
+B (50%)
+A (45%)
+3%
+How much does EBS snapshots archive cost?
+Pricing and billing. Archived snapshots are billed at a rate of $0.0125 per GB-month. For example, if you archive a 100 GiB snapshot, you are billed
+$1.25 (100 GiB * $0.0125) per month.
+What is the cost of Glacier?
+Even though uploading data to Amazon S3 Glacier is free, there is a pricing method for upload requests, which is $0.03 per 1,000 requests.
+Transferring data out of S3 Glacier to the same region is free; however, there is a cost for transferring data to a different region.
+• $0.0036 per GB / Month
+upvoted 7 times
+ln2718 Most Recent 9 months, 3 weeks ago
+Selected Answer: B
+You can’t copy EBS snapshots to your own S3/Glacier Deep Archive objects; use EBS Snapshots Archive for long-term, low-cost storage.
+upvoted 1 times
+TEC65 1 year, 1 month ago
+Selected Answer: B
+snapshots archive designed for low cost snapshots
+upvoted 1 times
+0c21057 1 year, 1 month ago
+Selected Answer: B
+The correct answer is B: Continue with the current EBS snapshot policy. Add a new policy to move the monthly snapshot to Amazon EBS Snapshots
+Archive with a 7-year retention period.
+upvoted 1 times
+gigilla 1 year, 2 months ago
+Selected Answer: A
+A: Amazon S3 Glacier Deep Archive
+upvoted 1 times
+nadeerm 1 year, 3 months ago
+Selected Answer: B
+Cost Efficiency : Amazon EBS Snapshots Archive is designed to provide a cost-effective option for long-term storage of EBS snapshots. By moving
+monthly snapshots to the archive tier, you will significantly reduce the cost
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: B
+Amazon EBS Snapshots Archive is a storage tier that you can use for low-cost, long-term storage of your rarely-accessed snapshots that do not need
+frequent or fast retrieval.
+Move to S3... more job, so A is not a good idea...
+Only 5% daily change.. would consider cheaper than S3 for long run... (MOST cost-effectively)
+I don't think in the exam need to calculate cost per $, how to remember?
+Just add new policy to move the snapshot to Amazon EBS Snapshots Archive (minimal administrative effort)
+upvoted 1 times
+Dantecito 1 year, 3 months ago
+Selected Answer: A
+A or B but I will choose A because Is the MOST cost-effectively and companies will always choose to save money.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: B
+"EBS Snapshots are stored incrementally."
+"The snapshots are automatically saved to Amazon Simple Storage Service (Amazon S3) for long-term retention"
+"Save up to 75% in snapshot storage costs by using EBS Snapshots Archive for the long-term retention (over 90 days) of seldom-accessed
+snapshots."
+Moreover, copy files (option A) requires more administrative effort than automatic policy.
+https://aws.amazon.com/ebs/snapshots/#:~:text=available%20and%20durable-,Amazon%20EBS%20Snapshots%20are%20a%20convenient%20way%
+20to%20back%20up,availability%20of%20your%20EBS%20Snapshots.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: A
+A - S3 Glacier Deep Archive is designed for long-term data archiving with a retention period of up to 7 years or more at an extremely low cost (the
+most cost-effective S3 storage class).
+B - OK but EBS Snapshots Archive costs more.
+C - Keep the monthly snapshot in the standard tier for 1 month, OK. For 7 years??? You'll pay so much money for that. The standard EBS snapshot tie
+is designed for frequent access.
+D - Storing snapshots directly in Amazon S3 (even in the Infrequent Access tier) is not ideal for EBS snapshots because it doesn't leverage EBS
+snapshot mechanisms, which are designed for efficient storage and management of EBS backup data.
+upvoted 2 times
+ARV14 1 year, 6 months ago
+Selected Answer: B
+https://repost.aws/knowledge-center/ebs-copy-snapshot-data-s3-create-volume. =>I want to copy an Amazon Elastic Block Store (Amazon EBS)
+snapshot to my Amazon Simple Storage Service (Amazon S3) bucket. I also want to create Amazon EBS volumes from data that's stored in my S3
+bucket.
+Looks like B
+Short description
+When you create an EBS snapshot, it's automatically stored in an Amazon S3 bucket that AWS manages. You can copy snapshots within the same
+AWS Region, or from one Region to another. However, you can't copy snapshots to S3 buckets that you manage.
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: B
+If we consider both cost and administrative effort more closely:
+EBS Snapshots Archive may be easier to manage but could incur higher costs over 7 years compared to S3 Glacier.
+S3 Glacier, despite its complexity for initial transfers, could end up being more cost-effective in the long run, especially for large data volumes.
+Ultimately, if minimizing costs is a primary concern and the organization can handle the initial complexity of transferring snapshots, using S3 Glacier
+(Option A) could still be worth considering.
+So, while Option B is easier, if cost is a significant factor, Option A might be the better choice despite the additional administrative effort involved. It's
+a trade-off that depends on the organization's priorities regarding cost and operational simplicity.
+upvoted 4 times
+MatAlves 1 year, 8 months ago
+"We charge you $0.0125 per GB-month of stored data and $0.03 per GB retrieved. "
+https://aws.amazon.com/blogs/aws/new-amazon-ebs-snapshots-archive/
+"All Storage / Month $0.0036 per GB
+S3 Glacier Deep Archive *** - For long-term data archiving that is accessed once or twice in a year and can be restored within 12 hours"
+https://aws.amazon.com/s3/pricing/
+2nd time reviewing this question and, yeah, "A" is the option that better meets the "cost" requirement.
+upvoted 2 times
+dhewa 1 year, 9 months ago
+Selected Answer: A
+Keyword here is cost. S3 Glacier deep archive is significantly cheaper than keeping snapshots in the EBS snapshot standard tier or even the EBS
+Snapshots Archive.
+upvoted 4 times
+Abdullah2004 1 year, 9 months ago
+Selected Answer: A
+A is correct answer
+upvoted 3 times
+Johnoppong101 1 year, 9 months ago
+Selected Answer: B
+Choose EBS Snapshot Archive when:
+Data is associated with EBS volumes.
+You need to maintain point-in-time copies of your EBS volumes.
+You require faster restore times than S3 Glacier Archive.
+You need to comply with regulations requiring EBS snapshot retention.
+upvoted 3 times
+Zahran23 1 year, 11 months ago
+Selected Answer: A
+Option (B) is incorrect due to the following:
+Archiving is recommended for monthly, quarterly, or yearly snapshots. Archiving daily incremental snapshots of a single volume can lead to higher
+costs when compared to keeping them in the standard tier.
+https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-archive.html
+upvoted 5 times
+Cpso 1 year, 6 months ago
+the company needs to keep the monthly snapshots for 7 years. not daily
+upvoted 1 times

@@ -1,0 +1,135 @@
+A company uses AWS Organizations with all features enabled and runs multiple Amazon EC2 workloads in the ap-southeast-2
+Region. The company has a service control policy (SCP) that prevents any resources from being created in any other Region. A
+security policy requires the company to encrypt all data at rest.
+An audit discovers that employees have created Amazon Elastic Block Store (Amazon EBS) volumes for EC2 instances without
+encrypting the volumes. The company wants any new EC2 instances that any IAM user or root user launches in ap-southeast-2 to
+use encrypted EBS volumes. The company wants a solution that will have minimal effect on employees who create EBS volumes.
+Which combination of steps will meet these requirements? (Choose two.)
+A. In the Amazon EC2 console, select the EBS encryption account attribute and define a default encryption key.
+B. Create an IAM permission boundary. Attach the permission boundary to the root organizational unit (OU). Define the
+boundary to deny the ec2:CreateVolume action when the ec2:Encrypted condition equals false.
+C. Create an SCP. Attach the SCP to the root organizational unit (OU). Define the SCP to deny the ec2:CreateVolume action
+whenthe ec2:Encrypted condition equals false. Most Voted
+D. Update the IAM policies for each account to deny the ec2:CreateVolume action when the ec2:Encrypted condition equals
+false.
+E. In the Organizations management account, specify the Default EBS volume encryption setting. Most Voted
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: CE
+The correct answer is (C) and (E).
+Option (C): Creating an SCP and attaching it to the root organizational unit (OU) will deny the ec2:CreateVolume action when the ec2:Encrypted
+condition equals false. This means that any IAM user or root user in any account in the organization will not be able to create an EBS volume without
+encrypting it.
+Option (E): Specifying the Default EBS volume encryption setting in the Organizations management account will ensure that all new EBS volumes
+created in any account in the organization are encrypted by default.
+upvoted 12 times
+Axaus Highly Voted 2 years, 6 months ago
+Selected Answer: CE
+CE
+Prevent future issues by creating a SCP and set a default encryption.
+upvoted 10 times
+network_enthusiast Most Recent 1 year, 1 month ago
+Selected Answer: AC
+Answer will be A&C.
+AWS does not currently provide a direct setting at the organization level to enforce default EBS encryption across all member accounts in AWS
+Organizations. However, you can achieve this goal by implementing default encryption at the account level and enforcing compliance using an SCP
+(Service Control Policy).
+upvoted 2 times
+Andreew883 1 year, 1 month ago
+Selected Answer: CE
+Correct Answer: CE
+Community vote distribution
+CE (71%)
+AC (16%)
+12%
+C and E as shaded by guru4cloud
+upvoted 1 times
+Jazz888 1 year, 6 months ago
+The problem here is we don't know in which account the workload is on. The account in ap-xx-is that the management account or it's a member
+account?? That will decide to select either A or E. C is certainly correct
+upvoted 2 times
+NSA_Poker 1 year, 6 months ago
+Selected Answer: CE
+(A) is incorrect bc absent of SCP or the Organizations management account, the scope of the EC2 console is too narrow to be applied to 'any IAM
+user or root user'.
+upvoted 2 times
+venutadi 1 year, 7 months ago
+Selected Answer: AC
+https://repost.aws/knowledge-center/ebs-automatic-encryption
+Newly created Amazon EBS volumes aren't encrypted by default. However, you can turn on default encryption for new EBS volumes and snapshot
+copies that are created within a specified Region. To turn on encryption by default, use the Amazon Elastic Compute Cloud (Amazon EC2) console.
+upvoted 2 times
+1rob 1 year, 11 months ago
+Selected Answer: AC
+A: will enforce automatic encryption in a account. This will have no effect on employees. Do this in every account.
+B: permission boundary is not appropriate here.
+C: an SCP will force employees to create encrypted volumes in every account.
+D: This would work but is too much maintenance.
+E: Setting EBS volume encryption in the Organizations management account will only have impact on volumes in that account, not on other
+accounts.
+upvoted 4 times
+pentium75 1 year, 11 months ago
+Selected Answer: AE
+The solution should "have minimal effect on employees who create EBS volumes". Thus new volumes should automatically be encrypted. Options B,
+C and D do NOT automatically encrypt volumes, they simply cause requests to create non-encrypted volumes to fail.
+upvoted 3 times
+dkw2342 1 year, 9 months ago
+IMO the correct solution is AC:
+In the Amazon EC2 console, select the EBS encryption account attribute and define a default encryption key.
+-> This has to be done in every AWS account separately.
+Create an SCP. Attach the SCP to the root organizational unit (OU). Define the SCP to deny the ec2:CreateVolume action whenthe ec2:Encrypted
+condition equals false.
+-> This will just act as a safeguard in case an admin would disable default encryption in the member account, so it should not have any effect on
+employees who create EBS volumes.
+I think an updated question would offer options A and an updated C:
+Create an SCP. Attach the SCP to the root organizational unit (OU). Define the SCP to deny the ec2:DisableEbsEncryptionByDefault action.
+-> This will prevent disabling default encryption once is has been enabled.
+upvoted 2 times
+Valder21 2 years, 3 months ago
+Wondering if just C would be sufficient?
+upvoted 1 times
+bjexamprep 2 years, 3 months ago
+Seems many people selected E as part of the correct answer. But I didn't find so called Organization level EBS default setting in my Organization
+management account. I tried setting default EBS encryption setting in my Organization management account, and it didn't apply to the member
+account. If E cannot guarantee default encryption in all other account, E has no advantage over A. Anyone can explain why E is better than A?
+upvoted 4 times
+novelai_me 2 years, 5 months ago
+Selected Answer: AE
+Option A: By default, EBS encryption is not enabled for EC2 instances. However, you can set an EBS encryption by default in your AWS account in the
+Amazon EC2 console. This ensures that every new EBS volume that is created is encrypted.
+Option E: With AWS Organizations, you can centrally set the default EBS encryption for your organization's accounts. This helps in enforcing a
+consistent encryption policy across your organization.
+Option B, C and D are not correct because while you can use IAM policies or SCPs to restrict the creation of unencrypted EBS volumes, this could
+potentially impact employees' ability to create necessary resources if not properly configured. They might require additional permissions
+management, which is not mentioned in the requirements. By setting the EBS encryption by default at the account or organization level (Options A
+and E), you can ensure all new volumes are encrypted without affecting the ability of employees to create resources.
+upvoted 3 times
+Buruguduystunstugudunstuy 2 years, 6 months ago
+Selected Answer: CE
+SCPs are a great way to enforce policies across an entire AWS Organization, preventing users from creating resources that do not comply with the se
+policies.
+In AWS Management Console, one can go to EC2 dashboard -> Settings -> Data encryption -> Check "Always encrypt new EBS volumes" and
+choose a default KMS key. This ensures that every new EBS volume created will be encrypted by default, regardless of how it is created.
+upvoted 3 times
+PRASAD180 2 years, 6 months ago
+1000% CE crt
+upvoted 1 times
+hiroohiroo 2 years, 6 months ago
+Selected Answer: CE
+CとEが正しいと考える。
+upvoted 3 times
+Efren 2 years, 6 months ago
+Selected Answer: CE
+CE for me as well
+upvoted 2 times
+nosense 2 years, 6 months ago
+Selected Answer: CE
+SCP that denies the ec2:CreateVolume action when the ec2:Encrypted condition equals false. This will prevent users and service accounts in member
+accounts from creating unencrypted EBS volumes in the ap-southeast-2 Region.
+upvoted 2 times
+Efren 2 years, 6 months ago
+agreed
+upvoted 1 times
+pentium75 1 year, 11 months ago
+Wouldn't this have "effect on employees who create EBS volumes", which we are asked to minimize?
+upvoted 1 times

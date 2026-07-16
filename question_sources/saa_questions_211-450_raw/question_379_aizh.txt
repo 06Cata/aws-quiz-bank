@@ -1,0 +1,46 @@
+Question #379
+A company hosts a frontend application that uses an Amazon API Gateway API backend that is integrated with AWS Lambda.
+When the API receives requests, the Lambda function loads many libraries. Then the Lambda function connects to an Amazon RDS
+database, processes the data, and returns the data to the frontend application. The company wants to ensure that response
+latency is as low as possible for all its users with the fewest number of changes to the company's operations.
+Which solution will meet these requirements?
+一家公司托管了一个前端应用程序，该应用程序使用了一个 Amazon API Gateway API 后端，并与 AWS Lambda 集成。当 API 接收
+到请求时，Lambda 函数会加载许多库。然后，Lambda 函数连接到一个 Amazon RDS 数据库，处理数据，并将数据返回给前端应
+用程序。该公司希望确保所有用户的响应延迟尽可能低，同时对公司运营的更改数量最少。
+哪种解决方案可以满足这些要求？
+A. Establish a connection between the frontend application and the database to make queries faster by bypassing the API.
+在前端应用程序和数据库之间建立连接，以绕过 API 来加快查询速度。
+B. Configure provisioned concurrency for the Lambda function that handles the requests. Most Voted
+为处理请求的 Lambda 函数配置预置并发。
+C. Cache the results of the queries in Amazon S3 for faster retrieval of similar datasets.
+将查询结果缓存到 Amazon S3 中，以便更快地检索类似的数据集。
+D. Increase the size of the database to increase the number of connections Lambda can establish at one time.
+增加数据库的大小，以提高 Lambda 可以同时建立连接的数量。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)
+Amazon API Gateway与AWS Lambda的集成。
+Lambda函数的性能优化，包括并发配置。
+数据库连接优化与缓存机制。
+2. 选项分析
+A. 在前端应用程序和数据库之间建立连接，以绕过 API 来加快查询速度。
+错误：直接连接前端应用程序和数据库会绕过API Gateway和Lambda的逻辑处理层，破坏现有架构设计，可能导致安全性问题和复
+杂性增加。
+B. 为处理请求的 Lambda 函数配置预置并发。
+正确：预置并发可以减少Lambda函数的冷启动时间，从而降低响应延迟。这是解决问题的最佳方法，且对现有架构的改动最少。
+C. 将查询结果缓存到 Amazon S3 中，以便更快地检索类似的数据集。
+错误：虽然缓存可以提高性能，但题目没有提到查询结果是重复的或可以缓存。此外，使用S3作为缓存需要额外的开发工作，改变
+现有架构。
+D. 增加数据库的大小，以提高 Lambda 可以同时建立连接的数量。
+错误：增加数据库大小不会直接减少Lambda函数的冷启动时间，也不会显著降低响应延迟。
+3. 我选的答案
+B. 为处理请求的 Lambda 函数配置预置并发。
+4. 官方答案
+B. 为处理请求的 Lambda 函数配置预置并发。
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：预置并发是解决Lambda冷启动问题的最佳实践，能够显著降低响应延迟，同时对现有架构的改动最少。

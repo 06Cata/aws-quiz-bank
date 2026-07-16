@@ -1,0 +1,72 @@
+Question #802
+A company wants to run its payment application on AWS. The application receives payment notifications from mobile devices.
+Payment notifications require a basic validation before they are sent for further processing.
+The backend processing application is long running and requires compute and memory to be adjusted. The company does not
+want to manage the infrastructure.
+Which solution will meet these requirements with the LEAST operational overhead?
+一家公司希望在 AWS 上运行其支付应用程序。该应用程序从移动设备接收支付通知。支付通知需要进行基本验证后才能发送进行
+进一步处理。
+后端处理应用程序是长时间运行的，并且需要调整计算和内存。公司不希望管理基础设施。
+哪种解决方案能够以最少的运营开销满足这些需求？
+A. Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to
+receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the
+notifications to the backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS)
+Anywhere. Create a standalone cluster.
+创建一个 Amazon Simple Queue Service (Amazon SQS) 队列。将队列与 Amazon EventBridge 规则集成，以从移动设备接收支
+付通知。配置规则以验证支付通知并将通知发送到后端应用程序。将后端应用程序部署在 Amazon Elastic Kubernetes Service
+(Amazon EKS) Anywhere 上。创建一个独立集群。
+B. Create an Amazon API Gateway API. Integrate the API with an AWS Step Functions state machine to receive payment
+notifications from mobile devices. Invoke the state machine to validate payment notifications and send the notifications to the
+backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS). Configure an EKS
+cluster with self-managed nodes.
+创建一个 Amazon API Gateway API。将 API 与 AWS Step Functions 状态机集成，以从移动设备接收支付通知。调用状态机以验
+证支付通知并将通知发送到后端应用程序。将后端应用程序部署在 Amazon Elastic Kubernetes Service (Amazon EKS) 上。使用
+自管理节点配置 EKS 集群。
+C. Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to
+receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the
+notifications to the backend application. Deploy the backend application on Amazon EC2 Spot Instances. Configure a Spot
+Fleet with a default allocation strategy.
+创建一个 Amazon Simple Queue Service (Amazon SQS) 队列。将队列与 Amazon EventBridge 规则集成，以从移动设备接收支
+付通知。配置规则以验证支付通知并将通知发送到后端应用程序。将后端应用程序部署在 Amazon EC2 Spot Instances 上。使用
+默认分配策略配置一个 Spot Fleet。
+D. Create an Amazon API Gateway API. Integrate the API with AWS Lambda to receive payment notifications from mobile
+devices. Invoke a Lambda function to validate payment notifications and send the notifications to the backend application.
+Deploy the backend application on Amazon Elastic Container Service (Amazon ECS). Configure Amazon ECS with an AWS
+Fargate launch type. Most Voted
+创建一个 Amazon API Gateway API。将 API 与 AWS Lambda 集成，以从移动设备接收支付通知。调用 Lambda 函数以验证支
+付通知并将通知发送到后端应用程序。将后端应用程序部署在 Amazon Elastic Container Service (Amazon ECS) 上。使用 AWS
+Fargate 启动类型配置 Amazon ECS。
+题目分析与解答
+1. 考察的知识点
+无服务器架构（Serverless Architecture）
+AWS服务集成：Amazon API Gateway、AWS Lambda、Amazon ECS、AWS Fargate
+最小化运维开销（Least Operational Overhead）
+事件驱动架构（Event-Driven Architecture）
+2. 选项分析
+A:
+使用Amazon SQS和Amazon EventBridge进行消息处理是合理的，但后端应用程序部署在Amazon EKS Anywhere需要用户管理基础
+设施（独立集群），这增加了运维开销。
+错误原因：Amazon EKS Anywhere并非完全托管服务，违反了“最小化运维开销”的要求。
+B:
+使用Amazon API Gateway和AWS Step Functions进行消息处理是合理的，但后端应用程序部署在Amazon EKS（自管理节点）需要
+用户管理节点和集群，增加了运维开销。
+错误原因：EKS自管理节点需要用户负责节点的维护，违反了“最小化运维开销”的要求。
+C:
+使用Amazon SQS和Amazon EventBridge进行消息处理是合理的，但后端应用程序部署在Amazon EC2 Spot Instances需要用户管理
+实例和Spot Fleet，增加了运维开销。
+错误原因：EC2 Spot Instances需要用户负责实例管理，违反了“最小化运维开销”的要求。
+D:
+使用Amazon API Gateway和AWS Lambda进行消息处理是合理的，后端应用程序部署在Amazon ECS（使用AWS Fargate启动类型）
+是完全托管的解决方案，符合“最小化运维开销”的要求。
+正确原因：AWS Fargate是无服务器计算引擎，用户无需管理底层基础设施，完全符合题目要求。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案比较
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (100%)
+我的答案与官方答案一致，无需重新思考。

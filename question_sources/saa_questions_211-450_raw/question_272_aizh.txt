@@ -1,0 +1,74 @@
+Question #272
+A company serves a dynamic website from a fleet of Amazon EC2 instances behind an Application Load Balancer (ALB). The
+website needs to support multiple languages to serve customers around the world. The website’s architecture is running in the us-
+west-1 Region and is exhibiting high request latency for users that are located in other parts of the world.
+The website needs to serve requests quickly and efficiently regardless of a user’s location. However, the company does not want to
+recreate the existing architecture across multiple Regions.
+What should a solutions architect do to meet these requirements?
+一家公司通过位于一个 Application Load Balancer (ALB) 后面的 Amazon EC2 实例群组提供动态网站服务。该网站需要支持多种语
+言，以服务全球范围内的客户。该网站的架构运行在 us-west-1 区域，并且对于位于世界其他地区的用户表现出较高的请求延迟。
+该网站需要快速高效地响应请求，无论用户的地理位置如何。然而，该公司不希望在多个区域重新创建现有的架构。
+解决方案架构师应该怎么做以满足这些需求？
+A. Replace the existing architecture with a website that is served from an Amazon S3 bucket. Configure an Amazon CloudFront
+distribution with the S3 bucket as the origin. Set the cache behavior settings to cache based on the Accept-Language request
+header.
+将现有架构替换为从 Amazon S3 bucket 提供服务的网站。配置一个 Amazon CloudFront 分配，并将 S3 bucket 设置为源。将
+缓存行为设置为基于 Accept-Language 请求头进行缓存。
+B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on
+the Accept-Language request header. Most Voted
+配置一个 Amazon CloudFront 分配，并将 ALB 设置为源。将缓存行为设置为基于 Accept-Language 请求头进行缓存。
+C. Create an Amazon API Gateway API that is integrated with the ALB. Configure the API to use the HTTP integration type. Set
+up an API Gateway stage to enable the API cache based on the Accept-Language request header.
+创建一个与 ALB 集成的 Amazon API Gateway API。配置 API 使用 HTTP 集成类型。设置一个 API Gateway 阶段以启用基于
+Accept-Language 请求头的 API 缓存。
+D. Launch an EC2 instance in each additional Region and configure NGINX to act as a cache server for that Region. Put all the
+EC2 instances and the ALB behind an Amazon Route 53 record set with a geolocation routing policy.
+在每个额外的区域启动一个 EC2 实例，并配置 NGINX 作为该区域的缓存服务器。将所有 EC2 实例和 ALB 放置在一个具有地理
+位置路由策略的 Amazon Route 53 记录集后面。
+Correct Answer: B
+题目分析与解答
+1. 考察的知识点
+Amazon CloudFront的使用及其缓存行为配置。
+如何优化全球用户访问动态网站的性能。
+Accept-Language请求头的缓存机制。
+跨区域架构优化的解决方案。
+2. 选项分析
+A. Replace the existing architecture with a website that is served from an Amazon S3 bucket. Configure an Amazon
+CloudFront distribution with the S3 bucket as the origin. Set the cache behavior settings to cache based on the Accept-
+Language request header.
+分析：
+将现有架构替换为S3存储桶会导致动态网站的功能受限，因为S3适合静态内容托管，而不是动态内容。
+虽然CloudFront可以优化全球访问，但替换架构并不符合题目要求，因为公司不希望重建现有架构。
+此选项错误。
+B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache
+based on the Accept-Language request header.
+分析：
+CloudFront可以作为全球内容分发网络（CDN），有效减少用户请求的延迟。
+将ALB作为源保留了现有架构，同时通过Accept-Language请求头进行缓存优化，满足多语言支持的需求。
+此选项正确。
+C. Create an Amazon API Gateway API that is integrated with the ALB. Configure the API to use the HTTP integration type.
+Set up an API Gateway stage to enable the API cache based on the Accept-Language request header.
+分析：
+API Gateway主要用于构建和管理API，而不是优化动态网站的全球访问性能。
+虽然API Gateway可以启用缓存，但它并不是解决高请求延迟的昀佳选择。
+此选项错误。
+D. Launch an EC2 instance in each additional Region and configure NGINX to act as a cache server for that Region. Put all
+the EC2 instances and the ALB behind an Amazon Route 53 record set with a geolocation routing policy.
+分析：
+此选项需要在多个区域启动EC2实例并配置NGINX，增加了架构复杂性和管理成本。
+题目明确要求不重建现有架构，因此此选项不符合要求。
+此选项错误。
+3. 我的答案
+B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on the
+Accept-Language request header.
+4. 官方答案
+B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on the
+Accept-Language request header.
+5. 与官方答案的比较
+我的答案与官方答案一致。
+理由：CloudFront作为CDN可以有效优化全球用户访问性能，同时保留现有架构并支持多语言缓存。
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)
+嬄信: " Examtopics "

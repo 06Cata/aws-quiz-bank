@@ -1,0 +1,80 @@
+Question #775
+Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 worker nodes.
+A company has deployed an application in an AWS account. The application consists of microservices that run on AWS Lambda
+and Amazon Elastic Kubernetes Service (Amazon EKS). A separate team supports each microservice. The company has multiple
+AWS accounts and wants to give each team its own account for its microservices.
+A solutions architect needs to design a solution that will provide service-to-service communication over HTTPS (port 443). The
+solution also must provide a service registry for service discovery.
+Which solution will meet these requirements with the LEAST administrative overhead?
+使用 Amazon Elastic Kubernetes Service (Amazon EKS) 与 Amazon EC2 工作节点。
+一家公司在一个 AWS 账户中部署了一个应用程序。该应用程序由运行在 AWS Lambda 和 Amazon Elastic Kubernetes Service
+(Amazon EKS) 上的微服务组成。每个微服务由一个独立的团队负责支持。该公司拥有多个 AWS 账户，并希望为每个团队提供一个
+专属账户来管理其微服务。
+解决方案架构师需要设计一个解决方案，以提供通过 HTTPS（端口 443）的服务间通信。该解决方案还必须提供一个服务注册表用
+于服务发现。
+哪种解决方案能够以最少的管理开销满足这些要求？
+A. Create an inspection VPC. Deploy an AWS Network Firewall firewall to the inspection VPC. Attach the inspection VPC to a
+new transit gateway. Route VPC-to-VPC traffic to the inspection VPC. Apply firewall rules to allow only HTTPS communication.
+创建一个检查 VPC。在检查 VPC 中部署一个 AWS Network Firewall 防火墙。将检查 VPC 附加到一个新的 Transit Gateway。将
+VPC 到 VPC 的流量路由到检查 VPC。应用防火墙规则以仅允许 HTTPS 通信。
+B. Create a VPC Lattice service network. Associate the microservices with the service network. Define HTTPS listeners for each
+service. Register microservice compute resources as targets. Identify VPCs that need to communicate with the services.
+Associate those VPCs with the service network. Most Voted
+创建一个 VPC Lattice 服务网络。将微服务与服务网络关联。为每个服务定义 HTTPS 监听器。将微服务的计算资源注册为目
+标。识别需要与服务通信的 VPC。将这些 VPC 与服务网络关联。
+C. Create a Network Load Balancer (NLB) with an HTTPS listener and target groups for each microservice. Create an AWS
+PrivateLink endpoint service for each microservice. Create an interface VPC endpoint in each VPC that needs to consume that
+microservice.
+创建一个带有 HTTPS 监听器的 Network Load Balancer (NLB) 和每个微服务的目标组。为每个微服务创建一个 AWS PrivateLink
+端点服务。在需要使用该微服务的每个 VPC 中创建一个接口 VPC 端点。
+D. Create peering connections between VPCs that contain microservices. Create a prefix list for each service that requires a
+connection to a client. Create route tables to route traffic to the appropriate VPC. Create security groups to allow only HTTPS
+communication.
+在包含微服务的 VPC 之间创建对等连接。为需要与客户端连接的每个服务创建一个前缀列表。创建路由表以将流量路由到适当
+的 VPC。创建安全组以仅允许 HTTPS 通信。
+题目分析与解答
+1. 考察的知识点
+跨账户和跨VPC的服务通信设计。
+服务发现和服务注册的实现。
+HTTPS通信的安全性和管理。
+减少管理开销的解决方案。
+2. 选项分析
+A. Create an inspection VPC...
+分析：
+使用AWS Network Firewall和Transit Gateway可以实现跨VPC流量的检查和控制。
+虽然可以限制流量到HTTPS，但没有提到服务注册和服务发现功能。
+管理开销较高，因为需要手动配置防火墙规则和路由。
+结论：错误。
+B. Create a VPC Lattice service network...
+分析：
+VPC Lattice是专门设计用于跨VPC和跨账户的服务通信的解决方案。
+支持服务注册和服务发现功能，简化了服务间通信的管理。
+支持HTTPS监听器，满足安全通信需求。
+管理开销最低，因为VPC Lattice自动处理服务注册和通信。
+结论：正确。
+C. Create a Network Load Balancer...
+分析：
+使用PrivateLink可以实现跨VPC的服务通信。
+需要为每个微服务创建单独的NLB和PrivateLink端点，管理开销较高。
+没有提到服务注册和服务发现功能。
+结论：错误。
+D. Create peering connections...
+分析：
+VPC Peering可以实现跨VPC通信，但不支持跨账户通信。
+需要手动配置路由表和安全组，管理开销较高。
+没有提到服务注册和服务发现功能。
+结论：错误。
+3. 我的答案
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)
+B
+4. 官方答案
+B
+5. 比较与思考
+我的答案与官方答案一致。
+原因：VPC Lattice提供了跨账户和跨VPC的服务通信解决方案，同时支持服务注册和服务发现功能，管理开销最低，完全满足题目
+要求。
+嬄信: " Examtopics "

@@ -1,0 +1,59 @@
+A company has an automobile sales website that stores its listings in a database on Amazon RDS. When an automobile is sold, the
+listing needs to be removed from the website and the data must be sent to multiple target systems.
+Which design should a solutions architect recommend?
+一家公司有一个汽车销售网站，其列表存储在 Amazon RDS 的数据库中。当汽车售出时，需要从网站上移除该列表，并且必须将数
+据发送到多个目标系统。
+解决方案架构师应该推荐哪种设计？
+A. Create an AWS Lambda function triggered when the database on Amazon RDS is updated to send the information to an
+Amazon Simple Queue Service (Amazon SQS) queue for the targets to consume. Most Voted
+创建一个 AWS Lambda 函数，当 Amazon RDS 数据库更新时触发，将信息发送到一个 Amazon Simple Queue Service (Amazon
+SQS) 队列供目标系统消费。
+B. Create an AWS Lambda function triggered when the database on Amazon RDS is updated to send the information to an
+Amazon Simple Queue Service (Amazon SQS) FIFO queue for the targets to consume.
+创建一个 AWS Lambda 函数，当 Amazon RDS 数据库更新时触发，将信息发送到一个 Amazon Simple Queue Service (Amazon
+SQS) FIFO 队列供目标系统消费。
+C. Subscribe to an RDS event notification and send an Amazon Simple Queue Service (Amazon SQS) queue fanned out to
+multiple Amazon Simple Notification Service (Amazon SNS) topics. Use AWS Lambda functions to update the targets.
+订阅一个 RDS 事件通知，并将信息发送到一个 Amazon Simple Queue Service (Amazon SQS) 队列，再分发到多个 Amazon
+Simple Notification Service (Amazon SNS) 主题。使用 AWS Lambda 函数来更新目标系统。
+D. Subscribe to an RDS event notification and send an Amazon Simple Notification Service (Amazon SNS) topic fanned out to
+multiple Amazon Simple Queue Service (Amazon SQS) queues. Use AWS Lambda functions to update the targets.
+订阅一个 RDS 事件通知，并将信息发送到一个 Amazon Simple Notification Service (Amazon SNS) 主题，再分发到多个
+Amazon Simple Queue Service (Amazon SQS) 队列。使用 AWS Lambda 函数来更新目标系统。
+Correct Answer: A
+正确答案：A
+Community vote distribution
+社区投票分布
+A (50%)
+D (45%)
+2%
+题目分析与解答
+1. 考察的知识点
+Amazon RDS事件通知机制
+AWS Lambda的触发器功能
+Amazon SQS队列的使用
+系统设计中消息队列的应用
+2. 选项分析
+A. Create an AWS Lambda function triggered when the database on Amazon RDS is updated to send the information to an
+Amazon Simple Queue Service (Amazon SQS) queue for the targets to consume.
+分析：此选项设计合理，使用AWS Lambda函数监听数据库更新事件，并将数据发送到Amazon SQS队列供目标系统消费。SQS队列
+可以有效解耦系统，支持多目标消费。此选项符合题目需求。
+B. Create an AWS Lambda function triggered when the database on Amazon RDS is updated to send the information to an
+Amazon Simple Queue Service (Amazon SQS) FIFO queue for the targets to consume.
+分析：此选项与A类似，但使用了FIFO队列。FIFO队列主要用于需要严格顺序和去重的场景，而题目并未提到需要顺序处理或去
+重，因此使用FIFO队列可能会增加不必要的复杂性。
+C. Subscribe to an RDS event notification and send an Amazon Simple Queue Service (Amazon SQS) queue fanned out to
+multiple Amazon Simple Notification Service (Amazon SNS) topics. Use AWS Lambda functions to update the targets.
+分析：此选项设计复杂，涉及RDS事件通知、SQS队列和SNS主题的组合。虽然可以实现目标，但题目并未要求使用SNS主题进行分
+发，且设计过于复杂，不符合最佳实践。
+D. Subscribe to an RDS event notification and send an Amazon Simple Notification Service (Amazon SNS) topic fanned
+out to multiple Amazon Simple Queue Service (Amazon SQS) queues. Use AWS Lambda functions to update the targets.
+分析：此选项与C类似，使用了SNS主题和SQS队列的组合。虽然可以实现目标，但设计复杂且不必要，题目并未要求使用SNS主题
+进行分发。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：选项A设计简单且符合题目需求，使用AWS Lambda和SQS队列实现解耦和多目标消费，符合最佳实践。

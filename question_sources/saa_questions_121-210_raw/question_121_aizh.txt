@@ -1,0 +1,50 @@
+A company is running an online transaction processing (OLTP) workload on AWS. This workload uses an unencrypted Amazon RDS
+DB instance in a Multi-AZ deployment. Daily database snapshots are taken from this instance.
+What should a solutions architect do to ensure the database and snapshots are always encrypted moving forward?
+一家公司正在 AWS 上运行在线事务处理 (OLTP) 工作负载。该工作负载使用未加密的 Amazon RDS DB 实例，并采用 Multi-AZ 部
+署。每天都会从该实例中获取数据库快照。
+解决方案架构师应该怎么做以确保数据库和快照从现在起始终加密？
+A. Encrypt a copy of the latest DB snapshot. Replace existing DB instance by restoring the encrypted snapshot. Most Voted
+对昀新的数据库快照进行加密。通过恢复加密的快照替换现有的数据库实例。
+B. Create a new encrypted Amazon Elastic Block Store (Amazon EBS) volume and copy the snapshots to it. Enable encryption
+on the DB instance.
+创建一个新的加密 Amazon Elastic Block Store (Amazon EBS) 卷，并将快照复制到其中。在数据库实例上启用加密。
+C. Copy the snapshots and enable encryption using AWS Key Management Service (AWS KMS) Restore encrypted snapshot to
+an existing DB instance.
+使用 AWS Key Management Service (AWS KMS) 复制快照并启用加密。将加密的快照恢复到现有的数据库实例。
+D. Copy the snapshots to an Amazon S3 bucket that is encrypted using server-side encryption with AWS Key Management
+Service (AWS KMS) managed keys (SSE-KMS).
+将快照复制到使用 AWS Key Management Service (AWS KMS) 托管密钥 (SSE-KMS) 进行服务器端加密的 Amazon S3 存储桶中。
+题目分析与解答
+1. 考察的知识点
+Amazon RDS数据库加密机制。
+Correct Answer: A
+正确答案：A
+Community vote distribution
+社区投票分布
+A (85%)
+Other
+如何处理未加密的RDS实例和快照。
+使用AWS Key Management Service (KMS)进行加密。
+2. 选项分析
+A. Encrypt a copy of the latest DB snapshot. Replace existing DB instance by restoring the encrypted snapshot.
+正确：这是AWS推荐的方式。RDS实例无法直接启用加密，必须通过创建加密的快照并从该快照恢复一个新的加密实例来实现。
+此方法确保数据库和未来的快照都被加密。
+B. Create a new encrypted Amazon Elastic Block Store (Amazon EBS) volume and copy the snapshots to it. Enable
+encryption on the DB instance.
+错误：RDS实例的加密与EBS卷的加密是独立的。无法通过创建加密的EBS卷直接为RDS实例启用加密。
+RDS实例的加密只能通过加密的快照恢复来实现。
+C. Copy the snapshots and enable encryption using AWS Key Management Service (AWS KMS). Restore encrypted
+snapshot to an existing DB instance.
+错误：虽然可以使用KMS加密快照，但无法将加密的快照恢复到现有的未加密实例。
+必须创建一个新的加密实例，而不是恢复到现有实例。
+D. Copy the snapshots to an Amazon S3 bucket that is encrypted using server-side encryption with AWS Key Management
+Service (AWS KMS) managed keys (SSE-KMS).
+错误：将快照复制到S3并加密不会影响RDS实例本身的加密状态。
+此方法仅适用于备份目的，而不是为RDS实例启用加密。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致，没有差异。

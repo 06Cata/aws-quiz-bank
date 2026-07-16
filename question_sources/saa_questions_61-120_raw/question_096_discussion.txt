@@ -1,0 +1,122 @@
+An Amazon EC2 administrator created the following policy associated with an IAM group containing several users:
+What is the effect of this policy?
+A. Users can terminate an EC2 instance in any AWS Region except us-east-1.
+B. Users can terminate an EC2 instance with the IP address 10.100.100.1 in the us-east-1 Region.
+C. Users can terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254. Most Voted
+D. Users cannot terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254.
+Comments
+Joxtat Highly Voted 3 years, 5 months ago
+What the policy means:
+1. Allow termination of any instance if user’s source IP address is 100.100.254.
+2. Deny termination of instances that are not in the us-east-1 Combining this two, you get:
+“Allow instance termination in the us-east-1 region if the user’s source IP address is 10.100.100.254. Deny termination operation on other regions.”
+upvoted 73 times
+KMohsoe 3 years, 1 month ago
+Nice explanation. Thanks
+upvoted 4 times
+Subh_fidelity Highly Voted 3 years, 6 months ago
+Correct Answer: C
+Community vote distribution
+C (72%)
+D (28%)
+C is correct.
+0.0/24 , the following five IP addresses are reserved:
+0.0: Network address.
+0.1: Reserved by AWS for the VPC router.
+0.2: Reserved by AWS. The IP address of the DNS server is the base of the VPC network range plus two. ...
+0.3: Reserved by AWS for future use.
+0.255: Network broadcast address.
+upvoted 35 times
+Bmarodi 3 years ago
+A good explanation!
+upvoted 3 times
+c12ab95 1 year ago
+Also, it is the USER's IP that matters, the policy provided does not check or restrict the IP address of the EC2 instance itself
+upvoted 1 times
+Dharmarajan Most Recent 1 year, 4 months ago
+Selected Answer: C
+It is C. Because the keyword "SourceIp". Thats what distinguishes C and D.
+upvoted 1 times
+itsmeDiyan 1 year, 4 months ago
+Selected Answer: C
+Uncle Trump says so
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: C
+Ans C - must be in us-east-1 region and CIDR address is in allowable range (/24)
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: C
+The first rule allows users with the specified IP CIDR to terminate instances, and the second rule specifies that the region must be us-east-1 for the
+termination process to be allowed, hence C is the correct answer.
+upvoted 2 times
+jatric 1 year, 11 months ago
+Selected Answer: C
+policy allow us-east-1 and with the specific IP address in the range
+upvoted 3 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: C
+C for sure
+upvoted 1 times
+jhoiti 2 years, 2 months ago
+Selected Answer: D
+D. Users cannot terminate an EC2 instance in the us-east-1 region when the user's source IP is 10.100.100.254.
+This option corresponds to the second statement in the policy, where all EC2 actions in the "us-east-1" region are denied permission when the user's
+source IP is "10.100.100.254".
+upvoted 2 times
+lofzee 2 years ago
+but it says "StringNotEquals" meaning everything is denied apart from us-east-1
+upvoted 4 times
+vip2 2 years, 3 months ago
+Selected Answer: C
+Clearly the answer is C.
+D is 'Deny' 'String NOT equal' == only allow us-east-1
+upvoted 5 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: C
+Here is how I interpreted this
+first part: terminate instance is allowed for the given CIDR block
+second part: deny all ec2 actions when region is not us-east-1
+so second part is like double negative which means allow for us-east-1 region
+You combine both (remember deny always take priority which is why this is written in double negative) and you get:
+[allow us-east-region1 to do any action on ec2] when [action is terminate instance and CIDR block is match]
+so C is the answer
+D is there to confuse you with the double negative
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: C
+Deny takes precedence over Allow. Thus the flow is as follows:
+IF region of the EC2 instance is not "us-east-1" -> Deny
+ELSE if request is coming from 10.100.100.0/24 -> Allow
+ELSE: implicit deny (what is not allowed is denied)
+upvoted 4 times
+Cyberkayu 2 years, 6 months ago
+if
+IP = 10.100.100.0/24
+allow terminate EC2
+Else
+Deny EC2 termination permission
+- with the condition "String NOT equal" to us-east-1
+Answer C
+upvoted 5 times
+Bjfikky 2 years, 6 months ago
+Selected Answer: D
+The first statement allows users to terminate EC2 instances (ec2:TerminateInstances) from any IP address within the range 10.100.100.0/24.
+The second statement denies users the ability to perform any EC2 actions (ec2:*) in any region other than us-east-1.
+So, the correct interpretation is:
+D. Users cannot terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254
+upvoted 1 times
+pentium75 2 years, 5 months ago
+D denies "the ability to perform any actions in any region OTHER than us-east-1". Thus the user CAN terminate instances IN us-east-1. Thus C.
+upvoted 2 times
+sweetheatmn 2 years, 7 months ago
+Selected Answer: C
+C because the explicit deny blocks other regions than us-east-1
+upvoted 1 times
+tom_cruise 2 years, 8 months ago
+Selected Answer: C
+The first statement is a subset of the second statement.
+upvoted 1 times
+prabhjot 2 years, 8 months ago
+ans D - This policy denies EC2 instance termination for users with the source IP address 10.100.100.254 in the us-east-1 Region.
+upvoted 1 times

@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 991,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 GPS 追蹤器記錄數千隻海龜的遷移模式。追蹤器每 5 分鐘檢查一次，看看海龜移動的距離是否超過 100 碼（91.4 公尺）。如果烏龜移動了，它的追蹤器會將新座標傳送到在一個 AWS 區域的多個可用區中的三個 Amazon EC2 執行個體上執行的 Web 應用程式。最近，Web 應用程式在處理大量追蹤器資料時不堪重負。資料遺失，無法重播事件。解決方案架構師必須防止此問題再次發生，並且需要一個營運開銷最少的解決方案。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company uses GPS trackers to document the migration patterns of thousands of sea turtles. The trackers check every 5 minutes to see if a turtle has moved more than 100 yards (91.4 meters). If a turtle has moved, its tracker sends the new coordinates to a web application running on three Amazon EC2 instances that are in multiple Availability Zones in one AWS Region. Recently, the web application was overwhelmed while processing an unexpected volume of tracker data. Data was lost with no way to replay the events. A solutions architect must prevent this problem from happening again and needs a solution with the least operational overhead. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon S3 儲存桶來儲存資料。配置應用程式以掃描儲存桶中的新資料進行處理。",
+          "en": "Create an Amazon S3 bucket to store the data. Configure the application to scan for new data in the bucket for processing."
+        },
+        "B": {
+          "zh": "建立 Amazon API Gateway 終端節點來處理傳輸的位置座標。使用 AWS Lambda 函數同時處理每個項目。",
+          "en": "Create an Amazon API Gateway endpoint to handle transmitted location coordinates. Use an AWS Lambda function to process each item concurrently."
+        },
+        "C": {
+          "zh": "建立 Amazon Simple Queue Service (Amazon SQS) 佇列來儲存傳入資料。配置應用程式以輪詢新訊息以進行處理。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue to store the incoming data. Configure the application to poll for new messages for processing."
+        },
+        "D": {
+          "zh": "建立 Amazon DynamoDB 表來儲存傳輸的位置座標。配置應用程式以查詢表格以取得要處理的新資料。使用TTL來刪除已經處理過的資料。",
+          "en": "Create an Amazon DynamoDB table to store transmitted location coordinates. Configure the application to query the table for new data for processing. Use TTL to remove data that has been processed."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：Amazon S3 是一種物件儲存服務，適合儲存狀態檔案或數據，但不適合處理即時資料流。掃描S3桶的方法效率低下，無法保證資料處理的有序性或可靠性。",
+          "en": "Incorrect. Reason: Amazon S3 is an object storage service, suitable for storing state files or data, but not suitable for processing real-time data streams. The method of scanning S3 buckets is inefficient and cannot guarantee the orderliness or reliability of data processing."
+        },
+        "B": {
+          "zh": "錯誤。原因：API Gateway 和 Lambda 雖然可以處理並發請求，但無法中斷資料流。如果流量激增，API網關可能會過載，導致資料遺失。另外，該方案需要額外的配置和管理，營運開銷較高。",
+          "en": "Incorrect. Reason: Although API Gateway and Lambda can handle concurrent requests, they cannot interrupt the data stream. If traffic surges, API Gateway may be overloaded, resulting in data loss. In addition, this solution requires additional configuration and management, and the operational overhead is relatively high."
+        },
+        "C": {
+          "zh": "正確。原因：Amazon SQS 是一項專門設計用於緩衝和儲存訊息的服務，能夠處理並發資料流並防止資料遺失。應用程式序列可以輪詢佇列中的消息，以確保資料按順序處理。該解決方案具有較低的營運開銷並且非常可靠。",
+          "en": "Correct. Reason: Amazon SQS is a service specifically designed to buffer and store messages, capable of handling concurrent data streams and preventing data loss. The application sequence can poll the messages in the queue to ensure that the data is processed in sequence. This solution has low operational overhead and is very reliable."
+        },
+        "D": {
+          "zh": "錯誤。原因：雖然DynamoDB可以儲存資料並支援TTL清理，但它並不是被設計為處理即時資料流的最佳選擇。查詢新資料的方法效率低下，無法保證資料處理的順序。此外，營運費用也相對較高。",
+          "en": "Incorrect. Reason: Although DynamoDB can store data and supports TTL scrubbing, it is not designed to be the best choice for processing real-time data streams. The method of querying new data is inefficient and cannot guarantee the order of data processing. In addition, operating expenses are relatively high."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 Amazon Simple Queue Service (Amazon SQS) 佇列來儲存傳入資料。配置應用程式以輪詢新訊息以進行處理。",
+        "en": "C. Create an Amazon Simple Queue Service (Amazon SQS) queue to store the incoming data. Configure the application to poll for new messages for processing."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：原因：Amazon SQS 是一項專門設計用於緩衝和儲存訊息的服務，能夠處理並發資料流並防止資料遺失。應用程式序列可以輪詢佇列中的消息，以確保資料按順序處理。該解決方案具有較低的營運開銷並且非常可靠。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Reason: Amazon SQS is a service specifically designed to buffer and store messages, capable of handling concurrent data streams and preventing data loss. The application sequence can poll the messages in the queue to ensure that the data is processed in sequence. This solution has low operational overhead and is very reliable."
+      }
+    },
+    {
+      "question_no": 992,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司的軟體開發團隊需要一個 Amazon RDS 多可用區叢集。 RDS 叢集將充當本機部署的桌面用戶端的後端。桌面用戶端需要直接連接到 RDS 叢集。公司必須讓開發團隊能夠在團隊在辦公室時使用客戶端連接到叢集。哪種解決方案最安全地提供所需的連接？",
+        "en": "A company's software development team needs an Amazon RDS Multi-AZ cluster. The RDS cluster will serve as a backend for a desktop client that is deployed on premises. The desktop client requires direct connectivity to the RDS cluster. The company must give the development team the ability to connect to the cluster by using the client when the team is in the office. Which solution provides the required connectivity MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 VPC 和兩個公有子網路。在公有子網路中建立 RDS 叢集。將 AWS Site-to-Site VPN 與公司辦公室中的客戶閘道結合使用。",
+          "en": "Create a VPC and two public subnets. Create the RDS cluster in the public subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+        },
+        "B": {
+          "zh": "建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。將 AWS Site-to-Site VPN 與公司辦公室中的客戶閘道結合使用。",
+          "en": "Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+        },
+        "C": {
+          "zh": "建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。使用RDS安全群組允許公司辦公IP範圍存取叢集。",
+          "en": "Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use RDS security groups to allow the company's office IP ranges to access the cluster."
+        },
+        "D": {
+          "zh": "建立一個 VPC 和兩個公有子網路。在公有子網路中建立 RDS 叢集。為每個開發者建立一個叢集使用者。使用RDS安全群組允許使用者存取叢集。",
+          "en": "Create a VPC and two public subnets. Create the RDS cluster in the public subnets. Create a cluster user for each developer. Use RDS security groups to allow the users to access the cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。建立一個 VPC 和兩個公有子網路。在公有子網路中建立 RDS 叢集。使用 AWS Site-to-Site VPN 和公司辦公室的客戶閘道。錯誤：在公有子網路中部署RDS會暴露資料庫執行個體的公有IP位址，增加安全風險。雖然使用站點到站點 VPN 可以提供安全連接，但公共子網路的選擇違反了最佳實踐。",
+          "en": "Incorrect. Create a VPC and two public subnets. Create an RDS cluster in a public subnet. Use AWS Site-to-Site VPN and the corporate office's customer gateway. Error: Deploying RDS in a public subnet will expose the public IP address of the database instance, increasing security risks. While using a Site-to-Site VPN can provide a secure connection, the choice of a public subnet goes against best practices."
+        },
+        "B": {
+          "zh": "正確。建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。使用 AWS Site-to-Site VPN 和公司辦公室的客戶閘道。正確：在私有子網路中部署 RDS 可確保資料庫執行個體不會直接暴露於 Internet，符合安全最佳實務。使用AWS Site-to-Site VPN安全連接公司辦公室和AWS VPC，滿足問題需求。",
+          "en": "Correct. Create a VPC and two private subnets. Create an RDS cluster in a private subnet. Use AWS Site-to-Site VPN and the corporate office's customer gateway. Correct: Deploying RDS in a private subnet ensures that the database instance is not directly exposed to the Internet, complying with security best practices. Use AWS Site-to-Site VPN to securely connect the company office and AWS VPC to meet the problem requirements."
+        },
+        "C": {
+          "zh": "錯誤。建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。使用 RDS 安全群組允許公司的辦公室 IP 範圍存取叢集。錯誤：雖然RDS安全群組可以限制訪問，但沒有提及如何建立安全的網路連線（例如VPN）。直接依賴 IP 範圍存取可能不安全，尤其是在動態 IP 環境中。",
+          "en": "Incorrect. Create a VPC and two private subnets. Create an RDS cluster in a private subnet. Use RDS security groups to allow your company's office IP ranges to access the cluster. Error: Although RDS security groups can restrict access, there is no mention of how to establish a secure network connection (such as a VPN). Relying directly on IP range access may not be secure, especially in a dynamic IP environment."
+        },
+        "D": {
+          "zh": "錯誤。此選項錯誤：在公有子網路中部署RDS會暴露資料庫執行個體的公有IP位址，增加安全風險。雖然可以透過為每個開發人員建立使用者並使用安全群組來限制存取權來控制權限，但公共子網路的選擇違反了安全最佳實踐。",
+          "en": "Incorrect. Create a VPC and two public subnets. Create an RDS cluster in a public subnet. Create a cluster user for each developer. Use RDS security groups to allow users to access the cluster. Error: Deploying RDS in a public subnet will expose the public IP address of the database instance, increasing security risks. While it is possible to control permissions by creating users for each developer and using security groups to limit access, the choice of a public subnet goes against security best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。將 AWS Site-to-Site VPN 與公司辦公室中的客戶閘道結合使用。",
+        "en": "B. Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (81%)； C (19%)。熱門討論與考點摘要：建立一個 VPC 和兩個私有子網路。在私有子網路中建立 RDS 叢集。使用 AWS Site-to-Site VPN 和公司辦公室的客戶閘道。正確：在私有子網路中部署 RDS 可確保資料庫執行個體不會直接暴露於 Internet，符合安全最佳實務。使用AWS Site-to-Site VPN安全連接公司辦公室和AWS VPC，滿足問題需求。",
+        "en": "Community vote as displayed: B (81%); C (19%). Popular discussion and key point summary: Create a VPC and two private subnets. Create an RDS cluster in a private subnet. Use AWS Site-to-Site VPN and the corporate office's customer gateway. Correct: Deploying RDS in a private subnet ensures that the database instance is not directly exposed to the Internet, complying with security best practices. Use AWS Site-to-Site VPN to securely connect the company office and AWS VPC to meet the problem requirements."
+      }
+    },
+    {
+      "question_no": 993,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在創建一個應用程式來處理大量資料的批次。輸入資料將保存在 Amazon S3 中，輸出資料將儲存在不同的 S3 儲存桶中。為了進行處理，應用程式將透過網路在多個 Amazon EC2 執行個體之間傳輸資料。解決方案架構師應該如何降低整體資料傳輸成本？",
+        "en": "A solutions architect is creating an application that will handle batch processing of large amounts of data. The input data will be held in Amazon S3 and the output data will be stored in a different S3 bucket. For processing, the application will transfer the data over the network between multiple Amazon EC2 instances. What should the solutions architect do to reduce the overall data transfer costs?"
+      },
+      "options": {
+        "A": {
+          "zh": "將所有 EC2 執行個體放入 Auto Scaling 群組中。",
+          "en": "Place all the EC2 instances in an Auto Scaling group."
+        },
+        "B": {
+          "zh": "將所有 EC2 執行個體放置在同一 AWS 區域中。",
+          "en": "Place all the EC2 instances in the same AWS Region."
+        },
+        "C": {
+          "zh": "將所有 EC2 執行個體放置在同一可用區中。",
+          "en": "Place all the EC2 instances in the same Availability Zone."
+        },
+        "D": {
+          "zh": "將所有 EC2 執行個體放置在多個可用區的私有子網路中。",
+          "en": "Place all the EC2 instances in private subnets in multiple Availability Zones."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Auto Scaling群組的主要功能是根據負載動態調整執行個體數量，這與資料傳輸成本最佳化密切相關。",
+          "en": "Incorrect. The main function of the Auto Scaling group is to adjust the number of instances according to load dynamics, which is closely related to data transmission cost optimization."
+        },
+        "B": {
+          "zh": "錯誤。雖然同Region內和跨Region之間傳輸資料很方便，但同一Region內不同可用區之間傳輸資料仍會產生費用。",
+          "en": "Incorrect. Although it is convenient to transfer data within the same Region and across Regions, charges will still be incurred for transferring data between different Availability Zones in the same Region."
+        },
+        "C": {
+          "zh": "正確。同一可用區的EC2實例之間的資料傳輸是免費的，因為將所有執行個體放在同一可用區可以有效降低資料傳輸成本。",
+          "en": "Correct. Data transfer between EC2 instances in the same Availability Zone is free, because placing all instances in the same Availability Zone can effectively reduce data transfer costs."
+        },
+        "D": {
+          "zh": "錯誤。雖然使用雲端可以提高安全性，但在多個可用區之間傳輸資料仍需要付費。",
+          "en": "Incorrect. Although using a cloud can improve security, there are still charges for transferring data between multiple Availability Zones."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將所有 EC2 執行個體放置在同一可用區中。",
+        "en": "C. Place all the EC2 instances in the same Availability Zone."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (83%)； B (17%)。熱門討論與考點摘要：同一可用區的EC2實例之間的資料傳輸是免費的，因為將所有執行個體放在同一可用區可以有效降低資料傳輸成本。",
+        "en": "Community vote as displayed: C (83%); B (17%). Popular discussion and key point summary: Data transfer between EC2 instances in the same Availability Zone is free, because placing all instances in the same Availability Zone can effectively reduce data transfer costs."
+      }
+    },
+    {
+      "question_no": 994,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司託管一個多層 Web 應用程序，該應用程式使用 Amazon Aurora MySQL 資料庫叢集進行儲存。應用程式層託管在 Amazon EC2 執行個體上。該公司的 IT 安全準則要求對資料庫憑證進行加密並每 14 天輪換一次。解決方案架構師應該如何做才能以最少的操作工作來滿足此要求？",
+        "en": "A company hosts a multi-tier web application that uses an Amazon Aurora MySQL DB cluster for storage. The application tier is hosted on Amazon EC2 instances. The company's IT security guidelines mandate that the database credentials be encrypted and rotated every 14 days. What should a solutions architect do to meet this requirement with the LEAST operational effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立新的 AWS Key Management Service (AWS KMS) 加密金鑰。使用 AWS Secrets Manager 建立一個使用 KMS 金鑰和適當憑證的新金鑰。將金鑰與 Aurora 資料庫叢集關聯。配置 14 天的自訂輪換期。",
+          "en": "Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new secret that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a custom rotation period of 14 days."
+        },
+        "B": {
+          "zh": "在 AWS Systems Manager Parameter Store 中建立兩個參數：一個用於將使用者名稱作為字串參數，另一個使用 SecureString 類型作為密碼。為密碼參數選擇 AWS Key Management Service (AWS KMS) 加密，並將這些參數載入到應用程式層中。實作每 14 天輪換一次密碼的 AWS Lambda 函數。",
+          "en": "Create two parameters in AWS Systems Manager Parameter Store: one for the user name as a string parameter and one that uses the SecureString type for the password. Select AWS Key Management Service (AWS KMS) encryption for the password parameter, and load these parameters in the application tier. Implement an AWS Lambda function that rotates the password every 14 days."
+        },
+        "C": {
+          "zh": "將包含憑證的檔案儲存在 AWS Key Management Service (AWS KMS) 加密的 Amazon Elastic File System (Amazon EFS) 檔案系統中。在應用層的所有 EC2 執行個體中掛載 EFS 檔案系統。限制對文件系統上的文件的訪問，以便應用程式可以讀取該文件，並且只有超級用戶可以修改該文件。實作一個 AWS Lambda 函數，該函數每 14 天輪換一次 Aurora 中的金鑰並將新憑證寫入檔案。",
+          "en": "Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system in all EC2 instances of the application tier. Restrict the access to the file on the file system so that the application can read the file and that only super users can modify the file. Implement an AWS Lambda function that rotates the key in Aurora every 14 days and writes new credentials into the file."
+        },
+        "D": {
+          "zh": "將包含憑證的檔案儲存在應用程式用來載入憑證的 AWS Key Management Service (AWS KMS) 加密的 Amazon S3 儲存桶中。定期將文件下載到應用程序，以確保使用正確的憑證。實作一個 AWS Lambda 函數，該函數每 14 天輪換一次 Aurora 憑證，並將這些憑證上傳到 S3 儲存桶中的檔案。",
+          "en": "Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon S3 bucket that the application uses to load the credentials. Download the file to the application regularly to ensure that the correct credentials are used. Implement an AWS Lambda function that rotates the Aurora credentials every 14 days and uploads these credentials to the file in the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。分析：AWS Secrets Manager 支援資料庫憑證自動輪換，並且可以直接與 Aurora 資料庫整合。使用 AWS KMS 加密金鑰確保憑證的安全。配置自訂輪換週期（14天）完全滿足問題要求。此方案操作簡單，自動化程度高，滿足「最小操作工作量」的要求。",
+          "en": "Correct. Analysis: AWS Secrets Manager supports automatic rotation of database credentials and can be directly integrated with the Aurora database. Credentials are kept secure using AWS KMS encryption keys. Configuring a custom rotation period (14 days) fully meets the question requirements. This option is simple to operate, has a high degree of automation and meets the \"minimum operating effort\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。分析：AWS Systems Manager Parameter Store 可以儲存加密參數，但不支援資料庫憑證的自動輪調。需要實作額外的 AWS Lambda 函數來輪換密碼，這增加了操作的複雜度。此選項比 Secrets Manager 需要更多的手動配置和維護，並且不符合「最小操作工作量」要求。",
+          "en": "Incorrect. Analysis: AWS Systems Manager Parameter Store can store encrypted parameters, but it does not support automatic rotation of database credentials. An additional AWS Lambda function needs to be implemented to rotate passwords, which increases the complexity of the operation. This option requires more manual configuration and maintenance than Secrets Manager and does not meet the \"minimum operational effort\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。分析：使用EFS儲存和加密憑證檔案是可行的，但需要額外的配置來掛載檔案系統。需要實作AWS Lambda函數來輪換憑證，這增加了操作複雜度。這種方式不如Secrets Manager直接整合Aurora資料庫方便，操作複雜度較高。",
+          "en": "Incorrect. Analysis: Using EFS to store and encrypt credential files is feasible, but requires additional configuration to mount the file system. An AWS Lambda function needs to be implemented to rotate credentials, which increases the operational complexity. This method is not as convenient as Secrets Manager's direct integration of the Aurora database, and the operation complexity is high."
+        },
+        "D": {
+          "zh": "錯誤。自訂 S3 檔案下載和 Lambda 輪調工作流程需要程式碼、同步和安全文件處理； Secrets Manager 以更少的工作量提供託管憑證輪替。",
+          "en": "Incorrect. A custom S3 file-download and Lambda rotation workflow requires code, synchronization, and secure file handling; Secrets Manager provides managed credential rotation with much less effort."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立新的 AWS Key Management Service (AWS KMS) 加密金鑰。使用 AWS Secrets Manager 建立一個使用 KMS 金鑰和適當憑證的新金鑰。將金鑰與 Aurora 資料庫叢集關聯。配置 14 天的自訂輪換期。",
+        "en": "A. Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new secret that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a custom rotation period of 14 days."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：分析：AWS Secrets Manager 支援資料庫憑證自動輪換，並且可以直接與 Aurora 資料庫整合。使用 AWS KMS 加密金鑰確保憑證的安全。配置自訂輪換週期（14天）完全滿足問題要求。此方案操作簡單，自動化程度高，滿足「最小操作工作量」的要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Analysis: AWS Secrets Manager supports automatic rotation of database credentials and can be directly integrated with the Aurora database. Credentials are kept secure using AWS KMS encryption keys. Configuring a custom rotation period (14 days) fully meets the question requirements. This option is simple to operate, has a high degree of automation and meets the \"minimum operating effort\" requirement."
+      }
+    },
+    {
+      "question_no": 995,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家串流媒體公司正在重建其基礎設施，以滿足用戶日常消費的視訊內容日益增長的需求。該公司需要處理 TB 大小的影片以阻止影片中的某些內容。視訊處理最多可能需要 20 分鐘。該公司需要一種能夠根據需求擴展並保持成本效益的解決方案。哪種解決方案可以滿足這些要求？",
+        "en": "A streaming media company is rebuilding its infrastructure to accommodate increasing demand for video content that users consume daily. The company needs to process terabyte-sized videos to block some content in the videos. Video processing can take up to 20 minutes. The company needs a solution that will scale with demand and remain cost-effective. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Lambda 函數處理影片。將視訊元資料儲存在 Amazon DynamoDB 中。將影片內容儲存在 Amazon S3 智慧分層中。",
+          "en": "Use AWS Lambda functions to process videos. Store video metadata in Amazon DynamoDB. Store video content in Amazon S3 Intelligent-Tiering."
+        },
+        "B": {
+          "zh": "使用 Amazon Elastic Container Service (Amazon ECS) 和 AWS Fargate 實作微服務來處理影片。將視訊元資料儲存在 Amazon Aurora 中。將影片內容儲存在 Amazon S3 智慧分層中。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) and AWS Fargate to implement microservices to process videos. Store video metadata in Amazon Aurora. Store video content in Amazon S3 Intelligent-Tiering."
+        },
+        "C": {
+          "zh": "使用 Application Load Balancer (ALB) 後面的 Auto Scaling 群組中的 Amazon EC2 執行個體來處理影片。將視訊內容儲存在 Amazon S3 Standard 中。使用 Amazon Simple Queue Service (Amazon SQS) 進行排隊並解耦處理任務。",
+          "en": "Use Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer (ALB) to process videos. Store video content in Amazon S3 Standard. Use Amazon Simple Queue Service (Amazon SQS) for queuing and to decouple processing tasks."
+        },
+        "D": {
+          "zh": "在 Amazon EC2 上的 Amazon Elastic Kubernetes Service (Amazon EKS) 上部署容器化視訊處理應用程式。將視訊元資料儲存在 Amazon RDS 的單一可用區中。將影片內容儲存在 Amazon S3 Glacier Deep Archive 中。",
+          "en": "Deploy a containerized video processing application on Amazon Elastic Kubernetes Service (Amazon EKS) on Amazon EC2. Store video metadata in Amazon RDS in a single Availability Zone. Store video content in Amazon S3 Glacier Deep Archive."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 AWS Lambda 函數處理影片。錯誤：AWS Lambda適合處理短期任務（最多15分鐘），但問題中的視訊處理需要20分鐘，超出了Lambda的執行時間限制。 Amazon DynamoDB 是適合儲存視訊元資料的高效能 NoSQL 資料庫。 Amazon S3 智慧分層會根據存取模式自動最佳化儲存成本。",
+          "en": "Incorrect. Use AWS Lambda functions to process videos. Error: AWS Lambda is suitable for processing short-term tasks (up to 15 minutes), but the video processing in the question takes 20 minutes, which exceeds the execution time limit of Lambda. Amazon DynamoDB is a high-performance NoSQL database suitable for storing video metadata. Amazon S3 Intelligent-Tiering automatically optimizes storage costs based on access patterns."
+        },
+        "B": {
+          "zh": "正確。使用 Amazon ECS 和 AWS Fargate 實作微服務來處理視訊。 Amazon ECS 和 AWS Fargate 支援容器化應用程序，可以處理長時間運行的任務，並且可以根據需要自動擴展，適合視訊處理場景。 Amazon Aurora 是一種高效能關聯式資料庫，適合儲存結構化元資料。 Amazon S3 智慧分層可以優化儲存成本，適合儲存影片內容。",
+          "en": "Correct. Implement microservices using Amazon ECS and AWS Fargate to process videos. Amazon ECS and AWS Fargate support containerized applications, can handle long-running tasks, and can automatically expand as needed, making them suitable for video processing scenarios. Amazon Aurora is a high-performance relational database suitable for storing structured metadata. Amazon S3 Intelligent-Tiering can optimize storage costs and is suitable for storing video content."
+        },
+        "C": {
+          "zh": "錯誤。使用 Amazon EC2 執行個體處理 Auto Scaling 群組中的影片。 EC2 執行個體可以處理長時間運行的任務，Auto Scaling 群組可以根據需要擴展計算資源。 Amazon SQS 可以解耦任務並實現佇列管理。錯誤：雖然Amazon S3 Standard適合用來儲存影片內容，但它不提供成本優化功能。這個問題必須具有成本效益。",
+          "en": "Incorrect. Use Amazon EC2 instances to process video in an Auto Scaling group. EC2 instances can handle long-running tasks, and Auto Scaling groups can scale computing resources as needed. Amazon SQS can decouple tasks and implement queue management. Error: Although Amazon S3 Standard is suitable for storing video content, it does not provide cost optimization functions. The question must be cost-effective."
+        },
+        "D": {
+          "zh": "錯誤。在 Amazon EKS 上部署容器化視訊處理應用程式。 Amazon EKS 支援容器化應用程序，適合處理複雜的工作負載。錯誤：在單一可用區中部署 Amazon RDS 可能會導致高可用性問題，且不符合最佳實務。錯誤：Amazon S3 Glacier Deep Archive 適合長期儲存冷數據，不適合經常存取的影片內容。",
+          "en": "Incorrect. Deploy containerized video processing applications on Amazon EKS. Amazon EKS supports containerized applications and is suitable for handling complex workloads. Error: Deploying Amazon RDS in a single Availability Zone can cause high availability issues and is not in line with best practices. Error: Amazon S3 Glacier Deep Archive is suitable for long-term storage of cold data and is not suitable for frequently accessed video content."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon Elastic Container Service (Amazon ECS) 和 AWS Fargate 實作微服務來處理影片。將視訊元資料儲存在 Amazon Aurora 中。將影片內容儲存在 Amazon S3 智慧分層中。",
+        "en": "B. Use Amazon Elastic Container Service (Amazon ECS) and AWS Fargate to implement microservices to process videos. Store video metadata in Amazon Aurora. Store video content in Amazon S3 Intelligent-Tiering."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (83%)； C (17%)。熱門討論與考點摘要：使用 Amazon ECS 和 AWS Fargate 實作微服務來處理視訊。 Amazon ECS 和 AWS Fargate 支援容器化應用程序，可以處理長時間運行的任務，並且可以根據需要自動擴展，適合視訊處理場景。 Amazon Aurora 是一種高效能關聯式資料庫，適合儲存結構化元資料。 Amazon S3 智慧分層可以優化儲存成本，適合儲存影片內容。",
+        "en": "Community vote as displayed: B (83%); C (17%). Popular discussion and key point summary: Implement microservices using Amazon ECS and AWS Fargate to process videos. Amazon ECS and AWS Fargate support containerized applications, can handle long-running tasks, and can automatically expand as needed, making them suitable for video processing scenarios. Amazon Aurora is a high-performance relational database suitable for storing structured metadata. Amazon S3 Intelligent-Tiering can optimize storage costs and is suitable for storing video content."
+      }
+    },
+    {
+      "question_no": 996,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Kubernetes 叢集上運行本機應用程式。該公司最近增加了數百萬新客戶。該公司現有的本地基礎設施無法處理大量新客戶。該公司需要將本地應用程式遷移到AWS雲端。該公司將遷移到 Amazon Elastic Kubernetes Service (Amazon EKS) 叢集。該公司不想管理 AWS 上新架構的底層運算基礎架構。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company runs an on-premises application on a Kubernetes cluster. The company recently added millions of new customers. The company's existing on-premises infrastructure is unable to handle the large number of new customers. The company needs to migrate the on-premises application to the AWS Cloud. The company will migrate to an Amazon Elastic Kubernetes Service (Amazon EKS) cluster. The company does not want to manage the underlying compute infrastructure for the new architecture on AWS. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用自我管理節點來提供運算能力。將應用程式部署到新的 EKS 叢集。",
+          "en": "Use a self-managed node to supply compute capacity. Deploy the application to the new EKS cluster."
+        },
+        "B": {
+          "zh": "使用受管節點組提供運算容量。將應用程式部署到新的 EKS 叢集。",
+          "en": "Use managed node groups to supply compute capacity. Deploy the application to the new EKS cluster."
+        },
+        "C": {
+          "zh": "使用 AWS Fargate 提供運算容量。建立 Fargate 設定檔。使用 Fargate 設定檔部署應用程式。",
+          "en": "Use AWS Fargate to supply compute capacity. Create a Fargate profile. Use the Fargate profile to deploy the application."
+        },
+        "D": {
+          "zh": "使用 Karpenter 的受管節點群組來提供運算容量。將應用程式部署到新的 EKS 叢集。",
+          "en": "Use managed node groups with Karpenter to supply compute capacity. Deploy the application to the new EKS cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用自我管理的節點來提供運算能力。將應用程式部署到新的 EKS 叢集。錯誤：自我管理節點需要使用者手動管理底層運算資源，包括EC2實例的啟動、設定、控制和維護。這樣就增加了運行開銷，不滿足問題所要求的「最小運行開銷」。",
+          "en": "Incorrect. Use self-managed nodes to provide compute capacity. Deploy the application to the new EKS cluster. Error: Self-managed nodes require users to manually manage underlying computing resources, including the launch, configuration, control, and maintenance of EC2 instances. This increases the operating overhead and does not meet the \"minimum operating overhead\" required by the question."
+        },
+        "B": {
+          "zh": "錯誤。使用受管節點組提供運算能力。將應用程式部署到新的 EKS 叢集。託管節點場減少了一些管理工作，因為 AWS 會自動管理節點生命週期（例如自動修復和更新）。但它仍然需要管理底層的EC2實例，操作開銷比Fargate要高。",
+          "en": "Incorrect. Use managed node groups to provide compute capacity. Deploy the application to the new EKS cluster. Managed node farms reduce some of the management effort because AWS automatically manages the node lifecycle (such as automatic repairs and updates). But it still needs to manage the underlying EC2 instances, and the operation overhead is higher than Fargate."
+        },
+        "C": {
+          "zh": "正確。此選項正確：AWS Fargate 是一種無伺服器部署選項，完全無需管理底層部署資源。使用者只需定義任務和服務，AWS會自動處理資源分配和管理。這是營運開銷最少的解決方案。",
+          "en": "Correct. Use AWS Fargate to provide compute capacity. Create a Fargate configuration file. Deploy applications using Fargate profiles. Correct: AWS Fargate is a serverless deployment option that completely eliminates the need to manage underlying deployment resources. Users only need to define tasks and services, and AWS automatically handles resource allocation and management. This is the solution with the least operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。將受管節點組與 Karpenter 結合使用來提供運算能力。將應用程式部署到新的 EKS 叢集。 Karpenter 是一種自動縮放工具，可動態調整節點群的大小以滿足工作負載需求。但它仍然依賴託管節點組，因此需要管理底層 EC2 實例，操作開銷比 Fargate 更高。",
+          "en": "Incorrect. Use managed node groups with Karpenter to provide compute capacity. Deploy the application to the new EKS cluster. Karpenter is an autoscaling tool that dynamically resizes a node fleet to meet workload demands. However, it still relies on managed node groups, so it needs to manage the underlying EC2 instances, and the operational overhead is higher than Fargate."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Fargate 提供運算容量。建立 Fargate 設定檔。使用 Fargate 設定檔部署應用程式。",
+        "en": "C. Use AWS Fargate to supply compute capacity. Create a Fargate profile. Use the Fargate profile to deploy the application."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：此選項正確：AWS Fargate 是一種無伺服器部署選項，完全無需管理底層部署資源。使用者只需定義任務和服務，AWS會自動處理資源分配和管理。這是營運開銷最少的解決方案。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Use AWS Fargate to provide compute capacity. Create a Fargate configuration file. Deploy applications using Fargate profiles. Correct: AWS Fargate is a serverless deployment option that completely eliminates the need to manage underlying deployment resources. Users only need to define tasks and services, and AWS automatically handles resource allocation and management. This is the solution with the least operational overhead."
+      }
+    },
+    {
+      "question_no": 997,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在推出一款新應用程序，該應用程式需要結構化資料庫來儲存使用者設定檔、應用程式設定和交易資料。資料庫必須能夠隨著應用程式流量進行擴展，並且必須提供備份。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company is launching a new application that requires a structured database to store user profiles, application settings, and transactional data. The database must be scalable with application traffic and must offer backups. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用開源軟體在 Amazon EC2 執行個體上部署自我管理資料庫。使用 Spot 實例來優化成本。配置自動備份到 Amazon S3。",
+          "en": "Deploy a self-managed database on Amazon EC2 instances by using open source software. Use Spot Instances for cost optimization. Configure automated backups to Amazon S3."
+        },
+        "B": {
+          "zh": "使用 Amazon RDS。對具有通用 SSD 儲存的資料庫使用按需容量模式。配置自動備份，保留期為 7 天。",
+          "en": "Use Amazon RDS. Use on-demand capacity mode for the database with General Purpose SSD storage. Configure automatic backups with a retention period of 7 days."
+        },
+        "C": {
+          "zh": "使用 Amazon Aurora Serverless 作為資料庫。使用無伺服器容量擴充。配置自動備份到 Amazon S3。",
+          "en": "Use Amazon Aurora Serverless for the database. Use serverless capacity scaling. Configure automated backups to Amazon S3."
+        },
+        "D": {
+          "zh": "在 Amazon EC2 執行個體上部署自我管理的 NoSQL 資料庫。使用預留實例來優化成本。將自動備份直接配置到 Amazon S3 Glacier 彈性檢索。",
+          "en": "Deploy a self-managed NoSQL database on Amazon EC2 instances. Use Reserved Instances for cost optimization. Configure automated backups directly to Amazon S3 Glacier Flexible Retrieval."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：雖然使用 Spot 執行個體可以降低成本，但自託管資料庫需要額外的管理工作，包括安裝、維護、擴充和備份配置。這增加了複雜性和營運成本。可以備份到 Amazon S3，但不如 Amazon RDS 或 Aurora 的自動備份機制方便。錯誤原因：不符合「最具成本效益」的要求，因為管理開銷很高。",
+          "en": "Incorrect. Performance analysis: While using Spot Instances can reduce costs, self-hosted databases require additional management effort, including installation, maintenance, scaling, and backup configuration. This increases complexity and operational costs. Backing up to Amazon S3 is possible, but not as convenient as Amazon RDS or Aurora's automated backup mechanisms. Reason for the error: The \"most cost-effective\" requirement is not met because the management overhead is high."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：Amazon RDS 提供了支援自動備份和擴充的託管關聯式資料庫服務。使用通用 SSD 儲存是合理的選擇。錯誤原因：雖然 RDS 是一個不錯的選擇，但使用按需容量模型可能會導致比 Aurora Serverless 更高的成本，特別是在流量波動較大的情況下。",
+          "en": "Incorrect. Performance analysis: Amazon RDS provides a managed relational database service that supports automatic backup and expansion. Using General Purpose SSD storage is a reasonable choice. Reason for the error: While RDS is a good choice, using the on-demand capacity model may result in higher costs than Aurora Serverless, especially if traffic fluctuates significantly."
+        },
+        "C": {
+          "zh": "正確。效能分析：Amazon Aurora Serverless 是無伺服器關係型資料庫解決方案，支援自動擴充和按需計費，非常適合流量波動的應用場景。備份機制自動整合到Amazon S3中，簡化管理。最符合問題要求的「最具成本效益」的解決方案。",
+          "en": "Correct. Performance analysis: Amazon Aurora Serverless is a serverless relational database solution that supports automatic expansion and on-demand billing, and is very suitable for application scenarios with fluctuating traffic. The backup mechanism is automatically integrated into Amazon S3, simplifying management. The \"most cost-effective\" solution that best meets the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。分析：NoSQL資料庫不適合用來儲存結構化資料（例如使用者資料和交易資料）。雖然預留執行個體可以降低成本，但自託管資料庫仍需要額外的管理工作。錯誤原因：「結構化資料庫」和「最具性價比」的解決方案不符合問題的要求。",
+          "en": "Incorrect. Analysis: NoSQL databases are not suitable for storing structured data (such as user profiles and transaction data). While Reserved Instances can reduce costs, self-hosted databases still require additional management effort. Reason for the error: The \"structured database\" and \"most cost-effective\" solution do not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 Amazon Aurora Serverless 作為資料庫。使用無伺服器容量擴充。配置自動備份到 Amazon S3。",
+        "en": "C. Use Amazon Aurora Serverless for the database. Use serverless capacity scaling. Configure automated backups to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：效能分析：Amazon Aurora Serverless 是無伺服器關係型資料庫解決方案，支援自動擴充和按需計費，非常適合流量波動的應用場景。備份機制自動整合到Amazon S3中，簡化管理。最符合問題要求的「最具成本效益」的解決方案。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Performance analysis: Amazon Aurora Serverless is a serverless relational database solution that supports automatic expansion and on-demand billing, and is very suitable for application scenarios with fluctuating traffic. The backup mechanism is automatically integrated into Amazon S3, simplifying management. The \"most cost-effective\" solution that best meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 998,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上運行其舊版 Web 應用程式。 Web 應用程式伺服器在 VPC 公有子網路中的 Amazon EC2 執行個體上執行。 Web 應用程式伺服器從客戶收集映像並將映像檔案儲存在本機連接的 Amazon Elastic Block Store (Amazon EBS) 磁碟區中。映像檔每天晚上上傳到 Amazon S3 儲存桶進行備份。解決方案架構師發現映像檔正在透過公共終端節點上傳到 Amazon S3。解決方案架構師需要確保流向 Amazon S3 的流量不會使用公共終端節點。哪種解決方案可以滿足這些要求？",
+        "en": "A company runs its legacy web application on AWS. The web application server runs on an Amazon EC2 instance in the public subnet of a VPC. The web application server collects images from customers and stores the image files in a locally attached Amazon Elastic Block Store (Amazon EBS) volume. The image files are uploaded every night to an Amazon S3 bucket for backup. A solutions architect discovers that the image files are being uploaded to Amazon S3 through the public endpoint. The solutions architect needs to ensure that traffic to Amazon S3 does not use the public endpoint. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為具有 VPC 必要權限的 S3 儲存桶建立閘道 VPC 終端節點。設定子網路由表以使用網關 VPC 終端節點。",
+          "en": "Create a gateway VPC endpoint for the S3 bucket that has the necessary permissions for the VPC. Configure the subnet route table to use the gateway VPC endpoint."
+        },
+        "B": {
+          "zh": "將 S3 儲存桶移至 VPC 內。設定子網路路由表以透過私人 IP 位址存取 S3 儲存桶。",
+          "en": "Move the S3 bucket inside the VPC. Configure the subnet route table to access the S3 bucket through private IP addresses."
+        },
+        "C": {
+          "zh": "為 VP 內的 Amazon EC2 執行個體建立 Amazon S3 存取點配置 Web 應用程式以使用 Amazon S3 存取點上傳。",
+          "en": "Create an Amazon S3 access point for the Amazon EC2 instance inside the VPConfigure the web application to upload by using the Amazon S3 access point."
+        },
+        "D": {
+          "zh": "在具有 Amazon EC2 執行個體的 VPC 和 Amazon S3 之間設定 AWS Direct Connect 連線以提供專用網路路徑。",
+          "en": "Configure an AWS Direct Connect connection between the VPC that has the Amazon EC2 instance and Amazon S3 to provide a dedicated network path."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。網關 VPC 終端節點允許流量直接透過專用網路存取 Amazon S3，而無需透過公共終端節點。透過設定子網路路由表，流量可以透過VPC Endpoint存取S3，滿足問題要求。",
+          "en": "Correct. Gateway VPC Endpoint allows traffic to access Amazon S3 directly over the private network without going through the public endpoint. By configuring the subnet routing table, traffic can access S3 through VPC Endpoint, meeting the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。S3 是區域服務，無法直接「移動」到 VPC 中。即使配置了私有IP位址，S3的架構設計也不支援這種方式。",
+          "en": "Incorrect. S3 is a regional service and cannot be directly \"moved\" into a VPC. Even if a private IP address is configured, the architectural design of S3 does not support this approach."
+        },
+        "C": {
+          "zh": "錯誤。S3 Access Point是一種簡化大規模資料存取的工具，但它仍然依賴公共端點和VPC端點。這個問題需要避免使用公共端點，而這個選項並不能解決問題。",
+          "en": "Incorrect. S3 Access Point is a tool for simplifying large-scale data access, but it still relies on public endpoints and VPC Endpoints. The question requires avoiding the use of public endpoints, and this option does not solve the problem."
+        },
+        "D": {
+          "zh": "錯誤。專線主要用於連接本地資料中心和AWS，而不是解決VPC內部流量問題。該選項過於複雜且成本高昂，並且不滿足作為簡單解決方案的問題的要求。",
+          "en": "Incorrect. Direct Connect is mainly used to connect the local data center and AWS, rather than solving the internal traffic problem of the VPC. This option is too complex and costly and does not meet the requirements of the question as a simple solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 為具有 VPC 必要權限的 S3 儲存桶建立閘道 VPC 終端節點。設定子網路由表以使用網關 VPC 終端節點。",
+        "en": "A. Create a gateway VPC endpoint for the S3 bucket that has the necessary permissions for the VPC. Configure the subnet route table to use the gateway VPC endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (67%)； C (33%)。熱門討論與考點摘要：網關 VPC 終端節點允許流量直接透過專用網路存取 Amazon S3，而無需透過公共終端節點。透過設定子網路路由表，流量可以透過VPC Endpoint存取S3，滿足問題要求。",
+        "en": "Community vote as displayed: A (67%); C (33%). Popular discussion and key point summary: Gateway VPC Endpoint allows traffic to access Amazon S3 directly over the private network without going through the public endpoint. By configuring the subnet routing table, traffic can access S3 through VPC Endpoint, meeting the question requirements."
+      }
+    },
+    {
+      "question_no": 999,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上建立電子商務網站的原型。本網站由應用程式負載平衡器、用於 Web 伺服器的 Amazon EC2 執行個體 Auto Scaling 群組以及使用單一可用區配置執行的 Amazon RDS for MySQL 資料庫執行個體組成。搜尋產品目錄時網站反應緩慢。產品目錄是MySQL資料庫中公司不常更新的一組表。解決方案架構師確定，當進行產品目錄搜尋時，資料庫執行個體上的 CPU 使用率很高。解決方案架構師應該建議什麼來提高產品目錄搜尋期間網站的效能？",
+        "en": "A company is creating a prototype of an ecommerce website on AWS. The website consists of an Application Load Balancer, an Auto Scaling group of Amazon EC2 instances for web servers, and an Amazon RDS for MySQL DB instance that runs with the Single-AZ configuration. The website is slow to respond during searches of the product catalog. The product catalog is a group of tables in the MySQL database that the company does not update frequently. A solutions architect has determined that the CPU utilization on the DB instance is high when product catalog searches occur. What should the solutions architect recommend to improve the performance of the website during searches of the product catalog?"
+      },
+      "options": {
+        "A": {
+          "zh": "將產品目錄移轉到 Amazon Redshift 資料庫。使用 COPY 指令載入產品目錄表。",
+          "en": "Migrate the product catalog to an Amazon Redshift database. Use the COPY command to load the product catalog tables."
+        },
+        "B": {
+          "zh": "實作 Amazon ElastiCache for Redis 叢集來快取產品目錄。使用延遲載入來填充快取。",
+          "en": "Implement an Amazon ElastiCache for Redis cluster to cache the product catalog. Use lazy loading to populate the cache."
+        },
+        "C": {
+          "zh": "在 Auto Scaling 群組中新增額外的擴展策略，以便在資料庫反應緩慢時啟動額外的 EC2 執行個體。",
+          "en": "Add an additional scaling policy to the Auto Scaling group to launch additional EC2 instances when database response is slow."
+        },
+        "D": {
+          "zh": "開啟資料庫執行個體的多可用區配置。配置 EC2 執行個體以限制傳送至資料庫的產品目錄查詢。",
+          "en": "Turn on the Multi-AZ configuration for the DB instance. Configure the EC2 instances to throttle the product catalog queries that are sent to the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon Redshift 是專為資料倉儲設計的服務，適合處理分析查詢而非交易查詢。產品目錄查詢通常是事務性查詢，遷移到Redshift並不能有效解決問題。",
+          "en": "Incorrect. Amazon Redshift is a service designed for data warehouses and is suitable for processing analytical queries rather than transactional queries. Product catalog query is usually a transactional query, and migrating to Redshift cannot effectively solve the problem."
+        },
+        "B": {
+          "zh": "正確。使用 Amazon ElastiCache 可以減慢頻繁查詢的資料（例如產品目錄）的速度並減少對資料庫的直接訪問，從而降低資料庫的 CPU 負載並提高查詢效能。延遲載入是一種常見的快取填充策略，可以在需要時動態地將資料載入到快取中。",
+          "en": "Correct. Using Amazon ElastiCache can slow down frequently queried data (such as product catalogs) and reduce direct access to the database, thereby reducing the CPU load of the database and improving query performance. Lazy loading is a common cache filling strategy that dynamically loads data into the cache when needed."
+        },
+        "C": {
+          "zh": "錯誤。增加EC2執行個體數量並不能直接解決資料庫效能問題，因為問題的根源是資料庫的CPU利用率高，而不是Web伺服器的負載。",
+          "en": "Incorrect. Increasing the number of EC2 instances does not directly solve the database performance problem, because the root of the problem is the high CPU utilization of the database, not the load of the web server."
+        },
+        "D": {
+          "zh": "錯誤。啟用多可用區配置可以提高資料庫的可用性能，但不會直接提高查詢效能。限制查詢可能會進一步降低使用者體驗。",
+          "en": "Incorrect. Enabling Multi-AZ configuration can improve the available performance of the database, but it will not directly improve query performance. Throttling queries may further degrade the user experience."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 實作 Amazon ElastiCache for Redis 叢集來快取產品目錄。使用延遲載入來填充快取。",
+        "en": "B. Implement an Amazon ElastiCache for Redis cluster to cache the product catalog. Use lazy loading to populate the cache."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：使用 Amazon ElastiCache 可以減慢頻繁查詢的資料（例如產品目錄）的速度並減少對資料庫的直接訪問，從而降低資料庫的 CPU 負載並提高查詢效能。延遲載入是一種常見的快取填充策略，可以在需要時動態地將資料載入到快取中。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Using Amazon ElastiCache can slow down frequently queried data (such as product catalogs) and reduce direct access to the database, thereby reducing the CPU load of the database and improving query performance. Lazy loading is a common cache filling strategy that dynamically loads data into the cache when needed."
+      }
+    },
+    {
+      "question_no": 1000,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司目前在本地區塊儲存系統中儲存 5 TB 的資料。該公司目前的儲存解決方案為額外資料提供的空間有限。該公司在本地運行的應用程式必須能夠以低延遲檢索頻繁存取的資料。該公司需要基於雲端的儲存解決方案。哪種解決方案能夠以最高的營運效率滿足這些要求？",
+        "en": "A company currently stores 5 TB of data in on-premises block storage systems. The company's current storage solution provides limited space for additional data. The company runs applications on premises that must be able to retrieve frequently accessed data with low latency. The company requires a cloud-based storage solution. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon S3 檔案閘道。將 S3 文件網關與本機應用程式集成，以使用 SMB 文件系統儲存和直接檢索文件。",
+          "en": "Use Amazon S3 File Gateway. Integrate S3 File Gateway with the on-premises applications to store and directly retrieve files by using the SMB file system."
+        },
+        "B": {
+          "zh": "使用 AWS Storage Gateway 磁碟區閘道並將快取磁碟區作為 iSCSI 目標。",
+          "en": "Use an AWS Storage Gateway Volume Gateway with cached volumes as iSCSI targets."
+        },
+        "C": {
+          "zh": "使用 AWS Storage Gateway 磁碟區閘道並將儲存磁碟區作為 iSCSI 目標。",
+          "en": "Use an AWS Storage Gateway Volume Gateway with stored volumes as iSCSI targets."
+        },
+        "D": {
+          "zh": "使用 AWS Storage Gateway 磁帶閘道。將磁帶網關與本機應用程式整合以在 Amazon S3 中儲存虛擬磁帶。",
+          "en": "Use an AWS Storage Gateway Tape Gateway. Integrate Tape Gateway with the on-premises applications to store virtual tapes in Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：S3檔案閘道適用於檔案儲存場景，支援透過SMB或NFS協定進行檔案存取。但問題是要求低時延訪問，而S3文件網關的訪問延遲可能較高，不能完全滿足頻繁訪問和低時延的需求。",
+          "en": "Incorrect. Performance analysis: S3 File Gateway is suitable for file storage scenarios and supports file access through SMB or NFS protocols. However, the question requires low-latency access, and the access latency of S3 File Gateway may be high, which does not fully meet the needs of frequent access and low-latency."
+        },
+        "B": {
+          "zh": "正確。效能分析：Volume Gateway的快取磁碟區模式可以將經常存取的資料保存在本地，同時將資料備份到雲端。這種方法可以提供低延遲訪問，同時滿足雲端儲存需求。",
+          "en": "Correct. Performance analysis: Volume Gateway's cache volume mode allows frequently accessed data to be saved locally while backing up the data to the cloud. This approach can provide low-latency access while meeting cloud storage needs."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：儲存磁碟區模式將所有資料儲存在本機，並定期備份到雲端。這種方式適合需要以本地儲存為主的場景，但問題是需要雲端整合和低延遲訪問，所以並不能完全滿足要求。",
+          "en": "Incorrect. Performance analysis: Storage volume mode stores all data locally and backs it up to the cloud regularly. This method is suitable for scenarios that require local storage as the main focus, but the question requires cloud integration and low-latency access, so it does not fully meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。效能分析：磁帶閘道主要應用於備份、歸檔場景，適合取代傳統磁帶庫。這些問題要求頻繁存取和低延遲，這與磁帶網關的設計目標不符。",
+          "en": "Incorrect. Performance analysis: Tape Gateway is mainly used in backup and archiving scenarios, and is suitable for replacing traditional tape libraries. The questions require frequent access and low latency, which is inconsistent with the design goals of Tape Gateway."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Storage Gateway 磁碟區閘道並將快取磁碟區作為 iSCSI 目標。",
+        "en": "B. Use an AWS Storage Gateway Volume Gateway with cached volumes as iSCSI targets."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (81%)； C (19%)。熱門討論與考點摘要：效能分析：Volume Gateway的快取磁碟區模式可以將經常存取的資料保存在本地，同時將資料備份到雲端。這種方法可以提供低延遲訪問，同時滿足雲端儲存需求。",
+        "en": "Community vote as displayed: B (81%); C (19%). Popular discussion and key point summary: Performance analysis: Volume Gateway's cache volume mode allows frequently accessed data to be saved locally while backing up the data to the cloud. This approach can provide low-latency access while meeting cloud storage needs."
+      }
+    },
+    {
+      "question_no": 1001,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司經營送餐服務。由於最近的成長，該公司的訂單處理系統在高峰流量時段遇到了擴展問題。目前架構包括 Auto Scaling 群組中的 Amazon EC2 實例，用於從應用程式收集訂單。 Auto Scaling 組中的第二組 EC2 執行個體履行訂單。訂單收集過程發生得很快，但訂單履行過程可能需要更長的時間。數據不得因縮放事件而遺失。解決方案架構師必須確保訂單收集流程和訂單履行流程都能在尖峰流量時段充分擴展。哪種解決方案可以滿足這些要求？",
+        "en": "A company operates a food delivery service. Because of recent growth, the company's order processing system is experiencing scaling problems during peak traffic hours. The current architecture includes Amazon EC2 instances in an Auto Scaling group that collect orders from an application. A second group of EC2 instances in an Auto Scaling group fulfills the orders. The order collection process occurs quickly, but the order fulfillment process can take longer. Data must not be lost because of a scaling event. A solutions architect must ensure that the order collection process and the order fulfillment process can both scale adequately during peak traffic hours. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon CloudWatch 監控兩個 Auto Scaling 群組中每個執行個體的 CPUUtilization 指標。配置每個 Auto Scaling 組的最小容量以滿足其峰值工作負載值。",
+          "en": "Use Amazon CloudWatch to monitor the CPUUtilization metric for each instance in both Auto Scaling groups. Configure each Auto Scaling group's minimum capacity to meet its peak workload value."
+        },
+        "B": {
+          "zh": "使用 Amazon CloudWatch 監控兩個 Auto Scaling 群組中每個執行個體的 CPUUtilization 指標。配置 CloudWatch 警報以呼叫 Amazon Simple Notification Service (Amazon SNS) 主題，從而根據需要建立其他 Auto Scaling 群組。",
+          "en": "Use Amazon CloudWatch to monitor the CPUUtilization metric for each instance in both Auto Scaling groups. Configure a CloudWatch alarm to invoke an Amazon Simple Notification Service (Amazon SNS) topic to create additional Auto Scaling groups on demand."
+        },
+        "C": {
+          "zh": "預置兩個 Amazon Simple Queue Service (Amazon SQS) 佇列。使用一個SQS隊列進行訂單收集。使用第二個 SQS 佇列來履行訂單。配置 EC2 執行個體以輪詢其各自的隊列。根據佇列發送的通知擴充 Auto Scaling 群組。",
+          "en": "Provision two Amazon Simple Queue Service (Amazon SQS) queues. Use one SQS queue for order collection. Use the second SQS queue for order fulfillment. Configure the EC2 instances to poll their respective queues. Scale the Auto Scaling groups based on notifications that the queues send."
+        },
+        "D": {
+          "zh": "預設兩個 Amazon Simple Queue Service (Amazon SQS) 佇列。使用一個SQS隊列進行訂單收集。使用第二個 SQS 佇列來履行訂單。配置 EC2 執行個體以輪詢其各自的隊列。根據每個佇列中的消息數量擴展 Auto Scaling 組。",
+          "en": "Provision two Amazon Simple Queue Service (Amazon SQS) queues. Use one SQS queue for order collection. Use the second SQS queue for order fulfillment. Configure the EC2 instances to poll their respective queues. Scale the Auto Scaling groups based on the number of messages in each queue."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 Amazon CloudWatch 監控 CPUUtilization 並設定最小容量：錯誤。雖然CPUUtilization是常用的方法，但只有設定最小容量才能解決訂單處理速度不同步的問題，並確保資料不會遺失。系統動態調整資源以因應流量波動。",
+          "en": "Incorrect. Using Amazon CloudWatch to monitor CPUUtilization and set minimum capacity: Error. Although CPUUtilization is a common method, only setting the minimum capacity can solve the problem of out-of-sync order processing speed and ensure that data will not be lost. The system dynamically adjusts resources to cope with traffic fluctuations."
+        },
+        "B": {
+          "zh": "錯誤。透過警報和 SNS 建立額外的 Auto Scaling 群組不會持久緩衝訂單或協調不同的處理速率，因此擴展事件仍然可能會失去工作。",
+          "en": "Incorrect. Creating additional Auto Scaling groups through alarms and SNS does not durably buffer orders or coordinate the different processing rates, so scaling events can still lose work."
+        },
+        "C": {
+          "zh": "錯誤。使用兩個 SQS 佇列並根據通知擴展 Auto Scaling 群組：錯誤。雖然使用SQS佇列是正確的方向，但基於通知擴展Auto Scaling群組並不能直接反映佇列中的訊息數量，這可能會導致資源分配不準確。",
+          "en": "Incorrect. Using two SQS queues and scaling an Auto Scaling group based on notifications: Error. While using SQS queues is the correct direction, scaling an Auto Scaling group based on notifications does not directly reflect the number of messages in the queue, which can lead to inaccurate resource allocation."
+        },
+        "D": {
+          "zh": "正確。使用兩個 SQS 佇列並根據佇列中的訊息數量擴展 Auto Scaling 群組：正確。我們使用SQS佇列來解耦訂單收集和訂單完成，並根據佇列中的消息數量動態擴展Auto Scaling組，以確保其能夠處理峰值流量而不丟失資料。",
+          "en": "Correct. Using two SQS queues and scaling an Auto Scaling group based on the number of messages in the queue: Correct. We use SQS queues to decouple order collection and order completion, and dynamically expand the Auto Scaling group based on the number of messages in the queue to ensure that it can handle peak traffic without losing data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 預設兩個 Amazon Simple Queue Service (Amazon SQS) 佇列。使用一個SQS隊列進行訂單收集。使用第二個 SQS 佇列來履行訂單。配置 EC2 執行個體以輪詢其各自的隊列。根據每個佇列中的消息數量擴展 Auto Scaling 組。",
+        "en": "D. Provision two Amazon Simple Queue Service (Amazon SQS) queues. Use one SQS queue for order collection. Use the second SQS queue for order fulfillment. Configure the EC2 instances to poll their respective queues. Scale the Auto Scaling groups based on the number of messages in each queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：使用兩個 SQS 佇列並根據佇列中的訊息數量擴展 Auto Scaling 群組：正確。我們使用SQS佇列來解耦訂單收集和訂單完成，並根據佇列中的消息數量動態擴展Auto Scaling組，以確保其能夠處理峰值流量而不丟失資料。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Using two SQS queues and scaling an Auto Scaling group based on the number of messages in the queue: Correct. We use SQS queues to decouple order collection and order completion, and dynamically expand the Auto Scaling group based on the number of messages in the queue to ensure that it can handle peak traffic without losing data."
+      }
+    },
+    {
+      "question_no": 1002,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家線上遊戲公司正在將用戶資料儲存體遷移到 Amazon DynamoDB，以支援公司不斷成長的用戶群。目前架構包括 DynamoDB 表，其中包含使用者個人資料、成就和遊戲內交易。該公司需要設計一個強大、持續可用且有彈性的 DynamoDB 架構，以維持用戶的無縫遊戲體驗。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "An online gaming company is transitioning user data storage to Amazon DynamoDB to support the company's growing user base. The current architecture includes DynamoDB tables that contain user profiles, achievements, and in-game transactions. The company needs to design a robust, continuously available, and resilient DynamoDB architecture to maintain a seamless gaming experience for users. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在單一 AWS 區域中建立 DynamoDB 資料表。使用按需容量模式。使用全域表跨多個區域複製資料。",
+          "en": "Create DynamoDB tables in a single AWS Region. Use on-demand capacity mode. Use global tables to replicate data across multiple Regions."
+        },
+        "B": {
+          "zh": "使用 DynamoDB Accelerator (DAX) 快取經常存取的資料。在單一 AWS 區域中部署表格並啟用自動擴充。手動配置跨區域複製到其他區域。",
+          "en": "Use DynamoDB Accelerator (DAX) to cache frequently accessed data. Deploy tables in a single AWS Region and enable auto scaling. Configure Cross-Region Replication manually to additional Regions."
+        },
+        "C": {
+          "zh": "在多個 AWS 區域中建立 DynamoDB 資料表。使用按需容量模式。使用 DynamoDB Streams 在區域之間進行跨區域複製。",
+          "en": "Create DynamoDB tables in multiple AWS Regions. Use on-demand capacity mode. Use DynamoDB Streams for Cross- Region Replication between Regions."
+        },
+        "D": {
+          "zh": "使用 DynamoDB 全域表進行自動多區域複製。在多個 AWS 區域部署表。使用預配置容量模式。啟用自動縮放。",
+          "en": "Use DynamoDB global tables for automatic multi-Region replication. Deploy tables in multiple AWS Regions. Use provisioned capacity mode. Enable auto scaling."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：此選項提到使用全域表進行跨區域複製，但全域表需要在多個區域而不是單一區域建立表。另外，按需容量模型雖然靈活，但在大流量場景下可能會比較昂貴。",
+          "en": "Incorrect. Performance analysis: This option mentions using Global Tables for cross-region replication, but Global Tables require creating tables in multiple regions instead of a single region. In addition, although the on-demand capacity model is flexible, it may be more expensive in high-traffic scenarios."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：DAX可以提高讀取效能，但沒有解決跨區域複製的問題。手動配置跨區域複製複雜且容易出錯，不符合「持續可用性」和「彈性」的要求。",
+          "en": "Incorrect. Performance analysis: DAX can improve read performance, but it does not solve the problem of cross-region replication. Manually configuring cross-region replication is complex and error-prone, and does not meet the requirements of \"continuous availability\" and \"resilience.\"."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：使用 DynamoDB Streams 進行跨區域複製需要額外的管理工作，並且不如全域表自動化和高效。另外，按需容量模型在高流量場景下可能會更加昂貴。",
+          "en": "Incorrect. Performance analysis: Using DynamoDB Streams for cross-region replication requires additional management work and is not as automated and efficient as Global Tables. In addition, the on-demand capacity model may be more expensive in high-traffic scenarios."
+        },
+        "D": {
+          "zh": "正確。效能分析：全域表提供自動化的多區域複製，以確保高可用性和容錯能力。預設容量模式結合自動擴容可以在成本和效能之間取得平衡，是最符合問題要求的解決方案。",
+          "en": "Correct. Performance analysis: Global Tables provide automated multi-region replication to ensure high availability and fault tolerance. The preset capacity mode combined with automatic expansion can strike a balance between cost and performance, and is the solution that best meets the requirements of the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 DynamoDB 全域表進行自動多區域複製。在多個 AWS 區域部署表。使用預配置容量模式。啟用自動縮放。",
+        "en": "D. Use DynamoDB global tables for automatic multi-Region replication. Deploy tables in multiple AWS Regions. Use provisioned capacity mode. Enable auto scaling."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (91%)。熱門討論與考點摘要：效能分析：全域表提供自動化的多區域複製，以確保高可用性和容錯能力。預設容量模式結合自動擴容可以在成本和效能之間取得平衡，是最符合問題要求的解決方案。",
+        "en": "Community vote as displayed: D (91%). Popular discussion and key point summary: Performance analysis: Global Tables provide automated multi-region replication to ensure high availability and fault tolerance. The preset capacity mode combined with automatic expansion can strike a balance between cost and performance, and is the solution that best meets the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 1003,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在本地運行其媒體渲染應用程式。該公司希望降低儲存成本，並將所有資料轉移到 Amazon S3。本地渲染應用程式需要低延遲地存取儲存。該公司需要為該應用程式設計一個儲存解決方案。儲存解決方案必須保持所需的應用程式效能。哪種儲存解決方案能夠以最具成本效益的方式滿足這些要求？",
+        "en": "A company runs its media rendering application on premises. The company wants to reduce storage costs and has moved all data to Amazon S3. The on-premises rendering application needs low-latency access to storage. The company needs to design a storage solution for the application. The storage solution must maintain the desired application performance. Which storage solution will meet these requirements in the MOST cost-effective way?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon S3 的 Mountpoint 存取 Amazon S3 中本機應用程式的資料。",
+          "en": "Use Mountpoint for Amazon S3 to access the data in Amazon S3 for the on-premises application."
+        },
+        "B": {
+          "zh": "設定 Amazon S3 檔案閘道以提供本機應用程式儲存。",
+          "en": "Configure an Amazon S3 File Gateway to provide storage for the on-premises application."
+        },
+        "C": {
+          "zh": "將資料從 Amazon S3 複製到 Amazon FSx for Windows File Server。配置 Amazon FSx 檔案閘道以為本機應用程式提供儲存。",
+          "en": "Copy the data from Amazon S3 to Amazon FSx for Windows File Server. Configure an Amazon FSx File Gateway to provide storage for the on-premises application."
+        },
+        "D": {
+          "zh": "設定本機檔案伺服器。使用 Amazon S3 API 連接到 S3 儲存。配置應用程式以從本機檔案伺服器存取儲存。",
+          "en": "Configure an on-premises file server. Use the Amazon S3 API to connect to S3 storage. Configure the application to access the storage from the on-premises file server."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Mountpoint for Amazon S3是一個允許應用程式直接掛載S3儲存桶的工具，但它不適合低延遲場景，因為S3是物件存儲，存取延遲較高。此選項不滿足問題所要求的「低延遲存取」和「高效能」要求。錯誤原因：無法滿足低時延效能要求。",
+          "en": "Incorrect. Mountpoint for Amazon S3 is a tool that allows applications to directly mount S3 buckets, but it is not suitable for low-latency scenarios because S3 is object storage and has high access latency. This option does not meet the \"low-latency access\" and \"high performance\" requirements required by the question. Error reason: Unable to meet low-latency performance requirements."
+        },
+        "B": {
+          "zh": "正確。Amazon S3 檔案閘道允許本機應用程式透過檔案介面存取 S3 存儲，提供低延遲和高效能的解決方案。此選項滿足問題的「低延遲存取」和「成本優化」要求。能夠滿足性能和成本要求。",
+          "en": "Correct. Amazon S3 File Gateway allows local applications to access S3 storage through the file interface, providing a low-latency and high-performance solution. This option meets the \"low-latency access\" and \"cost optimization\" requirements of the question. Able to meet performance and cost requirements."
+        },
+        "C": {
+          "zh": "錯誤。Amazon FSx for Windows File Server 是一種高效能檔案儲存服務，但將資料從 S3 複製到 FSx 會增加額外的儲存成本。此選項不滿足問題的「成本優化」要求。錯誤原因：成本高，不是最優方案。",
+          "en": "Incorrect. Amazon FSx for Windows File Server is a high-performance file storage service, but copying data from S3 to FSx will add additional storage costs. This option does not meet the \"cost optimization\" requirements of the question. Reason for the error: The cost is high and it is not the optimal solution."
+        },
+        "D": {
+          "zh": "錯誤。使用本機檔案伺服器和 S3 API 可能會增加複雜性，並且無法保證低延遲效能。該選項不滿足問題所要求的「低延遲訪問」和「高性能」要求。錯誤原因：複雜度高，性能無法保證。",
+          "en": "Incorrect. Using a local file server and the S3 API may add complexity, and low-latency performance is not guaranteed. This option does not meet the \"low-latency access\" and \"high performance\" requirements required by the question. Reason for the error: High complexity and performance cannot be guaranteed."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 設定 Amazon S3 檔案閘道以提供本機應用程式儲存。",
+        "en": "B. Configure an Amazon S3 File Gateway to provide storage for the on-premises application."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：Amazon S3 檔案閘道允許本機應用程式透過檔案介面存取 S3 存儲，提供低延遲和高效能的解決方案。此選項滿足問題的「低延遲存取」和「成本優化」要求。能夠滿足性能和成本要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon S3 File Gateway allows local applications to access S3 storage through the file interface, providing a low-latency and high-performance solution. This option meets the \"low-latency access\" and \"cost optimization\" requirements of the question. Able to meet performance and cost requirements."
+      }
+    },
+    {
+      "question_no": 1004,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 us-east-1 區域託管其企業資源規劃 (ERP) 系統。該系統在 Amazon EC2 執行個體上運作。客戶使用 EC2 執行個體上託管的公共 API 與 ERP 系統交換資訊。國際客戶報告其資料中心的 API 回應時間緩慢。哪種解決方案能夠最具成本效益地縮短國際客戶的回應時間？",
+        "en": "A company hosts its enterprise resource planning (ERP) system in the us-east-1 Region. The system runs on Amazon EC2 instances. Customers use a public API that is hosted on the EC2 instances to exchange information with the ERP system. International customers report slow API response times from their data centers. Which solution will improve response times for the international customers MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個具有公共虛擬介面 (VIF) 的 AWS Direct Connect 連接，以提供從每個客戶的資料中心到 us-east-1 的連接。使用 Direct Connect 閘道將客戶 API 請求路由到 ERP 系統 API。",
+          "en": "Create an AWS Direct Connect connection that has a public virtual interface (VIF) to provide connectivity from each customer's data center to us-east-1. Route customer API requests by using a Direct Connect gateway to the ERP system API."
+        },
+        "B": {
+          "zh": "在 API 前面設定 Amazon CloudFront 分配。配置 CachingOptimized 託管快取策略以提高快取效率。",
+          "en": "Set up an Amazon CloudFront distribution in front of the API. Configure the CachingOptimized managed cache policy to provide improved cache efficiency."
+        },
+        "C": {
+          "zh": "設定 AWS Global Accelerator。為必要的連接埠配置偵聽器。為適當的區域配置終端節點群組以分配流量。在群組中為 API 建立端點。",
+          "en": "Set up AWS Global Accelerator. Configure listeners for the necessary ports. Configure endpoint groups for the appropriate Regions to distribute traffic. Create an endpoint in the group for the API."
+        },
+        "D": {
+          "zh": "使用 AWS Site-to-Site VPN 在區域和客戶網路之間建立專用 VPN 隧道。透過 VPN 連線將流量路由到 API。",
+          "en": "Use AWS Site-to-Site VPN to establish dedicated VPN tunnels between Regions and customer networks. Route traffic to the API over the VPN connections."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。提供專線連接，適合需要高頻寬、低時延的場景，但價格較高，且需要客戶在資料中心建立專線連接。對於國際客戶來說，建立 Direct Connect 可能並不划算，特別是在需要多個客戶建立單獨的連線的情況下。因此，雖然該選項可能會提高效能，但它並不能滿足「最具成本效益」的要求。",
+          "en": "Incorrect. Provides dedicated line connections, which are suitable for scenarios that require high bandwidth and low latency, but are more expensive and require customers to set up Direct Connect connections in their data centers. For international customers, setting up Direct Connect may not be cost-effective, especially if multiple customers are required to set up separate connections. Therefore, while this option may improve performance, it does not meet the \"most cost-effective\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。是一種內容分發網絡 (CDN)，可緩存靜態內容以加快分發速度，但對動態 API 請求的緩存效率有限。雖然透過 CloudFront 可以實現一些效能改進，但動態 API 請求的回應時間改進是有限的，並且不能解決國際客戶的延遲問題。因此，這個選項並不完全適合解決問題。",
+          "en": "Incorrect. is a content delivery network (CDN) that caches static content to speed delivery, but has limited caching efficiency for dynamic API requests. While some performance improvements are available through CloudFront, response time improvements for dynamic API requests are limited and do not address latency issues for international customers. Therefore, this option is not entirely suitable for solving the problem."
+        },
+        "C": {
+          "zh": "正確。是一項專門設計的服務，旨在通過使用 AWS 全球網絡減少延遲來優化全球用戶訪問。它為 API 請求等動態內容提供加速，並透過偵聽器和端點群組將流量分配到最近的區域，從而顯著縮短國際客戶的回應時間。此選項滿足「最具成本效益」的要求，同時為國際客戶解決延遲問題。",
+          "en": "Correct. is a service specifically designed to optimize global user access by using the AWS global network to reduce latency. It provides acceleration for dynamic content such as API requests and distributes traffic to the nearest region through listeners and endpoint groups, significantly improving response times for international customers. This option meets the \"most cost-effective\" requirement while solving latency issues for international customers."
+        },
+        "D": {
+          "zh": "錯誤。提供安全連接，但它通常用於內部企業網路之間的通信，並且未針對訪問公共 API 的國際客戶進行最佳化。 VPN 效能可能會受到網路頻寬和延遲的限制，並且需要客戶在其資料中心建立 VPN 連接，成本高昂。因此，該選項不適合解決該問題。",
+          "en": "Incorrect. Provides a secure connection, but it is typically used for communication between internal enterprise networks and is not optimized for international customers accessing public APIs. VPN performance can be limited by network bandwidth and latency, and requires customers to set up a VPN connection in their data center, which is costly. Therefore, this option is not suitable for solving the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 AWS Global Accelerator。為必要的連接埠配置偵聽器。為適當的區域配置終端節點群組以分配流量。在群組中為 API 建立端點。",
+        "en": "C. Set up AWS Global Accelerator. Configure listeners for the necessary ports. Configure endpoint groups for the appropriate Regions to distribute traffic. Create an endpoint in the group for the API."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (61%)； B (39%)。熱門討論與考點摘要：是一項專門設計的服務，旨在通過使用 AWS 全球網絡減少延遲來優化全球用戶訪問。它為 API 請求等動態內容提供加速，並透過偵聽器和端點群組將流量分配到最近的區域，從而顯著縮短國際客戶的回應時間。此選項滿足「最具成本效益」的要求，同時為國際客戶解決延遲問題。",
+        "en": "Community vote as displayed: C (61%); B (39%). Popular discussion and key point summary: is a service specifically designed to optimize global user access by using the AWS global network to reduce latency. It provides acceleration for dynamic content such as API requests and distributes traffic to the nearest region through listeners and endpoint groups, significantly improving response times for international customers. This option meets the \"most cost-effective\" requirement while solving latency issues for international customers."
+      }
+    },
+    {
+      "question_no": 1005,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司透過在其網站上進行的調查來追蹤客戶滿意度。有時每小時都會有數千名客戶接受調查。目前，調查結果透過電子郵件發送給公司，以便公司員工可以手動查看結果並評估客戶情緒。該公司希望實現客戶調查流程的自動化。必須提供過去 12 個月的調查結果。哪種解決方案能夠以最具可擴展性的方式滿足這些要求？",
+        "en": "A company tracks customer satisfaction by using surveys that the company hosts on its website. The surveys sometimes reach thousands of customers every hour. Survey results are currently sent in email messages to the company so company employees can manually review results and assess customer sentiment. The company wants to automate the customer survey process. Survey results must be available for the previous 12 months. Which solution will meet these requirements in the MOST scalable way?"
+      },
+      "options": {
+        "A": {
+          "zh": "將調查結果資料傳送至連接至 Amazon Simple Queue Service (Amazon SQS) 佇列的 Amazon API Gateway 終端節點。建立一個 AWS Lambda 函數來輪詢 SQS 佇列，呼叫 Amazon Comprehend 進行情緒分析，並將結果儲存到 Amazon DynamoDB 表。將所有記錄的 TTL 設定為未來 365 天。",
+          "en": "Send the survey results data to an Amazon API Gateway endpoint that is connected to an Amazon Simple Queue Service (Amazon SQS) queue. Create an AWS Lambda function to poll the SQS queue, call Amazon Comprehend for sentiment analysis, and save the results to an Amazon DynamoDB table. Set the TTL for all records to 365 days in the future."
+        },
+        "B": {
+          "zh": "將調查結果資料傳送至在 Amazon EC2 執行個體上執行的 API。配置 API 以將調查結果儲存為 Amazon DynamoDB 表中的新記錄，呼叫 Amazon Comprehend 進行情緒分析，並將結果儲存在第二個 DynamoDB 表中。將所有記錄的 TTL 設定為未來 365 天。",
+          "en": "Send the survey results data to an API that is running on an Amazon EC2 instance. Configure the API to store the survey results as a new record in an Amazon DynamoDB table, call Amazon Comprehend for sentiment analysis, and save the results in a second DynamoDB table. Set the TTL for all records to 365 days in the future."
+        },
+        "C": {
+          "zh": "將調查結果資料寫入 Amazon S3 儲存桶。使用 S3 事件通知呼叫 AWS Lambda 函數來讀取資料並呼叫 Amazon Rekognition 進行情緒分析。將情緒分析結果儲存在第二個 S3 儲存桶中。對每個儲存桶使用 S3 生命週期策略，使物件在 365 天後過期。",
+          "en": "Write the survey results data to an Amazon S3 bucket. Use S3 Event Notifications to invoke an AWS Lambda function to read the data and call Amazon Rekognition for sentiment analysis. Store the sentiment analysis results in a second S3 bucket. Use S3 lifecycle policies on each bucket to expire objects after 365 days."
+        },
+        "D": {
+          "zh": "將調查結果資料傳送至連接至 Amazon Simple Queue Service (Amazon SQS) 佇列的 Amazon API Gateway 終端節點。配置 SQS 佇列以呼叫 AWS Lambda 函數，該函數會呼叫 Amazon Lex 進行情緒分析並將結果儲存到 Amazon DynamoDB 表。將所有記錄的 TTL 設定為未來 365 天。",
+          "en": "Send the survey results data to an Amazon API Gateway endpoint that is connected to an Amazon Simple Queue Service (Amazon SQS) queue. Configure the SQS queue to invoke an AWS Lambda function that calls Amazon Lex for sentiment analysis and saves the results to an Amazon DynamoDB table. Set the TTL for all records to 365 days in the future."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。使用 Amazon API Gateway 和 Amazon SQS 實現高效的佇列處理並支援高並發。正確：AWS Lambda 可以輪詢來自 SQS 佇列的訊息並觸發 Amazon Comprehend 進行上下文分析。正確：Amazon DynamoDB 支援 TTL 功能，可自動刪除超過 365 天的記錄。正確：此方案是無伺服器架構，可擴充性高，維護成本低。",
+          "en": "Correct. Use Amazon API Gateway and Amazon SQS to implement efficient queue processing and support high concurrency. Correct: AWS Lambda can poll messages from SQS queues and trigger Amazon Comprehend for context analysis. Correct: Amazon DynamoDB supports TTL function and can automatically delete records older than 365 days. Correct: This solution is a serverless architecture with high scalability and low maintenance costs."
+        },
+        "B": {
+          "zh": "錯誤。使用 Amazon EC2 執行個體執行 API 需要啟動管理伺服器，這會增加操作複雜度。錯誤：雖然 EC2 執行個體可以正常運作，但其擴充性不如 Lambda 等無伺服器架構。正確：Amazon DynamoDB 支援 TTL 功能，但此解決方案整體效率不高且可擴充性不高。",
+          "en": "Incorrect. Using Amazon EC2 instances to run the API requires activating the management server, which increases operational complexity. Error: While functional, EC2 instances don't scale as well as serverless architectures like Lambda. Correct: Amazon DynamoDB supports TTL functionality, but this solution is not efficient and scalable overall."
+        },
+        "C": {
+          "zh": "錯誤。Amazon Rekognition 是用於影像和視訊分析的服務，不適合情境分析。修正：S3 事件通知可以觸發 Lambda 函數，但情況分析的服務選擇錯誤。錯誤：使用 S3 生命週期策略來管理資料過期並不像 DynamoDB 的 TTL 功能那樣無縫。",
+          "en": "Incorrect. Amazon Rekognition is a service for image and video analysis and is not suitable for situational analysis. Correct: S3 Event Notifications can trigger the Lambda function, but the service selection for situation analysis is wrong. Error: Using the S3 lifecycle strategy to manage data expiration is not as seamless as DynamoDB's TTL functionality."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Lex 是用於建立簡單介面的服務，不適合情況分析。正確：使用API​​網關和SQS佇列可以實現高效率的查詢處理。錯誤：情緒分析服務選擇不正確。您應該使用 Amazon Comprehend。",
+          "en": "Incorrect. Amazon Lex is a service used to build simple interfaces and is not suitable for situation analysis. Correct: Efficient query processing can be achieved using API Gateway and SQS queues. Error: The sentiment analysis service was selected incorrectly. You should use Amazon Comprehend."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將調查結果資料傳送至連接至 Amazon Simple Queue Service (Amazon SQS) 佇列的 Amazon API Gateway 終端節點。建立一個 AWS Lambda 函數來輪詢 SQS 佇列，呼叫 Amazon Comprehend 進行情緒分析，並將結果儲存到 Amazon DynamoDB 表。將所有記錄的 TTL 設定為未來 365 天。",
+        "en": "A. Send the survey results data to an Amazon API Gateway endpoint that is connected to an Amazon Simple Queue Service (Amazon SQS) queue. Create an AWS Lambda function to poll the SQS queue, call Amazon Comprehend for sentiment analysis, and save the results to an Amazon DynamoDB table. Set the TTL for all records to 365 days in the future."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：使用 Amazon API Gateway 和 Amazon SQS 實現高效的佇列處理並支援高並發。正確：AWS Lambda 可以輪詢來自 SQS 佇列的訊息並觸發 Amazon Comprehend 進行上下文分析。正確：Amazon DynamoDB 支援 TTL 功能，可自動刪除超過 365 天的記錄。正確：此方案是無伺服器架構，可擴充性高，維護成本低。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Use Amazon API Gateway and Amazon SQS to implement efficient queue processing and support high concurrency. Correct: AWS Lambda can poll messages from SQS queues and trigger Amazon Comprehend for context analysis. Correct: Amazon DynamoDB supports TTL function and can automatically delete records older than 365 days. Correct: This solution is a serverless architecture with high scalability and low maintenance costs."
+      }
+    }
+  ]
+}

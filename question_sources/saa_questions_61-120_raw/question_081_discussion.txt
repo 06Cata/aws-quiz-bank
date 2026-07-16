@@ -1,0 +1,141 @@
+A solutions architect is designing the cloud architecture for a new application being deployed on AWS. The process should run in
+parallel while adding and removing application nodes as needed based on the number of jobs to be processed. The processor
+application is stateless. The solutions architect must ensure that the application is loosely coupled and the job items are durably
+stored.
+Which design should the solutions architect use?
+A. Create an Amazon SNS topic to send the jobs that need to be processed. Create an Amazon Machine Image (AMI) that
+consists of the processor application. Create a launch configuration that uses the AMI. Create an Auto Scaling group using the
+launch configuration. Set the scaling policy for the Auto Scaling group to add and remove nodes based on CPU usage.
+B. Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI) that
+consists of the processor application. Create a launch configuration that uses the AMI. Create an Auto Scaling group using the
+launch configuration. Set the scaling policy for the Auto Scaling group to add and remove nodes based on network usage.
+C. Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI) that
+consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the
+launch template. Set the scaling policy for the Auto Scaling group to add and remove nodes based on the number of items in
+the SQS queue. Most Voted
+D. Create an Amazon SNS topic to send the jobs that need to be processed. Create an Amazon Machine Image (AMI) that
+consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the
+launch template. Set the scaling policy for the Auto Scaling group to add and remove nodes based on the number of
+messages published to the SNS topic.
+Comments
+Marge_Simpson Highly Voted 3 years, 6 months ago
+Selected Answer: C
+decoupled = SQS
+Launch template = AMI
+Launch configuration = EC2
+upvoted 57 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: C
+This design follows the best practices for loosely coupled and scalable architecture. By using SQS, the jobs are durably stored in the queue, ensuring
+they are not lost. The processor application is stateless, which aligns with the design requirement. The AMI allows for consistent deployment of the
+application. The launch template and ASG facilitate the dynamic scaling of the application based on the number of items in the SQS, ensuring paralle
+processing of jobs.
+Options A and D suggest using SNS, which is a publish/subscribe messaging service and may not provide the durability required for job storage.
+Option B suggests using network usage as a scaling metric, which may not be directly related to the number of jobs to be processed. The number of
+items in the SQS provides a more accurate metric for scaling based on the workload.
+upvoted 9 times
+PaulGa Most Recent 1 year, 8 months ago
+Selected Answer: C
+Ans C - decoupled and durable (SQS), auto-scaling based on number of messages.
+upvoted 3 times
+Correct Answer: C
+Community vote distribution
+C (100%)
+setout4saa 2 years ago
+Selected Answer: C
+C for sure
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: C
+SNS is not reliable in case of processing failure which is why none of the SNS options are useful. SQS (not in FIFO mode) allows parallel message
+processing but reliability/durability of messages is guaranteed. AMI/EC2 scaling is good choice and scaling parameter should be number of
+messages. Hence "C" is the correct answer
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: C
+"Based on the number of jobs to be processed" -> that alone rules out ABD because only C is based on queue length. (D is based on "number of
+messages published to the queue", not number of messages currently in queue.)
+"Job items are durably stored" also speaks for SQS over SNS.
+upvoted 3 times
+clumsyninja4life 2 years, 5 months ago
+so many words...
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+... yet only one answer is correct
+upvoted 3 times
+slimen 2 years, 7 months ago
+Selected Answer: C
+from my perspective, I didn't go for D even though it provides decoupled architecture is because in the question they said "parallel processing"
+SNS sends the same message to all the subscribers, but in this case we don't want all the nodes to process the same message instead we want them
+to process as much jobs as possible in a parallel fashion.
+SQS in this case is more suitable because each job will get a message and process it and the next message will be taken by another job and so on..
+upvoted 4 times
+darekw 2 years, 9 months ago
+https://aws.amazon.com/about-aws/whats-new/2021/03/aws-certificate-manager-provides-certificate-expiry-monitoring-through-amazon-
+cloudwatch/
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: C
+Loosely coupled = Amazon SQS queue
+New application being deployed = deploy on Amazon Machine Image
+Adding and removing application nodes as needed based on the number of jobs to be processed = Auto Scaling group with launch template
+upvoted 3 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: C
+The recommended design is to use an SQS queue to store jobs (option C):
+SQS provides a durable and decoupled queue to store job items
+An Auto Scaling group with scaling policies based on SQS queue length will add/remove nodes as needed
+Launch templates provide flexibility to update AMIs
+The key points:
+SQS enables loose coupling and stores jobs durably
+Auto Scaling provides parallel processing
+Scaling based on queue length manages nodes effectively
+upvoted 3 times
+Bmarodi 3 years ago
+Selected Answer: C
+C for sure
+upvoted 1 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Selected Answer: C
+***CORRECT***
+The correct design is Option C. Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI)
+that consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the launch template. Set
+the scaling policy for the Auto Scaling group to add and remove nodes based on the number of items in the SQS queue.
+This design satisfies the requirements of the application by using Amazon Simple Queue Service (SQS) as durable storage for the job items and
+Amazon Elastic Compute Cloud (EC2) Auto Scaling to add and remove nodes based on the number of items in the queue. The processor application
+can be run in parallel on multiple nodes, and the use of launch templates allows for flexibility in the configuration of the EC2 instances.
+upvoted 6 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+***WRONG***
+Option A is incorrect because it uses Amazon Simple Notification Service (SNS) instead of SQS, which is not a durable storage solution.
+Option B is incorrect because it uses CPU usage as the scaling trigger instead of the number of items in the queue.
+Option D is incorrect for the same reasons as option A.
+upvoted 7 times
+graveend 2 years, 10 months ago
+SNS provides durable storage of all messages that it receives.
+Ref: https://aws.amazon.com/sns/faqs/#:~:text=SNS%20provides%20durable%20storage%20of%20all%20messages%20that%20it%20receives.
+Why use SQS instead of SNS? In the question it says parallel execution of processes. SNS has that ability.
+upvoted 1 times
+cyber_bedouin 2 years, 7 months ago
+SQS satisfies the decoupling requirement
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+SNS is not a durable storage. SQS stores the messages until they are process. SNS just notifies the subscribers and doesn't care if the notification
+is processed or not. It's kind of "fire and forget"
+upvoted 1 times
+career360guru 3 years, 5 months ago
+Selected Answer: C
+SQS with EC2 autoscaling policy based number of messages in the queue.
+upvoted 1 times
+Uhrien 3 years, 6 months ago
+Selected Answer: C
+C is correct
+upvoted 2 times
+kelljons 3 years, 6 months ago
+what about the word "coupled"
+upvoted 1 times
+kewl 3 years, 6 months ago
+Selected Answer: C
+AWS strongly recommends that you do not use launch configurations hence answer is C
+https://docs.amazonaws.cn/en_us/autoscaling/ec2/userguide/launch-configurations.html
+upvoted 3 times

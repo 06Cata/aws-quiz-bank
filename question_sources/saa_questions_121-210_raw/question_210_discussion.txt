@@ -1,0 +1,126 @@
+A company offers a food delivery service that is growing rapidly. Because of the growth, the company’s order processing system is
+experiencing scaling problems during peak traffic hours. The current architecture includes the following:
+• A group of Amazon EC2 instances that run in an Amazon EC2 Auto Scaling group to collect orders from the application
+• Another group of EC2 instances that run in an Amazon EC2 Auto Scaling group to fulfill orders
+The order collection process occurs quickly, but the order fulfillment process can take longer. Data must not be lost because of a
+scaling event.
+A solutions architect must ensure that the order collection process and the order fulfillment process can both scale properly
+during peak traffic hours. The solution must optimize utilization of the company’s AWS resources.
+Which solution meets these requirements?
+A. Use Amazon CloudWatch metrics to monitor the CPU of each instance in the Auto Scaling groups. Configure each Auto
+Scaling group’s minimum capacity according to peak workload values.
+B. Use Amazon CloudWatch metrics to monitor the CPU of each instance in the Auto Scaling groups. Configure a CloudWatch
+alarm to invoke an Amazon Simple Notification Service (Amazon SNS) topic that creates additional Auto Scaling groups on
+demand.
+C. Provision two Amazon Simple Queue Service (Amazon SQS) queues: one for order collection and another for order
+fulfillment. Configure the EC2 instances to poll their respective queue. Scale the Auto Scaling groups based on notifications
+that the queues send.
+D. Provision two Amazon Simple Queue Service (Amazon SQS) queues: one for order collection and another for order
+fulfillment. Configure the EC2 instances to poll their respective queue. Create a metric based on a backlog per instance
+calculation. Scale the Auto Scaling groups based on this metric. Most Voted
+Comments
+TungPham Highly Voted 3 years, 3 months ago
+Selected Answer: D
+When the backlog per instance reaches the target value, a scale-out event will happen. Because the backlog per instance is already 150 messages
+(1500 messages / 10 instances), your group scales out, and it scales out by five instances to maintain proportion to the target value.
+Backlog per instance: To calculate your backlog per instance, start with the ApproximateNumberOfMessages queue attribute to determine the length
+of the SQS queue (number of messages available for retrieval from the queue). Divide that number by the fleet's running capacity, which for an Auto
+Scaling group is the number of instances in the InService state, to get the backlog per instance.
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html
+upvoted 16 times
+n43u435b543ht2b Highly Voted 2 years, 10 months ago
+Selected Answer: D
+C is incorrect as scaling based on the number of "notifications" doesn't make logical sense. This means that both the order collection and fulfilment
+instances would scale in parallel, but they have clearly said that the collection is processing quickly while the fulfilment is struggling. Therefore, we
+should scale the pool when there is a backlog building in a respective queue - not just based on the number of incoming requests.
+upvoted 14 times
+jerryl Most Recent 1 year, 2 months ago
+Correct Answer: D
+Community vote distribution
+D (91%)
+9%
+Selected Answer: C
+I can understand you guy's explanation on D (the burden is on one queue only not both)
+but i dont understand how D imply that the metric is monitoring on on side
+upvoted 1 times
+satyaammm 1 year, 3 months ago
+Selected Answer: D
+Since only the order fulfillment requires scaling capacity so D is the most suitable here.
+upvoted 1 times
+jatric 1 year, 11 months ago
+Selected Answer: C
+both have their own queue. Instance processing order will be scale up based on the queue length that collect messages that collected by other
+queue.
+upvoted 1 times
+lofzee 2 years ago
+Selected Answer: D
+not C as the questions state that only one system is struggling, so C doesnt really solve the problem.
+D does.
+upvoted 2 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: D
+Decoupling with Amazon SQS: By using Amazon SQS queues for order collection and order fulfillment, the system can decouple the components,
+ensuring that orders are not lost, even during scaling events. Orders are queued up and processed in a reliable and scalable manner.
+Scalability Based on Queue Backlog: By creating a metric based on the backlog per instance calculation, the system can monitor the workload of each
+instance in the Auto Scaling groups. This allows for dynamic scaling based on the workload, ensuring that additional instances are launched when the
+backlog increases and terminated when the backlog decreases. Optimization of AWS Resources: This solution optimizes the utilization of AWS
+resources by dynamically scaling the Auto Scaling groups based on the actual workload, preventing over-provisioning or under-provisioning of
+instances. It ensures that the system can handle peak traffic efficiently without incurring unnecessary costs.
+upvoted 3 times
+bujuman 2 years, 4 months ago
+Selected Answer: D
+D is the most appropriate response base on https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+D. Provision two Amazon Simple Queue Service (Amazon SQS) queues: one for order collection and another for order fulfillment. Configure the EC2
+instances to poll their respective queue. Create a metric based on a backlog per instance calculation. Scale the Auto Scaling groups based on this
+metric.
+upvoted 5 times
+argl1995 2 years, 11 months ago
+SQS auto-scales by default so I don't think we need to mention it explicitly. Option D should be correct.
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+A. This approach focuses solely on CPU utilization, which may not accurately reflect the scaling needs of the order collection and fulfillment
+processes. It does not address the need for decoupling and reliable message processing.
+B. While this approach incorporates alarms to trigger additional Auto Scaling groups, it lacks the decoupling and reliable message processing
+provided by using SQS queues. It may lead to inefficient scaling and potential data loss.
+C. Although using SQS queues is a step in the right direction, scaling solely based on queue notifications may not provide optimal resource
+utilization. It does not consider the backlog per instance and does not allow for fine-grained control over scaling.
+Overall, option D, which involves using SQS queues for order collection and fulfillment, creating a metric based on backlog per instance calculation,
+and scaling the Auto Scaling groups accordingly, is the most suitable solution to address the scaling problems while optimizing resource utilization
+and ensuring reliable message processing.
+upvoted 5 times
+studynoplay 3 years ago
+Selected Answer: D
+C is incorrect. "based on notifications that the queues send" SQS does not send notification
+upvoted 4 times
+mandragon 3 years, 1 month ago
+Selected Answer: C
+D is not correct because it requires more operational overhead and complexity than option C which is simpler and more cost-effective. It uses the
+existing queue metrics that are provided by Amazon SQS and does not require creating or publishing any custom metrics. You can use target
+tracking scaling policies to automatically maintain a desired backlog per instance ratio without having to calculate or monitor it yourself.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"You can use target tracking scaling policies" but you don't with option C. What is "scaling based on notifications that the queues send"? Where do
+they send these notifications to?
+upvoted 1 times
+JayBee65 3 years, 4 months ago
+Selected Answer: D
+Scale based on queue length
+upvoted 3 times
+Rudraman 3 years, 4 months ago
+answer is D.
+read question again
+upvoted 3 times
+LuckyAro 3 years, 4 months ago
+Selected Answer: D
+The number of instances in your Auto Scaling group can be driven by how long it takes to process a message and the acceptable amount of latency
+(queue delay).
+The solution is to use a backlog per instance metric with the target value being the acceptable backlog per instance to maintain.
+upvoted 2 times
+Aseem8888 3 years, 4 months ago
+Selected Answer: D
+D is correct
+upvoted 2 times

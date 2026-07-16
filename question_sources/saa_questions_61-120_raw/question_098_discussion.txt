@@ -1,0 +1,194 @@
+An image-processing company has a web application that users use to upload images. The application uploads the images into an
+Amazon S3 bucket. The company has set up S3 event notifications to publish the object creation events to an Amazon Simple
+Queue Service (Amazon SQS) standard queue. The SQS queue serves as the event source for an AWS Lambda function that
+processes the images and sends the results to users through email.
+Users report that they are receiving multiple email messages for every uploaded image. A solutions architect determines that SQS
+messages are invoking the Lambda function more than once, resulting in multiple email messages.
+What should the solutions architect do to resolve this issue with the LEAST operational overhead?
+A. Set up long polling in the SQS queue by increasing the ReceiveMessage wait time to 30 seconds.
+B. Change the SQS standard queue to an SQS FIFO queue. Use the message deduplication ID to discard duplicate messages.
+C. Increase the visibility timeout in the SQS queue to a value that is greater than the total of the function timeout and the
+batch window timeout. Most Voted
+D. Modify the Lambda function to delete each message from the SQS queue immediately after the message is read before
+processing.
+Comments
+Six_Fingered_Jose Highly Voted 3 years, 7 months ago
+Selected Answer: C
+answer should be C,
+users get duplicated messages because -> lambda polls the message, and starts processing the message.
+However, before the first lambda can finish processing the message, the visibility timeout runs out on SQS, and SQS returns the message to the poll,
+causing another Lambda node to process that same message.
+By increasing the visibility timeout, it should prevent SQS from returning a message back to the poll before Lambda can finish processing the
+message
+upvoted 68 times
+MutiverseAgent 2 years, 11 months ago
+I agree it seems solution is C, as thought the SQS FIFO makes sense deduplication id would make NO sense as the system who put messages in the
+queue is S3 events; and as far as I know S3 do not send duplicated events. Also, the question mention that users are complaining about receiving
+multiple emails for each email, which is different to say they are receiving occasionally a repeated email; so my guess is SQS FIFO is not needed.
+upvoted 2 times
+JoeGuan 2 years, 10 months ago
+The FIFO SQS is for solving a different problem, where items in the queue require order. You cannot simply switch from a standard queue to fifo
+queue. Duplicate emails are a common issue with a standard queue. The documentation consistently reminds us that duplicate emails can occur,
+and the solution is not to create a FIFO queue, but rather adjust the configuration parameters accordingly.
+upvoted 5 times
+PLN6302 2 years, 9 months ago
+amazon s3 doesn't support fifo queues
+upvoted 3 times
+Ello2023 3 years, 4 months ago
+I am confused. If the email has been sent many times already why would they need more time?
+I believe SQS Queue Fifo will keep in order and any duplicates with same ID will be deleted. Can you tell me where i am going wrong? Thanks
+upvoted 9 times
+MrAWS 3 years, 4 months ago
+I tend to agree with you. See my comments above.
+Correct Answer: C
+Community vote distribution
+C (81%)
+Other
+upvoted 2 times
+Robrobtutu 3 years, 1 month ago
+Increasing the visibility timeout would give time to the lambda function to finish processing the message, which would make it disappear from the
+queue, and therefore only one email would be send to the user.
+If the visibility timeout ends while the lambda function is still processing the message, the message will be returned to the queue and there
+another lambda function would pick it up and process it again, which would result in the user receiving two or more emails about the same thing.
+upvoted 12 times
+aadityaravi8 2 years, 11 months ago
+I agree with your answer explanation
+upvoted 1 times
+Abdou1604 2 years, 10 months ago
+i aggree because the issue is multiple received email for an image uploaded
+upvoted 1 times
+brushek Highly Voted 3 years, 8 months ago
+Selected Answer: C
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
+this is important part:
+Immediately after a message is received, it remains in the queue. To prevent other consumers from processing the message again, Amazon SQS sets
+a visibility timeout, a period of time during which Amazon SQS prevents other consumers from receiving and processing the message. The default
+visibility timeout for a message is 30 seconds. The minimum is 0 seconds. The maximum is 12 hours.
+upvoted 16 times
+ln2718 Most Recent 9 months, 2 weeks ago
+Selected Answer: C
+Switching S3 event notifications to FIFO SQS queues is not supported (S3 can only publish to Standard queues)
+upvoted 1 times
+BennyBrrr 1 year ago
+Selected Answer: C
+I guessed B because I know FIFO queues have deduplication functionality, but when I looked it up it wouldn't solve this issue.
+FIFO deduplication protects against a producer sending a message with the same deduplication ID to the queue multiple times within the
+deduplication interval (5 minutes). The question doesn't mention duplicates are being added into the queue; it just mentions that messages from the
+queue are being processed more than once.
+As a result, the answer must be C because messages that take longer to process than the configured visibility timeout are made visible on the queue
+again, and are therefore picked up by another processor.
+upvoted 1 times
+AwsAbhiKumar 1 year, 3 months ago
+Selected Answer: B
+I believe answer is B cause FIFO queues provide exactly-once processing and guarantee that messages are delivered in order. They also support
+message deduplication, which prevents processing duplicate messages within a specified deduplication interval.
+Whereas a longer visibility timeout might prevent messages from being processed more than once if processing takes longer than expected.
+However, it does not eliminate the inherent at-least-once delivery behavior of standard queues, which can still cause duplicates.
+upvoted 2 times
+jerryl 1 year, 2 months ago
+I think there is another question that mention the visibility timeout concept as well
+My understanding is for SQS, you have producer (inject data to queue) and consumer (get data from queue), the SQS itself does not know who will
+be the producer or consumer, this is implemented at the producer/consumer side like a Lambda function
+So ensuring the read sequence doesnt mean no duplication at all
+Instead you need to ensure a data (element in the queue) not to be read multiple times by consumer
+And this is done by adjusting the visible timeout, making it long enough will make sure each consumer (Lambda in this case) can either consume
+the data completely (or fail) without other consumer's interruption
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: C
+SQS feature of "Visibility timeout" sets the time for getting acknowledgement from processor that the message has been successfully processed. I
+think it should have been called "Invisibility " rather than "Visibility" timeout. Anyways, I think AWS engineers have thought this Queue service
+through well. So if the processing time> visibility timeout, the message comes back and is picked up by another execution of lambda funtion. It is
+such a small thing but it can easily rake up lambda usage if not considered!
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html , standard queue is delivered at lease
+once, the duplication can not be avoided
+upvoted 1 times
+Rcosmos 1 year, 5 months ago
+Selected Answer: C
+C. Aumentar o tempo limite de visibilidade:
+Um tempo limite de visibilidade maior reduz a chance de reprocessamento prematuro, mas não resolve completamente o problema de mensagens
+duplicadas.
+É mais complexo ajustar adequadamente o tempo de visibilidade para sincronizar com o processamento da função Lambda e o tempo limite.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: C
+Using Visibility Timeout is the most suitable option here with the least operational overhead.
+upvoted 1 times
+salman7540 1 year, 5 months ago
+Selected Answer: C
+FIFO queues are designed to never introduce duplicate messages. However, a message producer might introduce duplicates if another producer
+(lambda in this case) picks up same fifo message after visibility timeout over but previous lambda was still processing it. Hence correct answer is C.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: B
+it should be B
+- Using a FIFO (First In, First Out) queue ensures that messages are processed in the exact order they are received, preventing duplicates from being
+processed multiple times by the Lambda function. By setting up message deduplication IDs, you can further guarantee that even if the same message
+is sent multiple times, only one instance will be processed.
+- When dealing with potential duplicate messages in an event-driven architecture, switching to an SQS FIFO queue with message deduplication is
+generally the most efficient and reliable solution to prevent redundant processing.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: D
+Ans D - is my preferred choice because it removes the record and therefore eliminates the possibility of duplication; the only snag here is ensuring
+the SQS record is locked.
+Ans C, which has the most votes will work but is less robust - but perhaps it is the cheapest option.
+Ans A, the author's preference, won't work unless the Lambda function is guaranteed to complete within 30secs - and nowhere is that stated
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+the correct answer is C, although B and D might also work, C is the one that achieves the least operational overhead condition.
+upvoted 1 times
+Solomon2001 2 years, 1 month ago
+Selected Answer: B
+B. Change the SQS standard queue to an SQS FIFO queue. Use the message deduplication ID to discard duplicate messages.
+Here’s why this option is suitable:
+SQS FIFO Queue:
+Amazon SQS FIFO (First-In-First-Out) queues ensure that the order of messages is preserved.
+Each message in a FIFO queue has a unique message deduplication ID.
+By using a FIFO queue, you can prevent duplicate messages from being processed.
+Message Deduplication ID:
+When sending messages to a FIFO queue, set the message deduplication ID to ensure that identical messages are treated as duplicates.
+If a message with the same deduplication ID is sent within a 5-minute window, it is considered a duplicate and discarded.
+https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
+upvoted 2 times
+Anthony_Rodrigues 2 years ago
+This wouldn't work as expected because the issue is not the order or the queue receiving multiple times the same message. The issue is that the
+Lambda executes the same message multiple times.
+The FIFO deduplication ID works when the producer sends the message, not when the consumer is receiving the message.
+(https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html)
+For this to work, the Lambda function would need to know/keep the last N deduplication ID to guarantee that it isn't processing the same message
+which goes against Lambda's statelessness.
+Therefore, for this case, B is the best answer.
+upvoted 1 times
+824c449 2 years, 1 month ago
+Selected Answer: B
+B: Directly addresses the issue of duplicates by ensuring exact-once processing and message ordering, which mitigates the risk without requiring
+adjustments based on anticipated processing times or additional application logic to manage potential duplicates.
+So, while increasing the visibility timeout could help in managing when messages are available for processing again, it doesn't provide a structural
+solution to the problem of duplicate processing in the way that using an SQS FIFO queue does, nor does it ensure the operational simplicity and
+reliability that comes with eliminating duplicates at the source.
+upvoted 2 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: C
+to all those who are considering option B, Its INCORRECT.
+Amazon Simple Queue Service FIFO (First-In-First-Out) queues aren't supported as an Amazon S3 event notification destination.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html
+upvoted 3 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: B
+Given the requirement to resolve the issue of multiple email messages being sent to users with the least operational overhead, the most appropriate
+solution is:
+B. Change the SQS standard queue to an SQS FIFO queue. Use the message deduplication ID to discard duplicate messages.
+Explanation:
+SQS FIFO Queue: FIFO (First-In-First-Out) queues in SQS ensure that the order in which messages are sent and received is strictly preserved and that
+each message is processed only once. By switching to an SQS FIFO queue, you can prevent the Lambda function from processing duplicate
+messages.
+upvoted 1 times
+ManikRoy 2 years, 1 month ago
+Its INCORRECT
+Amazon Simple Queue Service FIFO (First-In-First-Out) queues aren't supported as an Amazon S3 event notification destination.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html
+upvoted 1 times

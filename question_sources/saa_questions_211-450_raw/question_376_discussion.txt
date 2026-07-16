@@ -1,0 +1,53 @@
+A company has launched an Amazon RDS for MySQL DB instance. Most of the connections to the database come from serverless
+applications. Application traffic to the database changes significantly at random intervals. At times of high demand, users report
+that their applications experience database connection rejection errors.
+Which solution will resolve this issue with the LEAST operational overhead?
+A. Create a proxy in RDS Proxy. Configure the users’ applications to use the DB instance through RDS Proxy. Most Voted
+B. Deploy Amazon ElastiCache for Memcached between the users’ applications and the DB instance.
+C. Migrate the DB instance to a different instance class that has higher I/O capacity. Configure the users’ applications to use
+the new DB instance.
+D. Configure Multi-AZ for the DB instance. Configure the users’ applications to switch between the DB instances.
+Comments
+TariqKipkemei Highly Voted 1 year, 7 months ago
+Selected Answer: A
+database connection rejection errors = RDS Proxy
+upvoted 7 times
+ktulu2602 Highly Voted 2 years, 3 months ago
+Selected Answer: A
+The correct solution for this scenario would be to create a proxy in RDS Proxy. RDS Proxy allows for managing thousands of concurrent database
+connections, which can help reduce connection errors. RDS Proxy also provides features such as connection pooling, read/write splitting, and retries.
+This solution requires the least operational overhead as it does not involve migrating to a different instance class or setting up a new cache layer.
+Therefore, option A is the correct answer.
+upvoted 5 times
+Guru4Cloud Most Recent 1 year, 9 months ago
+Selected Answer: A
+RDS Proxy provides a proxy layer that pools and shares database connections to improve scalability. This allows the proxy to handle connection
+spikes to the database gracefully.
+Using RDS Proxy requires minimal operational overhead - just create the proxy and reconfigure applications to use it. No code changes needed.
+upvoted 4 times
+antropaws 2 years ago
+Wait, why not B?????
+upvoted 2 times
+Guru4Cloud 1 year, 9 months ago
+ElastiCache (B) and larger instance type (C) help performance but don't resolve connection issues.
+upvoted 4 times
+live_reply_developers 1 year, 11 months ago
+Amazon ElastiCache tends to have a lower operational overhead compared to Amazon RDS Proxy. BUT we already have " Amazon RDS for MySQL
+DB instance"
+upvoted 2 times
+Guru4Cloud 1 year, 9 months ago
+ElastiCache (B) and larger instance type (C) help performance but don't resolve connection issues.
+Correct Answer: A
+Community vote distribution
+A (100%)
+upvoted 2 times
+roxx529 2 years ago
+To reduce application failures resulting from database connection timeouts, the best solution is to enable RDS Proxy on the RDS DB instances
+upvoted 2 times
+COTIT 2 years, 2 months ago
+Selected Answer: A
+Many applications, including those built on modern serverless architectures, can have a large number of open connections to the database server
+and may open and close database connections at a high rate, exhausting database memory and compute resources. Amazon RDS Proxy allows
+applications to pool and share connections established with the database, improving database efficiency and application scalability.
+(https://aws.amazon.com/pt/rds/proxy/)
+upvoted 4 times

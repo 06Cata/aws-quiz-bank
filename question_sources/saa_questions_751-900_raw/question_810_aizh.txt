@@ -1,0 +1,59 @@
+Question #810
+A company collects and processes data from a vendor. The vendor stores its data in an Amazon RDS for MySQL database in the
+vendor's own AWS account. The company’s VPC does not have an internet gateway, an AWS Direct Connect connection, or an
+AWS Site-to-Site VPN connection. The company needs to access the data that is in the vendor database.
+Which solution will meet this requirement?
+一家公司从供应商处收集并处理数据。供应商将其数据存储在供应商自己AWS账户中的Amazon RDS for MySQL数据库中。 该公司
+的VPC没有Internet Gateway、AWS Direct Connect连接或AWS Site-to-Site VPN连接。 该公司需要访问供应商数据库中的数据。
+哪种解决方案可以满足此要求？
+A. Instruct the vendor to sign up for the AWS Hosted Connection Direct Connect Program. Use VPC peering to connect the
+company's VPC and the vendor's VPC.
+指示供应商注册AWS Hosted Connection Direct Connect Program。使用VPC Peering连接公司的VPC和供应商的VPC。
+B. Configure a client VPN connection between the company's VPC and the vendor's VPC. Use VPC peering to connect the
+company's VPC and the vendor's VPC.
+配置公司VPC和供应商VPC之间的Client VPN连接。使用VPC Peering连接公司的VPC和供应商的VPC。
+C. Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL
+database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC. Most Voted
+指示供应商创建一个Network Load Balancer (NLB)。将NLB放置在Amazon RDS for MySQL数据库前面。使用AWS PrivateLink集
+成公司的VPC和供应商的VPC。
+D. Use AWS Transit Gateway to integrate the company's VPC and the vendor's VPC. Use VPC peering to connect the company’s
+VPC and the vendor's VPC.
+使用AWS Transit Gateway集成公司的VPC和供应商的VPC。使用VPC Peering连接公司的VPC和供应商的VPC。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (95%)
+5%
+题目分析与解答
+1. 考察的知识点
+VPC连接选项：包括VPC Peering、AWS PrivateLink、AWS Transit Gateway等。
+如何在没有互联网网关、Direct Connect或Site-to-Site VPN的情况下实现跨账户数据访问。
+Amazon RDS的访问方式及其与网络负载均衡器（NLB）的集成。
+2. 选项分析
+A. Instruct the vendor to sign up for the AWS Hosted Connection Direct Connect Program. Use VPC peering to connect
+the company's VPC and the vendor's VPC.
+错误原因：Direct Connect是一种物理连接解决方案，与题目中明确指出公司没有Direct Connect连接的条件不符。
+此外，VPC Peering无法直接访问Amazon RDS，因为它不支持跨VPC的服务发现。
+B. Configure a client VPN connection between the company's VPC and the vendor's VPC. Use VPC peering to connect the
+company's VPC and the vendor's VPC.
+错误原因：Client VPN主要用于用户设备连接到VPC，而不是VPC之间的连接。题目要求的是VPC间的连接解决方案。
+同样，VPC Peering无法直接访问Amazon RDS。
+C. Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL
+database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC.
+正确原因：AWS PrivateLink允许通过接口端点安全地访问跨VPC的服务。通过将NLB放置在RDS前面，供应商可以创建一个服务端
+点，供公司通过PrivateLink访问。
+PrivateLink是专门设计用于跨VPC和跨账户的服务访问，符合题目要求。
+D. Use AWS Transit Gateway to integrate the company's VPC and the vendor's VPC. Use VPC peering to connect the
+company’s VPC and the vendor's VPC.
+错误原因：AWS Transit Gateway是一种多VPC连接解决方案，但题目中没有提到公司或供应商使用Transit Gateway的需求。
+此外，Transit Gateway和VPC Peering的组合并不适合直接访问Amazon RDS。
+3. 我的答案
+C. Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL
+database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC.
+4. 官方答案
+C. Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL
+database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC.
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因分析清晰，符合题目要求和AWS最佳实践。

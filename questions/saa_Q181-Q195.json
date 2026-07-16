@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 181,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個在 Amazon EC2 執行個體上執行的舊資料處理應用程式。數據按順序處理，但結果的順序並不重要。該應用程式使用整體架構。公司擴展應用程式以滿足不斷增長的需求的唯一方法是增加實例的大小。該公司的開發人員決定重寫該應用程序，以使用 Amazon Elastic Container Service (Amazon ECS) 上的微服務架構。解決方案架構師應該為微服務之間的通訊推薦什麼？",
+        "en": "A company has a legacy data processing application that runs on Amazon EC2 instances. Data is processed sequentially, but the order of results does not matter. The application uses a monolithic architecture. The only way that the company can scale the application to meet increased demand is to increase the size of the instances. The company’s developers have decided to rewrite the application to use a microservices architecture on Amazon Elastic Container Service (Amazon ECS). What should a solutions architect recommend for communication between the microservices?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon Simple Queue Service (Amazon SQS) 佇列。將程式碼新增至資料生產者，並將資料傳送到佇列。將程式碼新增至資料使用者以處理來自佇列的資料。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue. Add code to the data producers, and send data to the queue. Add code to the data consumers to process data from the queue."
+        },
+        "B": {
+          "zh": "建立 Amazon Simple Notification Service (Amazon SNS) 主題。向資料生產者添加程式碼，並向主題發布通知。向數據消費者添加代碼以訂閱主題。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic. Add code to the data producers, and publish notifications to the topic. Add code to the data consumers to subscribe to the topic."
+        },
+        "C": {
+          "zh": "建立 AWS Lambda 函數來傳遞訊息。在資料產生器中新增程式碼以使用資料物件呼叫 Lambda 函數。向資料使用者新增程式碼以接收從 Lambda 函數傳遞的資料物件。",
+          "en": "Create an AWS Lambda function to pass messages. Add code to the data producers to call the Lambda function with a data object. Add code to the data consumers to receive a data object that is passed from the Lambda function."
+        },
+        "D": {
+          "zh": "建立 Amazon DynamoDB 資料表。啟用 DynamoDB 串流。在資料產生器中新增程式碼以將資料插入表中。向資料使用者新增程式碼以使用 DynamoDB Streams API 偵測新的表格條目並檢索資料。",
+          "en": "Create an Amazon DynamoDB table. Enable DynamoDB Streams. Add code to the data producers to insert data into the table. Add code to the data consumers to use the DynamoDB Streams API to detect new table entries and retrieve the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon SQS 是完全託管的訊息佇列服務，適用於非同步通訊場景。資料生產者將訊息傳送到佇列，消費者從佇列中拉取訊息進行處理。此模式支援解耦和高吞吐量。由於資料處理的順序並不重要，因此SQS非常適合這種場景。",
+          "en": "Correct. Amazon SQS is a fully managed message queue service suitable for asynchronous communication scenarios. Data producers send messages to the queue, and consumers pull messages from the queue for processing. This pattern supports decoupling and high throughput. Since the order of data processing is not important, SQS is very suitable for this scenario."
+        },
+        "B": {
+          "zh": "錯誤。Amazon SNS 是一種發布/訂閱訊息服務，適用於即時通知和廣播訊息。儘管SNS可以向多個訂閱者發送訊息，但它不支援訊息持久化，消費者必須即時處理訊息。這題需要非同步處理，SNS不適合這種場景。",
+          "en": "Incorrect. Amazon SNS is a publish/subscribe messaging service suitable for real-time notifications and broadcast messages. Although SNS can send messages to multiple subscribers, it does not support message persistence and consumers must process messages in real time. This question requires asynchronous processing, and SNS is not suitable for this scenario."
+        },
+        "C": {
+          "zh": "錯誤。AWS Lambda 適用於事件驅動的調度，但它不是專門設計用於訊息佇列的服務。使用 Lambda 傳遞訊息會增加複雜性，且不支援訊息持久化。這題需要非同步處理，Lambda不適合這種場景。",
+          "en": "Incorrect. AWS Lambda is suitable for event-driven scheduling, but it is not a service specifically designed for use with message queues. Using Lambda to deliver messages adds complexity and does not support message persistence. This question requires asynchronous processing, and Lambda is not suitable for this scenario."
+        },
+        "D": {
+          "zh": "錯誤。DynamoDB Streams 可以偵測表格中的新條目並觸發事件，但它主要用於即時處理資料變更。使用 DynamoDB 作為訊息佇列會增加複雜性，並且不像 SQS 那樣專注於訊息佇列場景。這個問題需要非同步處理，DynamoDB Streams 不適合這個場景。",
+          "en": "Incorrect. DynamoDB Streams can detect new entries in tables and trigger events, but it is primarily used for real-time processing of data changes. Using DynamoDB as a message queue adds complexity and is not as focused on message queue scenarios as SQS. This question requires asynchronous processing, and DynamoDB Streams is not suitable for this scenario."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立 Amazon Simple Queue Service (Amazon SQS) 佇列。將程式碼新增至資料生產者，並將資料傳送到佇列。將程式碼新增至資料使用者以處理來自佇列的資料。",
+        "en": "A. Create an Amazon Simple Queue Service (Amazon SQS) queue. Add code to the data producers, and send data to the queue. Add code to the data consumers to process data from the queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (95%)。熱門討論與考點摘要：Amazon SQS 是完全託管的訊息佇列服務，適用於非同步通訊場景。資料生產者將訊息傳送到佇列，消費者從佇列中拉取訊息進行處理。此模式支援解耦和高吞吐量。由於資料處理的順序並不重要，因此SQS非常適合這種場景。",
+        "en": "Community vote as displayed: A (95%). Popular discussion and key point summary: Amazon SQS is a fully managed message queue service suitable for asynchronous communication scenarios. Data producers send messages to the queue, and consumers pull messages from the queue for processing. This pattern supports decoupling and high throughput. Since the order of data processing is not important, SQS is very suitable for this scenario."
+      }
+    },
+    {
+      "question_no": 182,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將其 MySQL 資料庫從本地端遷移到 AWS。該公司最近經歷了一次資料庫中斷，對業務產生了重大影響。為了確保這種情況不再發生，該公司希望在 AWS 上有一個可靠的資料庫解決方案，最大限度地減少資料遺失並將每筆交易儲存在至少兩個節點上。哪種解決方案滿足這些要求？",
+        "en": "A company wants to migrate its MySQL database from on premises to AWS. The company recently experienced a database outage that significantly impacted the business. To ensure this does not happen again, the company wants a reliable database solution on AWS that minimizes data loss and stores every transaction on at least two nodes. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 Amazon RDS 資料庫實例，同步複製到三個可用區中的三個節點。",
+          "en": "Create an Amazon RDS DB instance with synchronous replication to three nodes in three Availability Zones."
+        },
+        "B": {
+          "zh": "建立啟用多可用區功能的 Amazon RDS MySQL 資料庫執行個體以同步複製資料。",
+          "en": "Create an Amazon RDS MySQL DB instance with Multi-AZ functionality enabled to synchronously replicate the data."
+        },
+        "C": {
+          "zh": "建立 Amazon RDS MySQL 資料庫實例，然後在單獨的 AWS 區域中建立唯讀副本以同步複製資料。",
+          "en": "Create an Amazon RDS MySQL DB instance and then create a read replica in a separate AWS Region that synchronously replicates the data."
+        },
+        "D": {
+          "zh": "建立安裝了 MySQL 引擎的 Amazon EC2 實例，觸發 AWS Lambda 函數將資料同步複製到 Amazon RDS MySQL 資料庫執行個體。",
+          "en": "Create an Amazon EC2 instance with a MySQL engine installed that triggers an AWS Lambda function to synchronously replicate the data to an Amazon RDS MySQL DB instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。BUG：Amazon RDS 的多可用區功能確實使用同步複製，但它沒有明確讓使用者配置到三個節點。 RDS Multi-AZ的實作是自動的，使用者無法直接選擇節點數量。",
+          "en": "Incorrect. BUG: Amazon RDS's Multi-AZ feature does use synchronous replication, but it does not explicitly let users provision to three nodes. The implementation of RDS Multi-AZ is automatic, and users cannot directly select the number of nodes."
+        },
+        "B": {
+          "zh": "正確。Amazon RDS 的多可用區功能提供高可用性和資料冗餘。透過同步複製確保主備實例資料一致，最大限度地減少資料遺失。",
+          "en": "Correct. Amazon RDS's Multi-AZ feature provides high availability and data redundancy. It ensures that data remains consistent between the primary and standby instances through synchronous replication, minimizing data loss."
+        },
+        "C": {
+          "zh": "錯誤。Amazon RDS 的跨區域唯讀副本使用非同步複製，而不是同步複製。這不符合問題的「最小化資料遺失」要求。",
+          "en": "Incorrect. Amazon RDS's cross-region read replicas use asynchronous replication, not synchronous replication. This does not meet the \"minimize data loss\" requirement of the question."
+        },
+        "D": {
+          "zh": "錯誤。這種情況很複雜，而且不遵循最佳實務。使用 EC2 和 Lambda 手動實現同步複製不僅會增加管理複雜性，還會導致效能問題。",
+          "en": "Incorrect. This scenario is complex and does not follow best practices. Manually implementing synchronous replication using EC2 and Lambda not only adds management complexity, but can also cause performance issues."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立啟用多可用區功能的 Amazon RDS MySQL 資料庫執行個體以同步複製資料。",
+        "en": "B. Create an Amazon RDS MySQL DB instance with Multi-AZ functionality enabled to synchronously replicate the data."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (98%)。熱門討論與考點摘要：Amazon RDS 的多可用區功能提供高可用性和資料冗餘。透過同步複製確保主備實例資料一致，最大限度地減少資料遺失。",
+        "en": "Community vote as displayed: B (98%). Popular discussion and key point summary: Amazon RDS's Multi-AZ feature provides high availability and data redundancy. It ensures that data remains consistent between the primary and standby instances through synchronous replication, minimizing data loss."
+      }
+    },
+    {
+      "question_no": 183,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在建立一個新的動態訂購網站。該公司希望最大限度地減少伺服器維護和修補。網站必須具有高可用性，並且必須盡快擴展讀寫容量，以滿足使用者需求的變化。哪種解決方案可以滿足這些要求？",
+        "en": "A company is building a new dynamic ordering website. The company wants to minimize server maintenance and patching. The website must be highly available and must scale read and write capacity as quickly as possible to meet changes in user demand. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon S3 中託管靜態內容。使用 Amazon API Gateway 和 AWS Lambda 託管動態內容。使用具有按需資料庫容量的 Amazon DynamoDB。配置 Amazon CloudFront 以交付網站內容。",
+          "en": "Host static content in Amazon S3. Host dynamic content by using Amazon API Gateway and AWS Lambda. Use Amazon DynamoDB with on-demand capacity for the database. Configure Amazon CloudFront to deliver the website content."
+        },
+        "B": {
+          "zh": "在 Amazon S3 中託管靜態內容。使用 Amazon API Gateway 和 AWS Lambda 託管動態內容。將 Amazon Aurora 與 Aurora Auto Scaling 結合使用作為資料庫。配置 Amazon CloudFront 以交付網站內容。",
+          "en": "Host static content in Amazon S3. Host dynamic content by using Amazon API Gateway and AWS Lambda. Use Amazon Aurora with Aurora Auto Scaling for the database. Configure Amazon CloudFront to deliver the website content."
+        },
+        "C": {
+          "zh": "在 Amazon EC2 執行個體上託管所有網站內容。建立 Auto Scaling 組以擴展 EC2 執行個體。使用應用程式負載平衡器來分配流量。使用具有為資料庫預置的寫入容量的 Amazon DynamoDB。",
+          "en": "Host all the website content on Amazon EC2 instances. Create an Auto Scaling group to scale the EC2 instances. Use an Application Load Balancer to distribute traffic. Use Amazon DynamoDB with provisioned write capacity for the database."
+        },
+        "D": {
+          "zh": "在 Amazon EC2 執行個體上託管所有網站內容。建立 Auto Scaling 組以擴展 EC2 執行個體。使用應用程式負載平衡器來分配流量。將 Amazon Aurora 與 Aurora Auto Scaling 結合使用作為資料庫。",
+          "en": "Host all the website content on Amazon EC2 instances. Create an Auto Scaling group to scale the EC2 instances. Use an Application Load Balancer to distribute traffic. Use Amazon Aurora with Aurora Auto Scaling for the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 是託管靜態內容的最佳選擇，支援高可用性和低成本。使用 Amazon API Gateway 和 AWS Lambda 的動態內容：真正的無伺服器架構減少了伺服器維護和修補，同時實現了自動擴充。資料庫使用Amazon DynamoDB的On-DemandCapacity：正確，On-DemandCapacity模式支援自動擴展，適合動態負載。使用 Amazon CloudFront：正確，CloudFront 提供全球內容分發和加速。此選項完全滿足題目要求。",
+          "en": "Correct. S3 is the best choice for hosting static content, supporting high availability and low cost. Dynamic content using Amazon API Gateway and AWS Lambda: True, serverless architecture reduces server maintenance and patching while enabling automatic scaling. The database uses Amazon DynamoDB's On-Demand Capacity: Correct, the On-Demand Capacity mode supports automatic scaling and is suitable for dynamic loads. Use Amazon CloudFront: Correct, CloudFront provides global content distribution and acceleration. This option fully meets the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。使用 Amazon API Gateway 和 AWS Lambda 的動態內容：資料庫使用 Amazon Aurora 和 Aurora Auto Scaling：錯誤，Aurora 是關聯式資料庫。雖然支援自動擴展，但Aurora的管理複雜度比DynamoDB更高，並不能完全滿足「最小化伺服器維護和修補程式」的要求。使用 Amazon CloudFront：此選項不完全符合問題要求。",
+          "en": "Incorrect. Dynamic content using Amazon API Gateway and AWS Lambda: The database uses Amazon Aurora and Aurora Auto Scaling: Error, Aurora is a relational database. Although it supports automatic expansion, Aurora has higher management complexity than DynamoDB and does not fully meet the requirements of \"minimizing server maintenance and patches\". Using Amazon CloudFront: This option does not fully meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。EC2需要手動管理伺服器，增加了維護和打補丁的工作量，不符合問題的要求。建立Auto Scaling群組：正確，但是EC2的管理複雜度更高。使用應用程式負載平衡器：正確，但不符合無伺服器架構。資料庫使用Amazon DynamoDB的預先配置寫入容量：預先配置容量模式需要手動調整，無法快速回應需求變化。該選項不符合題目要求。",
+          "en": "Incorrect. EC2 requires manual server management, which increases the workload of maintenance and patching, and does not meet the requirements of the question. Create an Auto Scaling group: Correct, but EC2 has higher management complexity. Use Application Load Balancer: Correct, but not compliant with serverless architecture. The database uses Amazon DynamoDB's provisioned write capacity: The provisioned capacity mode needs to be manually adjusted and cannot respond quickly to changes in demand. This option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。與選項 C 相同，增加了維護和修補工作。建立Auto Scaling群組：正確，但是EC2的管理複雜度更高。使用應用程式負載平衡器：正確，但不符合無伺服器架構。使用Amazon Aurora和Aurora Auto Scaling的資料庫：錯誤，與選項B相同，Aurora具有更高的管理複雜性。該選項不符合題目要求。",
+          "en": "Incorrect. same as option C, increases maintenance and patching effort. Create an Auto Scaling group: Correct, but EC2 has higher management complexity. Use Application Load Balancer: Correct, but not compliant with serverless architecture. Database using Amazon Aurora and Aurora Auto Scaling: Wrong, same as option B, Aurora has higher management complexity. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 Amazon S3 中託管靜態內容。使用 Amazon API Gateway 和 AWS Lambda 託管動態內容。使用具有按需資料庫容量的 Amazon DynamoDB。配置 Amazon CloudFront 以交付網站內容。",
+        "en": "A. Host static content in Amazon S3. Host dynamic content by using Amazon API Gateway and AWS Lambda. Use Amazon DynamoDB with on-demand capacity for the database. Configure Amazon CloudFront to deliver the website content."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (95%)。熱門討論與考點摘要：S3 是託管靜態內容的最佳選擇，支援高可用性和低成本。使用 Amazon API Gateway 和 AWS Lambda 的動態內容：真正的無伺服器架構減少了伺服器維護和修補，同時實現了自動擴充。資料庫使用Amazon DynamoDB的On-DemandCapacity：正確，On-DemandCapacity模式支援自動擴展，適合動態負載。使用 Amazon CloudFront：正確，CloudFront 提供全球內容分發和加速。此選項完全滿足題目要求。",
+        "en": "Community vote as displayed: A (95%). Popular discussion and key point summary: S3 is the best choice for hosting static content, supporting high availability and low cost. Dynamic content using Amazon API Gateway and AWS Lambda: True, serverless architecture reduces server maintenance and patching while enabling automatic scaling. The database uses Amazon DynamoDB's On-Demand Capacity: Correct, the On-Demand Capacity mode supports automatic scaling and is suitable for dynamic loads. Use Amazon CloudFront: Correct, CloudFront provides global content distribution and acceleration. This option fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 184,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有一個用於軟體工程的 AWS 帳戶。 AWS 帳戶可以透過一對 AWS Direct Connect 連線存取公司的本機資料中心。所有非 VPC 流量都會路由到虛擬專用網關。一個開發團隊最近透過控制臺創建了一個 AWS Lambda 函數。開發團隊需要允許該函數存取在公司資料中心的私有子網路中運行的資料庫。哪種解決方案可以滿足這些要求？",
+        "en": "A company has an AWS account used for software engineering. The AWS account has access to the company’s on-premises data center through a pair of AWS Direct Connect connections. All non-VPC traffic routes to the virtual private gateway. A development team recently created an AWS Lambda function through the console. The development team needs to allow the function to access a database that runs in a private subnet in the company’s data center. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Lambda 函數配置為在具有適當安全性群組的 VPC 中運行。",
+          "en": "Configure the Lambda function to run in the VPC with the appropriate security group."
+        },
+        "B": {
+          "zh": "設定從 AWS 到資料中心的 VPN 連線。透過 VPN 路由來自 Lambda 函數的流​​量。",
+          "en": "Set up a VPN connection from AWS to the data center. Route the traffic from the Lambda function through the VPN."
+        },
+        "C": {
+          "zh": "更新 VPC 中的路由表，以允許 Lambda 函數透過 Direct Connect 存取本機資料中心。",
+          "en": "Update the route tables in the VPC to allow the Lambda function to access the on-premises data center through Direct Connect."
+        },
+        "D": {
+          "zh": "建立彈性 IP 位址。配置 Lambda 函數以透過彈性 IP 位址傳送流量，而無需彈性網路介面。",
+          "en": "Create an Elastic IP address. Configure the Lambda function to send traffic through the Elastic IP address without an elastic network interface."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Lambda函數預設運行在AWS的託管環境中，無法直接存取VPC資源和本機資料。將 Lambda 函數設定為在 VPC 中執行並指派適當的安全性群組可確保其可透過 Direct Connect 存取本機資料中的資源。",
+          "en": "Correct. The Lambda function runs in the managed environment of AWS by default and cannot directly access VPC resources and local data. Configuring the Lambda function to run in a VPC and assigning the appropriate security group ensures that it can access resources in the local data through Direct Connect."
+        },
+        "B": {
+          "zh": "錯誤。標題已經提到公司使用AWS Direct Connect連接本地數據，因此無需設定額外的VPN連接。",
+          "en": "Incorrect. The title has mentioned that the company uses AWS Direct Connect to connect to local data, so there is no need to set up an additional VPN connection."
+        },
+        "C": {
+          "zh": "錯誤。雖然更新路由表是必要的，但僅更新路由表不足以讓 Lambda 函數存取 VPC 資源。 Lambda 函數必須在 VPC 中運作才能使用這些路由。",
+          "en": "Incorrect. Although updating the routing table is necessary, updating the routing table alone is not sufficient for the Lambda function to access VPC resources. Lambda functions must run in a VPC to use these routes."
+        },
+        "D": {
+          "zh": "錯誤。彈性 IP 位址與 Lambda 函數的網路存取無關。 Lambda 函數需要透過 VPC 和安全群組存取本機數據，而不是透過彈性 IP 位址。",
+          "en": "Incorrect. The Elastic IP address is not relevant for network access of the Lambda function. Lambda functions need to access local data through VPC and security groups, not through Elastic IP addresses."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將 Lambda 函數配置為在具有適當安全性群組的 VPC 中運行。",
+        "en": "A. Configure the Lambda function to run in the VPC with the appropriate security group."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (76%)； C (24%)。熱門討論與考點摘要：Lambda函數預設運行在AWS的託管環境中，無法直接存取VPC資源和本機資料。將 Lambda 函數設定為在 VPC 中執行並指派適當的安全性群組可確保其可透過 Direct Connect 存取本機資料中的資源。",
+        "en": "Community vote as displayed: A (76%); C (24%). Popular discussion and key point summary: The Lambda function runs in the managed environment of AWS by default and cannot directly access VPC resources and local data. Configuring the Lambda function to run in a VPC and assigning the appropriate security group ensures that it can access resources in the local data through Direct Connect."
+      }
+    },
+    {
+      "question_no": 185,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon ECS 運行應用程式。該應用程式創建原始圖像的調整大小版本，然後進行 Amazon S3 API 呼叫以將調整大小的圖像儲存在 Amazon S3 中。解決方案架構師如何確保應用程式有權存取 Amazon S3？",
+        "en": "A company runs an application using Amazon ECS. The application creates resized versions of an original image and then makes Amazon S3 API calls to store the resized images in Amazon S3. How can a solutions architect ensure that the application has permission to access Amazon S3?"
+      },
+      "options": {
+        "A": {
+          "zh": "更新 AWS IAM 中的 S3 角色以允許從 Amazon ECS 進行讀取/寫入訪問，然後重新啟動容器。",
+          "en": "Update the S3 role in AWS IAM to allow read/write access from Amazon ECS, and then relaunch the container."
+        },
+        "B": {
+          "zh": "建立具有 S3 權限的 IAM 角色，然後在任務定義中將該角色指定為 taskRoleArn。",
+          "en": "Create an IAM role with S3 permissions, and then specify that role as the taskRoleArn in the task definition."
+        },
+        "C": {
+          "zh": "建立一個允許從 Amazon ECS 存取 Amazon S3 的安全性群組，並更新 ECS 叢集使用的啟動配置。",
+          "en": "Create a security group that allows access from Amazon ECS to Amazon S3, and update the launch configuration used by the ECS cluster."
+        },
+        "D": {
+          "zh": "建立具有 S3 權限的 IAM 用戶，然後在以此帳戶登入時重新啟動 ECS 叢集的 Amazon EC2 執行個體。",
+          "en": "Create an IAM user with S3 permissions, and then relaunch the Amazon EC2 instances for the ECS cluster while logged in as this account."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。IAM 角色無法直接與 Amazon ECS 關聯。 IAM角色需要透過任務定義中的taskRoleArn屬性與任務綁定。",
+          "en": "Incorrect. IAM roles cannot be directly associated with Amazon ECS. The IAM role needs to be bound to the task through the taskRoleArn attribute in the task definition."
+        },
+        "B": {
+          "zh": "正確。這是最佳實踐。透過在任務定義中指定 taskRoleArn，ECS 任務可以使用該 IAM 角色來存取 Amazon S3。",
+          "en": "Correct. This is a best practice. By specifying taskRoleArn in the task definition, the ECS task can use that IAM role to access Amazon S3."
+        },
+        "C": {
+          "zh": "錯誤。安全群組用於控製網路流量，而不是權限管理。無法透過安全性群組授予 ECS 任務對 S3 的存取權限。",
+          "en": "Incorrect. Security groups are used to control network traffic, not permission management. Unable to grant ECS tasks access to S3 via security group."
+        },
+        "D": {
+          "zh": "錯誤。IAM 使用者是為人類使用者或應用程式設計的，而不是為 ECS 任務設計的。 ECS 任務應使用 IAM 角色而非 IAM 使用者。",
+          "en": "Incorrect. IAM users are designed for human users or applications, not for ECS tasks. ECS tasks should use IAM roles instead of IAM users."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立具有 S3 權限的 IAM 角色，然後在任務定義中將該角色指定為 taskRoleArn。",
+        "en": "B. Create an IAM role with S3 permissions, and then specify that role as the taskRoleArn in the task definition."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：這是最佳實踐。透過在任務定義中指定 taskRoleArn，ECS 任務可以使用該 IAM 角色來存取 Amazon S3。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: This is a best practice. By specifying taskRoleArn in the task definition, the ECS task can use that IAM role to access Amazon S3."
+      }
+    },
+    {
+      "question_no": 186,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個基於 Windows 的應用程序，必須遷移到 AWS。該應用程式需要使用附加到跨多個可用區部署的多個 Amazon EC2 Windows 執行個體的共用 Windows 檔案系統：解決方案架構師應該如何做才能滿足此要求？",
+        "en": "A company has a Windows-based application that must be migrated to AWS. The application requires the use of a shared Windows file system attached to multiple Amazon EC2 Windows instances that are deployed across multiple Availability Zone: What should a solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "在磁碟區閘道模式下設定 AWS Storage Gateway。將磁碟區載入到每個 Windows 執行個體。",
+          "en": "Configure AWS Storage Gateway in volume gateway mode. Mount the volume to each Windows instance."
+        },
+        "B": {
+          "zh": "設定 Amazon FSx for Windows File Server。將 Amazon FSx 檔案系統掛載到每個 Windows 執行個體。",
+          "en": "Configure Amazon FSx for Windows File Server. Mount the Amazon FSx file system to each Windows instance."
+        },
+        "C": {
+          "zh": "使用 Amazon Elastic File System (Amazon EFS) 設定檔系統。將 EFS 檔案系統掛載到每個 Windows 執行個體。",
+          "en": "Configure a file system by using Amazon Elastic File System (Amazon EFS). Mount the EFS file system to each Windows instance."
+        },
+        "D": {
+          "zh": "配置具有所需大小的 Amazon Elastic Block Store (Amazon EBS) 磁碟區。將每個 EC2 執行個體附加到磁碟區。將磁碟區內的檔案系統裝載到每個 Windows 執行個體。",
+          "en": "Configure an Amazon Elastic Block Store (Amazon EBS) volume with the required size. Attach each EC2 instance to the volume. Mount the file system within the volume to each Windows instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Storage Gateway 主要用於混合雲端場景，將本機儲存與 AWS 雲端儲存整合。它不適合直接作為跨多個可用區的共享檔案系統解決方案。此外，卷宗網關模式主要用於區塊存儲，而不是檔案系統共用。",
+          "en": "Incorrect. AWS Storage Gateway is mainly used in hybrid cloud scenarios to integrate local storage with AWS cloud storage. It is not suitable directly as a shared file system solution across multiple Availability Zones. Additionally, Volume Gateway mode is primarily used for block storage, not file system sharing."
+        },
+        "B": {
+          "zh": "正確。Amazon FSx for Windows File Server 是專為 Windows 環境設計的託管檔案系統服務。它支援SMB協議，可以提供跨多個可用區的共享檔案系統。完全滿足題目要求，支援Windows實例之間的檔案共用。",
+          "en": "Correct. Amazon FSx for Windows File Server is a managed file system service designed specifically for Windows environments. It supports the SMB protocol and can provide a shared file system across multiple availability zones. It fully meets the question requirements and supports file sharing between Windows instances."
+        },
+        "C": {
+          "zh": "錯誤。Amazon EFS 是專為 Linux 環境設計的檔案系統服務，不支援掛載 Windows 執行個體。因此，EFS無法滿足問題中Windows共享檔案系統的要求。",
+          "en": "Incorrect. Amazon EFS is a file system service designed for Linux environments and does not support mounting of Windows instances. Therefore, EFS cannot meet the requirements of the Windows shared file system in the question."
+        },
+        "D": {
+          "zh": "錯誤。Amazon EBS 是一種區塊儲存服務，不能直接用作共用檔案系統。一個EBS磁碟區只能掛載到一個EC2執行個體上，無法滿足多個執行個體共用檔案系統的需求。",
+          "en": "Incorrect. Amazon EBS is a block storage service and cannot be used directly as a shared file system. An EBS volume can only be mounted to one EC2 instance, which cannot meet the needs of multiple instances to share the file system."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 設定 Amazon FSx for Windows File Server。將 Amazon FSx 檔案系統掛載到每個 Windows 執行個體。",
+        "en": "B. Configure Amazon FSx for Windows File Server. Mount the Amazon FSx file system to each Windows instance."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：Amazon FSx for Windows File Server 是專為 Windows 環境設計的託管檔案系統服務。它支援SMB協議，可以提供跨多個可用區的共享檔案系統。完全滿足題目要求，支援Windows實例之間的檔案共用。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon FSx for Windows File Server is a managed file system service designed specifically for Windows environments. It supports the SMB protocol and can provide a shared file system across multiple availability zones. It fully meets the question requirements and supports file sharing between Windows instances."
+      }
+    },
+    {
+      "question_no": 187,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在開發一個電子商務應用程序，該應用程式由負載平衡前端、基於容器的應用程式和關聯式資料庫組成。解決方案架構師需要創建一個高度可用的解決方案，該解決方案在運行時需要盡可能少的手動幹預。哪些解決方案滿足這些要求？ （選兩個。）",
+        "en": "A company is developing an ecommerce application that will consist of a load-balanced front end, a container-based application, and a relational database. A solutions architect needs to create a highly available solution that operates with as little manual intervention as possible. Which solutions meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在多可用區模式下建立 Amazon RDS 資料庫執行個體。",
+          "en": "Create an Amazon RDS DB instance in Multi-AZ mode."
+        },
+        "B": {
+          "zh": "在另一個可用區中建立一個 Amazon RDS 資料庫執行個體和一個或多個副本。",
+          "en": "Create an Amazon RDS DB instance and one or more replicas in another Availability Zone."
+        },
+        "C": {
+          "zh": "建立基於 Amazon EC2 執行個體的 Docker 叢集來處理動態應用程式負載。",
+          "en": "Create an Amazon EC2 instance-based Docker cluster to handle the dynamic application load."
+        },
+        "D": {
+          "zh": "使用 Fargate 啟動類型建立 Amazon Elastic Container Service (Amazon ECS) 叢集來處理動態應用程式負載。",
+          "en": "Create an Amazon Elastic Container Service (Amazon ECS) cluster with a Fargate launch type to handle the dynamic application load."
+        },
+        "E": {
+          "zh": "使用 Amazon EC2 啟動類型建立 Amazon Elastic Container Service (Amazon ECS) 叢集來處理動態應用程式負載。",
+          "en": "Create an Amazon Elastic Container Service (Amazon ECS) cluster with an Amazon EC2 launch type to handle the dynamic application load."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Multi-AZ模型為資料庫提供了高可用和自動故障轉移功能，以高可用和最小的努力滿足了問題的要求。",
+          "en": "Correct. The Multi-AZ model provides high availability and automatic failover functions for the database, meeting the requirements of the question with high availability and minimal effort."
+        },
+        "B": {
+          "zh": "錯誤。雖然跨可用區的副本可以提高讀取效能，但它們不提供自動故障轉移，因此不能完全滿足高可用性要求。",
+          "en": "Incorrect. Although replicas across Availability Zones can improve read performance, they do not provide automatic failover and therefore do not fully meet high availability requirements."
+        },
+        "C": {
+          "zh": "錯誤。EC2執行個體需要主動管理與擴容，且不符合問題中「減容、主動防範」的要求。",
+          "en": "Incorrect. EC2 instances require active management and expansion, which does not meet the \"volume reduction and active precautions\" requirement of the question."
+        },
+        "D": {
+          "zh": "正確。Fargate 是一種無伺服器伺服器運行模型，自動管理公寓基礎設施，滿足高可用性和減少幹預的要求。",
+          "en": "Correct. Fargate is a serverless server running model that automatically manages the apartment infrastructure and meets the requirements of high availability and reduced intervention."
+        },
+        "E": {
+          "zh": "錯誤。EC2啟動類型需要主動管理實例，這不滿足問題的「卷減少幹預」要求。",
+          "en": "Incorrect. The EC2 startup type requires an active management instance, which does not meet the \"volume reduction intervention\" requirement of the question."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 在多可用區模式下建立 Amazon RDS 資料庫執行個體。；D. 使用 Fargate 啟動類型建立 Amazon Elastic Container Service (Amazon ECS) 叢集來處理動態應用程式負載。",
+        "en": "A. Create an Amazon RDS DB instance in Multi-AZ mode.; D. Create an Amazon Elastic Container Service (Amazon ECS) cluster with a Fargate launch type to handle the dynamic application load."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AD (100%)。熱門討論與考點摘要：Multi-AZ模型為資料庫提供了高可用和自動故障轉移功能，以高可用和最小的努力滿足了問題的要求。；Fargate 是一種無伺服器伺服器運行模型，自動管理公寓基礎設施，滿足高可用性和減少幹預的要求。",
+        "en": "Community vote as displayed: AD (100%). Popular discussion and key point summary: The Multi-AZ model provides high availability and automatic failover functions for the database, meeting the requirements of the question with high availability and minimal effort.; Fargate is a serverless server running model that automatically manages the apartment infrastructure and meets the requirements of high availability and reduced intervention."
+      }
+    },
+    {
+      "question_no": 188,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon S3 作為其資料湖。該公司有一個新的合作夥伴，必須使用 SFTP 上傳資料檔案。解決方案架構師需要實施高度可用的 SFTP 解決方案，以最大限度地減少營運開銷。哪種解決方案可以滿足這些要求？",
+        "en": "A company uses Amazon S3 as its data lake. The company has a new partner that must use SFTP to upload data files. A solutions architect needs to implement a highly available SFTP solution that minimizes operational overhead. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Transfer Family 設定具有可公開存取終端節點的支援 SFTP 的伺服器。選擇 S3 資料湖作為目標。",
+          "en": "Use AWS Transfer Family to configure an SFTP-enabled server with a publicly accessible endpoint. Choose the S3 data lake as the destination."
+        },
+        "B": {
+          "zh": "使用 Amazon S3 檔案閘道作為 SFTP 伺服器。向新合作夥伴公開 S3 檔案閘道端點 URL。與新合作夥伴共用 S3 檔案閘道端點。",
+          "en": "Use Amazon S3 File Gateway as an SFTP server. Expose the S3 File Gateway endpoint URL to the new partner. Share the S3 File Gateway endpoint with the new partner."
+        },
+        "C": {
+          "zh": "在 VPC 的私有子網路中啟動 Amazon EC2 執行個體。指示新合作夥伴使用 VPN 將檔案上傳到 EC2 執行個體。在 EC2 執行個體上執行 cron 作業腳本，將檔案上傳到 S3 資料湖。",
+          "en": "Launch an Amazon EC2 instance in a private subnet in a VPC. Instruct the new partner to upload files to the EC2 instance by using a VPN. Run a cron job script on the EC2 instance to upload files to the S3 data lake."
+        },
+        "D": {
+          "zh": "在 VPC 的私有子網路中啟動 Amazon EC2 執行個體。將網路負載平衡器 (NLB) 放置在 EC2 執行個體前面。為 NLB 建立 SFTP 偵聽器連接埠。與新合作夥伴共用 NLB 主機名稱。在 EC2 執行個體上執行 cron 作業腳本，將檔案上傳到 S3 資料湖。",
+          "en": "Launch Amazon EC2 instances in a private subnet in a VPC. Place a Network Load Balancer (NLB) in front of the EC2 instances. Create an SFTP listener port for the NLB. Share the NLB hostname with the new partner. Run a cron job script on the EC2 instances to upload files to the S3 data lake."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Transfer Family 是一項專門設計用於支援 SFTP、FTPS 和 FTP 協定的託管服務，並且可以直接與 Amazon S3 整合。提供高可用性，無需管理公寓級基礎設施，滿足「最小化運維開銷」的要求。可以配置可公開存取的端點以滿足合作夥伴的需求。",
+          "en": "Correct. AWS Transfer Family is a managed service specifically designed to support SFTP, FTPS, and FTP protocols and can integrate directly with Amazon S3. It provides high availability and does not require management of apartment-level infrastructure, meeting the requirement of \"minimizing operation and maintenance overhead\". A publicly accessible endpoint can be configured to meet partner needs."
+        },
+        "B": {
+          "zh": "錯誤。Amazon S3 檔案閘道是用於將本機檔案系統與 Amazon S3 整合的服務，但它不支援 SFTP 協定。無法直接使用 S3 檔案閘道作為 SFTP 伺服器。",
+          "en": "Incorrect. Amazon S3 File Gateway is a service for integrating local file systems with Amazon S3, but it does not support the SFTP protocol. Unable to use S3 File Gateway directly as an SFTP server."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以透過EC2實例實現SFTP功能，但需要設定和管理伺服器，增加了維運開銷。使用VPN增加了複雜性，不符合「最小化維運開銷」的要求。",
+          "en": "Incorrect. Although the SFTP function can be implemented through the EC2 instance, it requires configuring and managing the server, which increases operation and maintenance overhead. Using VPN adds complexity and does not meet the requirement of \"minimizing operation and maintenance overhead\"."
+        },
+        "D": {
+          "zh": "錯誤。雖然透過NLB和EC2可以實現高可用的SFTP解決方案，但需要主動管理多個EC2執行個體和負載平衡器，這增加了維運開銷。與AWS Transfer Family相比，此解決方案較為複雜，不符合「最小化維運開銷」的要求。",
+          "en": "Incorrect. Although a highly available SFTP solution can be achieved through NLB and EC2, multiple EC2 instances and load balancers need to be actively managed, which increases operation and maintenance overhead. Compared with AWS Transfer Family, this solution is complex and does not meet the requirement of \"minimizing operation and maintenance overhead\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Transfer Family 設定具有可公開存取終端節點的支援 SFTP 的伺服器。選擇 S3 資料湖作為目標。",
+        "en": "A. Use AWS Transfer Family to configure an SFTP-enabled server with a publicly accessible endpoint. Choose the S3 data lake as the destination."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：AWS Transfer Family 是一項專門設計用於支援 SFTP、FTPS 和 FTP 協定的託管服務，並且可以直接與 Amazon S3 整合。提供高可用性，無需管理公寓級基礎設施，滿足「最小化運維開銷」的要求。可以配置可公開存取的端點以滿足合作夥伴的需求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Transfer Family is a managed service specifically designed to support SFTP, FTPS, and FTP protocols and can integrate directly with Amazon S3. It provides high availability and does not require management of apartment-level infrastructure, meeting the requirement of \"minimizing operation and maintenance overhead\". A publicly accessible endpoint can be configured to meet partner needs."
+      }
+    },
+    {
+      "question_no": 189,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要儲存合約文件。合約期限為 5 年。 5年內，公司必須確保文件不會被覆蓋或刪除。該公司需要對靜態文件進行加密，並每年自動輪換加密金鑰。解決方案架構師應採取哪種步驟組合才能以最少的營運開銷滿足這些要求？ （選兩個。）",
+        "en": "A company needs to store contract documents. A contract lasts for 5 years. During the 5-year period, the company must ensure that the documents cannot be overwritten or deleted. The company needs to encrypt the documents at rest and rotate the encryption keys automatically every year. Which combination of steps should a solutions architect take to meet these requirements with the LEAST operational overhead? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將文件儲存在 Amazon S3 中。在治理模式下使用 S3 物件鎖。",
+          "en": "Store the documents in Amazon S3. Use S3 Object Lock in governance mode."
+        },
+        "B": {
+          "zh": "將文件儲存在 Amazon S3 中。在合規模式下使用 S3 物件鎖定。",
+          "en": "Store the documents in Amazon S3. Use S3 Object Lock in compliance mode."
+        },
+        "C": {
+          "zh": "使用具有 Amazon S3 託管加密金鑰 (SSE-S3) 的伺服器端加密。配置密鑰輪換。",
+          "en": "Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Configure key rotation."
+        },
+        "D": {
+          "zh": "透過 AWS Key Management Service (AWS KMS) 用戶管理的金鑰使用伺服器端加密。配置密鑰輪換。",
+          "en": "Use server-side encryption with AWS Key Management Service (AWS KMS) customer managed keys. Configure key rotation."
+        },
+        "E": {
+          "zh": "透過 AWS Key Management Service (AWS KMS) 客戶提供（導入）的金鑰使用伺服器端加密。配置密鑰輪換。",
+          "en": "Use server-side encryption with AWS Key Management Service (AWS KMS) customer provided (imported) keys. Configure key rotation."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。治理模式允許管理員繞過鎖定規則，這不符合問題所要求的「確保檔案不能被覆蓋或刪除」的嚴格合規性要求。因此這個選項是錯誤的。",
+          "en": "Incorrect. Governance mode allows administrators to bypass locking rules, which does not meet the strict compliance requirement of \"ensuring files cannot be overwritten or deleted\" required by the question. Therefore this option is wrong."
+        },
+        "B": {
+          "zh": "正確。合規模式可確保檔案無法被覆寫或刪除，甚至管理員也無法繞過鎖定規則。此選項符合題目要求，是。",
+          "en": "Correct. Compliance mode ensures that files cannot be overwritten or deleted, and even administrators cannot bypass locking rules. This option meets the question requirements and is."
+        },
+        "C": {
+          "zh": "錯誤。SSE-S3 使用 Amazon S3 管理的加密金鑰，但不支援使用者控制的金鑰輪換。問題要求每年自動輪換加密金鑰，所以這個選項是。",
+          "en": "Incorrect. SSE-S3 uses Amazon S3-managed encryption keys, but it does not support user-controlled key rotation. The question requires automatic rotation of encryption keys every year, so this option is."
+        },
+        "D": {
+          "zh": "正確。旋轉。 AWS KMS 客戶管理的金鑰支援自動金鑰輪換，滿足問題要求。這個選項是。",
+          "en": "Correct. rotation. AWS KMS customer-managed keys support automatic key rotation, which meets the question requirements. This option is."
+        },
+        "E": {
+          "zh": "錯誤。配置金鑰輪換。客戶提供的密鑰需要手動管理密鑰輪換，不支援自動輪換。題目要求自動輪換加密金鑰，所以這個選項是。",
+          "en": "Incorrect. Configure key rotation. Customer-provided keys require manual management of key rotation and automatic rotation is not supported. The question requires automatic rotation of encryption keys, so this option is."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "B. 將文件儲存在 Amazon S3 中。在合規模式下使用 S3 物件鎖定。；D. 透過 AWS Key Management Service (AWS KMS) 用戶管理的金鑰使用伺服器端加密。配置密鑰輪換。",
+        "en": "B. Store the documents in Amazon S3. Use S3 Object Lock in compliance mode.; D. Use server-side encryption with AWS Key Management Service (AWS KMS) customer managed keys. Configure key rotation."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BD (79%)； BC (20%)。熱門討論與考點摘要：合規模式可確保檔案無法被覆寫或刪除，甚至管理員也無法繞過鎖定規則。此選項符合題目要求，是。；旋轉。 AWS KMS 客戶管理的金鑰支援自動金鑰輪換，滿足問題要求。這個選項是。",
+        "en": "Community vote as displayed: BD (79%); BC (20%). Popular discussion and key point summary: Compliance mode ensures that files cannot be overwritten or deleted, and even administrators cannot bypass locking rules. This option meets the question requirements and is.; rotation. AWS KMS customer-managed keys support automatic key rotation, which meets the question requirements. This option is."
+      }
+    },
+    {
+      "question_no": 190,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個基於 Java 和 PHP 的 Web 應用程式。該公司計劃將應用程式從本地遷移到 AWS。該公司需要能夠經常測試新網站功能。該公司還需要一個高度可用且託管的解決方案，並且需要最小的營運開銷。哪種解決方案可以滿足這些要求？",
+        "en": "A company has a web application that is based on Java and PHP. The company plans to move the application from on premises to AWS. The company needs the ability to test new site features frequently. The company also needs a highly available and managed solution that requires minimum operational overhead. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon S3 儲存桶。在 S3 儲存桶上啟用靜態 Web 託管。將靜態內容上傳到 S3 儲存桶。使用 AWS Lambda 處理所有動態內容。",
+          "en": "Create an Amazon S3 bucket. Enable static web hosting on the S3 bucket. Upload the static content to the S3 bucket. Use AWS Lambda to process all dynamic content."
+        },
+        "B": {
+          "zh": "將 Web 應用程式部署到 AWS Elastic Beanstalk 環境。使用 URL 交換在多個 Elastic Beanstalk 環境之間切換以進行功能測試。",
+          "en": "Deploy the web application to an AWS Elastic Beanstalk environment. Use URL swapping to switch between multiple Elastic Beanstalk environments for feature testing."
+        },
+        "C": {
+          "zh": "將 Web 應用程式部署到使用 Java 和 PHP 配置的 Amazon EC2 執行個體。使用 Auto Scaling 群組和 Application Load Balancer 來管理網站的可用性。",
+          "en": "Deploy the web application to Amazon EC2 instances that are configured with Java and PHP. Use Auto Scaling groups and an Application Load Balancer to manage the website’s availability."
+        },
+        "D": {
+          "zh": "將 Web 應用程式容器化。將 Web 應用程式部署到 Amazon EC2 執行個體。使用 AWS 負載平衡器控制器在包含新站點功能的容器之間動態路由流量以進行測試。",
+          "en": "Containerize the web application. Deploy the web application to Amazon EC2 instances. Use the AWS Load Balancer Controller to dynamically route traffic between containers that contain the new site features for testing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。本質分析：Amazon S3適合託管靜態網站，但本題的應用是基於Java和PHP的動態網站，S3無法直接支援動態內容。雖然使用AWS Lambda處理動態內容是可行的，但會增加開發複雜性，且不符合「最小營運開銷」的要求。結論：這個選項是錯的。",
+          "en": "Incorrect. ness analysis: Amazon S3 is suitable for hosting static websites, but the application in this question is a dynamic website based on Java and PHP, and S3 cannot directly support dynamic content. Although using AWS Lambda to process dynamic content is feasible, it will increase development complexity and does not meet the \"minimum operational overhead\" requirement. Conclusion: This option is wrong."
+        },
+        "B": {
+          "zh": "正確。本質分析：AWS Elastic Beanstalk是一項託管服務，支援Java和PHP應用程序，可自動處理部署、負載平衡和擴展，並滿足「最低營運開銷」的要求。 URL交換功能可在多個環境之間快速切換，滿足頻繁測試新功能的需求。結論：這個選項是。",
+          "en": "Correct. ness analysis: AWS Elastic Beanstalk is a managed service that supports Java and PHP applications, can automatically handle deployment, load balancing and scaling, and meets the requirements of \"minimum operational overhead\". The URL exchange function allows quick switching between multiple environments to meet the needs of frequent testing of new features. Conclusion: This option is."
+        },
+        "C": {
+          "zh": "錯誤。分析：雖然EC2實例可以支援Java和PHP應用，且Auto Scaling和ALB可以提供高可用性，但需要手動管理執行個體配置和部署，增加了營運開銷。結論：這個選項是錯的。",
+          "en": "Incorrect. ness analysis: Although EC2 instances can support Java and PHP applications, and Auto Scaling and ALB can provide high availability, manual management of instance configuration and deployment is required, increasing operational overhead. Conclusion: This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。分析：容器化部署需要額外的容器管理工具（如EKS或ECS），而手動管理EC2執行個體和容器會增加營運開銷。雖然可以動態路由流量進行測試，但複雜度較高，不符合「最小營運開銷」的要求。結論：這個選項是錯的。",
+          "en": "Incorrect. ness analysis: Containerized deployment requires additional container management tools (such as EKS or ECS), and manual management of EC2 instances and containers increases operational overhead. Although traffic can be dynamically routed for testing, the complexity is high and does not meet the \"minimum operational overhead\" requirement. Conclusion: This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 將 Web 應用程式部署到 AWS Elastic Beanstalk 環境。使用 URL 交換在多個 Elastic Beanstalk 環境之間切換以進行功能測試。",
+        "en": "B. Deploy the web application to an AWS Elastic Beanstalk environment. Use URL swapping to switch between multiple Elastic Beanstalk environments for feature testing."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (94%)。熱門討論與考點摘要：本質分析：AWS Elastic Beanstalk是一項託管服務，支援Java和PHP應用程序，可自動處理部署、負載平衡和擴展，並滿足「最低營運開銷」的要求。 URL交換功能可在多個環境之間快速切換，滿足頻繁測試新功能的需求。結論：這個選項是。",
+        "en": "Community vote as displayed: B (94%). Popular discussion and key point summary: ness analysis: AWS Elastic Beanstalk is a managed service that supports Java and PHP applications, can automatically handle deployment, load balancing and scaling, and meets the requirements of \"minimum operational overhead\". The URL exchange function allows quick switching between multiple environments to meet the needs of frequent testing of new features. Conclusion: This option is."
+      }
+    },
+    {
+      "question_no": 191,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個訂購應用程序，該應用程式將客戶資訊儲存在 Amazon RDS for MySQL 中。在正常工作時間內，員工會出於報告目的執行一次性查詢。訂單處理期間發生逾時，因為報表查詢需要很長時間才能運行。公司需要在不阻止員工執行查詢的情況下消除逾時。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company has an ordering application that stores customer information in Amazon RDS for MySQL. During regular business hours, employees run one-time queries for reporting purposes. Timeouts are occurring during order processing because the reporting queries are taking a long time to run. The company needs to eliminate the timeouts without preventing employees from performing queries. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立唯讀副本。將報表查詢移至唯讀副本。",
+          "en": "Create a read replica. Move reporting queries to the read replica."
+        },
+        "B": {
+          "zh": "建立唯讀副本。將排序應用程式分發到主資料庫執行個體和唯讀副本。",
+          "en": "Create a read replica. Distribute the ordering application to the primary DB instance and the read replica."
+        },
+        "C": {
+          "zh": "將訂購應用程式移轉到具有按需容量的 Amazon DynamoDB。",
+          "en": "Migrate the ordering application to Amazon DynamoDB with on-demand capacity."
+        },
+        "D": {
+          "zh": "安排非尖峰時段的報告查詢。",
+          "en": "Schedule the reporting queries for non-peak hours."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。建立唯讀副本可以有效分擔主資料庫實例的讀取壓力。將報表查詢移至唯讀副本可防止主執行個體因高查詢負載而逾時。這是解決讀寫分離問題的最佳實踐。",
+          "en": "Correct. Creating a read replica can effectively share the read pressure of the primary database instance. Moving reporting queries to the read replica prevents the primary instance from timing out due to high query load. This is a best practice for solving read-write separation issues."
+        },
+        "B": {
+          "zh": "錯誤。只讀副本是唯讀的，無法處理寫入。訂閱應用程式需要寫入數據，因此無法指派給唯讀副本。該選項不滿足實際需求。",
+          "en": "Incorrect. The read replica is read-only and cannot handle writes. Subscribing application programs require writing data and therefore cannot be assigned to read replicas. This option does not meet actual needs."
+        },
+        "C": {
+          "zh": "錯誤。儘管 DynamoDB 是高效能 NoSQL 資料庫，但遷移到 DynamoDB 需要對應用程式進行重大變更。問題沒有提到需要改變資料庫類型，所以這個選項不符合要求。",
+          "en": "Incorrect. Although DynamoDB is a high-performance NoSQL database, migrating to DynamoDB requires significant changes to the application program. The question does not mention the need to change the database type, so this option does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。雖然安排查詢在非尖峰時段運行可以減輕主實例的壓力，但它並不能完全解決問題。員工可能需要隨時執行查詢，因此該選項無法滿足需求。",
+          "en": "Incorrect. While scheduling queries to run during off-peak hours can reduce stress on the master instance, it does not completely solve the problem. Employees may need to run queries at any time, so this option does not meet the needs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立唯讀副本。將報表查詢移至唯讀副本。",
+        "en": "A. Create a read replica. Move reporting queries to the read replica."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：建立唯讀副本可以有效分擔主資料庫實例的讀取壓力。將報表查詢移至唯讀副本可防止主執行個體因高查詢負載而逾時。這是解決讀寫分離問題的最佳實踐。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Creating a read replica can effectively share the read pressure of the primary database instance. Moving reporting queries to the read replica prevents the primary instance from timing out due to high query load. This is a best practice for solving read-write separation issues."
+      }
+    },
+    {
+      "question_no": 192,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家醫院想要為其大量歷史書面記錄建立數位副本。醫院每天將繼續增加數百份新文件。醫院的數據團隊將掃描文件並將文件上傳到AWS雲端。解決方案架構師必須實作一個解決方案來分析文件、提取醫療資訊並儲存文檔，以便應用程式可以對資料執行 SQL 查詢。此解決方案必須最大限度地提高可擴展性和營運效率。解決方案架構師應該採取哪些步驟組合來滿足這些要求？ （選兩個。）",
+        "en": "A hospital wants to create digital copies for its large collection of historical written records. The hospital will continue to add hundreds of new documents each day. The hospital’s data team will scan the documents and will upload the documents to the AWS Cloud. A solutions architect must implement a solution to analyze the documents, extract the medical information, and store the documents so that an application can run SQL queries on the data. The solution must maximize scalability and operational efficiency. Which combination of steps should the solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將文件資訊寫入執行 MySQL 資料庫的 Amazon EC2 執行個體。",
+          "en": "Write the document information to an Amazon EC2 instance that runs a MySQL database."
+        },
+        "B": {
+          "zh": "將文件資訊寫入 Amazon S3 儲存桶。使用 Amazon Athena 查詢資料。",
+          "en": "Write the document information to an Amazon S3 bucket. Use Amazon Athena to query the data."
+        },
+        "C": {
+          "zh": "建立 Amazon EC2 執行個體的 Auto Scaling 群組以執行處理掃描檔案並擷取醫療資訊的自訂應用程式。",
+          "en": "Create an Auto Scaling group of Amazon EC2 instances to run a custom application that processes the scanned files and extracts the medical information."
+        },
+        "D": {
+          "zh": "建立一個在上傳新文件時執行的 AWS Lambda 函數。使用 Amazon Rekognition 將文件轉換為原始文字。使用 Amazon Transcribe Medical 從文本中檢測並提取相關醫療資訊。",
+          "en": "Create an AWS Lambda function that runs when new documents are uploaded. Use Amazon Rekognition to convert the documents to raw text. Use Amazon Transcribe Medical to detect and extract relevant medical information from the text."
+        },
+        "E": {
+          "zh": "建立一個在上傳新文件時執行的 AWS Lambda 函數。使用 Amazon Textract 將文件轉換為原始文字。使用 Amazon Comprehend Medical 從文字中偵測並提取相關醫療資訊。",
+          "en": "Create an AWS Lambda function that runs when new documents are uploaded. Use Amazon Textract to convert the documents to raw text. Use Amazon Comprehend Medical to detect and extract relevant medical information from the text."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用EC2執行個體執行MySQL資料庫不符合「最大化可擴充性和運作效率」的要求。 EC2需要人工管理，而MySQL在處理大規模資料時可能不如S3和Athena有效率。",
+          "en": "Incorrect. Using an EC2 instance to run a MySQL database does not meet the requirements of \"maximizing scalability and operational efficiency\". EC2 requires manual management, and MySQL may not be as efficient as S3 and Athena when handling large-scale data."
+        },
+        "B": {
+          "zh": "正確。Amazon S3 提供高可擴展性和低成本存儲，適合儲存大量文件。 Amazon Athena可以直接查詢S3中儲存的數據，支援SQL查詢，滿足提問要求。",
+          "en": "Correct. Amazon S3 provides high scalability and low-cost storage, suitable for storing large amounts of documents. Amazon Athena can directly query data stored in S3, supports SQL query, and meets the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。使用EC2實例運行自訂應用程式需要手動管理和維護，增加了操作複雜度，不符合「營運效率最大化」的要求。",
+          "en": "Incorrect. Using EC2 instances to run custom applications requires manual management and maintenance, which increases operational complexity and does not meet the requirement of \"maximizing operational efficiency\"."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Rekognition 主要用於影像和視訊分析，不適合文件文字擷取。 Amazon Transcribe Medical 用於語音轉錄，不適合從文件中提取醫療資訊。",
+          "en": "Incorrect. Amazon Rekognition is mainly used for image and video analysis and is not suitable for document text extraction. Amazon Transcribe Medical is used for speech transcription and is not suitable for extracting medical information from documents."
+        },
+        "E": {
+          "zh": "正確。AWS Lambda 可以自動觸發上傳文件的處理，Amazon Textract 可以從文件中提取文本，Amazon Comprehend Medical 可以從文本中提取醫療信息，滿足問題的要求。",
+          "en": "Correct. AWS Lambda can automatically trigger processing of uploaded documents, Amazon Textract can extract text from documents, and Amazon Comprehend Medical can extract medical information from text, which meets the requirements of the question."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 將文件資訊寫入 Amazon S3 儲存桶。使用 Amazon Athena 查詢資料。；E. 建立一個在上傳新文件時執行的 AWS Lambda 函數。使用 Amazon Textract 將文件轉換為原始文字。使用 Amazon Comprehend Medical 從文字中偵測並提取相關醫療資訊。",
+        "en": "B. Write the document information to an Amazon S3 bucket. Use Amazon Athena to query the data.; E. Create an AWS Lambda function that runs when new documents are uploaded. Use Amazon Textract to convert the documents to raw text. Use Amazon Comprehend Medical to detect and extract relevant medical information from the text."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BE (100%)。熱門討論與考點摘要：Amazon S3 提供高可擴展性和低成本存儲，適合儲存大量文件。 Amazon Athena可以直接查詢S3中儲存的數據，支援SQL查詢，滿足提問要求。；AWS Lambda 可以自動觸發上傳文件的處理，Amazon Textract 可以從文件中提取文本，Amazon Comprehend Medical 可以從文本中提取醫療信息，滿足問題的要求。",
+        "en": "Community vote as displayed: BE (100%). Popular discussion and key point summary: Amazon S3 provides high scalability and low-cost storage, suitable for storing large amounts of documents. Amazon Athena can directly query data stored in S3, supports SQL query, and meets the question requirements.; AWS Lambda can automatically trigger processing of uploaded documents, Amazon Textract can extract text from documents, and Amazon Comprehend Medical can extract medical information from text, which meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 193,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 Amazon EC2 執行個體上執行批次應用程式。該應用程式由具有多個 Amazon RDS 資料庫的後端組成。該應用程式導致對資料庫的大量讀取。解決方案架構師必須減少資料庫讀取次數，同時確保高可用性。解決方案架構師應該做什麼來滿足這個要求？",
+        "en": "A company is running a batch application on Amazon EC2 instances. The application consists of a backend with multiple Amazon RDS databases. The application is causing a high number of reads on the databases. A solutions architect must reduce the number of database reads while ensuring high availability. What should the solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "新增 Amazon RDS 唯讀副本。",
+          "en": "Add Amazon RDS read replicas."
+        },
+        "B": {
+          "zh": "使用 Amazon ElastiCache for Redis。",
+          "en": "Use Amazon ElastiCache for Redis."
+        },
+        "C": {
+          "zh": "使用 Amazon Route 53 DNS 緩存",
+          "en": "Use Amazon Route 53 DNS caching"
+        },
+        "D": {
+          "zh": "使用 Amazon ElastiCache for Memcached。",
+          "en": "Use Amazon ElastiCache for Memcached."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon RDS 唯讀副本可以有效降低主資料庫的讀取壓力，同時提供高可用性。只讀副本專門設計用於處理高讀取負載場景。滿足問題的要求：減少資料庫讀取次數，確保高可用。",
+          "en": "Correct. Amazon RDS read replicas can effectively reduce the read pressure on the primary database while providing high availability. Read replicas are specifically designed to handle high read load scenarios. Meet the requirements of the question: reduce the number of database reads and ensure high availability."
+        },
+        "B": {
+          "zh": "錯誤。雖然Redis可以作為快取層來減輕資料庫讀取壓力，但問題中並沒有提到應用程式支援Redis或需要複雜的快取邏輯。 Redis適用於需要高效能快取的場景，但它並不會直接提供資料庫的高可用功能。",
+          "en": "Incorrect. Although Redis can be used as a caching layer to reduce database read pressure, the question does not mention that the application supports Redis or requires complex caching logic. Redis is suitable for scenarios that require high-performance caching, but it does not directly provide the high-availability function of the database."
+        },
+        "C": {
+          "zh": "錯誤。Route 53 DNS快取主要用於優化網域名稱解析速度，與減少資料庫讀取次數無關。不符合問題要求：無法直接解決資料庫讀取壓力問題。",
+          "en": "Incorrect. Route 53 DNS cache is mainly used to optimize domain name resolution speed and has nothing to do with reducing the number of database reads. Does not meet the requirements of the question: it cannot directly solve the problem of database reading pressure."
+        },
+        "D": {
+          "zh": "錯誤。Memcached與Redis類似，可以作為快取層，減輕資料庫讀取壓力，但問題中沒有提到應用程式支援Memcached。 Memcached也不直接提供資料庫的高可用功能。",
+          "en": "Incorrect. Memcached is similar to Redis and can be used as a cache layer to reduce database reading pressure, but the question does not mention that the application supports Memcached. Memcached also does not directly provide the high availability functionality of the database."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 新增 Amazon RDS 唯讀副本。",
+        "en": "A. Add Amazon RDS read replicas."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (60%)； B (40%)。熱門討論與考點摘要：Amazon RDS 唯讀副本可以有效降低主資料庫的讀取壓力，同時提供高可用性。只讀副本專門設計用於處理高讀取負載場景。滿足問題的要求：減少資料庫讀取次數，確保高可用。",
+        "en": "Community vote as displayed: A (60%); B (40%). Popular discussion and key point summary: Amazon RDS read replicas can effectively reduce the read pressure on the primary database while providing high availability. Read replicas are specifically designed to handle high read load scenarios. Meet the requirements of the question: reduce the number of database reads and ensure high availability."
+      }
+    },
+    {
+      "question_no": 194,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司需要在 AWS 上執行關鍵應用程式。該公司需要使用 Amazon EC2 作為應用程式的資料庫。資料庫必須具有高可用性，並且在發生破壞性事件時必須自動進行故障轉移。哪種解決方案可以滿足這些要求？",
+        "en": "A company needs to run a critical application on AWS. The company needs to use Amazon EC2 for the application’s database. The database must be highly available and must fail over automatically if a disruptive event occurs. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "啟動兩個 EC2 實例，每個執行個體位於同一 AWS 區域的不同可用區。在兩個 EC2 執行個體上安裝資料庫。將 EC2 執行個體配置為叢集。設定資料庫複製。",
+          "en": "Launch two EC2 instances, each in a different Availability Zone in the same AWS Region. Install the database on both EC2 instances. Configure the EC2 instances as a cluster. Set up database replication."
+        },
+        "B": {
+          "zh": "在可用區中啟動 EC2 執行個體。在 EC2 執行個體上安裝資料庫。使用 Amazon 系統映像 (AMI) 備份資料。如果發生中斷事件，使用 AWS CloudFormation 自動預置 EC2 執行個體。",
+          "en": "Launch an EC2 instance in an Availability Zone. Install the database on the EC2 instance. Use an Amazon Machine Image (AMI) to back up the data. Use AWS CloudFormation to automate provisioning of the EC2 instance if a disruptive event occurs."
+        },
+        "C": {
+          "zh": "啟動兩個 EC2 實例，每個執行個體位於不同的 AWS 區域。在兩個 EC2 執行個體上安裝資料庫。設定資料庫複製。將資料庫故障轉移到第二個區域。",
+          "en": "Launch two EC2 instances, each in a different AWS Region. Install the database on both EC2 instances. Set up database replication. Fail over the database to a second Region."
+        },
+        "D": {
+          "zh": "在可用區中啟動 EC2 執行個體。在 EC2 執行個體上安裝資料庫。使用 Amazon 系統映像 (AMI) 備份資料。如果發生中斷事件，使用 EC2 自動復原來復原執行個體。",
+          "en": "Launch an EC2 instance in an Availability Zone. Install the database on the EC2 instance. Use an Amazon Machine Image (AMI) to back up the data. Use EC2 automatic recovery to recover the instance if a disruptive event occurs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。此選項符合高可用性要求，因為它在同一區域的不同可用區中間託管兩個 EC2 實例，並設定資料庫複製和叢集配置。這樣可以確保當一個可用區發生故障時，另一可用區的執行個體仍能順利運作。",
+          "en": "Correct. This option meets high availability requirements because it hosts two EC2 instances in the middle of different Availability Zones in the same region and sets up database replication and cluster configuration. This ensures that if one Availability Zone fails, instances in another Availability Zone can run smoothly."
+        },
+        "B": {
+          "zh": "錯誤。此選項僅在可用區中間配置 EC2 實例，且不提供跨可用區的高可用性。雖然使用 AMI 和 CloudFormation 可以實現快速恢復，但這不是自動故障轉移，也不能滿足高可用性要求。",
+          "en": "Incorrect. This option only provisions an EC2 instance in the middle of an Availability Zone and does not provide high availability across Availability Zones. While fast recovery is possible using AMIs and CloudFormation, this is not an automatic failover and does not meet high availability requirements."
+        },
+        "C": {
+          "zh": "錯誤。雖然跨區域複製可以提供災難恢復，但它並不是一個高可用性解決方案。跨區域故障轉移通常需要人工幹預，且延遲較高，因此自動故障轉移並不能滿足問題的要求。",
+          "en": "Incorrect. Although cross-region replication can provide disaster recovery, it is not a high-availability solution. Cross-region failover usually requires manual intervention and has high latency, so automatic failover does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。EC2自動復原僅適用於特定執行個體的故障（例如硬體故障），不適用於特定於可用區的故障。此外，此選項不具有跨可用區元件，無法滿足高可用性要求。",
+          "en": "Incorrect. EC2 automatic recovery only applies to instance-specific faults (such as hardware failures), not availability zone-specific faults. Additionally, this option does not have cross-Availability Zone components and cannot meet high availability requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 啟動兩個 EC2 實例，每個執行個體位於同一 AWS 區域的不同可用區。在兩個 EC2 執行個體上安裝資料庫。將 EC2 執行個體配置為叢集。設定資料庫複製。",
+        "en": "A. Launch two EC2 instances, each in a different Availability Zone in the same AWS Region. Install the database on both EC2 instances. Configure the EC2 instances as a cluster. Set up database replication."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (63%)； C (37%)。熱門討論與考點摘要：此選項符合高可用性要求，因為它在同一區域的不同可用區中間託管兩個 EC2 實例，並設定資料庫複製和叢集配置。這樣可以確保當一個可用區發生故障時，另一可用區的執行個體仍能順利運作。",
+        "en": "Community vote as displayed: A (63%); C (37%). Popular discussion and key point summary: This option meets high availability requirements because it hosts two EC2 instances in the middle of different Availability Zones in the same region and sets up database replication and cluster configuration. This ensures that if one Availability Zone fails, instances in another Availability Zone can run smoothly."
+      }
+    },
+    {
+      "question_no": 195,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司的訂單系統將客戶端的請求傳送至 Amazon EC2 執行個體。 EC2 執行個體處理訂單，然後將訂單儲存在 Amazon RDS 上的資料庫中。用戶報告說，當系統出現故障時，他們必須重新處理訂單。該公司需要一種彈性解決方案，能夠在系統發生故障時自動處理訂單。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company’s order system sends requests from clients to Amazon EC2 instances. The EC2 instances process the orders and then store the orders in a database on Amazon RDS. Users report that they must reprocess orders when the system fails. The company wants a resilient solution that can process orders automatically if a system outage occurs. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 EC2 執行個體移至 Auto Scaling 組中。建立 Amazon EventBridge (Amazon CloudWatch Events) 規則以定位 Amazon Elastic Container Service (Amazon ECS) 任務。",
+          "en": "Move the EC2 instances into an Auto Scaling group. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to target an Amazon Elastic Container Service (Amazon ECS) task."
+        },
+        "B": {
+          "zh": "將 EC2 執行個體移至應用程式負載平衡器 (ALB) 後面的 Auto Scaling 群組中。更新訂單系統以將訊息傳送到 ALB 端點。",
+          "en": "Move the EC2 instances into an Auto Scaling group behind an Application Load Balancer (ALB). Update the order system to send messages to the ALB endpoint."
+        },
+        "C": {
+          "zh": "將 EC2 執行個體移至 Auto Scaling 組中。配置訂單系統以將訊息傳送至 Amazon Simple Queue Service (Amazon SQS) 佇列。配置 EC2 執行個體以使用佇列中的消息。",
+          "en": "Move the EC2 instances into an Auto Scaling group. Configure the order system to send messages to an Amazon Simple Queue Service (Amazon SQS) queue. Configure the EC2 instances to consume messages from the queue."
+        },
+        "D": {
+          "zh": "建立 Amazon Simple Notification Service (Amazon SNS) 主題。建立 AWS Lambda 函數，並將該函數訂閱 SNS 主題。配置訂單系統以向 SNS 主題發送訊息。使用 AWS Systems Manager Run Command 向 EC2 執行個體傳送命令以處理訊息。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic. Create an AWS Lambda function, and subscribe the function to the SNS topic. Configure the order system to send messages to the SNS topic. Send a command to the EC2 instances to process the messages by using AWS Systems Manager Run Command."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。以 Amazon Elastic Container Service (Amazon ECS) 任務為目標。分析：將 EC2 執行個體移至 Auto Scaling 群中是正確的，因為它提供了彈性和高可用性。使用EventBridge和ECS任務不適合解決訂單垃圾郵件的訊息處理問題。 EventBridge主要用在事件驅動架構中，使用ECS任務並沒有明確解決訊息持久化的問題。此選項沒有提及如何處理訊息持久化和重試機制，因此不符合要求。結論：錯誤。",
+          "en": "Incorrect. to target an Amazon Elastic Container Service (Amazon ECS) task. Analysis: Moving EC2 instances into an Auto Scaling swarm is correct because it provides resiliency and high availability. Using EventBridge and ECS tasks is not suitable for solving the message processing problem of order spam. EventBridge is mainly used in event-driven architecture, and the use of ECS tasks does not explicitly solve the problem of message persistence. This option makes no mention of how message persistence and retry mechanisms are handled, and therefore does not meet the requirements. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。系統將訊息傳送到 ALB 端點。分析：將 EC2 執行個體移至 Auto Scaling 群組是正確的做法，因為它提供了彈性和高可用性。使用 ALB 作為訊息傳遞的入口點不適合特定於訂單的需求。 ALB主要用於處理HTTP/HTTPS請求，不是訊息佇列的功能。此選項沒有解決訊息的持久化問題，也沒有提供重試機制，因此不符合要求。結論：錯誤。",
+          "en": "Incorrect. system to send messages to the ALB endpoint. Analysis: Moving EC2 instances into an Auto Scaling group is the right thing to do because it provides resiliency and high availability. Using ALB as the entry point for messaging is not suitable for order-specific needs. ALB is mainly used to process HTTP/HTTPS requests and is not a function of the message queue. This option does not address the persistence of messages or provide a retry mechanism, so it does not meet the requirements. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "正確。隊列服務 (Amazon SQS) 隊列。配置 EC2 實例以使用隊列中的消息。分析：將 EC2 執行個體移至 Auto Scaling 群組是正確的做法，因為它提供了彈性和高可用性。使用 Amazon SQS 佇列可確保訊息持久性並提供重試機制，適合處理訂單中斷。 EC2執行個體可以消費來自SQS佇列的訊息，確保即使伺服器發生故障，訊息仍可被處理。結論：。",
+          "en": "Correct. Queue Service (Amazon SQS) queue. Configure the EC2 instances to consume messages from the queue. Analysis: Moving the EC2 instances into an Auto Scaling group is the right thing to do because it provides resiliency and high availability. Using Amazon SQS queues ensures message durability and provides a retry mechanism, suitable for handling order interruptions. EC2 instances can consume messages from SQS queues, ensuring that even if a server fails, messages can still be processed. Conclusion:."
+        },
+        "D": {
+          "zh": "錯誤。功能到SNS主題。配置訂單系統以向 SNS 主題發送訊息。透過 Systems Manager Run Command 向 EC2 執行個體傳送命令處理訊息的方法較為複雜，不適合訂單處理需求。此選項不解決訊息的持久性問題，因此不滿足要求。結論：錯誤。",
+          "en": "Incorrect. function to the SNS topic. Configure the order system to send messages to the SNS topic. The method of sending command processing messages to EC2 instances through Systems Manager Run Command is complex and not suitable for order processing needs. This option does not address the persistence of messages and therefore does not meet the requirements. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將 EC2 執行個體移至 Auto Scaling 組中。配置訂單系統以將訊息傳送至 Amazon Simple Queue Service (Amazon SQS) 佇列。配置 EC2 執行個體以使用佇列中的消息。",
+        "en": "C. Move the EC2 instances into an Auto Scaling group. Configure the order system to send messages to an Amazon Simple Queue Service (Amazon SQS) queue. Configure the EC2 instances to consume messages from the queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (97%)。熱門討論與考點摘要：隊列服務 (Amazon SQS) 隊列。配置 EC2 實例以使用隊列中的消息。分析：將 EC2 執行個體移至 Auto Scaling 群組是正確的做法，因為它提供了彈性和高可用性。使用 Amazon SQS 佇列可確保訊息持久性並提供重試機制，適合處理訂單中斷。 EC2執行個體可以消費來自SQS佇列的訊息，確保即使伺服器發生故障，訊息仍可被處理。結論：。",
+        "en": "Community vote as displayed: C (97%). Popular discussion and key point summary: Queue Service (Amazon SQS) queue. Configure the EC2 instances to consume messages from the queue. Analysis: Moving the EC2 instances into an Auto Scaling group is the right thing to do because it provides resiliency and high availability. Using Amazon SQS queues ensures message durability and provides a retry mechanism, suitable for handling order interruptions. EC2 instances can consume messages from SQS queues, ensuring that even if a server fails, messages can still be processed. Conclusion:."
+      }
+    }
+  ]
+}

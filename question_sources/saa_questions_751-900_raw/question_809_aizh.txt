@@ -1,0 +1,68 @@
+Question #809
+A company uses an AWS Batch job to run its end-of-day sales process. The company needs a serverless solution that will invoke a
+third-party reporting application when the AWS Batch job is successful. The reporting application has an HTTP API interface that
+uses username and password authentication.
+Which solution will meet these requirements?
+一家公司使用AWS Batch作业运行其日终销售流程。该公司需要一个无服务器解决方案，当AWS Batch作业成功时，能够调用一个
+第三方报告应用程序。该报告应用程序具有使用用户名和密码认证的HTTP API接口。
+哪种解决方案可以满足这些需求？
+A. Configure an Amazon EventBridge rule to match incoming AWS Batch job SUCCEEDED events. Configure the third-party API
+as an EventBridge API destination with a username and password. Set the API destination as the EventBridge rule target.
+Most Voted
+配置一个Amazon EventBridge规则以匹配传入的AWS Batch作业SUCCEEDED事件。将第三方API配置为EventBridge API目标，并
+使用用户名和密码进行认证。将API目标设置为EventBridge规则的目标。
+B. Configure Amazon EventBridge Scheduler to match incoming AWS Batch job SUCCEEDED events. Configure an AWS Lambda
+function to invoke the third-party API by using a username and password. Set the Lambda function as the EventBridge rule
+target.
+配置Amazon EventBridge Scheduler以匹配传入的AWS Batch作业SUCCEEDED事件。配置一个AWS Lambda函数，通过使用用户
+名和密码调用第三方API。将Lambda函数设置为EventBridge规则的目标。
+C. Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure an HTTP
+proxy integration on the API Gateway REST API to invoke the third-party API by using a username and password.
+配置一个AWS Batch作业以将作业SUCCEEDED事件发布到一个Amazon API Gateway REST API。配置一个HTTP代理集成到API
+Gateway REST API，以使用用户名和密码调用第三方API。
+D. Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure a proxy
+integration on the API Gateway REST API to an AWS Lambda function. Configure the Lambda function to invoke the third-party
+API by using a username and password.
+配置一个AWS Batch作业以将作业SUCCEEDED事件发布到一个Amazon API Gateway REST API。配置一个代理集成到API
+Gateway REST API以连接到一个AWS Lambda函数。配置Lambda函数以使用用户名和密码调用第三方API。
+Correct Answer: A
+正确答案：A
+题目分析与解答
+1. 考察的知识点
+Amazon EventBridge的规则配置与事件处理能力。
+EventBridge API目标的使用，包括如何配置API目标并进行身份验证。
+如何实现无服务器架构以集成第三方API。
+2. 选项分析
+A. Configure an Amazon EventBridge rule to match incoming AWS Batch job SUCCEEDED events. Configure the third-
+party API as an EventBridge API destination with a username and password. Set the API destination as the EventBridge
+rule target.
+正确：EventBridge可以直接配置API目标，并支持通过用户名和密码进行身份验证。这种方法是无服务器的，并且直接满足题目要
+求。
+EventBridge规则可以监听AWS Batch的SUCCEEDED事件，并将事件发送到配置的API目标。
+B. Configure Amazon EventBridge Scheduler to match incoming AWS Batch job SUCCEEDED events. Configure an AWS
+Lambda function to invoke the third-party API by using a username and password. Set the Lambda function as the
+EventBridge rule target.
+错误：EventBridge Scheduler用于定时任务，而不是监听事件。题目要求监听AWS Batch的SUCCEEDED事件，因此使用Scheduler不
+符合要求。
+虽然Lambda可以调用第三方API，但这增加了额外的复杂性，不是最优解。
+C. Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure an
+HTTP proxy integration on the API Gateway REST API to invoke the third-party API by using a username and password.
+错误：AWS Batch无法直接发布事件到API Gateway。需要额外的配置来实现事件的传递。
+虽然HTTP代理集成可以调用第三方API，但这种方法需要更多的配置，并且不符合无服务器的最佳实践。
+D. Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure a proxy
+integration on the API Gateway REST API to an AWS Lambda function. Configure the Lambda function to invoke the third-
+party API by using a username and password.
+错误：同样，AWS Batch无法直接发布事件到API Gateway。
+这种方法增加了额外的复杂性，需要配置API Gateway和Lambda，且不符合题目要求的直接无服务器解决方案。
+3. 我的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致。
+理由：选项A直接使用EventBridge API目标，符合题目要求的无服务器解决方案，并且支持用户名和密码认证。
+Community vote distribution
+社区投票分布
+A (65%)
+B (26%)
+9%

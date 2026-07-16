@@ -1,0 +1,66 @@
+Question #618
+A company wants to use Amazon FSx for Windows File Server for its Amazon EC2 instances that have an SMB file share mounted
+as a volume in the us-east-1 Region. The company has a recovery point objective (RPO) of 5 minutes for planned system
+maintenance or unplanned service disruptions. The company needs to replicate the file system to the us-west-2 Region. The
+replicated data must not be deleted by any user for 5 years.
+Which solution will meet these requirements?
+一家公司希望为其位于 us-east-1 区域的 Amazon EC2 实例使用 Amazon FSx for Windows File Server，该实例具有作为卷挂载的
+SMB 文件共享。该公司在计划的系统维护或意外的服务中断情况下，具有 5 分钟的恢复点目标 (RPO)。公司需要将文件系统复制到
+us-west-2 区域。复制的数据必须在 5 年内不能被任何用户删除。
+哪种解决方案可以满足这些要求？
+A. Create an FSx for Windows File Server file system in us-east-1 that has a Single-AZ 2 deployment type. Use AWS Backup to
+create a daily backup plan that includes a backup rule that copies the backup to us-west-2. Configure AWS Backup Vault Lock
+in compliance mode for a target vault in us-west-2. Configure a minimum duration of 5 years.
+在 us-east-1 创建一个具有 Single-AZ 2 部署类型的 FSx for Windows File Server 文件系统。使用 AWS Backup 创建一个每日备
+份计划，其中包含将备份复制到 us-west-2 的备份规则。在 us-west-2 的目标保管库中以合规模式配置 AWS Backup Vault
+Lock。配置最短期限为 5 年。
+B. Create an FSx for Windows File Server file system in us-east-1 that has a Multi-AZ deployment type. Use AWS Backup to
+create a daily backup plan that includes a backup rule that copies the backup to us-west-2. Configure AWS Backup Vault Lock
+in governance mode for a target vault in us-west-2. Configure a minimum duration of 5 years.
+在 us-east-1 创建一个具有 Multi-AZ 部署类型的 FSx for Windows File Server 文件系统。使用 AWS Backup 创建一个每日备份计
+划，其中包含将备份复制到 us-west-2 的备份规则。在 us-west-2 的目标保管库中以治理模式配置 AWS Backup Vault Lock。配
+置最短期限为 5 年。
+C. Create an FSx for Windows File Server file system in us-east-1 that has a Multi-AZ deployment type. Use AWS Backup to
+create a daily backup plan that includes a backup rule that copies the backup to us-west-2. Configure AWS Backup Vault Lock
+in compliance mode for a target vault in us-west-2. Configure a minimum duration of 5 years. Most Voted
+在 us-east-1 创建一个具有 Multi-AZ 部署类型的 FSx for Windows File Server 文件系统。使用 AWS Backup 创建一个每日备份计
+划，其中包含将备份复制到 us-west-2 的备份规则。在 us-west-2 的目标保管库中以合规模式配置 AWS Backup Vault Lock。配
+置最短期限为 5 年。
+D. Create an FSx for Windows File Server file system in us-east-1 that has a Single-AZ 2 deployment type. Use AWS Backup to
+create a daily backup plan that includes a backup rule that copies the backup to us-west-2. Configure AWS Backup Vault Lock
+in governance mode for a target vault in us-west-2. Configure a minimum duration of 5 years.
+在 us-east-1 创建一个具有 Single-AZ 2 部署类型的 FSx for Windows File Server 文件系统。使用 AWS Backup 创建一个每日备
+份计划，其中包含将备份复制到 us-west-2 的备份规则。在 us-west-2 的目标保管库中以治理模式配置 AWS Backup Vault
+Lock。配置最短期限为 5 年。
+题目分析与解答
+1. 考察的知识点
+Amazon FSx for Windows File Server的部署类型（Single-AZ vs Multi-AZ）。
+AWS Backup的跨区域备份功能。
+AWS Backup Vault Lock的模式（Compliance Mode vs Governance Mode）。
+数据保留策略和恢复点目标（RPO）。
+2. 选项分析
+A. 错误
+使用了Single-AZ 2部署类型，这种部署类型无法提供高可用性，可能无法满足RPO为5分钟的要求。
+虽然使用了AWS Backup和Backup Vault Lock的合规模式，但高可用性是关键要求，Single-AZ部署不适合。
+B. 错误
+使用了Multi-AZ部署类型，这种部署类型提供高可用性，满足RPO要求。
+但是Backup Vault Lock使用了治理模式，而题目要求数据不能被删除，治理模式允许管理员修改或删除数据，不符合要求。
+C. 正确
+使用了Multi-AZ部署类型，提供高可用性，满足RPO为5分钟的要求。
+使用了AWS Backup和Backup Vault Lock的合规模式，确保数据不能被删除，符合5年保留要求。
+D. 错误
+使用了Single-AZ 2部署类型，无法提供高可用性，可能无法满足RPO为5分钟的要求。
+Backup Vault Lock使用了治理模式，不符合数据不可删除的要求。
+3. 我选的答案
+C
+4. 官方答案
+C
+5. 与官方答案比较
+我的答案与官方答案一致。
+理由：选项C满足所有题目要求，包括高可用性（Multi-AZ）、跨区域备份、数据不可删除（Compliance Mode）、以及5年数据保
+留策略。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (100%)

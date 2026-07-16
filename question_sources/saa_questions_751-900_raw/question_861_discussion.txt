@@ -1,0 +1,58 @@
+A company wants to relocate its on-premises MySQL database to AWS. The database accepts regular imports from a client-facing
+application, which causes a high volume of write operations. The company is concerned that the amount of traffic might be
+causing performance issues within the application.
+How should a solutions architect design the architecture on AWS?
+A. Provision an Amazon RDS for MySQL DB instance with Provisioned IOPS SSD storage. Monitor write operation metrics by
+using Amazon CloudWatch. Adjust the provisioned IOPS if necessary. Most Voted
+B. Provision an Amazon RDS for MySQL DB instance with General Purpose SSD storage. Place an Amazon ElastiCache cluster in
+front of the DB instance. Configure the application to query ElastiCache instead.
+C. Provision an Amazon DocumentDB (with MongoDB compatibility) instance with a memory optimized instance type. Monitor
+Amazon CloudWatch for performance-related issues. Change the instance class if necessary.
+D. Provision an Amazon Elastic File System (Amazon EFS) file system in General Purpose performance mode. Monitor Amazon
+CloudWatch for IOPS bottlenecks. Change to Provisioned Throughput performance mode if necessary.
+Comments
+Hkayne Highly Voted 2 years, 1 month ago
+Selected Answer: A
+A or B. Can't be B because there is high volume of write no need for Elasticache
+upvoted 7 times
+GOTJ Most Recent 1 year, 3 months ago
+Selected Answer: B
+Even though option "A" makes sense, everybody discarding option "B" is focusing on improving the import process performance itself by using
+ElastiCache, which is basically correct. However, there is not a clear indicator that the “client-facing application” ONLY performs high volumes of write
+operations. In fact, this can be pointless (a “write only” database?).
+In my opinion, the main concern of the company is how THE REST of the application processes might be affected while this write-intensive
+operations run in the database. And those operations surely includes reads.
+Using an ElastiCache in front of the RDB instance or creating a read replica to redirect reads to might help with performance of THE REST of
+application when write-intensive imports processes are executing, as the query result might be cached.
+My vote goes to “B”
+upvoted 1 times
+KennethNg923 1 year, 12 months ago
+Selected Answer: A
+high volume of write operation -> Provisioned IOPS SSD storage
+upvoted 3 times
+Scheldon 2 years ago
+Selected Answer: A
+Answer A
+For sure we cannot choose generar purpose IOPS SSD hence I would choos provisioned one. addtionally it is a good idea to monitor performance
+with CloudWatch and adjust setup(provisioned IOPS) if there will be a need.
+upvoted 4 times
+Correct Answer: A
+Community vote distribution
+A (82%)
+B (18%)
+sandordini 2 years, 1 month ago
+Selected Answer: B
+The most effective strategy for coping with that limit is to supplement disk-based databases with in-memory caching (Elasticache for Redis, Write-
+through strategy) I'd go for B...
+upvoted 3 times
+JA2018 1 year, 6 months ago
+why I would not choose #B? While ElastiCache can be used for caching read-heavy workloads, it's not the best choice for a database with high write
+operations as it is primarily designed for fast reads from a cache.
+upvoted 1 times
+Mr_Marcus 2 years ago
+If it were changes to existing data, maybe. The scenario specifically says data imports. Going with "A".
+upvoted 2 times
+Tanidanindo 2 years, 2 months ago
+Selected Answer: A
+Amazon RDS for MySQL DB instance with Provisioned IOPS SSD storage
+upvoted 4 times

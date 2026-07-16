@@ -1,0 +1,51 @@
+Question #231
+An application runs on an Amazon EC2 instance that has an Elastic IP address in VPC A. The application requires access to a
+database in VPC B. Both VPCs are in the same AWS account.
+Which solution will provide the required access MOST securely?
+一个应用程序运行在具有弹性 IP 地址的 VPC A 中的 Amazon EC2 实例上。该应用程序需要访问 VPC B 中的数据库。两个 VPC 都在
+同一个 AWS 账户中。
+哪种解决方案将最安全地提供所需的访问？
+A. Create a DB instance security group that allows all traffic from the public IP address of the application server in VPC A.
+创建一个允许来自 VPC A 中应用服务器的公共 IP 地址的所有流量的 DB 实例安全组。
+B. Configure a VPC peering connection between VPC A and VPC B. Most Voted
+配置 VPC A 和 VPC B 之间的 VPC 对等连接。
+C. Make the DB instance publicly accessible. Assign a public IP address to the DB instance.
+使 DB 实例可公开访问。为 DB 实例分配一个公共 IP 地址。
+D. Launch an EC2 instance with an Elastic IP address into VPC B. Proxy all requests through the new EC2 instance.
+在 VPC B 中启动一个具有弹性 IP 地址的 EC2 实例。通过新的 EC2 实例代理所有请求。
+题目分析与解答
+1. 考察的知识点
+VPC网络连接：如何在不同VPC之间安全地通信。
+安全性：选择最安全的解决方案以保护数据和资源。
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (91%)
+9%
+VPC Peering：VPC之间的私有连接。
+2. 选项分析
+A. 创建一个允许来自 VPC A 中应用服务器的公共 IP 地址的所有流量的 DB 实例安全组。
+错误原因：
+使用公共IP地址进行通信会暴露资源，降低安全性。
+安全组规则允许所有流量，可能导致不必要的安全风险。
+B. 配置 VPC A 和 VPC B 之间的 VPC 对等连接。
+正确原因：
+VPC Peering允许两个VPC之间的私有通信，无需通过公共互联网。
+这种方式最安全，因为流量保持在AWS网络内部。
+可以通过安全组进一步限制访问权限。
+C. 使 DB 实例可公开访问。为 DB 实例分配一个公共 IP 地址。
+错误原因：
+将数据库公开访问会暴露在互联网中，存在安全风险。
+不符合“最安全”的要求。
+D. 在 VPC B 中启动一个具有弹性 IP 地址的 EC2 实例。通过新的 EC2 实例代理所有请求。
+错误原因：
+虽然可以通过代理实现访问，但增加了额外的复杂性和成本。
+使用弹性IP地址仍然涉及公共互联网通信，降低了安全性。
+3. 我选的答案
+B. 配置 VPC A 和 VPC B 之间的 VPC 对等连接。
+4. 官方答案
+B. 配置 VPC A 和 VPC B 之间的 VPC 对等连接。
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：VPC Peering是最安全、最直接的解决方案，符合题目要求。

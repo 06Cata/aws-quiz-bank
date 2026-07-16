@@ -1,0 +1,122 @@
+A company is deploying a new public web application to AWS. The application will run behind an Application Load Balancer (ALB).
+The application needs to be encrypted at the edge with an SSL/TLS certificate that is issued by an external certificate authority
+(CA). The certificate must be rotated each year before the certificate expires.
+What should a solutions architect do to meet these requirements?
+A. Use AWS Certificate Manager (ACM) to issue an SSL/TLS certificate. Apply the certificate to the ALB. Use the managed
+renewal feature to automatically rotate the certificate.
+B. Use AWS Certificate Manager (ACM) to issue an SSL/TLS certificate. Import the key material from the certificate. Apply the
+certificate to the ALUse the managed renewal feature to automatically rotate the certificate.
+C. Use AWS Certificate Manager (ACM) Private Certificate Authority to issue an SSL/TLS certificate from the root CA. Apply the
+certificate to the ALB. Use the managed renewal feature to automatically rotate the certificate.
+D. Use AWS Certificate Manager (ACM) to import an SSL/TLS certificate. Apply the certificate to the ALB. Use Amazon
+EventBridge (Amazon CloudWatch Events) to send a notification when the certificate is nearing expiration. Rotate the
+certificate manually. Most Voted
+Comments
+Sinaneos Highly Voted 3 years, 7 months ago
+Selected Answer: D
+It's a third-party certificate, hence AWS cannot manage renewal automatically. The closest thing you can do is to send a notification to renew the 3rd
+party certificate.
+upvoted 64 times
+mabotega Highly Voted 3 years, 7 months ago
+Selected Answer: D
+It is D, because ACM does not manage the renewal process for imported certificates. You are responsible for monitoring the expiration date of your
+imported certificates and for renewing them before they expire.
+Check this question on the link below:
+Q: What types of certificates can I create and manage with ACM?
+https://www.amazonaws.cn/en/certificate-manager/faqs/#Managed_renewal_and_deployment
+upvoted 22 times
+Clouddon Most Recent 11 months, 1 week ago
+Selected Answer: D
+Since the certificate is from an external CA:
+You import it into ACM.
+Apply it to the ALB.
+Set up EventBridge notifications to alert before expiration.
+You must manually rotate it each year.
+upvoted 2 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: D
+D is the most appropriate. C seems like it might work, but the word "Private"makes it ineligible answer.
+Although I would say is to have ACM renew the public cetificate automatically per the renewal method supported:
+https://www.amazonaws.cn/en/certificate-manager/faqs/#Managed_renewal_and_deployment
+Correct Answer: D
+Community vote distribution
+D (94%)
+6%
+Thanks @mabotega for the link to the doc.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: D
+Since the certificate is external it needs to be imported and thus D is the most suitable option.
+upvoted 1 times
+MrAnhQuan 1 year, 5 months ago
+Selected Answer: D
+It's D, because ACM doesn't manage the renewal process for imported certificates.
+upvoted 2 times
+Tjazz04 1 year, 6 months ago
+Selected Answer: D
+Ans. D
+Keyword: issued by an external certificate authority
+ACM cannot rotate certificate automatically if from external CA.
+upvoted 3 times
+PaulGa 1 year, 9 months ago
+Selected Answer: D
+Ans D - hint: we're importing the certificate "...Use AWS Certificate Manager (ACM) to import an SSL/TLS certificate"
+upvoted 3 times
+Anji195 2 years, 4 months ago
+Yes it’s D. Here is a clear explanation.
+Imported certificates – If you want to use a third-party certificate with Amazon CloudFront, Elastic Load Balancing, or Amazon API Gateway, you may
+import it into ACM using the AWS Management Console, AWS CLI, or ACM APIs. ACM can not renew imported certificates, but it can help you
+manage the renewal process. You are responsible for monitoring the expiration date of your imported certificates and for renewing them before they
+expire. You can use ACM CloudWatch metrics to monitor the expiration dates of an imported certificates and import a new third-party certificate to
+replace an expiring one.
+https://www.amazonaws.cn/en/certificate-manager/faqs/#Managed_renewal_and_deployment
+upvoted 5 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+"certificate that is issued by an external certificate authority (CA)"
+AB will create a new certificate in AWS
+C will also create a new certificate but this is not what PCA are for *=(https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html)
+D: Import the certificate is correct answer
+upvoted 1 times
+1Alpha1 2 years, 5 months ago
+Selected Answer: D
+D - "External CA" --> 'Update Manually'
+upvoted 1 times
+xdkonorek2 2 years, 7 months ago
+Selected Answer: A
+internal CA are typically trusted only within the organization unless you manually distribute and trust the root certificate elsewhere
+external CA:
+Certificates from a well-known external CA are trusted by most browsers and systems by default
+https://docs.aws.amazon.com/acm/latest/userguide/acm-certificate.html
+"Public certificates that you request through ACM are obtained from Amazon Trust Services, an Amazon managed public certificate authority (CA). ...
+Any browser, application, or OS that includes the Amazon or Starfield roots will trust public certificates obtained from ACM."
+The answer is A, different story if they said external certificate
+upvoted 3 times
+Ruffyit 2 years, 7 months ago
+: What types of certificates can I create and manage with ACM?
+https://www.amazonaws.cn/en/certificate-manager/faqs/#Managed_renewal_and_deployment
+upvoted 1 times
+est3la21 2 years, 9 months ago
+answer is D
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: D
+The key points are:
+Obtain certificate from external CA, not ACM
+Import the external certificate into ACM
+Apply imported certificate to the ALB
+Set up EventBridge rule to trigger notification on certificate expiration
+Manually renew and rotate the external certificate each year.
+upvoted 2 times
+miki111 2 years, 10 months ago
+Option D is the right answer.
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+D: With this approach, you import the third-party certificate into ACM, which allows you to centrally manage and apply it to the ALB. By configuring
+CloudWatch Events, you can receive notifications when the certificate is close to expiring, prompting you to manually initiate the rotation process.
+A & B: These options assume that the SSL/TLS certificate can be issued directly by ACM. However, since the requirement specifies that the certificate
+should be issued by an external certificate authority (CA), this option is not suitable.
+C: ACM Private Certificate Authority is used when you want to create your own private CA and issue certificates from it. It does not support
+certificates issued by external CAs. Therefore, this option is not suitable for the given requirement.
+upvoted 3 times

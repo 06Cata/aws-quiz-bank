@@ -1,0 +1,86 @@
+A company plans to use Amazon ElastiCache for its multi-tier web application. A solutions architect creates a Cache VPC for the
+ElastiCache cluster and an App VPC for the application’s Amazon EC2 instances. Both VPCs are in the us-east-1 Region.
+The solutions architect must implement a solution to provide the application’s EC2 instances with access to the ElastiCache cluster.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure
+an inbound rule for the ElastiCache cluster’s security group to allow inbound connection from the application’s security group.
+Most Voted
+B. Create a Transit VPC. Update the VPC route tables in the Cache VPC and the App VPC to route traffic through the Transit
+VPC. Configure an inbound rule for the ElastiCache cluster's security group to allow inbound connection from the application’s
+security group.
+C. Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure
+an inbound rule for the peering connection’s security group to allow inbound connection from the application’s security
+group.
+D. Create a Transit VPC. Update the VPC route tables in the Cache VPC and the App VPC to route traffic through the Transit
+VPC. Configure an inbound rule for the Transit VPC’s security group to allow inbound connection from the application’s
+security group.
+Comments
+mhmt4438 Highly Voted 2 years, 4 months ago
+Selected Answer: A
+A. Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for
+the ElastiCache cluster’s security group to allow inbound connection from the application’s security group.
+Creating a peering connection between the VPCs allows the application's EC2 instances to communicate with the ElastiCache cluster directly and
+efficiently. This is the most cost-effective solution as it does not involve creating additional resources such as a Transit VPC, and it does not incur
+additional costs for traffic passing through the Transit VPC. Additionally, it is also more secure as it allows you to configure a more restrictive security
+group rule to allow inbound connection from only the application's security group.
+upvoted 17 times
+Ruffyit Most Recent 1 year, 7 months ago
+A. Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for
+the ElastiCache cluster’s security group to allow inbound connection from the application’s security group.
+Creating a peering connection between the VPCs allows the application's EC2 instances to communicate with the ElastiCache cluster directly and
+efficiently. This is the most cost-effective solution as it does not involve creating additional resources such as a Transit VPC, and it does not incur
+additional costs for traffic passing through the Transit VPC. Additionally, it is also more secure as it allows you to configure a more restrictive security
+group rule to allow inbound connection from only the application's security group.
+upvoted 3 times
+TariqKipkemei 1 year, 8 months ago
+Selected Answer: A
+Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for the
+ElastiCache cluster’s security group to allow inbound connection from the application’s security group.
+upvoted 2 times
+Correct Answer: A
+Community vote distribution
+A (100%)
+Guru4Cloud 1 year, 9 months ago
+Selected Answer: A
+Create a VPC peering connection between the Cache VPC and App VPC. This allows private IP connectivity between the VPCs.
+Add route table entries in each VPC to route traffic destined to the other VPC via the peering connection. This enables network routing.
+Configure security groups to allow inbound connections from the application instances to the ElastiCache cluster.
+upvoted 2 times
+cookieMr 1 year, 11 months ago
+Selected Answer: A
+Creating a peering connection between the VPCs is a cost-effective way to establish connectivity. By adding a route table entry for the peering
+connection in both VPCs, traffic can flow between them. Configuring an inbound rule in the ElastiCache cluster's security group allows inbound
+connections from the application's security group, enabling access to the ElastiCache cluster from the EC2 instances in the App VPC.
+Option B suggests creating a Transit VPC, which adds unnecessary complexity and cost for this scenario.
+Option C suggests configuring an inbound rule for the peering connection's security group, which is not necessary as the security group for the
+ElastiCache cluster should be used to control inbound connections.
+Option D suggests configuring an inbound rule for the Transit VPC's security group, which is not needed in this case and adds unnecessary
+complexity.
+Therefore, option A is the most cost-effective solution to provide the application's EC2 instances with access to the ElastiCache cluster.
+upvoted 4 times
+smartegnine 1 year, 12 months ago
+Selected Answer: A
+A is correct,
+1. VPC transit is used for more complex architecture and can do VPCs to VPCs connectivity. But for simple VPC 2 VPC can use peer connection.
+2.To enable private IPv4 traffic between instances in peered VPCs, you must add a route to the route tables associated with the subnets for both
+instances.
+So base on 1, B and D are out, base on 2 C is out
+upvoted 2 times
+wRhlH 2 years ago
+Why not C ? any explanation?
+upvoted 1 times
+smartegnine 1 year, 11 months ago
+Application read from ElasticCache, not viseversa, so inbound rule should be ElasticCach
+upvoted 3 times
+Cor5in 1 year, 11 months ago
+Thank you Sir!
+upvoted 1 times
+smartegnine 1 year, 12 months ago
+To enable private IPv4 traffic between instances in peered VPCs, you must add a route to the route tables associated with the subnets for both
+instances.
+https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html
+upvoted 3 times
+nder 2 years, 3 months ago
+Selected Answer: A
+Cost Effectively!
+upvoted 2 times

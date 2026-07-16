@@ -1,0 +1,59 @@
+Question #881
+A company is hosting a high-traffic static website on Amazon S3 with an Amazon CloudFront distribution that has a default TTL of
+0 seconds. The company wants to implement caching to improve performance for the website. However, the company also wants
+to ensure that stale content is not served for more than a few minutes after a deployment.
+Which combination of caching methods should a solutions architect implement to meet these requirements? (Choose two.)
+一家公司正在通过 Amazon S3 托管一个高流量的静态网站，并使用一个默认 TTL 为 0 秒的 Amazon CloudFront 分发。该公司希望
+实施缓存以提高网站性能。然而，公司还希望确保在部署后，过期内容不会被提供超过几分钟。
+解决方案架构师应该实施哪些缓存方法组合以满足这些要求？（选择两个）
+A. Set the CloudFront default TTL to 2 minutes. Most Voted
+将 CloudFront 默认 TTL 设置为 2 分钟。
+B. Set a default TTL of 2 minutes on the S3 bucket.
+在 S3 bucket 上设置默认 TTL 为 2 分钟。
+C. Add a Cache-Control private directive to the objects in Amazon S3.
+向 Amazon S3 中的对象添加 Cache-Control private 指令。
+D. Create an AWS Lambda@Edge function to add an Expires header to HTTP responses. Configure the function to run on
+viewer response.
+创建一个 AWS Lambda@Edge 函数以向 HTTP 响应添加 Expires 头。配置该函数在 viewer response 时运行。
+E. Add a Cache-Control max-age directive of 24 hours to the objects in Amazon S3. On deployment, create a CloudFront
+invalidation to clear any changed files from edge caches. Most Voted
+向 Amazon S3 中的对象添加 Cache-Control max-age 指令，设置为 24 小时。在部署时，创建一个 CloudFront invalidation 来
+清除边缘缓存中的任何已更改文件。
+Correct Answer: AE
+正确答案：AE
+Community vote distribution
+社区投票分布
+AE (52%)
+AC (42%)
+2%
+题目分析与解答
+1. 考察的知识点
+Amazon S3 和 Amazon CloudFront 的集成使用。
+缓存策略的配置，包括 TTL 和 Cache-Control 指令。
+如何通过 CloudFront invalidation 清除缓存。
+使用 Cache-Control 和 Expires 头来控制内容的缓存行为。
+2. 选项分析
+A. Set the CloudFront default TTL to 2 minutes.
+正确：将 CloudFront 的默认 TTL 设置为 2 分钟可以确保内容在边缘位置缓存一段时间，从而提高性能。
+同时，TTL 的设置较短（2 分钟）可以减少 stale 内容的时间，符合题目要求。
+B. Set a default TTL of 2 minutes on the S3 bucket.
+错误：S3 本身不支持直接设置 TTL。TTL 是 CloudFront 的功能，而不是 S3 的功能。
+C. Add a Cache-Control private directive to the objects in Amazon S3.
+错误：Cache-Control private 指令会告诉缓存服务器不要缓存内容，这与题目要求的“实现缓存以提高性能”相矛盾。
+D. Create an AWS Lambda@Edge function to add an Expires header to HTTP responses. Configure the function to run on
+viewer response.
+错误：虽然可以通过 Lambda@Edge 添加 Expires 头，但这会增加复杂性，且题目没有明确要求使用 Lambda@Edge。
+E. Add a Cache-Control max-age directive of 24 hours to the objects in Amazon S3. On deployment, create a CloudFront
+invalidation to clear any changed files from edge caches.
+正确：Cache-Control max-age 指令可以设置对象的缓存时间为 24 小时，从而提高性能。
+通过 CloudFront invalidation，可以在部署时清除已更改的文件，确保 stale 内容不会被长时间缓存。
+3. 我选的答案
+A
+E
+4. 官方答案
+A
+E
+5. 与官方答案的比较
+我的答案与官方答案一致。
+没有需要重新思考的地方。
+嬄信: " Examtopics "

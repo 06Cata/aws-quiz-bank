@@ -1,0 +1,127 @@
+A company wants to build a web application on AWS. Client access requests to the website are not predictable and can be idle for
+a long time. Only customers who have paid a subscription fee can have the ability to sign in and use the web application.
+Which combination of steps will meet these requirements MOST cost-effectively? (Choose three.)
+A. Create an AWS Lambda function to retrieve user information from Amazon DynamoDB. Create an Amazon API Gateway
+endpoint to accept RESTful APIs. Send the API calls to the Lambda function. Most Voted
+B. Create an Amazon Elastic Container Service (Amazon ECS) service behind an Application Load Balancer to retrieve user
+information from Amazon RDS. Create an Amazon API Gateway endpoint to accept RESTful APIs. Send the API calls to the
+Lambda function.
+C. Create an Amazon Cognito user pool to authenticate users. Most Voted
+D. Create an Amazon Cognito identity pool to authenticate users.
+E. Use AWS Amplify to serve the frontend web content with HTML, CSS, and JS. Use an integrated Amazon CloudFront
+configuration. Most Voted
+F. Use Amazon S3 static web hosting with PHP, CSS, and JS. Use Amazon CloudFront to serve the frontend web content.
+Comments
+manOfThePeople Highly Voted 2 years, 9 months ago
+If in doubt between E or F. S3 doesn't support server-side scripts, PHP is a server-side script.
+The answer is ACE.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html
+upvoted 22 times
+msdnpro Highly Voted 2 years, 11 months ago
+Selected Answer: ACE
+Option B (Amazon ECS) is not the best option since the website "can be idle for a long time", so Lambda (Option A) is a more cost-effective choice.
+Option D is incorrect because User pools are for authentication (identity verification) while Identity pools are for authorization (access control).
+Option F is wrong because S3 web hosting only supports static web files like HTML/CSS, and does not support PHP or JavaScript.
+upvoted 12 times
+0628atv 2 years, 11 months ago
+https://aws.amazon.com/getting-started/projects/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/module-1/?nc1=h_ls
+upvoted 3 times
+Gape4 Most Recent 1 year, 11 months ago
+Selected Answer: ACE
+I will go for A C E
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: ACE
+A: App may be idle for long time so Lambda is perfect (charge per invocation)
+C: Cognito user pool for user auth
+E: Amplify is low code web dev tool
+Correct Answer: ACE
+Community vote distribution
+ACE (86%)
+9%
+B: Wrong, too much cost when idle
+D: Identity pool is session management/identification. Does not help with auth.
+F: S3 + PHP doesn't work also no security
+upvoted 3 times
+rcptryk 2 years, 6 months ago
+Selected Answer: ACE
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html
+S3 doesn't support server-side scripting
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: ACE
+User Pool = authentication
+Identity Pool = authorization
+upvoted 7 times
+thanhnv142 2 years, 7 months ago
+A D F:
+A: for hosting the dynamic content of the app. Pay as execution
+D: for granting temporary privilege access to users who has paid a fee.
+F: for hosting the static content of the app
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+There is no static content in this web application so F is wrong. You cannot host PHP on S3 also so it is just wrong.
+upvoted 2 times
+kwang312 2 years, 8 months ago
+Selected Answer: ACE
+ACE is correct answer
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: CEF
+C) Create an Amazon Cognito user pool to authenticate users.
+E) Use AWS Amplify to serve the frontend web content with HTML, CSS, and JS. Use an integrated CloudFront configuration.
+F) Use Amazon S3 static web hosting with PHP, CSS, and JS. Use Amazon CloudFront to serve the frontend web content.
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+There is no static content in this web application so F is wrong. You cannot host PHP on S3 also so it is just wrong.
+upvoted 2 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: ACE
+Build a web application = AWS Amplify
+Sign in users = Amazon Cognito user pool
+Traffic can be idle for a long time = AWS Lambda
+Amazon S3 does not support server-side scripting such as PHP, JSP, or ASP.NET.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html?
+icmpid=docs_amazons3_console#:~:text=website%20relies%20on-,server%2Dside,-processing%2C%20including%20server
+Traffic can be idle for a long time = AWS Lambda
+upvoted 2 times
+james2033 2 years, 11 months ago
+Selected Answer: ACE
+Use exclusion method: No need for Container (no need run all time), remove B. PHP cannot run with static Amazon S3, remove F.
+Use selection method: Idle for sometime, choose AWS Lambda, choose A. “Amazon Cognito is an identity platform for web and mobile apps.”
+(https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html ), choose C. Create an identity pool
+https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-identity-pool.html . AWS Amplify https://aws.amazon.com/amplify/ for
+build full-stack web-app in hours.
+upvoted 6 times
+baba365 2 years, 11 months ago
+Ans: ACF
+use AWS SDK for PHP/JS with S3
+https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/php_s3_code_examples.html
+upvoted 1 times
+unbendable 2 years, 7 months ago
+did you actually read the link or just copy the first link from google here? the sdk is intended for usage in a php application. it does not say anything
+about php support in a s3 bucket
+upvoted 2 times
+Zox42 2 years, 11 months ago
+Selected Answer: ACE
+Answer is ACE
+upvoted 2 times
+jaydesai8 2 years, 11 months ago
+Selected Answer: ACE
+Lambda =serverless
+User Pool = For user authentication
+Amplify = hosting web/mobile apps
+upvoted 3 times
+live_reply_developers 2 years, 11 months ago
+Selected Answer: ACE
+S3 doesn't support PHP as stated in answer F.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html
+upvoted 4 times
+wRhlH 2 years, 11 months ago
+Selected Answer: ACE
+I don't think S3 can handle anything dynamic such as PHP. So I go for ACE
+upvoted 2 times
+antropaws 2 years, 11 months ago
+Selected Answer: ACF
+ACF no doubt. Check the difference between user pools and identity pools.
+upvoted 2 times

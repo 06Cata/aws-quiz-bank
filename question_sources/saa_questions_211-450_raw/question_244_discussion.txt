@@ -1,0 +1,110 @@
+A company is using a content management system that runs on a single Amazon EC2 instance. The EC2 instance contains both the
+web server and the database software. The company must make its website platform highly available and must enable the website
+to scale to meet user demand.
+What should a solutions architect recommend to meet these requirements?
+A. Move the database to Amazon RDS, and enable automatic backups. Manually launch another EC2 instance in the same
+Availability Zone. Configure an Application Load Balancer in the Availability Zone, and set the two instances as targets.
+B. Migrate the database to an Amazon Aurora instance with a read replica in the same Availability Zone as the existing EC2
+instance. Manually launch another EC2 instance in the same Availability Zone. Configure an Application Load Balancer, and set
+the two EC2 instances as targets.
+C. Move the database to Amazon Aurora with a read replica in another Availability Zone. Create an Amazon Machine Image
+(AMI) from the EC2 instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling group
+that uses the AMI across two Availability Zones. Most Voted
+D. Move the database to a separate EC2 instance, and schedule backups to Amazon S3. Create an Amazon Machine Image
+(AMI) from the original EC2 instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling
+group that uses the AMI across two Availability Zones.
+Comments
+mhmt4438 Highly Voted 2 years, 11 months ago
+Selected Answer: C
+C. Move the database to Amazon Aurora with a read replica in another Availability Zone. Create an Amazon Machine Image (AMI) from the EC2
+instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling group that uses the AMI across two Availability
+Zones.
+This approach will provide both high availability and scalability for the website platform. By moving the database to Amazon Aurora with a read
+replica in another availability zone, it will provide a failover option for the database. The use of an Application Load Balancer and an Auto Scaling
+group across two availability zones allows for automatic scaling of the website to meet increased user demand. Additionally, creating an AMI from
+the original EC2 instance allows for easy replication of the instance in case of failure.
+upvoted 23 times
+Bmarodi 2 years, 6 months ago
+Very good explanations!
+upvoted 2 times
+cookieMr Highly Voted 2 years, 5 months ago
+Selected Answer: C
+Option A does not provide a solution for high availability or scalability. Manually launching another EC2 instance in the same AZ may not ensure high
+availability, as a failure in that AZ would result in downtime.
+Option B improves database performance and provides a level of fault tolerance, it does not address the scalability aspect of the website platform.
+Option C provides both high availability and fault tolerance. Creating an AMI allows for easy replication of the EC2 instance across AZs. Configuring
+an ALB in two AZs and attaching an ASG ensures scalability and load distribution across multiple instances.
+Option D does not provide the high availability and scalability required by the company. Scheduled backups to S3 address data protection but do
+not contribute to website availability or scalability.
+upvoted 6 times
+Correct Answer: C
+Community vote distribution
+C (98%)
+2%
+satyaammm Most Recent 1 year, 3 months ago
+Selected Answer: C
+Aurora with read replica in different region is the most suitable here.
+upvoted 1 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: C
+C is the only option via deduction logic based on the assumption the CMS database is Aurora compatible. Other solutions don't promise scaling as
+much as Aurora solution in option C does.
+upvoted 2 times
+awsgeek75 1 year, 10 months ago
+Just to clarify, the question is vague as we don't know anything about the DB types on the CMS so making an assumption that Aurora will work with
+the CMS.
+upvoted 4 times
+pentium75 1 year, 11 months ago
+Selected Answer: C
+A and B involve manual steps and do not include scaling (it's just two fixed instances)
+D scales the application part but leaves the database on a single EC2 instance which would be neither "highly available" nor "scaleable"
+upvoted 5 times
+Ruffyit 2 years ago
+C. Move the database to Amazon Aurora with a read replica in another Availability Zone. Create an Amazon Machine Image (AMI) from the EC2
+instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling group that uses the AMI across two Availability
+Zones.
+upvoted 2 times
+TariqKipkemei 2 years, 2 months ago
+Selected Answer: C
+Move the database to Amazon Aurora with a read replica in another Availability Zone. Create an Amazon Machine Image (AMI) from the EC2
+instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling group that uses the AMI across two Availability
+Zones.
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C. Move the database to Amazon Aurora with a read replica in another Availability Zone. Create an Amazon Machine Image (AMI) from the EC2
+instance. Configure an Application Load Balancer in two Availability Zones. Attach an Auto Scaling group that uses the AMI across two Availability
+Zones.
+upvoted 2 times
+MutiverseAgent 2 years, 4 months ago
+Selected Answer: D
+The question does not say if the current application is using a relational database, so how we can be sure that it can moved to RDS or aurora as
+answers A, B & C states? In my opinion the right answer is D.
+upvoted 1 times
+pentium75 1 year, 11 months ago
+In D, you "move the database to a separate EC2 instance" BEFORE creating the AMI for the Auto Scaling group. So you'd still have a single EC2
+instance running the database, which would meet neither the availability nor the scalability requirement.
+upvoted 2 times
+animefan1 2 years, 5 months ago
+Selected Answer: C
+has all options needed for HA
+upvoted 2 times
+Bmarodi 2 years, 6 months ago
+Selected Answer: C
+Option C meets the requirements.
+upvoted 2 times
+ssoffline 2 years, 6 months ago
+Why not D?
+Are we just assuming that there will be no write to the db?
+upvoted 1 times
+antropaws 2 years, 6 months ago
+Selected Answer: C
+Absolutely C.
+upvoted 2 times
+Aninina 2 years, 11 months ago
+Selected Answer: C
+C: This will allow the website platform to be highly available by using Aurora, which provides automatic failover and replication. Additionally, by
+creating an AMI from the original EC2 instance, the Auto Scaling group can automatically launch new instances in multiple availability zones and use
+the Application Load Balancer to distribute traffic across them. This way, the website will be able to handle the increased traffic, and will be less likely
+to go down due to a single point of failure.
+upvoted 3 times

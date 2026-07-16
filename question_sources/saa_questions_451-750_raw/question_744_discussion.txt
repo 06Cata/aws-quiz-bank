@@ -1,0 +1,92 @@
+A company is designing a new web service that will run on Amazon EC2 instances behind an Elastic Load Balancing (ELB) load
+balancer. However, many of the web service clients can only reach IP addresses authorized on their firewalls.
+What should a solutions architect recommend to meet the clients’ needs?
+A. A Network Load Balancer with an associated Elastic IP address. Most Voted
+B. An Application Load Balancer with an associated Elastic IP address.
+C. An A record in an Amazon Route 53 hosted zone pointing to an Elastic IP address.
+D. An EC2 instance with a public IP address running as a proxy in front of the load balancer.
+Comments
+67a3f49 Highly Voted 2 years, 3 months ago
+A for sure. The same question was in "AWS Certified Solutions Architect Associate Practice Test 3" on Udemy. There was an explaination that NLB
+needs to be before ALB because only NLB can have static IP.
+upvoted 17 times
+alawada Highly Voted 2 years, 2 months ago
+Selected Answer: A
+A - correct (Static ip can thereafter be used for client whitelisting)
+Using a Network Load Balancer instead of a Classic Load Balancer has the following benefits:
+Support for static IP addresses for the load balancer.
+https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html
+upvoted 5 times
+bora4motion Most Recent 1 year ago
+Selected Answer: A
+Why not B? we're talking about http traffic not tcp / udp. Why not ALB instead of NLB?
+upvoted 1 times
+FlyingHawk 1 year, 5 months ago
+Selected Answer: A
+Both A and C are correct:
+A Uses an NLB because it supports Elastic IP addresses, which are static IPs that can be whitelisted by clients.
+C : Create an Alias record in Route 53 that points to the NLB.
+An Alias record is a Route 53-specific feature that allows you to map a domain name (e.g., webservice.example.com) directly to the NLB without
+needing to use the NLB's IP address in the DNS record.
+Clients can access the web service using the domain name (e.g., webservice.example.com), which resolves to the NLB's IP address.
+However, in the context of exam, I will select A since the question explicitly mentions the use of an Elastic Load Balancer (ELB), and A directly
+addresses this by recommending a Network Load Balancer (NLB) with an Elastic IP address.
+upvoted 2 times
+Scheldon 1 year, 11 months ago
+Correct Answer: A
+Community vote distribution
+A (95%)
+5%
+Selected Answer: A
+AnswerA
+upvoted 2 times
+Sivaeas 2 years, 3 months ago
+Selected Answer: A
+Option A
+Please look into the below for detailed explaination
+https://www.scalefactory.com/blog/2021/12/13/aws-network-load-balancers-new-features/img/previously-firewall-egress.png
+upvoted 3 times
+PolarFox 2 years, 3 months ago
+Selected Answer: C
+Option C
+upvoted 1 times
+JA2018 1 year, 6 months ago
+B. An Application Load Balancer with an associated Elastic IP address:
+While an ALB can use an Elastic IP, it operates at the application layer and may not be suitable when the primary concern is client firewall
+restrictions requiring a specific IP.
+C. An A record in an Amazon Route 53 hosted zone pointing to an Elastic IP address:
+While Route 53 can manage DNS records, it does not directly address the need for a specific IP address accessible by clients with firewall
+restrictions.
+D. An EC2 instance with a public IP address running as a proxy in front of the load balancer:
+This adds unnecessary complexity and introduces a single point of failure, making it less than optimal.
+upvoted 1 times
+BillaRanga 2 years, 3 months ago
+Selected Answer: A
+B -> Application Load Balancer cannot be assigned an Elastic IP address (static IP address).
+C -> Its DNS after all, "Associated elastic IP" is what IP? Makes no sense
+D -> "If you require a persistent public IP address that can be associated to and from instances as you require, use an Elastic IP address instead."
+PUBLIC IP of an EC2 is not persistent, although we can give an Elastic Ip, Using EC2 in front of a Load Balancer is tooooo much. What if it gets a
+million request? So to scale that EC2 you use another LB and an ASG>? This makes no sense
+A is correct because a NLB can have an elastic IP and we can use this in our firewall as per the use case
+upvoted 5 times
+hajra313 2 years, 4 months ago
+Setting up an EC2 instance with a public IP address to act as a proxy in front of the load balancer allows clients with restricted IP access to connect to
+the web service. The EC2 instance can handle IP address whitelisting and proxy requests to the ELB load balancer, ensuring that only authorized
+clients can access the service. This solution provides flexibility and control over access while leveraging the scalability and availability benefits of ELB.
+upvoted 1 times
+BillaRanga 2 years, 3 months ago
+Is this ChatGPT answer? Can you provide the AWS documentation link?
+upvoted 3 times
+Andy_09 2 years, 4 months ago
+Option C
+upvoted 2 times
+jaswantn 2 years, 3 months ago
+is there any valid justification for opting C? Glad to be informed, as these questions are tricky to answer.
+upvoted 2 times
+jaswantn 2 years, 3 months ago
+My inclination is for Option D, but not 100 % sure
+upvoted 1 times
+JA2018 1 year, 6 months ago
+D. An EC2 instance with a public IP address running as a proxy in front of the load balancer:
+This adds unnecessary complexity and introduces a single point of failure, making it less than optimal.
+upvoted 1 times

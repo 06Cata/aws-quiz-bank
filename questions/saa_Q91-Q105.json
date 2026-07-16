@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 91,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有在 VPC 中的 Amazon EC2 執行個體上執行的應用程式。其中一個應用程式需要呼叫 Amazon S3 API 來儲存和讀取物件。根據該公司的安全規定，不允許來自應用程式的流量透過網路傳輸。哪種解決方案可以滿足這些要求？",
+        "en": "A company has applications that run on Amazon EC2 instances in a VPC. One of the applications needs to call the Amazon S3 API to store and read objects. According to the company's security regulations, no traffic from the applications is allowed to travel across the internet. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 S3 閘道端點。",
+          "en": "Configure an S3 gateway endpoint."
+        },
+        "B": {
+          "zh": "在私有子網路中建立 S3 儲存桶。",
+          "en": "Create an S3 bucket in a private subnet."
+        },
+        "C": {
+          "zh": "在與 EC2 執行個體相同的 AWS 區域中建立 S3 儲存桶。",
+          "en": "Create an S3 bucket in the same AWS Region as the EC2 instances."
+        },
+        "D": {
+          "zh": "在與 EC2 執行個體相同的子網路中設定 NAT 閘道。",
+          "en": "Configure a NAT gateway in the same subnet as the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 閘道端點允許 EC2 執行個體直接從 VPC 存取 S3，而不需要存取 Internet 的流量。滿足問題要求：流量不會離開VPC，滿足安全需求。",
+          "en": "Correct. S3 Gateway Endpoint allows EC2 instances to access S3 directly from the VPC without requiring traffic to access the Internet. Meets the problem requirements: traffic will not leave the VPC, meeting security requirements."
+        },
+        "B": {
+          "zh": "錯誤。S3 是區域服務，無法直接部署在私有子網路中。",
+          "en": "Incorrect. S3 is a regional service and cannot be deployed directly in a private subnet."
+        },
+        "C": {
+          "zh": "錯誤。雖然同一區域中的 S3 和 EC2 可以減少延遲，但這並不能阻止流量到達 Internet。",
+          "en": "Incorrect. Although S3 and EC2 in the same region can reduce latency, this does not prevent traffic from reaching the Internet."
+        },
+        "D": {
+          "zh": "錯誤。NAT閘道用來讓私有子網路的資源存取Internet，但問題明確要求流量不能到達Internet。",
+          "en": "Incorrect. The NAT gateway is used to allow resources in a private subnet to access the Internet, but the question clearly requires that the traffic cannot reach the Internet."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 設定 S3 閘道端點。",
+        "en": "A. Configure an S3 gateway endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：S3 閘道端點允許 EC2 執行個體直接從 VPC 存取 S3，而不需要存取 Internet 的流量。滿足問題要求：流量不會離開VPC，滿足安全需求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: S3 Gateway Endpoint allows EC2 instances to access S3 directly from the VPC without requiring traffic to access the Internet. Meets the problem requirements: traffic will not leave the VPC, meeting security requirements."
+      }
+    },
+    {
+      "question_no": 92,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司將敏感使用者資訊儲存在 Amazon S3 儲存桶中。該公司希望從 VPC 內的 Amazon EC2 執行個體上執行的應用程式層提供對此儲存桶的安全存取。解決方案架構師應該採取哪些步驟組合來實現這一目標？ （選兩個。）",
+        "en": "A company is storing sensitive user information in an Amazon S3 bucket. The company wants to provide secure access to this bucket from the application tier running on Amazon EC2 instances inside a VPC. Which combination of steps should a solutions architect take to accomplish this? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在 VPC 內為 Amazon S3 設定 VPC 閘道終端節點。",
+          "en": "Configure a VPC gateway endpoint for Amazon S3 within the VPC."
+        },
+        "B": {
+          "zh": "建立儲存桶策略以使 S3 儲存桶中的物件公開。",
+          "en": "Create a bucket policy to make the objects in the S3 bucket public."
+        },
+        "C": {
+          "zh": "建立儲存桶策略，僅限制對 VPC 中執行的應用程式層的存取。",
+          "en": "Create a bucket policy that limits access to only the application tier running in the VPC."
+        },
+        "D": {
+          "zh": "使用 S3 存取原則建立 IAM 使用者並將 IAM 憑證複製到 EC2 執行個體。",
+          "en": "Create an IAM user with an S3 access policy and copy the IAM credentials to the EC2 instance."
+        },
+        "E": {
+          "zh": "建立 NAT 執行個體並讓 EC2 執行個體使用 NAT 執行個體存取 S3 儲存桶。",
+          "en": "Create a NAT instance and have the EC2 instances use the NAT instance to access the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。VPC 閘道端點允許 EC2 執行個體直接透過私有網路存取 S3，而無需透過網際網路。這是安全存取 S3 的建議方法。",
+          "en": "Correct. The VPC Gateway Endpoint allows EC2 instances to access S3 directly over a private network without going through the internet. This is the recommended way to securely access S3."
+        },
+        "B": {
+          "zh": "錯誤。公開 S3 物件會暴露敏感訊息，並且不滿足問題的「安全存取」要求。",
+          "en": "Incorrect. Making S3 objects public will expose sensitive information and does not meet the \"secure access\" requirements of the question."
+        },
+        "C": {
+          "zh": "正確。儲存桶策略可讓您限制存取權限，僅允許特定 VPC 的請求存取 S3 資源，從而提高安全性。",
+          "en": "Correct. Bucket Policy allows you to restrict access permissions and only allow requests from specific VPCs to access S3 resources, thereby improving security."
+        },
+        "D": {
+          "zh": "錯誤。將 IAM 憑證直接複製到 EC2 執行個體中是一種不安全的做法，可能會導致憑證洩漏。",
+          "en": "Incorrect. Copying IAM credentials directly into an EC2 instance is an insecure practice and can lead to credential leakage."
+        },
+        "E": {
+          "zh": "錯誤。沒有必要使用 NAT 實例存取 S3，因為 S3 可以直接透過 VPC 閘道終端節點訪問，而 NAT 執行個體會增加成本和複雜性。",
+          "en": "Incorrect. Using a NAT instance to access S3 is not necessary as S3 can be accessed directly through the VPC Gateway Endpoint, and a NAT instance adds cost and complexity."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 在 VPC 內為 Amazon S3 設定 VPC 閘道終端節點。；C. 建立儲存桶策略，僅限制對 VPC 中執行的應用程式層的存取。",
+        "en": "A. Configure a VPC gateway endpoint for Amazon S3 within the VPC.; C. Create a bucket policy that limits access to only the application tier running in the VPC."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AC (90%)。熱門討論與考點摘要：VPC 閘道端點允許 EC2 執行個體直接透過私有網路存取 S3，而無需透過網際網路。這是安全存取 S3 的建議方法。；儲存桶策略可讓您限制存取權限，僅允許特定 VPC 的請求存取 S3 資源，從而提高安全性。",
+        "en": "Community vote as displayed: AC (90%). Popular discussion and key point summary: The VPC Gateway Endpoint allows EC2 instances to access S3 directly over a private network without going through the internet. This is the recommended way to securely access S3.; Bucket Policy allows you to restrict access permissions and only allow requests from specific VPCs to access S3 resources, thereby improving security."
+      }
+    },
+    {
+      "question_no": 93,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司運行由 MySQL 資料庫支援的本機應用程式。該公司正在將應用程式遷移到AWS，以提高應用程式的彈性和可用性。目前的體系結構在正常操作期間顯示資料庫上的大量讀取活動。每 4 小時，公司的開發團隊就會完整匯出生產資料庫，以填入臨時環境中的資料庫。在此期間，用戶會遇到不可接受的應用程式延遲。在流程完成之前，開發團隊無法使用暫存環境。解決方案架構師必須推薦可緩解應用程式延遲問題的替代架構。替換架構也必須使開發團隊能夠立即繼續使用登臺環境。哪種解決方案滿足這些要求？",
+        "en": "A company runs an on-premises application that is powered by a MySQL database. The company is migrating the application to AWS to increase the application's elasticity and availability. The current architecture shows heavy read activity on the database during times of normal operation. Every 4 hours, the company's development team pulls a full export of the production database to populate a database in the staging environment. During this period, users experience unacceptable application latency. The development team is unable to use the staging environment until the procedure completes. A solutions architect must recommend replacement architecture that alleviates the application latency issue. The replacement architecture also must give the development team the ability to continue using the staging environment without delay. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Aurora MySQL 和多可用區 Aurora 副本進行生產。透過實作使用 mysqldump 實用程式的備份和復原程序來填入臨時資料庫。",
+          "en": "Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Populate the staging database by implementing a backup and restore process that uses the mysqldump utility."
+        },
+        "B": {
+          "zh": "使用 Amazon Aurora MySQL 和多可用區 Aurora 副本進行生產。使用資料庫克隆按需建立臨時資料庫。",
+          "en": "Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Use database cloning to create the staging database on-demand."
+        },
+        "C": {
+          "zh": "使用 Amazon RDS for MySQL 進行多可用區部署和生產唯讀副本。使用備用實例作為臨時資料庫。",
+          "en": "Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Use the standby instance for the staging database."
+        },
+        "D": {
+          "zh": "使用 Amazon RDS for MySQL 進行多可用區部署和生產唯讀副本。透過實作使用 mysqldump 實用程式的備份和復原程序來填入臨時資料庫。",
+          "en": "Use Amazon RDS for MySQL with a Multi-AZ deployment and read replicas for production. Populate the staging database by implementing a backup and restore process that uses the mysqldump utility."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。本質分析：Amazon Aurora MySQL 和 Multi-AZ Aurora Replicas 可以提供高可用性和效能，但使用 mysqldump 工具進行備份和還原仍然會導致生產環境中的效能下降，無法解決問題中提到的應用程式延遲問題。結核病理論：錯誤。",
+          "en": "Incorrect. ness analysis: Amazon Aurora MySQL and Multi-AZ Aurora Replicas can provide high availability and performance, but using the mysqldump tool for backup and recovery will still cause a performance degradation in the production environment and cannot solve the application delay problem mentioned in the question. Tuberculosis Theory: Wrong."
+        },
+        "B": {
+          "zh": "正確。本質分析：Amazon Aurora MySQL支援資料庫克隆功能，可以快速建立預生產資料庫，而不影響生產環境的效能。這樣就徹底解決了問題中所說的應用延遲問題，並滿足了開發團隊的需求。結核病理論：。",
+          "en": "Correct. ness analysis: Amazon Aurora MySQL supports the database cloning function, which can quickly create a pre-production database without affecting the performance of the production environment. This completely solves the application delay problem stated in the question and meets the needs of the development team. Tuberculosis Theory:."
+        },
+        "C": {
+          "zh": "錯誤。性質分析：多可用區中的備實例用於故障轉移，不能用於讀取作業或作為預生產資料庫。這個解法不符合問題的要求。結核病理論：錯誤。",
+          "en": "Incorrect. ness analysis: The standby instance in Multi-AZ is used for failover and cannot be used for read operations or as a pre-production database. This solution does not meet the requirements of the question. Tuberculosis Theory: Wrong."
+        },
+        "D": {
+          "zh": "錯誤。ness分析：雖然讀取副本可以減輕生產資料庫的讀取壓力，但使用mysqldump工具進行備份和復原仍然會導致效能問題，並且無法解決問題中所述的應用程式延遲問題。結核病理論：錯誤。 集群中的",
+          "en": "Incorrect. ness analysis: Although the read copy can reduce the reading pressure of the production database, using the mysqldump tool for backup and recovery will still cause performance problems and cannot solve the application delay problem stated in the question. Tuberculosis Theory: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon Aurora MySQL 和多可用區 Aurora 副本進行生產。使用資料庫克隆按需建立臨時資料庫。",
+        "en": "B. Use Amazon Aurora MySQL with Multi-AZ Aurora Replicas for production. Use database cloning to create the staging database on-demand."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (92%)。熱門討論與考點摘要：本質分析：Amazon Aurora MySQL支援資料庫克隆功能，可以快速建立預生產資料庫，而不影響生產環境的效能。這樣就徹底解決了問題中所說的應用延遲問題，並滿足了開發團隊的需求。結核病理論：。",
+        "en": "Community vote as displayed: B (92%). Popular discussion and key point summary: ness analysis: Amazon Aurora MySQL supports the database cloning function, which can quickly create a pre-production database without affecting the performance of the production environment. This completely solves the application delay problem stated in the question and meets the needs of the development team. Tuberculosis Theory:."
+      }
+    },
+    {
+      "question_no": 94,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在設計一個應用程序，用戶可以將小檔案上傳到 Amazon S3。用戶上傳檔案後，需要對檔案進行一次簡單處理，將資料進行轉換，並將資料儲存為JSON格式以供後續分析。每個文件上傳後必須盡快處理。需求會有所不同。有時，使用者會上傳大量文件。在其他日子裡，使用者會上傳一些檔案或不上傳任何檔案。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is designing an application where users upload small files into Amazon S3. After a user uploads a file, the file requires one-time simple processing to transform the data and save the data in JSON format for later analysis. Each file must be processed as quickly as possible after it is uploaded. Demand will vary. On some days, users will upload a high number of files. On other days, users will upload a few files or no files. Which solution meets these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Amazon EMR 以從 Amazon S3 讀取文字檔。運行處理腳本來轉換資料。將產生的 JSON 檔案儲存在 Amazon Aurora 資料庫叢集中。",
+          "en": "Configure Amazon EMR to read text files from Amazon S3. Run processing scripts to transform the data. Store the resulting JSON file in an Amazon Aurora DB cluster."
+        },
+        "B": {
+          "zh": "設定 Amazon S3 以將事件通知傳送至 Amazon Simple Queue Service (Amazon SQS) 佇列。使用 Amazon EC2 執行個體從佇列讀取並處理資料。將產生的 JSON 檔案儲存在 Amazon DynamoDB 中。",
+          "en": "Configure Amazon S3 to send an event notification to an Amazon Simple Queue Service (Amazon SQS) queue. Use Amazon EC2 instances to read from the queue and process the data. Store the resulting JSON file in Amazon DynamoDB."
+        },
+        "C": {
+          "zh": "設定 Amazon S3 以將事件通知傳送至 Amazon Simple Queue Service (Amazon SQS) 佇列。使用 AWS Lambda 函數從佇列讀取並處理資料。將產生的 JSON 檔案儲存在 Amazon DynamoDB 中。",
+          "en": "Configure Amazon S3 to send an event notification to an Amazon Simple Queue Service (Amazon SQS) queue. Use an AWS Lambda function to read from the queue and process the data. Store the resulting JSON file in Amazon DynamoDB."
+        },
+        "D": {
+          "zh": "設定 Amazon EventBridge (Amazon CloudWatch Events) 以在上傳新檔案時將事件傳送至 Amazon Kinesis Data Streams。使用 AWS Lambda 函數使用流中的事件並處理資料。將產生的 JSON 檔案儲存在 Amazon Aurora 資料庫叢集中。",
+          "en": "Configure Amazon EventBridge (Amazon CloudWatch Events) to send an event to Amazon Kinesis Data Streams when a new file is uploaded. Use an AWS Lambda function to consume the event from the stream and process the data. Store the resulting JSON file in an Amazon Aurora DB cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。。原因 Amazon EMR 是一種大規模資料處理工具，適合處理複雜的大量資料分析任務。本題需要處理小文件。 EMR 的使用將增加營運開銷。此外，Amazon Aurora 資料庫叢集過於複雜且昂貴，無法作為單一 JSON 檔案的儲存解決方案進行儲存。",
+          "en": "Incorrect. in the cluster. Reason for the Amazon EMR is a large-scale data processing tool suitable for processing complex batch data analysis tasks. The question requires the processing of small files. The use of EMR will increase operational overhead. In addition, Amazon Aurora DB clusters are too complex and expensive to store as a storage solution for a single JSON file."
+        },
+        "B": {
+          "zh": "錯誤。並處理資料。將產生的 JSON 檔案儲存在 Amazon DynamoDB 中。使用 Amazon EC2 執行個體處理資料的原因需要主動管理執行個體的啟動、停止和擴展，這會增加營運開銷。雖然 Amazon DynamoDB 是一個合適的儲存解決方案，但使用 EC2 並不能滿足「最低營運開銷」的要求。",
+          "en": "Incorrect. and process the data. Store the generated JSON file in Amazon DynamoDB. Reason for the Using Amazon EC2 instances to process data requires active management of starting, stopping, and expanding the instances, which increases operational overhead. While Amazon DynamoDB is a suitable storage solution, the use of EC2 does not meet the \"minimum operational overhead\" requirement."
+        },
+        "C": {
+          "zh": "正確。原因：AWS Lambda是一種無伺服器運算服務，可自動擴展和處理事件，無需管理底層基礎設施，滿足「最小營運開銷」的要求。 Amazon SQS 用於事件通知，以確保訊息的可靠傳送，適合處理文件上傳事件。 Amazon DynamoDB 是一種高效能、低延遲的 NoSQL 資料庫，適合以 JSON 格式儲存資料。",
+          "en": "Correct. reason: AWS Lambda is a serverless computing service that can automatically scale and handle events without the need to manage the underlying infrastructure and meets the requirements of \"minimum operational overhead\". Amazon SQS is used for event notification to ensure reliable delivery of messages and is suitable for processing file upload events. Amazon DynamoDB is a high-performance, low-latency NoSQL database suitable for storing data in JSON format."
+        },
+        "D": {
+          "zh": "錯誤。使用 AWS Lambda 函數使用流中的事件並處理資料。將產生的 JSON 檔案儲存在 Amazon Aurora 資料庫叢集中。原因是Amazon Kinesis Data Streams適合處理即時串流數據，但問題中沒有提到即時串流處理的必要性。使用 Kinesis 會增加複雜性和成本。 Amazon Aurora 資料庫叢集太複雜且昂貴，無法作為單一 JSON 檔案的儲存解決方案進行儲存。",
+          "en": "Incorrect. Use AWS Lambda functions to consume events from streams and process data. Store the generated JSON file in an Amazon Aurora DB cluster. Reason for the Amazon Kinesis Data Streams is suitable for processing real-time stream data, but the question does not mention the need for real-time stream processing. Using Kinesis will increase complexity and cost. Amazon Aurora DB clusters are too complex and expensive to store as a storage solution for a single JSON file."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 Amazon S3 以將事件通知傳送至 Amazon Simple Queue Service (Amazon SQS) 佇列。使用 AWS Lambda 函數從佇列讀取並處理資料。將產生的 JSON 檔案儲存在 Amazon DynamoDB 中。",
+        "en": "C. Configure Amazon S3 to send an event notification to an Amazon Simple Queue Service (Amazon SQS) queue. Use an AWS Lambda function to read from the queue and process the data. Store the resulting JSON file in Amazon DynamoDB."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：原因：AWS Lambda是一種無伺服器運算服務，可自動擴展和處理事件，無需管理底層基礎設施，滿足「最小營運開銷」的要求。 Amazon SQS 用於事件通知，以確保訊息的可靠傳送，適合處理文件上傳事件。 Amazon DynamoDB 是一種高效能、低延遲的 NoSQL 資料庫，適合以 JSON 格式儲存資料。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: reason: AWS Lambda is a serverless computing service that can automatically scale and handle events without the need to manage the underlying infrastructure and meets the requirements of \"minimum operational overhead\". Amazon SQS is used for event notification to ensure reliable delivery of messages and is suitable for processing file upload events. Amazon DynamoDB is a high-performance, low-latency NoSQL database suitable for storing data in JSON format."
+      }
+    },
+    {
+      "question_no": 95,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "應用程式允許公司總部的使用者存取產品資料。產品資料儲存在 Amazon RDS MySQL 資料庫執行個體中。營運團隊已隔離應用程式效能下降問題，並希望將讀取流量與寫入流量分開。解決方案架構師需要快速優化應用程式的效能。解決方案架構師該推薦什麼？",
+        "en": "An application allows users at a company's headquarters to access product data. The product data is stored in an Amazon RDS MySQL DB instance. The operations team has isolated an application performance slowdown and wants to separate read traffic from write traffic. A solutions architect needs to optimize the application's performance quickly. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "將現有資料庫變更為多可用區部署。服務來自主可用區的讀取請求。",
+          "en": "Change the existing database to a Multi-AZ deployment. Serve the read requests from the primary Availability Zone."
+        },
+        "B": {
+          "zh": "將現有資料庫變更為多可用區部署。服務來自輔助可用區的讀取請求。",
+          "en": "Change the existing database to a Multi-AZ deployment. Serve the read requests from the secondary Availability Zone."
+        },
+        "C": {
+          "zh": "為資料庫建立唯讀副本。配置唯讀副本，使用一半的運算和儲存資源作為來源資料庫。",
+          "en": "Create read replicas for the database. Configure the read replicas with half of the compute and storage resources as the source database."
+        },
+        "D": {
+          "zh": "為資料庫建立唯讀副本。使用與來源資料庫相同的運算和儲存資源配置唯讀副本。",
+          "en": "Create read replicas for the database. Configure the read replicas with the same compute and storage resources as the source database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。多可用區部署的主要目的是提供高可用性和災難恢復，而不是優化效能。主可用區仍然處理所有讀寫請求，無法實現讀寫分離。",
+          "en": "Incorrect. The primary purpose of a Multi-AZ deployment is to provide high availability and disaster recovery, not to optimize performance. The primary availability zone still handles all read and write requests, and read and write separation cannot be achieved."
+        },
+        "B": {
+          "zh": "錯誤。多可用區的備用執行個體僅用於故障轉移，無法直接處理讀取要求。此選項不滿足讀寫分離的要求。",
+          "en": "Incorrect. The standby instance of Multi-AZ is only used for failover and cannot handle read requests directly. This option does not meet the requirements for read-write separation."
+        },
+        "C": {
+          "zh": "錯誤。雖然建立唯讀副本是正確的方向，但使用來源資料庫一半的資源配置副本可能會導致效能瓶頸，尤其是在高負載場景下。",
+          "en": "Incorrect. While creating a Read Replica is the right direction, configuring a replica with half the resources of the source database can cause performance bottlenecks, especially in high load scenarios."
+        },
+        "D": {
+          "zh": "正確。建立唯讀副本可以實現讀寫分離，最佳化效能。使用與來源資料庫相同的資源配置副本可確保副本可以處理高負載的讀取請求。",
+          "en": "Correct. Creating a Read Replica can separate reading and writing and optimize performance. Configuring the replica with the same resources as the source database ensures that the replica can handle a high load of read requests."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 為資料庫建立唯讀副本。使用與來源資料庫相同的運算和儲存資源配置唯讀副本。",
+        "en": "D. Create read replicas for the database. Configure the read replicas with the same compute and storage resources as the source database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (99%)。熱門討論與考點摘要：建立唯讀副本可以實現讀寫分離，最佳化效能。使用與來源資料庫相同的資源配置副本可確保副本可以處理高負載的讀取請求。",
+        "en": "Community vote as displayed: D (99%). Popular discussion and key point summary: Creating a Read Replica can separate reading and writing and optimize performance. Configuring the replica with the same resources as the source database ensures that the replica can handle a high load of read requests."
+      }
+    },
+    {
+      "question_no": 96,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "Amazon EC2 管理員建立了以下與包含多個使用者的 IAM 群組關聯的政策：此策略的效果為何？",
+        "en": "An Amazon EC2 administrator created the following policy associated with an IAM group containing several users: What is the effect of this policy?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用者可以終止 us-east-1 以外的任何 AWS 區域中的 EC2 執行個體。",
+          "en": "Users can terminate an EC2 instance in any AWS Region except us-east-1."
+        },
+        "B": {
+          "zh": "使用者可以在 us-east-1 區域終止 IP 位址為 10.100.100.1 的 EC2 執行個體。",
+          "en": "Users can terminate an EC2 instance with the IP address 10.100.100.1 in the us-east-1 Region."
+        },
+        "C": {
+          "zh": "當使用者的來源 IP 為 10.100.100.254 時，使用者可以終止 us-east-1 區域中的 EC2 執行個體。",
+          "en": "Users can terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254."
+        },
+        "D": {
+          "zh": "當使用者的來源 IP 為 10.100.100.254 時，使用者無法終止 us-east-1 區域中的 EC2 執行個體。",
+          "en": "Users cannot terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。根據策略，使用者只能在來源 IP 為 10.100.100.0/24 時終止實例，並且「拒絕」語句明確禁止使用者在非 us-east-1 區域執行任何 EC2 操作。",
+          "en": "Incorrect. According to the policy, users can only terminate the instance when the source IP is 10.100.100.0/24, and the \"Deny\" statement explicitly prohibits users from performing any EC2 operations in non-us-east-1 regions."
+        },
+        "B": {
+          "zh": "錯誤。雖然10.100.100.1屬於10.100.100.0/24範圍，但此策略並不局限於特定的單一IP位址，而是允許操作整個子網路範圍內的IP位址。",
+          "en": "Incorrect. Although 10.100.100.1 belongs to the 10.100.100.0/24 range, the policy is not restricted to a specific single IP address, but allows operation of IP addresses within the entire subnet range."
+        },
+        "C": {
+          "zh": "正確。根據策略，「允許」語句允許來源 IP 為 10.100.100.0/24 的使用者終止任意區域的實例，而「拒絕」語句僅禁止在非 us-east-1 區域進行操作。因此，來源IP為10.100.100.254的使用者可以終止us-east-1區域中的實例。",
+          "en": "Correct. According to the policy, the \"Allow\" statement allows users with a source IP of 10.100.100.0/24 to terminate instances in any region, while the \"Deny\" statement only prohibits operations in non-us-east-1 regions. Therefore, users with a source IP of 10.100.100.254 can terminate the instance in the us-east-1 region."
+        },
+        "D": {
+          "zh": "錯誤。來源 IP 為 10.100.100.254 的使用者可以終止 us-east-1 區域中的實例。",
+          "en": "Incorrect. Users with a source IP of 10.100.100.254 are allowed to terminate instances in the us-east-1 region."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 當使用者的來源 IP 為 10.100.100.254 時，使用者可以終止 us-east-1 區域中的 EC2 執行個體。",
+        "en": "C. Users can terminate an EC2 instance in the us-east-1 Region when the user's source IP is 10.100.100.254."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (72%)； D (28%)。熱門討論與考點摘要：根據策略，「允許」語句允許來源 IP 為 10.100.100.0/24 的使用者終止任意區域的實例，而「拒絕」語句僅禁止在非 us-east-1 區域進行操作。因此，來源IP為10.100.100.254的使用者可以終止us-east-1區域中的實例。",
+        "en": "Community vote as displayed: C (72%); D (28%). Popular discussion and key point summary: According to the policy, the \"Allow\" statement allows users with a source IP of 10.100.100.0/24 to terminate instances in any region, while the \"Deny\" statement only prohibits operations in non-us-east-1 regions. Therefore, users with a source IP of 10.100.100.254 can terminate the instance in the us-east-1 region."
+      }
+    },
+    {
+      "question_no": 97,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個在本機運行的大型 Microsoft SharePoint 部署，需要 Microsoft Windows 共用檔案儲存。該公司希望將此工作負載遷移到 AWS 雲，並正在考慮各種儲存選項。儲存解決方案必須具有高可用性，並與 Active Directory 整合以進行存取控制。哪種解決方案可以滿足這些要求？",
+        "en": "A company has a large Microsoft SharePoint deployment running on-premises that requires Microsoft Windows shared file storage. The company wants to migrate this workload to the AWS Cloud and is considering various storage options. The storage solution must be highly available and integrated with Active Directory for access control. Which solution will satisfy these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Amazon EFS 儲存並設定用於驗證的 Active Directory 網域。",
+          "en": "Configure Amazon EFS storage and set the Active Directory domain for authentication."
+        },
+        "B": {
+          "zh": "在兩個可用區的 AWS Storage Gateway 檔案閘道上建立 SMB 檔案共用。",
+          "en": "Create an SMB file share on an AWS Storage Gateway file gateway in two Availability Zones."
+        },
+        "C": {
+          "zh": "建立 Amazon S3 儲存桶並設定 Microsoft Windows Server 以將其掛載為磁碟區。",
+          "en": "Create an Amazon S3 bucket and configure Microsoft Windows Server to mount it as a volume."
+        },
+        "D": {
+          "zh": "在 AWS 上建立 Amazon FSx for Windows File Server 檔案系統並設定用於驗證的 Active Directory 網域。",
+          "en": "Create an Amazon FSx for Windows File Server file system on AWS and set the Active Directory domain for authentication."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：不支援Windows檔案共用。",
+          "en": "Incorrect. reason: Windows file sharing is not supported."
+        },
+        "B": {
+          "zh": "錯誤。AWS Storage Gateway 檔案閘道支援 SMB 檔案共享，但主要用於混合雲場景，將本地儲存擴展到雲端。檔案閘道不提供本機高可用性，需要額外設定才能與 Active Directory 整合。原因 未完全滿足高可用性和 Active Directory 整合的要求。",
+          "en": "Incorrect. The AWS Storage Gateway file gateway supports SMB file sharing, but it is primarily used in hybrid cloud scenarios to extend local storage to the cloud. File gateways do not provide native high availability and require additional configuration to integrate with Active Directory. Reason for the The requirements for high availability and Active Directory integration are not fully met."
+        },
+        "C": {
+          "zh": "錯誤。Amazon S3 是一種物件儲存服務，不適合用作 Windows 共用檔案儲存。雖然 S3 可以透過第三方工具或自訂配置安裝為磁碟區，但這不是本機支援的功能，也不支援 Active Directory 整合。原因 不適合Windows檔案分享場景，不支援Active Directory。",
+          "en": "Incorrect. Amazon S3 is an object storage service and is not suitable for use as Windows shared file storage. Although S3 can be mounted as a volume through third-party tools or custom configuration, this is not a natively supported feature and Active Directory integration is not supported. Reason for the It is not suitable for Windows file sharing scenarios and does not support Active Directory."
+        },
+        "D": {
+          "zh": "正確。身份驗證。 Amazon FSx for Windows File Server 是專為 Windows 工作負載設計的檔案儲存服務，支援 SMB 協定。它本身支援與 Active Directory 整合並提供高可用性。正確原因：完全滿足問題要求，包括高可用性和Active Directory整合。",
+          "en": "Correct. authentication. Amazon FSx for Windows File Server is a file storage service designed for Windows workloads and supports the SMB protocol. It natively supports integration with Active Directory and provides high availability. Correct reason: Fully meets the question requirements, including high availability and Active Directory integration."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 AWS 上建立 Amazon FSx for Windows File Server 檔案系統並設定用於驗證的 Active Directory 網域。",
+        "en": "D. Create an Amazon FSx for Windows File Server file system on AWS and set the Active Directory domain for authentication."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：身份驗證。 Amazon FSx for Windows File Server 是專為 Windows 工作負載設計的檔案儲存服務，支援 SMB 協定。它本身支援與 Active Directory 整合並提供高可用性。正確原因：完全滿足問題要求，包括高可用性和Active Directory整合。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: authentication. Amazon FSx for Windows File Server is a file storage service designed for Windows workloads and supports the SMB protocol. It natively supports integration with Active Directory and provides high availability. Correct reason: Fully meets the question requirements, including high availability and Active Directory integration."
+      }
+    },
+    {
+      "question_no": 98,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家圖像處理公司有一個使用者用來上傳圖像的 Web 應用程式。該應用程式將圖像上傳到 Amazon S3 儲存桶中。該公司已設定 S3 事件通知，以將物件建立事件發佈到 Amazon Simple Queue Service (Amazon SQS) 標準佇列。 SQS 佇列可作為 AWS Lambda 函數的事件來源，該函數處理映像並透過電子郵件將結果傳送給使用者。用戶報告說，他們針對每張上傳的圖像都會收到多封電子郵件。解決方案架構師確定 SQS 訊息多次呼叫 Lambda 函數，從而產生多封電子郵件。解決方案架構師應該怎麼做才能以最少的營運開銷解決這個問題？",
+        "en": "An image-processing company has a web application that users use to upload images. The application uploads the images into an Amazon S3 bucket. The company has set up S3 event notifications to publish the object creation events to an Amazon Simple Queue Service (Amazon SQS) standard queue. The SQS queue serves as the event source for an AWS Lambda function that processes the images and sends the results to users through email. Users report that they are receiving multiple email messages for every uploaded image. A solutions architect determines that SQS messages are invoking the Lambda function more than once, resulting in multiple email messages. What should the solutions architect do to resolve this issue with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "透過將 ReceiveMessage 等待時間增加到 30 秒，在 SQS 佇列中設定長輪詢。",
+          "en": "Set up long polling in the SQS queue by increasing the ReceiveMessage wait time to 30 seconds."
+        },
+        "B": {
+          "zh": "將 SQS 標準佇列變更為 SQS FIFO 佇列。使用訊息重複資料刪除ID丟棄重複的訊息。",
+          "en": "Change the SQS standard queue to an SQS FIFO queue. Use the message deduplication ID to discard duplicate messages."
+        },
+        "C": {
+          "zh": "將 SQS 佇列中的可見性逾時增加到大於函數逾時和批次視窗逾時總和的值。",
+          "en": "Increase the visibility timeout in the SQS queue to a value that is greater than the total of the function timeout and the batch window timeout."
+        },
+        "D": {
+          "zh": "修改 Lambda 函數，以便在處理之前讀取訊息後立即從 SQS 佇列中刪除每個訊息。",
+          "en": "Modify the Lambda function to delete each message from the SQS queue immediately after the message is read before processing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。長輪詢可以減少空輪詢請求的數量，但無法解決重複淘汰的問題。訊息重複的原因是SQS標準佇列的設計允許訊息多次投遞，而不是輪詢時間設定。該選項不能解決問題，因此是錯誤的。",
+          "en": "Incorrect. Long polling can reduce the number of empty polling requests, but it cannot solve the problem of repeated elimination. The reason for repeated messages is that the design of the SQS standard queue allows messages to be delivered multiple times, rather than the polling time setting. This option does not solve the problem and is therefore wrong."
+        },
+        "B": {
+          "zh": "錯誤。訊息。 SQS FIFO 佇列確實支援重複資料刪除，但切換到 FIFO 佇列可能需要對現有系統進行重大變更。另外，FIFO佇列吞吐量較低，可能不適合高並發場景。雖然它解決了問題，但它不是最低限度的操作解決方案，因此不是最佳選擇。",
+          "en": "Incorrect. messages. SQS FIFO queues do support deduplication, but switching to FIFO queues may require major changes to the existing system. In addition, FIFO queues have low throughput and may not be suitable for high concurrency scenarios. While it solves the problem, it is not a minimally operational solution and therefore not the best option."
+        },
+        "C": {
+          "zh": "正確。批次視窗逾時。 Visibility Timeout 用於防止訊息在處理過程中被其他消費者讀取。如果 Lambda 函數處理時間較長且「可見性逾時」設定得太短，則消除可能會再次變得可見並再次被處理。將可見性逾時設定為大於 Lambda 函數逾時和批次視窗逾時總和，可以有效避免重複處理問題。此選項解決了問題並且具有最小的操作開銷，因此它是正確的答案。",
+          "en": "Correct. batch window timeout. Visibility Timeout is used to prevent the message from being read by other consumers during processing. If the Lambda function takes a long time to process and the Visibility Timeout is set too short, the elimination may become visible again and be processed again. By setting the Visibility Timeout to be greater than the sum of the Lambda function timeout and the batch window timeout, you can effectively avoid duplicate processing problems. This option solves the problem and has minimal operational overhead, so it is the correct answer."
+        },
+        "D": {
+          "zh": "錯誤。處理。在取消處理完成之前刪除取消可能會導致資料遺失，因為如果 Lambda 函數失敗，則無法重新處理取消。這種選擇違反了可靠消除廢棄物處理的原則，因此是錯誤的。",
+          "en": "Incorrect. processing. Deleting a cancellation before cancellation processing is complete may result in data loss because the cancellation cannot be reprocessed if the Lambda function fails. This option violates the principle of reliable elimination of waste processing and is therefore wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將 SQS 佇列中的可見性逾時增加到大於函數逾時和批次視窗逾時總和的值。",
+        "en": "C. Increase the visibility timeout in the SQS queue to a value that is greater than the total of the function timeout and the batch window timeout."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (81%)。熱門討論與考點摘要：批次視窗逾時。 Visibility Timeout 用於防止訊息在處理過程中被其他消費者讀取。如果 Lambda 函數處理時間較長且「可見性逾時」設定得太短，則消除可能會再次變得可見並再次被處理。將可見性逾時設定為大於 Lambda 函數逾時和批次視窗逾時總和，可以有效避免重複處理問題。此選項解決了問題並且具有最小的操作開銷，因此它是正確的答案。",
+        "en": "Community vote as displayed: C (81%). Popular discussion and key point summary: batch window timeout. Visibility Timeout is used to prevent the message from being read by other consumers during processing. If the Lambda function takes a long time to process and the Visibility Timeout is set too short, the elimination may become visible again and be processed again. By setting the Visibility Timeout to be greater than the sum of the Lambda function timeout and the batch window timeout, you can effectively avoid duplicate processing problems. This option solves the problem and has minimal operational overhead, so it is the correct answer."
+      }
+    },
+    {
+      "question_no": 99,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在為本地資料中心託管的遊戲應用程式實施共享儲存解決方案。該公司需要能夠使用 Lustre 客戶端存取資料。該解決方案必須經過全面管理。哪種解決方案滿足這些要求？",
+        "en": "A company is implementing a shared storage solution for a gaming application that is hosted in an on-premises data center. The company needs the ability to use Lustre clients to access data. The solution must be fully managed. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 AWS Storage Gateway 檔案閘道。建立使用所需客戶端協定的文件共用。將應用程式伺服器連接到檔案共用。",
+          "en": "Create an AWS Storage Gateway file gateway. Create a file share that uses the required client protocol. Connect the application server to the file share."
+        },
+        "B": {
+          "zh": "建立 Amazon EC2 Windows 執行個體。在實例上安裝並設定 Windows 檔案共用角色。將應用程式伺服器連接到檔案共用。",
+          "en": "Create an Amazon EC2 Windows instance. Install and configure a Windows file share role on the instance. Connect the application server to the file share."
+        },
+        "C": {
+          "zh": "建立 Amazon Elastic File System (Amazon EFS) 檔案系統，並將其配置為支援 Lustre。將檔案系統附加到來源伺服器。將應用程式伺服器連接到檔案系統。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) file system, and configure it to support Lustre. Attach the file system to the origin server. Connect the application server to the file system."
+        },
+        "D": {
+          "zh": "建立 Amazon FSx for Lustre 檔案系統。將檔案系統附加到來源伺服器。將應用程式伺服器連接到檔案系統。",
+          "en": "Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to the file system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Storage Gateway 文件閘道主要用於將本機檔案系統與AWS 雲端儲存（如S3）集成，但不支援Lustre 協定。分析：檔案閘道雖然可以提供檔案共用功能，但不符合問題中「使用Lustre客戶端存取資料」的要求。",
+          "en": "Incorrect. AWS Storage Gateway file gateway is mainly used to integrate local file systems with AWS cloud storage (such as S3), but it does not support the Luster protocol. Analysis: Although the file gateway can provide file sharing functions, it does not meet the requirement of \"using the Luster client to access data\" in the question."
+        },
+        "B": {
+          "zh": "錯誤。EC2 執行個體上的 Windows 檔案共用角色不支援 Lustre 協定。分析：此選項需要手動設定檔共享，不符合「完全託管」的要求，也不支援Lustre協定。",
+          "en": "Incorrect. The Windows file share role on the EC2 instance does not support the Luster protocol. Analysis: This option requires manual configuration of file sharing and does not meet the requirements of \"fully managed\" and does not support the Luster protocol."
+        },
+        "C": {
+          "zh": "錯誤。Amazon EFS 是完全託管的文件儲存服務，但它不支援 Lustre 協定。分析：EFS主要用於支援NFS協議，而不是Lustre協議，所以不符合問題要求。",
+          "en": "Incorrect. Amazon EFS is a fully managed file storage service, but it does not support the Luster protocol. Analysis: EFS is mainly used to support the NFS protocol, not the Luster protocol, so it does not meet the question requirements."
+        },
+        "D": {
+          "zh": "正確。Amazon FSx for Lustre 是一個完全託管的檔案系統，專門支援 Lustre 協定。分析：此選項完全符合題目要求，包括「完全託管」和「支援Lustre客戶端存取資料」。",
+          "en": "Correct. Amazon FSx for Luster is a fully managed file system that exclusively supports the Luster protocol. Analysis: This option fully meets the question requirements, including \"fully managed\" and \"supports Luster client access to data\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 建立 Amazon FSx for Lustre 檔案系統。將檔案系統附加到來源伺服器。將應用程式伺服器連接到檔案系統。",
+        "en": "D. Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to the file system."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (91%)。熱門討論與考點摘要：Amazon FSx for Lustre 是一個完全託管的檔案系統，專門支援 Lustre 協定。分析：此選項完全符合題目要求，包括「完全託管」和「支援Lustre客戶端存取資料」。",
+        "en": "Community vote as displayed: D (91%). Popular discussion and key point summary: Amazon FSx for Luster is a fully managed file system that exclusively supports the Luster protocol. Analysis: This option fully meets the question requirements, including \"fully managed\" and \"supports Luster client access to data\"."
+      }
+    },
+    {
+      "question_no": 100,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司的容器化應用程式在 Amazon EC2 執行個體上執行。應用程式需要下載安全證書才能與其他業務應用程式通訊。該公司希望有一個高度安全的解決方案來近乎即時地加密和解密憑證。該解決方案還需要在資料加密後將資料儲存在高可用儲存中。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company's containerized application runs on an Amazon EC2 instance. The application needs to download security certificates before it can communicate with other business applications. The company wants a highly secure solution to encrypt and decrypt the certificates in near real time. The solution also needs to store data in highly available storage after the data is encrypted. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "為加密憑證建立 AWS Secrets Manager 金鑰。根據需要手動更新證書。使用細粒度 IAM 存取控制對資料的存取。",
+          "en": "Create AWS Secrets Manager secrets for encrypted certificates. Manually update the certificates as needed. Control access to the data by using fine-grained IAM access."
+        },
+        "B": {
+          "zh": "建立一個 AWS Lambda 函數，該函數使用 Python 加密函式庫來接收和執行加密操作。將函數儲存在 Amazon S3 儲存桶中。",
+          "en": "Create an AWS Lambda function that uses the Python cryptography library to receive and perform encryption operations. Store the function in an Amazon S3 bucket."
+        },
+        "C": {
+          "zh": "建立 AWS Key Management Service (AWS KMS) 客戶託管金鑰。允許 EC2 角色使用 KMS 金鑰進行加密操作。將加密資料儲存在 Amazon S3 上。",
+          "en": "Create an AWS Key Management Service (AWS KMS) customer managed key. Allow the EC2 role to use the KMS key for encryption operations. Store the encrypted data on Amazon S3."
+        },
+        "D": {
+          "zh": "建立 AWS Key Management Service (AWS KMS) 客戶託管金鑰。允許 EC2 角色使用 KMS 金鑰進行加密操作。將加密資料儲存在 Amazon Elastic Block Store (Amazon EBS) 磁碟區上。",
+          "en": "Create an AWS Key Management Service (AWS KMS) customer managed key. Allow the EC2 role to use the KMS key for encryption operations. Store the encrypted data on Amazon Elastic Block Store (Amazon EBS) volumes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。本質分析：AWS Secrets Manager適合儲存和管理敏感資訊（例如秘密、API金鑰），但它不直接提供即時加密和解密功能。原因：手動更新憑證增加了操作開銷，不符合「最小化操作開銷」的要求。",
+          "en": "Incorrect. ness analysis: AWS Secrets Manager is suitable for storing and managing sensitive information (such as secrets, API keys), but it does not directly provide real-time encryption and decryption capabilities. Reason for the Manually updating the certificate increases operational overhead and does not meet the requirement of \"minimizing operational overhead\"."
+        },
+        "B": {
+          "zh": "錯誤。本質分析：加密操作可以使用Lambda函數和Python函式庫來實現，但需要額外的開發和維護工作。原因 這種做法增加了開發複雜度和維運開銷，不符合「最小化維運開銷」的要求。",
+          "en": "Incorrect. ness analysis: Encryption operations can be implemented using Lambda functions and Python libraries, but require additional development and maintenance work. Reason for the This kind of approach increases development complexity and operational overhead, and does not meet the requirement of \"minimizing operational overhead\"."
+        },
+        "C": {
+          "zh": "正確。加密操作。將加密資料儲存在 Amazon S3 上。準確性分析：AWS KMS提供安全的加密和解密功能，Amazon S3提供高可用性儲存。確切原因：此選項利用 AWS 原生服務，減少營運開銷，同時滿足安全性和高可用性要求。",
+          "en": "Correct. encryption operations. Store the encrypted data on Amazon S3. Accuracy analysis: AWS KMS provides secure encryption and decryption functions, and Amazon S3 provides high-availability storage. The exact reason: This option leverages AWS native services, reducing operational overhead while meeting security and high availability requirements."
+        },
+        "D": {
+          "zh": "錯誤。加密操作。將加密資料儲存在 Amazon Elastic Block Store (Amazon EBS) 磁碟區上。準確性分析：AWS KMS提供加密功能，Amazon EBS也可以儲存資料。原因 Amazon EBS 的高可用性不如 Amazon S3，且 EBS 磁碟區與 EC2 執行個體綁定，限制了靈活性。",
+          "en": "Incorrect. encryption operations. Store the encrypted data on Amazon Elastic Block Store (Amazon EBS) volumes. Accuracy analysis: AWS KMS provides encryption functions, and Amazon EBS can also store data. Reason for the The high availability of Amazon EBS is not as good as Amazon S3, and the EBS volume is tied to the EC2 instance, which limits flexibility."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 AWS Key Management Service (AWS KMS) 客戶託管金鑰。允許 EC2 角色使用 KMS 金鑰進行加密操作。將加密資料儲存在 Amazon S3 上。",
+        "en": "C. Create an AWS Key Management Service (AWS KMS) customer managed key. Allow the EC2 role to use the KMS key for encryption operations. Store the encrypted data on Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (80%)； D (17%)。熱門討論與考點摘要：加密操作。將加密資料儲存在 Amazon S3 上。準確性分析：AWS KMS提供安全的加密和解密功能，Amazon S3提供高可用性儲存。確切原因：此選項利用 AWS 原生服務，減少營運開銷，同時滿足安全性和高可用性要求。",
+        "en": "Community vote as displayed: C (80%); D (17%). Popular discussion and key point summary: encryption operations. Store the encrypted data on Amazon S3. Accuracy analysis: AWS KMS provides secure encryption and decryption functions, and Amazon S3 provides high-availability storage. The exact reason: This option leverages AWS native services, reducing operational overhead while meeting security and high availability requirements."
+      }
+    },
+    {
+      "question_no": 101,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在設計具有公有子網路和私有子網路的 VPC。 VPC 和子網路使用 IPv4 CIDR 區塊。三個可用區 (AZ) 中各有 1 個公有子網和 1 個私有子網，以實現高可用性。 Internet 閘道用於為公用子網路提供 Internet 存取。私有子網路需要存取網際網路才能允許 Amazon EC2 執行個體下載軟體更新。解決方案架構師應該怎麼做才能實現私有子網路的 Internet 存取？",
+        "en": "A solutions architect is designing a VPC with public and private subnets. The VPC and subnets use IPv4 CIDR blocks. There is one public subnet and one private subnet in each of three Availability Zones (AZs) for high availability. An internet gateway is used to provide internet access for the public subnets. The private subnets require access to the internet to allow Amazon EC2 instances to download software updates. What should the solutions architect do to enable Internet access for the private subnets?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立三個 NAT 網關，每個可用區中的每個公有子網路一個。為每個可用區建立私有路由表，將非 VPC 流量轉送至其可用區中的 NAT 閘道。",
+          "en": "Create three NAT gateways, one for each public subnet in each AZ. Create a private route table for each AZ that forwards non-VPC traffic to the NAT gateway in its AZ."
+        },
+        "B": {
+          "zh": "建立三個 NAT 實例，每個可用區中的每個私有子網路一個。為每個可用區建立私有路由表，將非 VPC 流量轉送至其可用區中的 NAT 執行個體。",
+          "en": "Create three NAT instances, one for each private subnet in each AZ. Create a private route table for each AZ that forwards non-VPC traffic to the NAT instance in its AZ."
+        },
+        "C": {
+          "zh": "在私有子網路之一上建立第二個 Internet 閘道。更新將非 VPC 流量轉送到私有 Internet 閘道的私有子網路的路由表。",
+          "en": "Create a second internet gateway on one of the private subnets. Update the route table for the private subnets that forward non-VPC traffic to the private internet gateway."
+        },
+        "D": {
+          "zh": "在公用子網路上之一建立僅出口 Internet 閘道。更新將非 VPC 流量轉送至僅出口 Internet 閘道的私有子網路的路由表。",
+          "en": "Create an egress-only internet gateway on one of the public subnets. Update the route table for the private subnets that forward non-VPC traffic to the egress-only Internet gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。NAT 閘道是建議的解決方案，用於提供對私有子網路的 Internet 存取。將每個可用區的私人子網路流量路由到專用 NAT 閘道可確保高可用性。高可用性：每個可用區都有獨立的NAT網關，避免單點故障。",
+          "en": "Correct. A NAT gateway is the recommended solution for providing internet access to a private subnet. Routing each Availability Zone's private subnet traffic to a dedicated NAT gateway ensures high availability. High availability: Each availability zone has an independent NAT gateway to avoid single points of failure."
+        },
+        "B": {
+          "zh": "錯誤。NAT 實例是較舊的解決方案，已被 NAT 閘道取代。 NAT實例需要主動管理，不具備自動擴容能力。高可用性：NAT 執行個體可能成為效能瓶頸和單點故障。",
+          "en": "Incorrect. The NAT instance is an older solution and has been superseded by the NAT gateway. NAT instances require active management and do not have automatic expansion capabilities. High availability: NAT instances can become performance bottlenecks and single points of failure."
+        },
+        "C": {
+          "zh": "錯誤。一個VPC只能有一個公網關，不能建立第二個公網閘道。 Internet 網關僅適用於公用子網，無法直接提供對私有子網路的 Internet 存取。",
+          "en": "Incorrect. A VPC can only have one internet gateway, and a second internet gateway cannot be created. Internet gateways only work with public subnets and cannot directly provide Internet access to private subnets."
+        },
+        "D": {
+          "zh": "錯誤。僅出口 Internet 閘道僅適用於 IPv6 流量，但問題明確指出使用 IPv4 CIDR 區塊。不適用：出口網關無法滿足問題所要求的私有子網路上網要求。",
+          "en": "Incorrect. The egress-only internet gateway only applies to IPv6 traffic, but the question clearly states that IPv4 CIDR blocks are used. Not applicable: The egress gateway cannot meet the private subnet Internet access requirements required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立三個 NAT 網關，每個可用區中的每個公有子網路一個。為每個可用區建立私有路由表，將非 VPC 流量轉送至其可用區中的 NAT 閘道。",
+        "en": "A. Create three NAT gateways, one for each public subnet in each AZ. Create a private route table for each AZ that forwards non-VPC traffic to the NAT gateway in its AZ."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (98%)。熱門討論與考點摘要：NAT 閘道是建議的解決方案，用於提供對私有子網路的 Internet 存取。將每個可用區的私人子網路流量路由到專用 NAT 閘道可確保高可用性。高可用性：每個可用區都有獨立的NAT網關，避免單點故障。",
+        "en": "Community vote as displayed: A (98%). Popular discussion and key point summary: A NAT gateway is the recommended solution for providing internet access to a private subnet. Routing each Availability Zone's private subnet traffic to a dedicated NAT gateway ensures high availability. High availability: Each availability zone has an independent NAT gateway to avoid single points of failure."
+      }
+    },
+    {
+      "question_no": 102,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將本地資料中心遷移到 AWS。資料中心託管一個 SFTP 伺服器，該伺服器將其資料儲存在基於 NFS 的檔案系統上。伺服器保存需要傳輸的 200 GB 資料。伺服器必須託管在使用 Amazon Elastic File System (Amazon EFS) 檔案系統的 Amazon EC2 執行個體上。解決方案架構師應採取哪些步驟組合來自動執行此任務？ （選兩個。）",
+        "en": "A company wants to migrate an on-premises data center to AWS. The data center hosts an SFTP server that stores its data on an NFS-based file system. The server holds 200 GB of data that needs to be transferred. The server must be hosted on an Amazon EC2 instance that uses an Amazon Elastic File System (Amazon EFS) file system. Which combination of steps should a solutions architect take to automate this task? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將 EC2 執行個體啟動到與 EFS 檔案系統相同的可用區。",
+          "en": "Launch the EC2 instance into the same Availability Zone as the EFS file system."
+        },
+        "B": {
+          "zh": "在本機資料中心安裝 AWS DataSync 代理程式。",
+          "en": "Install an AWS DataSync agent in the on-premises data center."
+        },
+        "C": {
+          "zh": "在 EC2 執行個體上為資料建立輔助 Amazon Elastic Block Store (Amazon EBS) 磁碟區。",
+          "en": "Create a secondary Amazon Elastic Block Store (Amazon EBS) volume on the EC2 instance for the data."
+        },
+        "D": {
+          "zh": "手動使用作業系統複製指令將資料推送到 EC2 執行個體。",
+          "en": "Manually use an operating system copy command to push the data to the EC2 instance."
+        },
+        "E": {
+          "zh": "使用 AWS DataSync 為本機 SFTP 伺服器建立適當的位置配置。",
+          "en": "Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：雖然EFS檔案系統需要掛載在與EC2實例相同的可用區，但本問題的重點是資料遷移，而不是EC2實例的啟動位置。因此，此選項與資料遷移的自動化任務無關。",
+          "en": "Incorrect. Analysis: Although the EFS file system needs to be mounted in the same availability zone as the EC2 instance, the focus of this question is data migration, not the startup location of the EC2 instance. Therefore this option is not relevant for automated tasks of data migration."
+        },
+        "B": {
+          "zh": "正確。分析：這是正確的步驟之一。 AWS DataSync 代理程式可以協助將資料從本機資料中心遷移到 AWS 上的儲存服務（例如 EFS）。",
+          "en": "Correct. Analysis: This is one of the correct steps. The AWS DataSync agent can help migrate data from on-premises data centers to storage services on AWS (such as EFS)."
+        },
+        "C": {
+          "zh": "錯誤。分析：本題要求使用EFS作為存儲，而不是EBS。因此，該選項不符合題目要求，是錯誤的。",
+          "en": "Incorrect. Analysis: This question requires using EFS as storage instead of EBS. Therefore, this option does not meet the requirements of the question and is wrong."
+        },
+        "D": {
+          "zh": "錯誤。分析：手動操作無法實現自動化任務，而題中明確要求採用自動化的方式進行資料遷移，所以該選項是錯誤的。",
+          "en": "Incorrect. Analysis: Manual operation cannot achieve automated tasks, and the question clearly requires the use of automated methods for data migration, so this option is wrong."
+        },
+        "E": {
+          "zh": "正確。分析：這是正確的步驟之一。 AWS DataSync 需要設定來源位置（本機 SFTP 伺服器）和目標位置（EFS 檔案系統）才能完成資料遷移。",
+          "en": "Correct. Analysis: This is one of the correct steps. AWS DataSync requires configuration of the source location (local SFTP server) and destination location (EFS file system) to complete data migration."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 在本機資料中心安裝 AWS DataSync 代理程式。；E. 使用 AWS DataSync 為本機 SFTP 伺服器建立適當的位置配置。",
+        "en": "B. Install an AWS DataSync agent in the on-premises data center.; E. Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BE (57%)； AB (39%)。熱門討論與考點摘要：分析：這是正確的步驟之一。 AWS DataSync 代理程式可以協助將資料從本機資料中心遷移到 AWS 上的儲存服務（例如 EFS）。；分析：這是正確的步驟之一。 AWS DataSync 需要設定來源位置（本機 SFTP 伺服器）和目標位置（EFS 檔案系統）才能完成資料遷移。",
+        "en": "Community vote as displayed: BE (57%); AB (39%). Popular discussion and key point summary: Analysis: This is one of the correct steps. The AWS DataSync agent can help migrate data from on-premises data centers to storage services on AWS (such as EFS).; Analysis: This is one of the correct steps. AWS DataSync requires configuration of the source location (local SFTP server) and destination location (EFS file system) to complete data migration."
+      }
+    },
+    {
+      "question_no": 103,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個每天同時運行的 AWS Glue 提取、轉換和載入 (ETL) 作業。此作業處理 Amazon S3 儲存桶中的 XML 資料。每天都有新資料添加到 S3 儲存桶中。解決方案架構師注意到 AWS Glue 在每次運行期間處理所有資料。解決方案架構師應該如何防止 AWS Glue 重新處理舊資料？",
+        "en": "A company has an AWS Glue extract, transform, and load (ETL) job that runs every day at the same time. The job processes XML data that is in an Amazon S3 bucket. New data is added to the S3 bucket every day. A solutions architect notices that AWS Glue is processing all the data during each run. What should the solutions architect do to prevent AWS Glue from reprocessing old data?"
+      },
+      "options": {
+        "A": {
+          "zh": "編輯作業以使用作業書籤。",
+          "en": "Edit the job to use job bookmarks."
+        },
+        "B": {
+          "zh": "編輯作業以在處理資料後刪除資料。",
+          "en": "Edit the job to delete data after the data is processed."
+        },
+        "C": {
+          "zh": "將 NumberOfWorkers 欄位設為 1 來編輯作業。",
+          "en": "Edit the job by setting the NumberOfWorkers field to 1."
+        },
+        "D": {
+          "zh": "使用 FindMatches 機器學習 (ML) 轉換。",
+          "en": "Use a FindMatches machine learning (ML) transform."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Glue 的作業書籤功能可以追蹤已處理的資料並防止重新處理舊資料。這正是解決問題的最佳方法。",
+          "en": "Correct. AWS Glue's job bookmarking feature can track processed data and prevent reprocessing of old data. This is exactly the best way to solve the problem."
+        },
+        "B": {
+          "zh": "錯誤。刪除資料可能會導致資料遺失，不符合實際業務需求。該問題不需要刪除數據，而是避免重複處理。",
+          "en": "Incorrect. Deleting data may result in data loss and does not meet actual business requirements. The question does not require deletion of data, but rather avoids duplication of processing."
+        },
+        "C": {
+          "zh": "錯誤。NumberOfWorkers欄位用於設定作業的平行度，與避免重複處理資料無關。",
+          "en": "Incorrect. The NumberOfWorkers field is used to set the parallelism of the job and has nothing to do with avoiding repeated processing of data."
+        },
+        "D": {
+          "zh": "錯誤。FindMatches 是一種用於重複資料刪除的機器學習轉換，與避免重複處理資料無關。",
+          "en": "Incorrect. FindMatches is a machine learning transformation used for data deduplication and has nothing to do with avoiding repeated processing of data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 編輯作業以使用作業書籤。",
+        "en": "A. Edit the job to use job bookmarks."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：AWS Glue 的作業書籤功能可以追蹤已處理的資料並防止重新處理舊資料。這正是解決問題的最佳方法。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Glue's job bookmarking feature can track processed data and prevent reprocessing of old data. This is exactly the best way to solve the problem."
+      }
+    },
+    {
+      "question_no": 104,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師必須為網站設計高度可用的基礎架構。本網站由在 Amazon EC2 執行個體上執行的 Windows Web 伺服器提供支援。解決方案架構師必須實施能夠緩解源自數千個 IP 位址的大規模 DDoS 攻擊的解決方案。網站無法接受停機時間。解決方案架構師應該採取哪些措施來保護網站免受此類攻擊？ （選兩個。）",
+        "en": "A solutions architect must design a highly available infrastructure for a website. The website is powered by Windows web servers that run on Amazon EC2 instances. The solutions architect must implement a solution that can mitigate a large-scale DDoS attack that originates from thousands of IP addresses. Downtime is not acceptable for the website. Which actions should the solutions architect take to protect the website from such an attack? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Shield Advanced 封鎖 DDoS 攻擊。",
+          "en": "Use AWS Shield Advanced to stop the DDoS attack."
+        },
+        "B": {
+          "zh": "設定 Amazon GuardDuty 以自動封鎖攻擊者。",
+          "en": "Configure Amazon GuardDuty to automatically block the attackers."
+        },
+        "C": {
+          "zh": "設定網站以將 Amazon CloudFront 用於靜態和動態內容。",
+          "en": "Configure the website to use Amazon CloudFront for both static and dynamic content."
+        },
+        "D": {
+          "zh": "使用 AWS Lambda 函數自動將攻擊者 IP 位址新增至 VPC 網路 ACL。",
+          "en": "Use an AWS Lambda function to automatically add attacker IP addresses to VPC network ACLs."
+        },
+        "E": {
+          "zh": "在 Auto Scaling 群組中使用 EC2 Spot 實例，目標追蹤擴展策略設定為 80% CPU 使用率。",
+          "en": "Use EC2 Spot Instances in an Auto Scaling group with a target tracking scaling policy that is set to 80% CPU utilization."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Shield Advanced 是一項專門設計用於保護應用程式免受複雜和大規模 DDoS 攻擊的服務。它提供高級保護功能並與其他 AWS 服務整合以有效緩解攻擊。",
+          "en": "Correct. AWS Shield Advanced is a service specifically designed to protect applications from sophisticated and large-scale DDoS attacks. It provides advanced protection features and integrates with other AWS services to effectively mitigate attacks."
+        },
+        "B": {
+          "zh": "錯誤。Amazon GuardDuty 是一種威脅偵測服務，可識別潛在的惡意活動，但它不會自動阻止攻擊者。其主要功能是檢測和報告，而不是直接防禦。",
+          "en": "Incorrect. Amazon GuardDuty is a threat detection service that identifies potentially malicious activity, but it does not automatically block attackers. Its primary function is detection and reporting, not direct defense."
+        },
+        "C": {
+          "zh": "正確。Amazon CloudFront 是一個內容傳遞網路 (CDN)，可以幫助緩解 DDoS 攻擊。它透過分散式邊緣位置交付內容，減少對來源伺服器的直接訪問，並提供內建的 DDoS 保護。",
+          "en": "Correct. Amazon CloudFront is a content delivery network (CDN) that can help mitigate DDoS attacks. It delivers content through distributed edge locations, reduces direct access to origin servers, and provides built-in DDoS protection."
+        },
+        "D": {
+          "zh": "錯誤。雖然您可以使用AWS Lambda自動更新VPC網路ACL，但這種方法不適合應對大規模DDoS攻擊，因為攻擊可能來自數千個IP位址，並且手動管理ACL效率低且不夠全面。",
+          "en": "Incorrect. Although you can use AWS Lambda to automatically update VPC network ACLs, this method is not suitable for dealing with large-scale DDoS attacks because the attacks may come from thousands of IP addresses, and manual management of ACLs is inefficient and not comprehensive enough."
+        },
+        "E": {
+          "zh": "錯誤。使用 Spot 執行個體和 Auto Scaling 可以提高成本效益，但不能直接緩解 DDoS 攻擊。 DDoS 攻擊的目標是耗盡資源而不是優化資源使用。",
+          "en": "Incorrect. Using Spot Instances and Auto Scaling can increase cost-effectiveness, but it does not directly mitigate DDoS attacks. The goal of DDoS attacks is to exhaust resources rather than optimize resource usage."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Shield Advanced 封鎖 DDoS 攻擊。；C. 設定網站以將 Amazon CloudFront 用於靜態和動態內容。",
+        "en": "A. Use AWS Shield Advanced to stop the DDoS attack.; C. Configure the website to use Amazon CloudFront for both static and dynamic content."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AC (89%)。熱門討論與考點摘要：AWS Shield Advanced 是一項專門設計用於保護應用程式免受複雜和大規模 DDoS 攻擊的服務。它提供高級保護功能並與其他 AWS 服務整合以有效緩解攻擊。；Amazon CloudFront 是一個內容傳遞網路 (CDN)，可以幫助緩解 DDoS 攻擊。它透過分散式邊緣位置交付內容，減少對來源伺服器的直接訪問，並提供內建的 DDoS 保護。",
+        "en": "Community vote as displayed: AC (89%). Popular discussion and key point summary: AWS Shield Advanced is a service specifically designed to protect applications from sophisticated and large-scale DDoS attacks. It provides advanced protection features and integrates with other AWS services to effectively mitigate attacks.; Amazon CloudFront is a content delivery network (CDN) that can help mitigate DDoS attacks. It delivers content through distributed edge locations, reduces direct access to origin servers, and provides built-in DDoS protection."
+      }
+    },
+    {
+      "question_no": 105,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在準備部署新的無伺服器工作負載。解決方案架構師必須使用最小權限原則來配置將用於執行 AWS Lambda 函數的權限。 Amazon EventBridge (Amazon CloudWatch Events) 規則將呼叫該函數。哪種解決方案滿足這些要求？",
+        "en": "A company is preparing to deploy a new serverless workload. A solutions architect must use the principle of least privilege to configure permissions that will be used to run an AWS Lambda function. An Amazon EventBridge (Amazon CloudWatch Events) rule will invoke the function. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將執行角色加入函數中，以 lambda:InvokeFunction 作為操作，以 * 作為主體。",
+          "en": "Add an execution role to the function with lambda:InvokeFunction as the action and * as the principal."
+        },
+        "B": {
+          "zh": "在函數中加入一個執行角色，其中 lambda:InvokeFunction 作為操作，Service: lambda.amazonaws.com 為主體。",
+          "en": "Add an execution role to the function with lambda:InvokeFunction as the action and Service: lambda.amazonaws.com as the principal."
+        },
+        "C": {
+          "zh": "將基於資源的策略加入函數中，其中 lambda:* 作為操作，Service: events.amazonaws.com 作為主體。",
+          "en": "Add a resource-based policy to the function with lambda:* as the action and Service: events.amazonaws.com as the principal."
+        },
+        "D": {
+          "zh": "將基於資源的策略加入函數中，其中 lambda:InvokeFunction 作為操作，Service: events.amazonaws.com 作為主體。",
+          "en": "Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com as the principal."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。執行角色授予 Lambda 函數呼叫其他服務的權限，而不是授予其他服務呼叫 Lambda 函數的權限。 * 的主體不符合最小權限原則，因為它允許任何主體呼叫 Lambda 函數。",
+          "en": "Incorrect. The execution role gives the Lambda function permission to call other services, rather than giving other services permission to call the Lambda function. A Principal of * does not comply with the principle of least privilege because it allows any principal to invoke the Lambda function."
+        },
+        "B": {
+          "zh": "錯誤。執行角色的主體應該是 Lambda 函數本身，而不是其他服務（例如 lambda.amazonaws.com）。此外，lambda:InvokeFunction 是呼叫 Lambda 函數的權限，而不是授予 Lambda 函數執行權限的正確操作。",
+          "en": "Incorrect. The principal executing the role should be the Lambda function itself, not another service (such as lambda.amazonaws.com). Additionally, lambda:InvokeFunction is a permission to invoke a Lambda function, not the correct action to give a Lambda function execution permissions."
+        },
+        "C": {
+          "zh": "錯誤。lambda:* 的權限範圍太大，不符合最小權限原則。主要服務：events.amazonaws.com 是正確的，因為 EventBridge 需要呼叫 Lambda 函數。",
+          "en": "Incorrect. The permission scope of lambda:* is too large and does not comply with the principle of least privilege. Principal Service: events.amazonaws.com is correct because EventBridge needs to call the Lambda function."
+        },
+        "D": {
+          "zh": "正確。lambda:InvokeFunction 是正確的最低權限操作，允許 EventBridge 呼叫 Lambda 函數。主要服務：events.amazonaws.com 是正確的，因為 EventBridge 是呼叫 Lambda 的服務。",
+          "en": "Correct. lambda:InvokeFunction is a correct least-privilege action that allows EventBridge to invoke a Lambda function. Principal Service: events.amazonaws.com is correct because EventBridge is the service that calls Lambda."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將基於資源的策略加入函數中，其中 lambda:InvokeFunction 作為操作，Service: events.amazonaws.com 作為主體。",
+        "en": "D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com as the principal."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (97%)。熱門討論與考點摘要：lambda:InvokeFunction 是正確的最低權限操作，允許 EventBridge 呼叫 Lambda 函數。主要服務：events.amazonaws.com 是正確的，因為 EventBridge 是呼叫 Lambda 的服務。",
+        "en": "Community vote as displayed: D (97%). Popular discussion and key point summary: lambda:InvokeFunction is a correct least-privilege action that allows EventBridge to invoke a Lambda function. Principal Service: events.amazonaws.com is correct because EventBridge is the service that calls Lambda."
+      }
+    }
+  ]
+}

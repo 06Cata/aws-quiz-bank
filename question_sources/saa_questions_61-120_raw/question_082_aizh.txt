@@ -1,0 +1,65 @@
+A company hosts its web applications in the AWS Cloud. The company configures Elastic Load Balancers to use certificates that are
+imported into AWS Certificate Manager (ACM). The company's security team must be notified 30 days before the expiration of
+each certificate.
+What should a solutions architect recommend to meet this requirement?
+一家公司在 AWS 云中托管其 Web 应用程序。 该公司配置了 Elastic Load Balancers 使用导入到 AWS Certificate Manager (ACM) 的
+证书。 公司的安全团队必须在每个证书到期前 30 天收到通知。
+解决方案架构师应该推荐什么来满足此要求？
+A. Add a rule in ACM to publish a custom message to an Amazon Simple Notification Service (Amazon SNS) topic every day,
+beginning 30 days before any certificate will expire.
+在 ACM 中添加一个规则，每天向 Amazon Simple Notification Service (Amazon SNS) 主题发布自定义消息， 从任何证书到期前
+30 天开始。
+B. Create an AWS Config rule that checks for certificates that will expire within 30 days. Configure Amazon EventBridge
+(Amazon CloudWatch Events) to invoke a custom alert by way of Amazon Simple Notification Service (Amazon SNS) when
+AWS Config reports a noncompliant resource. Most Voted
+创建一个 AWS Config 规则，检查将在 30 天内到期的证书。 配置 Amazon EventBridge (Amazon CloudWatch Events) 通过
+Amazon Simple Notification Service (Amazon SNS) 调用自定义警报， 当 AWS Config 报告不合规资源时。
+C. Use AWS Trusted Advisor to check for certificates that will expire within 30 days. Create an Amazon CloudWatch alarm that is
+based on Trusted Advisor metrics for check status changes. Configure the alarm to send a custom alert by way of Amazon
+Simple Notification Service (Amazon SNS).
+使用 AWS Trusted Advisor 检查将在 30 天内到期的证书。 创建一个基于 Trusted Advisor 检查状态变化的指标的 Amazon
+CloudWatch 警报。 配置警报通过 Amazon Simple Notification Service (Amazon SNS) 发送自定义警报。
+D. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to detect any certificates that will expire within 30 days.
+Configure the rule to invoke an AWS Lambda function. Configure the Lambda function to send a custom alert by way of
+Amazon Simple Notification Service (Amazon SNS).
+创建一个 Amazon EventBridge (Amazon CloudWatch Events) 规则，检测将在 30 天内到期的任何证书。 配置该规则调用一个
+AWS Lambda 函数。 配置 Lambda 函数通过 Amazon Simple Notification Service (Amazon SNS) 发送自定义警报。
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (49%)
+D (48%)
+2%
+题目分析与解答
+1. 考察的知识点
+本题考察的是如何监控和管理证书的到期时间，并通过自动化方式通知相关团队。
+涉及的AWS服务包括：AWS Certificate Manager (ACM)、Amazon SNS、AWS Config、Amazon EventBridge、AWS Lambda、AWS
+Trusted Advisor。
+2. 独立分析每个选项
+A. 在 ACM 中添加一个规则，每天向 Amazon SNS 主题发布自定义消息，从任何证书到期前 30 天开始。
+错误：ACM本身并不支持直接创建规则来发布消息到SNS。ACM的功能主要是管理证书，而不是提供通知功能。
+因此此选项不可行。
+B. 创建一个 AWS Config 规则，检查将在 30 天内到期的证书。配置 Amazon EventBridge (Amazon CloudWatch Events) 通过
+Amazon SNS 调用自定义警报，当 AWS Config 报告不合规资源时。
+正确：AWS Config可以通过规则检查资源的合规性，包括证书的到期时间。
+EventBridge可以捕获AWS Config的非合规事件，并触发SNS通知。
+此选项是可行的，并且符合题目要求。
+C. 使用 AWS Trusted Advisor 检查将在 30 天内到期的证书。创建一个基于 Trusted Advisor 检查状态变化的指标的 Amazon
+CloudWatch 警报。配置警报通过 Amazon SNS 发送自定义警报。
+错误：虽然Trusted Advisor可以检查证书的状态，但它的功能主要是提供建议，而不是实时监控和通知。
+此外，Trusted Advisor的某些功能需要企业支持计划，可能不适合所有用户。
+此选项不符合题目要求。
+D. 创建一个 Amazon EventBridge (Amazon CloudWatch Events) 规则，检测将在 30 天内到期的任何证书。配置该规则调用一个
+AWS Lambda 函数。配置 Lambda 函数通过 Amazon SNS 发送自定义警报。
+正确：EventBridge可以检测证书到期事件，并触发Lambda函数。
+Lambda函数可以进一步处理逻辑并发送SNS通知。
+此选项是可行的，但实现起来比选项B复杂，且需要额外的Lambda函数开发工作。
+3. 我的选择
+我选择的答案是：B
+4. 官方答案
+官方答案是：B
+5. 比较与重新思考
+我的答案与官方答案一致。
+原因：选项B使用AWS Config和EventBridge的组合，能够直接满足题目要求，且实现起来相对简单，无需额外开发工作。
+棃宝: " IT认证轻松过 " https://shop542998714.m.taobao.com

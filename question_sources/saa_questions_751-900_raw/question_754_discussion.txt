@@ -1,0 +1,109 @@
+A company has users all around the world accessing its HTTP-based application deployed on Amazon EC2 instances in multiple
+AWS Regions. The company wants to improve the availability and performance of the application. The company also wants to
+protect the application against common web exploits that may affect availability, compromise security, or consume excessive
+resources. Static IP addresses are required.
+What should a solutions architect recommend to accomplish this?
+A. Put the EC2 instances behind Network Load Balancers (NLBs) in each Region. Deploy AWS WAF on the NLBs. Create an
+accelerator using AWS Global Accelerator and register the NLBs as endpoints.
+B. Put the EC2 instances behind Application Load Balancers (ALBs) in each Region. Deploy AWS WAF on the ALBs. Create an
+accelerator using AWS Global Accelerator and register the ALBs as endpoints. Most Voted
+C. Put the EC2 instances behind Network Load Balancers (NLBs) in each Region. Deploy AWS WAF on the NLBs. Create an
+Amazon CloudFront distribution with an origin that uses Amazon Route 53 latency-based routing to route requests to the
+NLBs.
+D. Put the EC2 instances behind Application Load Balancers (ALBs) in each Region. Create an Amazon CloudFront distribution
+with an origin that uses Amazon Route 53 latency-based routing to route requests to the ALBs. Deploy AWS WAF on the
+CloudFront distribution.
+Comments
+ogerber Highly Voted 1 year, 9 months ago
+Selected Answer: B
+HTTP based application so ALB is required.
+because static IP addresses are required, we should use global accelerator:
+"By default, Global Accelerator provides you with static IP addresses that you associate with your accelerator."
+upvoted 15 times
+Andy_09 Highly Voted 1 year, 10 months ago
+Option D
+upvoted 5 times
+Typewriter101 1 year, 9 months ago
+Why D cause i think global accelerator will do a better job an cloudfront to increase availability and performance
+upvoted 2 times
+Typewriter101 1 year, 9 months ago
+than cloudfront*
+upvoted 1 times
+ln2718 Most Recent 10 months, 2 weeks ago
+Selected Answer: D
+The best answer is now D - this is an HTTP based app and Cloudfront currently supports static IPs - https://aws.amazon.com/about-aws/whats-
+new/2024/11/amazon-cloudfront-anycast-static-ips/ Either this is a trick question - or it is now outdated and needs revision.
+upvoted 1 times
+f07ed8f 1 year, 6 months ago
+Selected Answer: B
+CloudFront doesn't support assigning a static IP address to distributions
+Correct Answer: B
+Community vote distribution
+B (85%)
+D (15%)
+upvoted 3 times
+zinabu 1 year, 7 months ago
+Selected Answer: B
+Http based app=ALB
+static IP= AWS global accelerator
+for those who choice ''A'' NLB doesn't support Http based traffic it is just used for TCP/UDP based traffic.
+upvoted 4 times
+mohammadthainat 1 year, 8 months ago
+Selected Answer: D
+Something wrong in the question, here is why:
+Static IP addresses are required --> NLB
+protect against common web exploits --> WAF (But you can't use WAF directly with NLB)
+HTTP-based application --> Cloudfront (using CloudFront with NLB is not recommended)
+EC2s in multiple AWS Regions --> Route 53 latency-based
+upvoted 3 times
+mohammadthainat 1 year, 8 months ago
+Changing my answer to B
+Static IP addresses are required --> We can use Global Accelerator for fixed IP and WAF on the ALB
+upvoted 4 times
+TruthWS 1 year, 8 months ago
+Option A
+Static IP --> NLB
+against common web exploits --> WAF
+performance --> Global Accelerator is best choice in this situation.
+upvoted 1 times
+dkw2342 1 year, 8 months ago
+No, option B is correct.
+* WAF (L7) does not work with NLB (L4)
+* Traffic enters via the Global Accelerator, so that's the customer-facing (static) IP - https://docs.aws.amazon.com/global-
+accelerator/latest/dg/about-accelerators.eip-accelerator.html
+upvoted 3 times
+jackky3123213 1 year, 8 months ago
+Selected Answer: D
+Option D
+upvoted 1 times
+alawada 1 year, 8 months ago
+Selected Answer: B
+CloudFront uses multiple sets of dynamically changing IP addresses while Global Accelerator will provide you a set of static IP addresses as a fixed
+entry point to your applications
+upvoted 2 times
+Ipergorta 1 year, 8 months ago
+Option D
+upvoted 1 times
+Naveena_Devanga 1 year, 9 months ago
+Correct Answer is C.
+Static IP addresses are required specific to the requirement.
+upvoted 1 times
+stephensimudemy 1 year, 9 months ago
+Selected Answer: B
+CloudFront uses multiple sets of dynamically changing IP addresses while Global Accelerator will provide you a set of static IP addresses as a fixed
+entry point to your applications
+upvoted 2 times
+osmk 1 year, 9 months ago
+Selected Answer: B
+Network Load Balancer (NLB): NLB operates at layer 4 and does not support AWS WAF directly
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html
+upvoted 2 times
+osmk 1 year, 9 months ago
+The company wants to improve the availability and performance of the application
+upvoted 1 times
+jaswantn 1 year, 9 months ago
+Static IP addresses are required, so option B....global accelerator with ALB
+upvoted 3 times
+Dhokal 1 year, 10 months ago
+B is correct
+upvoted 3 times

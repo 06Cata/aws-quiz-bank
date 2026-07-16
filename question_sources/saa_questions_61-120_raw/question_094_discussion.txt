@@ -1,0 +1,117 @@
+A company is designing an application where users upload small files into Amazon S3. After a user uploads a file, the file requires
+one-time simple processing to transform the data and save the data in JSON format for later analysis.
+Each file must be processed as quickly as possible after it is uploaded. Demand will vary. On some days, users will upload a high
+number of files. On other days, users will upload a few files or no files.
+Which solution meets these requirements with the LEAST operational overhead?
+A. Configure Amazon EMR to read text files from Amazon S3. Run processing scripts to transform the data. Store the resulting
+JSON file in an Amazon Aurora DB cluster.
+B. Configure Amazon S3 to send an event notification to an Amazon Simple Queue Service (Amazon SQS) queue. Use Amazon
+EC2 instances to read from the queue and process the data. Store the resulting JSON file in Amazon DynamoDB.
+C. Configure Amazon S3 to send an event notification to an Amazon Simple Queue Service (Amazon SQS) queue. Use an AWS
+Lambda function to read from the queue and process the data. Store the resulting JSON file in Amazon DynamoDB. Most Voted
+D. Configure Amazon EventBridge (Amazon CloudWatch Events) to send an event to Amazon Kinesis Data Streams when a new
+file is uploaded. Use an AWS Lambda function to consume the event from the stream and process the data. Store the resulting
+JSON file in an Amazon Aurora DB cluster.
+Comments
+rjam Highly Voted 3 years, 7 months ago
+Option C
+Dynamo DB is a NoSQL-JSON supported
+upvoted 17 times
+rjam 3 years, 7 months ago
+also Use an AWS Lambda - serverless - less operational overhead
+upvoted 12 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: C
+A. Configuring EMR and an Aurora DB cluster for this use case would introduce unnecessary complexity and operational overhead. EMR is typically
+used for processing large datasets and running big data frameworks like Apache Spark or Hadoop.
+B. While using S3 event notifications and SQS for decoupling is a good approach, using EC2 to process the data would introduce operational
+overhead in terms of managing and scaling the EC2.
+D. Using EventBridge and Kinesis Data Streams for this use case would introduce additional complexity and operational overhead compared to the
+other options. EventBridge and Kinesis are typically used for real-time streaming and processing of large volumes of data.
+In summary, option C is the recommended solution as it provides a serverless and scalable approach for processing uploaded files using S3 event
+notifications, SQS, and Lambda. It offers low operational overhead, automatic scaling, and efficient handling of varying demand. Storing the resulting
+JSON file in DynamoDB aligns with the requirement of saving the data for later analysis.
+upvoted 10 times
+Dharmarajan Most Recent 1 year, 4 months ago
+Selected Answer: C
+C is the simplest and most widely used architecture, for example, processing photos to generate thumbnails.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Correct Answer: C
+Community vote distribution
+C (100%)
+Selected Answer: C
+C is most suitable here as we need DynamoDB for low latency, AWS Lambda for scaling as per the demand.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: C
+Ans C - as per cookieMr (1 yr, 2 mth ago)
+"...In summary, option C is the recommended solution as it provides a serverless and scalable approach for processing uploaded files using S3 event
+notifications, SQS, and Lambda. It offers low operational overhead, automatic scaling, and efficient handling of varying demand. Storing the resulting
+JSON file in DynamoDB aligns with the requirement of saving the data for later analysis."
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: C
+Option C, fulfills the least operational overhead condition.
+upvoted 2 times
+TilTil 2 years, 2 months ago
+Selected Answer: C
+B where we use EC2 instances for processing would be ideal in situations where runtime is > 15 minutes. However the question mentions 'simple
+processing', hence we go for Lambda.
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: C
+LEAST operational overhead
+A: EMR is massive programming effort for this
+B: EC2 is considerable overhead
+D: Nice solution but why would you use Kinesis as there is no streaming scenario here
+C: Simplest and all managed services so least operational overhead compared to other options
+upvoted 2 times
+Ruffyit 2 years, 7 months ago
+Option C is the best solution that meets the requirements with the least operational overhead:
+Configure Amazon S3 to send event notification to SQS queue
+Use Lambda function triggered by SQS to process each file
+Store output JSON in DynamoDB
+This leverages serverless components like S3, SQS, Lambda, and DynamoDB to provide automated file processing without needing to provision and
+manage servers.
+SQS queues the notifications and Lambda scales automatically to handle spikes and drops in file uploads. No EMR cluster or EC2 Fleet is needed to
+manage.
+upvoted 2 times
+Modulopi 2 years, 8 months ago
+Selected Answer: C
+C: Lambdas are made for that
+upvoted 1 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: C
+C is best
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: C
+Option C is the best solution that meets the requirements with the least operational overhead:
+Configure Amazon S3 to send event notification to SQS queue
+Use Lambda function triggered by SQS to process each file
+Store output JSON in DynamoDB
+This leverages serverless components like S3, SQS, Lambda, and DynamoDB to provide automated file processing without needing to provision and
+manage servers.
+SQS queues the notifications and Lambda scales automatically to handle spikes and drops in file uploads. No EMR cluster or EC2 Fleet is needed to
+manage.
+upvoted 2 times
+beginnercloud 3 years ago
+Selected Answer: C
+Option C is correct - Dynamo DB is a NoSQL-JSON supported
+upvoted 1 times
+Abrar2022 3 years ago
+Selected Answer: C
+SQS + LAMDA + JSON >>>>>> Dynamo DB
+upvoted 2 times
+Bmarodi 3 years ago
+Selected Answer: C
+The option C is right answer.
+upvoted 1 times
+jy190 3 years, 1 month ago
+can someone explain why SQS? it's a poll-based messaging, does it guarantee reacting the event asap?
+upvoted 1 times
+Zerotn3 3 years, 5 months ago
+Selected Answer: C
+Dynamo DB is a NoSQL-JSON supported
+upvoted 1 times

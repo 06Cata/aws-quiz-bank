@@ -1,0 +1,69 @@
+Question #528
+A data analytics company wants to migrate its batch processing system to AWS. The company receives thousands of small data
+files periodically during the day through FTP. An on-premises batch job processes the data files overnight. However, the batch job
+takes hours to finish running.
+The company wants the AWS solution to process incoming data files as soon as possible with minimal changes to the FTP clients
+that send the files. The solution must delete the incoming data files after the files have been processed successfully. Processing for
+each file needs to take 3-8 minutes.
+Which solution will meet these requirements in the MOST operationally efficient way?
+一家数据分析公司希望将其批处理系统迁移到AWS。该公司通过FTP在一天中的不同时间周期性地接收数千个小型数据文件。一个
+本地的批处理作业会在夜间处理这些数据文件。然而，该批处理作业需要数小时才能完成运行。
+该公司希望AWS解决方案能够尽快处理接收到的数据文件，同时对发送文件的FTP客户端进行最少的更改。解决方案必须在文件成
+功处理后删除接收到的数据文件。每个文件的处理时间需要在3-8分钟之间。
+哪种解决方案可以以最具操作效率的方式满足这些需求？
+A. Use an Amazon EC2 instance that runs an FTP server to store incoming files as objects in Amazon S3 Glacier Flexible
+Retrieval. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the objects nightly
+from S3 Glacier Flexible Retrieval. Delete the objects after the job has processed the objects.
+使用运行FTP服务器的Amazon EC2实例将接收到的文件存储为对象到Amazon S3 Glacier Flexible Retrieval中。在AWS Batch中配
+置一个作业队列。使用Amazon EventBridge规则每晚从S3 Glacier Flexible Retrieval中调用作业来处理对象。在作业处理完对象
+后删除这些对象。
+B. Use an Amazon EC2 instance that runs an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS)
+volume. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the files nightly from
+the EBS volume. Delete the files after the job has processed the files.
+使用运行FTP服务器的Amazon EC2实例将接收到的文件存储到Amazon Elastic Block Store（Amazon EBS）卷中。在AWS Batch
+中配置一个作业队列。使用Amazon EventBridge规则每晚从EBS卷中调用作业来处理文件。在作业处理完文件后删除这些文件。
+C. Use AWS Transfer Family to create an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS)
+volume. Configure a job queue in AWS Batch. Use an Amazon S3 event notification when each file arrives to invoke the job in
+AWS Batch. Delete the files after the job has processed the files.
+使用AWS Transfer Family创建一个FTP服务器，将接收到的文件存储到Amazon Elastic Block Store（Amazon EBS）卷中。在AWS
+Batch中配置一个作业队列。使用Amazon S3事件通知在每个文件到达时调用AWS Batch中的作业。在作业处理完文件后删除这
+些文件。
+D. Use AWS Transfer Family to create an FTP server to store incoming files in Amazon S3 Standard. Create an AWS Lambda
+function to process the files and to delete the files after they are processed. Use an S3 event notification to invoke the Lambda
+function when the files arrive. Most Voted
+使用AWS Transfer Family创建一个FTP服务器，将接收到的文件存储到Amazon S3 Standard中。创建一个AWS Lambda函数来处
+理文件并在文件处理后删除这些文件。使用S3事件通知在文件到达时调用Lambda函数。
+题目分析与解答
+1. 考察的知识点
+AWS Transfer Family的使用：创建FTP服务器以接收文件。
+Amazon S3的存储类型及事件通知机制。
+AWS Lambda的无服务器计算能力及文件处理能力。
+操作效率与实时处理的设计。
+2. 选项分析
+A. 使用Amazon EC2和S3 Glacier Flexible Retrieval：
+错误：S3 Glacier Flexible Retrieval是用于长期存储的冷存储解决方案，检索时间较长，不适合实时处理。
+错误：使用Amazon EC2运行FTP服务器增加了管理开销，降低了操作效率。
+B. 使用Amazon EC2和Amazon EBS：
+错误：Amazon EBS是块存储，适合与EC2实例配合使用，但不支持事件通知机制，无法实现实时处理。
+错误：使用Amazon EC2运行FTP服务器增加了管理开销，降低了操作效率。
+C. 使用AWS Transfer Family和Amazon EBS：
+错误：虽然AWS Transfer Family可以创建FTP服务器，但Amazon EBS不支持事件通知机制，无法实现实时触发处理。
+错误：需要额外的配置来实现文件处理的自动化，操作效率较低。
+D. 使用AWS Transfer Family和Amazon S3 Standard：
+正确：AWS Transfer Family可以创建FTP服务器，支持接收文件。
+正确：Amazon S3 Standard支持事件通知机制，可以实时触发AWS Lambda函数处理文件。
+正确：AWS Lambda是无服务器计算服务，适合处理短时间任务（3-8分钟），并且可以自动删除文件。
+正确：此方案操作效率高，符合题目要求。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：选项D最符合题目要求，提供了高效的实时处理解决方案，并且使用了AWS服务的最佳实践。
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (96%)
+4%

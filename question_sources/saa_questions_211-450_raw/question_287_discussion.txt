@@ -1,0 +1,113 @@
+A company wants to migrate a Windows-based application from on premises to the AWS Cloud. The application has three tiers: an
+application tier, a business tier, and a database tier with Microsoft SQL Server. The company wants to use specific features of SQL
+Server such as native backups and Data Quality Services. The company also needs to share files for processing between the tiers.
+How should a solutions architect design the architecture to meet these requirements?
+A. Host all three tiers on Amazon EC2 instances. Use Amazon FSx File Gateway for file sharing between the tiers.
+B. Host all three tiers on Amazon EC2 instances. Use Amazon FSx for Windows File Server for file sharing between the tiers.
+Most Voted
+C. Host the application tier and the business tier on Amazon EC2 instances. Host the database tier on Amazon RDS. Use
+Amazon Elastic File System (Amazon EFS) for file sharing between the tiers.
+D. Host the application tier and the business tier on Amazon EC2 instances. Host the database tier on Amazon RDS. Use a
+Provisioned IOPS SSD (io2) Amazon Elastic Block Store (Amazon EBS) volume for file sharing between the tiers.
+Comments
+KZM Highly Voted 3 years, 3 months ago
+It is B:
+A: Incorrect> FSx file Gateway designed for low latency and efficient access to in-cloud FSx for Windows File Server file shares from your on-premises
+facility.
+B: Correct> This solution will allow the company to host all three tiers on Amazon EC2 instances while using Amazon FSx for Windows File Server to
+provide Windows-based file sharing between the tiers. This will allow the company to use specific features of SQL Server, such as native backups and
+Data Quality Services, while sharing files for processing between the tiers.
+C: Incorrect> Currently, Amazon EFS supports the NFSv4.1 protocol and does not natively support the SMB protocol, and can't be used in Windows
+instances yet.
+D: Incorrect> Amazon EBS is a block-level storage solution that is typically used to store data at the operating system level, rather than for file
+sharing between servers.
+upvoted 20 times
+djgodzilla Most Recent 2 years, 5 months ago
+Selected Answer: B
+RDS for SQL Backups: aren't Native MSSQL backups Instead RDS creates a storage volume snapshot of the instance, backing up the entire instance
+not just individual databases.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+Not A - File Gateway is just a gateway, needs S3 too
+B - Yes
+Not C - RDS does not support the required features, and EFS does not provide SMB
+Not D - RDS does not support the required features, and EBS volume shared between tiers doesn't make sense
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+B. Host all three tiers on Amazon EC2 instances. Use Amazon FSx for Windows File Server for file sharing between the tiers.
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+B (92%)
+8%
+Abrar2022 3 years ago
+The question mentions Microsoft = windows
+EFS is Linux
+upvoted 2 times
+kruasan 3 years, 1 month ago
+Selected Answer: B
+This design satisfies the needs in the following ways:
+• Running all tiers on EC2 allows using SQL Server on EC2 with its native features like backups and Data Quality Services. SQL Server cannot be run
+directly on RDS.
+• Amazon FSx for Windows File Server provides fully managed Windows file storage with SMB access. This allows sharing files between the Windows
+EC2 instances for all three tiers.
+• FSx for Windows File Server has high performance, so it can handle file sharing needs between the tiers.
+upvoted 2 times
+kruasan 3 years, 1 month ago
+The other options would not meet requirements:
+A. FSx File Gateway only provides access to S3 or EFS storage. It cannot be used directly for Windows file sharing.
+C. RDS cannot run SQL Server or its native tools. The database tier needs to run on EC2.
+D. EBS volumes can only be attached to a single EC2 instance. They cannot be shared between tiers for file exchanges.
+upvoted 2 times
+Netgear 2 years, 8 months ago
+No, there is RDS for SQL Server.
+https://aws.amazon.com/rds/sqlserver/
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Installing SQL Server directly on an EC2 instance allows access to its native features like backups and Data Quality Services. For this use case, SQL
+Server cannot be run directly on RDS.
+upvoted 1 times
+fageroff 2 years, 8 months ago
+IO2 support multi-attach
+upvoted 1 times
+ManOnTheMoon 3 years, 3 months ago
+Why not C?
+upvoted 1 times
+KZM 3 years, 3 months ago
+Currently, Amazon EFS supports the NFSv4.1 protocol and does not natively support the SMB protocol, and can't be used in Windows instances yet
+upvoted 4 times
+AlmeroSenior 3 years, 3 months ago
+Selected Answer: B
+Yup B . RDS will not work , Native Backup only to S3 , and Data Quality is not supported , so all EC2 .
+https://aws.amazon.com/premiumsupport/knowledge-center/native-backup-rds-sql-server/ and https://www.sqlserver-dba.com/2021/07/aws-rds-
+sql-server-limitations.html
+upvoted 3 times
+LuckyAro 3 years, 3 months ago
+After further research, I concur that the correct answer is B. Native Back up and Data Quality not supported on RDS for Ms SQL
+upvoted 3 times
+LuckyAro 3 years, 3 months ago
+Selected Answer: C
+C.
+Host the application tier and the business tier on Amazon EC2 instances.
+Host the database tier on Amazon RDS.
+Use Amazon Elastic File System (Amazon EFS) for file sharing between the tiers.
+This solution allows the company to use specific features of SQL Server such as native backups and Data Quality Services, by hosting the database
+tier on Amazon RDS. It also enables file sharing between the tiers using Amazon EFS, which is a fully managed, highly available, and scalable file
+system. Amazon EFS provides shared access to files across multiple instances, which is important for processing files between the tiers. Additionally,
+hosting the application and business tiers on Amazon EC2 instances provides the company with the flexibility to configure and manage the
+environment according to their requirements.
+upvoted 2 times
+rushi0611 3 years, 1 month ago
+How are you gonna connect the EFS to windows based ??
+upvoted 3 times
+Yechi 3 years, 3 months ago
+Selected Answer: B
+Data Quality Services: If this feature is critical to your workload, consider choosing Amazon RDS Custom or Amazon EC2.
+https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-sql-server/comparison.html
+upvoted 4 times
+Bhawesh 3 years, 3 months ago
+Selected Answer: B
+Correct Answer: B
+upvoted 4 times

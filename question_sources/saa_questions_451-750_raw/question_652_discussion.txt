@@ -1,0 +1,77 @@
+A company has a large data workload that runs for 6 hours each day. The company cannot lose any data while the process is
+running. A solutions architect is designing an Amazon EMR cluster configuration to support this critical data workload.
+Which solution will meet these requirements MOST cost-effectively?
+A. Configure a long-running cluster that runs the primary node and core nodes on On-Demand Instances and the task nodes
+on Spot Instances.
+B. Configure a transient cluster that runs the primary node and core nodes on On-Demand Instances and the task nodes on
+Spot Instances. Most Voted
+C. Configure a transient cluster that runs the primary node on an On-Demand Instance and the core nodes and task nodes on
+Spot Instances.
+D. Configure a long-running cluster that runs the primary node on an On-Demand Instance, the core nodes on Spot Instances,
+and the task nodes on Spot Instances.
+Comments
+louisaok Highly Voted 2 years, 7 months ago
+Relax man. take a break since you have made this far so far.
+upvoted 58 times
+AWSSURI 1 year, 9 months ago
+Rest at the end NOT in the middle
+-- Kobe Bryant
+upvoted 12 times
+potomac Highly Voted 2 years, 7 months ago
+Selected Answer: B
+A transient cluster provides cost savings because it runs only during the computation time, and it provides scalability and flexibility in a cloud
+environment.
+Option C (transient cluster with On-Demand primary node and Spot core and task nodes) exposes the core nodes to Spot Instance interruptions,
+which may not be acceptable for a workload that cannot lose any data.
+upvoted 15 times
+EllenLiu Most Recent 1 year, 5 months ago
+Selected Answer: B
+take a break and feel better now. thanks for encouraging with each other!
+daily batch handling within several hours => transient cluster
+data-critical application => spot for task node only
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: B
+AD are long-running so don't fit in with 6 hours schedule
+BC are ideal for scheduled EMR activities
+C is wrong as running core node on Spot instance has a risk of data loss https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-
+core-task-nodes.html
+B is correct because primary, core will be stable on on-demand as recommended by AWS and task can go on spot instances as task nodes are short
+lived by nature anyway
+upvoted 6 times
+Correct Answer: B
+Community vote distribution
+B (100%)
+pentium75 2 years, 5 months ago
+Selected Answer: B
+"Long-running cluster" = runs until you shut it down
+"Transient cluster" = runs until the workload is completed
+This runs only 6 hours each day -> transient -> B or C
+"Cannot lose any data while the process is running" -> Primary and core nodes cannot be Spot instances -> A or B
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-longrunning-transient.html
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html
+upvoted 10 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+Cannot loose data = ondemand primary + core nodes
+Save on costs = spot task nodes
+Runs for 6 hours = transient cluster
+upvoted 6 times
+SHAAHIBHUSHANAWS 2 years, 6 months ago
+A
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html
+It's long running and no data loss is needed.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+The link says you can lose data if you are running a transient cluster WITH ONLY Spot instances. "Long-running" = runs until you shut it down,
+"Transient" = Runs until the workload is completed
+upvoted 1 times
+whiterick 2 years, 4 months ago
+Option A suggests a long-running cluster, which continues to run until manually terminated. This means that even if tasks are rerouted due to Spo
+Instance interruptions, the cluster itself remains active, allowing the rerouted tasks to complete on other nodes.
+Option B suggests a transient cluster, which is terminated after all steps are completed. If the Spot Instances are interrupted and tasks are not
+completed, the cluster might still terminate after the steps are deemed complete, potentially leading to incomplete processing of data.
+upvoted 1 times
+MFKang 2 years, 6 months ago
+Get up Stand up
+upvoted 3 times

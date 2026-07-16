@@ -1,0 +1,72 @@
+A company is developing a new machine learning (ML) model solution on AWS. The models are developed as independent
+microservices that fetch approximately 1 GB of model data from Amazon S3 at startup and load the data into memory. Users
+access the models through an asynchronous API. Users can send a request or a batch of requests and specify where the results
+should be sent.
+The company provides models to hundreds of users. The usage patterns for the models are irregular. Some models could be
+unused for days or weeks. Other models could receive batches of thousands of requests at a time.
+Which design should a solutions architect recommend to meet these requirements?
+A. Direct the requests from the API to a Network Load Balancer (NLB). Deploy the models as AWS Lambda functions that are
+invoked by the NLB.
+B. Direct the requests from the API to an Application Load Balancer (ALB). Deploy the models as Amazon Elastic Container
+Service (Amazon ECS) services that read from an Amazon Simple Queue Service (Amazon SQS) queue. Use AWS App Mesh to
+scale the instances of the ECS cluster based on the SQS queue size.
+C. Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the models as AWS
+Lambda functions that are invoked by SQS events. Use AWS Auto Scaling to increase the number of vCPUs for the Lambda
+functions based on the SQS queue size.
+D. Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the models as
+Amazon Elastic Container Service (Amazon ECS) services that read from the queue. Enable AWS Auto Scaling on Amazon ECS
+for both the cluster and copies of the service based on the queue size. Most Voted
+Comments
+examtopictempacc Highly Voted 2 years, 6 months ago
+asynchronous=SQS, microservices=ECS.
+Use AWS Auto Scaling to adjust the number of ECS services.
+upvoted 17 times
+TariqKipkemei 2 years, 6 months ago
+good breakdown :)
+upvoted 4 times
+TariqKipkemei Highly Voted 2 years, 6 months ago
+Selected Answer: D
+For once examtopic answer is correct :) haha...
+Batch requests/async = Amazon SQS
+Microservices = Amazon ECS
+Workload variations = AWS Auto Scaling on Amazon ECS
+upvoted 11 times
+wizcloudifa Most Recent 1 year, 7 months ago
+Selected Answer: D
+ALB is mentioned in other options to distract you, you dont need ALB for scaling here, we would need ECS autoscaling, they play with that idea in
+option B a bit however D gets it in a completely optimized way.... A and C both have lambda which for Machine learning models with workloads on
+heavy side, will not fly
+Correct Answer: D
+Community vote distribution
+D (100%)
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: D
+I go with everyone D.
+upvoted 3 times
+alexandercamachop 2 years, 6 months ago
+Selected Answer: D
+D, no need for an App Load balancer like C says, no where in the text.
+SQS is needed to ensure all request gets routed properly in a Microservices architecture and also that it waits until its picked up.
+ECS with Autoscaling, will scale based on the unknown pattern of usage as mentioned.
+upvoted 2 times
+anibinaadi 2 years, 6 months ago
+It is D
+Refer https://aws.amazon.com/blogs/containers/amazon-elastic-container-service-ecs-auto-scaling-using-custom-metrics/ for additional
+information/knowledge.
+upvoted 2 times
+nosense 2 years, 6 months ago
+Selected Answer: D
+because it is scalable, reliable, and efficient.
+C does not scale the models automatically
+upvoted 4 times
+deechean 2 years, 3 months ago
+why C doesn't scale the model? Application Auto Scaling can apply to lambda.
+upvoted 1 times
+pentium75 1 year, 11 months ago
+How would you "use Auto Scaling (!) to increase the number of vCPUs (!) for the Lamba functions"?
+upvoted 3 times
+NSA_Poker 1 year, 6 months ago
+Auto Scaling doesn't apply to Lambda. As your functions receive more requests, Lambda automatically handles scaling the number of execution
+environments until you reach your account's concurrency limit.
+upvoted 2 times

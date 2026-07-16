@@ -1,0 +1,167 @@
+A company runs a web-based portal that provides users with global breaking news, local alerts, and weather updates. The portal
+delivers each user a personalized view by using mixture of static and dynamic content. Content is served over HTTPS through an
+API server running on an Amazon EC2 instance behind an Application Load Balancer (ALB). The company wants the portal to
+provide this content to its users across the world as quickly as possible.
+How should a solutions architect design the application to ensure the LEAST amount of latency for all users?
+A. Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve all static and dynamic content by
+specifying the ALB as an origin. Most Voted
+B. Deploy the application stack in two AWS Regions. Use an Amazon Route 53 latency routing policy to serve all content from
+the ALB in the closest Region.
+C. Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve the static content. Serve the dynamic
+content directly from the ALB.
+D. Deploy the application stack in two AWS Regions. Use an Amazon Route 53 geolocation routing policy to serve all content
+from the ALB in the closest Region.
+Comments
+huiy Highly Voted 3 years, 8 months ago
+Selected Answer: A
+Answer is A.
+Amazon CloudFront is a web service that speeds up distribution of your static and dynamic web content
+https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solutions-architect-associate-saa-c02/
+upvoted 36 times
+MutiverseAgent 2 years, 10 months ago
+Also, option B does not use CloudFront which means all the traffic will go through the internet; So, despite deploying resources in two regions and
+using the lowest latency point, that public internet connection might probably be slower than a connection through a private aws network as
+Cloudfront can use.
+upvoted 5 times
+Six_Fingered_Jose Highly Voted 3 years, 7 months ago
+Selected Answer: B
+Answer should be B,
+CloudFront reduces latency if its only static content, which is not the case here.
+For Dynamic content, CF cant cache the content so it sends the traffic through the AWS Network which does reduces latency, but it still has to travel
+through another region.
+For the case with 2 region and Route 53 latency routing, Route 53 detects the nearest resouce (with lowest latency) and routes the traffic there.
+Because the traffic does not have to travel to resources far away, it should have the least latency in this case here.
+upvoted 17 times
+Aamee 3 years, 6 months ago
+Can you pls. provide a ref. link from where this info. got extracted?
+upvoted 1 times
+manuelemg2007 2 years, 10 months ago
+this is link https://aws.amazon.com/es/blogs/aws-spanish/cloudfront-para-la-distribucion-de-contenido-estatico-y-dinamico/
+upvoted 4 times
+Correct Answer: A
+Community vote distribution
+A (71%)
+B (24%)
+3%
+Abdou1604 2 years, 8 months ago
+What about accross the word :)
+upvoted 4 times
+Onimole 3 years, 7 months ago
+Cf works for both static and dynamic content
+upvoted 13 times
+awsgeek75 2 years, 4 months ago
+two regions won't cover the whole world.
+upvoted 1 times
+SnaxAttax Most Recent 6 months, 2 weeks ago
+Selected Answer: A
+Answer is A-- CF serves static and dynamic content globally. Did not select multi-region because it is irrelevant to this question, as resiliency is not
+mentioned.
+upvoted 1 times
+network_enthusiast 1 year, 1 month ago
+Selected Answer: B
+B is the correct answer
+upvoted 1 times
+tch 1 year, 2 months ago
+Selected Answer: C
+Dynamic content can also be served via CloudFront by configuring the WordPress website as an origin. Since dynamic content includes personalized
+content, you need to configure CloudFront to forward certain HTTP cookies and HTTP headers as part of a request to your custom origin server.
+CloudFront uses the forwarded cookie values as part of the key that identifies a unique object in its cache. To ensure that you maximize the caching
+efficiency, you should configure CloudFront to only forward those HTTP cookies and HTTP headers that really vary the content (not cookies that are
+only used on the client side or by third-party applications, for example, for web analytics).
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+A is correct, because the dynamic content is also cached - which means first time the data is brought in, then subsequently it does not have to go to
+the source to get the same content.
+There are many ways to set these combinations up, even with Route 53, but of the given options, "A" seems to fit the bill best.
+upvoted 1 times
+satyaammm 1 year, 4 months ago
+Selected Answer: A
+CloudFront is suitable for both static and dynamic content.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+The best approach combines multi-region deployment for dynamic content and Amazon CloudFront for static content. However, none of the options
+explicitly describe this combination. Among the given options, Option B is the best because:
+It uses two regions to reduce latency for dynamic content.
+Route 53 latency routing ensures users are directed to the closest region.
+For a more optimal solution (not listed in the options):
+Deploy the application stack in multiple AWS Regions.
+Use Amazon CloudFront to serve static content from edge locations.
+Use Route 53 latency routing to direct users to the closest region for dynamic content.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+A : CloudFront is a global CDN that caches static content at edge locations, reducing latency for users worldwide.
+However, dynamic content served through CloudFront with a single ALB origin will still incur latency for users far from the single AWS Region.
+This solution does not address latency for dynamic content effectively
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+B - Deploying in two regions reduces latency for users closer to those regions.
+Route 53 latency routing ensures users are directed to the closest region.
+However, this solution does not leverage a CDN for static content, which could further reduce latency.
+Verdict: Better than Option A but not optimal for static content delivery.
+upvoted 1 times
+rmanuraj 1 year, 5 months ago
+Selected Answer: A
+Amazon cloud front is a better choice in terms of delivering both static and dynamic content globally. Also option B says deploy the application stack
+to only two regions. but the use case is to access the portal globally. Don't think Amazon Route 53 latency routing policy will have a bigger impact in
+terms of low latency.
+upvoted 2 times
+PaulGa 1 year, 8 months ago
+Selected Answer: B
+Ans B - "If your application is hosted in multiple AWS Regions, you can improve performance for your users by serving their requests from the AWS
+Region that provides the lowest latency" ...because it needs to be dynamic: "Latency between hosts on the internet can change over time as a result
+of changes in network connectivity and routing. Latency-based routing is based on latency measurements taken over a period of time, and the
+measurements reflect these changes. A request that is routed to the Oregon Region this week might be routed to the Singapore Region next week."
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: B
+B for sure
+upvoted 1 times
+ManikRoy 2 years, 1 month ago
+With Amazon CloudFront, your end users connections are terminated at CloudFront locations closer to them, which helps in reducing the overall
+round trip time required to establish a connection. This is irrespective of static a dynamic content.
+upvoted 2 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: A
+You can still have improved performance by distributing the dynamic traffic through CDN instead of ALB. Refer below link.
+Also for other 2 options, using just 2 other regions for world wide distribution doesn't make much of a sense.
+https://aws.amazon.com/cloudfront/dynamic-content/
+upvoted 3 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: C
+CloudFront for Static Content: By leveraging Amazon CloudFront, static content such as images, stylesheets, and scripts can be cached and
+distributed globally across a network of edge locations. This ensures that users receive static content from the nearest edge location, reducing
+latency and improving performance.
+Serve Dynamic Content from ALB: Since dynamic content requires real-time processing and cannot be effectively cached at edge locations, serving
+dynamic content directly from the Application Load Balancer (ALB) is appropriate. The ALB can handle dynamic requests efficiently within the AWS
+Region where the application is deployed.
+upvoted 3 times
+eb7be10 2 years, 1 month ago
+C was my choice for the reasons stated here. What am I missing?
+upvoted 3 times
+lofzee 2 years ago
+How can you SERVE content from a load balancer?
+Amazon Cloudfront is designed for static and dynamic content. Why would you pick any other option that isn't A?
+upvoted 3 times
+tch 1 year, 2 months ago
+https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/dynamic-content.html
+upvoted 1 times
+Parul25 2 years, 4 months ago
+CloudFront improves the performance, availability, and security of your dynamic content but not the latency as compared to Route 53 Latency
+Routing policy. Hence option B
+https://aws.amazon.com/cloudfront/dynamic-content/
+upvoted 2 times
+Parul25 2 years, 4 months ago
+I choose option B.
+While CloudFront can accelerate content delivery by caching static content at edge locations, it may not be the most effective solution in this
+scenario. Since the portal delivers a mixture of static and dynamic content, leveraging Route 53 latency routing for dynamic content delivery ensures
+that users are directed to the nearest AWS Region hosting the dynamic content.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: A
+"Least amount of latency for all users" "across the world" = CloudFront, thus B and D are out. Also, deploying the stack in "two regions" would
+benefit those two regions, but not users "across the world".
+CloudFront can also cache dynamic content, thus A.
+upvoted 9 times

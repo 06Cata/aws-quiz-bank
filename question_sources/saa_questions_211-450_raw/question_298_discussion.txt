@@ -1,0 +1,90 @@
+A company is running a critical business application on Amazon EC2 instances behind an Application Load Balancer. The EC2
+instances run in an Auto Scaling group and access an Amazon RDS DB instance.
+The design did not pass an operational review because the EC2 instances and the DB instance are all located in a single Availability
+Zone. A solutions architect must update the design to use a second Availability Zone.
+Which solution will make the application highly available?
+A. Provision a subnet in each Availability Zone. Configure the Auto Scaling group to distribute the EC2 instances across both
+Availability Zones. Configure the DB instance with connections to each network.
+B. Provision two subnets that extend across both Availability Zones. Configure the Auto Scaling group to distribute the EC2
+instances across both Availability Zones. Configure the DB instance with connections to each network.
+C. Provision a subnet in each Availability Zone. Configure the Auto Scaling group to distribute the EC2 instances across both
+Availability Zones. Configure the DB instance for Multi-AZ deployment. Most Voted
+D. Provision a subnet that extends across both Availability Zones. Configure the Auto Scaling group to distribute the EC2
+instances across both Availability Zones. Configure the DB instance for Multi-AZ deployment.
+Comments
+bdp123 Highly Voted 2 years, 9 months ago
+Selected Answer: C
+A subnet must reside within a single Availability Zone.
+https://aws.amazon.com/vpc/faqs/#:~:text=Can%20a%20subnet%20span%20Availability,within%20a%20single%20Availability%20Zone.
+upvoted 23 times
+zjcorpuz Highly Voted 2 years, 4 months ago
+a subnet only resides on a one AZ, it does not span to another AZ.
+upvoted 8 times
+LoXoL Most Recent 1 year, 10 months ago
+Selected Answer: C
+A subnet can't "Extend" across multiple AZs: B,D out
+HA = RDS Multi-AZ: A out
+C
+upvoted 4 times
+thewalker 1 year, 10 months ago
+Selected Answer: C
+An Auto Scaling group can span across two Availability Zones, where one subnet is created in each AZ.
+When creating an Auto Scaling group, you need to specify at least one subnet. You can add additional subnets later on, including subnets across
+multiple AZs.
+Auto Scaling will distribute instances evenly across the specified subnets to maintain availability and optimize performance. If one AZ becomes
+unavailable, instances can be launched in the other AZ.
+The associated load balancer should also span the same subnets/AZs as the Auto Scaling group. This allows traffic to be routed to instances in
+different subnets and AZs, increasing fault tolerance of the application.
+Correct Answer: C
+Community vote distribution
+C (100%)
+upvoted 3 times
+TariqKipkemei 2 years, 2 months ago
+Selected Answer: C
+Provision a subnet in each Availability Zone. Configure the Auto Scaling group to distribute the EC2 instances across both Availability Zones.
+Configure the DB instance for Multi-AZ deployment
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+This solution will ensure that the EC2 instances and the DB instance are not located in the same Availability Zone, which will improve the availability
+of the application.
+upvoted 3 times
+MrAWSAssociate 2 years, 5 months ago
+Selected Answer: C
+D is completely wrong, because each subnet must reside entirely within one Availability Zone and cannot span zones. By launching AWS resources in
+separate Availability Zones, you can protect your applications from the failure of a single Availability Zone.
+upvoted 3 times
+Anmol_1010 2 years, 6 months ago
+The key word here was extend.
+upvoted 2 times
+GalileoEC2 2 years, 8 months ago
+This discards B and D: Subnet basics. Each subnet must reside entirely within one Availability Zone and cannot span zones. By launching AWS
+resources in separate Availability Zones, you can protect your applications from the failure of a single Availability Zone
+upvoted 3 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: C
+a subnet is per AZ. a scaling group can span multiple AZs. https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-add-availability-zone.html
+upvoted 2 times
+KZM 2 years, 9 months ago
+I think D.
+Span the single subnet in both Availability Zones can access the DB instances in either zone without going over the public internet.
+upvoted 3 times
+KZM 2 years, 9 months ago
+Can span like that?
+upvoted 1 times
+KZM 2 years, 9 months ago
+Sorry I think C is correct.
+upvoted 2 times
+leoattf 2 years, 9 months ago
+Nope. The answer is indeed C.
+You cannot span like that. Check the link below:
+"Each subnet must reside entirely within one Availability Zone and cannot span zones."
+https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
+upvoted 4 times
+KZM 2 years, 9 months ago
+Thanks, Leoattf for the link you shared.
+upvoted 3 times
+Babba 2 years, 9 months ago
+Selected Answer: C
+it's C
+upvoted 2 times

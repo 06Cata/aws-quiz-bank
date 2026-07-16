@@ -1,0 +1,66 @@
+Question #917
+A company needs to design a resilient web application to process customer orders. The web application must automatically
+handle increases in web traffic and application usage without affecting the customer experience or losing customer orders.
+Which solution will meet these requirements?
+一家公司需要设计一个弹性强的网络应用程序来处理客户订单。该网络应用程序必须能够自动处理网络流量和应用程序使用量的增
+加，而不会影响客户体验或丢失客户订单。
+哪种解决方案可以满足这些要求？
+A. Use a NAT gateway to manage web traffic. Use Amazon EC2 Auto Scaling groups to receive, process, and store processed
+customer orders. Use an AWS Lambda function to capture and store unprocessed orders.
+使用 NAT gateway 管理网络流量。使用 Amazon EC2 Auto Scaling 组来接收、处理和存储已处理的客户订单。使用 AWS
+Lambda 函数来捕获和存储未处理的订单。
+B. Use a Network Load Balancer (NLB) to manage web traffic. Use an Application Load Balancer to receive customer orders
+from the NLUse Amazon Redshift with a Multi-AZ deployment to store unprocessed and processed customer orders.
+使用 Network Load Balancer (NLB) 管理网络流量。使用 Application Load Balancer 从 NLB 接收客户订单。使用 Amazon
+Redshift 的 Multi-AZ 部署来存储未处理和已处理的客户订单。
+C. Use a Gateway Load Balancer (GWLB) to manage web traffic. Use Amazon Elastic Container Service (Amazon ECS) to receive
+and process customer orders. Use the GWLB to capture and store unprocessed orders. Use Amazon DynamoDB to store
+processed customer orders.
+使用 Gateway Load Balancer (GWLB) 管理网络流量。使用 Amazon Elastic Container Service (Amazon ECS) 来接收和处理客户订
+单。使用 GWLB 来捕获和存储未处理的订单。使用 Amazon DynamoDB 存储已处理的客户订单。
+D. Use an Application Load Balancer to manage web traffic. Use Amazon EC2 Auto Scaling groups to receive and process
+customer orders. Use Amazon Simple Queue Service (Amazon SQS) to store unprocessed orders. Use Amazon RDS with a
+Multi-AZ deployment to store processed customer orders. Most Voted
+使用 Application Load Balancer 管理网络流量。使用 Amazon EC2 Auto Scaling 组来接收和处理客户订单。使用 Amazon
+Simple Queue Service (Amazon SQS) 存储未处理的订单。使用 Amazon RDS 的 Multi-AZ 部署存储已处理的客户订单。
+Correct Answer: D
+正确答案：D
+题目分析与解答
+1. 考察的知识点
+高可用性和弹性架构设计
+负载均衡器的使用（Application Load Balancer）
+自动扩展（Auto Scaling）
+队列服务（Amazon SQS）
+数据库的高可用性（Amazon RDS Multi-AZ）
+2. 选项分析
+A. 使用 NAT gateway 管理网络流量。使用 Amazon EC2 Auto Scaling 组来接收、处理和存储已处理的客户订单。使用 AWS
+Lambda 函数来捕获和存储未处理的订单。
+错误： NAT Gateway 主要用于管理出站流量，而不是处理 Web 应用的流量。它不适合用来管理客户订单的流量。
+正确： Amazon EC2 Auto Scaling 组可以处理弹性扩展需求。
+错误： AWS Lambda 不适合直接捕获和存储未处理的订单，缺乏队列机制。
+B. 使用 Network Load Balancer (NLB) 管理网络流量。使用 Application Load Balancer 从 NLB 接收客户订单。使用 Amazon
+Redshift 的 Multi-AZ 部署来存储未处理和已处理的客户订单。
+错误： Network Load Balancer 适用于处理低延迟和 TCP/UDP 流量，但不适合 Web 应用的 HTTP/HTTPS 流量。
+正确： Application Load Balancer 适合处理 HTTP/HTTPS 流量。
+错误： Amazon Redshift 是数据仓库服务，不适合用来存储实时订单数据。
+C. 使用 Gateway Load Balancer (GWLB) 管理网络流量。使用 Amazon Elastic Container Service (Amazon ECS) 来接收和处理
+客户订单。使用 GWLB 来捕获和存储未处理的订单。使用 Amazon DynamoDB 存储已处理的客户订单。
+错误： Gateway Load Balancer 主要用于管理第三方虚拟网络设备流量，不适合处理 Web 应用流量。
+正确： Amazon ECS 可以处理弹性扩展需求。
+错误： GWLB 不具备存储未处理订单的功能。
+正确： Amazon DynamoDB 是高性能的 NoSQL 数据库，但题目中更适合使用关系型数据库（如 RDS）。
+D. 使用 Application Load Balancer 管理网络流量。使用 Amazon EC2 Auto Scaling 组来接收和处理客户订单。使用 Amazon
+Simple Queue Service (Amazon SQS) 存储未处理的订单。使用 Amazon RDS 的 Multi-AZ 部署存储已处理的客户订单。
+正确： Application Load Balancer 适合处理 HTTP/HTTPS 流量。
+正确： Amazon EC2 Auto Scaling 组可以处理弹性扩展需求。
+正确： Amazon SQS 是队列服务，适合存储未处理的订单，确保订单不会丢失。
+正确： Amazon RDS Multi-AZ 提供高可用性和持久性，适合存储已处理的订单。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+Community vote distribution
+社区投票分布
+D (100%)

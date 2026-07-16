@@ -1,0 +1,54 @@
+A company has a multi-tier web application. The application's internal service components are deployed on Amazon EC2
+instances. The internal service components need to access third-party software as a service (SaaS) APIs that are hosted on AWS.
+The company needs to provide secure and private connectivity from the application's internal services to the third-party SaaS
+application. The company needs to ensure that there is minimal public internet exposure.
+Which solution will meet these requirements?
+A. Implement an AWS Site-to-Site VPN to establish a secure connection with the third-party SaaS provider.
+B. Deploy AWS Transit Gateway to manage and route traffic between the application's VPC and the third-party SaaS provider.
+C. Configure AWS PrivateLink to allow only outbound traffic from the VPC without enabling the third-party SaaS provider to
+establish.
+D. Use AWS PrivateLink to create a private connection between the application's VPC and the third-party SaaS provider.
+Most Voted
+Comments
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: D
+C - PrivateLink exists because of its main benefit of bidirectional communication for secure access without public internet exposure. By doing this,
+you're restricting the SaaS provider's ability to establish sessions. Option C is misleading and just plain wrong. Option D alone is enough.
+upvoted 4 times
+c3c7e62 1 year, 1 month ago
+D is correct, just want to clarify, PrivateLink setup is unidirectional.
+"AWS PrivateLink — Use AWS PrivateLink when you have a client/server set up where you want to allow one or more consumer VPCs unidirectional
+access to a specific service or set of instances in the service provider VPC or certain AWS services. Only the clients with access in the consumer VPC
+can initiate a connection to the service in the service provider VPC or AWS service. "
+That means -
+Inbound to service: Yes (from client to the endpoint service).
+Outbound from service to client: No, unless the client explicitly exposes something .
+refer to this -
+https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/aws-privatelink.html
+upvoted 1 times
+spoved 1 year, 8 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/prescriptive-guidance/latest/integrate-third-party-services/architecture-1.html
+It is limited to only TCP traffic and unidirectional communication. The third-party workloads cannot initiate communication back to your account.
+upvoted 4 times
+56ce46c 1 year, 8 months ago
+I think C is corret
+2. Restrict Inbound Traffic via Security Groups:
+To prevent the third-party SaaS provider from establishing inbound connections to your VPC, use Security Groups attached to the VPC Endpoint
+Interface.
+Outbound Traffic Allowed: Ensure that your security groups allow outbound traffic to the SaaS provider’s IP ranges or endpoints.
+Restrict Inbound Traffic: You should block all inbound traffic on the VPC Endpoint Interface by configuring the security group rules. For example:
+Correct Answer: D
+Community vote distribution
+D (100%)
+Inbound Rules: Block all traffic (or leave it empty).
+Outbound Rules: Allow outbound connections to the IP addresses or ports specified by the SaaS provider.
+upvoted 1 times
+komorebi 1 year, 10 months ago
+Selected Answer: D
+Answer is D
+upvoted 3 times
+JunsK1e 1 year, 10 months ago
+Selected Answer: D
+D is correct
+upvoted 2 times

@@ -1,0 +1,56 @@
+Question #428
+A serverless application uses Amazon API Gateway, AWS Lambda, and Amazon DynamoDB. The Lambda function needs
+permissions to read and write to the DynamoDB table.
+Which solution will give the Lambda function access to the DynamoDB table MOST securely?
+一个无服务器应用程序使用了 Amazon API Gateway、AWS Lambda 和 Amazon DynamoDB。Lambda 函数需要权限来读取和写入
+DynamoDB 表。
+哪种解决方案可以最安全地让 Lambda 函数访问 DynamoDB 表？
+A. Create an IAM user with programmatic access to the Lambda function. Attach a policy to the user that allows read and write
+access to the DynamoDB table. Store the access_key_id and secret_access_key parameters as part of the Lambda environment
+variables. Ensure that other AWS users do not have read and write access to the Lambda function configuration.
+创建一个具有编程访问权限的 IAM 用户供 Lambda 函数使用。为该用户附加一个允许读取和写入 DynamoDB 表的策略。将
+access_key_id 和 secret_access_key 参数作为 Lambda 环境变量的一部分进行存储。确保其他 AWS 用户没有读取和写入
+Lambda 函数配置的权限。
+B. Create an IAM role that includes Lambda as a trusted service. Attach a policy to the role that allows read and write access to
+the DynamoDB table. Update the configuration of the Lambda function to use the new role as the execution role. Most Voted
+创建一个包含 Lambda 作为可信服务的 IAM 角色。为该角色附加一个允许读取和写入 DynamoDB 表的策略。更新 Lambda 函
+数的配置以使用新角色作为执行角色。
+C. Create an IAM user with programmatic access to the Lambda function. Attach a policy to the user that allows read and write
+access to the DynamoDB table. Store the access_key_id and secret_access_key parameters in AWS Systems Manager Parameter
+Store as secure string parameters. Update the Lambda function code to retrieve the secure string parameters before
+connecting to the DynamoDB table.
+创建一个具有编程访问权限的 IAM 用户供 Lambda 函数使用。为该用户附加一个允许读取和写入 DynamoDB 表的策略。将
+access_key_id 和 secret_access_key 参数存储在 AWS Systems Manager Parameter Store 中作为安全字符串参数。更新 Lambda
+函数代码以在连接到 DynamoDB 表之前检索安全字符串参数。
+D. Create an IAM role that includes DynamoDB as a trusted service. Attach a policy to the role that allows read and write access
+from the Lambda function. Update the code of the Lambda function to attach to the new role as an execution role.
+创建一个包含 DynamoDB 作为可信服务的 IAM 角色。为该角色附加一个允许 Lambda 函数读取和写入的策略。更新 Lambda
+函数的代码以附加到新角色作为执行角色。
+Correct Answer: B
+题目分析与解答
+1. 考察的知识点
+IAM角色与权限管理
+Lambda函数的执行角色配置
+安全性最佳实践
+2. 选项分析
+A. 创建一个具有编程访问权限的 IAM 用户供 Lambda 函数使用。
+错误：使用 IAM 用户并将 access_key_id 和 secret_access_key 存储在 Lambda 环境变量中存在安全风险。环境变量可能被意外暴
+露，违反安全性最佳实践。
+B. 创建一个包含 Lambda 作为可信服务的 IAM 角色。
+正确：这是 AWS 推荐的最佳实践。通过为 Lambda 函数分配 IAM 角色，Lambda 可以安全地访问 DynamoDB，而无需显式存储凭
+证。
+C. 创建一个具有编程访问权限的 IAM 用户供 Lambda 函数使用。
+错误：虽然使用 AWS Systems Manager Parameter Store 存储凭证比直接存储在环境变量中更安全，但仍然不如使用 IAM 角色安
+全。IAM 用户的凭证可能被泄露。
+D. 创建一个包含 DynamoDB 作为可信服务的 IAM 角色。
+错误：IAM 角色的信任关系应该是 Lambda，而不是 DynamoDB。DynamoDB 不需要成为可信服务。
+3. 我选的答案
+B
+4. 官方答案
+B
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)

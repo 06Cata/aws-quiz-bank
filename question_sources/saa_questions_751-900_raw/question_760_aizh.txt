@@ -1,0 +1,64 @@
+Question #760
+A solutions architect needs to design the architecture for an application that a vendor provides as a Docker container image. The
+container needs 50 GB of storage available for temporary files. The infrastructure must be serverless.
+Which solution meets these requirements with the LEAST operational overhead?
+一个解决方案架构师需要为一个供应商提供的应用程序设计架构，该应用程序作为一个Docker容器镜像提供。容器需要50 GB的存
+储空间用于临时文件。基础设施必须是无服务器的。
+哪个解决方案以最少的操作开销满足这些要求？
+A. Create an AWS Lambda function that uses the Docker container image with an Amazon S3 mounted volume that has more
+than 50 GB of space.
+创建一个使用Docker容器镜像的AWS Lambda函数，并挂载一个具有超过50 GB空间的Amazon S3卷。
+B. Create an AWS Lambda function that uses the Docker container image with an Amazon Elastic Block Store (Amazon EBS)
+volume that has more than 50 GB of space.
+创建一个使用Docker容器镜像的AWS Lambda函数，并挂载一个具有超过50 GB空间的Amazon Elastic Block Store (Amazon EBS)
+卷。
+C. Create an Amazon Elastic Container Service (Amazon ECS) cluster that uses the AWS Fargate launch type. Create a task
+definition for the container image with an Amazon Elastic File System (Amazon EFS) volume. Create a service with that task
+definition. Most Voted
+创建一个使用AWS Fargate启动类型的Amazon Elastic Container Service (Amazon ECS)集群。为容器镜像创建一个任务定义，并
+使用一个Amazon Elastic File System (Amazon EFS)卷。使用该任务定义创建一个服务。
+D. Create an Amazon Elastic Container Service (Amazon ECS) cluster that uses the Amazon EC2 launch type with an Amazon
+Elastic Block Store (Amazon EBS) volume that has more than 50 GB of space. Create a task definition for the container image.
+Create a service with that task definition.
+创建一个使用Amazon EC2启动类型的Amazon Elastic Container Service (Amazon ECS)集群，并使用一个具有超过50 GB空间的
+Amazon Elastic Block Store (Amazon EBS)卷。为容器镜像创建一个任务定义。使用该任务定义创建一个服务。
+Correct Answer: C
+正确答案：C
+题目分析与解答
+1. 考察的知识点
+理解AWS的无服务器架构（Serverless Architecture）。
+熟悉AWS Lambda、Amazon ECS（Fargate和EC2启动类型）、Amazon EFS、Amazon EBS和Amazon S3的使用场景和限制。
+选择最少的操作开销（Least Operational Overhead）的解决方案。
+2. 选项分析
+A. Create an AWS Lambda function that uses the Docker container image with an Amazon S3 mounted volume that has
+more than 50 GB of space.
+错误：AWS Lambda不支持直接挂载Amazon S3作为存储卷。S3是对象存储，不能直接作为文件系统使用。
+此外，Lambda的临时存储空间限制为512 MB，无法满足50 GB的需求。
+B. Create an AWS Lambda function that uses the Docker container image with an Amazon Elastic Block Store (Amazon
+EBS) volume that has more than 50 GB of space.
+错误：AWS Lambda不支持挂载Amazon EBS卷。EBS卷只能与EC2实例或某些容器服务（如ECS）一起使用。
+同样，Lambda的临时存储空间限制为512 MB，无法满足50 GB的需求。
+C. Create an Amazon Elastic Container Service (Amazon ECS) cluster that uses the AWS Fargate launch type. Create a task
+definition for the container image with an Amazon Elastic File System (Amazon EFS) volume. Create a service with that
+task definition.
+正确：AWS Fargate是无服务器的容器运行服务，符合题目要求的“serverless”。
+Amazon EFS可以提供超过50 GB的存储，并且可以挂载到容器中作为文件系统使用。
+操作开销较低，因为Fargate不需要管理底层的EC2实例。
+D. Create an Amazon Elastic Container Service (Amazon ECS) cluster that uses the Amazon EC2 launch type with an
+Amazon Elastic Block Store (Amazon EBS) volume that has more than 50 GB of space. Create a task definition for the
+container image. Create a service with that task definition.
+错误：虽然Amazon EC2启动类型可以使用EBS卷满足50 GB的存储需求，但EC2启动类型需要管理底层的EC2实例，增加了操作开
+销。
+不符合题目要求的“serverless”架构。
+3. 我的选择
+答案：C
+4. 官方答案
+答案：C
+5. 与官方答案比较
+我的答案与官方答案一致。
+理由：选项C使用了AWS Fargate（无服务器架构）和Amazon EFS（满足50 GB存储需求），并且操作开销最低，完全符合题目要
+求。
+Community vote distribution
+社区投票分布
+C (94%)
+6%

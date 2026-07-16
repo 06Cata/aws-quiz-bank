@@ -1,0 +1,52 @@
+A company is preparing to deploy a new serverless workload. A solutions architect must use the principle of least privilege to
+configure permissions that will be used to run an AWS Lambda function. An Amazon EventBridge (Amazon CloudWatch Events)
+rule will invoke the function.
+Which solution meets these requirements?
+一家公司正在准备部署一个新的无服务器工作负载。 解决方案架构师必须遵循最小权限原则来配置用于运行 AWS Lambda 函数的
+权限。 一个 Amazon EventBridge (Amazon CloudWatch Events) 规则将调用该函数。
+满足这些要求的解决方案是什么？
+A. Add an execution role to the function with lambda:InvokeFunction as the action and * as the principal.
+为函数添加一个执行角色，操作为 lambda:InvokeFunction，主体为 *。
+B. Add an execution role to the function with lambda:InvokeFunction as the action and Service: lambda.amazonaws.com as the
+principal.
+为函数添加一个执行角色，操作为 lambda:InvokeFunction，主体为 Service: lambda.amazonaws.com。
+C. Add a resource-based policy to the function with lambda:* as the action and Service: events.amazonaws.com as the
+principal.
+为函数添加一个基于资源的策略，操作为 lambda:*，主体为 Service: events.amazonaws.com。
+D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service: events.amazonaws.com
+as the principal. Most Voted
+为函数添加一个基于资源的策略，操作为 lambda:InvokeFunction，主体为 Service: events.amazonaws.com。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: D
+正确答案: D
+Community vote distribution
+社区投票分布
+D (97%)
+3%
+本题考察的是 AWS Lambda 的权限配置，尤其是基于资源的策略（Resource-based Policy）和执行角色（Execution Role）的使
+用。
+同时涉及到 AWS 服务之间的调用权限配置，例如 Amazon EventBridge 调用 AWS Lambda 的权限。
+重点是遵循最小权限原则（Principle of Least Privilege）。
+2. 选项分析
+A. Add an execution role to the function with lambda:InvokeFunction as the action and * as the principal.
+错误：执行角色是赋予 Lambda 函数权限去调用其他服务，而不是赋予其他服务权限调用 Lambda 函数。
+主体（Principal）为 * 是不符合最小权限原则的，因为它允许任何主体调用 Lambda 函数。
+B. Add an execution role to the function with lambda:InvokeFunction as the action and Service: lambda.amazonaws.com
+as the principal.
+错误：执行角色的主体（Principal）应该是 Lambda 函数本身，而不是其他服务（如 lambda.amazonaws.com）。
+此外，lambda:InvokeFunction 是用于调用 Lambda 函数的权限，而不是赋予 Lambda 函数执行权限的正确操作。
+C. Add a resource-based policy to the function with lambda:* as the action and Service: events.amazonaws.com as the
+principal.
+错误：lambda:* 的权限范围过大，不符合最小权限原则。
+主体（Principal）Service: events.amazonaws.com 是正确的，因为 EventBridge 需要调用 Lambda 函数。
+D. Add a resource-based policy to the function with lambda:InvokeFunction as the action and Service:
+events.amazonaws.com as the principal.
+正确：lambda:InvokeFunction 是最小权限的正确操作，允许 EventBridge 调用 Lambda 函数。
+主体（Principal）Service: events.amazonaws.com 是正确的，因为 EventBridge 是调用 Lambda 的服务。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案的比较
+我的答案与官方答案一致，没有差异。

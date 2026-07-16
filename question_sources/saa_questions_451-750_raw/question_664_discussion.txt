@@ -1,0 +1,143 @@
+A company has a web application that runs on premises. The application experiences latency issues during peak hours. The latency
+issues occur twice each month. At the start of a latency issue, the application's CPU utilization immediately increases to 10 times
+its normal amount.
+The company wants to migrate the application to AWS to improve latency. The company also wants to scale the application
+automatically when application demand increases. The company will use AWS Elastic Beanstalk for application deployment.
+Which solution will meet these requirements?
+A. Configure an Elastic Beanstalk environment to use burstable performance instances in unlimited mode. Configure the
+environment to scale based on requests. Most Voted
+B. Configure an Elastic Beanstalk environment to use compute optimized instances. Configure the environment to scale based
+on requests.
+C. Configure an Elastic Beanstalk environment to use compute optimized instances. Configure the environment to scale on a
+schedule.
+D. Configure an Elastic Beanstalk environment to use burstable performance instances in unlimited mode. Configure the
+environment to scale on predictive metrics.
+Comments
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: A
+"Scale on predictive metrics" does not sound like something that Beanstalk can do. In EC2 you can create a "predictive scaling policy", but apparently
+this is not supported by Beanstalk. That would rule out D.
+We have no indication that the application is CPU-intensive in general. If CPU utilization "increases to 10 times its normal amount" then the "normal
+amount" cannot be higher than 10 %. This would rule out B and C.
+upvoted 11 times
+LemonGremlin Highly Voted 2 years, 6 months ago
+Selected Answer: D
+Burstable Performance Instances (T3 or T3a): These instances are designed for burstable workloads and provide a baseline level of CPU performance
+with the ability to burst above that baseline when needed. Bursting is particularly beneficial for handling sudden spikes in CPU utilization, such as
+those described in the scenario.
+Unlimited Mode: Enabling "unlimited" mode allows instances to burst beyond their baseline performance without accumulating CPU credits. This is
+important for handling sudden and sustained increases in CPU utilization during peak hours.
+Scale on Predictive Metrics: Configuring the environment to scale on predictive metrics allows AWS Elastic Beanstalk to proactively adjust the numbe
+of instances based on anticipated demand. This can help ensure that the environment is scaled up before the latency issues occur, addressing them
+in advance.
+upvoted 10 times
+ftaws 2 years, 5 months ago
+Traffic is "immediately increases". We can't predict and can not use Predictive Metrics.
+And requirement need auto scaling
+upvoted 2 times
+e10c971 Most Recent 6 months ago
+Correct Answer: A
+Community vote distribution
+A (63%)
+D (34%)
+3%
+Selected Answer: B
+From AI Why B is correct
+Compute optimized instances (C family) are designed for CPU-intensive workloads, which is exactly the problem here (CPU spikes 10x during peak).
+Scaling based on requests (or CPU utilization) ensures the environment automatically adds instances when demand increases, eliminating latency
+during peak hours.
+Elastic Beanstalk supports Auto Scaling policies based on metrics like CPU or request count.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: A
+IMO answer is A.
+"The Auto Scaling group uses two Amazon CloudWatch alarms to trigger scaling operations. The default triggers scale when the average outbound
+network traffic from each instance is higher than 6 MiB or lower than 2 MiB over a period of five minutes. To use Auto Scaling effectively, configure
+triggers that are appropriate for your application, instance type, and service requirements. You can scale based on several statistics including latency,
+disk I/O, CPU utilization, and request count."
+This is dynamic scaling.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-types.html
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.as.html
+upvoted 1 times
+3c6417b 2 years ago
+Selected Answer: B
+Explain to me why it's not B?
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+B is incorrect because CPU usage percentage rising does not necessarily have anything to do with computing methods. Especially during peak
+hours, the jobs are coming in hot, but it's quite possible that each job can be done within seconds. It's just too many jobs, and that's not something
+compute optimized instances can tackle.
+upvoted 1 times
+Gape4 1 year, 11 months ago
+I have the same question.
+upvoted 1 times
+sandordini 2 years, 1 month ago
+Selected Answer: A
+D - No such service as Elastic Beanstalk Predictive Scaling, And even if there was, no historical data in AWS for an application we are just about to
+migrate to AWS. Therefore: A
+upvoted 6 times
+lenotc 2 years, 2 months ago
+Selected Answer: A
+D is incorrect Predictive scaling not fit
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+For those voting D, predictive scaling analyses historic data to predict the scaling needs. This scenario is a migration scenario so there won't be any
+historic data which is why D won't work. A (burst) is the only option after migration.
+upvoted 5 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: A
+BC are compute optimised instances which don't solve 10x CPU issues at start of the latency.
+AD are burstable performance which will help with 10x increase CPU usage
+D is not an available feature of Elastic Beanstalk (yet) or I cannot find it in config/docs. Happy to be corrected
+A makes sense due to burst performance. Scale based on requests is possible and I'm assuming that latency is related to requests.
+upvoted 6 times
+1rob 2 years, 5 months ago
+Selected Answer: A
+Following https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.as.html I see: " You can scale based on several statistics
+including latency, disk I/O, CPU utilization, and request count. " So no 'scale on predictive metrics, so D is not okay.
+Also, the company also wants to scale the application automatically when application demand increases, so scale on a schedule is not appropriate
+here. So C is not okay.
+Burstable performance instances in unlimited mode can sustain high CPU utilization for any period of time whenever required, so an immediate
+demand of CPU resources is 'covered'. So I go for A.
+upvoted 4 times
+Min_93 2 years, 5 months ago
+Selected Answer: D
+Option A, which suggests using burstable performance instances in unlimited mode, is appropriate. However, option D is more specific to the
+requirement of scaling based on predictive metrics, which is crucial for handling the latency issues that occur at specific times each month.
+Options B and C suggest using compute optimized instances and scaling based on requests or on a schedule. While these options might work for
+general scalability, they may not address the immediate and intense spikes in CPU utilization that are mentioned in the scenario.
+Therefore, option D is the most appropriate solution for improving latency and automatically scaling the application based on predictive metrics
+using AWS Elastic Beanstalk.
+upvoted 4 times
+evelynsun 2 years, 5 months ago
+Selected Answer: A
+This solution meets the requirements because it allows the company to automatically scale the application's CPU capacity based on the number of
+requests it receives. The burstable performance instances provide high CPU performance when needed, which can help to reduce latency during
+peak hours.
+not D: this solution has some drawbacks. First, it can be expensive to use burstable performance instances in unlimited mode, as the instances are
+charged per hour. Second, it can be difficult to predict the exact CPU requirements of the application, which can lead to over- or under-provisioning
+of CPU resources.
+upvoted 3 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: A
+The company also wants to scale the application automatically when application demand increases = Scale based on requests
+upvoted 3 times
+SHAAHIBHUSHANAWS 2 years, 6 months ago
+B
+Question is asking scale based on demand so better scale based on requests. Predictive metrics not defined and may be interpreted differently by
+many users.
+upvoted 3 times
+reika1914 2 years, 6 months ago
+Selected Answer: D
+Given the scenario described, the best solution among the provided options to meet the requirements of migrating the application to AWS,
+improving latency, and scaling the application automatically during increased demand would be:
+D. Configure an Elastic Beanstalk environment to use burstable performance instances in unlimited mode. Configure the environment to scale on
+predictive metrics.
+upvoted 2 times
+t0nx 2 years, 6 months ago
+Selected Answer: D
+In this scenario, the application experiences latency issues during peak hours with a sudden increase in CPU utilization. Using burstable performance
+instances in unlimited mode allows the application to burst beyond the baseline performance when needed. Configuring the environment to scale on
+predictive metrics enables proactive scaling based on anticipated increases in demand.
+upvoted 4 times

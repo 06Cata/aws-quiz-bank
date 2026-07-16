@@ -1,0 +1,46 @@
+A company’s application is receiving data from multiple data sources. The size of the data varies and is expected to increase over
+time. The current maximum size is 700 KB. The data volume and data size continue to grow as more data sources are added.
+The company decides to use Amazon DynamoDB as the primary database for the application. A solutions architect needs to
+identify a solution that handles the large data sizes.
+Which solution will meet these requirements in the MOST operationally efficient way?
+A. Create an AWS Lambda function to filter the data that exceeds DynamoDB item size limits. Store the larger data in an
+Amazon DocumentDB (with MongoDB compatibility) database.
+B. Store the large data as objects in an Amazon S3 bucket. In a DynamoDB table, create an item that has an attribute that
+points to the S3 URL of the data. Most Voted
+C. Split all incoming large data into a collection of items that have the same partition key. Write the data to a DynamoDB table
+in a single operation by using the BatchWriteItem API operation.
+D. Create an AWS Lambda function that uses gzip compression to compress the large objects as they are written to a
+DynamoDB table.
+Comments
+Neung983 Highly Voted 2 years, 3 months ago
+Selected Answer: B
+option B is the most operationally efficient solution for handling large data sizes in Amazon DynamoDB.
+upvoted 9 times
+seetpt Highly Voted 2 years, 3 months ago
+Selected Answer: B
+B is correct
+upvoted 5 times
+LeonSauveterre Most Recent 1 year, 5 months ago
+Selected Answer: B
+A - Introducing another database. No need.
+B - Decoupling the large data storage (S3) from the metadata or smaller structured data (DynamoDB) is an AWS-recommended pattern.
+C - OK but this is too complicated.
+D - Compression does not guarantee that the data will always fit within DynamoDB's 400 KB limit.
+upvoted 2 times
+Scheldon 2 years ago
+Selected Answer: B
+AnswerB
+Compresion of data in DynamoDB is a good idea especially for text data link from forum, but to do that we do not need AWS Lambda if I'm not
+wrong.
+In other head Storing big object on S3 and seving URL to it in DynamoDB is one of best practices mentioned by Amazon. Hence we do not know
+what kind of data we are storing in DB and how big objects will be in the future option B looks like the best solution.
+https://aws.amazon.com/blogs/database/large-object-storage-strategies-for-amazon-dynamodb/ <<<< Read Option 2
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html
+upvoted 1 times
+Correct Answer: B
+Community vote distribution
+B (100%)
+Sergiuss95 2 years, 1 month ago
+Selected Answer: B
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html
+upvoted 2 times

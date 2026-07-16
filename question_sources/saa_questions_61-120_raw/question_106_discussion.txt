@@ -1,0 +1,132 @@
+A company is preparing to store confidential data in Amazon S3. For compliance reasons, the data must be encrypted at rest.
+Encryption key usage must be logged for auditing purposes. Keys must be rotated every year.
+Which solution meets these requirements and is the MOST operationally efficient?
+A. Server-side encryption with customer-provided keys (SSE-C)
+B. Server-side encryption with Amazon S3 managed keys (SSE-S3)
+C. Server-side encryption with AWS KMS keys (SSE-KMS) with manual rotation
+D. Server-side encryption with AWS KMS keys (SSE-KMS) with automatic rotation Most Voted
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: D
+The MOST operationally efficient one is D.
+Automating the key rotation is the most efficient.
+Just to confirm, the A and B options don't allow automate the rotation as explained here:
+https://aws.amazon.com/kms/faqs/#:~:text=You%20can%20choose%20to%20have%20AWS%20KMS%20automatically%20rotate%20KMS,KMS%20cu
+stom%20key%20store%20feature
+upvoted 22 times
+vadiminski_a 3 years, 5 months ago
+In addition you cannot log key usage in B, for A I am not certain
+upvoted 2 times
+ocbn3wby 3 years, 6 months ago
+Thank you for the explanation.
+upvoted 1 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: D
+SSE-KMS provides a secure and efficient way to encrypt data at rest in S3. SSE-KMS uses KMS to manage the encryption keys securely. With SSE-
+KMS, encryption keys can be automatically rotated using KMS key rotation feature, which simplifies the key management process and ensures
+compliance with the requirement to rotate keys every year.
+Additionally, SSE-KMS provides built-in audit logging for encryption key usage through CloudTrail, which captures API calls related to the
+management and usage of KMS keys. This meets the requirement for logging key usage for auditing purposes.
+Option A (SSE-C) requires customers to provide their own encryption keys, but it does not provide key rotation or built-in logging of key usage.
+Option B (SSE-S3) uses Amazon S3 managed keys for encryption, which simplifies key management but does not provide key rotation or detailed key
+usage logging.
+Option C (SSE-KMS with manual rotation) uses AWS KMS keys but requires manual rotation, which is less operationally efficient than the automatic
+key rotation available with option D.
+upvoted 10 times
+satyaammm Most Recent 1 year, 5 months ago
+Selected Answer: D
+Automating the key rotation is the most important here and hence D is the most suitable option here.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (93%)
+7%
+Ans D - just the Amazon provided service with key automatic key rotation
+upvoted 1 times
+MehulKapadia 2 years, 2 months ago
+Selected Answer: D
+Correct Answer: D
+Automatic Key Rotation = KMS, hence Option A & B are not correct answer.
+Hence Possible answer is Option C or D. Now mentioned in the requirement that key rotation solution must be automated. So Option C is not the
+correct answer.
+Correct Answer: D - SSE with KMS which support automatic key rotation.
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+I'll go for D as SSS-S3 has unpublished scheduled of rotation which may or may not be "each year".
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
+upvoted 2 times
+rcptryk 2 years, 6 months ago
+Selected Answer: B
+SSE-S3 can be used for logging in cloudtrail since January 5, 2023
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html
+upvoted 2 times
+pentium75 2 years, 5 months ago
+But "keys must be rotated every year". I understand that SSE-S3 rotates the keys "regularly" but you have no influence on the schedule.
+upvoted 2 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: D
+The correct answer is D. Server-side encryption with AWS KMS keys (SSE-KMS) with automatic rotation.
+SSE-KMS is the most secure way to encrypt data in Amazon S3. It uses AWS KMS, which is a highly secure key management service that is managed
+by AWS. AWS KMS logs all key usage, so the company can meet its compliance requirements. AWS KMS also rotates keys automatically, so the
+company does not have to worry about manually rotating keys.
+upvoted 4 times
+SilentMilli 3 years, 5 months ago
+Selected Answer: D
+Server-side encryption with AWS KMS keys (SSE-KMS) with automatic rotation meets the requirements and is the most operationally efficient
+solution. This option allows you to use AWS KMS to automatically rotate the keys every year, which simplifies key management. In addition, key
+usage is logged for auditing purposes, and the data is encrypted at rest to meet compliance requirements.
+upvoted 3 times
+Zerotn3 3 years, 5 months ago
+Selected Answer: B
+mazon API Gateway is a fully managed service that makes it easy to create, publish, maintain, monitor, and secure APIs at any scale. You can use API
+Gateway to create a REST API that exposes the location data as an API endpoint, allowing you to access the data from your analytics platform.
+AWS Lambda is a serverless compute service that lets you run code in response to events or HTTP requests. You can use Lambda to write the code
+that retrieves the location data from your data store and returns it to API Gateway as a response to API requests. This allows you to scale the API to
+handle a large number of requests without the need to provision or manage any infrastructure.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+This question is about server-side encryption, not API Gateway
+upvoted 1 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Selected Answer: D
+The most operationally efficient solution that meets the requirements listed would be option D: Server-side encryption with AWS KMS keys (SSE-
+KMS) with automatic rotation.
+SSE-KMS allows you to use keys that are managed by the AWS Key Management Service (KMS) to encrypt your data at rest. KMS is a fully managed
+service that makes it easy to create and control the encryption keys used to encrypt your data. With automatic key rotation enabled, KMS will
+automatically create a new key for you on a regular basis, typically every year, and use it to encrypt your data. This simplifies the key rotation process
+and reduces the operational burden on your team.
+In addition, SSE-KMS provides logging of key usage through AWS CloudTrail, which can be used for auditing purposes.
+upvoted 3 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Why other options are wrong
+Option A: Server-side encryption with customer-provided keys (SSE-C) would require you to manage the encryption keys yourself, which can be
+more operationally burdensome.
+Option B: Server-side encryption with Amazon S3 managed keys (SSE-S3) does not allow for key rotation or logging of the key usage.
+Option C: Server-side encryption with AWS KMS keys (SSE-KMS) with manual rotation would require you to manually initiate the key rotation
+process, which can be more operationally burdensome compared to automatic rotation.
+upvoted 4 times
+career360guru 3 years, 5 months ago
+Selected Answer: D
+Option D
+upvoted 1 times
+Berny 3 years, 5 months ago
+You can choose to have AWS KMS automatically rotate KMS keys every year, provided that those keys were generated within AWS KMS HSMs.
+Automatic key rotation is not supported for imported keys, asymmetric keys, or keys generated in a CloudHSM cluster using the AWS KMS custom
+key store feature. If you choose to import keys to AWS KMS or asymmetric keys or use a custom key store, you can manually rotate them by creating
+a new KMS key and mapping an existing key alias from the old KMS key to the new KMS key.
+upvoted 2 times
+PavelTech 3 years, 6 months ago
+Can anybody correct me if I'm wrong, KMS does not offer automatic rotations but SSE-KMS only allows automatic rotation once in 3 years thus if we
+want rotation every year we need to rotate it manually?
+upvoted 2 times
+JayBee65 3 years, 5 months ago
+You're wrong :) "All AWS managed keys are automatically rotated every year. You cannot change this rotation schedule."
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
+upvoted 2 times
+PS_R 3 years, 7 months ago
+Selected Answer: D
+Agree Also, SSE-S3 cannot be audited.
+upvoted 2 times

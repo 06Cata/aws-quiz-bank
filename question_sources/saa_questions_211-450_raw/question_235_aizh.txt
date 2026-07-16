@@ -1,0 +1,67 @@
+Question #235
+A company is moving its on-premises Oracle database to Amazon Aurora PostgreSQL. The database has several applications that
+write to the same tables. The applications need to be migrated one by one with a month in between each migration. Management
+has expressed concerns that the database has a high number of reads and writes. The data must be kept in sync across both
+databases throughout the migration.
+What should a solutions architect recommend?
+一家公司正在将其本地的 Oracle 数据库迁移到 Amazon Aurora PostgreSQL。该数据库有多个应用程序会写入相同的表。这些应用
+程序需要一个接一个地迁移，每次迁移之间间隔一个月。管理层表达了对数据库高读写量的担忧。在整个迁移过程中，数据必须在
+两个数据库之间保持同步。
+解决方案架构师应该推荐什么？
+A. Use AWS DataSync for the initial migration. Use AWS Database Migration Service (AWS DMS) to create a change data
+capture (CDC) replication task and a table mapping to select all tables.
+使用 AWS DataSync 进行初始迁移。使用 AWS Database Migration Service (AWS DMS) 创建一个变更数据捕获 (CDC) 复制任
+务，并使用表映射选择所有表。
+B. Use AWS DataSync for the initial migration. Use AWS Database Migration Service (AWS DMS) to create a full load plus
+change data capture (CDC) replication task and a table mapping to select all tables.
+使用 AWS DataSync 进行初始迁移。使用 AWS Database Migration Service (AWS DMS) 创建一个全量加载加变更数据捕获
+(CDC) 复制任务，并使用表映射选择所有表。
+C. Use the AWS Schema Conversion Tool with AWS Database Migration Service (AWS DMS) using a memory optimized
+replication instance. Create a full load plus change data capture (CDC) replication task and a table mapping to select all tables.
+Most Voted
+使用 AWS Schema Conversion Tool 和 AWS Database Migration Service (AWS DMS)，使用内存优化的复制实例。创建一个全量
+加载加变更数据捕获 (CDC) 复制任务，并使用表映射选择所有表。
+D. Use the AWS Schema Conversion Tool with AWS Database Migration Service (AWS DMS) using a compute optimized
+replication instance. Create a full load plus change data capture (CDC) replication task and a table mapping to select the
+largest tables.
+使用 AWS Schema Conversion Tool 和 AWS Database Migration Service (AWS DMS)，使用计算优化的复制实例。创建一个全量
+加载加变更数据捕获 (CDC) 复制任务，并使用表映射选择最大的表。
+Correct Answer: C
+题目分析与解答
+1. 考察的知识点
+数据库迁移：从Oracle迁移到Amazon Aurora PostgreSQL。
+使用AWS Database Migration Service (AWS DMS)进行数据同步。
+使用AWS Schema Conversion Tool进行数据库架构转换。
+变更数据捕获 (CDC) 的应用。
+选择合适的实例类型（内存优化 vs 计算优化）。
+2. 选项分析
+A. 使用 AWS DataSync 进行初始迁移。使用 AWS Database Migration Service (AWS DMS) 创建一个变更数据捕获 (CDC) 复制
+任务，并使用表映射选择所有表。
+错误：AWS DataSync主要用于文件级别的数据迁移，而不是数据库迁移。对于数据库迁移，AWS DMS是更合适的工具。
+错误：仅使用CDC任务无法完成初始数据加载，必须结合全量加载任务。
+B. 使用 AWS DataSync 进行初始迁移。使用 AWS Database Migration Service (AWS DMS) 创建一个全量加载加变更数据捕获
+(CDC) 复制任务，并使用表映射选择所有表。
+错误：同样，AWS DataSync不适用于数据库迁移。
+正确：全量加载加CDC任务是正确的迁移方式，但此选项仍然不使用AWS Schema Conversion Tool，无法处理架构转换问题。
+C. 使用 AWS Schema Conversion Tool 和 AWS Database Migration Service (AWS DMS)，使用内存优化的复制实例。创建一个
+全量加载加变更数据捕获 (CDC) 复制任务，并使用表映射选择所有表。
+正确：AWS Schema Conversion Tool可以帮助将Oracle架构转换为PostgreSQL架构，这是迁移的必要步骤。
+正确：全量加载加CDC任务可以确保数据在迁移期间保持同步。
+正确：内存优化的复制实例适用于高读写负载的场景。
+D. 使用 AWS Schema Conversion Tool 和 AWS Database Migration Service (AWS DMS)，使用计算优化的复制实例。创建一个
+全量加载加变更数据捕获 (CDC) 复制任务，并使用表映射选择最大的表。
+正确：AWS Schema Conversion Tool可以处理架构转换。
+错误：计算优化的实例不适合高读写负载场景，内存优化的实例更合适。
+错误：仅选择最大的表可能导致数据不完整，应该选择所有表。
+3. 我选的答案
+C
+4. 官方答案
+C
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：C选项全面考虑了架构转换、数据同步以及实例类型选择，符合题目要求。
+正确答案：C
+Community vote distribution
+社区投票分布
+C (92%)
+8%

@@ -1,0 +1,67 @@
+Question #502
+A company runs a website that uses a content management system (CMS) on Amazon EC2. The CMS runs on a single EC2 instance
+and uses an Amazon Aurora MySQL Multi-AZ DB instance for the data tier. Website images are stored on an Amazon Elastic Block
+Store (Amazon EBS) volume that is mounted inside the EC2 instance.
+Which combination of actions should a solutions architect take to improve the performance and resilience of the website? (Choose
+two.)
+一家公司运营一个使用内容管理系统（CMS）的网站，该系统运行在 Amazon EC2 上。CMS 运行在单个 EC2 实例上，并使用
+Amazon Aurora MySQL Multi-AZ DB 实例作为数据层。网站图片存储在挂载到 EC2 实例内部的 Amazon Elastic Block Store
+(Amazon EBS) 卷上。
+解决方案架构师应采取哪些操作组合来提高网站的性能和弹性？（选择两个）
+A. Move the website images into an Amazon S3 bucket that is mounted on every EC2 instance
+将网站图片移到一个挂载到每个 EC2 实例上的 Amazon S3 存储桶中
+B. Share the website images by using an NFS share from the primary EC2 instance. Mount this share on the other EC2
+instances.
+通过主 EC2 实例使用 NFS 共享来共享网站图片。在其他 EC2 实例上挂载此共享。
+C. Move the website images onto an Amazon Elastic File System (Amazon EFS) file system that is mounted on every EC2
+instance. Most Voted
+将网站图片移到一个挂载到每个 EC2 实例上的 Amazon Elastic File System (Amazon EFS) 文件系统中。
+D. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind an
+Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum of two
+instances. Configure an accelerator in AWS Global Accelerator for the website
+从现有的 EC2 实例创建一个 Amazon Machine Image (AMI)。使用 AMI 在 Application Load Balancer 后面配置新的实例，并作
+为 Auto Scaling 组的一部分。配置 Auto Scaling 组以保持至少两个实例。为网站在 AWS Global Accelerator 中配置一个加速
+器。
+E. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind an
+Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum of two
+instances. Configure an Amazon CloudFront distribution for the website. Most Voted
+从现有的 EC2 实例创建一个 Amazon Machine Image (AMI)。使用 AMI 在 Application Load Balancer 后面配置新的实例，并作
+为 Auto Scaling 组的一部分。配置 Auto Scaling 组以保持至少两个实例。为网站配置一个 Amazon CloudFront 分发。
+题目分析与解答
+1. 考察的知识点
+Amazon S3 和 Amazon EFS 的使用场景及性能优化。
+Auto Scaling 和负载均衡的配置及高可用性设计。
+Amazon CloudFront 的内容分发功能及其对性能的提升。
+2. 选项分析
+A. Move the website images into an Amazon S3 bucket that is mounted on every EC2 instance
+错误：Amazon S3 不支持直接挂载到 EC2 实例。虽然可以通过 S3 API 或工具（如 s3fs）访问 S3，但这不是最佳实践，且性能可能
+受限。
+B. Share the website images by using an NFS share from the primary EC2 instance. Mount this share on the other EC2
+instances
+错误：使用 NFS 共享会导致单点故障问题，且性能和扩展性较差，不符合高可用性和性能优化的要求。
+C. Move the website images onto an Amazon Elastic File System (Amazon EFS) file system that is mounted on every EC2
+instance
+正确：Amazon EFS 是一个高可用、可扩展的文件存储服务，适合多个 EC2 实例共享文件数据，能够提升性能和弹性。
+D. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind
+an Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum
+of two instances. Configure an accelerator in AWS Global Accelerator for the website
+错误：虽然 Auto Scaling 和负载均衡是正确的高可用性设计，但 AWS Global Accelerator 的主要用途是优化跨区域流量，而题目没
+有提到跨区域需求。
+E. Create an Amazon Machine Image (AMI) from the existing EC2 instance. Use the AMI to provision new instances behind
+an Application Load Balancer as part of an Auto Scaling group. Configure the Auto Scaling group to maintain a minimum
+of two instances. Configure an Amazon CloudFront distribution for the website
+正确：使用 Auto Scaling 和负载均衡可以提高高可用性，Amazon CloudFront 可以优化内容分发，提升性能。
+3. 我选的答案
+C
+E
+4. 官方答案
+C
+E
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+Correct Answer: CE
+正确答案：CE
+Community vote distribution
+社区投票分布
+CE (75%)
+AE (25%)

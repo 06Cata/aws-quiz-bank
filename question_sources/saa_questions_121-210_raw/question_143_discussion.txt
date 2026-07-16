@@ -1,0 +1,112 @@
+A company wants to migrate its existing on-premises monolithic application to AWS. The company wants to keep as much of the
+front-end code and the backend code as possible. However, the company wants to break the application into smaller applications.
+A different team will manage each application. The company needs a highly scalable solution that minimizes operational
+overhead.
+Which solution will meet these requirements?
+A. Host the application on AWS Lambda. Integrate the application with Amazon API Gateway.
+B. Host the application with AWS Amplify. Connect the application to an Amazon API Gateway API that is integrated with AWS
+Lambda.
+C. Host the application on Amazon EC2 instances. Set up an Application Load Balancer with EC2 instances in an Auto Scaling
+group as targets.
+D. Host the application on Amazon Elastic Container Service (Amazon ECS). Set up an Application Load Balancer with Amazon
+ECS as the target. Most Voted
+Comments
+Ken701 Highly Voted 3 years, 7 months ago
+I think the answer here is "D" because usually when you see terms like "monolithic" the answer will likely refer to microservices.
+upvoted 40 times
+allanm 10 months, 1 week ago
+Yes but Microservices is a broad term through. Stuff like Lambda, SNS/SQS etc are all considered microservices. Within this question, I think the
+main differentiator is that "the code needs to be kept the same" which means lambda is out of the question and EC2/ALBs need to come into play
+hence D
+upvoted 1 times
+Bevemo Highly Voted 3 years, 7 months ago
+Selected Answer: D
+D is organic pattern, lift and shift, decompose to containers, first making most use of existing code, whilst new features can be added over time with
+lambda+api gw later.
+A is leapfrog pattern. requiring refactoring all code up front.
+upvoted 21 times
+Mimine87 Most Recent 1 year, 2 months ago
+Selected Answer: D
+Monolith to Smaller Apps (Microservices-Ready)
+ECS (or EKS) is ideal when breaking a monolithic app into smaller services (aka microservices).
+Different teams can manage individual containers running different parts of the app.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: D
+D because the operational overhead is the smallest among the given options. The company may do all that breaking up of functionalities and let
+teams manage the parts, but operationally for the site, hosting in Containers is the lowest maintenance. No ASG tuning, no ALB limitations and so on
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (78%)
+B (19%)
+2%
+The company wants to keep as much of the front-end code and the backend code as possible, so containization is less code changes than B which
+uses lambda.
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: C
+Auto scaling group meets highly scalable requirement. D is not right 1. it is unknown if the app can be containerized , 2. and it maintains EC2 as C, so
+D has no operational advantage. Microservice is not equivalent to container.
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: D
+Ans D - hint: "...break the application into smaller applications"
+upvoted 3 times
+PaulGa 1 year, 8 months ago
+Selected Answer: D
+Ans D - hint: "The company wants to keep as much of the front-end code and the backend code as possible. However, the company wants to break
+the application into smaller applications." Containerisation will help the company achieve a scaleable, more manageable solution.
+upvoted 2 times
+pedro_vieira 1 year, 10 months ago
+For the folks suggesting Amplify: Have any of you actually shipped anything on Amplify? There are tons of adaptations needed to port a monolith to
+Amplify, specially around the backend that will need severe refactor.
+Answer D allows for decomposing the application into different containers, enabling a distributed monolith.
+upvoted 4 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: B
+Amazon API Gateway and Amplify both server less. Also you can import your code from GitHub in the amplify.
+upvoted 2 times
+ManikRoy 2 years, 1 month ago
+Option D does not mention AWS Fargate which would cover the 'least operational overhead ' part.
+upvoted 1 times
+ManikRoy 2 years, 1 month ago
+The company wants to keep much of its existing code. So the preferable solution is ECS. However the option D does not mention AWS Fargate which
+would cover the 'least operational overhead ' part.
+upvoted 2 times
+jbkrishna 2 years, 2 months ago
+Different teams working means " microservices based architecture" so basically decoupling the application ..u can achieve this only by containerizing
+the app so answer is D
+upvoted 4 times
+NayeraB 2 years, 3 months ago
+Selected Answer: B
+B allows for a serverless architecture using AWS Lambda functions, which are highly scalable and require minimal operational overhead. AWS Amplify
+can help in managing the front-end code, while Amazon API Gateway integrated with AWS Lambda can handle the backend services.
+D imo is not the best option in this scenario. While ECS can be a good choice for containerized workloads, it might introduce more operational
+overhead compared to a serverless solution like AWS Lambda and AWS Amplify.
+upvoted 4 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+I have a problem with this question.
+"The company wants to keep as much of the front-end code and the backend code as possible"
+So containerization is the solution here (D)? ABC don't make much sense so I will go with D but using containers for FE/BE code and configuring ALB
+for ECS (hopefully for frontend containers) is a pain in practice. Maybe this is worded in a bad way.
+upvoted 5 times
+vip2 2 years, 5 months ago
+Selected Answer: B
+Original state: monolithic with FE and BE code
+Wanted state: seperate to mutilple components for diff. teams as Microservices
+B is correct to decouple monolithic to microservices.
+D still keep monolithic application in ECS.
+upvoted 3 times
+06042022 2 years, 5 months ago
+IT is B. AWS amplify.
+AWS Amplify will help seperate FE and BE. I agree with MM_Korvinus answer.
+upvoted 2 times
+JTruong 2 years, 5 months ago
+Selected Answer: D
+https://aws.amazon.com/tutorials/break-monolith-app-microservices-ecs-docker-ec2/module-three/
+This page explained clearly why D is the correct answer
+upvoted 3 times

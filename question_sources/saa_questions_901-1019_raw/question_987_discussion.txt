@@ -1,0 +1,79 @@
+A company recently launched a new application for its customers. The application runs on multiple Amazon EC2 instances across
+two Availability Zones. End users use TCP to communicate with the application.
+The application must be highly available and must automatically scale as the number of users increases.
+Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)
+A. Add a Network Load Balancer in front of the EC2 instances. Most Voted
+B. Configure an Auto Scaling group for the EC2 instances. Most Voted
+C. Add an Application Load Balancer in front of the EC2 instances.
+D. Manually add more EC2 instances for the application.
+E. Add a Gateway Load Balancer in front of the EC2 instances.
+Comments
+blehbleh Highly Voted 1 year, 8 months ago
+Selected Answer: AB
+This is A and B. TCP best option is NLB. I know tons of you want to use chat GPT and it's going to tell you application load balancer, then ask chatgpt
+if an application load balancer really is the best option for TCP and it will be like "aw dang dawg, its not, you're right". Then it will switch to A and B.
+Because chatgpt doesn't know everything. It's a great tool but you still need to research because it doesn't have all the answers.
+upvoted 8 times
+classic_manda 1 year, 7 months ago
+You are wrong! The question says, what will be the most cost effective way. ALB is much cheaper than the NLB. Thus, the best way to use NLB is
+when your application requires TCP and UDP connection. In this scenario, the users only communicate using TCP, which the ALB supports including
+variety of protocols such as, HTTP, HTTPS & SSL.
+Additionally, ALB's service uptime is up to 99.995%, which falls to the requirement of this question that application must be highly available... and
+that nullifies your logic!
+Correct answer is C
+upvoted 2 times
+7dcef09 Most Recent 1 year, 1 month ago
+Selected Answer: AB
+I initially selected BC because the question mentions "application" which I immediately assumed Layer 7 communication. However, the question also
+mentions "End users use TCP to communicate with the application." and looking at the AWS's ELB's comparison, NLB seems like a right fit.
+Regardless, the question is too vague to fully understand the correct requirements.
+https://aws.amazon.com/elasticloadbalancing/features/#compare
+upvoted 1 times
+Dantecito 1 year, 3 months ago
+Selected Answer: AB
+TCP = NLB
+highly available and automatically scale = Auto scaling group
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: AB
+Correct Answer: AB
+Community vote distribution
+AB (79%)
+11%
+11%
+Even for basic TCP, ALBs are still operating at Layer 7 to some extent. They have to do more processing per connection than an NLB, which operates
+at Layer 4. This translates to higher resource consumption on the ALB side, even for simple TCP forwarding.
+Also, both ALBs and NLBs have similar pricing structures based on
+1. Hourly usage: You pay for the time the load balancer is running. This is generally comparable between the two.
+2. Load Balancer Capacity Units (LCUs)
+For TCP traffic, NLBs are significantly more efficient in terms of LCU consumption, especially regarding new connections and bytes processed. Even
+with low connection rates, the overhead of the ALB's Layer 7 processing will usually result in higher LCU consumption and therefore higher costs.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+NLBs are designed to handle millions of connections per second with very low latency. Even if the application in the question doesn't require
+"extreme connection scaling" right now, using an NLB provides headroom for future growth without incurring significant cost increases. The cost
+difference between a lightly used NLB and an ALB handling the same basic TCP traffic is usually not substantial enough to justify the potential
+performance bottleneck and lack of scalability of the ALB for TCP. Lastly, NLB configuration for TCP is generally simpler than configuring an ALB for
+TCP.
+upvoted 1 times
+Ghoneam 1 year, 5 months ago
+Selected Answer: BC
+ALB for TCP
+upvoted 1 times
+siheom 1 year, 7 months ago
+Selected Answer: BC
+VOTE BC
+upvoted 1 times
+classic_manda 1 year, 7 months ago
+Selected Answer: C
+ALB is much cheaper than the NLB. Thus, the best way to use NLB is when your application requires TCP and UDP connection. In this scenario, the
+users only communicate using TCP, which the ALB supports including variety of protocols such as, HTTP, HTTPS & SSL. Additionally, ALB's service
+uptime is up to 99.995%, which falls to the requirement of this question that application must be highly available.
+upvoted 2 times
+classic_manda 1 year, 7 months ago
+Answer is B and C
+upvoted 1 times
+1a0d459 1 year, 8 months ago
+Selected Answer: AB
+TCP - NLB
+upvoted 4 times

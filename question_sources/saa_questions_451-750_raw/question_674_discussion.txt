@@ -1,0 +1,81 @@
+A company runs a web application on Amazon EC2 instances in an Auto Scaling group. The application uses a database that runs
+on an Amazon RDS for PostgreSQL DB instance. The application performs slowly when traffic increases. The database experiences
+a heavy read load during periods of high traffic.
+Which actions should a solutions architect take to resolve these performance issues? (Choose two.)
+A. Turn on auto scaling for the DB instance.
+B. Create a read replica for the DB instance. Configure the application to send read traffic to the read replica. Most Voted
+C. Convert the DB instance to a Multi-AZ DB instance deployment. Configure the application to send read traffic to the standby
+DB instance.
+D. Create an Amazon ElastiCache cluster. Configure the application to cache query results in the ElastiCache cluster. Most Voted
+E. Configure the Auto Scaling group subnets to ensure that the EC2 instances are provisioned in the same Availability Zone as
+the DB instance.
+Comments
+awsgeek75 Highly Voted 1 year, 11 months ago
+Selected Answer: BD
+A: RDS DB instance Autoscaling is not a thing
+C: You cannot read from standby even if this was done.
+E: Does not solve any problem
+Correct answer
+B: Read replicas distribute load and help improving performance
+D: Caching of any kind will help with performance
+Remember: " The database experiences a heavy read load during periods of high traffic."
+upvoted 10 times
+meenkaza Highly Voted 1 year, 11 months ago
+Selected Answer: BD
+B. Create a read replica for the DB instance. Configure the application to send read traffic to the read replica.
+By creating a read replica, you offload read traffic from the primary DB instance to the replica, distributing the load and improving overall
+performance during periods of heavy read traffic.
+D. Create an Amazon ElastiCache cluster. Configure the application to cache query results in the ElastiCache cluster.
+Amazon ElastiCache can be used to cache frequently accessed data, reducing the load on the database. This is particularly effective for read-heavy
+workloads, as it allows the application to retrieve data from the cache rather than making repeated database queries.
+upvoted 5 times
+pentium75 1 year, 11 months ago
+ElastiCache requires application changes, "the solutions architect" cannot simply "configure the application to cache query results".
+upvoted 3 times
+pentium75 1 year, 11 months ago
+On second thought, this might still be correct.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/creating-elasticache-cluster-with-RDS-settings.html
+upvoted 2 times
+Correct Answer: BD
+Community vote distribution
+BD (90%)
+10%
+xBUGx Most Recent 1 year, 8 months ago
+Selected Answer: BD
+RDS auto scaling helps capacity issue, not heavy read workload issue.
+upvoted 3 times
+06042022 1 year, 11 months ago
+Selected Answer: BD
+By creating a read replica, you offload read traffic from the primary DB instance to the replica, distributing the load and improving overall
+performance during periods of heavy read traffic.
+Amazon ElastiCache can be used to cache frequently accessed data, reducing the load on the database. This is particularly effective for read-heavy
+workloads, as it allows the application to retrieve data from the cache rather than making repeated database queries.
+upvoted 5 times
+Tekk97 1 year, 11 months ago
+i think we need Multi az DB, wtih ElastiCache
+upvoted 1 times
+pentium75 1 year, 11 months ago
+Selected Answer: BD
+Not A - There is no such thing as "auto scaling for a DB instance". There is automatic storage scaling, but storage is not the issue here.
+B - Yes, read replica will help with "heavy read load"
+Not C - "send read traffic to the standby DB instance" does not work
+D - "Configure the application ..." might be a bit simplified, but Elasticache helps with read load
+Not E - That might have impact on latency, but not on database load; and all instances in same AZ would be against WAF
+upvoted 5 times
+OSHOAIB 1 year, 11 months ago
+Amazon RDS does support Storage Auto Scaling :)
+https://aws.amazon.com/about-aws/whats-new/2019/06/rds-storage-auto-scaling/
+upvoted 1 times
+awsgeek75 1 year, 11 months ago
+Storage auto scaling is not same as instance autoscaling. Storage is not a problem here.
+upvoted 3 times
+Riajul 1 year, 11 months ago
+Selected Answer: AB
+A and B should be most correct ans
+upvoted 3 times
+awsgeek75 1 year, 10 months ago
+A is autoscaling for DB, it won't fix read problem.
+upvoted 2 times
+Riajul 1 year, 11 months ago
+Should be A and B
+upvoted 1 times

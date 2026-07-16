@@ -1,0 +1,49 @@
+Question #526
+A solutions architect is reviewing the resilience of an application. The solutions architect notices that a database administrator
+recently failed over the application's Amazon Aurora PostgreSQL database writer instance as part of a scaling exercise. The failover
+resulted in 3 minutes of downtime for the application.
+Which solution will reduce the downtime for scaling exercises with the LEAST operational overhead?
+解决方案架构师正在审查一个应用程序的弹性。解决方案架构师注意到，数据库管理员最近在一次扩展练习中对应用程序的
+Amazon Aurora PostgreSQL 数据库写入实例进行了故障转移操作。故障转移导致了应用程序 3 分钟的停机时间。
+哪种解决方案可以以最少的操作开销减少扩展练习中的停机时间？
+A. Create more Aurora PostgreSQL read replicas in the cluster to handle the load during failover.
+在集群中创建更多 Aurora PostgreSQL 只读副本，以在故障转移期间处理负载。
+B. Set up a secondary Aurora PostgreSQL cluster in the same AWS Region. During failover, update the application to use the
+secondary cluster's writer endpoint.
+在同一个 AWS Region 中设置一个辅助 Aurora PostgreSQL 集群。在故障转移期间，更新应用程序以使用辅助集群的写入端点。
+C. Create an Amazon ElastiCache for Memcached cluster to handle the load during failover.
+创建一个 Amazon ElastiCache for Memcached 集群，以在故障转移期间处理负载。
+D. Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint. Most Voted
+为数据库设置一个 Amazon RDS proxy。更新应用程序以使用代理端点。
+题目分析与解答
+1. 考察的知识点
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (76%)
+B (20%)
+4%
+本题考察的是Amazon Aurora数据库的高可用性和故障转移机制。
+重点关注如何减少故障转移期间的停机时间，同时降低操作复杂性。
+2. 选项分析
+A. Create more Aurora PostgreSQL read replicas in the cluster to handle the load during failover.
+错误：Aurora的只读副本无法作为写入实例使用，因此无法减少故障转移期间的停机时间。
+只读副本主要用于分担读取负载，而不是解决写入实例的故障转移问题。
+B. Set up a secondary Aurora PostgreSQL cluster in the same AWS Region. During failover, update the application to use
+the secondary cluster's writer endpoint.
+错误：设置辅助集群需要额外的管理和配置工作，增加了操作复杂性。
+虽然可以减少停机时间，但需要手动更新应用程序的写入端点，操作开销较大。
+C. Create an Amazon ElastiCache for Memcached cluster to handle the load during failover.
+错误：ElastiCache主要用于缓存数据以提高读取性能，无法解决数据库写入实例的故障转移问题。
+此选项与问题的核心需求不相关。
+D. Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint.
+正确：Amazon RDS Proxy可以管理数据库连接池，减少故障转移期间的连接中断。
+通过使用代理端点，应用程序无需直接连接到数据库实例，从而减少停机时间并降低操作复杂性。
+3. 我选的答案
+D. Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint.
+4. 官方答案
+D. Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint.
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因：Amazon RDS Proxy是解决故障转移期间停机时间的最佳选择，同时具有最低的操作开销。

@@ -1,0 +1,153 @@
+A company needs to optimize its Amazon S3 storage costs for an application that generates many files that cannot be recreated.
+Each file is approximately 5 MB and is stored in Amazon S3 Standard storage.
+The company must store the files for 4 years before the files can be deleted. The files must be immediately accessible. The files are
+frequently accessed in the first 30 days of object creation, but they are rarely accessed after the first 30 days.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create an S3 Lifecycle policy to move the files to S3 Glacier Instant Retrieval 30 days after object creation. Delete the files 4
+years after object creation. Most Voted
+B. Create an S3 Lifecycle policy to move the files to S3 One Zone-Infrequent Access (S3 One Zone-IA) 30 days after object
+creation. Delete the files 4 years after object creation.
+C. Create an S3 Lifecycle policy to move the files to S3 Standard-Infrequent Access (S3 Standard-IA) 30 days after object
+creation. Delete the files 4 years after object creation.
+D. Create an S3 Lifecycle policy to move the files to S3 Standard-Infrequent Access (S3 Standard-IA) 30 days after object
+creation. Move the files to S3 Glacier Flexible Retrieval 4 years after object creation.
+Comments
+sandordini Highly Voted 2 years, 1 month ago
+Selected Answer: A
+Although it's not stated what is meant by 'rarely accessed', this scenario would primarily be a candidate for the Glacier Instant Retrieval tier as the
+storage price would be more than 3 times lower compared to Standard IA. In the specific case of files being more frequently retrieved than quarterly,
+it can qualify for consideration of Standard IA.
+Actually, we don't have the required info, so we have to guess what they are thinking.. which is pretty lame, to be honest..
+upvoted 14 times
+sheilawu 1 year, 12 months ago
+S3 Glacier Instant Retrieval only retain the file for maximun 90 days, that is why A is not correct answer.
+So C is right answer.
+upvoted 2 times
+Edwars 1 year, 11 months ago
+No, it isn't. It is just the opposite.
+Objects archived to S3 Glacier Flexible Retrieval have a minimum of 90 days of storage. If an object is deleted, overwritten, or transitioned before
+90 days, a pro-rated charge equal to the storage charge for the remaining days will be incurred.
+https://aws.amazon.com/s3/faqs/?nc=sn&loc=7
+upvoted 4 times
+MatAlves 1 year, 8 months ago
+Hell no.
+S3 Glacier Instant Retrieval is designed for long-lived, rarely accessed data that is retained for months or years. Objects that are archived to S3
+Glacier Instant Retrieval have a minimum of 90 days of storage
+upvoted 2 times
+Dantecito 1 year, 3 months ago
+Correct Answer: A
+Community vote distribution
+A (64%)
+C (33%)
+2%
+The 90-day minimum storage duration means that if you delete, overwrite, or transition an object before 90 days, AWS will charge you for the
+remaining unused storage days.
+It's a bit confusing but it's not like you can only have the files for 90 days, all glaciers are intended to retain data for archival purposes and 4 years
+as the question says is archival.
+upvoted 2 times
+bmmbmm Most Recent 6 months ago
+Selected Answer: A
+Glacier Instant Retrieval : Storage cost - low(way cheaper than Standard IA), access cost : optimized
+Standard IA : Storage cost - average, access cost : low
+so, access some times -> Standard IA is better, rarely accessed -> Glacier is better
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: A
+B is out!
+store the files for 4 years before the files can be deleted - for long term we should use S3 Glacier Instant Retrieval.
+files are frequently accessed in the first 30 days of object creation, it actually store in Amazon S3 Standard storage
+upvoted 1 times
+tch 1 year, 3 months ago
+Each file is approximately 5 MB and is stored in Amazon S3 Standard storage, meaning when file created .. files already store in Amazon S3 Standard
+storage.. move to move the files to S3 Glacier Instant Retrieval 30 days after object creation is fine...
+upvoted 1 times
+a8a1e0e 1 year, 3 months ago
+Selected Answer: C
+Option C is correct instead of A because S3 Standard-IA provides lower long-term storage costs with immediate access, whereas S3 Glacier Instant
+Retrieval has higher retrieval costs, making it less cost-effective for files that may still need to be accessed occasionally.
+upvoted 1 times
+dfgdsfgfdgreg 1 year, 4 months ago
+Selected Answer: A
+Glacier is much cheaper for storage than standard. The catch is you have to pay for 90 days of storage no matter what, even if the object is deleted.
+Here we will store data for 4 years so glacier is the cheapest solution.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - S3 Glacier Instant Retrieval is designed for archival storage where objects are infrequently accessed but still require millisecond retrieval, so yes
+actually A will work. It's just that Glacier storage costs more than S3 Standard-IA (given that after 30 days, the files are only RARELY accessed), so this
+is not the most cost-effective option.
+B - For files that "cannot be recreated," durability is crucial, so single Availability Zone is not OK.
+C - S3 Standard-IA is optimized for objects accessed less frequently but still requires rapid retrieval and high durability.
+D - After 4 years, let's just delete those files.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Just a thought, if not constrained to these option, I would simply use Intelligent-Tiering to automatically move the files between access tiers
+(frequent access, infrequent access, etc) based on actual usage. Eventually, I'd delete these files after 4 years as well. I think this approach is better.
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: A
+Instant Retrieval = immediately accessible.
+Coose the S3 Glacier Instant Retrieval storage class when you need milliseconds access to low cost archive data.
+https://aws.amazon.com/s3/faqs/?nc=sn&loc=7
+upvoted 3 times
+scaredSquirrel 1 year, 9 months ago
+Selected Answer: A
+Glacier Instant Retrieval is much cheaper, and it is intended for archival storage with very low access patterns
+upvoted 3 times
+Ucy 1 year, 10 months ago
+Selected Answer: C
+While S3 Glacier Instant Retrieval offers immediate access, it has a minimum storage duration policy, Objects stored in S3 Glacier Instant Retrieval
+have a minimum storage duration of 90 days.
+upvoted 2 times
+FrozenCarrot 1 year, 11 months ago
+Selected Answer: A
+S3 Glacier Instant Retrieval delivers the fastest access to archive storage, with the same throughput and milliseconds access as the S3 Standard and
+S3 Standard-IA storage classes.
+--- https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/
+upvoted 4 times
+EdricHoang 1 year, 11 months ago
+Selected Answer: B
+cost effective -> OneZone IA
+"The files must be immediately accessible" -> cannot be Glacier
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Instant Retrieval = immediately accessible.
+Coose the S3 Glacier Instant Retrieval storage class when you need milliseconds access to low cost archive data.
+https://aws.amazon.com/s3/faqs/?nc=sn&loc=7
+upvoted 2 times
+Johnoppong101 1 year, 9 months ago
+files can not be recreated -> OneZone IA not accepted
+upvoted 2 times
+Mayank0502 1 year, 11 months ago
+Selected Answer: C
+this option has most durability
+upvoted 1 times
+Lin878 1 year, 11 months ago
+Selected Answer: C
+"are rarely accessed after the first 30 days" - not often
+I will go with "C".
+upvoted 1 times
+345645a 1 year, 11 months ago
+https://aws.amazon.com/es/s3/storage-classes/glacier/instant-retrieval/
+upvoted 2 times
+sheilawu 2 years ago
+Selected Answer: C
+mmediately accessible =>C
+upvoted 1 times
+Scheldon 2 years ago
+Selected Answer: C
+AnswerC
+We cannot choose B because if that one zone will fail, company will not be able to recreate them.
+We cannot choose D because we do not have to store files after 4y hence we can delete them (cost savings)
+We cannot choose A - Glacier is less expensive (0,004 per GB) then S3-Standard - IA but is not allowing for instant access which is one of
+requirements (there is no information that data access shouldn't be accessible immedietly) we have only information that after 30d access to data is
+less frequently. Hence I think we need to choose S3 Standard - IA (answer C)
+upvoted 4 times
+bujuman 2 years ago
+Selected Answer: C
+Requirements:
+- frequently accessed for 30 days
+- lower cost
+Features for S3 Standard-IA:
+- Infrequently accessed objects
+- Milliseconds to acces

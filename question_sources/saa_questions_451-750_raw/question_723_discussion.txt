@@ -1,0 +1,108 @@
+A company has applications that run on Amazon EC2 instances. The EC2 instances connect to Amazon RDS databases by using an
+IAM role that has associated policies. The company wants to use AWS Systems Manager to patch the EC2 instances without
+disrupting the running applications.
+Which solution will meet these requirements?
+A. Create a new IAM role. Attach the AmazonSSMManagedInstanceCore policy to the new IAM role. Attach the new IAM role
+to the EC2 instances and the existing IAM role.
+B. Create an IAM user. Attach the AmazonSSMManagedInstanceCore policy to the IAM user. Configure Systems Manager to
+use the IAM user to manage the EC2 instances.
+C. Enable Default Host Configuration Management in Systems Manager to manage the EC2 instances. Most Voted
+D. Remove the existing policies from the existing IAM role. Add the AmazonSSMManagedInstanceCore policy to the existing
+IAM role.
+Comments
+jaswantn Highly Voted 2 years, 4 months ago
+option C....Default Host Management Configuration creates and applies a default IAM role to ensure that Systems Manager has permissions to
+manage all instances in the Region and perform automated patch scans using Patch Manager.
+upvoted 13 times
+Pics00094 Highly Voted 2 years, 3 months ago
+Selected Answer: C
+C is the answer
+upvoted 6 times
+ln2718 Most Recent 9 months, 3 weeks ago
+Selected Answer: D
+Chat AI -
+C. Enable Default Host Configuration Management…
+This is an optional feature of Systems Manager, but not related to providing the EC2 instances the right IAM permissions. Doesn’t solve the problem.
+D. Remove the existing policies from the existing IAM role. Add the AmazonSSMManagedInstanceCore policy to the existing IAM role.
+Correct. You don’t replace the role (so applications using it for RDS keep working).
+You simply add the AmazonSSMManagedInstanceCore policy to the existing IAM role.
+This gives Systems Manager the access it needs, without disrupting existing functionality.
+upvoted 1 times
+Resilient_k 7 months ago
+https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html
+upvoted 1 times
+ln2718 10 months, 2 weeks ago
+Selected Answer: C
+This is a terrible question because both A and C require a new role and cannot have more than one role for an EC2 - A is eliminated because it says
+two roles, C is eliminated because it will require two roles.... but it doesn't kill itself by saying such. So the least wrong answer to this question is C.
+upvoted 1 times
+lalaraj 10 months, 3 weeks ago
+Correct Answer: C
+Community vote distribution
+C (72%)
+A (22%)
+6%
+Selected Answer: A
+Answer: A. Create a new IAM role. Attach the AmazonSSMManagedInstanceCore policy to the new IAM role. Attach the new IAM role to the EC2
+instances and the existing IAM role.
+upvoted 1 times
+FlyingHawk 1 year, 5 months ago
+Selected Answer: C
+https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html, DHMC eliminates the need to manually create
+and attach a new IAM role for Systems Manager, reducing operational overhead.
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+Well.. Actually I don't know what to choose. A or C ??
+A - EC2 instances can have only one IAM role attached at a time. Whether attaching multiple roles is possible or not depends on whether AWS allows
+such configuration in your environment.
+B - Systems Manager manages EC2 instances through the instance's attached IAM role, not an IAM user.
+C - It doesn't address the core requirement of maintaining the existing RDS connectivity. It still requires the EC2 instances to have the necessary IAM
+permissions to be managed by SSM. The IAM role associated with the EC2 instance must still have the AmazonSSMManagedInstanceCore policy
+attached to enable Systems Manager capabilities.
+D - Removing the existing policies would break the application's ability to connect to the RDS database. This directly contradicts the requirement of
+not disrupting running applications.
+upvoted 1 times
+FlyingHawk 1 year, 5 months ago
+A is the way before having C, details see this blog:
+https://aws.amazon.com/blogs/mt/enable-management-of-your-amazon-ec2-instances-in-aws-systems-manager-using-default-host-
+management-configuration/
+upvoted 2 times
+rosanna 1 year, 5 months ago
+Selected Answer: A
+I'd vote for A because the request here is not to disrupt the existing workload, meaning the existing IAM role must be intact with the addition to the
+new permission set that gives SSM patch manager patching capabilities.
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: C
+"The Default Host Management Configuration setting allows AWS Systems Manager to manage your Amazon EC2 instances automatically as
+managed instances.
+Default Host Management Configuration makes it possible to manage EC2 instances without your having to manually create an AWS Identity and
+Access Management (IAM) instance profile. Instead, Default Host Management Configuration creates and applies a default IAM role to ensure that
+Systems Manager has permissions to manage all instances in the AWS account and AWS Region where it's activated."
+upvoted 3 times
+MatAlves 1 year, 8 months ago
+https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html
+upvoted 2 times
+88f8032 2 years, 1 month ago
+Selected Answer: A
+i think A
+upvoted 2 times
+NayeraB 2 years, 3 months ago
+So is C same as A, but automated?
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+No, A is impossible because EC2 instances can have only one IAM role attached at a time.
+upvoted 1 times
+osmk 2 years, 3 months ago
+C is fine
+upvoted 2 times
+Andy_09 2 years, 4 months ago
+C is a better option
+upvoted 3 times
+Andy_09 2 years, 4 months ago
+Correct answer A
+upvoted 3 times
+arunkpskpm 2 years, 3 months ago
+"Attach the new IAM role to the EC2 instances and the existing IAM role" - You can't attach multiple policies to an EC2 instance. So A is wrong.
+upvoted 6 times

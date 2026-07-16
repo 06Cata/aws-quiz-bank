@@ -1,0 +1,105 @@
+A development team has launched a new application that is hosted on Amazon EC2 instances inside a development VPC. A
+solutions architect needs to create a new VPC in the same account. The new VPC will be peered with the development VPC. The
+VPC CIDR block for the development VPC is 192.168.0.0/24. The solutions architect needs to create a CIDR block for the new VPC.
+The CIDR block must be valid for a VPC peering connection to the development VPC.
+What is the SMALLEST CIDR block that meets these requirements?
+A. 10.0.1.0/32
+B. 192.168.0.0/24
+C. 192.168.1.0/32
+D. 10.0.1.0/24 Most Voted
+Comments
+BrainOBrain Highly Voted 2 years, 9 months ago
+Selected Answer: D
+10.0.1.0/32 and 192.168.1.0/32 are too small for VPC, and /32 network is only 1 host
+192.168.0.0/24 is overlapping with existing VPC
+upvoted 30 times
+kruasan Highly Voted 2 years, 7 months ago
+Selected Answer: D
+• Option A (10.0.1.0/32) is invalid - a /32 CIDR prefix is a host route, not a VPC range.
+• Option B (192.168.0.0/24) overlaps the development VPC and so cannot be used.
+• Option C (192.168.1.0/32) is invalid - a /32 CIDR prefix is a host route, not a VPC range.
+• Option D (10.0.1.0/24) satisfies the non-overlapping CIDR requirement but is a larger block than needed. Since only two VPCs need to be peered, a
+/24 block provides more addresses than necessary.
+upvoted 13 times
+TheFivePips Most Recent 1 year, 9 months ago
+Selected Answer: D
+In an Amazon VPC, the first four and the last IP address in each subnet are reserved for specific purposes, and they cannot be used for customer
+instances. Here's how the reserved addresses are typically allocated:
+Network Address (First IP):
+The first IP address (all zeros in the host portion) in a subnet is reserved as the network address. For example, if you have a subnet with a CIDR
+notation of 10.0.0.0/24, the network address would be 10.0.0.0.
+VPC Router (Second IP):
+The second IP address in the subnet is reserved for the VPC router.
+DNS Server (Third IP):
+The third IP address is reserved for the DNS server.
+Reserved for Future Use (Fourth IP):
+The fourth IP address is reserved for future use.
+Customer Instances (Fifth to Second-to-Last IP):
+The IP addresses from the fifth to the second-to-last IP address in the subnet are available for customer instances.
+Broadcast Address (Last IP):
+Correct Answer: D
+Community vote distribution
+D (99%)
+1
+The last IP address (all ones in the host portion) in a subnet is reserved as the broadcast address, even though AWS does not support broadcast.
+upvoted 6 times
+walter9660 1 year, 9 months ago
+Selected Answer: C
+10.0.0.0 - 10.255.255.255 (10/8 prefix): Example CIDR block: 10.0.0.0/16
+172.16.0.0 - 172.31.255.255 (172.16/12 prefix): Example CIDR block: 172.31.0.0/16
+192.168.0.0 - 192.168.255.255 (192.168/16 prefix): Example CIDR block: 192.168.0.0/20
+Given that the development VPC already uses 192.168.0.0/24, we need to choose a non-overlapping CIDR block. The smallest valid CIDR block that
+meets the requirements is 192.168.1.0/24 (Option C).
+upvoted 1 times
+bora4motion 1 year, 1 month ago
+WOW! just WOW!
+upvoted 1 times
+Murtadhaceit 2 years ago
+Selected Answer: D
+A and C are host IP addresses.
+B is not possible because it's using the same subnet for the other team/department.
+We are left with D, which is the right answer.
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: D
+10.0.1.0/32 and 192.168.1.0/32 are too small for VPC, and /32 network is only 1 host
+192.168.0.0/24 is overlapping with existing VPC
+upvoted 2 times
+Abrar2022 2 years, 6 months ago
+Definitely D. The only valid VPC CIDR block that does not overlap with the development VPC CIDR block among the options. The other 2 CIDR block
+options are too small.
+upvoted 2 times
+antropaws 2 years, 6 months ago
+Selected Answer: D
+D is correct.
+upvoted 2 times
+channn 2 years, 8 months ago
+Selected Answer: D
+D is the only correct answer
+upvoted 2 times
+r04dB10ck 2 years, 8 months ago
+Selected Answer: D
+only one valid with no overlap
+upvoted 2 times
+Steve_4542636 2 years, 9 months ago
+Selected Answer: D
+A process by elimination solution here. a CIDR value is the number of bits that are lockeed so 10.0.0.0/32 means no range.
+upvoted 4 times
+LuckyAro 2 years, 9 months ago
+Selected Answer: D
+Answer is D, 10.0.1.0/24.
+upvoted 2 times
+skiwili 2 years, 9 months ago
+Selected Answer: D
+Yes D is the answer
+upvoted 2 times
+obatunde 2 years, 9 months ago
+Selected Answer: D
+Definitely D. It is the only valid VPC CIDR block that does not overlap with the development VPC CIDR block among the options.
+upvoted 2 times
+bdp123 2 years, 9 months ago
+Selected Answer: D
+The allowed block size is between a /28 netmask and /16 netmask.
+The CIDR block must not overlap with any existing CIDR block that's associated with the VPC.
+https://docs.aws.amazon.com/vpc/latest/userguide/configure-your-vpc.html
+upvoted 6 times

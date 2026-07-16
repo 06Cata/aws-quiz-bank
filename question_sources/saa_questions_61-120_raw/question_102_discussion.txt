@@ -1,0 +1,178 @@
+A company wants to migrate an on-premises data center to AWS. The data center hosts an SFTP server that stores its data on an
+NFS-based file system. The server holds 200 GB of data that needs to be transferred. The server must be hosted on an Amazon
+EC2 instance that uses an Amazon Elastic File System (Amazon EFS) file system.
+Which combination of steps should a solutions architect take to automate this task? (Choose two.)
+A. Launch the EC2 instance into the same Availability Zone as the EFS file system.
+B. Install an AWS DataSync agent in the on-premises data center. Most Voted
+C. Create a secondary Amazon Elastic Block Store (Amazon EBS) volume on the EC2 instance for the data.
+D. Manually use an operating system copy command to push the data to the EC2 instance.
+E. Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server. Most Voted
+Comments
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: BE
+Answer and HOW-TO
+B. Install an AWS DataSync agent in the on-premises data center.
+E. Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server.
+To automate the process of transferring the data from the on-premises SFTP server to an EC2 instance with an EFS file system, you can use AWS
+DataSync. AWS DataSync is a fully managed data transfer service that simplifies, automates, and accelerates transferring data between on-premises
+storage systems and Amazon S3, Amazon EFS, or Amazon FSx for Windows File Server.
+To use AWS DataSync for this task, you should first install an AWS DataSync agent in the on-premises data center. This agent is a lightweight software
+application that you install on your on-premises data source. The agent communicates with the AWS DataSync service to transfer data between the
+data source and target locations.
+upvoted 74 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Next, you should use AWS DataSync to create a suitable location configuration for the on-premises SFTP server. A location represents a data source
+or a data destination in an AWS DataSync task. You can create a location for the on-premises SFTP server by specifying the IP address, the path to
+the data, and the necessary credentials to access the data.
+Once you have created the location configuration for the on-premises SFTP server, you can use AWS DataSync to transfer the data to the EC2
+instance with the EFS file system. AWS DataSync handles the data transfer process automatically and efficiently, transferring the data at high speeds
+and minimizing downtime.
+upvoted 24 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Explanation of other options
+A. Launch the EC2 instance into the same Availability Zone as the EFS file system.
+This option is not wrong, but it is not directly related to automating the process of transferring the data from the on-premises SFTP server to the
+EC2 instance with the EFS file system. Launching the EC2 instance into the same Availability Zone as the EFS file system can improve the
+performance and reliability of the file system, as it reduces the latency between the EC2 instance and the file system. However, it is not necessary
+for automating the data transfer process.
+upvoted 18 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Correct Answer: BE
+Community vote distribution
+BE (57%)
+AB (39%)
+3%
+C. Create a secondary Amazon Elastic Block Store (Amazon EBS) volume on the EC2 instance for the data.
+This option is incorrect because Amazon EBS is a block-level storage service that is designed for use with Amazon EC2 instances. It is not suitable
+for storing large amounts of data that need to be accessed by multiple EC2 instances, like in the case of the NFS-based file system on the on-
+premises SFTP server. Instead, you should use Amazon EFS, which is a fully managed, scalable, and distributed file system that can be accessed by
+multiple EC2 instances concurrently.
+upvoted 9 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+D. Manually use an operating system copy command to push the data to the EC2 instance.
+This option is not wrong, but it is not the most efficient or automated way to transfer the data from the on-premises SFTP server to the EC2
+instance with the EFS file system. Manually transferring the data using an operating system copy command would require manual intervention
+and would not scale well for large amounts of data. It would also not provide the same level of performance and reliability as a fully managed
+service like AWS DataSync.
+upvoted 8 times
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: AB
+**A**. Launch the EC2 instance into the same Availability Zone as the EFS file system.
+Makes sense to have the instance in the same AZ the EFS storage is.
+**B**. Install an AWS DataSync agent in the on-premises data center.
+The DataSync with move the data to the EFS, which already uses the EC2 instance (see the info provided). No more things are required...
+C. Create a secondary Amazon Elastic Block Store (Amazon EBS) volume on the EC2 instance for the data.
+This secondary EBS volume isn't required... the data should be move on to EFS...
+D. Manually use an operating system copy command to push the data to the EC2 instance.
+Potentially possible (instead of A), BUT the "automate this task" premise goes against any "manually" action. So, we should keep A.
+E. Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server.
+I don't get the relationship between DataSync and the configuration for SFTP "on-prem"! Nonsense.
+So, anwers are A&B
+upvoted 62 times
+Cizzla7049 3 years, 6 months ago
+E is correct
+https://aws.amazon.com/blogs/storage/migrating-storage-with-aws-datasync/
+upvoted 5 times
+happpieee 2 years, 3 months ago
+Use AWS Transfer Family instead of DataSync for SFTP. So E seems incorrect.
+When do I use AWS DataSync and when do I use AWS Transfer Family?
+A: If you currently use SFTP to exchange data with third parties, AWS Transfer Family provides a fully managed SFTP, FTPS, FTP, and AS2 transfer
+directly into and out of Amazon S3, while reducing your operational burden.
+If you want an accelerated and automated data transfer between NFS servers, SMB file shares, Hadoop clusters, self-managed or cloud object
+storage, AWS Snowcone, Amazon S3, Amazon EFS, and Amazon FSx, you can use AWS DataSync. DataSync is ideal for customers who need online
+migrations for active data sets, timely transfers for continuously generated data, or replication for business continuity.
+upvoted 1 times
+RBSK 3 years, 6 months ago
+will A,B work without E?
+upvoted 4 times
+Lalo 3 years, 3 months ago
+CORRECT ANSWER: B&E
+Steps 4 &5
+https://aws.amazon.com/datasync/getting-started/?nc1=h_ls
+upvoted 16 times
+attila9778 3 years, 6 months ago
+Can someone explain why A is correct?
+EFS is spread across Availability Zones in a region, as per https://aws.amazon.com/blogs/gametech/gearbox-entertainment-goes-remote-with-aws-
+and-perforce/
+My question then is whether it makes sense to launch EC2 instances in the *same Availability Zone as the EFS file system* ?
+upvoted 7 times
+lovelazur 3 years, 2 months ago
+However, launching the EC2 instance in the same AZ as the EFS file system can provide some performance benefits, such as reduced network
+latency and improved throughput. Therefore, it may be a best practice to launch the EC2 instance in the same AZ as the EFS file system if
+performance is a concern.
+upvoted 2 times
+BlueVolcano1 3 years, 4 months ago
+Yes exactly, that's why A doesn't make sense. I voted for B and E.
+upvoted 4 times
+ln2718 Most Recent 9 months, 2 weeks ago
+Selected Answer: BE
+Revision on my previous answer...
+B. Install an AWS DataSync agent in the on-premises data center.
+Required for automated transfers from on-prem NFS to AWS.
+E. Use AWS DataSync to create a suitable location configuration for the on-premises SFTP server. Configure the on-prem NFS storage (behind the
+SFTP server) as the source location and EFS as the destination, then run a DataSync task.
+upvoted 1 times
+ln2718 9 months, 4 weeks ago
+Selected Answer: AB
+Chat says A,B
+upvoted 1 times
+kaleido 12 months ago
+Selected Answer: BE
+I hate it when the questions are no longer about AWS and become more like a logic test lol. The EC2 instance with an EFS is "implied" to exist
+because of the way the question is posed, so the answer becomes B and E.
+upvoted 1 times
+Vandaman 1 year, 3 months ago
+Selected Answer: BE
+I was initially going with AB, but I questioned why would you need to launch an EC2 Instance for?
+upvoted 2 times
+satyaammm 1 year, 5 months ago
+Selected Answer: BE
+Since DataSync needs to me installed locally on on-premises and also we need DataSync to use SFTP.
+upvoted 2 times
+Gizmo2022 1 year, 5 months ago
+I'm going to go with AB because AWS DataSync does not support SFTP location configuration.
+upvoted 1 times
+tom_cruise 1 year, 6 months ago
+Selected Answer: BE
+A is wrong because EFS is across AZ.
+upvoted 1 times
+0de7d1b 1 year, 6 months ago
+Selected Answer: AB
+A. Launch the EC2 instance into the same Availability Zone as the EFS file system:
+Amazon EFS file systems are tied to specific Availability Zones (AZs) within a region, and for optimal performance and availability, the EC2 instance
+should be launched in the same AZ as the EFS file system. This ensures low-latency access to the EFS data.
+B. Install an AWS DataSync agent in the on-premises data center:
+AWS DataSync is a service that automates data transfer between on-premises storage and AWS. To transfer the data from the on-premises server to
+EFS, you would need to install the DataSync agent on your on-premises system. The agent securely handles data transfer, ensuring the process is
+efficient and reliable.
+upvoted 2 times
+ChymKuBoy 1 year, 7 months ago
+Selected Answer: AB
+A, B for sure
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: AB
+Ans A,B - hint: "The server must be hosted on an Amazon EC2 instance that uses an Amazon Elastic File System (Amazon EFS) file system" then use
+DataSync on-prem
+upvoted 2 times
+XXXXXlNN 1 year, 9 months ago
+option E is not valid because AWS DataSync does not support SFTP as a location configuration. Instead, you would need to use AWS Transfer Family
+for SFTP transfers.
+upvoted 3 times
+SaurabhTiwari1 1 year, 9 months ago
+Selected Answer: BE
+BE is correct
+upvoted 1 times
+KTEgghead 1 year, 10 months ago
+Selected Answer: BE
+let DataSync work it all out - AWS DataSync can create a suitable location configuration for an on-premises SFTP server.
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: BE
+B and E is the most logical solution, launching the instance in the same AZ as the EFS is not cruicial, C and D negate the automation part and the par
+where it says that we need to use EFS.
+upvoted 2 times
+freedafeng 1 year, 11 months ago
+I don't think E is correct. You create an EC2, and DataSync to migrate the NFS to EFS. That's it. You don't need to migrate anything on the on-
+presmise sftp server
+upvoted 1 times

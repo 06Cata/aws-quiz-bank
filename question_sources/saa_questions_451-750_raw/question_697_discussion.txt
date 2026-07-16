@@ -1,0 +1,75 @@
+A solutions architect creates a VPC that includes two public subnets and two private subnets. A corporate security mandate
+requires the solutions architect to launch all Amazon EC2 instances in a private subnet. However, when the solutions architect
+launches an EC2 instance that runs a web server on ports 80 and 443 in a private subnet, no external internet traffic can connect to
+the server.
+What should the solutions architect do to resolve this issue?
+A. Attach the EC2 instance to an Auto Scaling group in a private subnet. Ensure that the DNS record for the website resolves to
+the Auto Scaling group identifier.
+B. Provision an internet-facing Application Load Balancer (ALB) in a public subnet. Add the EC2 instance to the target group
+that is associated with the ALEnsure that the DNS record for the website resolves to the ALB. Most Voted
+C. Launch a NAT gateway in a private subnet. Update the route table for the private subnets to add a default route to the NAT
+gateway. Attach a public Elastic IP address to the NAT gateway.
+D. Ensure that the security group that is attached to the EC2 instance allows HTTP traffic on port 80 and HTTPS traffic on port
+443. Ensure that the DNS record for the website resolves to the public IP address of the EC2 instance.
+Comments
+sandordini Highly Voted 2 years, 1 month ago
+Selected Answer: B
+Not A - Autoscaling Irrelevant
+B - ALB, route tales for the public subnet with a route to Priv subnet
+C - "NAT gateway" is "to allow [outbound] internet traffic", but this is about inbound traffic
+D - Instances are in the private subnet, therefore it wont work from the public.
+upvoted 6 times
+anikolov Highly Voted 2 years, 4 months ago
+Selected Answer: B
+B: Provision an internet-facing Application Load Balancer (ALB) in a public subnet makes more sense
+upvoted 5 times
+LeonSauveterre Most Recent 1 year, 5 months ago
+Selected Answer: B
+A - Auto Scaling groups are for managing instance scaling.
+B - The internet-facing ALB is deployed in a public subnet and acts as a bridge between the internet and the private EC2 instance. Then, The ALB
+forwards HTTP/HTTPS traffic to the EC2 instance in the private subnet.
+C - A NAT gateway provides outbound internet access for private instances, but it does not solve inbound traffic issues.
+D - Private EC2 instances do not have public IP addresses at all.
+upvoted 1 times
+8621a7c 1 year, 7 months ago
+Selected Answer: C
+Is the question ask to solve the external connection?
+upvoted 1 times
+waldirlsantos 2 years, 1 month ago
+Why not "D"?
+upvoted 1 times
+Correct Answer: B
+Community vote distribution
+B (84%)
+Other
+boluwatito 2 years, 2 months ago
+Selected Answer: D
+nsure that the security group attached to the EC2 instance allows inbound traffic on ports 80 and 443 from the desired sources (e.g., any IP or
+specific IP ranges). This allows external internet traffic to reach the web server running on the EC2 instance
+upvoted 1 times
+GOTJ 1 year, 5 months ago
+But the EC2s must be located in a private subnet, which is not direct internet accesible by definition
+upvoted 1 times
+TruthWS 2 years, 2 months ago
+B - because ALB do it better NAT
+upvoted 2 times
+Cali182 2 years, 4 months ago
+Selected Answer: C
+Option C from Chatgt
+upvoted 1 times
+jaswantn 2 years, 4 months ago
+NAT Gateway stays in public subnet, not in private subnet. So, C can't be.
+upvoted 6 times
+lenotc 2 years, 2 months ago
+NAT Gateway outbound connections
+upvoted 2 times
+mestule 2 years, 4 months ago
+Selected Answer: B
+B makes most sense
+upvoted 4 times
+Andy_09 2 years, 4 months ago
+Changing to option D
+upvoted 1 times
+Andy_09 2 years, 4 months ago
+C should be the correct answer
+upvoted 1 times

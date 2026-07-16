@@ -1,0 +1,74 @@
+A solutions architect is designing an application that will allow business users to upload objects to Amazon S3. The solution needs
+to maximize object durability. Objects also must be readily available at any time and for any length of time. Users will access
+objects frequently within the first 30 days after the objects are uploaded, but users are much less likely to access objects that are
+older than 30 days.
+Which solution meets these requirements MOST cost-effectively?
+A. Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 Glacier after 30 days.
+B. Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 Standard-Infrequent Access (S3
+Standard-IA) after 30 days. Most Voted
+C. Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 One Zone-Infrequent Access (S3
+One Zone-IA) after 30 days.
+D. Store all the objects in S3 Intelligent-Tiering with an S3 Lifecycle rule to transition the objects to S3 Standard-Infrequent
+Access (S3 Standard-IA) after 30 days.
+Comments
+TheLaPlanta Highly Voted 2 years, 2 months ago
+Selected Answer: C
+I believe it's C. The following link mentions One Zone-IA offers 99.999999999% durability. Questions says nothing about HA
+upvoted 5 times
+Sugarbear_01 Highly Voted 2 years, 8 months ago
+Selected Answer: B
+Minimum Days for Transition to S3 Standard-IA or S3 One Zone-IA
+Before you transition objects to S3 Standard-IA or S3 One Zone-IA, you must store them for at least 30 days in Amazon S3. For example, you cannot
+create a Lifecycle rule to transition objects to the S3 Standard-IA storage class one day after you create them. Amazon S3 doesn't support this
+transition within the first 30 days because newer objects are often accessed more frequently or deleted sooner than is suitable for S3 Standard-IA or
+S3 One Zone-IA storage.
+Similarly, if you are transitioning noncurrent objects (in versioned buckets), you can transition only objects that are at least 30 days noncurrent to S3
+Standard-IA or S3 One Zone-IA storage.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html
+upvoted 5 times
+abriggy Most Recent 1 year, 10 months ago
+Answer is B.
+C is wrong because one-zone doesn't maximize durability, it compromises it.
+upvoted 3 times
+MatAlves 1 year, 8 months ago
+No, both Standard-IA and OZ-IA have SAME durability. What differs it the availability.
+Durability is calculated based on how many times the data is copied and made redundant, inherently by the service itself. But that redundancy can
+be across one building (AZ) or multiple availability zones.
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+B (74%)
+C (26%)
+SHAAHIBHUSHANAWS 2 years, 6 months ago
+B
+Intelligent tiering will automatically transition to S3 One Zone-IA which is not needed for durability.
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+'Objects also must be readily available at any time and for any length of time'…definitely option B.
+upvoted 3 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+B is correct
+upvoted 2 times
+thanhnv142 2 years, 7 months ago
+B is correct
+C is not correct because data must be durable. C is only for data that can be regenerated.
+upvoted 4 times
+Xin123 2 years, 8 months ago
+Selected Answer: B
+Durability. Available any time for any duration => B
+upvoted 2 times
+Devsin2000 2 years, 8 months ago
+A
+S3 Glacier is most cost effective
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Between A & B, this is the tie-breaker:
+"Objects also must be readily available at any time and for any length of time"
+While Glacier IS more cost effective but it won't make the objects readily available at any time for any duration.... this is only possible with IA.
+upvoted 2 times
+taustin2 2 years, 8 months ago
+Selected Answer: B
+B meets the requirements. No need for intelligent Tiering because of 30 days.
+upvoted 2 times

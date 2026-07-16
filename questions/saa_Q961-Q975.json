@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 961,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS 託管其公共電子商務網站。該網站使用 AWS Global Accelerator 加速器來處理來自網路的流量。 Global Accelerator 加速器將流量轉送到作為 Auto Scaling 群組入口點的應用程式負載平衡器 (ALB)。該公司最近發現該網站遭受了 DDoS 攻擊。該公司需要一個解決方案來減輕未來的攻擊。哪種解決方案能夠以最少的實施工作來滿足這些要求？",
+        "en": "A company uses AWS to host its public ecommerce website. The website uses an AWS Global Accelerator accelerator for traffic from the internet. The Global Accelerator accelerator forwards the traffic to an Application Load Balancer (ALB) that is the entry point for an Auto Scaling group. The company recently identified a DDoS attack on the website. The company needs a solution to mitigate future attacks. Which solution will meet these requirements with the LEAST implementation effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "為 Global Accelerator 加速器設定 AWS WAF Web ACL，以使用基於速率的規則封鎖流量",
+          "en": "Configure an AWS WAF web ACL for the Global Accelerator accelerator to block traffic by using rate-based rules"
+        },
+        "B": {
+          "zh": "設定 AWS Lambda 函數以讀取 ALB 指標，透過更新 VPC 網路 ACL 來阻止攻擊",
+          "en": "Configure an AWS Lambda function to read the ALB metrics to block attacks by updating a VPC network ACL"
+        },
+        "C": {
+          "zh": "在 ALB 上設定 AWS WAF Web ACL 以使用基於速率的規則封鎖流量",
+          "en": "Configure an AWS WAF web ACL on the ALB to block traffic by using rate-based rules"
+        },
+        "D": {
+          "zh": "在 Global Accelerator 加速器前配置 Amazon CloudFront 分配",
+          "en": "Configure an Amazon CloudFront distribution in front of the Global Accelerator accelerator"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然可以在 Global Accelerator 上設定 AWS WAF，但 Global Accelerator 本身並不會直接支援 Web ACL。 AWS WAF 通常與 ALB 和 CloudFront 結合使用。此外，在 Global Accelerator 上設定 WAF 需要額外的複雜性，違反了「最少實施工作」的要求。",
+          "en": "Incorrect. Although AWS WAF can be configured on Global Accelerator, Global Accelerator itself does not directly support Web ACLs. AWS WAF is typically used in conjunction with ALB and CloudFront. Additionally, configuring WAF on Global Accelerator requires additional complexity, violating the \"minimum implementation effort\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。使用 Lambda 函數讀取 ALB 指標並動態更新 VPC 網路 ACL 是一個複雜的解決方案，涉及多個元件的整合和程式設計。這種方法不符合「最小實施工作量」的要求。",
+          "en": "Incorrect. Using Lambda functions to read ALB metrics and dynamically update VPC network ACLs is a complex solution that involves the integration and programming of multiple components. This approach does not meet the \"minimum implementation effort\" requirement."
+        },
+        "C": {
+          "zh": "正確。AWS WAF 可以直接與 ALB 集成，並透過基於速率的規則有效阻止 DDoS 攻擊。此方法簡單、易於實施，滿足「最小實施工作量」的要求。",
+          "en": "Correct. AWS WAF can integrate directly with ALB and effectively block DDoS attacks through rate-based rules. This method is simple and easy to implement and meets the requirement of \"minimum implementation effort\"."
+        },
+        "D": {
+          "zh": "錯誤。雖然 CloudFront 可以幫助減輕 DDoS 攻擊，但將 CloudFront 置於 Global Accelerator 之前會增加架構複雜性。此外，Global Accelerator 的主要用途是優化全球流量，而不是直接與 CloudFront 結合使用。",
+          "en": "Incorrect. Although CloudFront can help mitigate DDoS attacks, placing CloudFront in front of Global Accelerator will increase architectural complexity. Additionally, the primary use of Global Accelerator is to optimize global traffic, not directly in conjunction with CloudFront."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 ALB 上設定 AWS WAF Web ACL 以使用基於速率的規則封鎖流量",
+        "en": "C. Configure an AWS WAF web ACL on the ALB to block traffic by using rate-based rules"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (83%)； A (17%)。熱門討論與考點摘要：AWS WAF 可以直接與 ALB 集成，並透過基於速率的規則有效阻止 DDoS 攻擊。此方法簡單、易於實施，滿足「最小實施工作量」的要求。",
+        "en": "Community vote as displayed: C (83%); A (17%). Popular discussion and key point summary: AWS WAF can integrate directly with ALB and effectively block DDoS attacks through rate-based rules. This method is simple and easy to implement and meets the requirement of \"minimum implementation effort\"."
+      }
+    },
+    {
+      "question_no": 962,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon DynamoDB 表格來儲存該公司從裝置接收的資料。 DynamoDB 表格支援客戶導向的網站來顯示客戶裝置上的最新活動。該公司為表配置了寫入和讀取的預先配置吞吐量。該公司希望每天計算客戶設備數據的性能指標。此解決方案必須對錶的預先配置讀寫容量影響最小。哪種解決方案可以滿足這些要求？",
+        "en": "A company uses an Amazon DynamoDB table to store data that the company receives from devices. The DynamoDB table supports a customer-facing website to display recent activity on customer devices. The company configured the table with provisioned throughput for writes and reads. The company wants to calculate performance metrics for customer device data on a daily basis. The solution must have minimal effect on the table's provisioned read and write capacity. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Amazon Athena SQL 查詢與 Amazon Athena DynamoDB 連接器結合使用，以定期規劃計算效能指標。",
+          "en": "Use an Amazon Athena SQL query with the Amazon Athena DynamoDB connector to calculate performance metrics on a recurring schedule."
+        },
+        "B": {
+          "zh": "將 AWS Glue 作業與 AWS Glue DynamoDB 匯出連接器結合使用，依照定期規劃計算效能指標。",
+          "en": "Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring schedule."
+        },
+        "C": {
+          "zh": "使用 Amazon Redshift COPY 指令依照定期規劃計算效能指標。",
+          "en": "Use an Amazon Redshift COPY command to calculate performance metrics on a recurring schedule."
+        },
+        "D": {
+          "zh": "將 Amazon EMR 作業與 Apache Hive 外部表結合使用，依照定期規劃計算效能指標。",
+          "en": "Use an Amazon EMR job with an Apache Hive external table to calculate performance metrics on a recurring schedule."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：Amazon Athena可以透過DynamoDB連接器直接查詢DynamoDB表，但這種方法會直接讀取表數據，可能會影響DynamoDB的讀取能力，違反了「最小化影響表的讀寫能力」的題目要求。",
+          "en": "Incorrect. Performance analysis: Amazon Athena can directly query the DynamoDB table through the DynamoDB connector, but this method will directly read the table data, which may affect the read capacity of DynamoDB, violating the question requirement of \"minimally affecting the read and write capacity of the table.\"."
+        },
+        "B": {
+          "zh": "正確。效能分析：AWS Glue DynamoDB 匯出連接器可以將 DynamoDB 表格資料匯出到其他儲存空間（例如 S3），然後進行分析。這種方法不會直接影響DynamoDB表格的讀寫能力，滿足問題的要求。",
+          "en": "Correct. Performance analysis: AWS Glue DynamoDB export connector can export DynamoDB table data to other storage (such as S3) and then analyze it. This method will not directly affect the read and write capacity of the DynamoDB table and meets the requirements of the question."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：Amazon Redshift COPY 指令需要將資料從 DynamoDB 匯入到 Redshift，但導入過程可能會直接讀取 DynamoDB 表格數據，影響其讀取能力，違反題目要求。",
+          "en": "Incorrect. Performance analysis: The Amazon Redshift COPY command needs to import data from DynamoDB to Redshift, but the import process may directly read the DynamoDB table data, affecting its read capacity and violating the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。效能分析：Amazon EMR 可以透過 Hive 外部表查詢 DynamoDB 數據，但該方法會直接讀取 DynamoDB 表數據，可能會影響其讀取能力，違反題目要求。",
+          "en": "Incorrect. Performance analysis: Amazon EMR can query DynamoDB data through Hive external tables, but this method will directly read the DynamoDB table data, which may affect its read capacity and violate the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 將 AWS Glue 作業與 AWS Glue DynamoDB 匯出連接器結合使用，依照定期規劃計算效能指標。",
+        "en": "B. Use an AWS Glue job with the AWS Glue DynamoDB export connector to calculate performance metrics on a recurring schedule."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (89%)。熱門討論與考點摘要：效能分析：AWS Glue DynamoDB 匯出連接器可以將 DynamoDB 表格資料匯出到其他儲存空間（例如 S3），然後進行分析。這種方法不會直接影響DynamoDB表格的讀寫能力，滿足問題的要求。",
+        "en": "Community vote as displayed: B (89%). Popular discussion and key point summary: Performance analysis: AWS Glue DynamoDB export connector can export DynamoDB table data to other storage (such as S3) and then analyze it. This method will not directly affect the read and write capacity of the DynamoDB table and meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 963,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在為將部署在 AWS 上的新無狀態應用程式設計雲端架構。解決方案架構師為應用程式建立了 Amazon 系統映像 (AMI) 和啟動範本。根據需要處理的作業數量，處理必須並行運行，同時根據需要新增和刪除應用程式 Amazon EC2 執行個體。應用程式必須是鬆散耦合的。作業物品必須持久保存。哪種解決方案可以滿足這些要求？",
+        "en": "A solutions architect is designing the cloud architecture for a new stateless application that will be deployed on AWS. The solutions architect created an Amazon Machine Image (AMI) and launch template for the application. Based on the number of jobs that need to be processed, the processing must run in parallel while adding and removing application Amazon EC2 instances as needed. The application must be loosely coupled. The job items must be durably stored. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon Simple Notification Service (Amazon SNS) 主題以傳送需要處理的作業。使用啟動範本建立 Auto Scaling 群組，並設定擴充策略以根據 CPU 使用情況新增和刪除 EC2 執行個體。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic to send the jobs that need to be processed. Create an Auto Scaling group by using the launch template with the scaling policy set to add and remove EC2 instances based on CPU usage."
+        },
+        "B": {
+          "zh": "建立 Amazon Simple Queue Service (Amazon SQS) 佇列來儲存需要處理的作業。使用啟動範本建立 Auto Scaling 群組，並設定擴充策略以根據網路使用情況新增和刪除 EC2 執行個體。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue to hold the jobs that need to be processed. Create an Auto Scaling group by using the launch template with the scaling policy set to add and remove EC2 instances based on network usage."
+        },
+        "C": {
+          "zh": "建立 Amazon Simple Queue Service (Amazon SQS) 佇列來儲存需要處理的作業。使用啟動範本建立 Auto Scaling 群組，並設定擴充策略以根據 SQS 佇列中的項目數新增和刪除 EC2 執行個體。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue to hold the jobs that need to be processed. Create an Auto Scaling group by using the launch template with the scaling policy set to add and remove EC2 instances based on the number of items in the SQS queue."
+        },
+        "D": {
+          "zh": "建立 Amazon Simple Notification Service (Amazon SNS) 主題以傳送需要處理的作業。使用啟動範本建立 Auto Scaling 群組，並設定擴充策略，以根據發佈到 SNS 主題的訊息數量新增和刪除 EC2 執行個體。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic to send the jobs that need to be processed. Create an Auto Scaling group by using the launch template with the scaling policy set to add and remove EC2 instances based on the number of messages published to the SNS topic."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。SNS是一種發布/訂閱服務，適合通知和訊息廣播，但不適合儲存和管理任務佇列。主要問題是任務必須持久化存儲，而SNS不具備持久化存儲能力。錯誤：基於CPU使用率的伸縮可能無法準確反映任務佇列的處理需求，但也可能無法保證任務處理的效率。",
+          "en": "Incorrect. SNS is a publish/subscribe service, suitable for notifications and message broadcasts, but not suitable for storing and managing task queues. The main problem is that tasks must be stored persistently, and SNS does not have persistent storage capabilities. Error: Scaling based on CPU usage may not accurately reflect the processing needs of the task queue, but it may not guarantee the efficiency of task processing."
+        },
+        "B": {
+          "zh": "錯誤。SQS佇列可以持久儲存任務，所以沒有問題。錯誤：基於網路使用情況進行伸縮可能無法準確反映任務佇列的處理需求，也可能無法保證任務處理的效率。",
+          "en": "Incorrect. SQS queues can store tasks persistently, so there is no problem. Error: Scaling based on network usage may not accurately reflect the processing needs of the task queue, and it may not guarantee the efficiency of task processing."
+        },
+        "C": {
+          "zh": "正確。SQS佇列可以持久儲存任務，所以沒有問題。根據SQS隊列中的任務數量擴展，可以準確反映任務處理需求，確保資源的高效利用。",
+          "en": "Correct. SQS queues can store tasks persistently, so there is no problem. Expanding based on the number of tasks in the SQS queue can accurately reflect task processing needs and ensure efficient use of resources."
+        },
+        "D": {
+          "zh": "錯誤。SNS 不提供待處理作業所需的持久佇列，並且從已發布的通知計數進行擴展並不代表工作人員必須處理的積壓工作。",
+          "en": "Incorrect. SNS does not provide the durable queue required for pending jobs, and scaling from published notification counts does not represent the backlog that workers must process."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 Amazon Simple Queue Service (Amazon SQS) 佇列來儲存需要處理的作業。使用啟動範本建立 Auto Scaling 群組，並設定擴充策略以根據 SQS 佇列中的項目數新增和刪除 EC2 執行個體。",
+        "en": "C. Create an Amazon Simple Queue Service (Amazon SQS) queue to hold the jobs that need to be processed. Create an Auto Scaling group by using the launch template with the scaling policy set to add and remove EC2 instances based on the number of items in the SQS queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：SQS佇列可以持久儲存任務，所以沒有問題。根據SQS隊列中的任務數量擴展，可以準確反映任務處理需求，確保資源的高效利用。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: SQS queues can store tasks persistently, so there is no problem. Expanding based on the number of tasks in the SQS queue can accurately reflect task processing needs and ensure efficient use of resources."
+      }
+    },
+    {
+      "question_no": 964,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家全球電子商務公司使用整體架構。該公司需要一個解決方案來管理不斷增加的產品資料量。此解決方案必須具有可擴展性並具有模組化服務架構。該公司需要維護其結構化資料庫模式。該公司還需要一個儲存解決方案來儲存產品資料和產品影像。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A global ecommerce company uses a monolithic architecture. The company needs a solution to manage the increasing volume of product data. The solution must be scalable and have a modular service architecture. The company needs to maintain its structured database schemas. The company also needs a storage solution to store product data and product images. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Auto Scaling 群組中的 Amazon EC2 執行個體部署容器化應用程式。使用應用程式負載平衡器來指派 Web 流量。使用 Amazon RDS 資料庫執行個體儲存產品資料和產品影像。",
+          "en": "Use an Amazon EC2 instance in an Auto Scaling group to deploy a containerized application. Use an Application Load Balancer to distribute web traffic. Use an Amazon RDS DB instance to store product data and product images."
+        },
+        "B": {
+          "zh": "使用 AWS Lambda 函數來管理現有的整體應用程式。使用 Amazon DynamoDB 儲存產品資料和產品影像。使用 Amazon Simple Notification Service (Amazon SNS) 在 Lambda 函數之間進行事件驅動的通訊。",
+          "en": "Use AWS Lambda functions to manage the existing monolithic application. Use Amazon DynamoDB to store product data and product images. Use Amazon Simple Notification Service (Amazon SNS) for event-driven communication between the Lambda functions."
+        },
+        "C": {
+          "zh": "將 Amazon Elastic Kubernetes Service (Amazon EKS) 與 Amazon EC2 部署結合使用來部署容器化應用程式。使用 Amazon Aurora 叢集來儲存產品資料。使用 AWS Step Functions 管理工作流程。將產品影像儲存在 Amazon S3 Glacier Deep Archive 中。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with an Amazon EC2 deployment to deploy a containerized application. Use an Amazon Aurora cluster to store the product data. Use AWS Step Functions to manage workflows. Store the product images in Amazon S3 Glacier Deep Archive."
+        },
+        "D": {
+          "zh": "將 Amazon Elastic Container Service (Amazon ECS) 與 AWS Fargate 結合使用來部署容器化應用程式。將 Amazon RDS 與多可用區部署結合使用來儲存產品資料。將產品影像儲存在 Amazon S3 儲存桶中。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate to deploy a containerized application. Use Amazon RDS with a Multi-AZ deployment to store the product data. Store the product images in an Amazon S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 EC2 執行個體和 RDS：正確：EC2 執行個體可以支援伺服器化，RDS 可以儲存結構化資料。 EC2執行個體需要主動管理和維護，這增加了維運開銷，不符合「最小運維開銷」的要求。",
+          "en": "Incorrect. Using EC2 instances and RDS: Correct: EC2 instances can support serverization and RDS can store structured data. EC2 instances require active management and maintenance, which increases operational overhead and does not meet the requirement of \"minimum operational overhead\"."
+        },
+        "B": {
+          "zh": "錯誤。使用 Lambda 和 DynamoDB：正確：Lambda 函數可以實現無伺服器架構，而 DynamoDB 是高效能 NoSQL 資料庫。 DynamoDB 是一種 NoSQL 資料庫，不適合在結構化資料庫模型中儲存資料。另外，Lambda函數不適合直接管理複雜的單一應用程式。",
+          "en": "Incorrect. Using Lambda and DynamoDB: Correct: Lambda functions can implement serverless architecture, and DynamoDB is a high-performance NoSQL database. DynamoDB is a NoSQL database and is not suitable for storing data in structured database models. In addition, Lambda functions are not suitable for directly managing complex single applications."
+        },
+        "C": {
+          "zh": "錯誤。使用 EKS 和 Aurora：正確：EKS 支援本機應用程序，而 Aurora 是高效能關聯式資料庫。 EKS 需要複雜的管理和配置，這會增加營運開銷。 S3 Glacier Deep Archive 不適合儲存經常存取的產品影像。",
+          "en": "Incorrect. Using EKS and Aurora: Correct: EKS supports on-premises applications, and Aurora is a high-performance relational database. EKS requires complex management and configuration, which increases operational overhead. S3 Glacier Deep Archive is not suitable for storing frequently accessed product images."
+        },
+        "D": {
+          "zh": "正確。使用 ECS 和 Fargate： 正確：ECS 和 Fargate 提供無伺服器伺服器管理，減少營運開銷。 RDS多可用區部署提供高可用性，S3適合儲存產品鏡像。沒有明顯的問題，完全符合題目的要求。",
+          "en": "Correct. Using ECS ​​and Fargate: Correct: ECS and Fargate provide serverless server management, reducing operational overhead. RDS Multi-AZ deployment provides high availability, and S3 is suitable for storing product images. There are no obvious questions and it fully meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將 Amazon Elastic Container Service (Amazon ECS) 與 AWS Fargate 結合使用來部署容器化應用程式。將 Amazon RDS 與多可用區部署結合使用來儲存產品資料。將產品影像儲存在 Amazon S3 儲存桶中。",
+        "en": "D. Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate to deploy a containerized application. Use Amazon RDS with a Multi-AZ deployment to store the product data. Store the product images in an Amazon S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (93%)。熱門討論與考點摘要：使用 ECS 和 Fargate： 正確：ECS 和 Fargate 提供無伺服器伺服器管理，減少營運開銷。 RDS多可用區部署提供高可用性，S3適合儲存產品鏡像。沒有明顯的問題，完全符合題目的要求。",
+        "en": "Community vote as displayed: D (93%). Popular discussion and key point summary: Using ECS ​​and Fargate: Correct: ECS and Fargate provide serverless server management, reducing operational overhead. RDS Multi-AZ deployment provides high availability, and S3 is suitable for storing product images. There are no obvious questions and it fully meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 965,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在將應用程式從本地環境遷移到 AWS。該應用程式將在 Amazon S3 中儲存敏感資料。公司必須在將資料儲存在 Amazon S3 之前對資料進行加密。哪種解決方案可以滿足這些要求？",
+        "en": "A company is migrating an application from an on-premises environment to AWS. The application will store sensitive data in Amazon S3. The company must encrypt the data before storing the data in Amazon S3. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用客戶端加密和客戶管理金鑰來加密資料。",
+          "en": "Encrypt the data by using client-side encryption with customer managed keys."
+        },
+        "B": {
+          "zh": "透過使用 AWS KMS 金鑰 (SSE-KMS) 的伺服器端加密來加密資料。",
+          "en": "Encrypt the data by using server-side encryption with AWS KMS keys (SSE-KMS)."
+        },
+        "C": {
+          "zh": "使用伺服器端加密和客戶提供的金鑰 (SSE-C) 來加密資料。",
+          "en": "Encrypt the data by using server-side encryption with customer-provided keys (SSE-C)."
+        },
+        "D": {
+          "zh": "透過使用 Amazon S3 託管金鑰進行用戶端加密來加密資料。",
+          "en": "Encrypt the data by using client-side encryption with Amazon S3 managed keys."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。客戶端加密意味著資料在上傳到 Amazon S3 之前進行加密。使用客戶管理的金鑰可確保公司完全控制加密金鑰並滿足敏感資料保護要求。",
+          "en": "Correct. . Client-side encryption means the data is encrypted before being uploaded to Amazon S3. Using Customer Managed Keys ensures that the company has full control over encryption keys and meets sensitive data protection requirements."
+        },
+        "B": {
+          "zh": "錯誤。。雖然SSE-KMS是一個強大的加密選項，但它是伺服器端加密，資料在傳輸過程中不會加密。題目要求「儲存前對資料進行加密」，所以不符合要求。",
+          "en": "Incorrect. . Although SSE-KMS is a strong encryption option, it is server-side encryption and data is not encrypted during transmission. The question requires \"encrypting data before storing\", so it does not meet the requirements."
+        },
+        "C": {
+          "zh": "錯誤。。 SSE-C是伺服器端加密，資料在傳輸過程中不會加密。題目要求「儲存前對資料進行加密」，所以不符合要求。",
+          "en": "Incorrect. . SSE-C is server-side encryption, and data is not encrypted during transmission. The question requires \"encrypting data before storing\", so it does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。。 Amazon S3 託管金鑰由 AWS 管理，客戶對金鑰沒有完全控制權。題目要求使用客戶管理機密，所以不符合要求。",
+          "en": "Incorrect. . Amazon S3 managed keys are managed by AWS and customers do not have full control over the keys. The question requires the use of customer management secrets, so it does not meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用客戶端加密和客戶管理金鑰來加密資料。",
+        "en": "A. Encrypt the data by using client-side encryption with customer managed keys."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (92%)。熱門討論與考點摘要：。客戶端加密意味著資料在上傳到 Amazon S3 之前進行加密。使用客戶管理的金鑰可確保公司完全控制加密金鑰並滿足敏感資料保護要求。",
+        "en": "Community vote as displayed: A (92%). Popular discussion and key point summary: . Client-side encryption means the data is encrypted before being uploaded to Amazon S3. Using Customer Managed Keys ensures that the company has full control over encryption keys and meets sensitive data protection requirements."
+      }
+    },
+    {
+      "question_no": 966,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司想要建立一個供多個團隊使用的 Amazon EMR 叢集。該公司希望確保每個團隊的大數據工作負載只能存取每個團隊需要互動的 AWS 服務。該公司不希望工作負載存取叢集底層 EC2 執行個體上的執行個體元資料服務版本 2 (IMDSv2)。哪種解決方案可以滿足這些要求？",
+        "en": "A company wants to create an Amazon EMR cluster that multiple teams will use. The company wants to ensure that each team’s big data workloads can access only the AWS services that each team needs to interact with. The company does not want the workloads to have access to Instance Metadata Service Version 2 (IMDSv2) on the cluster’s underlying EC2 instances. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為團隊所需的每個 AWS 服務設定介面 VPC 終端節點。使用所需的介面 VPC 終端節點提交大數據工作負載。",
+          "en": "Configure interface VPC endpoints for each AWS service that the teams need. Use the required interface VPC endpoints to submit the big data workloads."
+        },
+        "B": {
+          "zh": "建立 EMR 運行時角色。配置叢集以使用運行時角色。使用運行時角色提交大數據工作負載。",
+          "en": "Create EMR runtime roles. Configure the cluster to use the runtime roles. Use the runtime roles to submit the big data workloads."
+        },
+        "C": {
+          "zh": "建立一個具有每個團隊所需權限的 EC2 IAM 執行個體設定檔。使用實例設定檔提交大數據工作負載。",
+          "en": "Create an EC2 IAM instance profile that has the required permissions for each team. Use the instance profile to submit the big data workloads."
+        },
+        "D": {
+          "zh": "建立將 EnableApplicationScopedIAMRole 選項設定為 false 的 EMR 安全性配置。使用安全性配置提交大數據工作負載。",
+          "en": "Create an EMR security configuration that has the EnableApplicationScopedIAMRole option set to false. Use the security configuration to submit the big data workloads."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。VPC終端節點雖然可以限制對特定AWS服務的訪問，但無法直接解決團隊權限隔離問題，也無法停用IMDSv2。",
+          "en": "Incorrect. Although the VPC endpoint can restrict access to specific AWS services, it cannot directly solve the problem of team permission isolation, nor can it disable IMDSv2."
+        },
+        "B": {
+          "zh": "正確。EMR 運行時角色允許向每個團隊分配特定權限，並且可以透過設定來停用 IMDSv2。這才是解決問題的正確方法。這個選項是正確的。",
+          "en": "Correct. EMR runtime roles allow specific permissions to be assigned to each team, and IMDSv2 can be disabled through configuration. This is the correct way to solve the problem. This option is correct."
+        },
+        "C": {
+          "zh": "錯誤。EC2 執行個體設定檔將權限指派給 EC2 實例，而不是 EMR 叢集中的工作負載。此方法無法實現團隊權限隔離，也無法停用IMDSv2。",
+          "en": "Incorrect. The EC2 instance configuration file allocates permissions to the EC2 instance, not to the workload in the EMR cluster. This method cannot achieve team permission isolation, nor can it disable IMDSv2."
+        },
+        "D": {
+          "zh": "錯誤。此選項涉及EMR安全性配置，但將EnableApplicationScopedIAMRole設定為false並不能直接解決團隊權限隔離問題，也無法停用IMDSv2。",
+          "en": "Incorrect. This option involves EMR security configuration, but setting EnableApplicationScopedIAMRole to false does not directly solve the problem of team permission isolation, nor can IMDSv2 be disabled."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立 EMR 運行時角色。配置叢集以使用運行時角色。使用運行時角色提交大數據工作負載。",
+        "en": "B. Create EMR runtime roles. Configure the cluster to use the runtime roles. Use the runtime roles to submit the big data workloads."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：EMR 運行時角色允許向每個團隊分配特定權限，並且可以透過設定來停用 IMDSv2。這才是解決問題的正確方法。這個選項是正確的。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: EMR runtime roles allow specific permissions to be assigned to each team, and IMDSv2 can be disabled through configuration. This is the correct way to solve the problem. This option is correct."
+      }
+    },
+    {
+      "question_no": 967,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在設計一個應用程序，幫助使用者填寫和提交註冊表。解決方案架構師計劃使用兩層架構，其中包括 Web 應用程式伺服器層和工作層。應用程式需要快速處理提交的表單。應用程式需要僅處理每個表單一次。解決方案必須確保不會遺失任何資料。哪種解決方案可以滿足這些要求？",
+        "en": "A solutions architect is designing an application that helps users fill out and submit registration forms. The solutions architect plans to use a two-tier architecture that includes a web application server tier and a worker tier. The application needs to process submitted forms quickly. The application needs to process each form exactly once. The solution must ensure that no data is lost. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Web 應用程式伺服器層和工作執行緒層之間使用 Amazon Simple Queue Service (Amazon SQS) FIFO 佇列來儲存和轉發表單一資料。",
+          "en": "Use an Amazon Simple Queue Service (Amazon SQS) FIFO queue between the web application server tier and the worker tier to store and forward form data."
+        },
+        "B": {
+          "zh": "在 Web 應用程式伺服器層和工作執行緒層之間使用 Amazon API Gateway HTTP API 來儲存和轉發表單資料。",
+          "en": "Use an Amazon API Gateway HTTP API between the web application server tier and the worker tier to store and forward form data."
+        },
+        "C": {
+          "zh": "在 Web 應用程式伺服器層和工作執行緒層之間使用 Amazon Simple Queue Service (Amazon SQS) 標準佇列來儲存和轉發表單一資料。",
+          "en": "Use an Amazon Simple Queue Service (Amazon SQS) standard queue between the web application server tier and the worker tier to store and forward form data."
+        },
+        "D": {
+          "zh": "使用 AWS Step Functions 工作流程。在 Web 應用程式伺服器層和儲存和轉發表單一資料的工作層之間建立同步工作流程。",
+          "en": "Use an AWS Step Functions workflow. Create a synchronous workflow between the web application server tier and the worker tier that stores and forwards form data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon SQS FIFO佇列可以保證訊息的順序和「恰好一次」處理，滿足問題的要求。先進先出佇列適用於要求嚴格順序、避免重複處理的場景。",
+          "en": "Correct. Amazon SQS FIFO queue can ensure the sequential and \"exactly once\" processing of messages, which meets the requirements of the question. FIFO queues are suitable for scenarios that require strict order and avoid repeated processing."
+        },
+        "B": {
+          "zh": "錯誤。API閘道主要用於管理HTTP API請求，且不具備訊息佇列的功能。不保證訊息的順序或「恰好一次」處理。",
+          "en": "Incorrect. API Gateway is mainly used to manage HTTP API requests and does not have the function of message queue. There is no guarantee of sequential or \"exactly once\" processing of messages."
+        },
+        "C": {
+          "zh": "錯誤。標準佇列雖然支援高吞吐量，但不保證訊息的順序或「恰好一次」處理。題目明確要求「恰好一次」處理，所以標準隊列不符合要求。",
+          "en": "Incorrect. Standard queues, while supporting high throughput, do not guarantee sequential or \"exactly once\" processing of messages. The question clearly requires \"exactly once\" processing, so the standard queue does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。Step Functions 主要用於編排複雜的工作流程，而不是簡單的訊息佇列場景。該題需要快速處理表單數據，Step Functions 的同步工作流程可能會增加延遲。",
+          "en": "Incorrect. Step Functions is mainly used to orchestrate complex workflows, rather than simple message queue scenarios. The question requires rapid processing of form data, and the synchronous workflow of Step Functions may increase delays."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 Web 應用程式伺服器層和工作執行緒層之間使用 Amazon Simple Queue Service (Amazon SQS) FIFO 佇列來儲存和轉發表單一資料。",
+        "en": "A. Use an Amazon Simple Queue Service (Amazon SQS) FIFO queue between the web application server tier and the worker tier to store and forward form data."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：Amazon SQS FIFO佇列可以保證訊息的順序和「恰好一次」處理，滿足問題的要求。先進先出佇列適用於要求嚴格順序、避免重複處理的場景。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon SQS FIFO queue can ensure the sequential and \"exactly once\" processing of messages, which meets the requirements of the question. FIFO queues are suitable for scenarios that require strict order and avoid repeated processing."
+      }
+    },
+    {
+      "question_no": 968,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家金融公司使用本地搜尋應用程式收集來自各個生產商的串流資料。該應用程式提供搜尋和視覺化功能的即時更新。該公司正計劃遷移到 AWS，並希望使用 AWS 原生解決方案。哪種解決方案可以滿足這些要求？",
+        "en": "A finance company uses an on-premises search application to collect streaming data from various producers. The application provides real-time updates to search and visualization features. The company is planning to migrate to AWS and wants to use an AWS native solution. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon EC2 執行個體將資料流擷取並處理至 Amazon S3 儲存桶或儲存。使用 Amazon Athena 搜尋資料。使用 Amazon Managed Grafana 創建視覺化。",
+          "en": "Use Amazon EC2 instances to ingest and process the data streams to Amazon S3 buckets tor storage. Use Amazon Athena to search the data. Use Amazon Managed Grafana to create visualizations."
+        },
+        "B": {
+          "zh": "使用 Amazon EMR 將資料流提取並處理到 Amazon Redshift 進行儲存。使用 Amazon Redshift Spectrum 搜尋資料。使用 Amazon QuickSight 建立視覺化。",
+          "en": "Use Amazon EMR to ingest and process the data streams to Amazon Redshift for storage. Use Amazon Redshift Spectrum to search the data. Use Amazon QuickSight to create visualizations."
+        },
+        "C": {
+          "zh": "使用 Amazon Elastic Kubernetes Service (Amazon EKS) 將資料流提取並處理至 Amazon DynamoDB 進行儲存。使用 Amazon CloudWatch 建立圖形儀錶板來搜尋和視覺化資料。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) to ingest and process the data streams to Amazon DynamoDB for storage. Use Amazon CloudWatch to create graphical dashboards to search and visualize the data."
+        },
+        "D": {
+          "zh": "使用 Amazon Kinesis Data Streams 將資料流擷取並處理至 Amazon OpenSearch Service。使用 OpenSearch 服務搜尋資料。使用 Amazon QuickSight 建立視覺化。",
+          "en": "Use Amazon Kinesis Data Streams to ingest and process the data streams to Amazon OpenSearch Service. Use OpenSearch Service to search the data. Use Amazon QuickSight to create visualizations."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 Amazon EC2 執行個體將資料流擷取並處理至 Amazon S3 儲存桶中進行儲存。使用 Amazon Athena 搜尋資料。使用 Amazon Managed Grafana 創建視覺化。錯誤：Amazon EC2需要手動管理，不適合處理即時資料流，缺乏原生流處理能力。錯誤：Amazon S3和Athena適合大量資料查詢，但不適合即時搜尋。正確：Amazon Managed Grafana 可以創建視覺化，但整體解決方案不適合即時處理需求。",
+          "en": "Incorrect. Use an Amazon EC2 instance to ingest and process data streams into an Amazon S3 bucket for storage. Search data using Amazon Athena. Create visualizations using Amazon Managed Grafana. Error: Amazon EC2 requires manual management and is not suitable for processing real-time data streams and lacks native stream processing capabilities. Error: Amazon S3 and Athena are suitable for batch data query, but not suitable for real-time search. Correct: Amazon Managed Grafana can create visualizations, but the overall solution is not suitable for real-time processing needs."
+        },
+        "B": {
+          "zh": "錯誤。使用 Amazon EMR 將資料流提取並處理到 Amazon Redshift 中進行儲存。使用 Amazon Redshift Spectrum 搜尋資料。使用 Amazon QuickSight 建立視覺化。錯誤：Amazon EMR 適合大規模資料處理，但不適合即時串流處理。錯誤：Amazon Redshift 是一種資料倉儲服務，適合結構化資料分析，但不適合即時搜尋。正確：Amazon QuickSight 可以建立視覺化，但整體解決方案不適合即時處理需求。",
+          "en": "Incorrect. Use Amazon EMR to ingest and process data streams into Amazon Redshift for storage. Search data using Amazon Redshift Spectrum. Create visualizations using Amazon QuickSight. Wrong: Amazon EMR is suitable for large-scale data processing, but not for real-time stream processing. Error: Amazon Redshift is a data warehouse service, suitable for structured data analysis, but not suitable for real-time search. Correct: Amazon QuickSight can create visualizations, but the overall solution is not suitable for real-time processing needs."
+        },
+        "C": {
+          "zh": "錯誤。使用 Amazon Elastic Kubernetes Service (Amazon EKS) 將資料流提取並處理到 Amazon DynamoDB 中進行儲存。使用 Amazon CloudWatch 建立圖形儀錶板來搜尋和視覺化資料。錯誤：Amazon EKS 需要複雜的管理，不適合直接處理即時資料流。錯誤：Amazon DynamoDB 是 NoSQL 資料庫，適合快速查詢，但不適合複雜的搜尋功能。錯誤：Amazon CloudWatch 主要用於控制和日誌分析，不適合複雜的資料視覺化。",
+          "en": "Incorrect. Use Amazon Elastic Kubernetes Service (Amazon EKS) to ingest and process data streams into Amazon DynamoDB for storage. Use Amazon CloudWatch to create graphical dashboards to search and visualize data. Error: Amazon EKS requires complex management and is not suitable for directly processing real-time data streams. Error: Amazon DynamoDB is a NoSQL database, suitable for fast queries, but not suitable for complex search functions. Error: Amazon CloudWatch is mainly used for control and log analysis, and is not suitable for complex data visualization."
+        },
+        "D": {
+          "zh": "正確。使用 Amazon Kinesis Data Streams 將資料流擷取並處理到 Amazon OpenSearch Service 中。使用 OpenSearch 服務搜尋資料。使用 Amazon QuickSight 建立視覺化。正確：Amazon Kinesis Data Streams 是一種本機即時資料流處理服務，適合即時資料擷取和處理。正確：Amazon OpenSearch Service 支援即時搜尋和分析功能，適合即時資料需求。正確：Amazon QuickSight 可以創造適合資料分析的視覺化效果。",
+          "en": "Correct. Use Amazon Kinesis Data Streams to ingest and process data streams into Amazon OpenSearch Service. Search data using OpenSearch Service. Create visualizations using Amazon QuickSight. Correct: Amazon Kinesis Data Streams is a native real-time data stream processing service suitable for real-time data ingestion and processing. Correct: Amazon OpenSearch Service supports real-time search and analysis functions, which is suitable for real-time data needs. Correct: Amazon QuickSight can create visualizations suitable for data analysis."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 Amazon Kinesis Data Streams 將資料流擷取並處理至 Amazon OpenSearch Service。使用 OpenSearch 服務搜尋資料。使用 Amazon QuickSight 建立視覺化。",
+        "en": "D. Use Amazon Kinesis Data Streams to ingest and process the data streams to Amazon OpenSearch Service. Use OpenSearch Service to search the data. Use Amazon QuickSight to create visualizations."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：使用 Amazon Kinesis Data Streams 將資料流擷取並處理到 Amazon OpenSearch Service 中。使用 OpenSearch 服務搜尋資料。使用 Amazon QuickSight 建立視覺化。正確：Amazon Kinesis Data Streams 是一種本機即時資料流處理服務，適合即時資料擷取和處理。正確：Amazon OpenSearch Service 支援即時搜尋和分析功能，適合即時資料需求。正確：Amazon QuickSight 可以創造適合資料分析的視覺化效果。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Use Amazon Kinesis Data Streams to ingest and process data streams into Amazon OpenSearch Service. Search data using OpenSearch Service. Create visualizations using Amazon QuickSight. Correct: Amazon Kinesis Data Streams is a native real-time data stream processing service suitable for real-time data ingestion and processing. Correct: Amazon OpenSearch Service supports real-time search and analysis functions, which is suitable for real-time data needs. Correct: Amazon QuickSight can create visualizations suitable for data analysis."
+      }
+    },
+    {
+      "question_no": 969,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司目前在 Linux 電腦上執行使用 ASP.NET 的本機應用程式。該應用程式是資源密集型的，直接為客戶提供服務。該公司希望將應用程式現代化到.NET。該公司希望在容器上運行該應用程式並根據 Amazon CloudWatch 指標進行擴展。該公司還希望減少營運維護活動所花費的時間。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company currently runs an on-premises application that usesASP.NET on Linux machines. The application is resource-intensive and serves customers directly. The company wants to modernize the application to .NET. The company wants to run the application on containers and to scale based on Amazon CloudWatch metrics. The company also wants to reduce the time spent on operational maintenance activities. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS App2Container 對應用程式進行容器化。使用 AWS CloudFormation 範本將應用程式部署到 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS)。",
+          "en": "Use AWS App2Container to containerize the application. Use an AWS CloudFormation template to deploy the application to Amazon Elastic Container Service (Amazon ECS) on AWS Fargate."
+        },
+        "B": {
+          "zh": "使用 AWS App2Container 對應用程式進行容器化。使用 AWS CloudFormation 範本將應用程式部署到 Amazon EC2 執行個體上的 Amazon Elastic Container Service (Amazon ECS)。",
+          "en": "Use AWS App2Container to containerize the application. Use an AWS CloudFormation template to deploy the application to Amazon Elastic Container Service (Amazon ECS) on Amazon EC2 instances."
+        },
+        "C": {
+          "zh": "使用 AWS App Runner 對應用程式進行容器化。使用 App Runner 將應用程式部署到 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS)。",
+          "en": "Use AWS App Runner to containerize the application. Use App Runner to deploy the application to Amazon Elastic Container Service (Amazon ECS) on AWS Fargate."
+        },
+        "D": {
+          "zh": "使用 AWS App Runner 對應用程式進行容器化。使用 App Runner 將應用程式部署到 Amazon EC2 執行個體上的 Amazon Elastic Kubernetes Service (Amazon EKS)。",
+          "en": "Use AWS App Runner to containerize the application. Use App Runner to deploy the application to Amazon Elastic Kubernetes Service (Amazon EKS) on Amazon EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。效能分析：AWS App2Container 是一個適合容器化現有應用程式的工具。 AWS Fargate 是一種無伺服器運算引擎，支援 Amazon ECS 並且可以減少營運開銷。可以使用CloudFormation範本來實現自動化部署。此選項滿足問題的要求，包括減少營運開銷和基於 CloudWatch 指標的擴展。正確的。",
+          "en": "Correct. Performance analysis: AWS App2Container is a tool suitable for containerizing existing applications. AWS Fargate is a serverless computing engine that supports Amazon ECS and can reduce operational overhead. Automation deployment can be achieved using CloudFormation templates. This option meets the requirements of the question, including reducing operational overhead and scaling based on CloudWatch metrics. Correct."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：雖然AWS AppContainer可以容器化應用程式且Amazon ECS可以部署容器，但使用Amazon EC2執行個體會增加營運開銷（例如管理EC2執行個體的生命週期、修補等）。此選項不符合「減少營運開銷」的要求。",
+          "en": "Incorrect. Performance analysis: Although AWS AppContainer can containerize applications and Amazon ECS can deploy containers, using Amazon EC2 instances will increase operational overhead (such as managing the life cycle of EC2 instances, patching, etc.). This option does not meet the \"Reduce Operational Overhead\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：AWS App Runner 是一項完全託管的服務，適合直接運行容器化應用程序，但不支援將應用程式載入到 Amazon ECS。該選項在技術上是不正確的。",
+          "en": "Incorrect. Performance analysis: AWS App Runner is a fully managed service suitable for directly running containerized applications, but it does not support loading applications to Amazon ECS. This option is technically incorrect."
+        },
+        "D": {
+          "zh": "錯誤。效能分析：AWS App Runner 無法連線到 Amazon EKS。另外，使用Amazon EC2執行個體會增加營運費用，也不符合問題的要求。",
+          "en": "Incorrect. Performance analysis: AWS App Runner cannot connect to Amazon EKS. In addition, using Amazon EC2 instances will increase operating expenses and does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS App2Container 對應用程式進行容器化。使用 AWS CloudFormation 範本將應用程式部署到 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS)。",
+        "en": "A. Use AWS App2Container to containerize the application. Use an AWS CloudFormation template to deploy the application to Amazon Elastic Container Service (Amazon ECS) on AWS Fargate."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：效能分析：AWS App2Container 是一個適合容器化現有應用程式的工具。 AWS Fargate 是一種無伺服器運算引擎，支援 Amazon ECS 並且可以減少營運開銷。可以使用CloudFormation範本來實現自動化部署。此選項滿足問題的要求，包括減少營運開銷和基於 CloudWatch 指標的擴展。正確的。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Performance analysis: AWS App2Container is a tool suitable for containerizing existing applications. AWS Fargate is a serverless computing engine that supports Amazon ECS and can reduce operational overhead. Automation deployment can be achieved using CloudFormation templates. This option meets the requirements of the question, including reducing operational overhead and scaling based on CloudWatch metrics. Correct."
+      }
+    },
+    {
+      "question_no": 970,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 雲端中設計一個新的內部 Web 應用程式。新應用程式必須從 AWS 託管服務安全地檢索和儲存多個員工使用者名稱和密碼。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is designing a new internal web application in the AWS Cloud. The new application must securely retrieve and store multiple employee usernames and passwords from an AWS managed service. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "將員工憑證儲存在 AWS Systems Manager Parameter Store 中。使用 AWS CloudFormation 和 BatchGetSecretValue API 從 Parameter Store 檢索使用者名稱和密碼。",
+          "en": "Store the employee credentials in AWS Systems Manager Parameter Store. Use AWS CloudFormation and the BatchGetSecretValue API to retrieve usernames and passwords from Parameter Store."
+        },
+        "B": {
+          "zh": "將員工憑證儲存在 AWS Secrets Manager 中。將 AWS CloudFormation 和 AWS Batch 與 BatchGetSecretValue API 結合使用，從 Secrets Manager 檢索使用者名稱和密碼。",
+          "en": "Store the employee credentials in AWS Secrets Manager. Use AWS CloudFormation and AWS Batch with the BatchGetSecretValue API to retrieve the usernames and passwords from Secrets Manager."
+        },
+        "C": {
+          "zh": "將員工憑證儲存在 AWS Systems Manager Parameter Store 中。將 AWS CloudFormation 和 AWS Batch 與 BatchGetSecretValue API 結合使用，從 Parameter Store 檢索使用者名稱和密碼。",
+          "en": "Store the employee credentials in AWS Systems Manager Parameter Store. Use AWS CloudFormation and AWS Batch with the BatchGetSecretValue API to retrieve the usernames and passwords from Parameter Store."
+        },
+        "D": {
+          "zh": "將員工憑證儲存在 AWS Secrets Manager 中。使用 AWS CloudFormation 和 BatchGetSecretValue API 從 Secrets Manager 檢索使用者名稱和密碼。",
+          "en": "Store the employee credentials in AWS Secrets Manager. Use AWS CloudFormation and the BatchGetSecretValue API to retrieve the usernames and passwords from Secrets Manager."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Systems Manager Parameter Store 適合儲存配置資料和非敏感訊息，但對於敏感資訊（例如使用者名稱和密碼），AWS Secrets Manager 是更合適的選擇。錯誤：BatchGetSecretValue API 是 Secrets Manager 的 API，不能在 Parameter Store 中使用。",
+          "en": "Incorrect. AWS Systems Manager Parameter Store is suitable for storing configuration data and non-sensitive information, but for sensitive information (such as usernames and passwords), AWS Secrets Manager is a more suitable choice. Error: BatchGetSecretValue API is the API of Secrets Manager and cannot be used in Parameter Store."
+        },
+        "B": {
+          "zh": "錯誤。雖然 Secrets Manager 是正確的儲存選擇，但 AWS Batch 並不是檢索 Secrets Manager 資料的合適工具。錯誤：AWS Batch 主要用於執行批次作業，與檢索敏感資訊無關。",
+          "en": "Incorrect. While Secrets Manager is the right storage choice, AWS Batch is not the appropriate tool to retrieve Secrets Manager data. Error: AWS Batch is primarily used for running batch jobs and has nothing to do with retrieving sensitive information."
+        },
+        "C": {
+          "zh": "錯誤。與選項 A 相同，Parameter Store 不適合儲存敏感資訊。錯誤：BatchGetSecretValue API 是 Secrets Manager 的 API，不能在 Parameter Store 中使用。錯誤：AWS Batch 與檢索敏感資訊無關。",
+          "en": "Incorrect. Same as option A, Parameter Store is not suitable for storing sensitive information. Error: BatchGetSecretValue API is the API of Secrets Manager and cannot be used in Parameter Store. Error: AWS Batch is not related to retrieving sensitive information."
+        },
+        "D": {
+          "zh": "正確。AWS Secrets Manager 專門用於儲存和管理敏感資訊（例如使用者名稱和密碼）。正確：BatchGetSecretValue API 是 Secrets Manager 的 API，用於檢索儲存的敏感資訊。正確：此選項使用正確的服務和 API，且營運開銷最小。",
+          "en": "Correct. AWS Secrets Manager is specifically designed to store and manage sensitive information (such as usernames and passwords). Correct: The BatchGetSecretValue API is the API of Secrets Manager and is used to retrieve stored sensitive information. Correct: This option uses the correct services and APIs with minimal operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將員工憑證儲存在 AWS Secrets Manager 中。使用 AWS CloudFormation 和 BatchGetSecretValue API 從 Secrets Manager 檢索使用者名稱和密碼。",
+        "en": "D. Store the employee credentials in AWS Secrets Manager. Use AWS CloudFormation and the BatchGetSecretValue API to retrieve the usernames and passwords from Secrets Manager."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：AWS Secrets Manager 專門用於儲存和管理敏感資訊（例如使用者名稱和密碼）。正確：BatchGetSecretValue API 是 Secrets Manager 的 API，用於檢索儲存的敏感資訊。正確：此選項使用正確的服務和 API，且營運開銷最小。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS Secrets Manager is specifically designed to store and manage sensitive information (such as usernames and passwords). Correct: The BatchGetSecretValue API is the API of Secrets Manager and is used to retrieve stored sensitive information. Correct: This option uses the correct services and APIs with minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 971,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "位於 ap-northeast-1 區域的一家公司擁有數千臺 AWS Outposts 伺服器。該公司已將伺服器部署在世界各地的遠端地點。所有伺服器都會定期下載包含 100 個檔案的新軟體版本。在所有伺服器運行新軟體版本之前存在顯著的延遲。公司必須減少新軟體版本的部署延遲。哪種解決方案能夠以最少的營運開銷滿足這項要求？",
+        "en": "A company that is in the ap-northeast-1 Region has a fleet of thousands of AWS Outposts servers. The company has deployed the servers at remote locations around the world. All the servers regularly download new software versions that consist of 100 files. There is significant latency before all servers run the new software versions. The company must reduce the deployment latency for new software versions. Which solution will meet this requirement with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 ap-northeast-1 中建立 Amazon S3 儲存桶。在 ap-northeast-1 中設定包含 CachingDisabled 快取策略的 Amazon CloudFront 分配。將 S3 儲存桶配置為來源。使用簽名 URL 下載軟體。",
+          "en": "Create an Amazon S3 bucket in ap-northeast-1. Set up an Amazon CloudFront distribution in ap-northeast-1 that includes a CachingDisabled cache policy. Configure the S3 bucket as the origin. Download the software by using signed URLs."
+        },
+        "B": {
+          "zh": "在 ap-northeast-1 中建立 Amazon S3 儲存桶。在 us-east-1 區域中建立第二個 S3 儲存桶。配置儲存桶之間的複製。設定使用 ap-northeast-1 作為主要來源、使用 us-east-1 作為輔助來源的 Amazon CloudFront 分配。使用簽名 URL 下載軟體。",
+          "en": "Create an Amazon S3 bucket in ap-northeast-1. Create a second S3 bucket in the us-east-1 Region. Configure replication between the buckets. Set up an Amazon CloudFront distribution that uses ap-northeast-1 as the primary origin and us-east-1 as the secondary origin. Download the software by using signed URLs."
+        },
+        "C": {
+          "zh": "在 ap-northeast-1 中建立 Amazon S3 儲存桶。配置 Amazon S3 傳輸加速。使用 S3 Transfer Acceleration 端點下載軟體。",
+          "en": "Create an Amazon S3 bucket in ap-northeast-1. Configure Amazon S3 Transfer Acceleration. Download the software by using the S3 Transfer Acceleration endpoint."
+        },
+        "D": {
+          "zh": "在 ap-northeast-1 中建立 Amazon S3 儲存桶。設定 Amazon CloudFront 分配。將 S3 儲存桶配置為來源。使用簽名 URL 下載軟體。",
+          "en": "Create an Amazon S3 bucket in ap-northeast-1. Set up an Amazon CloudFront distribution. Configure the S3 bucket as the origin. Download the software by using signed URLs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：雖然使用了CloudFront，但是停用快取（CachingDisabled）會導致每個請求直接回到來源伺服器，無法利用CloudFront的快取優勢。這可能會增加延遲，尤其是對於全球分發場景。因此，該方案不滿足減少部署延遲的要求。",
+          "en": "Incorrect. Analysis: Although CloudFront is used, disabling caching (CachingDisabled) will cause each request to go directly back to the origin server, making it impossible to take advantage of CloudFront's caching advantages. This can increase latency, especially for global distribution scenarios. Therefore, this option does not meet the requirement of reducing deployment latency."
+        },
+        "B": {
+          "zh": "錯誤。分析：配置了兩個 S3 儲存桶並設定了複製，但這增加了額外的複雜性和操作開銷。雖然 CloudFront 可以使用多個來源，但此配置並不能直接解決全球範圍的延遲問題。此選項具有較高的營運開銷，且不符合「最少營運開銷」要求。",
+          "en": "Incorrect. Analysis: Two S3 buckets were configured and replication set up, but this added additional complexity and operational overhead. While CloudFront can use multiple origins, this configuration does not directly address global-scale latency issues. This option has high operational overhead and does not meet the \"LEAST operational overhead\" requirements."
+        },
+        "C": {
+          "zh": "錯誤。分析：S3傳輸加速可以加速跨區域上傳和下載，但主要適用於單一客戶端與S3儲存桶互動。對於全球分發，CloudFront的邊緣快取更適合，因為它可以將內容快取到距離用戶最近的邊緣位置。此選項可減少延遲，但不如 CloudFront 的分發機制有效率。",
+          "en": "Incorrect. Analysis: S3 Transfer Acceleration can speed up cross-region uploads and downloads, but it is mainly suitable for a single client interacting with an S3 bucket. For global distribution, CloudFront's edge cache is more suitable because it can cache content to the edge location closest to the user. This option reduces latency, but is not as efficient as CloudFront's distribution mechanism."
+        },
+        "D": {
+          "zh": "正確。分析：使用 CloudFront 分發內容可以將檔案快取到世界各地的邊緣位置，從而顯著減少延遲。簽名 URL 提供安全性，確保只有授權使用者才能下載檔案。此選項操作簡單，並且符合「最少操作開銷」的要求。",
+          "en": "Correct. Analysis: Using CloudFront to distribute content allows files to be cached to edge locations around the world, significantly reducing latency. Signed URLs provide security, ensuring that only authorized users can download files. This option is simple to operate and meets the requirements of \"LEAST operational overhead\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 ap-northeast-1 中建立 Amazon S3 儲存桶。設定 Amazon CloudFront 分配。將 S3 儲存桶配置為來源。使用簽名 URL 下載軟體。",
+        "en": "D. Create an Amazon S3 bucket in ap-northeast-1. Set up an Amazon CloudFront distribution. Configure the S3 bucket as the origin. Download the software by using signed URLs."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (72%)； C (24%)。熱門討論與考點摘要：分析：使用 CloudFront 分發內容可以將檔案快取到世界各地的邊緣位置，從而顯著減少延遲。簽名 URL 提供安全性，確保只有授權使用者才能下載檔案。此選項操作簡單，並且符合「最少操作開銷」的要求。",
+        "en": "Community vote as displayed: D (72%); C (24%). Popular discussion and key point summary: Analysis: Using CloudFront to distribute content allows files to be cached to edge locations around the world, significantly reducing latency. Signed URLs provide security, ensuring that only authorized users can download files. This option is simple to operate and meets the requirements of \"LEAST operational overhead\"."
+      }
+    },
+    {
+      "question_no": 972,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司目前使用 Microsoft Windows Server 執行本機股票交易應用程式。該公司希望將應用程式遷移到 AWS 雲端。該公司需要設計一個高度可用的解決方案，提供跨多個可用區的區塊儲存的低延遲存取。哪種解決方案能夠以最少的實施工作來滿足這些要求？",
+        "en": "A company currently runs an on-premises stock trading application by using Microsoft Windows Server. The company wants to migrate the application to the AWS Cloud. The company needs to design a highly available solution that provides low-latency access to block storage across multiple Availability Zones. Which solution will meet these requirements with the LEAST implementation effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定跨 Amazon EC2 執行個體上兩個可用區的 Windows Server 叢集。在兩個叢集節點上安裝應用程式。使用 Amazon FSx for Windows File Server 作為兩個叢集節點之間的共用儲存體。",
+          "en": "Configure a Windows Server cluster that spans two Availability Zones on Amazon EC2 instances. Install the application on both cluster nodes. Use Amazon FSx for Windows File Server as shared storage between the two cluster nodes."
+        },
+        "B": {
+          "zh": "設定跨 Amazon EC2 執行個體上兩個可用區的 Windows Server 叢集。在兩個叢集節點上安裝應用程式。使用 Amazon Elastic Block Store (Amazon EBS) 通用 SSD (gp3) 磁碟區作為附加到 EC2 執行個體的儲存。設定應用程式層級複製，將資料從一個可用區中的一個 EBS 磁碟區同步到第二個可用區中的另一個 EBS 磁碟區。",
+          "en": "Configure a Windows Server cluster that spans two Availability Zones on Amazon EC2 instances. Install the application on both cluster nodes. Use Amazon Elastic Block Store (Amazon EBS) General Purpose SSD (gp3) volumes as storage attached to the EC2 instances. Set up application-level replication to sync data from one EBS volume in one Availability Zone to another EBS volume in the second Availability Zone."
+        },
+        "C": {
+          "zh": "在兩個可用區的 Amazon EC2 執行個體上部署應用程式。將一個 EC2 執行個體配置為活動模式，將第二個 EC2 執行個體配置為備用模式。使用 Amazon FSx for NetApp ONTAP 多重使用區檔案系統透過 Internet 小型電腦系統介面 (iSCSI) 協定存取資料。",
+          "en": "Deploy the application on Amazon EC2 instances in two Availability Zones. Configure one EC2 instance as active and the second EC2 instance in standby mode. Use an Amazon FSx for NetApp ONTAP Multi-AZ file system to access the data by using Internet Small Computer Systems Interface (iSCSI) protocol."
+        },
+        "D": {
+          "zh": "在兩個可用區的 Amazon EC2 執行個體上部署應用程式。將一個 EC2 執行個體配置為活動模式，將第二個 EC2 執行個體配置為備用模式。使用 Amazon Elastic Block Store (Amazon EBS) 預先配置 IOPS SSD (io2) 磁碟區作為附加到 EC2 執行個體的儲存。設定 Amazon EBS 層級複製，將資料從一個可用區中的一個 io2 磁碟區同步到第二個可用區中的另一個 io2 磁碟區。",
+          "en": "Deploy the application on Amazon EC2 instances in two Availability Zones. Configure one EC2 instance as active and the second EC2 instance in standby mode. Use Amazon Elastic Block Store (Amazon EBS) Provisioned IOPS SSD (io2) volumes as storage attached to the EC2 instances. Set up Amazon EBS level replication to sync data from one io2 volume in one Availability Zone to another io2 volume in the second Availability Zone."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：Amazon FSx for Windows File Server 是託管 Windows 檔案伺服器，適合 Windows 應用程式的共用儲存需求。雖然 FSx for Windows File Server 支援跨可用區的高可用性，但它主要用於檔案共用，而不是低延遲區塊儲存。此選項沒有提及區塊儲存的使用（如iSCSI協定），因此並不能完全滿足問題要求。",
+          "en": "Incorrect. Analysis: Amazon FSx for Windows File Server is a managed Windows file server that is suitable for the shared storage needs of Windows applications. While FSx for Windows File Server supports high availability across Availability Zones, it is primarily intended for file sharing and not low-latency block storage. This option does not mention the use of block storage (such as iSCSI protocol), so it does not fully meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。分析：Amazon EBS gp3 磁碟區提供高效能區塊存儲，但不支援跨可用區的本機同步或複製。應用順序複製需要額外的開發工作，從而增加了實現的複雜性。此選項的實施工作量較高，不符合問題所要求的「LEAST實施工作量」。",
+          "en": "Incorrect. Analysis: Amazon EBS gp3 volumes provide high-performance block storage, but it does not support native synchronization or replication across Availability Zones. Applying sequential replication requires additional development work, increasing implementation complexity. The implementation effort of this option is high and does not meet the \"LEAST implementation effort\" required by the question."
+        },
+        "C": {
+          "zh": "正確。分析：Amazon FSx for NetApp ONTAP 支援跨可用區的高可用性，並提供低延遲區塊儲存存取（透過 iSCSI 協定）。該方案直接滿足了高可用、低延遲、跨可用區塊儲存的需求。由於 FSx for NetApp ONTAP 是一項託管服務，因此實施工作量較低，從而降低了配置和管理的複雜性。",
+          "en": "Correct. Analysis: Amazon FSx for NetApp ONTAP supports high availability across Availability Zones and provides low-latency block storage access (via the iSCSI protocol). This option directly meets the requirements of the high availability, low latency, and block storage across availability zones. Implementation effort is lower because FSx for NetApp ONTAP is a managed service, reducing configuration and management complexity."
+        },
+        "D": {
+          "zh": "錯誤。分析：Amazon EBS io2 磁碟區提供高效能和高可靠性，但 EBS 本身不支援跨可用區的本機同步。設定 EBS 複製需要額外的配置工作，從而增加了實施複雜性。",
+          "en": "Incorrect. Analysis: Amazon EBS io2 volumes provide high performance and high reliability, but EBS itself does not support native synchronization across Availability Zones. Setting up EBS replication requires additional configuration work, increasing implementation complexity."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在兩個可用區的 Amazon EC2 執行個體上部署應用程式。將一個 EC2 執行個體配置為活動模式，將第二個 EC2 執行個體配置為備用模式。使用 Amazon FSx for NetApp ONTAP 多重使用區檔案系統透過 Internet 小型電腦系統介面 (iSCSI) 協定存取資料。",
+        "en": "C. Deploy the application on Amazon EC2 instances in two Availability Zones. Configure one EC2 instance as active and the second EC2 instance in standby mode. Use an Amazon FSx for NetApp ONTAP Multi-AZ file system to access the data by using Internet Small Computer Systems Interface (iSCSI) protocol."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (52%)； A (29%)。熱門討論與考點摘要：分析：Amazon FSx for NetApp ONTAP 支援跨可用區的高可用性，並提供低延遲區塊儲存存取（透過 iSCSI 協定）。該方案直接滿足了高可用、低延遲、跨可用區塊儲存的需求。由於 FSx for NetApp ONTAP 是一項託管服務，因此實施工作量較低，從而降低了配置和管理的複雜性。",
+        "en": "Community vote as displayed: C (52%); A (29%). Popular discussion and key point summary: Analysis: Amazon FSx for NetApp ONTAP supports high availability across Availability Zones and provides low-latency block storage access (via the iSCSI protocol). This option directly meets the requirements of the high availability, low latency, and block storage across availability zones. Implementation effort is lower because FSx for NetApp ONTAP is a managed service, reducing configuration and management complexity."
+      }
+    },
+    {
+      "question_no": 973,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在設計一個具有面向網際網路的應用程式負載平衡器 (ALB) 的 Web 應用程式。該公司需要 ALB 來接收來自公共網際網路的 HTTPS Web 流量。 ALB 必須僅將 HTTPS 流量傳送至連接埠 443 上 Amazon EC2 執行個體上託管的 Web 應用程式伺服器。 ALB 必須在連接埠 8443 上透過 HTTPS 對 Web 應用程式伺服器執行執行狀況檢查。與 ALB 關聯的安全性群組的哪種組態組合將滿足這些要求？ （選擇三項。）",
+        "en": "A company is designing a web application with an internet-facing Application Load Balancer (ALB). The company needs the ALB to receive HTTPS web traffic from the public internet. The ALB must send only HTTPS traffic to the web application servers hosted on the Amazon EC2 instances on port 443. The ALB must perform a health check of the web application servers over HTTPS on port 8443. Which combination of configurations of the security group that is associated with the ALB will meet these requirements? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "允許連接埠 443 來自 0.0.0.0/0 的 HTTPS 入站流量。",
+          "en": "Allow HTTPS inbound traffic from 0.0.0.0/0 for port 443."
+        },
+        "B": {
+          "zh": "允許連接埠 443 的所有出站流量到 0.0.0.0/0。",
+          "en": "Allow all outbound traffic to 0.0.0.0/0 for port 443."
+        },
+        "C": {
+          "zh": "允許連接埠 443 到 Web 應用程式實例的 HTTPS 出站流量。",
+          "en": "Allow HTTPS outbound traffic to the web application instances for port 443."
+        },
+        "D": {
+          "zh": "允許來自連接埠 443 的 Web 應用程式實例的 HTTPS 入站流量。",
+          "en": "Allow HTTPS inbound traffic from the web application instances for port 443."
+        },
+        "E": {
+          "zh": "允許 HTTPS 出站流量傳送至 Web 應用程式實例，以在連接埠 8443 上進行執行狀況檢查。",
+          "en": "Allow HTTPS outbound traffic to the web application instances for the health check on port 8443."
+        },
+        "F": {
+          "zh": "允許來自 Web 應用程式實例的 HTTPS 入站流量在連接埠 8443 上進行執行狀況檢查。",
+          "en": "Allow HTTPS inbound traffic from the web application instances for the health check on port 8443."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。ALB 需要從 Internet 接收 HTTPS 流量，因此需要允許從 0.0.0.0/0 到連接埠 443 的入站流量。",
+          "en": "Correct. The ALB needs to receive HTTPS traffic from the Internet, so it needs to allow inbound traffic from 0.0.0.0/0 to port 443."
+        },
+        "B": {
+          "zh": "錯誤。ALB 不需要將 HTTPS 流量傳送至 Internet，出站流量應限製到目標實例。",
+          "en": "Incorrect. ALB does not need to send HTTPS traffic to the Internet, outbound traffic should be restricted to the target instance."
+        },
+        "C": {
+          "zh": "正確。ALB 需要將 HTTPS 流量傳送至託管 Web 應用程式的 EC2 實例，因此需要允許到連接埠 443 的出站流量。",
+          "en": "Correct. The ALB needs to send HTTPS traffic to the EC2 instance hosting the web application, so outbound traffic to port 443 needs to be allowed."
+        },
+        "D": {
+          "zh": "錯誤。Web 應用程式實例不會將 HTTPS 流量傳送至 ALB，因此不需要此規則。",
+          "en": "Incorrect. Web application instances do not send HTTPS traffic to the ALB, so this rule is not required."
+        },
+        "E": {
+          "zh": "正確。ALB 需要對 Web 應用程式執行個體執行執行狀況檢查。健康檢查使用HTTPS協議，通過連接埠8443，因此需要允許該出站流量。",
+          "en": "Correct. ALB needs to perform a health check on the web application instance. The health check uses the HTTPS protocol and passes port 8443, so this outbound traffic needs to be allowed."
+        },
+        "F": {
+          "zh": "錯誤。健康檢查是ALB向實例發起的請求。該實例不會向 ALB 發送流量，因此不需要此規則。",
+          "en": "Incorrect. Health check is a request initiated by ALB to the instance. The instance does not send traffic to ALB, so this rule is not required."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 允許連接埠 443 來自 0.0.0.0/0 的 HTTPS 入站流量。；C. 允許連接埠 443 到 Web 應用程式實例的 HTTPS 出站流量。；E. 允許 HTTPS 出站流量傳送至 Web 應用程式實例，以在連接埠 8443 上進行執行狀況檢查。",
+        "en": "A. Allow HTTPS inbound traffic from 0.0.0.0/0 for port 443.; C. Allow HTTPS outbound traffic to the web application instances for port 443.; E. Allow HTTPS outbound traffic to the web application instances for the health check on port 8443."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：ACE (94%)。熱門討論與考點摘要：ALB 需要從 Internet 接收 HTTPS 流量，因此需要允許從 0.0.0.0/0 到連接埠 443 的入站流量。；ALB 需要將 HTTPS 流量傳送至託管 Web 應用程式的 EC2 實例，因此需要允許到連接埠 443 的出站流量。；ALB 需要對 Web 應用程式執行個體執行執行狀況檢查。健康檢查使用HTTPS協議，通過連接埠8443，因此需要允許該出站流量。",
+        "en": "Community vote as displayed: ACE (94%). Popular discussion and key point summary: The ALB needs to receive HTTPS traffic from the Internet, so it needs to allow inbound traffic from 0.0.0.0/0 to port 443.; The ALB needs to send HTTPS traffic to the EC2 instance hosting the web application, so outbound traffic to port 443 needs to be allowed.; ALB needs to perform a health check on the web application instance. The health check uses the HTTPS protocol and passes port 8443, so this outbound traffic needs to be allowed."
+      }
+    },
+    {
+      "question_no": 974,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上託管一個應用程式。該應用程式使用戶能夠上傳照片並將照片儲存在 Amazon S3 儲存桶中。該公司希望使用 Amazon CloudFront 和自訂網域將照片檔案上傳到 eu-west-1 區域中的 S3 儲存桶。哪種解決方案可以滿足這些要求？ （選兩個。）",
+        "en": "A company hosts an application on AWS. The application gives users the ability to upload photos and store the photos in an Amazon S3 bucket. The company wants to use Amazon CloudFront and a custom domain name to upload the photo files to the S3 bucket in the eu-west-1 Region. Which solution will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Certificate Manager (ACM) 在 us-east-1 區域中建立公用憑證。在 CloudFront 中使用憑證。",
+          "en": "Use AWS Certificate Manager (ACM) to create a public certificate in the us-east-1 Region. Use the certificate in CloudFront."
+        },
+        "B": {
+          "zh": "使用 AWS Certificate Manager (ACM) 在 eu-west-1 中建立公用憑證。在 CloudFront 中使用憑證。",
+          "en": "Use AWS Certificate Manager (ACM) to create a public certificate in eu-west-1. Use the certificate in CloudFront."
+        },
+        "C": {
+          "zh": "設定 Amazon S3 以允許從 CloudFront 上傳。配置 S3 傳輸加速。",
+          "en": "Configure Amazon S3 to allow uploads from CloudFront. Configure S3 Transfer Acceleration."
+        },
+        "D": {
+          "zh": "設定 Amazon S3 以允許從 CloudFront 來源存取控制 (OAC) 上傳。",
+          "en": "Configure Amazon S3 to allow uploads from CloudFront origin access control (OAC)."
+        },
+        "E": {
+          "zh": "設定 Amazon S3 以允許從 CloudFront 上傳。配置 Amazon S3 網站終端節點。",
+          "en": "Configure Amazon S3 to allow uploads from CloudFront. Configure an Amazon S3 website endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。 CloudFront 要求所使用的憑證必須在 us-east-1 區域中創建，因為 CloudFront 的憑證管理集中在 us-east-1 區域。",
+          "en": "Correct. . CloudFront requires that the certificate used must be created in the us-east-1 region because CloudFront's certificate management is centralized in the us-east-1 region."
+        },
+        "B": {
+          "zh": "錯誤。。 CloudFront 不支援在其他區域（例如 eu-west-1）建立的證書，必須在 us-east-1 區域建立證書。",
+          "en": "Incorrect. . CloudFront does not support certificates created in other regions (such as eu-west-1), the certificate must be created in the us-east-1 region."
+        },
+        "C": {
+          "zh": "錯誤。。 S3 Transfer Acceleration用於加速跨區域或全球上傳，但問題中沒有提及是否需要加速功能，且與CloudFront整合沒有直接關係。",
+          "en": "Incorrect. . S3 Transfer Acceleration is used to accelerate cross-regional or global uploads, but the question does not mention the need for acceleration functions, and it is not directly related to CloudFront integration."
+        },
+        "D": {
+          "zh": "正確。。建議使用 CloudFront 的來源存取控制 (OAC) 最佳實踐，以確保只有 CloudFront 可以存取 S3 資源。",
+          "en": "Correct. . Using CloudFront's Origin Access Control (OAC) is a recommended best practice to ensure that only CloudFront can access S3 resources."
+        },
+        "E": {
+          "zh": "錯誤。。 S3網站端點用於靜態網站託管，與CloudFront的上傳功能無關。",
+          "en": "Incorrect. . The S3 website endpoint is used for static website hosting and has nothing to do with CloudFront's upload functionality."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Certificate Manager (ACM) 在 us-east-1 區域中建立公用憑證。在 CloudFront 中使用憑證。；D. 設定 Amazon S3 以允許從 CloudFront 來源存取控制 (OAC) 上傳。",
+        "en": "A. Use AWS Certificate Manager (ACM) to create a public certificate in the us-east-1 Region. Use the certificate in CloudFront.; D. Configure Amazon S3 to allow uploads from CloudFront origin access control (OAC)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AD (83%)。熱門討論與考點摘要：。 CloudFront 要求所使用的憑證必須在 us-east-1 區域中創建，因為 CloudFront 的憑證管理集中在 us-east-1 區域。；。建議使用 CloudFront 的來源存取控制 (OAC) 最佳實踐，以確保只有 CloudFront 可以存取 S3 資源。",
+        "en": "Community vote as displayed: AD (83%). Popular discussion and key point summary: . CloudFront requires that the certificate used must be created in the us-east-1 region because CloudFront's certificate management is centralized in the us-east-1 region.; . Using CloudFront's Origin Access Control (OAC) is a recommended best practice to ensure that only CloudFront can access S3 resources."
+      }
+    },
+    {
+      "question_no": 975,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家天氣預報公司連續收集來自各種感測器的溫度讀數。現有的資料攝取過程會收集讀數並將讀數聚合到更大的 Apache Parquet 檔案中。然後，該進程使用帶有 KMS 託管金鑰的用戶端加密 (CSE-KMS) 來加密檔案。最後，該過程將檔案寫入 Amazon S3 儲存桶，每個日曆日都有單獨的前綴。該公司希望偶爾對資料執行 SQL 查詢，以獲取特定日曆日的移動平均值樣本。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A weather forecasting company collects temperature readings from various sensors on a continuous basis. An existing data ingestion process collects the readings and aggregates the readings into larger Apache Parquet files. Then the process encrypts the files by using client-side encryption with KMS managed keys (CSE-KMS). Finally, the process writes the files to an Amazon S3 bucket with separate prefixes for each calendar day. The company wants to run occasional SQL queries on the data to take sample moving averages for a specific calendar day. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Amazon Athena 以讀取加密檔案。直接在 Amazon S3 中對資料執行 SQL 查詢。",
+          "en": "Configure Amazon Athena to read the encrypted files. Run SQL queries on the data directly in Amazon S3."
+        },
+        "B": {
+          "zh": "使用 Amazon S3 Select 直接對 Amazon S3 中的資料執行 SQL 查詢。",
+          "en": "Use Amazon S3 Select to run SQL queries on the data directly in Amazon S3."
+        },
+        "C": {
+          "zh": "設定 Amazon Redshift 以讀取加密檔案。使用 Redshift Spectrum 和 Redshift 查詢編輯器 v2 直接對 Amazon S3 中的資料執行 SQL 查詢。",
+          "en": "Configure Amazon Redshift to read the encrypted files. Use Redshift Spectrum and Redshift query editor v2 to run SQL queries on the data directly in Amazon S3."
+        },
+        "D": {
+          "zh": "設定 Amazon EMR Serverless 以讀取加密檔案。使用 Apache SparkSQL 直接對 Amazon S3 中的資料執行 SQL 查詢。",
+          "en": "Configure Amazon EMR Serverless to read the encrypted files. Use Apache SparkSQL to run SQL queries on the data directly in Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon Athena 是無伺服器互動式查詢服務，可直接查詢 Amazon S3 中儲存的資料。它支援讀取加密的Parquet文件，並且可以透過KMS解密資料。經濟高效：Athena 按查詢付費，無需預置資源，非常適合偶爾執行 SQL 查詢的場景。",
+          "en": "Correct. Amazon Athena is a serverless interactive query service that can directly query data stored in Amazon S3. It supports reading encrypted Parquet files and can decrypt the data via KMS. Cost-effective: Athena pays per query and requires no provisioning of resources, making it ideal for scenarios where you occasionally run SQL queries."
+        },
+        "B": {
+          "zh": "錯誤。Amazon S3 Select 主要用於從單一物件中提取部分數據，而不是執行複雜的 SQL 查詢。該問題需要執行 SQL 查詢來計算移動平均值。 S3 Select 不適合這種場景。",
+          "en": "Incorrect. Amazon S3 Select is primarily used to extract partial data from a single object rather than running complex SQL queries. The question requires running a SQL query to calculate a moving average. S3 Select is not suitable for this scenario."
+        },
+        "C": {
+          "zh": "錯誤。雖然Redshift Spectrum可以查詢S3中儲存的數據，但Redshift需要預設集群，成本較高，且不適合偶爾執行查詢的場景。",
+          "en": "Incorrect. Although Redshift Spectrum can query data stored in S3, Redshift requires a preset cluster, which is costly and is not suitable for scenarios where queries are run occasionally."
+        },
+        "D": {
+          "zh": "錯誤。Amazon EMR Serverless 適合處理大規模資料分析任務，但對於偶爾執行 SQL 查詢的場景，EMR 複雜且成本高，並不是最佳選擇。",
+          "en": "Incorrect. Amazon EMR Serverless is suitable for processing large-scale data analysis tasks, but for scenarios where SQL queries are occasionally run, EMR is complex and costly and is not the optimal choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 設定 Amazon Athena 以讀取加密檔案。直接在 Amazon S3 中對資料執行 SQL 查詢。",
+        "en": "A. Configure Amazon Athena to read the encrypted files. Run SQL queries on the data directly in Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (85%)； D (15%)。熱門討論與考點摘要：Amazon Athena 是無伺服器互動式查詢服務，可直接查詢 Amazon S3 中儲存的資料。它支援讀取加密的Parquet文件，並且可以透過KMS解密資料。經濟高效：Athena 按查詢付費，無需預置資源，非常適合偶爾執行 SQL 查詢的場景。",
+        "en": "Community vote as displayed: A (85%); D (15%). Popular discussion and key point summary: Amazon Athena is a serverless interactive query service that can directly query data stored in Amazon S3. It supports reading encrypted Parquet files and can decrypt the data via KMS. Cost-effective: Athena pays per query and requires no provisioning of resources, making it ideal for scenarios where you occasionally run SQL queries."
+      }
+    }
+  ]
+}

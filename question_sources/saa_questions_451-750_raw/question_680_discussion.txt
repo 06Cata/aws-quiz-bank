@@ -1,0 +1,58 @@
+A solutions architect needs to copy files from an Amazon S3 bucket to an Amazon Elastic File System (Amazon EFS) file system and
+another S3 bucket. The files must be copied continuously. New files are added to the original S3 bucket consistently. The copied
+files should be overwritten only if the source file changes.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create an AWS DataSync location for both the destination S3 bucket and the EFS file system. Create a task for the
+destination S3 bucket and the EFS file system. Set the transfer mode to transfer only data that has changed. Most Voted
+B. Create an AWS Lambda function. Mount the file system to the function. Set up an S3 event notification to invoke the
+function when files are created and changed in Amazon S3. Configure the function to copy files to the file system and the
+destination S3 bucket.
+C. Create an AWS DataSync location for both the destination S3 bucket and the EFS file system. Create a task for the
+destination S3 bucket and the EFS file system. Set the transfer mode to transfer all data.
+D. Launch an Amazon EC2 instance in the same VPC as the file system. Mount the file system. Create a script to routinely
+synchronize all objects that changed in the origin S3 bucket to the destination S3 bucket and the mounted file system.
+Comments
+meenkaza Highly Voted 1 year, 11 months ago
+AWS DataSync (Option A): AWS DataSync is designed for efficient and reliable copying of data between different storage solutions. By setting up an
+AWS DataSync task with the transfer mode set to transfer only data that has changed, you ensure that only the new or modified files are copied. This
+minimizes data transfer and operational overhead.
+upvoted 5 times
+pentium75 1 year, 11 months ago
+Actually this is not fully correct:
+"By setting up an AWS DataSync task with the transfer mode set to transfer only data that has changed, you ensure that only the new or modified
+files are copied. "
+"Transfer only data that has changed ... copies only the data and metadata that differs between the source and destination location."
+So, if we have a source with existing items and an empty destination (like in this example), "transfer only data that has changed" will transfer all the
+existing items though in the true sense of the word they have not "changed".
+upvoted 4 times
+mohammadthainat Most Recent 1 year, 8 months ago
+Selected Answer: A
+DataSync will do an Initial Scan of both S3 buckets. Identifying Differences. Then, Transferring Changes, so technically DataSync will transfer All the
+data at first run then it will only transfer newly added/modified objects subsequently.
+upvoted 4 times
+Kezuko 1 year, 8 months ago
+Have always did this using B, guess now that I know A is less operational
+upvoted 4 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: A
+BD are more operation overhead although B can work in principle
+AC uses managed service to transfer data. A fulfils the requirement of "copied files should be overwritten only if the source file changes" so A is
+Correct Answer: A
+Community vote distribution
+A (100%)
+correct. B will just copy regardless of the change
+upvoted 2 times
+awsgeek75 1 year, 11 months ago
+Meant C will transfer everything and copy data without comparing for change
+upvoted 2 times
+pentium75 1 year, 11 months ago
+Selected Answer: A
+Transfer only data that has changed – DataSync copies only the data and metadata that differs between the source and destination location.
+Transfer all data – DataSync copies everything in the source to the destination without comparing differences between the locations.
+https://docs.aws.amazon.com/datasync/latest/userguide/configure-metadata.html
+(B would work too but is more "operational overhead.")
+upvoted 4 times
+cciesam 1 year, 11 months ago
+Selected Answer: A
+ans: A
+upvoted 3 times

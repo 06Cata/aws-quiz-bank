@@ -1,0 +1,138 @@
+A company wants to set up Amazon Managed Grafana as its visualization tool. The company wants to visualize data from its
+Amazon RDS database as one data source. The company needs a secure solution that will not expose the data over the internet.
+Which solution will meet these requirements?
+A. Create an Amazon Managed Grafana workspace without a VPC. Create a public endpoint for the RDS database. Configure
+the public endpoint as a data source in Amazon Managed Grafana.
+B. Create an Amazon Managed Grafana workspace in a VPC. Create a private endpoint for the RDS database. Configure the
+private endpoint as a data source in Amazon Managed Grafana. Most Voted
+C. Create an Amazon Managed Grafana workspace without a VPCreate an AWS PrivateLink endpoint to establish a connection
+between Amazon Managed Grafana and Amazon RDS. Set up Amazon RDS as a data source in Amazon Managed Grafana.
+D. Create an Amazon Managed Grafana workspace in a VPC. Create a public endpoint for the RDS database. Configure the
+public endpoint as a data source in Amazon Managed Grafana.
+Comments
+LeonSauveterre Highly Voted 1 year, 5 months ago
+Selected Answer: B
+A & D are out, because they're using public endpoints, which causes exposure over the Internet.
+Why C is wrong: If the Grafana workspace is not in a VPC, it cannot use PrivateLink endpoints. PrivateLink endpoints must reside within a VPC. If
+Grafana is outside the VPC, PrivateLink cannot establish the required secure, private connection.
+upvoted 6 times
+Sergiuss95 Highly Voted 2 years, 1 month ago
+Selected Answer: B
+I think is b. Private endpoint sounds like private vpc endpoint, that is equals to privatelink
+upvoted 6 times
+tch Most Recent 1 year, 3 months ago
+Selected Answer: C
+should be C:
+https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-nac.html
+Amazon Managed Grafana workspace not created in VPC.....
+upvoted 1 times
+GOTJ 1 year, 3 months ago
+Selected Answer: B
+With all due respect, once again options are poorly written: you don't create an Amazon Managed Grafana workspace IN or WITHOUT a VPC.
+Instead, you create an AMG WITH or WITHOUT a VPC CONNECTION:
+https://docs.aws.amazon.com/grafana/latest/userguide/AMG-create-workspace.html
+(Step 8, Optional): You can choose to connect to an Amazon virtual private cloud (VPC) on this page, or you can connect to a VPC later. To learn
+more, see Connect to data sources or notification channels in Amazon VPC from Amazon Managed Grafana.
+According to the "to learn more" link, if you create the AMG WITHOUT a VPC CONNECTION:
+By default, traffic from your Amazon Managed Grafana workspace to data sources or notification channels flows via the public Internet. This limits the
+connectivity from your Amazon Managed Grafana workspace to services that are publicly accessible.
+Correct Answer: B
+Community vote distribution
+B (68%)
+C (33%)
+So option "C" must be discarded as it doesn't comply company requirements of avoid using internet
+upvoted 1 times
+ARV14 1 year, 6 months ago
+Selected Answer: C
+https://docs.aws.amazon.com/grafana/latest/userguide/VPC-endpoints.html , https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-
+managed-grafana-connection-data-sources-hosted-virtual-private-cloud/
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+By default, traffic from your Amazon Managed Grafana workspace to data sources or notification channels flows via the public Internet. This limits
+the connectivity from your Amazon Managed Grafana workspace to services that are publicly accessible.
+If you want to connect to private-facing data sources that are within a VPC, or keep traffic local to a VPC, you can connect your Amazon Managed
+Grafana workspace to the Amazon Virtual Private Cloud (Amazon VPC) hosting these data sources. After you configure the VPC data source
+connection, all traffic flows via your VPC.
+upvoted 1 times
+chest_jd 1 year, 7 months ago
+Selected Answer: B
+Choice B or C could be resolved in this way:
+B. Create an Amazon Managed Grafana workspace in a VPC
+C. Create an Amazon Managed Grafana workspace without a VPC
+As far as I know we cannot create workspace without VCP
+upvoted 3 times
+tonybuivannghia 1 year, 7 months ago
+Selected Answer: C
+After searching effort, I agree C is correct because AMG workspace can't include in VPC. When you have not configured a private VPC, and Amazon
+Managed Grafana is connecting to publicly accessible data sources, it connects to some AWS services in the same region via AWS PrivateLink. This
+includes services such as CloudWatch, Amazon Managed Service for Prometheus and AWS X-Ray. Traffic to those services does not flow via the
+public Internet.
+upvoted 1 times
+NSA_Poker 1 year, 10 months ago
+Selected Answer: C
+(B or C)?-1 = Do we create AMG workspace in a VPC OR do we create AMG workspace without a VPC? AMG is NOT created within a VPC; AMG
+connects to a VPC. "Currently, you can connect one Amazon Managed Grafana workspace to one VPC endpoint in the same region and same
+account. However, you can use Virtual Private Cloud peering or AWS Transit Gateway to connect the cross-region or cross-account VPCs, then
+connect the select the VPC endpoint that’s in the same account and same region as your Amazon Managed Grafana workspace." -FAQs
+(C) is correct.
+upvoted 3 times
+NSA_Poker 1 year, 10 months ago
+(B or C)?-2 = private endpoint OR AWS PrivateLink? The brand-name is more correct.
+(B or C)?-3 = Configure the private endpoint as a data source OR Set up Amazon RDS as a data source? In the AMG console, after clicking on Data
+sources, you'll see a list of AWS services (Athena, Redshift etc) NOT network endpoints. After selecting RDS, you can further specify the Region &
+Resource ID.
+(B) eliminated.
+(C) is correct.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+You're missing out PrivateLink in option C.
+upvoted 1 times
+EdricHoang 1 year, 11 months ago
+Selected Answer: B
+Its B.
+C is also a valid choice
+"Not exposing to the internet" is letting me eliminate C
+upvoted 3 times
+NSA_Poker 1 year, 11 months ago
+(B) "a private endpoint" & (C) "an AWS PrivateLink endpoint" do NOT expose traffic to the internet.
+(A & D) eliminated. "a public endpoint for the RDS database" would "expose the data over the internet"
+upvoted 1 times
+ike001 1 year, 11 months ago
+B as you need to create Managed Grafana workspace with a VPC for private access https://docs.aws.amazon.com/grafana/latest/userguide/AMG-
+configure-nac.html
+upvoted 2 times
+NSA_Poker 1 year, 10 months ago
+(B) doesn't say 'with a VPC'; it says "..Grafana workspace IN A VPC."
+(B) eliminated.
+(C) is correct.
+upvoted 2 times
+Nm55569 2 years ago
+Selected Answer: B
+https://aws.amazon.com/about-aws/whats-new/2022/11/amazon-managed-grafana-connection-data-sources-hosted-virtual-private-cloud/
+upvoted 3 times
+sandordini 2 years, 1 month ago
+I guess they mean C, But again, it's strange... IMO B would also work... There is no requirement for the least effort... Pls, correct me if I'm wrong...
+upvoted 2 times
+venutadi 2 years, 1 month ago
+Selected Answer: C
+Once you configure direct connectivity between a Grafana workspace and a VPC, Amazon Managed Grafana creates and manages an elastic network
+interface (ENI) per subnet to connect to the VPC. This enables the Grafana workspace to connect to data sources within the VPC, such as OpenSearch
+domains or RDS databases. Additionally, all traffic is now routed through the configured VPC, including alert destination and data source
+connectivity.
+upvoted 4 times
+VortexMD 2 years, 2 months ago
+AWS PrivateLink provides private connectivity between virtual private clouds (VPCs), supported AWS services, and your on-premises networks withou
+exposing your traffic to the public internet. Interface VPC endpoints, powered by PrivateLink, connect you to services hosted by AWS Partners and
+supported solutions available in AWS Marketplace.
+upvoted 1 times
+VortexMD 2 years, 2 months ago
+https://aws.amazon.com/blogs/mt/announcing-private-vpc-data-source-support-for-amazon-managed-grafana/
+upvoted 1 times
+Bazzix 2 years, 2 months ago
+Selected Answer: B
+B is correct
+upvoted 5 times
+osmk 2 years, 3 months ago
+Selected Answer: C
+cccc ccc
+upvoted 3 times

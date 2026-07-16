@@ -1,0 +1,132 @@
+An application runs on an Amazon EC2 instance that has an Elastic IP address in VPC A. The application requires access to a
+database in VPC B. Both VPCs are in the same AWS account.
+Which solution will provide the required access MOST securely?
+A. Create a DB instance security group that allows all traffic from the public IP address of the application server in VPC A.
+B. Configure a VPC peering connection between VPC A and VPC B. Most Voted
+C. Make the DB instance publicly accessible. Assign a public IP address to the DB instance.
+D. Launch an EC2 instance with an Elastic IP address into VPC B. Proxy all requests through the new EC2 instance.
+Comments
+DUBURA Highly Voted 2 years, 6 months ago
+Selected Answer: B
+B. Configure a VPC peering connection between VPC A and VPC B.
+The most secure solution is to configure a VPC peering connection between the two VPCs. This allows private communication between the
+application server and the database, without exposing resources to the public internet.
+Option A exposes the database to the public internet by allowing inbound traffic from a public IP address.
+Option C makes the database instance itself public, which is insecure.
+Option D adds complexity with a proxy that is not needed when a VPC peering connection can enable private communication between VPCs.
+So option B is the most secure while allowing the necessary connectivity between the application server and the database in the separate VPCs.
+upvoted 14 times
+JayBee65 Highly Voted 3 years, 4 months ago
+A is correct. B will work but is not the most secure method, since it will allow everything in VPC A to talk to everything in VPC B and vice versa, not at
+all secure. A on the other hand will only allow the application (since you select it's IP address) to talk to the application server in VPC A - you are
+allowing only the required connectivity. See the link for this exact use case:
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html
+upvoted 14 times
+mhmt4438 3 years, 4 months ago
+" allows all traffic from the public IP address" Nice bro niceee This is absolutely the most secure method at all. :)))
+upvoted 18 times
+datz 3 years, 2 months ago
+he must be the security engineer lolol :D
+"Jaybee" - Please dont ever say that traffic over the public internet is secure :D
+upvoted 5 times
+swakan 1 year, 6 months ago
+https://aws.amazon.com/vpc/faqs/
+upvoted 1 times
+graveend 2 years, 10 months ago
+Both VPCs are in the "SAME AWS ACCOUNT" and the requirement specifies allowing traffic from the *PUBLIC IP of the APPLICATION SERVER*. In
+this case the traffic remains inside the AWS infrastructure or will it go through the public internet?
+Correct Answer: B
+Community vote distribution
+B (92%)
+8%
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Answer A (not "the requirement") specifies "allowing traffic from the public IP", which is for sure NOT the "most secure" option.
+upvoted 2 times
+FlyingHawk Most Recent 1 year, 4 months ago
+Selected Answer: B
+It should be B, plus the DB security g A. group that allows all traffic from the security group of the application server in VPC A
+upvoted 1 times
+Jazz888 2 years ago
+Well this is a tricky one!!! Are we going to assume that the database in VPC B is in private subnet? In that case configuring security group to allow the
+traffic coming from Elastic IP of VPC A will not work. And if we use peering, the resources that live in the same subnet as the EC2 instance in VPC A
+will have access to the database? So what would we say to this? Is moving traffic through the public AWS space is safer than allowing access to the
+DB to other resources in VPC A?..... I don't know what to think
+upvoted 2 times
+Ruffyit 2 years, 6 months ago
+When you establish peering relationships between VPCs across different AWS Regions, resources in the VPCs (for example, EC2 instances and
+Lambda functions) in different AWS Regions can communicate with each other using private IP addresses, without using a gateway, VPN connection,
+or network appliance. The traffic remains in the private IP space. All inter-Region traffic is encrypted with no single point of failure, or bandwidth
+bottleneck. Traffic always stays on the global AWS backbone, and never traverses the public internet, which reduces threats, such as common
+exploits, and DDoS attacks. Inter-Region VPC peering provides a simple and cost-effective way to share resources between regions or replicate data
+for geographic redundancy.
+upvoted 2 times
+rlamberti 2 years, 7 months ago
+Selected Answer: B
+Most secure = not leaving AWS network.
+VPC peering is the way.
+upvoted 3 times
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: B
+VPC to VPC comms = VPC peering
+upvoted 2 times
+Sutariya 2 years, 9 months ago
+B is correct : Setup VPC peering and connect Application from VPC A to connect with VPC B in private subnet so DB instace always secure with
+internet.
+upvoted 2 times
+_d1rk_ 2 years, 9 months ago
+Am I missing something or simply A is wrong because, without VPC peering (or other inter-connection sharing mechanisms such as Transit Gateway
+or VPN), VPC A and VPC B cannot communicate each other?
+upvoted 1 times
+jacob_ho 2 years, 9 months ago
+can use vpc endpoints but no option use that
+upvoted 1 times
+A1975 2 years, 10 months ago
+Selected Answer: B
+When you establish peering relationships between VPCs across different AWS Regions, resources in the VPCs (for example, EC2 instances and
+Lambda functions) in different AWS Regions can communicate with each other using private IP addresses, without using a gateway, VPN connection,
+or network appliance. The traffic remains in the private IP space. All inter-Region traffic is encrypted with no single point of failure, or bandwidth
+bottleneck. Traffic always stays on the global AWS backbone, and never traverses the public internet, which reduces threats, such as common
+exploits, and DDoS attacks. Inter-Region VPC peering provides a simple and cost-effective way to share resources between regions or replicate data
+for geographic redundancy.
+https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html
+upvoted 4 times
+animefan1 2 years, 11 months ago
+Selected Answer: B
+With peering, we EC2 can communicate with RDS. RDS SG can have inbound from EC2 IP rather than VPC CIDR for more security
+upvoted 2 times
+maggie135 2 years, 11 months ago
+Selected Answer: B
+VPC peering uses AWS network.
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+By configuring a VPC peering connection between VPC A and VPC B, you can establish private and secure communication between the EC2 instance
+in VPC A and the database in VPC B. VPC peering allows traffic to flow between the two VPCs using private IP addresses, without the need for public
+IP addresses or exposing the database to the internet.
+Option A is not the best solution as it requires allowing all traffic from the public IP address of the application server, which can be less secure.
+Option C involves making the DB instance publicly accessible, which introduces security risks by exposing the database directly to the internet.
+Option D adds unnecessary complexity by launching an additional EC2 instance in VPC B and proxying all requests through it, which is not the most
+efficient and secure approach in this scenario.
+upvoted 5 times
+joechen2023 2 years, 12 months ago
+Selected Answer: B
+I don't like A because the security group setting is wrong as it set up to allow all public IP addresses. If the security group setting is correct, then I wil
+go for A
+I don't like B because it need to set up security group as well on top of peering.
+for exam purpose only, I will go with the least worst choice which is B
+upvoted 1 times
+Bmarodi 2 years, 12 months ago
+Selected Answer: A
+The keywords are: "access MOST securely", hence the option A meets these requirements.
+upvoted 1 times
+smartegnine 2 years, 12 months ago
+Selected Answer: A
+Each VPC security group rule makes it possible for a specific source to access a DB instance in a VPC that is associated with that VPC security group.
+The source can be a range of addresses (for example, 203.0.113.0/24), or another VPC security group.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide
+upvoted 1 times
+MostafaWardany 3 years ago
+Selected Answer: B
+Most secure = VPC peering
+upvoted 2 times

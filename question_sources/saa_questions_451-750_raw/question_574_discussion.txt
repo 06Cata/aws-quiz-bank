@@ -1,0 +1,105 @@
+A financial services company launched a new application that uses an Amazon RDS for MySQL database. The company uses the
+application to track stock market trends. The company needs to operate the application for only 2 hours at the end of each week.
+The company needs to optimize the cost of running the database.
+Which solution will meet these requirements MOST cost-effectively?
+A. Migrate the existing RDS for MySQL database to an Aurora Serverless v2 MySQL database cluster. Most Voted
+B. Migrate the existing RDS for MySQL database to an Aurora MySQL database cluster.
+C. Migrate the existing RDS for MySQL database to an Amazon EC2 instance that runs MySQL. Purchase an instance
+reservation for the EC2 instance.
+D. Migrate the existing RDS for MySQL database to an Amazon Elastic Container Service (Amazon ECS) cluster that uses
+MySQL container images to run tasks.
+Comments
+Guru4Cloud Highly Voted 2 years, 9 months ago
+Selected Answer: A
+The key reasons are:
+Aurora Serverless v2 scales compute capacity automatically based on actual usage, down to zero when not in use. This minimizes costs for
+intermittent usage.
+Since it only runs for 2 hours per week, the application is ideal for a serverless architecture like Aurora Serverless.
+Aurora Serverless v2 charges per second when the database is active, unlike RDS which charges hourly.
+Aurora Serverless provides higher availability than self-managed MySQL on EC2 or ECS.
+Using reserved EC2 instances or ECS still incurs charges when not in use versus the fine-grained scaling of serverless.
+Standard Aurora clusters have a minimum capacity unlike the auto-scaling serverless architecture.
+upvoted 14 times
+dkw2342 2 years, 2 months ago
+A is correct, but Aurora Serverless v2 only scales down to 0.5 ACU, not to zero.
+upvoted 2 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: A
+2 hours per week = Serverless = A. Recommended for "infrequent, intermittent, or unpredictable workloads"
+upvoted 5 times
+LeonSauveterre Most Recent 1 year, 6 months ago
+Selected Answer: A
+A: Aurora Serverless v2 offers the most cost-effective and operationally efficient solution for intermittent workloads like this.
+B: over-provisioned and too expensive for this workload
+C: Also expensive. You gotta pay for the instance 24/7, regardless of usage.
+D: Introduces complexity and operational overhead for database management tasks. Overall, ECS is never easy to handle.
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: A
+B is wrong because Aurora MySQL cluster will just keep on running for the rest of the week and will be costly.
+C and D have too much infra bloating so costly
+Correct Answer: A
+Community vote distribution
+A (92%)
+8%
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: A
+Answer is A.
+Here are the key distinctions:
+Amazon Aurora: provides built-in security, continuous backups, serverless compute, up to 15 read replicas, automated multi-Region replication, and
+integrations with other AWS services.
+Amazon Aurora Serverless: is an on-demand, auto-scaling configuration for Aurora where the database automatically starts up, shuts down, and
+scales capacity up or down based on your application's needs.
+With serverless the db will shut down when not in use.
+upvoted 5 times
+anikety123 2 years, 9 months ago
+Selected Answer: A
+Option is A
+upvoted 3 times
+hachiri 2 years, 9 months ago
+Selected Answer: A
+### Aurora Serverless
+- Automated database instantiation and auto-scaling based on actual usage
+- Good for infrequent, intermittent or unpredictable workloads
+- No capacity planning needed
+- Pay per second, can be more cost-effective
+upvoted 3 times
+vini15 2 years, 10 months ago
+will go with A
+Amazon Aurora Serverless v2 is suitable for the most demanding, highly variable workloads. For example, your database usage might be heavy for a
+short period of time, followed by long periods of light activity or no activity at all.
+upvoted 3 times
+msdnpro 2 years, 10 months ago
+Selected Answer: A
+"Amazon Aurora Serverless v2 is suitable for the most demanding, highly variable workloads. For example, your database usage might be heavy for a
+short period of time, followed by long periods of light activity or no activity at all. "
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.how-it-works.html
+upvoted 3 times
+ersin13 2 years, 10 months ago
+A. Migrate the existing RDS for MySQL database to an Aurora Serverless v2 MySQL database cluster.
+upvoted 2 times
+mrsoa 2 years, 10 months ago
+Selected Answer: B
+B seems to be the correct answer, because if we have a predictable workload Aurora database seems to be most cost effective however if we have
+unpredictable workload aurora serverless seems to be more cost effective because our database will scale up and down
+for more informations please read this article
+https://medium.com/trackit/aurora-or-aurora-serverless-v2-which-is-more-cost-effective-bcd12e172dcf
+upvoted 3 times
+Chef_couincouin 2 years, 7 months ago
+according to the link, i understand that Aurora Serverless is ideal for sudden peaks in database usage with moderate or minimal usage during other
+periods of the day. So Answear is A
+upvoted 3 times
+Smart 2 years, 9 months ago
+True but due to autoscaling - it will be cheaper...check example#1 in the your link.
+upvoted 1 times
+Smart 2 years, 9 months ago
+Correct Answer is A
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Provisioned RDS (as in B) is good for steady (not "predictable") workloads. In this case, the workload is predictable, but the prediction is that it will
+be used only 2 hours per week.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Aurora Serverless is for "infrequent, intermittent, OR unpredictable workloads"
+upvoted 3 times

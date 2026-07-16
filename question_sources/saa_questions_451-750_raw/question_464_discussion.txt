@@ -1,0 +1,55 @@
+A company hosts an online shopping application that stores all orders in an Amazon RDS for PostgreSQL Single-AZ DB instance.
+Management wants to eliminate single points of failure and has asked a solutions architect to recommend an approach to
+minimize database downtime without requiring any changes to the application code.
+Which solution meets these requirements?
+A. Convert the existing database instance to a Multi-AZ deployment by modifying the database instance and specifying the
+Multi-AZ option. Most Voted
+B. Create a new RDS Multi-AZ deployment. Take a snapshot of the current RDS instance and restore the new Multi-AZ
+deployment with the snapshot.
+C. Create a read-only replica of the PostgreSQL database in another Availability Zone. Use Amazon Route 53 weighted record
+sets to distribute requests across the databases.
+D. Place the RDS for PostgreSQL database in an Amazon EC2 Auto Scaling group with a minimum group size of two. Use
+Amazon Route 53 weighted record sets to distribute requests across instances.
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: A
+A. Convert the existing database instance to a Multi-AZ deployment by modifying the database instance and specifying the Multi-AZ option
+upvoted 6 times
+Abrar2022 Highly Voted 2 years, 6 months ago
+"minimize database downtime" so why create a new DB just modify the existing one so no time is wasted.
+upvoted 5 times
+awsgeek75 Most Recent 1 year, 10 months ago
+Selected Answer: A
+A is correct but reason need to be clarified:
+https://aws.amazon.com/blogs/database/best-practices-for-converting-a-single-az-amazon-rds-instance-to-a-multi-az-instance/
+The instance doesn't automatically convert to Multi-AZ immediately. By default it will convert at next maintenance window but you can convert it
+immediately. Compared to B this is much better. CD are too many changes overall so unsuitable.
+upvoted 3 times
+TariqKipkemei 2 years, 5 months ago
+Selected Answer: A
+Eliminate single points of failure = Multi-AZ deployment
+upvoted 5 times
+antropaws 2 years, 6 months ago
+Selected Answer: A
+A) https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html#Concepts.MultiAZ.Migrating
+upvoted 2 times
+cloudenthusiast 2 years, 6 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (100%)
+Compared to other solutions that involve creating new instances, restoring snapshots, or setting up replication manually, converting to a Multi-AZ
+deployment is a simpler and more streamlined approach with lower overhead.
+Overall, option A offers a cost-effective and efficient way to minimize database downtime without requiring significant changes or additional
+complexities.
+upvoted 3 times
+Efren 2 years, 6 months ago
+A for HA, but also read replica can convert itself to master if the master is down... so not sure if C?
+upvoted 1 times
+Efren 2 years, 6 months ago
+Sorry, the Route 53 doesnt make sense to sent requests to RR , what if is a write?
+upvoted 2 times
+nosense 2 years, 6 months ago
+Selected Answer: A
+i guess aa
+upvoted 3 times

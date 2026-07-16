@@ -1,0 +1,143 @@
+A company is implementing a shared storage solution for a gaming application that is hosted in an on-premises data center. The
+company needs the ability to use Lustre clients to access data. The solution must be fully managed.
+Which solution meets these requirements?
+A. Create an AWS Storage Gateway file gateway. Create a file share that uses the required client protocol. Connect the
+application server to the file share.
+B. Create an Amazon EC2 Windows instance. Install and configure a Windows file share role on the instance. Connect the
+application server to the file share.
+C. Create an Amazon Elastic File System (Amazon EFS) file system, and configure it to support Lustre. Attach the file system to
+the origin server. Connect the application server to the file system.
+D. Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to
+the file system. Most Voted
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: D
+Answer is D.
+Lustre in the question is only available as FSx
+https://aws.amazon.com/fsx/lustre/
+upvoted 30 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: D
+Option D. Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to the file system.
+Amazon FSx for Lustre is a fully managed file system that is designed for high-performance workloads, such as gaming applications. It provides a
+high-performance, scalable, and fully managed file system that is optimized for Lustre clients, and it is fully integrated with Amazon EC2. It is the only
+option that meets the requirements of being fully managed and able to support Lustre clients.
+upvoted 16 times
+Dharmarajan Most Recent 1 year, 4 months ago
+Selected Answer: D
+This one had me stumped! Thanks, community, for the link.
+upvoted 1 times
+Rcosmos 1 year, 5 months ago
+Selected Answer: C
+Não é uma prática recomendada:
+O padrão em sistemas assíncronos com SQS e Lambda é remover a mensagem apenas após o processamento bem-sucedido. Isso garante que, caso
+algo falhe, a mensagem possa ser processada novamente.
+Não resolve duplicidade real:
+Mesmo que você exclua a mensagem imediatamente, o problema de mensagens duplicadas pode ocorrer devido à lógica de envio duplicado no S3
+ou por notificações redundantes do evento de criação de objetos. Assim, o problema original pode persistir.
+upvoted 1 times
+Rcosmos 1 year, 5 months ago
+Selected Answer: C
+Correct Answer: D
+Community vote distribution
+D (91%)
+6%
+A opção D pode parecer uma solução direta, mas não é recomendada porque introduz riscos significativos para a confiabilidade do sistema. Vamos
+analisar mais a fundo:
+O que a opção D sugere:
+Modificar a função Lambda para excluir cada mensagem da fila do SQS imediatamente após a mensagem ser lida, antes do processamento.
+Problemas com a opção D:
+Perda de mensagens em caso de falhas:
+Se a mensagem for excluída do SQS antes de ser processada e algo der errado (como falha na função Lambda ou erro na lógica de processamento),
+a mensagem será perdida permanentemente.
+O SQS é projetado para garantir que a mensagem seja processada com segurança antes de ser removida. Excluir a mensagem antes do
+processamento viola essa garantia.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: D
+Amazon FSx Lustre is the most suitable for managing Lustre Clients.
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+Selected Answer: D
+D, self explanatory.
+upvoted 2 times
+lofzee 2 years ago
+the question is missing some text i think.... as none of the answers really solve the equation.
+if the answer is D, how is the on prem infrastructure accessing Lustre in AWS?
+either way the only possible option it could be is D, so D it is.
+upvoted 3 times
+NullM 2 years, 1 month ago
+Sorry but what is origin server in this context, does it mean AWS server or premise??
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: D
+D: Lustre is key requirement
+AB: No support for Lustre
+C: Cannot just configure EFS to support Lustre file system
+upvoted 2 times
+Ruffyit 2 years, 7 months ago
+Option D. Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to the file system.
+Amazon FSx for Lustre is a fully managed file system that is designed for high-performance workloads, such as gaming applications. It provides a
+high-performance, scalable, and fully managed file system that is optimized for Lustre clients, and it is fully integrated with Amazon EC2. It is the only
+option that meets the requirements of being fully managed and able to support Lustre clients.
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: D
+Lustre clients = Amazon FSx for Lustre file system
+upvoted 4 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: D
+The correct solution is D) Create an Amazon FSx for Lustre file system. Attach the file system to the origin server. Connect the application server to
+the file system.
+The key requirements are:
+Shared storage solution
+Support Lustre clients
+Fully managed service
+Amazon FSx for Lustre provides a fully managed file system that is optimized for Lustre workloads. It allows Lustre clients to seamlessly connect to
+the file system.
+upvoted 4 times
+RupeC 2 years, 10 months ago
+Selected Answer: A
+Sorry, but I disagree with everyone. The question states "a gaming application that is hosted in an on-premises data center". Option D does not
+address this and cannot to my knowledge address it. Thus:
+A. Create an AWS Storage Gateway file gateway. Create a file share that uses the required client protocol. Connect the application server to the file
+share.
+By using AWS Storage Gateway in file gateway mode, you can extend your on-premises data center storage into the AWS cloud. The file share
+created on AWS Storage Gateway can use the necessary client protocol (such as Lustre), which would allow the Lustre clients in your on-premises
+data center to access the data stored on AWS Storage Gateway.
+This solution enables you to use Lustre clients to access data, while still keeping the gaming application hosted in your on-premises data center. AWS
+Storage Gateway provides a fully managed solution for this hybrid scenario, allowing seamless integration between on-premises and AWS cloud
+storage.
+upvoted 5 times
+David_Ang 2 years, 8 months ago
+mate if you have an aws service that is meant to be used for this task, there is simply not discussion, is more simple, is more cheap and better
+option
+upvoted 1 times
+JoeGuan 2 years, 10 months ago
+So, I think that the FSx File Gateway is currently only available for Windows? I don't think Lustre is part of this offering yet as of 8/8/2023
+upvoted 1 times
+pentium75 2 years, 5 months ago
+"The file share created on AWS Storage Gateway can use the necessary client protocol (such as Lustre)", no it can use only NFS or SMB. But NOT
+Lustre.
+upvoted 3 times
+james2033 2 years, 11 months ago
+Selected Answer: D
+Content of "Amazon FSx for Lustre" at this link https://aws.amazon.com/fsx/lustre/ . Focus at image, section: "On-premises clients".
+upvoted 3 times
+cookieMr 2 years, 11 months ago
+Selected Answer: D
+A. Lustre client access is not supported by AWS Storage Gateway file gateway.
+B. Creating a Windows file share on an EC2 Windows instance is suitable for Windows-based file sharing, but it does not provide the required Lustre
+client access. Lustre is a high-performance parallel file system primarily used in high-performance computing (HPC) environments.
+C. EFS does not natively support Lustre client access. Although EFS is a managed file storage service, it is designed for general-purpose file storage
+and is not optimized for Lustre workloads.
+D. Amazon FSx for Lustre is a fully managed file system optimized for high-performance computing workloads, including Lustre clients. It provides
+the ability to use Lustre clients to access data in a managed and scalable manner. By choosing this option, the company can benefit from the
+performance and manageability of Amazon FSx for Lustre while meeting the requirement of Lustre client access.
+upvoted 4 times
+Musti35 3 years, 1 month ago
+Selected Answer: D
+https://aws.amazon.com/fsx/lustre/?
+nc1=h_ls#:~:text=Amazon%20FSx%20for%20Lustre%20provides%20fully%20managed%20shared%20storage%20with%20the%20scalability%20and
+%20performance%20of%20the%20popular%20Lustre%20file%20system.
+upvoted 2 times

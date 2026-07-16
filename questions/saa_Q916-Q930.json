@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 916,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上設計一個處理敏感資料的應用程式。該應用程式儲存和處理多個客戶的財務資料。為了滿足合規性要求，必須使用安全的集中式金鑰管理解決方案單獨對每個客戶的靜態資料進行加密。該公司希望使用 AWS Key Management Service (AWS KMS) 來實施加密。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is designing an application on AWS that processes sensitive data. The application stores and processes financial data for multiple customers. To meet compliance requirements, the data for each customer must be encrypted separately at rest by using a secure, centralized key management solution. The company wants to use AWS Key Management Service (AWS KMS) to implement encryption. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "為每位客戶產生唯一的加密金鑰。將密鑰儲存在 Amazon S3 儲存桶中。啟用伺服器端加密。",
+          "en": "Generate a unique encryption key for each customer. Store the keys in an Amazon S3 bucket. Enable server-side encryption."
+        },
+        "B": {
+          "zh": "在 AWS 環境中部署硬體安全設備，以安全地儲存客戶提供的加密金鑰。將安全設備與 AWS KMS 整合以加密應用程式中的敏感資料。",
+          "en": "Deploy a hardware security appliance in the AWS environment that securely stores customer-provided encryption keys. Integrate the security appliance with AWS KMS to encrypt the sensitive data in the application."
+        },
+        "C": {
+          "zh": "建立單一 AWS KMS 金鑰來加密應用程式中的所有敏感資料。",
+          "en": "Create a single AWS KMS key to encrypt all sensitive data across the application."
+        },
+        "D": {
+          "zh": "為啟用精細存取控制和記錄的每個客戶資料建立單獨的 AWS KMS 金鑰。",
+          "en": "Create separate AWS KMS keys for each customer's data that have granular access control and logging enabled."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：將加密金鑰儲存在 Amazon S3 儲存桶中並啟用伺服器加密不是最佳實踐。 AWS KMS 是一項專門為安全管理加密金鑰而設計的服務。直接使用KMS會更安全且營運開銷更低。此外，S3 的伺服器加密無法為每個客戶的資料提供單獨的加密和存取控制。",
+          "en": "Incorrect. Cause: Storing encryption keys in an Amazon S3 bucket and enabling server encryption is not a best practice. AWS KMS is a service specifically designed to securely manage encryption keys. Using KMS directly will be more secure and have lower operational overhead. Additionally, S3's server encryption cannot provide individual encryption and access control for each customer's data."
+        },
+        "B": {
+          "zh": "錯誤。原因：部分安全設備會增加操作開銷和複雜性，不符合問題中「最小化操作開銷」的要求。雖然可以實現加密，但AWS KMS本身提供了安全的金鑰管理功能，無需額外的硬體設備。",
+          "en": "Incorrect. Reason: Partial security equipment will increase operational overhead and complexity, and does not meet the \"minimized operational overhead\" requirement of the question. Although encryption can be achieved, AWS KMS itself provides secure key management capabilities without the need for additional hardware devices."
+        },
+        "C": {
+          "zh": "錯誤。原因：使用單一KMS金鑰無法滿足問題中「每個客戶的資料必須單獨加密」的合規要求。單一密鑰無法提供精細的存取控制和日誌記錄。",
+          "en": "Incorrect. Reason: Using a single KMS key cannot meet the compliance requirement of \"each customer's data must be individually encrypted\" in the question. A single key cannot provide granular access control and logging."
+        },
+        "D": {
+          "zh": "正確。原因：為每個客戶的資料建立單獨的 KMS 金鑰可以滿足每個客戶的資料必須單獨加密的合規性要求。啟用細粒度的存取控制和日誌記錄可確保安全性和可審核性。使用 AWS KMS 可最大程度地減少營運開銷，因為它是一項提供自動化金鑰管理功能的託管服務。",
+          "en": "Correct. Reason: Creating separate KMS keys for each customer's data satisfies compliance requirements that each customer's data must be individually encrypted. Enabling fine-grained access control and logging ensures security and auditability. Using AWS KMS minimizes operational overhead because it is a managed service that provides automated key management capabilities."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 為啟用精細存取控制和記錄的每個客戶資料建立單獨的 AWS KMS 金鑰。",
+        "en": "D. Create separate AWS KMS keys for each customer's data that have granular access control and logging enabled."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：原因：為每個客戶的資料建立單獨的 KMS 金鑰可以滿足每個客戶的資料必須單獨加密的合規性要求。啟用細粒度的存取控制和日誌記錄可確保安全性和可審核性。使用 AWS KMS 可最大程度地減少營運開銷，因為它是一項提供自動化金鑰管理功能的託管服務。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Reason: Creating separate KMS keys for each customer's data satisfies compliance requirements that each customer's data must be individually encrypted. Enabling fine-grained access control and logging ensures security and auditability. Using AWS KMS minimizes operational overhead because it is a managed service that provides automated key management capabilities."
+      }
+    },
+    {
+      "question_no": 917,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司需要設計一個彈性 Web 應用程式來處理客戶訂單。 Web 應用程式必須自動處理 Web 流量和應用程式使用量的增加，而不影響客戶體驗或遺失客戶訂單。哪種解決方案可以滿足這些要求？",
+        "en": "A company needs to design a resilient web application to process customer orders. The web application must automatically handle increases in web traffic and application usage without affecting the customer experience or losing customer orders. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 NAT 閘道管理 Web 流量。使用 Amazon EC2 Auto Scaling 群組接收、處理和儲存已處理的客戶訂單。使用 AWS Lambda 函數擷取和儲存未處理的訂單。",
+          "en": "Use a NAT gateway to manage web traffic. Use Amazon EC2 Auto Scaling groups to receive, process, and store processed customer orders. Use an AWS Lambda function to capture and store unprocessed orders."
+        },
+        "B": {
+          "zh": "使用網路負載平衡器 (NLB) 管理 Web 流量。使用應用程式負載平衡器從 NL 接收客戶訂單使用 Amazon Redshift 與多可用區部署來儲存未處理和已處理的客戶訂單。",
+          "en": "Use a Network Load Balancer (NLB) to manage web traffic. Use an Application Load Balancer to receive customer orders from the NLUse Amazon Redshift with a Multi-AZ deployment to store unprocessed and processed customer orders."
+        },
+        "C": {
+          "zh": "使用閘道負載平衡器 (GWLB) 管理 Web 流量。使用 Amazon Elastic Container Service (Amazon ECS) 接收和處理客戶訂單。使用 GWLB 捕獲並儲存未處理的訂單。使用 Amazon DynamoDB 儲存已處理的客戶訂單。",
+          "en": "Use a Gateway Load Balancer (GWLB) to manage web traffic. Use Amazon Elastic Container Service (Amazon ECS) to receive and process customer orders. Use the GWLB to capture and store unprocessed orders. Use Amazon DynamoDB to store processed customer orders."
+        },
+        "D": {
+          "zh": "使用應用程式負載平衡器來管理 Web 流量。使用 Amazon EC2 Auto Scaling 群組接收和處理客戶訂單。使用 Amazon Simple Queue Service (Amazon SQS) 儲存未處理的訂單。將 Amazon RDS 與多可用區部署結合使用來儲存已處理的客戶訂單。",
+          "en": "Use an Application Load Balancer to manage web traffic. Use Amazon EC2 Auto Scaling groups to receive and process customer orders. Use Amazon Simple Queue Service (Amazon SQS) to store unprocessed orders. Use Amazon RDS with a Multi-AZ deployment to store processed customer orders."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 NAT 閘道來管理網路流量。使用 Amazon EC2 Auto Scaling 群組接收、處理和儲存已處理的客戶訂單。使用 AWS Lambda 函數擷取和儲存未處理的訂單。錯誤：NAT 閘道主要設計用於管理出站流量，而不是處理 Web 應用程式的流量。它不適合管理客戶訂單的流程。正確：Amazon EC2 Auto Scaling 組可以處理彈性擴展需求。錯誤：AWS Lambda 不適合直接捕獲和儲存未處理的訂單，並且缺乏排隊機制。",
+          "en": "Incorrect. Use a NAT gateway to manage network traffic. Use an Amazon EC2 Auto Scaling group to receive, process, and store processed customer orders. Use an AWS Lambda function to capture and store unprocessed orders. Error: NAT Gateway is primarily designed to manage outbound traffic, not to handle traffic for web applications. It is not suitable for managing the flow of customer orders. Correct: Amazon EC2 Auto Scaling groups can handle elastic scaling needs. Error: AWS Lambda is not suitable for directly capturing and storing unprocessed orders and lacks a queuing mechanism."
+        },
+        "B": {
+          "zh": "錯誤。使用網路負載平衡器 (NLB) 管理網路流量。使用 Application Load Balancer 從 NLB 接收客戶訂單。使用 Amazon Redshift 的多可用區部署來儲存未結帳和已處理的客戶訂單。錯誤：網路負載平衡器適合處理低延遲和 TCP/UDP 流量，但不適合 Web 應用程式的 HTTP/HTTPS 流量。正確：Application Load Balancer 適合處理 HTTP/HTTPS 流量。錯誤：Amazon Redshift 是資料倉儲服務，不適合儲存即時訂單資料。",
+          "en": "Incorrect. Use a Network Load Balancer (NLB) to manage network traffic. Use Application Load Balancer to receive customer orders from NLB. Use a Multi-AZ deployment of Amazon Redshift to store open and processed customer orders. Error: Network Load Balancer is suitable for handling low-latency and TCP/UDP traffic, but is not suitable for HTTP/HTTPS traffic of web applications. Correct: Application Load Balancer is suitable for handling HTTP/HTTPS traffic. Error: Amazon Redshift is a data warehouse service and is not suitable for storing real-time order data."
+        },
+        "C": {
+          "zh": "錯誤。使用閘道負載平衡器 (GWLB) 管理網路流量。使用 Amazon Elastic Container Service (Amazon ECS) 接收和處理客戶訂單。使用 GWLB 捕獲並儲存未處理的訂單。使用 Amazon DynamoDB 儲存已處理的客戶訂單。錯誤：網關負載平衡器主要用於管理第三方虛擬網路設備流量，不適合處理 Web 應用程式流量。正確：Amazon ECS 可以滿足彈性擴充需求。錯誤：GWLB 沒有儲存未處理訂單的功能。正確：Amazon DynamoDB 是一個高效能 NoSQL 資料庫，但關聯式資料庫（例如 RDS）更適合此問題。",
+          "en": "Incorrect. Use Gateway Load Balancer (GWLB) to manage network traffic. Use Amazon Elastic Container Service (Amazon ECS) to receive and process customer orders. Use GWLB to capture and store unprocessed orders. Use Amazon DynamoDB to store processed customer orders. Error: Gateway Load Balancer is primarily used to manage third-party virtual network device traffic and is not suitable for handling web application traffic. Correct: Amazon ECS can handle elastic scaling needs. Error: GWLB does not have the functionality to store unprocessed orders. Correct: Amazon DynamoDB is a high-performance NoSQL database, but a relational database (such as RDS) is more suitable for the question."
+        },
+        "D": {
+          "zh": "正確。使用應用程式負載平衡器來管理網路流量。使用 Amazon EC2 Auto Scaling 群組接收和處理客戶訂單。使用 Amazon Simple Queue Service (Amazon SQS) 儲存未處理的訂單。使用 Amazon RDS 的多可用區部署儲存已處理的客戶訂單。正確：Application Load Balancer 適合處理 HTTP/HTTPS 流量。正確：Amazon EC2 Auto Scaling 組可以處理彈性擴展需求。正確：Amazon SQS 是一種排隊服務，適合存放未處理的訂單，以確保訂單不會遺失。正確：Amazon RDS 多可用區提供高可用性和持久性，適合儲存已處理的訂單。",
+          "en": "Correct. Use an Application Load Balancer to manage network traffic. Use an Amazon EC2 Auto Scaling group to receive and process customer orders. Use Amazon Simple Queue Service (Amazon SQS) to store unprocessed orders. Store processed customer orders using a Multi-AZ deployment of Amazon RDS. Correct: Application Load Balancer is suitable for handling HTTP/HTTPS traffic. Correct: Amazon EC2 Auto Scaling groups can handle elastic scaling needs. Correct: Amazon SQS is a queuing service, suitable for storing unprocessed orders to ensure that orders are not lost. Correct: Amazon RDS Multi-AZ provides high availability and durability and is suitable for storing processed orders."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用應用程式負載平衡器來管理 Web 流量。使用 Amazon EC2 Auto Scaling 群組接收和處理客戶訂單。使用 Amazon Simple Queue Service (Amazon SQS) 儲存未處理的訂單。將 Amazon RDS 與多可用區部署結合使用來儲存已處理的客戶訂單。",
+        "en": "D. Use an Application Load Balancer to manage web traffic. Use Amazon EC2 Auto Scaling groups to receive and process customer orders. Use Amazon Simple Queue Service (Amazon SQS) to store unprocessed orders. Use Amazon RDS with a Multi-AZ deployment to store processed customer orders."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：使用應用程式負載平衡器來管理網路流量。使用 Amazon EC2 Auto Scaling 群組接收和處理客戶訂單。使用 Amazon Simple Queue Service (Amazon SQS) 儲存未處理的訂單。使用 Amazon RDS 的多可用區部署儲存已處理的客戶訂單。正確：Application Load Balancer 適合處理 HTTP/HTTPS 流量。正確：Amazon EC2 Auto Scaling 組可以處理彈性擴展需求。正確：Amazon SQS 是一種排隊服務，適合存放未處理的訂單，以確保訂單不會遺失。正確：Amazon RDS 多可用區提供高可用性和持久性，適合儲存已處理的訂單。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Use an Application Load Balancer to manage network traffic. Use an Amazon EC2 Auto Scaling group to receive and process customer orders. Use Amazon Simple Queue Service (Amazon SQS) to store unprocessed orders. Store processed customer orders using a Multi-AZ deployment of Amazon RDS. Correct: Application Load Balancer is suitable for handling HTTP/HTTPS traffic. Correct: Amazon EC2 Auto Scaling groups can handle elastic scaling needs. Correct: Amazon SQS is a queuing service, suitable for storing unprocessed orders to ensure that orders are not lost. Correct: Amazon RDS Multi-AZ provides high availability and durability and is suitable for storing processed orders."
+      }
+    },
+    {
+      "question_no": 918,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 AWS DataSync 將數百萬個檔案從本機系統遷移到 AWS。這些檔案的平均大小為 10 KB。該公司希望使用 Amazon S3 進行文件儲存。在遷移後的第一年，文件將被存取一次或兩次，並且必須立即可用。 1年後，文件必須存檔至少7年。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company is using AWS DataSync to migrate millions of files from an on-premises system to AWS. The files are 10 KB in size on average. The company wants to use Amazon S3 for file storage. For the first year after the migration, the files will be accessed once or twice and must be immediately available. After 1 year, the files must be archived for at least 7 years. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用歸檔工具將檔案分組為大物件。使用 DataSync 遷移物件。第一年將物件儲存在 S3 Glacier Instant Retrieval 中。使用生命週期配置在 1 年後將文件轉移到 S3 Glacier Deep Archive，保留期為 7 年。",
+          "en": "Use an archive tool to group the files into large objects. Use DataSync to migrate the objects. Store the objects in S3 Glacier Instant Retrieval for the first year. Use a lifecycle configuration to transition the files to S3 Glacier Deep Archive after 1 year with a retention period of 7 years."
+        },
+        "B": {
+          "zh": "使用歸檔工具將檔案分組為大物件。使用 DataSync 將物件複製到 S3 標準-不頻繁存取 (S3 標準-IA)。使用生命週期配置在 1 年後將文件過渡到 S3 Glacier Instant Retrieval，保留期為 7 年。",
+          "en": "Use an archive tool to group the files into large objects. Use DataSync to copy the objects to S3 Standard-Infrequent Access (S3 Standard-IA). Use a lifecycle configuration to transition the files to S3 Glacier Instant Retrieval after 1 year with a retention period of 7 years."
+        },
+        "C": {
+          "zh": "將檔案的目標儲存類別配置為 S3 Glacier 即時檢索。使用生命週期策略將文件在 1 年後過渡到 S3 Glacier 靈活檢索，保留期為 7 年。",
+          "en": "Configure the destination storage class for the files as S3 Glacier Instant Retrieval. Use a lifecycle policy to transition the files to S3 Glacier Flexible Retrieval after 1 year with a retention period of 7 years."
+        },
+        "D": {
+          "zh": "設定 DataSync 任務以將檔案傳輸到 S3 標準-不頻繁存取 (S3 標準-IA)。使用生命週期配置在 1 年後將文件轉移到 S3 Deep Archive，保留期為 7 年。",
+          "en": "Configure a DataSync task to transfer the files to S3 Standard-Infrequent Access (S3 Standard-IA). Use a lifecycle configuration to transition the files to S3 Deep Archive after 1 year with a retention period of 7 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。使用歸檔工具將檔案分組為大物件。使用 DataSync 遷移這些物件。第一年將物件儲存在 S3 Glacier Instant Retrieval 中。使用生命週期配置在 1 年後將文件轉移到 S3 Glacier Deep Archive，保留期為 7 年。正確：將小文件分組為較大的物件可以減少儲存和請求成本，尤其是在歸檔場景中。正確：S3 Glacier 即時擷取提供低延遲訪問，適合需要立即存取的場景。正確：使用生命週期配置將檔案遷移到 S3 Glacier Deep Archive 可以顯著降低長期儲存成本。",
+          "en": "Correct. Use archiving tools to group files into large objects. Use DataSync to migrate these objects. Store objects in S3 Glacier Instant Retrieval for the first year. Use a lifecycle configuration to transition files to S3 Glacier Deep Archive after 1 year with a retention period of 7 years. Correct: Grouping small files into larger objects can reduce storage and request costs, especially in archiving scenarios. Correct: S3 Glacier Instant Retrieval provides low-latency access and is suitable for scenarios where immediate access is required. Correct: Migrating files to S3 Glacier Deep Archive using lifecycle configuration can significantly reduce long-term storage costs."
+        },
+        "B": {
+          "zh": "錯誤。使用歸檔工具將檔案分組為大物件。使用 DataSync 將物件複製到 S3 標準-不頻繁存取 (S3 標準-IA)。使用生命週期配置在 1 年後將文件轉換為 S3 Glacier Instant Retrieval，保留期為 7 年。錯誤：S3 Standard-IA適合訪問率較低的場景，但需要一年內立即訪問的場景更適合S3 Glacier即時檢索。錯誤：將文件從 S3 Standard-IA 遷移到 S3 Glacier Instant Retrieval 不符合成本優化的要求。",
+          "en": "Incorrect. Use archiving tools to group files into large objects. Use DataSync to copy objects to S3 Standard-Infrequent Access (S3 Standard-IA). Use the lifecycle configuration to convert files to S3 Glacier Instant Retrieval after 1 year with a retention period of 7 years. Error: S3 Standard-IA is suitable for scenarios with low access rates, but scenarios that require immediate access within a year are more suitable for S3 Glacier Instant Retrieval. Error: Migrating files from S3 Standard-IA to S3 Glacier Instant Retrieval does not meet the requirements for cost optimization."
+        },
+        "C": {
+          "zh": "錯誤。將檔案的目標儲存類別配置為 S3 Glacier 即時檢索。使用生命週期策略在 1 年後將文件過渡到 S3 Glacier 靈活檢索，保留期為 7 年。錯誤：S3 Glacier 靈活檢索的存取延遲較長，不適合需要立即存取的場景。錯誤：問題要求一年後使用S3 Glacier Deep Archive，這不是S3 Glacier彈性檢索。",
+          "en": "Incorrect. Configure the file's target storage class to S3 Glacier Instant Retrieval. Use a lifecycle policy to transition files to S3 Glacier Flexible Retrieval after 1 year with a retention period of 7 years. Error: The access delay of S3 Glacier Flexible Retrieval is relatively long, which is not suitable for scenarios that require immediate access. Error: The question requires the use of S3 Glacier Deep Archive after one year, which is not S3 Glacier Flexible Retrieval."
+        },
+        "D": {
+          "zh": "錯誤。此選項錯誤：S3 Standard-IA 不適合需要立即存取的場景。錯誤：該問題需要使用 S3 Glacier Instant Retrieval 一年，這不是 S3 Standard-IA。",
+          "en": "Incorrect. Configure a DataSync task to transfer files to S3 Standard-Infrequent Access (S3 Standard-IA). Use the lifecycle configuration to transition files to S3 Deep Archive after 1 year with a retention period of 7 years. Error: S3 Standard-IA is not suitable for scenarios that require immediate access. Error: The question requires the use of S3 Glacier Instant Retrieval for one year, which is not S3 Standard-IA."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用歸檔工具將檔案分組為大物件。使用 DataSync 遷移物件。第一年將物件儲存在 S3 Glacier Instant Retrieval 中。使用生命週期配置在 1 年後將文件轉移到 S3 Glacier Deep Archive，保留期為 7 年。",
+        "en": "A. Use an archive tool to group the files into large objects. Use DataSync to migrate the objects. Store the objects in S3 Glacier Instant Retrieval for the first year. Use a lifecycle configuration to transition the files to S3 Glacier Deep Archive after 1 year with a retention period of 7 years."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (54%)； D (45%)。熱門討論與考點摘要：使用歸檔工具將檔案分組為大物件。使用 DataSync 遷移這些物件。第一年將物件儲存在 S3 Glacier Instant Retrieval 中。使用生命週期配置在 1 年後將文件轉移到 S3 Glacier Deep Archive，保留期為 7 年。正確：將小文件分組為較大的物件可以減少儲存和請求成本，尤其是在歸檔場景中。正確：S3 Glacier 即時擷取提供低延遲訪問，適合需要立即存取的場景。正確：使用生命週期配置將檔案遷移到 S3 Glacier Deep Archive 可以顯著降低長期儲存成本。",
+        "en": "Community vote as displayed: A (54%); D (45%). Popular discussion and key point summary: Use archiving tools to group files into large objects. Use DataSync to migrate these objects. Store objects in S3 Glacier Instant Retrieval for the first year. Use a lifecycle configuration to transition files to S3 Glacier Deep Archive after 1 year with a retention period of 7 years. Correct: Grouping small files into larger objects can reduce storage and request costs, especially in archiving scenarios. Correct: S3 Glacier Instant Retrieval provides low-latency access and is suitable for scenarios where immediate access is required. Correct: Migrating files to S3 Glacier Deep Archive using lifecycle configuration can significantly reduce long-term storage costs."
+      }
+    },
+    {
+      "question_no": 919,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司最近對其本地 Oracle 資料庫工作負載進行了直接遷移，以在 Amazon EC2 記憶體優化的 Linux 執行個體上運行。 EC2 Linux 執行個體使用 1 TB 預先設定 IOPS SSD (io1) EBS 卷，IOPS 為 64,000。遷移後的資料庫儲存效能低於本地資料庫的效能。哪種解決方案可以提高儲存效能？",
+        "en": "A company recently performed a lift and shift migration of its on-premises Oracle database workload to run on an Amazon EC2 memory optimized Linux instance. The EC2 Linux instance uses a 1 TB Provisioned IOPS SSD (io1) EBS volume with 64,000 IOPS. The database storage performance after the migration is slower than the performance of the on-premises database. Which solution will improve storage performance?"
+      },
+      "options": {
+        "A": {
+          "zh": "增加更多預先設定 IOPS SSD (io1) EBS 磁碟區。使用作業系統指令建立邏輯磁碟區管理 (LVM) 條帶。",
+          "en": "Add more Provisioned IOPS SSD (io1) EBS volumes. Use OS commands to create a Logical Volume Management (LVM) stripe."
+        },
+        "B": {
+          "zh": "將預先配置 IOPS SSD (io1) EBS 磁碟區增加到 64,000 IOPS 以上。",
+          "en": "Increase the Provisioned IOPS SSD (io1) EBS volume to more than 64,000 IOPS."
+        },
+        "C": {
+          "zh": "將預先配置 IOPS SSD (io1) EBS 磁碟區的大小增加到 2 TB。",
+          "en": "Increase the size of the Provisioned IOPS SSD (io1) EBS volume to 2 TB."
+        },
+        "D": {
+          "zh": "將 EC2 Linux 執行個體變更為儲存最佳化執行個體類型。請勿變更預先配置 IOPS SSD (io1) EBS 磁碟區。",
+          "en": "Change the EC2 Linux instance to a storage optimized instance type. Do not change the Provisioned IOPS SSD (io1) EBS volume."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。透過增加更多io1磁碟區並使用LVM條帶化，可以實現平行讀寫操作，顯著提高儲存效能。條帶化是一種常見的效能最佳化技術，特別是對於高效能資料庫工作負載。",
+          "en": "Correct. By adding more io1 volumes and using LVM striping, parallel read and write operations can be achieved, significantly improving storage performance. Striping is a common performance optimization technique, especially for high-performance database workloads."
+        },
+        "B": {
+          "zh": "錯誤。單一 io1 卷的最大 IOPS 限制為 64,000（Nitro 系統上為 256,000），因此無法透過將 IOPS 提高到 64,000 以上來解決問題。即使將 IOPS 提高到最大值也可能無法滿足資料庫的效能需求。",
+          "en": "Incorrect. The maximum IOPS limit for a single io1 volume is 64,000 (256,000 on Nitro systems), so there is no way to solve the problem by increasing the IOPS beyond 64,000. Even increasing IOPS to the maximum value may not meet the performance needs of the database."
+        },
+        "C": {
+          "zh": "錯誤。增加磁碟區大小不會直接提高 IOPS 效能。 IOPS與磁碟區大小有關，但問題的核心是效能缺乏，而不是儲存容量缺乏。",
+          "en": "Incorrect. Increasing the volume size does not directly improve IOPS performance. IOPS is related to volume size, but the core of the problem is a lack of performance, not a lack of storage capacity."
+        },
+        "D": {
+          "zh": "錯誤。儲存最佳化執行個體類型（例如 I3 或 I3en）通常使用本機 NVMe 儲存而不是 EBS 磁碟區。如果您繼續使用 EBS 卷，變更執行個體類型不會顯著提高效能。問題的核心是EBS磁碟區的效能，而不是實例類型。",
+          "en": "Incorrect. Storage-optimized instance types (such as I3 or I3en) typically use local NVMe storage rather than EBS volumes. If you continue to use EBS volumes, changing instance types will not significantly improve performance. The core of the problem is the performance of the EBS volume, not the instance type."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 增加更多預先設定 IOPS SSD (io1) EBS 磁碟區。使用作業系統指令建立邏輯磁碟區管理 (LVM) 條帶。",
+        "en": "A. Add more Provisioned IOPS SSD (io1) EBS volumes. Use OS commands to create a Logical Volume Management (LVM) stripe."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (91%)。熱門討論與考點摘要：透過增加更多io1磁碟區並使用LVM條帶化，可以實現平行讀寫操作，顯著提高儲存效能。條帶化是一種常見的效能最佳化技術，特別是對於高效能資料庫工作負載。",
+        "en": "Community vote as displayed: A (91%). Popular discussion and key point summary: By adding more io1 volumes and using LVM striping, parallel read and write operations can be achieved, significantly improving storage performance. Striping is a common performance optimization technique, especially for high-performance database workloads."
+      }
+    },
+    {
+      "question_no": 920,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在從 Amazon EC2 上託管的 Web 應用程式的整體架構遷移到無伺服器微服務架構。該公司希望使用支援事件驅動、鬆散耦合架構的 AWS 服務。該公司希望使用發布/訂閱 (pub/sub) 模式。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company is migrating from a monolithic architecture for a web application that is hosted on Amazon EC2 to a serverless microservices architecture. The company wants to use AWS services that support an event-driven, loosely coupled architecture. The company wants to use the publish/subscribe (pub/sub) pattern. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 Amazon API Gateway REST API 以呼叫將事件發佈到 Amazon Simple Queue Service (Amazon SQS) 佇列的 AWS Lambda 函數。配置一個或多個訂閱者從 SQS 佇列讀取事件。",
+          "en": "Configure an Amazon API Gateway REST API to invoke an AWS Lambda function that publishes events to an Amazon Simple Queue Service (Amazon SQS) queue. Configure one or more subscribers to read events from the SQS queue."
+        },
+        "B": {
+          "zh": "設定 Amazon API Gateway REST API 以呼叫將事件發佈到 Amazon Simple Notification Service (Amazon SNS) 主題的 AWS Lambda 函數。配置一個或多個訂閱者以接收來自 SNS 主題的事件。",
+          "en": "Configure an Amazon API Gateway REST API to invoke an AWS Lambda function that publishes events to an Amazon Simple Notification Service (Amazon SNS) topic. Configure one or more subscribers to receive events from the SNS topic."
+        },
+        "C": {
+          "zh": "設定 Amazon API Gateway WebSocket API 以寫入具有增強扇出功能的 Amazon Kinesis Data Streams 中的資料流。配置一個或多個訂閱者以接收來自資料流的事件。",
+          "en": "Configure an Amazon API Gateway WebSocket API to write to a data stream in Amazon Kinesis Data Streams with enhanced fan-out. Configure one or more subscribers to receive events from the data stream."
+        },
+        "D": {
+          "zh": "設定 Amazon API Gateway HTTP API 以呼叫將事件發佈到 Amazon Simple Notification Service (Amazon SNS) 主題的 AWS Lambda 函數。配置一個或多個訂閱者以接收來自主題的事件。",
+          "en": "Configure an Amazon API Gateway HTTP API to invoke an AWS Lambda function that publishes events to an Amazon Simple Notification Service (Amazon SNS) topic. Configure one or more subscribers to receive events from the topic."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。效能分析：Amazon SQS 是一種佇列服務，適合點對點訊息傳遞，而不是 Pub/Sub 模式。雖然可以透過多個消費者讀取佇列中的消息，但並不完全符合Pub/Sub設計模式。成本分析：使用 SQS 可能會增加成本，因為需要額外的佇列管理和訊息輪詢。不符合題目要求。",
+          "en": "Incorrect. Performance analysis: Amazon SQS is a queue service, suitable for point-to-point messaging, not the Pub/Sub mode. Although it is possible to read messages in the queue through multiple consumers, it does not fully comply with the Pub/Sub design pattern. Cost analysis: Using SQS may increase costs because of the additional queue management and message polling required. Does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：Amazon SNS 是一項支援事件驅動架構和多個訂閱者的 Pub/Sub 服務。該選項符合題目要求。成本分析：使用REST API可能會增加成本，因為REST API呼叫成本更高。雖然滿足要求，但並不是最具成本效益的解決方案。",
+          "en": "Incorrect. Performance analysis: Amazon SNS is a Pub/Sub service that supports event-driven architecture and multiple subscribers. This option meets the question requirements. Cost analysis: Using REST API may increase costs because REST API calls are more expensive. Although it meets the requirements, it is not the most cost-effective solution."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：Amazon Kinesis Data Streams 適用於即時資料流處理，但其主要目的是高吞吐量資料流，而不是事件驅動的 Pub/Sub 模型。成本分析：Kinesis Data Streams 的成本較高，尤其是在啟用增強扇出時。不符合題目要求。",
+          "en": "Incorrect. Performance analysis: Amazon Kinesis Data Streams is suitable for real-time data stream processing, but its main purpose is high-throughput data streaming, not the event-driven Pub/Sub model. Cost analysis: Kinesis Data Streams has a higher cost, especially when enhanced fan-out is enabled. Does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "正確。效能分析：Amazon SNS 是一項支援事件驅動架構和多個訂閱者的 Pub/Sub 服務。 HTTP API的成本比REST API低，滿足問題的要求。成本分析：HTTP API呼叫成本較低，是最具成本效益的解決方案。符合問題要求，是最佳答案。",
+          "en": "Correct. Performance analysis: Amazon SNS is a Pub/Sub service that supports event-driven architecture and multiple subscribers. The cost of HTTP API is lower than that of REST API, which meets the requirements of the question. Cost analysis: HTTP API calls are less expensive and are the most cost-effective solution. It meets the requirements of the question and is the best answer."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 設定 Amazon API Gateway HTTP API 以呼叫將事件發佈到 Amazon Simple Notification Service (Amazon SNS) 主題的 AWS Lambda 函數。配置一個或多個訂閱者以接收來自主題的事件。",
+        "en": "D. Configure an Amazon API Gateway HTTP API to invoke an AWS Lambda function that publishes events to an Amazon Simple Notification Service (Amazon SNS) topic. Configure one or more subscribers to receive events from the topic."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (74%)； B (26%)。熱門討論與考點摘要：效能分析：Amazon SNS 是一項支援事件驅動架構和多個訂閱者的 Pub/Sub 服務。 HTTP API的成本比REST API低，滿足問題的要求。成本分析：HTTP API呼叫成本較低，是最具成本效益的解決方案。符合問題要求，是最佳答案。",
+        "en": "Community vote as displayed: D (74%); B (26%). Popular discussion and key point summary: Performance analysis: Amazon SNS is a Pub/Sub service that supports event-driven architecture and multiple subscribers. The cost of HTTP API is lower than that of REST API, which meets the requirements of the question. Cost analysis: HTTP API calls are less expensive and are the most cost-effective solution. It meets the requirements of the question and is the best answer."
+      }
+    },
+    {
+      "question_no": 921,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司最近將單體應用程式遷移到 Amazon EC2 執行個體和 Amazon RDS。該應用程式具有緊密耦合的模組。應用程式的現有設計使應用程式能夠僅在單一 EC2 執行個體上執行。該公司注意到 EC2 執行個體在高峰使用時間的 CPU 使用率很高。高 CPU 利用率對應於 Amazon RDS 上讀取請求的效能下降。該公司希望降低高 CPU 使用率並提高讀取請求效能。哪種解決方案可以滿足這些要求？",
+        "en": "A company recently migrated a monolithic application to an Amazon EC2 instance and Amazon RDS. The application has tightly coupled modules. The existing design of the application gives the application the ability to run on only a single EC2 instance. The company has noticed high CPU utilization on the EC2 instance during peak usage times. The high CPU utilization corresponds to degraded performance on Amazon RDS for read requests. The company wants to reduce the high CPU utilization and improve read request performance. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 EC2 執行個體大小調整為具有更多 CPU 容量的 EC2 執行個體類型。配置 Auto Scaling 組，最小和最大大小均為 1。為讀取請求配置 RDS 唯讀副本。",
+          "en": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Configure an RDS read replica for read requests."
+        },
+        "B": {
+          "zh": "將 EC2 執行個體大小調整為具有更多 CPU 容量的 EC2 執行個體類型。配置 Auto Scaling 組，最小和最大大小均為 1。新增 RDS 唯讀副本並將所有讀取/寫入流量重新導向到該副本。",
+          "en": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Add an RDS read replica and redirect all read/write traffic to the replica."
+        },
+        "C": {
+          "zh": "配置 Auto Scaling 群組，最小大小為 1，最大大小為 2。將 RDS 資料庫執行個體大小調整為具有更多 CPU 容量的執行個體類型。",
+          "en": "Configure an Auto Scaling group with a minimum size of 1 and maximum size of 2. Resize the RDS DB instance to an instance type that has more CPU capacity."
+        },
+        "D": {
+          "zh": "將 EC2 執行個體大小調整為具有更多 CPU 容量的 EC2 執行個體類型。配置 Auto Scaling 組的最小和最大大小均為 1。將 RDS 資料庫執行個體的大小調整為具有更多 CPU 容量的執行個體類型。",
+          "en": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Resize the RDS DB instance to an instance type that has more CPU capacity."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。調整 EC2 執行個體大小以增加 CPU 容量可以解決高 CPU 使用率問題。正確：將Auto Scaling群組的最小和最大大小配置為1，以確保單一執行個體運作符合目前應用的設計約束。正確：新增 RDS 唯讀副本可以透過卸載讀取請求負載來提高資料庫效能。",
+          "en": "Correct. Sizing the EC2 instance to increase CPU capacity can resolve high CPU utilization issues. Correct: Configure the minimum and maximum size of the Auto Scaling group to 1 to ensure that single-instance operation meets the design constraints of the current application. Correct: Adding RDS read replicas can improve database performance by offloading the read request load."
+        },
+        "B": {
+          "zh": "錯誤。RDS只讀副本僅用於處理讀取請求，無法處理寫入請求。將所有讀取/寫入流量重新導向到只讀副本是不正確的。正確：調整 EC2 執行個體大小以增加 CPU 容量可以解決 CPU 使用率高的問題。正確：將 Auto Scaling 群組的最小和最大大小配置為 1，與目前應用程式的設計約束一致。",
+          "en": "Incorrect. RDS read replicas are only used to process read requests and cannot process write requests. It is incorrect to redirect all read/write traffic to the read replica. Correct: Sizing an EC2 instance to increase CPU capacity can resolve high CPU utilization issues. Correct: Configure the Auto Scaling group with a minimum and maximum size of 1, consistent with the design constraints of the current application."
+        },
+        "C": {
+          "zh": "錯誤。目前應用程式設計為僅在單一 EC2 執行個體上執行，因此將 Auto Scaling 群組的最大大小設為 2 不符合要求。正確：調整RDS執行個體增加CPU容量可以提高資料庫效能，但無法解決讀取請求分流問題。",
+          "en": "Incorrect. The current application is designed to run only on a single EC2 instance, so setting the maximum size of the Auto Scaling group to 2 does not meet the requirements. Correct: Adjusting an RDS instance to increase CPU capacity can improve database performance, but does not solve the problem of offloading read requests."
+        },
+        "D": {
+          "zh": "錯誤。調整 EC2 執行個體大小以增加 CPU 容量可以解決高 CPU 使用率問題。正確：將 Auto Scaling 群組的最小和最大大小配置為 1，與目前應用程式的設計約束一致。錯誤：調整RDS實例以增加CPU容量可以提高效能，但不能解決分流讀取請求的問題。相較之下，使用RDS只讀副本更適合解決讀取請求效能問題。",
+          "en": "Incorrect. Sizing the EC2 instance to increase CPU capacity can resolve high CPU utilization issues. Correct: Configure the Auto Scaling group with a minimum and maximum size of 1, consistent with the design constraints of the current application. Error: Tuning an RDS instance to increase CPU capacity can improve performance, but does not solve the problem of offloading read requests. In contrast, using RDS read replicas is more suitable for solving read request performance issues."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將 EC2 執行個體大小調整為具有更多 CPU 容量的 EC2 執行個體類型。配置 Auto Scaling 組，最小和最大大小均為 1。為讀取請求配置 RDS 唯讀副本。",
+        "en": "A. Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Configure an RDS read replica for read requests."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：調整 EC2 執行個體大小以增加 CPU 容量可以解決高 CPU 使用率問題。正確：將Auto Scaling群組的最小和最大大小配置為1，以確保單一執行個體運作符合目前應用的設計約束。正確：新增 RDS 唯讀副本可以透過卸載讀取請求負載來提高資料庫效能。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Sizing the EC2 instance to increase CPU capacity can resolve high CPU utilization issues. Correct: Configure the minimum and maximum size of the Auto Scaling group to 1 to ensure that single-instance operation meets the design constraints of the current application. Correct: Adding RDS read replicas can improve database performance by offloading the read request load."
+      }
+    },
+    {
+      "question_no": 922,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要授予開發團隊存取公司 AWS 資源的權限。公司必須保持資源的高度安全。該公司需要一種存取控制解決方案來防止未經授權的存取敏感資料。哪種解決方案可以滿足這些要求？",
+        "en": "A company needs to grant a team of developers access to the company's AWS resources. The company must maintain a high level of security for the resources. The company requires an access control solution that will prevent unauthorized access to the sensitive data. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "與團隊其他成員分享每個開發團隊成員的 IAM 使用者憑證，以簡化存取管理並簡化開發工作流程。",
+          "en": "Share the IAM user credentials for each development team member with the rest of the team to simplify access management and to streamline development workflows."
+        },
+        "B": {
+          "zh": "根據最小權限原則定義具有細微權限的 IAM 角色。為每個開發人員指派 IAM 角色。",
+          "en": "Define IAM roles that have fine-grained permissions based on the principle of least privilege. Assign an IAM role to each developer."
+        },
+        "C": {
+          "zh": "建立 IAM 存取金鑰以授予對 AWS 資源的程式存取權。僅允許開發人員使用存取金鑰透過 API 呼叫與 AWS 資源互動。",
+          "en": "Create IAM access keys to grant programmatic access to AWS resources. Allow only developers to interact with AWS resources through API calls by using the access keys."
+        },
+        "D": {
+          "zh": "建立 AWS Cognito 使用者池。使用使用者池授予開發人員對 AWS 資源的存取權限。",
+          "en": "Create an AWS Cognito user pool. Grant developers access to AWS resources by using the user pool."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。共享 IAM 使用者憑證違反了安全最佳實踐，因為它會帶來憑證外洩的風險。錯誤：無法對敏感資料實施細粒度的存取控制。",
+          "en": "Incorrect. Sharing IAM user credentials violates security best practices because it creates the risk of credential compromise. Error: Unable to implement fine-grained access control to sensitive data."
+        },
+        "B": {
+          "zh": "正確。基於最小權限原則定義 IAM 角色是 AWS 建議的最佳實務。正確：IAM 角色可以透過臨時憑證提供細粒度的權限控制和對資源的安全存取。",
+          "en": "Correct. Defining IAM roles based on the principle of least privilege is a best practice recommended by AWS. Correct: IAM roles can provide fine-grained permission control and secure access to resources through temporary credentials."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以透過訪問金鑰進行程式設計訪問，但長期使用靜態訪問金鑰存在安全風險。錯誤：無法實現基於最小權限的細粒度控制。",
+          "en": "Incorrect. While programmatic access is possible through access keys, long-term use of static access keys is a security risk. Error: Fine-grained control based on least privileges cannot be implemented."
+        },
+        "D": {
+          "zh": "錯誤。AWS Cognito 主要用於管理應用程式使用者身份，而不是直接管理對 AWS 資源的存取。錯誤：無法滿足敏感資料細粒度的權限控制需求。",
+          "en": "Incorrect. AWS Cognito is primarily used to manage application user identities, rather than directly managing access to AWS resources. Error: Unable to meet the need for fine-grained permission control of sensitive data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 根據最小權限原則定義具有細微權限的 IAM 角色。為每個開發人員指派 IAM 角色。",
+        "en": "B. Define IAM roles that have fine-grained permissions based on the principle of least privilege. Assign an IAM role to each developer."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (82%)。熱門討論與考點摘要：基於最小權限原則定義 IAM 角色是 AWS 建議的最佳實務。正確：IAM 角色可以透過臨時憑證提供細粒度的權限控制和對資源的安全存取。",
+        "en": "Community vote as displayed: B (82%). Popular discussion and key point summary: Defining IAM roles based on the principle of least privilege is a best practice recommended by AWS. Correct: IAM roles can provide fine-grained permission control and secure access to resources through temporary credentials."
+      }
+    },
+    {
+      "question_no": 923,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon EC2 執行個體上託管一個整體 Web 應用程式。應用程式用戶最近報告在特定時間表現不佳。對 Amazon CloudWatch 指標的分析顯示，在效能不佳期間，CPU 利用率為 100%。該公司希望解決此效能問題並提高應用程式可用性。哪一種步驟組合能夠最經濟有效地滿足這些要求？ （選兩個。）",
+        "en": "A company hosts a monolithic web application on an Amazon EC2 instance. Application users have recently reported poor performance at specific times. Analysis of Amazon CloudWatch metrics shows that CPU utilization is 100% during the periods of poor performance. The company wants to resolve this performance issue and improve application availability. Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Compute Optimizer 取得實例類型垂直擴充的建議。",
+          "en": "Use AWS Compute Optimizer to obtain a recommendation for an instance type to scale vertically."
+        },
+        "B": {
+          "zh": "從 Web 伺服器建立 Amazon 系統映像 (AMI)。在新的啟動範本中引用 AMI。",
+          "en": "Create an Amazon Machine Image (AMI) from the web server. Reference the AMI in a new launch template."
+        },
+        "C": {
+          "zh": "建立一個 Auto Scaling 群組和一個 Application Load Balancer 以進行垂直擴展。",
+          "en": "Create an Auto Scaling group and an Application Load Balancer to scale vertically."
+        },
+        "D": {
+          "zh": "使用 AWS Compute Optimizer 取得實例類型水平擴充的建議。",
+          "en": "Use AWS Compute Optimizer to obtain a recommendation for an instance type to scale horizontally."
+        },
+        "E": {
+          "zh": "建立 Auto Scaling 群組和 Application Load Balancer 以進行水平擴展。",
+          "en": "Create an Auto Scaling group and an Application Load Balancer to scale horizontally."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。 AWS Compute Optimizer 可以分析目前執行個體的效能，並為垂直擴充建議更高效能的執行個體類型。這是解決CPU利用率高問題的有效方法。",
+          "en": "Correct. . AWS Compute Optimizer can analyze the performance of current instances and recommend higher-performance instance types for vertical scaling. This is an effective way to solve the problem of high CPU utilization."
+        },
+        "B": {
+          "zh": "錯誤。。建立 AMI 和啟動範本是部署新執行個體的步驟，但它本身並不能解決效能問題或直接提高應用程式可用性。",
+          "en": "Incorrect. . Creating an AMI and launching templates is a step toward deploying new instances, but it does not by itself solve performance issues or directly improve application availability."
+        },
+        "C": {
+          "zh": "錯誤。。 Auto Scaling 群組和 Application Load Balancer 通常用於水平擴展，而不是垂直擴展。垂直擴展是透過替換更高效能的實例類型來實現的。",
+          "en": "Incorrect. . Auto Scaling groups and Application Load Balancers are typically used for horizontal scaling, not vertical scaling. Vertical scaling is achieved by replacing instance types with higher performance."
+        },
+        "D": {
+          "zh": "錯誤。。 AWS Compute Optimizer 主要用於為單一執行個體建議最佳化類型，而不是水平可擴展的架構設計。",
+          "en": "Incorrect. . AWS Compute Optimizer is primarily used to recommend optimization types for individual instances, rather than horizontally scalable architecture designs."
+        },
+        "E": {
+          "zh": "正確。。透過建立彈性伸縮組和負載平衡器，您可以實現水平擴展，動態增加執行個體數量以應對高負載，從而提高應用程式的可用性。",
+          "en": "Correct. . By creating Auto Scaling groups and Application Load Balancers, you can achieve horizontal expansion and dynamically increase the number of instances to cope with high loads, thereby improving application availability."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Compute Optimizer 取得實例類型垂直擴充的建議。；E. 建立 Auto Scaling 群組和 Application Load Balancer 以進行水平擴展。",
+        "en": "A. Use AWS Compute Optimizer to obtain a recommendation for an instance type to scale vertically.; E. Create an Auto Scaling group and an Application Load Balancer to scale horizontally."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AE (50%)； BE (47%)。熱門討論與考點摘要：。 AWS Compute Optimizer 可以分析目前執行個體的效能，並為垂直擴充建議更高效能的執行個體類型。這是解決CPU利用率高問題的有效方法。；。透過建立彈性伸縮組和負載平衡器，您可以實現水平擴展，動態增加執行個體數量以應對高負載，從而提高應用程式的可用性。",
+        "en": "Community vote as displayed: AE (50%); BE (47%). Popular discussion and key point summary: . AWS Compute Optimizer can analyze the performance of current instances and recommend higher-performance instance types for vertical scaling. This is an effective way to solve the problem of high CPU utilization.; . By creating Auto Scaling groups and Application Load Balancers, you can achieve horizontal expansion and dynamically increase the number of instances to cope with high loads, thereby improving application availability."
+      }
+    },
+    {
+      "question_no": 924,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 雲端中運行其所有業務應用程式。該公司使用 AWS Organizations 來管理多個 AWS 帳戶。解決方案架構師需要檢查授予 IAM 使用者的所有權限，以確定哪些 IAM 使用者擁有比所需更多的權限。哪種解決方案能夠以最少的管理開銷來滿足這些要求？",
+        "en": "A company runs all its business applications in the AWS Cloud. The company uses AWS Organizations to manage multiple AWS accounts. A solutions architect needs to review all permissions that are granted to IAM users to determine which IAM users have more permissions than required. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用網路存取分析器檢視公司 AWS 帳戶中的所有存取權限。",
+          "en": "Use Network Access Analyzer to review all access permissions in the company's AWS accounts."
+        },
+        "B": {
+          "zh": "建立一個 AWS CloudWatch 警報，在 IAM 使用者在 AWS 帳戶中建立或修改資源時啟動。",
+          "en": "Create an AWS CloudWatch alarm that activates when an IAM user creates or modifies resources in an AWS account."
+        },
+        "C": {
+          "zh": "使用 AWS Identity and Access Management (IAM) 存取分析器檢視公司的所有資源和帳戶。",
+          "en": "Use AWS Identity and Access Management (IAM) Access Analyzer to review all the company’s resources and accounts."
+        },
+        "D": {
+          "zh": "使用 Amazon Inspector 尋找現有 IAM 策略中的漏洞。",
+          "en": "Use Amazon Inspector to find vulnerabilities in existing IAM policies."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。網路存取分析器主要用於分析網路存取路徑和網路配置，並非專門用於檢查 IAM 使用者權限。",
+          "en": "Incorrect. Network Access Analyzer is primarily used to analyze network access paths and network configurations, and is not specifically designed to review IAM user permissions."
+        },
+        "B": {
+          "zh": "錯誤。CloudWatch 可以監控事件，但無法直接審核 IAM 使用者權限。這種方法需要額外的配置和手動分析，增加了管理開銷。",
+          "en": "Incorrect. CloudWatch can monitor events but cannot directly audit IAM user permissions. This approach requires additional configuration and manual analysis, adding administrative overhead."
+        },
+        "C": {
+          "zh": "正確。IAM 存取分析器專門用於分析權限並識別權限過多問題，是解決此問題的最佳工具。",
+          "en": "Correct. IAM Access Analyzer is specifically designed to analyze permissions and identify excessive permission issues and is the best tool to solve this problem."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Inspector 主要用於檢查 EC2 執行個體、容器和 Lambda 函數的安全漏洞，而不是檢查 IAM 權限。",
+          "en": "Incorrect. Amazon Inspector is mainly used to check security vulnerabilities of EC2 instances, containers, and Lambda functions, rather than reviewing IAM permissions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Identity and Access Management (IAM) 存取分析器檢視公司的所有資源和帳戶。",
+        "en": "C. Use AWS Identity and Access Management (IAM) Access Analyzer to review all the company’s resources and accounts."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：IAM 存取分析器專門用於分析權限並識別權限過多問題，是解決此問題的最佳工具。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: IAM Access Analyzer is specifically designed to analyze permissions and identify excessive permission issues and is the best tool to solve this problem."
+      }
+    },
+    {
+      "question_no": 925,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要實施新的資料保留策略以確保合規性。作為此策略的一部分，必須保護儲存在 Amazon S3 儲存桶中的敏感文件在固定的時間內不被刪除或修改。哪種解決方案可以滿足這些要求？",
+        "en": "A company needs to implement a new data retention policy for regulatory compliance. As part of this policy, sensitive documents that are stored in an Amazon S3 bucket must be protected from deletion or modification for a fixed period of time. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在所需物件上啟動 S3 物件鎖定並啟用治理模式。",
+          "en": "Activate S3 Object Lock on the required objects and enable governance mode."
+        },
+        "B": {
+          "zh": "在所需物件上啟動 S3 物件鎖定並啟用合規模式。",
+          "en": "Activate S3 Object Lock on the required objects and enable compliance mode."
+        },
+        "C": {
+          "zh": "在 S3 儲存桶上啟用版本控制。設定生命週期策略以在指定時間段後刪除物件。",
+          "en": "Enable versioning on the S3 bucket. Set a lifecycle policy to delete the objects after a specified period."
+        },
+        "D": {
+          "zh": "配置 S3 生命週期策略，以將物件在保留期內過渡到 S3 Glacier 靈活檢索。",
+          "en": "Configure an S3 Lifecycle policy to transition objects to S3 Glacier Flexible Retrieval for the retention duration."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。治理模式允許特定使用者（具有適當的權限）繞過鎖定並刪除或修改物件。這種模式不能完全滿足「防止刪除或修改」的要求，因為授權使用者仍然可以操作該物件。因此，該選項不符合題目要求。",
+          "en": "Incorrect. Governance mode allows specific users (with appropriate permissions) to bypass locks and delete or modify objects. This mode does not fully satisfy the \"protect from deletion or modification\" requirement because authorized users can still manipulate the object. Therefore, this option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。合規模式完全防止物件被刪除或修改，即使具有管理員權限的使用者也無法覆寫鎖定。這種模式完全滿足問題的要求，確保敏感文件在固定時間內無法被刪除或修改。該選項是正確答案。",
+          "en": "Correct. Compliance mode completely prevents the object from being deleted or modified, and even users with administrator rights cannot override the lock. This mode fully meets the requirements of the question and ensures that sensitive documents cannot be deleted or modified within a fixed period of time. This option is the correct answer."
+        },
+        "C": {
+          "zh": "錯誤。版本控制可以保留物件的歷史版本，但不能防止物件被刪除或修改。生命週期策略僅用於管理物件的儲存時間，無法滿足「防止刪除或修改」的要求。該選項不符合題目要求。",
+          "en": "Incorrect. Versioning can preserve historical versions of an object, but it cannot prevent the object from being deleted or modified. Life cycle policies are only used to manage the storage time of objects and cannot meet the requirement of \"preventing deletion or modification\". This option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。將物件移至 S3 Glacier 彈性檢索可以降低儲存成本，但無法防止物件被刪除或修改。該選項不符合題目要求。",
+          "en": "Incorrect. Moving objects to S3 Glacier Flexible Retrieval can reduce storage costs, but it does not prevent objects from being deleted or modified. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在所需物件上啟動 S3 物件鎖定並啟用合規模式。",
+        "en": "B. Activate S3 Object Lock on the required objects and enable compliance mode."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (89%)。熱門討論與考點摘要：合規模式完全防止物件被刪除或修改，即使具有管理員權限的使用者也無法覆寫鎖定。這種模式完全滿足問題的要求，確保敏感文件在固定時間內無法被刪除或修改。該選項是正確答案。",
+        "en": "Community vote as displayed: B (89%). Popular discussion and key point summary: Compliance mode completely prevents the object from being deleted or modified, and even users with administrator rights cannot override the lock. This mode fully meets the requirements of the question and ensures that sensitive documents cannot be deleted or modified within a fixed period of time. This option is the correct answer."
+      }
+    },
+    {
+      "question_no": 926,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在容器上運行其面向客戶的 Web 應用程式。此工作負載使用 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS)。 Web 應用程式是資源密集的。 Web 應用程式需要每週 7 天、每天 24 小時為客戶提供服務。該公司預計該應用程式會經歷短暫的高流量爆發。工作負載必須具有高可用性。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company runs its customer-facing web application on containers. The workload uses Amazon Elastic Container Service (Amazon ECS) on AWS Fargate. The web application is resource intensive. The web application needs to be available 24 hours a day, 7 days a week for customers. The company expects the application to experience short bursts of high traffic. The workload must be highly available. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Fargate 設定 ECS 容量提供者。使用第三方工具進行負載測試。調整 Amazon CloudWatch 中的 Fargate 任務規模。",
+          "en": "Configure an ECS capacity provider with Fargate. Conduct load testing by using a third-party tool. Rightsize the Fargate tasks in Amazon CloudWatch."
+        },
+        "B": {
+          "zh": "使用 Fargate 配置 ECS 容量提供者以達到穩定狀態，並使用 Fargate Spot 來設定突發流量。",
+          "en": "Configure an ECS capacity provider with Fargate for steady state and Fargate Spot for burst traffic."
+        },
+        "C": {
+          "zh": "使用 Fargate Spot 配置 ECS 容量提供者以達到穩定狀態，並使用 Fargate 以實現突發流量。",
+          "en": "Configure an ECS capacity provider with Fargate Spot for steady state and Fargate for burst traffic."
+        },
+        "D": {
+          "zh": "使用 Fargate 設定 ECS 容量提供者。使用 AWS Compute Optimizer 調整 Fargate 任務的大小。",
+          "en": "Configure an ECS capacity provider with Fargate. Use AWS Compute Optimizer to rightsize the Fargate task."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。僅使用 Fargate + 第三方壓力測試 + CloudWatch 調整大小中的調整來配置容量提供者有助於減少資源浪費；壓力測試可以幫助評估容量需求。沒有引入任何突發週期的成本最佳化方法（例如 Spot）。短期高流量情況下，只能透過按需Fargate擴容，峰值成本較高。可以滿足可用性，但不滿足「性價比最高」。",
+          "en": "Incorrect. Configure a capacity provider using only Fargate + third-party stress testing + rightsizing in CloudWatch rightsizing helps reduce resource waste; stress testing can help evaluate capacity needs. There is no cost optimization method that introduces any burst period (such as Spot). Under short-term high traffic conditions, capacity can only be expanded through on-demand Fargate, and peak costs are higher. It can meet usability, but it does not meet \"MOST cost-effectively\"."
+        },
+        "B": {
+          "zh": "正確。穩定狀態使用 Fargate，突發流量使用 Fargate Spot 的容量提供者。穩態容量採用不間斷Fargate，滿足7x24和高可用性的基本要求。突發擴容採用更便利的Fargate Spot，可大幅降低短期高峰時的成本。容量提供者幫助服務在擴展時在兩種容量之間策略性地分配任務。風險和可接受性：Fargate Spot可能會被回收，但將其用於「突發容量」通常是可以接受的；穩定狀態仍由Fargate承擔，整體可用性仍可維持。同時滿足高可用和突發彈性，性價比最高。",
+          "en": "Correct. Steady state uses Fargate, and burst traffic uses Fargate Spot's capacity provider. Steady state capacity uses uninterruptible Fargate, meeting the basic requirements of 7x24 and high availability. Burst expansion uses the more convenient Fargate Spot, which significantly reduces costs during short-term peaks. Capacity providers help services strategically allocate tasks between two capacities as they scale. Risk and acceptability: Fargate Spot may be recycled, but it is generally acceptable to use it for \"burst capacity\"; the steady state is still borne by Fargate, and the overall availability can still be maintained. It satisfies high availability and burst elasticity at the same time, and is the most cost-effective."
+        },
+        "C": {
+          "zh": "錯誤。穩定狀態下使用 Fargate Spot，突發狀態下使用 Fargate 將穩定狀態放在 Spot 上意味著核心 7x24 容量可能隨時中斷，不符合「必須高可用/持續可用」的要求。成本邏輯也不是最優的：使用較昂貴的 Fargate 進行突發（短期），使用可中斷的 Spot 進行穩態（長期）會引入可用性風險；即使省了錢，也不滿足可用性先決條件。未滿足高可用性和持續可用性的關鍵限制。",
+          "en": "Incorrect. Use Fargate Spot in steady state, use Fargate in burst Putting steady state on Spot means that the core 7x24 capacity may be interrupted at any time, which does not meet the requirement of \"must be highly available/continuously available\". The cost logic is not optimal either: using the more expensive Fargate for bursts (short-term) and using interruptible Spot for steady-state (long-term) will introduce availability risks; even if you save money, it does not meet the availability prerequisites. The key constraints of high availability and continuous availability are not met."
+        },
+        "D": {
+          "zh": "錯誤。僅使用 Fargate + 透過 Compute Optimizer 調整大小來配置容量提供者 Compute Optimizer 可以提供更系統化的規範優化建議並減少浪費。仍不採用現貨，降低「爆擴」單位成本；對於「短期高流量爆發」，僅調整規模通常不如「按需 + Spot 混合」經濟。成本改進是可能的，但通常不是「最具成本效益」的選擇。",
+          "en": "Incorrect. Configure capacity providers using only Fargate + rightsizing with Compute Optimizer Compute Optimizer may provide more systematic specification optimization recommendations and reduce waste. Spot is still not used to reduce the unit cost of \"burst expansion\"; for \"short-term high traffic bursts\", rightsizing only is usually not as economical as \"on-demand + Spot hybrid\". Cost improvements are possible but often not the “most cost-effective” option."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Fargate 配置 ECS 容量提供者以達到穩定狀態，並使用 Fargate Spot 來設定突發流量。",
+        "en": "B. Configure an ECS capacity provider with Fargate for steady state and Fargate Spot for burst traffic."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (50%)； D (50%)。熱門討論與考點摘要：穩定狀態使用 Fargate，突發流量使用 Fargate Spot 的容量提供者。穩態容量採用不間斷Fargate，滿足7x24和高可用性的基本要求。突發擴容採用更便利的Fargate Spot，可大幅降低短期高峰時的成本。容量提供者幫助服務在擴展時在兩種容量之間策略性地分配任務。風險和可接受性：Fargate Spot可能會被回收，但將其用於「突發容量」通常是可以接受的；穩定狀態仍由Fargate承擔，整體可用性仍可維持。同時滿足高可用和突發彈性，性價比最高。",
+        "en": "Community vote as displayed: B (50%); D (50%). Popular discussion and key point summary: Steady state uses Fargate, and burst traffic uses Fargate Spot's capacity provider. Steady state capacity uses uninterruptible Fargate, meeting the basic requirements of 7x24 and high availability. Burst expansion uses the more convenient Fargate Spot, which significantly reduces costs during short-term peaks. Capacity providers help services strategically allocate tasks between two capacities as they scale. Risk and acceptability: Fargate Spot may be recycled, but it is generally acceptable to use it for \"burst capacity\"; the steady state is still borne by Fargate, and the overall availability can still be maintained. It satisfies high availability and burst elasticity at the same time, and is the most cost-effective."
+      }
+    },
+    {
+      "question_no": 927,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 雲端中建置應用程式。該應用程式託管在應用程式負載平衡器 (ALB) 後面的 Amazon EC2 執行個體上。該公司使用 Amazon Route 53 作為 DNS。該公司需要一個能夠主動參與的託管解決方案來偵測 DDoS 攻擊。哪種解決方案可以滿足這些要求？",
+        "en": "A company is building an application in the AWS Cloud. The application is hosted on Amazon EC2 instances behind an Application Load Balancer (ALB). The company uses Amazon Route 53 for the DNS. The company needs a managed solution with proactive engagement to detect against DDoS attacks. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "啟用 AWS Config。配置偵測 DDoS 攻擊的 AWS Config 託管規則。",
+          "en": "Enable AWS Config. Configure an AWS Config managed rule that detects DDoS attacks."
+        },
+        "B": {
+          "zh": "在 AL 上啟用 AWS WAF 建立 AWS WAF Web ACL，其中包含偵測和防止 DDoS 攻擊的規則。將 Web ACL 與 ALB 關聯。",
+          "en": "Enable AWS WAF on the ALCreate an AWS WAF web ACL with rules to detect and prevent DDoS attacks. Associate the web ACL with the ALB."
+        },
+        "C": {
+          "zh": "將 ALB 存取日誌儲存在 Amazon S3 儲存桶中。配置 Amazon GuardDuty 以偵測 DDoS 攻擊並採取自動預防措施。",
+          "en": "Store the ALB access logs in an Amazon S3 bucket. Configure Amazon GuardDuty to detect and take automated preventative actions for DDoS attacks."
+        },
+        "D": {
+          "zh": "訂閱 AWS Shield Advanced。在 Route 53 中配置託管區域。將 ALB 資源新增為受保護資源。",
+          "en": "Subscribe to AWS Shield Advanced. Configure hosted zones in Route 53. Add ALB resources as protected resources."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Config主要用於資源配置的合規性檢查和審計，不具備偵測或防禦DDoS攻擊的功能。",
+          "en": "Incorrect. AWS Config is mainly used for compliance checking and auditing of resource configuration and does not have the function of detecting or defending against DDoS attacks."
+        },
+        "B": {
+          "zh": "錯誤。部分正確：AWS WAF 可以幫助防禦某些類型的攻擊（例如 SQL 注入、跨站腳本攻擊），但它並不是專門為防禦大規模 DDoS 攻擊而設計的解決方案。 AWS WAF 無法提供主動 DDoS 防護和事件回應服務。",
+          "en": "Incorrect. Partially correct: AWS WAF can help defend against certain types of attacks (such as SQL injection, cross-site scripting attacks), but it is not a solution specifically designed to defend against large-scale DDoS attacks. AWS WAF cannot provide proactive DDoS protection and incident response services."
+        },
+        "C": {
+          "zh": "錯誤。Amazon GuardDuty 主要用於偵測惡意活動和異常行為（例如惡意 IP 位址、異常流量），但不具備直接防禦 DDoS 攻擊的功能。 GuardDuty 無法提供主動 DDoS 防護和事件回應服務。",
+          "en": "Incorrect. Amazon GuardDuty is mainly used to detect malicious activities and abnormal behaviors (such as malicious IP addresses, abnormal traffic), but it does not have the function to directly defend against DDoS attacks. GuardDuty cannot provide proactive DDoS protection and incident response services."
+        },
+        "D": {
+          "zh": "正確。AWS Shield Advanced 是 AWS 提供的託管解決方案，專門用於防禦 DDoS 攻擊。它包括主動監控、事件回應支援以及對受保護資源的經濟補償。它支援與 Route 53 和 ALB 集成，以提供全面的 DDoS 防護。",
+          "en": "Correct. AWS Shield Advanced is a managed solution provided by AWS specifically designed to defend against DDoS attacks. It includes proactive monitoring, incident response support, and financial compensation for protected resources. It supports integration with Route 53 and ALB to provide comprehensive DDoS protection."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 訂閱 AWS Shield Advanced。在 Route 53 中配置託管區域。將 ALB 資源新增為受保護資源。",
+        "en": "D. Subscribe to AWS Shield Advanced. Configure hosted zones in Route 53. Add ALB resources as protected resources."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：AWS Shield Advanced 是 AWS 提供的託管解決方案，專門用於防禦 DDoS 攻擊。它包括主動監控、事件回應支援以及對受保護資源的經濟補償。它支援與 Route 53 和 ALB 集成，以提供全面的 DDoS 防護。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS Shield Advanced is a managed solution provided by AWS specifically designed to defend against DDoS attacks. It includes proactive monitoring, incident response support, and financial compensation for protected resources. It supports integration with Route 53 and ALB to provide comprehensive DDoS protection."
+      }
+    },
+    {
+      "question_no": 928,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 VPC 中託管視訊串流 Web 應用程式。該公司使用網路負載平衡器 (NLB) 來處理 TCP 流量以進行即時數據處理。存在未經授權的嘗試存取該應用程式的情況。該公司希望透過最小的架構變更來提高應用程式的安全性，以防止未經授權的嘗試存取應用程式。哪種解決方案可以滿足這些要求？",
+        "en": "A company hosts a video streaming web application in a VPC. The company uses a Network Load Balancer (NLB) to handle TCP traffic for real-time data processing. There have been unauthorized attempts to access the application. The company wants to improve application security with minimal architectural change to prevent unauthorized attempts to access the application. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "直接在 NLB 上實作一系列 AWS WAF 規則以過濾掉未經授權的流量。",
+          "en": "Implement a series of AWS WAF rules directly on the NLB to filter out unauthorized traffic."
+        },
+        "B": {
+          "zh": "使用安全群組重新建立 NLB，以僅允許受信任的 IP 位址。",
+          "en": "Recreate the NLB with a security group to allow only trusted IP addresses."
+        },
+        "C": {
+          "zh": "與配置了嚴格 IP 位址允許清單的現有 NLB 並行部署第二個 NLB。",
+          "en": "Deploy a second NLB in parallel with the existing NLB configured with a strict IP address allow list."
+        },
+        "D": {
+          "zh": "使用 AWS Shield Advanced 提供增強的 DDoS 保護並防止未經授權的存取嘗試。",
+          "en": "Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS WAF 無法直接套用於 NLB。 AWS WAF 只能與 Application Load Balancer (ALB)、Amazon CloudFront、API Gateway 或 AppSync 整合。因此這個方案不可行。",
+          "en": "Incorrect. AWS WAF cannot be applied directly to NLB. AWS WAF can only integrate with Application Load Balancer (ALB), Amazon CloudFront, API Gateway, or AppSync. Therefore this option is not feasible."
+        },
+        "B": {
+          "zh": "錯誤。NLB 不支援安全群組。安全群組只能套用於實例或​​ ALB，不能直接套用於 NLB。重新建立 NLB 也不符合「最小架構變更」要求。",
+          "en": "Incorrect. NLB does not support security groups. Security groups can only be applied to instances or ALBs, not directly to NLBs. Recreating NLB also does not meet the \"minimal architectural change\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。NLB 本身不支援 IP 位址允許清單的配置。此選項不僅增加了體系結構的複雜性，而且還無法實現所需的安全功能。並行部署第二個 NLB 也不符合「最小架構變更」要求。",
+          "en": "Incorrect. NLB itself does not support the configuration of IP address allow lists. Not only does this option increase architectural complexity, it also fails to implement the required security features. Deploying a second NLB in parallel also does not meet the \"minimal architectural change\" requirement."
+        },
+        "D": {
+          "zh": "正確。AWS Shield Advanced 是一項專門設計用於增強 DDoS 防護並協助防止未經授權的存取嘗試的服務。此選項滿足「最小的體系結構變更」的要求，因為它可以直接應用於現有的 NLB。",
+          "en": "Correct. AWS Shield Advanced is a service specifically designed to enhance DDoS protection and help prevent unauthorized access attempts. This option meets the requirement of \"minimal architectural change\" as it can be applied directly to existing NLB."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 AWS Shield Advanced 提供增強的 DDoS 保護並防止未經授權的存取嘗試。",
+        "en": "D. Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (54%)； B (41%)。熱門討論與考點摘要：AWS Shield Advanced 是一項專門設計用於增強 DDoS 防護並協助防止未經授權的存取嘗試的服務。此選項滿足「最小的體系結構變更」的要求，因為它可以直接應用於現有的 NLB。",
+        "en": "Community vote as displayed: D (54%); B (41%). Popular discussion and key point summary: AWS Shield Advanced is a service specifically designed to enhance DDoS protection and help prevent unauthorized access attempts. This option meets the requirement of \"minimal architectural change\" as it can be applied directly to existing NLB."
+      }
+    },
+    {
+      "question_no": 929,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家醫療保健公司正在開發一個 AWS Lambda 函數，該函數將通知發佈到加密的 Amazon Simple Notification Service (Amazon SNS) 主題。通知包含受保護的健康資訊 (PHI)。 SNS 主題使用 AWS Key Management Service (AWS KMS) 客戶管理的金鑰進行加密。公司必須確保應用程式具有將訊息安全地發佈到 SNS 主題所需的權限。哪一種步驟組合可以滿足這些要求？ （選擇三項。）",
+        "en": "A healthcare company is developing an AWS Lambda function that publishes notifications to an encrypted Amazon Simple Notification Service (Amazon SNS) topic. The notifications contain protected health information (PHI). The SNS topic uses AWS Key Management Service (AWS KMS) customer managed keys for encryption. The company must ensure that the application has the necessary permissions to publish messages securely to the SNS topic. Which combination of steps will meet these requirements? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "為 SNS 主題建立資源策略，以允許 Lambda 函數向該主題發布訊息。",
+          "en": "Create a resource policy for the SNS topic that allows the Lambda function to publish messages to the topic."
+        },
+        "B": {
+          "zh": "對 SNS 主題使用具有 AWS KMS 金鑰 (SSE-KMS) 的伺服器端加密，而不是客戶管理的金鑰。",
+          "en": "Use server-side encryption with AWS KMS keys (SSE-KMS) for the SNS topic instead of customer managed keys."
+        },
+        "C": {
+          "zh": "為 SNS 主題使用的具有必要 AWS KMS 權限的加密金鑰建立資源原則。",
+          "en": "Create a resource policy for the encryption key that the SNS topic uses that has the necessary AWS KMS permissions."
+        },
+        "D": {
+          "zh": "在 SNS 主題的資源策略中指定 Lambda 函數的 Amazon 資源名稱 (ARN)。",
+          "en": "Specify the Lambda function's Amazon Resource Name (ARN) in the SNS topic's resource policy."
+        },
+        "E": {
+          "zh": "將 Amazon API Gateway HTTP API 與 SNS 主題關聯，以使用 API Gateway 資源原則控制對該主題的存取。",
+          "en": "Associate an Amazon API Gateway HTTP API with the SNS topic to control access to the topic by using API Gateway resource policies."
+        },
+        "F": {
+          "zh": "設定一個 Lambda 執行角色，具有使用 AWS KMS 中的客戶託管金鑰所需的 IAM 權限。",
+          "en": "Configure a Lambda execution role that has the necessary IAM permissions to use a customer managed key in AWS KMS."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。。 SNS 主題需要資源策略以允許 Lambda 函數發布訊息。資源策略是控制對 SNS 主題的存取的關鍵部分。",
+          "en": "Correct. . SNS topics require a resource policy to allow Lambda functions to publish messages. Resource policies are a key part of controlling access to SNS topics."
+        },
+        "B": {
+          "zh": "錯誤。。該問題明確指出，SNS 主題已使用客戶管理的金鑰進行加密，因此無需將其替換為 SSE-KMS。",
+          "en": "Incorrect. . The question clearly states that the SNS topic has been encrypted using customer-managed keys, so there is no need to replace it with SSE-KMS."
+        },
+        "C": {
+          "zh": "正確。。 SNS 主題使用的加密金鑰需要資源策略來授予必要的 AWS KMS 權限，以確保 Lambda 函數可以安全地使用該金鑰。",
+          "en": "Correct. . The encryption key used by the SNS topic requires a resource policy to grant the necessary AWS KMS permissions to ensure that the Lambda function can use the key securely."
+        },
+        "D": {
+          "zh": "錯誤。。儘管可以在 SNS 資源策略中指定 Lambda 函數的 ARN，但這不是問題所需的最佳實踐。問題更集中在加密和權限管理上。",
+          "en": "Incorrect. . Although it is possible to specify the ARN of the Lambda function in the SNS resource policy, this is not the best practice required by the question. The question focuses more on encryption and permission management."
+        },
+        "E": {
+          "zh": "錯誤。。 API網關和SNS主題之間的關係不相關，且問題沒有提到需要透過API網關控制存取。",
+          "en": "Incorrect. . The relationship between API Gateway and SNS topics is not relevant, and the question does not mention the need to control access through API Gateway."
+        },
+        "F": {
+          "zh": "正確。。 Lambda 函數需要一個執行角色，該執行角色具有必要的 IAM 權限才能使用客戶管理的金鑰，以便能夠安全地發布加密訊息。",
+          "en": "Correct. . The Lambda function requires an execution role that has the necessary IAM permissions to use customer-managed keys to be able to securely publish encrypted messages."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "answer_text": {
+        "zh": "A. 為 SNS 主題建立資源策略，以允許 Lambda 函數向該主題發布訊息。；C. 為 SNS 主題使用的具有必要 AWS KMS 權限的加密金鑰建立資源原則。；F. 設定一個 Lambda 執行角色，具有使用 AWS KMS 中的客戶託管金鑰所需的 IAM 權限。",
+        "en": "A. Create a resource policy for the SNS topic that allows the Lambda function to publish messages to the topic.; C. Create a resource policy for the encryption key that the SNS topic uses that has the necessary AWS KMS permissions.; F. Configure a Lambda execution role that has the necessary IAM permissions to use a customer managed key in AWS KMS."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：ACF (70%)； ADF (30%)。熱門討論與考點摘要：。 SNS 主題需要資源策略以允許 Lambda 函數發布訊息。資源策略是控制對 SNS 主題的存取的關鍵部分。；。 SNS 主題使用的加密金鑰需要資源策略來授予必要的 AWS KMS 權限，以確保 Lambda 函數可以安全地使用該金鑰。；。 Lambda 函數需要一個執行角色，該執行角色具有必要的 IAM 權限才能使用客戶管理的金鑰，以便能夠安全地發布加密訊息。",
+        "en": "Community vote as displayed: ACF (70%); ADF (30%). Popular discussion and key point summary: . SNS topics require a resource policy to allow Lambda functions to publish messages. Resource policies are a key part of controlling access to SNS topics.; . The encryption key used by the SNS topic requires a resource policy to grant the necessary AWS KMS permissions to ensure that the Lambda function can use the key securely.; . The Lambda function requires an execution role that has the necessary IAM permissions to use customer-managed keys to be able to securely publish encrypted messages."
+      }
+    },
+    {
+      "question_no": 930,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個員工入口網站。員工登入入口網站查看薪資詳細資料。該公司正在開發一種新系統，使員工能夠上傳掃描文件以進行報銷。該公司運行一個程式從文件中提取基於文字的數據，並將提取的資訊附加到每個員工的報銷 ID 中進行處理。員工入口網站需要 100% 的正常運作時間。文檔提取程式全天根據需要偶爾運行。該公司希望建立一個可擴展且經濟高效的新系統，只需對現有入口網站進行最少的更改。該公司不想進行任何程式碼更改。哪種解決方案能夠以最少的實施工作來滿足這些要求？",
+        "en": "A company has an employee web portal. Employees log in to the portal to view payroll details. The company is developing a new system to give employees the ability to upload scanned documents for reimbursement. The company runs a program to extract text-based data from the documents and attach the extracted information to each employee’s reimbursement IDs for processing. The employee web portal requires 100% uptime. The document extract program runs infrequently throughout the day on an on- demand basis. The company wants to build a scalable and cost-effective new system that will require minimal changes to the existing web portal. The company does not want to make any code changes. Which solution will meet these requirements with the LEAST implementation effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Web 入口網站的 Auto Scaling 群組中執行 Amazon EC2 隨選執行個體。使用 AWS Lambda 函數執行文件擷取程式。當員工上傳新的報銷單據時呼叫 Lambda 函數。",
+          "en": "Run Amazon EC2 On-Demand Instances in an Auto Scaling group for the web portal. Use an AWS Lambda function to run the document extract program. Invoke the Lambda function when an employee uploads a new reimbursement document."
+        },
+        "B": {
+          "zh": "在 Web 入口網站的 Auto Scaling 群組中執行 Amazon EC2 Spot 執行個體。在 EC2 Spot 執行個體上執行文件擷取程式。當員工上傳新的報銷文件時啟動文件擷取程式實例。",
+          "en": "Run Amazon EC2 Spot Instances in an Auto Scaling group for the web portal. Run the document extract program on EC2 Spot Instances. Start document extract program instances when an employee uploads a new reimbursement document."
+        },
+        "C": {
+          "zh": "購買 Savings Plan 以執行入口網站和文件擷取程式。在 Auto Scaling 群組中執行 Web 入口網站和文件擷取程式。",
+          "en": "Purchase a Savings Plan to run the web portal and the document extract program. Run the web portal and the document extract program in an Auto Scaling group."
+        },
+        "D": {
+          "zh": "建立 Amazon S3 儲存桶來託管 Web 入口網站。使用 Amazon API Gateway 和 AWS Lambda 函數來實作現有功能。使用 Lambda 函數執行文件擷取程式。當呼叫與新文件上傳關聯的 API 時，呼叫 Lambda 函數。",
+          "en": "Create an Amazon S3 bucket to host the web portal. Use Amazon API Gateway and an AWS Lambda function for the existing functionalities. Use the Lambda function to run the document extract program. Invoke the Lambda function when the API that is associated with a new document upload is called."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。效能分析：EC2 按需執行個體可以提供高可用性和按需擴充能力，滿足入口網站 100% 正常運作時間的要求。 AWS Lambda 是無伺服器的，適合用來執行不頻繁的文件擷取器。呼叫 Lambda 函數時無需更改現有程式碼。高可用性、成本優化、最小化實施工作。沒有明顯的缺點。",
+          "en": "Correct. Performance analysis: EC2 On-Demand Instances can provide high availability and on-demand expansion capabilities to meet the 100% uptime requirement of the portal. AWS Lambda is serverless and suitable for running infrequent document extractors. No changes to existing code are required when calling Lambda functions. high availability, cost optimization, minimized implementation effort. No obvious disadvantages."
+        },
+        "B": {
+          "zh": "錯誤。效能分析：EC2 Spot 執行個體價格便宜，但不適合需要 100% 正常運行時間的門戶，因為 Spot 執行個體可能會中斷。成本更低。無法保證入口網站的高可用性，並且需要額外的邏輯來啟動文件擷取器實例。",
+          "en": "Incorrect. Performance analysis: EC2 Spot Instances are cheap, but not suitable for portals that require 100% uptime because Spot Instances can be interrupted. lower cost. High availability of the portal is not guaranteed and additional logic is required to start the document extractor instance."
+        },
+        "C": {
+          "zh": "錯誤。效能分析：Savings Plan 可以降低 EC2 成本，但在同一個 Auto Scaling 群組中執行文件擷取器和入口網站會增加複雜性，不符合按需運行的要求。成本優化。文檔提取程式無法按需運行，增加了系統複雜度。",
+          "en": "Incorrect. Performance analysis: Savings Plan can reduce EC2 costs, but running the document extractor and the portal in the same Auto Scaling group increases complexity and does not meet the requirements for running on demand. Cost optimization. The document extraction program cannot be run on demand, which increases system complexity."
+        },
+        "D": {
+          "zh": "錯誤。分析：將入口網站託管在S3上可以降低成本，但需要對現有入口網站進行程式碼變更以支援API網關，這與問題中「無需更改程式碼」的要求相矛盾。成本優化。需要對現有系統進行程式碼修改，實施工作量較大。",
+          "en": "Incorrect. Analysis: Hosting the portal on S3 can reduce costs, but it requires code changes to the existing portal to support API Gateway, which contradicts the \"no code changes required\" requirement of the question. Cost optimization. It requires code changes to the existing system, and the implementation workload is large."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 Web 入口網站的 Auto Scaling 群組中執行 Amazon EC2 隨選執行個體。使用 AWS Lambda 函數執行文件擷取程式。當員工上傳新的報銷單據時呼叫 Lambda 函數。",
+        "en": "A. Run Amazon EC2 On-Demand Instances in an Auto Scaling group for the web portal. Use an AWS Lambda function to run the document extract program. Invoke the Lambda function when an employee uploads a new reimbursement document."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (58%)； C (33%)。熱門討論與考點摘要：效能分析：EC2 按需執行個體可以提供高可用性和按需擴充能力，滿足入口網站 100% 正常運作時間的要求。 AWS Lambda 是無伺服器的，適合用來執行不頻繁的文件擷取器。呼叫 Lambda 函數時無需更改現有程式碼。高可用性、成本優化、最小化實施工作。沒有明顯的缺點。",
+        "en": "Community vote as displayed: A (58%); C (33%). Popular discussion and key point summary: Performance analysis: EC2 On-Demand Instances can provide high availability and on-demand expansion capabilities to meet the 100% uptime requirement of the portal. AWS Lambda is serverless and suitable for running infrequent document extractors. No changes to existing code are required when calling Lambda functions. high availability, cost optimization, minimized implementation effort. No obvious disadvantages."
+      }
+    }
+  ]
+}

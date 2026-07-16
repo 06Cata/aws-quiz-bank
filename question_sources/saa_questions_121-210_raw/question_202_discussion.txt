@@ -1,0 +1,208 @@
+A company is planning to move its data to an Amazon S3 bucket. The data must be encrypted when it is stored in the S3 bucket.
+Additionally, the encryption key must be automatically rotated every year.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Move the data to the S3 bucket. Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Use the
+built-in key rotation behavior of SSE-S3 encryption keys. Most Voted
+B. Create an AWS Key Management Service (AWS KMS) customer managed key. Enable automatic key rotation. Set the S3
+bucket’s default encryption behavior to use the customer managed KMS key. Move the data to the S3 bucket.
+C. Create an AWS Key Management Service (AWS KMS) customer managed key. Set the S3 bucket’s default encryption
+behavior to use the customer managed KMS key. Move the data to the S3 bucket. Manually rotate the KMS key every year.
+D. Encrypt the data with customer key material before moving the data to the S3 bucket. Create an AWS Key Management
+Service (AWS KMS) key without key material. Import the customer key material into the KMS key. Enable automatic key
+rotation.
+Comments
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: A
+KEYWORD: LEAST operational overhead
+To encrypt the data when it is stored in the S3 bucket and automatically rotate the encryption key every year with the least operational overhead, the
+company can use server-side encryption with Amazon S3-managed encryption keys (SSE-S3). SSE-S3 uses keys that are managed by Amazon S3, and
+the built-in key rotation behavior of SSE-S3 encryption keys automatically rotates the keys every year.
+To meet the requirements of the company, the solutions architect can move the data to the S3 bucket and enable server-side encryption with SSE-S3
+This solution requires no additional configuration or maintenance and has the least operational overhead.
+Hence, the correct answer is;
+Option A. Move the data to the S3 bucket. Use server-side encryption with Amazon S3-managed encryption keys (SSE-S3). Use the built-in key
+rotation behavior of SSE-S3 encryption keys.
+upvoted 45 times
+bicrasse 2 years, 6 months ago
+The good answer was B before may 2022, because the rotation schedule for AWS managed keys was 3 years (SSE-S3 is based on it)...
+From may 2022 the schedule rotation is 1 year, then A is now the best answer because there is NO operational task to do: S3 is by default encrypted
+at rest with SSE-S3 (rotation every year)... So it depends if the question has been updated since 2022
+upvoted 22 times
+LuckyAro 3 years, 4 months ago
+The order of these events is being ignored here in my opinion. The encryption checkbox needs to be checked before data is moved into the S3
+bucket or it will not be encrypted otherwise, you'll have to encrypt manually and reload into S3 bucket. If the box was checked before moving data
+into S3 then you are good to go !
+upvoted 10 times
+LuckyAro 3 years, 4 months ago
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html
+upvoted 2 times
+Correct Answer: A
+Community vote distribution
+A (50%)
+B (50%)
+Wang87 2 years, 5 months ago
+SSE DOES not rotate encryption keys, it changes master key used to lock encryption keys which creates new ciphered key and stores it.
+upvoted 4 times
+Smart 2 years, 10 months ago
+Ignoring the new changes that the default encryption is already enabled. I agree that the encryption should be configured before moving the data
+into the bucket. Otherwise, the existing objects will remain unencrypted.
+Correct Answer is B.
+Additionally, where is the reference that SSE-S3 will rotate keys every year (which is the question's requirement).
+upvoted 3 times
+pentium75 2 years, 5 months ago
+SSE-S3 rotates the keys when AWS wants it, not "every year" like required here.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+No, I stand corrected.
+All AWS managed keys are automatically rotated every year. You cannot change this rotation schedule.
+upvoted 5 times
+tohegajaf 2 years, 5 months ago
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#master_keys
+upvoted 1 times
+JA2018 1 year, 6 months ago
+For AWS managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk)
+Automatic rotation (https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html) --> Required. Every year (approximately 365
+days).
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Amazon S3 encrypts each object with a unique key. As an additional safeguard, it encrypts the key itself with a root key that it regularly rotates
+However, AWS does not publicly disclose the specific frequency of these rotations
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+I want to find a source for this yearly rotation because SSE-S3 just rotates periodically and doesn't say it follows the same policy as other
+managed key. I think you may be right but just need a doc link
+upvoted 3 times
+Maru86 2 years, 3 months ago
+https://repost.aws/questions/QUES_1VN01TU-eRSO3LXergA/s3-managed-key-sse-s3-rotation-period
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Check out the AWs link mentioned in the response:
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-mgmt
+For AWS managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk)
+Automatic rotation (https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html) --> Required. Every year (approximately 365
+days).
+upvoted 1 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Option B involves using a customer-managed AWS KMS key and enabling automatic key rotation, but this requires the company to manage the
+KMS key and monitor the key rotation process.
+Option C involves using a customer-managed AWS KMS key, but this requires the company to manually rotate the key every year, which introduces
+additional operational overhead.
+Option D involves encrypting the data with customer key material and creating a KMS key without key material, but this requires the company to
+manage the customer key material and import it into the KMS key, which introduces additional operational overhead.
+upvoted 4 times
+JayBee65 3 years, 5 months ago
+But...
+For A there is no reference to how often these keys are rotated, and to rotate to a new key, you need to upload it, which is operational overhead.
+So not only does it not necessarily meet the 'rotate keys every year' requirement, but every year it requires operational overhead.
+More importantly, the question states move the objects first, and then configure encryption, but ..."There is no change to the encryption of the
+objects that existed in the bucket before default encryption was enabled." from https://docs.aws.amazon.com/AmazonS3/latest/userguide/default
+bucket-encryption.html
+So A is clearly wrong.
+For B, whilst you have to set up KMS once, you then don't have to anything else, which i would say is LEAST operational overhead.
+upvoted 29 times
+ocbn3wby 3 years, 5 months ago
+God bless you, man! The most articulated answers, easy to understand. Good job!
+upvoted 5 times
+JayBee65 3 years, 5 months ago
+But wrong :)
+upvoted 5 times
+ocbn3wby 3 years, 4 months ago
+Reviewed it the second time. Some of them are wrong, indeed.
+upvoted 1 times
+techhb Highly Voted 3 years, 5 months ago
+Selected Answer: B
+SSE-S3 - is free and uses AWS owned CMKs (CMK = Customer Master Key). The encryption key is owned and managed by AWS, and is shared among
+many accounts. Its rotation is automatic with time that varies as shown in the table here. The time is not explicitly defined.
+SSE-KMS - has two flavors:
+AWS managed CMK. This is free CMK generated only for your account. You can only view it policies and audit usage, but not manage it. Rotation is
+automatic - once per 1095 days (3 years),
+Customer managed CMK. This uses your own key that you create and can manage. Rotation is not enabled by default. But if you enable it, it will be
+automatically rotated every 1 year. This variant can also use an imported key material by you. If you create such key with an imported material, there
+is no automated rotation. Only manual rotation.
+SSE-C - customer provided key. The encryption key is fully managed by you outside of AWS. AWS will not rotate it.
+upvoted 34 times
+ruqui 3 years ago
+AWS managed CMK rotates every 365 days (not 1095 days). Reference:
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-mgmt
+upvoted 3 times
+mahesuma Most Recent 2 weeks, 2 days ago
+Selected Answer: B
+For annual automatic key rotation, use: SSE-KMS with AWS KMS customer managed key
+upvoted 1 times
+DanRuggles 1 month, 2 weeks ago
+Selected Answer: B
+SSE-S3 Key Rotation happens regularly, but AWS's frequency is not publicly documented, and there is no guarantee it occurs exactly once a year.
+KMS can be set to annually
+upvoted 1 times
+plucio 5 months, 1 week ago
+Selected Answer: B
+SSE-S3 cannot be rotatied automatically once a year
+upvoted 1 times
+MultipleWorkerMirroredStrategy 9 months, 1 week ago
+Selected Answer: B
+AWS documentation about S3 SSE doesn't really commit to the yearly rotation, so to be it's B
+upvoted 1 times
+Clouddon 11 months, 1 week ago
+Selected Answer: B
+B. Create an AWS Key Management Service (AWS KMS) customer managed key. Enable automatic key rotation. Set the S3 bucket’s default encryption
+behavior to use the customer managed KMS key. Move the data to the S3 bucket.
+upvoted 1 times
+ln2718 11 months, 2 weeks ago
+Selected Answer: B
+AWS Key Management Service (AWS KMS) customer managed keys are better to use than Amazon S3 managed encryption keys (SSE-S3). AWS
+training states to first use KMS and not SSE-S3). The "better" correct answer is B.
+upvoted 1 times
+Charlesvg 11 months, 4 weeks ago
+Selected Answer: B
+AWS doesn't have a published frequency to rotate the keys used in SSE-S3
+https://repost.aws/questions/QUES_1VN01TU-eRSO3LXergA/s3-managed-key-sse-s3-rotation-period
+upvoted 1 times
+chest_jd 1 year, 2 months ago
+Selected Answer: B
+Why it is not B - we can not rely on implicit period of rotation for S3 kry.
+upvoted 1 times
+chest_jd 1 year, 2 months ago
+Sorry - it is not A - we can not rely on implicit period of rotation for S3 key.
+upvoted 1 times
+AwsAbhiKumar 1 year, 2 months ago
+Selected Answer: B
+Amazon S3 managed encryption keys (SSE-S3), Amazon S3 handles the key rotation automatically and regularly. Key points regarding the rotation
+schedule:
+SSE-S3 uses a unique encryption key for each object.
+These individual object keys are themselves encrypted with a root key.
+Amazon S3 regularly rotates this root key as an additional security measure.
+The exact rotation schedule for the root key is not publicly disclosed for security reasons.
+Hence Answer is B
+upvoted 1 times
+SirDNS 1 year, 2 months ago
+Selected Answer: B
+The answer should be B in this case cause we exactly know that AWS Managed (SSE-KMS) is automatically rotated annually. AWS does not disclose
+the rotation schedule of SSE-S3 keys
+upvoted 1 times
+yangbo 1 year, 3 months ago
+Selected Answer: B
+SSE-S3 is not rotate keys every year
+upvoted 2 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+It can be done with A & B, but with A, SSE-S3 there are no charges.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+AWS does not specify the exact rotation frequency for SSE-S3 root keys, AWS Managed Keys are rotated annually, and Customer Managed Keys offer
+customizable rotation options.
+upvoted 1 times
+suresh_01 1 year, 4 months ago
+Selected Answer: A
+Amazon S3 now applies server-side encryption with Amazon S3 managed keys (SSE-S3) as the base level of encryption for every
+bucket in Amazon S3. Starting January 5, 2023, all new object uploads to Amazon S3 are automatically encrypted at no additional
+cost and with no impact on performance. The automatic encryption status for S3 bucket default encryption configuration and for
+new object uploads is available in AWS CloudTrail logs, S3 Inventory, S3 Storage Lens, the Amazon S3 console, and as an
+additional Amazon S3 API response header in the AWS Command Line Interface and AWS SDKs.
+upvoted 1 times
+4729e6c 1 year, 4 months ago
+Selected Answer: B
+A is incorrect because SSE-S3 rotates keys when AWS thinks is right, not when customer wants ("every year")
+B is correct because AWS KMS customer managed keys allow automatic key rotation every year, meeting the requirement while minimizing
+operational overhead.
+upvoted 1 times

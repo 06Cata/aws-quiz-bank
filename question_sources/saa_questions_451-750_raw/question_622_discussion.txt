@@ -1,0 +1,146 @@
+A company is creating a new web application for its subscribers. The application will consist of a static single page and a persistent
+database layer. The application will have millions of users for 4 hours in the morning, but the application will have only a few
+thousand users during the rest of the day. The company's data architects have requested the ability to rapidly evolve their schema.
+Which solutions will meet these requirements and provide the MOST scalability? (Choose two.)
+A. Deploy Amazon DynamoDB as the database solution. Provision on-demand capacity. Most Voted
+B. Deploy Amazon Aurora as the database solution. Choose the serverless DB engine mode.
+C. Deploy Amazon DynamoDB as the database solution. Ensure that DynamoDB auto scaling is enabled.
+D. Deploy the static content into an Amazon S3 bucket. Provision an Amazon CloudFront distribution with the S3 bucket as the
+origin. Most Voted
+E. Deploy the web servers for static content across a fleet of Amazon EC2 instances in Auto Scaling groups. Configure the
+instances to periodically refresh the content from an Amazon Elastic File System (Amazon EFS) volume.
+Comments
+taustin2 Highly Voted 2 years, 8 months ago
+Selected Answer: AD
+Changing answer to A,D. DynamoDB on-demand is more scalable than DynamoDB auto-scaling.
+upvoted 12 times
+bogobob Highly Voted 2 years, 6 months ago
+Selected Answer: CD
+For those answering A over C, the question asks about scalability, but the text says the traffic patterns are known and don't state they will change.
+Both auto-scaling and on-demand can "scale", but auto-scaling is for known, on-demand is better for unknown traffic patterns. Its likely the
+"scalability" is more to do with the file hosting (EC2 wouldn't scale well at all vs S3)
+upvoted 8 times
+pentium75 2 years, 5 months ago
+"Most scalability" = A. Might be more expensive, but cost is irrelevant in the question.
+upvoted 4 times
+ln2718 Most Recent 10 months, 3 weeks ago
+Selected Answer: CD
+I agree with the comments for C and D. I would go with autoscaling as a tighter fit than on-demand.
+upvoted 1 times
+bora4motion 1 year ago
+Selected Answer: BD
+I'm going with BD.
+"the company's data architects have requested the ability to rapidly evolve their schema"
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: BD
+Amazon Aurora Serverless for a highly fluctuating DB workload, and S3 for static webpage
+upvoted 1 times
+Correct Answer: AD
+Community vote distribution
+AD (58%)
+CD (29%)
+6%
+RamanAgarwal 1 year, 6 months ago
+Cant change schema in Aurora
+upvoted 1 times
+marcosviniciuscb 1 year, 2 months ago
+Aurora is slower than DynamoDB, Dynamo scales to millions of requests, which is what the company asks for
+upvoted 1 times
+Ravee_L 1 year, 10 months ago
+B and D B. Deploy Amazon Aurora as the database solution. Choose the serverless DB engine mode: Aurora Serverless is an on-demand, auto-scaling
+configuration for Amazon Aurora.
+upvoted 3 times
+a7md0 1 year, 11 months ago
+Selected Answer: AD
+on-demand capacity for DynamoDB since traffic is not consistent, and S3 & CloudFront for static files
+upvoted 2 times
+KennethNg923 1 year, 11 months ago
+Selected Answer: AD
+MOST scalability - DynamoDB On-Demand > Auto Scaling + Static Content host in S3
+upvoted 2 times
+NSA_Poker 2 years ago
+Selected Answer: CD
+(A) is incorrect. "On-demand capacity mode is probably best when you have new tables with unknown workloads, unpredictable application traffic."
+We know the workload upper limit is the total amount of subscribers & we know it's busy in the morning & not so much in the afternoon. Nothing in
+the question says it bursts in the morning.
+(C) is correct. The traffic pattern is known, so prep for the morning & the exact upper boundary is the # of subscribers.
+upvoted 2 times
+jaswantn 2 years, 4 months ago
+For autoscaling we need to know the lower and upper limits. Anh the question says....application will have millions of users for 4 hours in the
+morning....how many millions , how much upper limit we need to set for to handle this much request?
+here we can't have exact estimation for the upper limit in autoscaling. Thus, better option is (A)
+upvoted 3 times
+jaswantn 2 years, 4 months ago
+With autoscaling we can face throttling initially, when there is surge of requests and the load is greater than the scaling upper limit. We can
+gradually increase the upper limit of autoscaling and would be then able to handle the load in subsequent requests preventing ourself from using
+OnDemand.
+Thus Option (C) is more scalable as it can handle the both types of load(high & low) in efficient manner.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+why not Amazon Aurora Serverless?
+upvoted 1 times
+1Alpha1 2 years, 4 months ago
+Selected Answer: AD
+AD vs CD ?
+1) Please read the final sentence. Which solutions will meet these requirements and provide the "MOST" scalability?
+2) It is not possible to predict an exact boundary based on the number of "millions of users".
+So I would choose "AD".
+upvoted 4 times
+NSA_Poker 2 years ago
+The exact boundary is known, the application's subscribers. Leaning towards AC now.
+upvoted 1 times
+06042022 2 years, 4 months ago
+Selected Answer: CD
+The traffic pattern is known here.
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: AD
+A: On-demand scaling because the demand changes drastically (millions to thousands)
+D: S3 for static page is perfect
+B: Aurora is RDMS so not much rapid schema changes (it's subjective and DBA will argue but better options on the table are DynamoDB)
+E: Too much work and overhead
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+To be fair, 4 hours is a strange time duration for burst traffic. 20 hours of low traffic may benefit from auto-scaling's as it is long enough to be called
+a "depressed" traffic mode in autoscaling config. 4 hours in the morning can also be termed as "sustained period" of burst in autoscaling.
+This question is not theoretical, someone who has scaled Dynamo in similar scenarios will be able to answer correctly.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: AD
+Question asks for "most scalability", not cost optimization. "DynamoDB auto scaling ... modifies provisioned throughput settings only when the actua
+workload stays elevated or depressed for a sustained period of several minutes. ... This means that provisioned capacity is probably best for you if
+you have relatively predictable application traffic, run applications whose traffic is consistent, and ramps up or down gradually."
+upvoted 5 times
+pentium75 2 years, 5 months ago
+"The on-demand pricing model is ideal for bursty, new, or unpredictable workloads whose traffic can spike in seconds or minutes, and when under-
+provisioned capacity would impact the user experience."
+Whereas on-demand capacity mode is probably best when you have new tables with unknown workloads, unpredictable application traffic and also
+if you only want to pay exactly for what you use. The on-demand pricing model is ideal for bursty, new, or unpredictable workloads whose traffic
+can spike in seconds or minutes, and when under-provisioned capacity would impact the user experience.
+https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/capacity.html
+upvoted 2 times
+Salilgen 1 year, 5 months ago
+This support C not A
+upvoted 1 times
+Ashhher 2 years, 5 months ago
+Selected Answer: BD
+I understand the argument between A and C, but why not B?
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"Ability to rapidly evolve their schema" -> NoSQL database, schema changes in transactional databases like RDS are difficult
+upvoted 5 times
+Derek_G 2 years, 5 months ago
+Selected Answer: AD
+Provisioned on-demand capacity:
+Manual: Requires manual setup and management of capacity.
+Cost-Effectiveness: Requires manual estimation of workload, which can result in either excess or insufficient capacity.
+Use Case: Suitable for relatively stable workloads with predictable capacity needs.
+predictable capacity needs.：4 hours in the morning,a few thousand users during the rest of the day.
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: AD
+rapidly evolve their schema, MOST scalability for data layer = DynamoDB with on-demand capacity. on-demand capacity mode automatically
+enables autoscaling.
+MOST scalability for single page app = Amazon CloudFront distribution with the S3 bucket as the origin.
+upvoted 4 times

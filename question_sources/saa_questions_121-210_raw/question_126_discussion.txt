@@ -1,0 +1,148 @@
+A solutions architect needs to implement a solution to reduce a company's storage costs. All the company's data is in the Amazon
+S3 Standard storage class. The company must keep all data for at least 25 years. Data from the most recent 2 years must be highly
+available and immediately retrievable.
+Which solution will meet these requirements?
+A. Set up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive immediately.
+B. Set up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive after 2 years. Most Voted
+C. Use S3 Intelligent-Tiering. Activate the archiving option to ensure that data is archived in S3 Glacier Deep Archive.
+D. Set up an S3 Lifecycle policy to transition objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) immediately and to
+S3 Glacier Deep Archive after 2 years.
+Comments
+rjam Highly Voted 3 years, 6 months ago
+Selected Answer: B
+Why Not C? Because Intelligent Tier the objects are automatically moved to different tiers.
+The question says "the data from most recent 2 yrs should be highly available and immediately retrievable", which means in intelligent tier , if you
+activate archiving option(as Option C specifies) , the objects will be moved to Archive tiers(instant to access to deep archive access tiers) in 90 to 730
+days. Remember these archive tiers performance will be similar to S3 glacier flexible and s3 deep archive which means files cannot be retrieved
+immediately within 2 yrs .
+We have a hard requirement in question which says it should be retreivable immediately for the 2 yrs. which cannot be acheived in Intelligent tier. So
+B is the correct option imho.
+Because of the above reason Its possible only in S3 standard and then configure lifecycle configuration to move to S3 Glacier Deep Archive after 2
+yrs.
+upvoted 18 times
+Abdou1604 2 years, 9 months ago
+but your S3 intelligent-tiering will move the object to S3 infrequent access tier which a is a single AZ tier , and then the HA requirement will not be
+respected
+upvoted 2 times
+sandordini 2 years, 1 month ago
+S3 Standard IA is NOT single AZ. (One-Zone IA is single Az.)
+upvoted 2 times
+sandordini 2 years, 1 month ago
+The issue is with the missing "flag" for 2 years, and not S3 Intelligent Tiering. It needs to be B.
+upvoted 2 times
+MutiverseAgent 2 years, 11 months ago
+Mmm.. You can enable Intelligent-Tiering and take advantage of of the infrequent Access tier and thus reducing costs. To avoid moving objects to
+the deep archive tier before the two years it would be enough to enable ONLY the check "Deep Archive Access tier" and set days to 720 (two years,
+which is curiously the maximum value), and keep disabled the check "Archive Access tier" to avoid the Intelligent-Tiering move objects to the non-
+instant retrieval tier. That will work, offcourse this specific configuration is not mention in the question which leaves some doubts about which
+option is the correct.
+upvoted 2 times
+MutiverseAgent 2 years, 11 months ago
+Just to clarify, my previous comment is about how answer B) might be correct and the MOST cheapest option under the correct configuration.
+Correct Answer: B
+Community vote distribution
+B (83%)
+Other
+upvoted 2 times
+MutiverseAgent 2 years, 11 months ago
+Sorry, I meant answer C) might be correct
+upvoted 1 times
+TelaO Highly Voted 3 years, 6 months ago
+Selected Answer: B
+B is the only right answer. C does not indicate archiving after 2 years. If it did specify 2 years, then C would also be an option.
+upvoted 9 times
+satyaammm Most Recent 1 year, 5 months ago
+Selected Answer: B
+S3 Lifecycle policies works best here as we no longer need frequently access to data that has been over 2 years and hence moving it to S3 Glacier
+Deep Archive help reduce costs.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: B
+Ans B - I did initially think Ans C, but rjam (1 yr, 10 mth ago) quickly quashed that notion:
+"Why Not C? Because Intelligent Tier the objects are automatically moved to different tiers. The question says "the data from most recent 2 yrs
+should be highly available and immediately retrievable", which means in intelligent tier , if you activate archiving option(as Option C specifies) , the
+objects will be moved to Archive tiers(instant to access to deep archive access tiers) in 90 to 730 days. Remember these archive tiers performance wil
+be similar to S3 glacier flexible and s3 deep archive which means files cannot be retrieved immediately within 2 yrs."
+upvoted 1 times
+bignatov 1 year, 9 months ago
+Selected Answer: B
+B is correct, because it fits to the requirements and it still cheaper than the option C.
+upvoted 1 times
+JaegEr_2k1 1 year, 10 months ago
+Stupid question:
+A: No immediately retrievable and cost
+B: No immediately retrievable
+C: Not unpredicted access
+D: Immediately retrievable but not HA
+F*ck the guy who made this question
+upvoted 4 times
+jaradat02 1 year, 10 months ago
+Selected Answer: B
+B is the correct choice, the requirements are very clear, intelligent tiering is used only when we don't have a clear pattern for the access of the data,
+when it's unpredictable.
+upvoted 2 times
+LoXoL 2 years, 5 months ago
+Selected Answer: B
+A. We can't move to Glacier immediately as data from last 2 yrs need to be immediately retrievable
+B. It's the perfect fit: getting HA and instant access (with current solution = S3 std), then moving to Deep Archive after 2 yrs (very cheap)
+C: Highly expensive because of Intelligent Tiering
+D: it lacks HA with One Zone
+upvoted 2 times
+SaurabhTiwari1 2 years, 5 months ago
+Selected Answer: B
+Data remain in S3 standard storage for 2 years then it will be move to s3 glacier deep archive after 2 year.
+upvoted 3 times
+Ruffyit 2 years, 7 months ago
+but your S3 intelligent-tiering will move the object to S3 infrequent access tier which a is a single AZ tier , and then the HA requirement will not be
+respected
+upvoted 1 times
+David_Ang 2 years, 7 months ago
+Selected Answer: B
+i understand why "B" is more correct than "C" and is because "C" is bad formulated, if in the answer would say "life cycle after 2 years of using
+intelligent tiring" then it would be the correct answer. so "B" is correct
+upvoted 2 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: B
+I would not opt for C simply because S3IT was specifically designed for scenarios where the access patterns are unknown.
+This scenario has clearly known access patterns making option B the best.
+upvoted 3 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+Option A is incorrect because immediately transitioning objects to S3 Glacier Deep Archive would not fulfill the requirement of keeping the most
+recent 2 years of data highly available and immediately retrievable.
+Option C is also incorrect because using S3 Intelligent-Tiering with archiving option would not meet the requirement of immediately retrievable data
+for the most recent 2 years.
+Option D is not the best choice because transitioning objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) and then to S3 Glacier Deep
+Archive would not satisfy the requirement of immediately retrievable data for the most recent 2 years.
+Option B is the correct solution. By setting up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive after 2 years, the company can
+keep all data for at least 25 years while ensuring that data from the most recent 2 years remains highly available and immediately retrievable in the
+Amazon S3 Standard storage class. This solution optimizes storage costs by leveraging the Glacier Deep Archive for long-term storage.
+upvoted 3 times
+kambarami 2 years, 9 months ago
+this makes sense the question is a bit tricky. I now uderstand that all the data is already kept in S3 Standard meaning immediate retrieval of the
+most recent data is remains highly available.
+upvoted 2 times
+Yadav_Sanjay 2 years, 11 months ago
+Why not D
+upvoted 2 times
+RNess 2 years, 7 months ago
+"Data from the most recent 2 years must be highly available and immediately retrievable."
+upvoted 1 times
+RNess 2 years, 7 months ago
+Additionally,
+S3 Standard Availability = 99.99%
+S3 One Zone-IA Availability = 99.5%
+upvoted 2 times
+Robrobtutu 3 years, 1 month ago
+Selected Answer: B
+B is the only one possible.
+upvoted 1 times
+rushlav 3 years, 1 month ago
+C would not work as the names of these S3 archives are called Archive Access Tier and Deep Archive access tiers, so since they mention glacier in
+option C , I think its B which is the correct.
+upvoted 2 times
+CaoMengde09 3 years, 4 months ago
+It's pretty straight forward.
+S3 Standard answers for High Availaibility/Immediate retrieval for 2 years. S3 Intelligent Tiering would just incur additional cost of analysis while the
+company insures that it requires immediate retrieval in any moment and without risk to Availability. So a capital B
+upvoted 2 times

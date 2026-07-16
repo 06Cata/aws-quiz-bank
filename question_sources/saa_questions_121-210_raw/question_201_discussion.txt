@@ -1,0 +1,135 @@
+A company is developing a marketing communications service that targets mobile app users. The company needs to send
+confirmation messages with Short Message Service (SMS) to its users. The users must be able to reply to the SMS messages. The
+company must store the responses for a year for analysis.
+What should a solutions architect do to meet these requirements?
+A. Create an Amazon Connect contact flow to send the SMS messages. Use AWS Lambda to process the responses.
+B. Build an Amazon Pinpoint journey. Configure Amazon Pinpoint to send events to an Amazon Kinesis data stream for
+analysis and archiving. Most Voted
+C. Use Amazon Simple Queue Service (Amazon SQS) to distribute the SMS messages. Use AWS Lambda to process the
+responses.
+D. Create an Amazon Simple Notification Service (Amazon SNS) FIFO topic. Subscribe an Amazon Kinesis data stream to the
+SNS topic for analysis and archiving.
+Comments
+TariqKipkemei Highly Voted 2 years, 2 months ago
+Selected Answer: B
+Marketing communications = Amazon Pinpoint
+upvoted 17 times
+cookieMr Highly Voted 2 years, 5 months ago
+Selected Answer: B
+By using Pinpoint, the company can effectively send SMS messages to its mobile app users. Additionally, Pinpoint allows the configuration of
+journeys, which enable the tracking and management of user interactions. The events generated during the journey, including user responses to
+SMS, can be captured and sent to an Kinesis data stream. This data stream can then be used for analysis and archiving purposes.
+A. Creating an Amazon Connect contact flow is primarily focused on customer support and engagement, and it lacks the capability to store and
+process SMS responses for analysis.
+C. Using SQS is a message queuing service and is not specifically designed for handling SMS responses or capturing them for analysis.
+D. Creating an SNS FIFO topic and subscribing a Kinesis data stream is not the most appropriate solution for capturing and storing SMS responses, a
+SNS is primarily used for message publishing and distribution.
+In summary, option B is the best choice as it leverages Pinpoint to send SMS messages and captures user responses for analysis and archiving using
+an Kinesis data stream.
+upvoted 11 times
+pabloss Most Recent 2 weeks, 4 days ago
+Selected Answer: B
+It's B, but Pinpoint will be deprecated soon
+upvoted 1 times
+scar0909 1 year, 9 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/connect/latest/adminguide/setup-sms-messaging.html
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Correct Answer: B
+Community vote distribution
+B (90%)
+7%
+Amazon Connect is primarily a contact center service, not designed for sending bulk SMS messages or handling two-way SMS communication for
+marketing purposes. It is overkill for this use case.
+upvoted 1 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/pinpoint/latest/userguide/welcome.html
+Amazon Pinpoint is the easiest solution.
+Amazon Connect is Contact Centre as a Service so this option is not relevant to the requirement.
+SQS and SNS options are overengineered or under engineered for the requirements so natural choice is "B"
+upvoted 2 times
+whoob 2 years, 2 months ago
+base function of AWS Pinpoint
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: B
+B. AWS Pinpoint is for Marketing communications.
+upvoted 4 times
+Bmarodi 2 years, 6 months ago
+Selected Answer: B
+Option B is correct answer: link: https://aws.amazon.com/pinpoint/, and video under the link.
+upvoted 3 times
+studynoplay 2 years, 6 months ago
+Selected Answer: B
+Two-Way Messaging
+Receive SMS messages from your customers and reply back to them in a chat-like interactive experience. With Amazon Pinpoint, you can create
+automatic responses when customers send you messages that contain certain keywords.
+upvoted 2 times
+CLOUDUMASTER 2 years, 7 months ago
+Based on my research Kinesis stream is real time data ingestion, and also stores only event data and not the actual people responses, furthermore
+there is no requirement to have real time data streaming. That is probably why I am hesitating agree here with everyone on B and rather choose A.
+upvoted 1 times
+pentium75 1 year, 11 months ago
+"A Kinesis data stream stores records for 24 hours by default, up to 365 days (8,760 hours)."
+https://aws.amazon.com/de/blogs/big-data/retaining-data-streams-up-to-one-year-with-amazon-kinesis-data-
+streams/#:~:text=A%20Kinesis%20data%20stream%20stores,parallel%20and%20at%20low%2Dlatency.
+upvoted 2 times
+jayce5 2 years, 7 months ago
+Selected Answer: B
+The answer is B. AWS Pinpoint is for Marketing communications.
+AWS Connect is for Contact center.
+upvoted 3 times
+jaswantn 2 years, 7 months ago
+Selected Answer: A
+According to the following link I would choose Option A.
+https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html
+upvoted 1 times
+smartegnine 2 years, 6 months ago
+no no, there is no SMS, note the question stated all activities through SMS, also Amazon connect flow most likely working on web application UI,
+but if you see question clearly, this is receiving and sending SMS not through application UI (Web/Mobile App). So for those reason we choose B
+upvoted 3 times
+ProfXsamson 2 years, 10 months ago
+Selected Answer: B
+Amazon Pinpoint is a flexible, scalable and fully managed push notification and SMS service for mobile apps.
+upvoted 4 times
+Foucault 2 years, 10 months ago
+It's B, see following link https://docs.aws.amazon.com/pinpoint/latest/developerguide/event-streams.html
+upvoted 3 times
+LuckyAro 2 years, 10 months ago
+Selected Answer: B
+https://aws.amazon.com/pinpoint/product-details/sms/
+Two-Way Messaging:
+Receive SMS messages from your customers and reply back to them in a chat-like interactive experience. With Amazon Pinpoint, you can create
+automatic responses when customers send you messages that contain certain keywords. You can even use Amazon Lex to create conversational bots
+A majority of mobile phone users read incoming SMS messages almost immediately after receiving them. If you need to be able to provide your
+customers with urgent or important information, SMS messaging may be the right solution for you.
+You can use Amazon Pinpoint to create targeted groups of customers, and then send them campaign-based messages. You can also use Amazon
+Pinpoint to send direct messages, such as appointment confirmations, order updates, and one-time passwords.
+upvoted 3 times
+DavidNamy 2 years, 11 months ago
+Selected Answer: D
+D:
+Amazon Simple Notification Service (SNS) is a fully managed messaging service that enables you to send and receive SMS messages in a cost-
+effective and highly scalable way. By creating an SNS FIFO topic, you can ensure that the SMS messages are delivered to your users in the order they
+were sent and that the SMS responses are processed and stored in the same order. You can also configure your SNS FIFO topic to publish SMS
+responses to an Amazon Kinesis data stream, which will allow you to store and analyze the responses for a year.
+Amazon Pinpoint ?¿?¿? NO!
+is not correct solution because while Amazon Pinpoint allows you to send SMS and Email campaigns, as well as handle push notifications to a user
+base, it doesn't provide SMS sending feature by itself. Furthermore, it's a service mainly focused on sending and tracking marketing campaigns, not
+for managing two-way SMS communication and the reception of reply.
+upvoted 3 times
+Omok 2 years, 10 months ago
+What do think about https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-two-way.html?
+upvoted 2 times
+Buruguduystunstugudunstuy 2 years, 11 months ago
+Selected Answer: B
+To send SMS messages and store the responses for a year for analysis, the company can use Amazon Pinpoint. Amazon Pinpoint is a fully-managed
+service that allows you to send targeted and personalized SMS messages to your users and track the results.
+To meet the requirements of the company, a solutions architect can build an Amazon Pinpoint journey and configure Amazon Pinpoint to send
+events to an Amazon Kinesis data stream for analysis and archiving. The Kinesis data stream can be configured to store the data for a year, allowing
+the company to analyze the responses over time.
+So, Option B is the correct answer.
+Option B. Build an Amazon Pinpoint journey. Configure Amazon Pinpoint to send events to an Amazon Kinesis data stream for analysis and archiving
+upvoted 5 times

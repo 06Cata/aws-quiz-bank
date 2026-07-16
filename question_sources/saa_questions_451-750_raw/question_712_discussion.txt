@@ -1,0 +1,84 @@
+A company is designing a web application on AWS. The application will use a VPN connection between the company’s existing
+data centers and the company's VPCs.
+The company uses Amazon Route 53 as its DNS service. The application must use private DNS records to communicate with the
+on-premises services from a VPC.
+Which solution will meet these requirements in the MOST secure manner?
+A. Create a Route 53 Resolver outbound endpoint. Create a resolver rule. Associate the resolver rule with the VPC. Most Voted
+B. Create a Route 53 Resolver inbound endpoint. Create a resolver rule. Associate the resolver rule with the VPC.
+C. Create a Route 53 private hosted zone. Associate the private hosted zone with the VPC.
+D. Create a Route 53 public hosted zone. Create a record for each service to allow service communication
+Comments
+haci Highly Voted 2 years, 3 months ago
+Selected Answer: A
+If you have workloads that leverage both VPCs and on-premises resources, you also need to resolve DNS records hosted on-premises. Similarly,
+these on-premises resources may need to resolve names hosted on AWS. Through Resolver endpoints and conditional forwarding rules, you can
+resolve DNS queries between your on-premises resources and VPCs to create a hybrid cloud setup over VPN or Direct Connect (DX). Specifically:
+Inbound Resolver endpoints allow DNS queries to your VPC from your on-premises network or another VPC.
+Outbound Resolver endpoints allow DNS queries from your VPC to your on-premises network or another VPC.
+Reference: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html
+upvoted 18 times
+MatAlves 1 year, 8 months ago
+Right to the point!
+upvoted 2 times
+JCVDB23 Highly Voted 2 years, 2 months ago
+Selected Answer: A
+Amazon Route 53 Resolver provides DNS resolution for VPCs and on-premises networks over a Direct Connect or VPN connection. An outbound
+resolver endpoint forwards DNS queries from your VPC to your on-premises DNS service. A resolver rule specifies the domain names for the DNS
+queries that you want to forward (such as example.com), and the IP addresses of the DNS resolvers in your on-premises network.
+Option C is not suitable because private hosted zones are used to route traffic within a VPC
+https://aws.amazon.com/blogs/architecture/using-route-53-private-hosted-zones-for-cross-account-multi-region-architectures/
+upvoted 6 times
+Joshua721 Most Recent 1 year, 4 months ago
+Selected Answer: A
+Inbound Resolver endpoints allow DNS queries to your VPC from your on-premises network or another VPC.
+Outbound Resolver endpoints allow DNS queries from your VPC to your on-premises network or another VPC.
+Resolver rules enable you to create one forwarding rule for each domain name and specify the name of the domain for which you want to forward
+DNS queries from your VPC to an on-premises DNS resolver and from your on-premises to your VPC. Rules are applied directly to your VPC and can
+be shared across multiple accounts.
+Correct Answer: A
+Community vote distribution
+A (88%)
+12%
+upvoted 2 times
+Duddle88 1 year, 5 months ago
+Selected Answer: C
+"The company uses Amazon Route 53 as its DNS service" THERE IS NO DNS ON-PREMISES
+Private DNS Resolution: It allows you to create DNS records that are only accessible within your VPC, ensuring secure and private communication
+between your AWS resources and on-premises network.
+Forwarding DNS Queries: This is useful if you need to forward DNS queries from your VPC to your on-premises DNS servers. It’s typically used when
+you have existing DNS infrastructure on-premises that you want to continue using.
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+Selected Answer: A
+AWS <-> On-premises = Route 53 Resolver
+- Outbound Resolver = From your VPC (AWS) to On-premises or another VPC
+- Inbound Resolver = From on-premises network or another VPC TO your VPC.
+upvoted 3 times
+Jacky_S 1 year, 11 months ago
+Selected Answer: C
+The reason why i vote on C, because the question mentioned that "The company uses Amazon Route53 as it's DNS service" and did not mention that
+is using multiple accounts, so it should be the most secure way to just add the record in it's private host zone of it's own account due to dns
+poisoning concern.
+Of cause, i totally agree on A if the dns zone owner is in on-premises dns server which reduce the operation efforts.
+upvoted 3 times
+cjace 1 year, 12 months ago
+C. Create a Route 53 private hosted zone. Associate the private hosted zone with the VPC.
+This setup allows the application within the VPC to resolve DNS queries using private DNS records, ensuring that the communication remains within
+the AWS network and is not exposed to the public internet. Associating the private hosted zone with the VPC ensures that only the resources within
+the VPC can resolve the DNS queries, maintaining a secure environment for application and on-premises service communication.
+The outbound resolver endpoint and rule would be more relevant if the requirement was for resources within the VPC to resolve DNS queries for
+domain names that are located in the on-premises network. In that case, the outbound resolver would forward queries from the VPC to the on-
+premises DNS server for resolution. However, for private DNS communication from the VPC to on-premises services, the private hosted zone is the
+most secure method.
+upvoted 3 times
+alawada 2 years, 2 months ago
+Selected Answer: A
+Amazon Route 53 Resolver provides DNS resolution for VPCs and on-premises networks
+upvoted 2 times
+anikolov 2 years, 4 months ago
+Selected Answer: A
+Should be A "Create a Route 53 Resolver outbound endpoint."
+upvoted 5 times
+Andy_09 2 years, 4 months ago
+Looks correct
+upvoted 2 times

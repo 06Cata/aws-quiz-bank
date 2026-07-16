@@ -1,0 +1,49 @@
+A company has an application with a REST-based interface that allows data to be received in near-real time from a third-party
+vendor. Once received, the application processes and stores the data for further analysis. The application is running on Amazon
+EC2 instances.
+The third-party vendor has received many 503 Service Unavailable Errors when sending data to the application. When the data
+volume spikes, the compute capacity reaches its maximum limit and the application is unable to process all requests.
+Which design should a solutions architect recommend to provide a more scalable solution?
+A. Use Amazon Kinesis Data Streams to ingest the data. Process the data using AWS Lambda functions. Most Voted
+B. Use Amazon API Gateway on top of the existing application. Create a usage plan with a quota limit for the third-party
+vendor.
+C. Use Amazon Simple Notification Service (Amazon SNS) to ingest the data. Put the EC2 instances in an Auto Scaling group
+behind an Application Load Balancer.
+D. Repackage the application as a container. Deploy the application using Amazon Elastic Container Service (Amazon ECS)
+using the EC2 launch type with an Auto Scaling group.
+Comments
+Guru4Cloud Highly Voted 2 years, 2 months ago
+Selected Answer: A
+The key reasons are:
+Kinesis Data Streams provides an auto-scaling stream that can handle large amounts of streaming data ingestion and throughput. This removes the
+bottlenecks around receiving the data.
+AWS Lambda can process and store the data in a scalable serverless manner, avoiding EC2 capacity limits.
+API Gateway adds API management capabilities but does not improve the underlying scalability of the EC2 application.
+SNS is for event publishing/notifications, not large scale data ingestion. ECS still relies on EC2 capacity.
+upvoted 7 times
+taustin2 Highly Voted 2 years, 2 months ago
+Selected Answer: A
+For near-real time data ingest and processing, Kinesis and Lambda are most scalable choice.
+upvoted 5 times
+zdi561 Most Recent 1 year, 4 months ago
+Selected Answer: B
+A change the whole architect, B adding a API gateway to make the app more scalable not perfect as in A it may not be possible within budget,
+deadline, Yes, AWS API Gateway significantly contributes to making an application more scalable by handling a large volume of concurrent API
+requests, automatically managing traffic distribution, it can cache response and allow asyn call
+upvoted 1 times
+ferdzcruz 1 year, 10 months ago
+A.
+Kinesis Data Streams = near realtime and scalable
+AWS Lambda functions = scalable
+upvoted 3 times
+TariqKipkemei 2 years ago
+Correct Answer: A
+Community vote distribution
+A (94%)
+6%
+Selected Answer: A
+more scalable solution? = serverless = Amazon Kinesis Data Streams and AWS Lambda functions
+upvoted 3 times
+wsdasdasdqwdaw 2 years, 1 month ago
+Only A is pure serverless which means scale. A for sure.
+upvoted 2 times

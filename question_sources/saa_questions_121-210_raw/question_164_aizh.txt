@@ -1,0 +1,55 @@
+A company has two applications: a sender application that sends messages with payloads to be processed and a processing
+application intended to receive the messages with payloads. The company wants to implement an AWS service to handle
+messages between the two applications. The sender application can send about 1,000 messages each hour. The messages may
+take up to 2 days to be processed: If the messages fail to process, they must be retained so that they do not impact the
+processing of any remaining messages.
+Which solution meets these requirements and is the MOST operationally efficient?
+一家公司有两个应用程序：一个发送应用程序，用于发送带有有效负载的消息以供处理；另一个处理应用程序，用于接收带有有效
+负载的消息。该公司希望实现一个AWS服务来处理两个应用程序之间的消息。发送应用程序每小时可以发送大约1,000条消息。这些
+消息可能需要长达2天的时间来处理：如果消息处理失败，它们必须被保留，以确保不会影响任何剩余消息的处理。
+哪个解决方案满足这些要求并且是最具操作效率的？
+A. Set up an Amazon EC2 instance running a Redis database. Configure both applications to use the instance. Store, process,
+and delete the messages, respectively.
+设置一个运行Redis数据库的Amazon EC2实例。配置两个应用程序使用该实例。分别存储、处理和删除消息。
+B. Use an Amazon Kinesis data stream to receive the messages from the sender application. Integrate the processing
+application with the Kinesis Client Library (KCL).
+使用Amazon Kinesis数据流接收来自发送应用程序的消息。将处理应用程序与Kinesis Client Library (KCL)集成。
+C. Integrate the sender and processor applications with an Amazon Simple Queue Service (Amazon SQS) queue. Configure a
+dead-letter queue to collect the messages that failed to process. Most Voted
+将发送和处理应用程序与Amazon Simple Queue Service (Amazon SQS)队列集成。配置一个死信队列以收集处理失败的消息。
+D. Subscribe the processing application to an Amazon Simple Notification Service (Amazon SNS) topic to receive notifications
+to process. Integrate the sender application to write to the SNS topic.
+将处理应用程序订阅到一个Amazon Simple Notification Service (Amazon SNS)主题，以接收通知进行处理。将发送应用程序集
+成到写入SNS主题。
+Correct Answer: C
+正确答案：C
+题目分析与解答
+1. 考察的知识点
+Amazon Simple Queue Service (SQS) 的使用场景和功能，包括消息队列的持久性和死信队列。
+Amazon SNS 的发布/订阅模式与消息通知机制。
+Amazon Kinesis 数据流的实时数据处理能力。
+Amazon EC2 和 Redis 的自托管解决方案的复杂性与适用场景。
+2. 选项分析
+A. Set up an Amazon EC2 instance running a Redis database.
+错误原因：虽然 Redis 可以用作消息队列，但需要手动管理消息的持久性、失败处理和重试逻辑。这种解决方案需要额外的运维工
+作，复杂度高，不符合“最具操作效率”的要求。
+B. Use an Amazon Kinesis data stream.
+错误原因：Amazon Kinesis 主要用于实时数据流处理，而题目中消息的处理可能会延迟长达 2 天。Kinesis 不适合长时间存储消
+息，且没有内置的失败消息处理机制（如死信队列）。
+C. Integrate the sender and processor applications with an Amazon Simple Queue Service (Amazon SQS) queue.
+正确原因：Amazon SQS 是专门设计用于消息队列的服务，支持消息的持久性（最长 14 天）和死信队列（DLQ）功能，可以收集
+处理失败的消息。它完全托管，操作效率高，符合题目要求。
+D. Subscribe the processing application to an Amazon Simple Notification Service (Amazon SNS) topic.
+错误原因：Amazon SNS 是发布/订阅模式，适合实时通知，但不支持消息的持久性和失败处理机制（如死信队列）。因此不符合题
+目要求。
+3. 我的答案
+C. Integrate the sender and processor applications with an Amazon Simple Queue Service (Amazon SQS) queue.
+4. 官方答案
+C. Integrate the sender and processor applications with an Amazon Simple Queue Service (Amazon SQS) queue.
+5. 与官方答案比较
+我的答案与官方答案一致。
+理由：Amazon SQS 是最适合题目场景的解决方案，提供消息持久性、失败处理（DLQ）功能，并且操作效率高。
+Community vote distribution
+社区投票分布
+C (90%)
+10%

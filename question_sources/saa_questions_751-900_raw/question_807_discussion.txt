@@ -1,0 +1,126 @@
+A company uses high concurrency AWS Lambda functions to process a constantly increasing number of messages in a message
+queue during marketing events. The Lambda functions use CPU intensive code to process the messages. The company wants to
+reduce the compute costs and to maintain service latency for its customers.
+Which solution will meet these requirements?
+A. Configure reserved concurrency for the Lambda functions. Decrease the memory allocated to the Lambda functions.
+B. Configure reserved concurrency for the Lambda functions. Increase the memory according to AWS Compute Optimizer
+recommendations.
+C. Configure provisioned concurrency for the Lambda functions. Decrease the memory allocated to the Lambda functions.
+D. Configure provisioned concurrency for the Lambda functions. Increase the memory according to AWS Compute Optimizer
+recommendations. Most Voted
+Comments
+JonJon03 Highly Voted 1 year, 11 months ago
+Selected Answer: B
+eserved concurrency — It guarantees the maximum number of concurrent instances for the function which can be invoked. When a function has
+being with a reserved concurrency configuration then no other lambda function within the same AWS account and region can use that concurrency.
+There is no charge for configuring reserved concurrency for a function.
+Provisioned concurrency — This concurrency initializes a requested number of execution environments so that they are prepared to respond
+immediately to your function’s invocations. Note that configuring provisioned concurrency incurs charges to your AWS account.
+upvoted 11 times
+SnaxAttax Most Recent 6 months, 2 weeks ago
+Selected Answer: D
+Provisioned concurrency addresses latency concerns and compute optimizer addresses cost. D is best answer here.
+upvoted 1 times
+ln2718 10 months, 1 week ago
+Selected Answer: B
+Not a very well written question, but I will go with answer B with this as the deciding factor - The company wants to reduce the compute costs
+upvoted 1 times
+tch 1 year, 3 months ago
+Selected Answer: B
+• Reserved concurrency – This represents the maximum number of concurrent instances allocated to your function. When a function has reserved
+concurrency, no other function can use that concurrency. Reserved concurrency is useful for ensuring that your most critical functions always have
+enough concurrency to handle incoming requests. Configuring reserved concurrency for a function incurs no additional charges.
+upvoted 1 times
+Gorkha 1 year, 4 months ago
+Selected Answer: D
+for reserved we don't know the incoming traffic as traffic is increasing so we choose provisioned and as it realted to cpu so compute optimizer.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (51%)
+B (44%)
+5%
+I vote D instead of B because of constantly increasing number of messages and to maintain service latency for its customer although provisioned
+concurrency incurs the charges to your AWS account. If the reduce of comput costs is more important than service latency , B is correct.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: D
+IMO answer is D.
+The number of messages in message queue is constantly increasing: then, to maintain service latency you need to configure provisioned
+concurrency.
+For cpu-intensive job you can optimize the duration increasing memory
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: B
+Let's think - Should we increase or decrease memory? Know that CPU resources scale proportionally with memory allocation in AWS Lambda, so
+increasing memory will help reduce the execution time for CPU-intensive tasks. Shorter execution times lower the overall compute cost. Then, A & C
+are out.
+About option D, it ensures performance and prevents cold starts, yes, but it also incurs additional costs to keep Lambda execution environments pre-
+warmed, even when not in use. Reserved concurrency is more cost-effective for sustained workloads.
+upvoted 3 times
+dragossky 1 year, 5 months ago
+Selected Answer: D
+Reserved concurrency – This represents the maximum number of concurrent instances allocated to your function. When a function has reserved
+concurrency, no other function can use that concurrency. Reserved concurrency is useful for ensuring that your most critical functions always have
+enough concurrency to handle incoming requests. Configuring reserved concurrency for a function incurs no additional charges.
+Provisioned concurrency – This is the number of pre-initialized execution environments allocated to your function. These execution environments are
+ready to respond immediately to incoming function requests. Provisioned concurrency is useful for reducing cold start latencies for functions.
+Configuring provisioned concurrency incurs additional charges to your AWS account.
+upvoted 2 times
+tch 1 year, 3 months ago
+then should use reserved concurrency... as no additional charges....
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: D
+Provisioned concurrency:
+For scenarios with predictable high traffic like marketing events, using provisioned concurrency ensures Lambda functions are always ready to
+process requests, maintaining low latency.
+Increase memory based on Compute Optimizer recommendations:
+Since the Lambda functions are CPU intensive, increasing allocated memory based on AWS Compute Optimizer suggestions can often improve
+performance and reduce costs by allowing the functions to process more data without hitting CPU throttling.
+upvoted 1 times
+AMEJack 1 year, 6 months ago
+Selected Answer: B
+Provioned concurrency will increase cost and we need to maintain latency not to decrease latency. Also, provisioned concurrency cost is very related
+to memory, so if you use provisioned and increase memory this will affect the cost dramatically.
+upvoted 2 times
+bujuman 2 years ago
+Selected Answer: D
+Also Lambda provisioned concurrency incure additionnal Account charges (https://docs.aws.amazon.com/lambda/latest/dg/provisioned-
+concurrency.html), it's the best option because it is stated:
+- The company wants to reduce the compute costs and to maintain service latency for its customers.
+So maintaining service latency while reducing compute cost is requested.
+That being said, Lambda optimization is not a trivial task, that's why one should rely on AWS Compute Optimizer recommendations to analyze usage
+and find the best fit.
+Please read following for more insights:
+https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-cost-and-performance-using-aws-compute-optimizer/
+upvoted 3 times
+JackyCCK 2 years, 2 months ago
+Increase the memory according to AWS Compute Optimizer recommendations --> so we can lower the duration of lambda function to reduce the
+cost.
+The ans must be between B & D
+upvoted 2 times
+alawada 2 years, 2 months ago
+Selected Answer: D
+Provisioned Concurrency keeps the Lambda functions initialized and ready to process incoming events, reducing the cold start latency associated
+with spinning up new execution environments.
+upvoted 4 times
+asdfcdsxdfc 2 years, 3 months ago
+Selected Answer: D
+D is correct
+upvoted 3 times
+osmk 2 years, 3 months ago
+Selected Answer: A
+When a large number of messages are in the SQS queue, Lambda scales out, adding additional functions to process the messages. The scale out can
+consume the concurrency quota in the account. To prevent this from happening, you can set reserved concurrency for individual Lambda functions.
+This ensures that the specified Lambda function can always scale to that much concurrency, but it also cannot exceed this number.
+https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html
+upvoted 2 times
+osmk 2 years, 3 months ago
+When a large number of messages are in the SQS queue, Lambda scales out, adding additional functions to process the messages. The scale out can
+consume the concurrency quota in the account. To prevent this from happening, you can set reserved concurrency for individual Lambda functions.
+This ensures that the specified Lambda function can always scale to that much concurrency, but it also cannot exceed this number.
+https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html
+upvoted 1 times

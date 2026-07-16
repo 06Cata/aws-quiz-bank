@@ -1,0 +1,69 @@
+A company has an ecommerce checkout workflow that writes an order to a database and calls a service to process the payment.
+Users are experiencing timeouts during the checkout process. When users resubmit the checkout form, multiple unique orders are
+created for the same desired transaction.
+How should a solutions architect refactor this workflow to prevent the creation of multiple orders?
+A. Configure the web application to send an order message to Amazon Kinesis Data Firehose. Set the payment service to
+retrieve the message from Kinesis Data Firehose and process the order.
+B. Create a rule in AWS CloudTrail to invoke an AWS Lambda function based on the logged application path request. Use
+Lambda to query the database, call the payment service, and pass in the order information.
+C. Store the order in the database. Send a message that includes the order number to Amazon Simple Notification Service
+(Amazon SNS). Set the payment service to poll Amazon SNS, retrieve the message, and process the order.
+D. Store the order in the database. Send a message that includes the order number to an Amazon Simple Queue Service
+(Amazon SQS) FIFO queue. Set the payment service to retrieve the message and process the order. Delete the message from
+the queue. Most Voted
+Comments
+Aninina Highly Voted 2 years, 11 months ago
+Selected Answer: D
+D. Store the order in the database. Send a message that includes the order number to an Amazon Simple Queue Service (Amazon SQS) FIFO queue.
+Set the payment service to retrieve the message and process the order. Delete the message from the queue.
+This approach ensures that the order creation and payment processing steps are separate and atomic. By sending the order information to an SQS
+FIFO queue, the payment service can process the order one at a time and in the order they were received. If the payment service is unable to process
+an order, it can be retried later, preventing the creation of multiple orders. The deletion of the message from the queue after it is processed will
+prevent the same message from being processed multiple times.
+It's worth noting that FIFO queues guarantee that messages are processed in the order they are received, and prevent duplicates.
+upvoted 11 times
+cookieMr Highly Voted 2 years, 5 months ago
+Selected Answer: D
+A. is not a suitable solution for preventing the creation of multiple orders. This approach does not guarantee the sequential and reliable processing
+of orders.
+B. is not an appropriate solution for preventing the creation of multiple orders. CloudTrail is primarily used for logging and auditing API activity, and
+invoking a Lambda based on the logged request does not ensure the correct order processing.
+C. is not a suitable solution. SNS is a publish-subscribe messaging service, and polling it may result in delayed processing and potential order
+duplication.
+D. is the correct solution. Using an SQS FIFO ensures that the orders are processed in a sequential and reliable manner, preventing the creation of
+multiple orders for the same transaction.
+upvoted 7 times
+TariqKipkemei Most Recent 2 years, 2 months ago
+Selected Answer: D
+if the backend can not keep up, queue the tasks.
+upvoted 2 times
+Guru4Cloud 2 years, 3 months ago
+Correct Answer: D
+Community vote distribution
+D (100%)
+Selected Answer: D
+D. Store the order in the database. Send a message that includes the order number to an Amazon Simple Queue Service (Amazon SQS) FIFO queue.
+Set the payment service to retrieve the message and process the order. Delete the message from the queue.
+upvoted 2 times
+animefan1 2 years, 5 months ago
+Selected Answer: D
+The question is related in breaking down the flow. SQS is go-to choice to decouple & DB will be used to store
+upvoted 2 times
+antropaws 2 years, 5 months ago
+Why not A?
+upvoted 1 times
+pentium75 1 year, 11 months ago
+Because Kinesis Data Firehose is for ingestion of streaming data, not queuing items.
+upvoted 4 times
+Wael216 2 years, 9 months ago
+Selected Answer: D
+The use of a FIFO queue in Amazon SQS ensures that messages are processed in the order they are received.
+upvoted 2 times
+mhmt4438 2 years, 11 months ago
+Selected Answer: D
+https://www.examtopics.com/discussions/amazon/view/95026-exam-aws-certified-solutions-architect-associate-saa-c03/
+upvoted 4 times
+bamishr 2 years, 11 months ago
+Selected Answer: D
+asnwer is d
+upvoted 3 times

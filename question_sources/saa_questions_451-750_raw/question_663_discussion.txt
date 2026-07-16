@@ -1,0 +1,149 @@
+A company is developing a new application on AWS. The application consists of an Amazon Elastic Container Service (Amazon
+ECS) cluster, an Amazon S3 bucket that contains assets for the application, and an Amazon RDS for MySQL database that contains
+the dataset for the application. The dataset contains sensitive information. The company wants to ensure that only the ECS cluster
+can access the data in the RDS for MySQL database and the data in the S3 bucket.
+Which solution will meet these requirements?
+A. Create a new AWS Key Management Service (AWS KMS) customer managed key to encrypt both the S3 bucket and the RDS
+for MySQL database. Ensure that the KMS key policy includes encrypt and decrypt permissions for the ECS task execution role.
+Most Voted
+B. Create an AWS Key Management Service (AWS KMS) AWS managed key to encrypt both the S3 bucket and the RDS for
+MySQL database. Ensure that the S3 bucket policy specifies the ECS task execution role as a user.
+C. Create an S3 bucket policy that restricts bucket access to the ECS task execution role. Create a VPC endpoint for Amazon
+RDS for MySQL. Update the RDS for MySQL security group to allow access from only the subnets that the ECS cluster will
+generate tasks in.
+D. Create a VPC endpoint for Amazon RDS for MySQL. Update the RDS for MySQL security group to allow access from only the
+subnets that the ECS cluster will generate tasks in. Create a VPC endpoint for Amazon S3. Update the S3 bucket policy to allow
+access from only the S3 VPC endpoint.
+Comments
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: A
+We're asked to restrict access to both, RDS and S3, to "the ECS cluster" (not to a subnet or endpoint).
+Not B: Does not restrict RDS at all. Wording about S3 is unusual.
+Not C: Would work for S3, but would allow RDS access from whole subnet which may contain other resources besides the ECS cluster
+Not D: Would allow RDS access from whole subnet which may contain other resources besides the ECS cluster. Would allow S3 access from VPC
+endpoint which might be accessed by other resources besides the ECS cluster.
+upvoted 14 times
+deacon967 1 year, 5 months ago
+A doesn't restricy access. It only encrypts at rest. D resctricts access. Encryption and Access Control are 2 different things
+upvoted 2 times
+GOTJ 1 year, 3 months ago
+You are right with your option "D" concerns about letting other resources running on the same subnet that your ECS cluster accessing the database
+But, likewise, the "task execution role" mentioned in your selected answer "A" is applied to a specific ECS task, not to the whole cluster
+(requirement)
+upvoted 1 times
+t0nx Highly Voted 2 years, 6 months ago
+Selected Answer: D
+Option D is the most comprehensive solution as it leverages VPC endpoints for both Amazon RDS and Amazon S3, along with proper network-level
+controls to restrict access to only the necessary resources from the ECS cluster.
+upvoted 11 times
+awsgeek75 2 years, 5 months ago
+Correct Answer: A
+Community vote distribution
+A (44%)
+D (41%)
+C (15%)
+D only secures access to RDS and S3, it does not secure the sensitive data inside the RDS and S3.
+upvoted 3 times
+KarlosRC Most Recent 3 months ago
+Selected Answer: D
+Encryption ≠ Access Control
+upvoted 1 times
+Pucmaster 3 months, 2 weeks ago
+Selected Answer: C
+i think C
+upvoted 1 times
+b7261f6 7 months ago
+Selected Answer: A
+Sensitive Data in S3 & RDS - KMS Key (customer or AWS both will work)
+Only access to ECAS Task - Role & KMS Key policy to give permission to access
+upvoted 1 times
+dungva1505 11 months ago
+Selected Answer: D
+I go for D.
+Because the question requires a network access control.
+A. It's not a network access control
+B. Can't access to RDS from ECS
+C. Have to access to S3 via internet
+D. Only ECS can access to S3 via AWS private network. It's more secure
+Someone consider about the other services can access to S3 and RDS if they lies on same subnet with ECS, but the question doesn't mention have
+other services. So I assumed we don't have any other services here.
+upvoted 2 times
+marcosnamekata 1 year, 1 month ago
+Selected Answer: D
+D- Shure
+upvoted 2 times
+diazed 1 year, 1 month ago
+Selected Answer: C
+I think this question is not written correctly.
+upvoted 2 times
+tch 1 year, 2 months ago
+Selected Answer: A
+But security groups allow you to control inbound and outbound traffic at the instance level, while network ACLs offer similar capabilities at the VPC
+subnet level.
+upvoted 1 times
+tch 1 year, 2 months ago
+look portion of answer D: Update the RDS for MySQL security group to allow access from only the subnets that the ECS cluster will generate tasks
+in.
+"allow access from only the subnets ".. is this correct for security group?
+upvoted 1 times
+Dantecito 1 year, 3 months ago
+Selected Answer: C
+I think the word "restricts" is confusing. But I interpret it as allow the ECS task execution role to access the S3 bucket and deny everything else.
+upvoted 2 times
+dragossky 1 year, 6 months ago
+Selected Answer: D
+The dataset contains sensitive information, nothing to be done here, just stating that it contains sensitive info.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: C
+Why not C?
+Key point:
+The question specifically asks to ensure that only the ECS cluster can access the data, which means restricting access to the S3 bucket and RDS
+database solely to the ECS task execution role.
+Breakdown of option C:
+S3 bucket policy: By creating a policy that only allows the ECS task execution role to access the S3 bucket, you effectively limit access to the data
+stored there.
+VPC endpoint for RDS: A VPC endpoint creates a private connection to the RDS database, preventing any external access and ensuring that only
+resources within the VPC can connect.
+RDS security group update: Further restricting access by configuring the RDS security group to only allow connections from the subnets where the
+ECS cluster will launch tasks.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+Why the other options are not as suitable:
+Option A and B:
+While using a KMS key to encrypt data is a good practice, it doesn't directly control access to the data. Attaching the KMS key to the ECS task
+execution role in the policy would still allow any entity with the key to decrypt the data, not just the ECS cluster.
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Option D:
+This option only addresses the RDS access by creating a VPC endpoint, but it doesn't restrict access to the S3 bucket effectively, which is also
+mentioned in the question
+upvoted 2 times
+XXXXXlNN 1 year, 8 months ago
+I cannot believe how many people vote A.
+the questions is asking only allow ECS cluster access RDS and access to S3.
+2 keys here: 1. security group is usually used to security access between RDS and ECS cluster 2. access data in S3 securely, imemdiately, we should
+think about S3 VPC Gateway endpoints because this secures the traffic only travel via private network.
+Answer A is just talking about encrpt data at rest, and that is not what the question is asking about
+upvoted 4 times
+MandAsh 1 year, 11 months ago
+After reading comments changed to A. D will not protect data at rest it will only give n/w level security
+upvoted 1 times
+bujuman 2 years, 1 month ago
+Selected Answer: A
+According to me "The dataset contains sensitive information" is the main information that motivate the real requirement which is "The company
+wants to ensure that only the ECS cluster can access the data in the RDS for MySQL database and the data in the S3 bucket". So we have to take
+these two assertions into consideration.
+And knowing that, as S3 default encryption capabilities, RDS Mysql DB Instance encryption is not active by default (check this link for details
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html ), option A is the best option to meet the requirements of
+accessing the datasets and the assets only from ECS cluster tasks and preserve, at the same time, data confidentiality and integrity. In other words,
+option A is the best one to ensure the data protection at REST for S3 and RDS and only accessed by ECS cluster.
+upvoted 3 times
+Hung23 2 years, 1 month ago
+Selected Answer: C
+Try to chat GPT Please
+upvoted 1 times
+seetpt 2 years, 3 months ago
+Selected Answer: A
+A seems right
+upvoted 2 times

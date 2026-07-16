@@ -1,0 +1,100 @@
+A company stores data in Amazon S3. According to regulations, the data must not contain personally identifiable information (PII).
+The company recently discovered that S3 buckets have some objects that contain PII. The company needs to automatically detect
+PII in S3 buckets and to notify the company’s security team.
+Which solution will meet these requirements?
+A. Use Amazon Macie. Create an Amazon EventBridge rule to filter the SensitiveData event type from Macie findings and to
+send an Amazon Simple Notification Service (Amazon SNS) notification to the security team. Most Voted
+B. Use Amazon GuardDuty. Create an Amazon EventBridge rule to filter the CRITICAL event type from GuardDuty findings and
+to send an Amazon Simple Notification Service (Amazon SNS) notification to the security team.
+C. Use Amazon Macie. Create an Amazon EventBridge rule to filter the SensitiveData:S3Object/Personal event type from Macie
+findings and to send an Amazon Simple Queue Service (Amazon SQS) notification to the security team.
+D. Use Amazon GuardDuty. Create an Amazon EventBridge rule to filter the CRITICAL event type from GuardDuty findings and
+to send an Amazon Simple Queue Service (Amazon SQS) notification to the security team.
+Comments
+alexandercamachop Highly Voted 3 years ago
+Selected Answer: A
+B and D are discarted as Macie is to identify PII.
+Now that we have between A and C.
+SNS is more suitable for this option as a pub/sub service, we subscribe the security team and then they will receive the notifications.
+upvoted 15 times
+LeonSauveterre Most Recent 1 year, 6 months ago
+Selected Answer: A
+Macie + SNS = Identify PII + Notification
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: A
+BD: Wrong products
+AC: Uses Macie which is the right product but C uses SQS to notify security team which is an incomplete solution (what's listening to SQS?)
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: A
+Detect PII -> Macie, A or C
+Notify security team -> SNS, A or B
+upvoted 4 times
+potomac 2 years, 7 months ago
+Selected Answer: A
+C is SQS, not SNS
+upvoted 4 times
+Wayne23Fang 2 years, 9 months ago
+SQS mentioned in C.
+Correct Answer: A
+Community vote distribution
+A (87%)
+13%
+upvoted 2 times
+Ale1973 2 years, 10 months ago
+Selected Answer: A
+Amazon SQS is typically used for decoupling and managing messages between distributed application components. It's not typically used for
+sending notifications directly to humans. On my opinion C isn't a best practice
+upvoted 2 times
+Kp88 2 years, 10 months ago
+Those who say C , please read carefully (I made the same mistake lol). Teams can't be notified with SQS hence A.
+upvoted 3 times
+ukivanlamlpi 2 years, 10 months ago
+Selected Answer: C
+there are different type of sensitive data: https://docs.aws.amazon.com/macie/latest/user/findings-types.html. if the question only focus on PII, then
+C is the answer. however, in reality, you will use A, because you will not want bank card, credential...etc all sensitive data , not only PII
+upvoted 3 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: A
+Automatically detect PII in S3 buckets = Amazon Macie
+Notify security team = Amazon SNS
+Trigger notification based on SensitiveData event type from Macie findings = EventBridge
+upvoted 2 times
+NASHDBA 2 years, 11 months ago
+Selected Answer: C
+There are different types of Sensitive Data. Here we are only referring to PII. Hence SensitiveData:S3Object/Personal. to use SNS, the security team
+must subscribe. SQS sends the information as designed
+upvoted 1 times
+narddrer 2 years, 11 months ago
+Selected Answer: C
+SensitiveData:S3Object/Personal
+upvoted 1 times
+jaydesai8 2 years, 11 months ago
+Selected Answer: A
+Sensitive = MACIE, and SNS to sent notification to the Security Team
+upvoted 3 times
+Iragmt 2 years, 11 months ago
+C. Because the question mentioned PII only, there are other Sensitive Data aside from PII.
+reference: https://docs.aws.amazon.com/macie/latest/user/findings-publish-event-schemas.html look for Event example for a sensitive data finding
+upvoted 2 times
+Ale1973 2 years, 10 months ago
+But Amazon SQS is typically used for decoupling and managing messages between distributed application components. It's not typically used for
+sending notifications directly to humans!
+upvoted 3 times
+kapit 2 years, 11 months ago
+AAAAAAA
+upvoted 2 times
+jack79 2 years, 12 months ago
+C https://docs.aws.amazon.com/macie/latest/user/findings-types.html
+and notice the ensitiveData:S3Object/Personal
+The object contains personally identifiable information (such as mailing addresses or driver's license identification numbers), personal health
+information (such as health insurance or medical identification numbers), or a combination of the two.
+upvoted 3 times
+Ale1973 2 years, 10 months ago
+But Amazon SQS is typically used for decoupling and managing messages between distributed application components. It's not typically used for
+sending notifications directly to humans!
+upvoted 2 times
+MAMADOUG 3 years ago
+I vote for A, Sensitive = MACIE, and SNS to prevent Security Team
+upvoted 4 times

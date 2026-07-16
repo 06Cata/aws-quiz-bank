@@ -1,0 +1,62 @@
+Question #399
+A financial company hosts a web application on AWS. The application uses an Amazon API Gateway Regional API endpoint to give
+users the ability to retrieve current stock prices. The company’s security team has noticed an increase in the number of API
+requests. The security team is concerned that HTTP flood attacks might take the application offline.
+A solutions architect must design a solution to protect the application from this type of attack.
+Which solution meets these requirements with the LEAST operational overhead?
+一家金融公司在 AWS 上托管了一个 Web 应用程序。该应用程序使用 Amazon API Gateway Regional API 端点，为用户提供检索当
+前股票价格的功能。公司的安全团队注意到 API 请求数量有所增加。安全团队担心 HTTP 洪水攻击可能会使应用程序离线。
+解决方案架构师必须设计一个解决方案来保护应用程序免受此类攻击。
+哪个解决方案以最少的运营开销满足这些要求？
+A. Create an Amazon CloudFront distribution in front of the API Gateway Regional API endpoint with a maximum TTL of 24
+hours.
+在 API Gateway Regional API 端点前创建一个 Amazon CloudFront 分配，并设置最大 TTL 为 24 小时。
+B. Create a Regional AWS WAF web ACL with a rate-based rule. Associate the web ACL with the API Gateway stage. Most Voted
+创建一个 Regional AWS WAF Web ACL，并添加基于速率的规则。将 Web ACL 与 API Gateway 阶段关联。
+C. Use Amazon CloudWatch metrics to monitor the Count metric and alert the security team when the predefined rate is
+reached.
+使用 Amazon CloudWatch 指标监控 Count 指标，并在达到预定义速率时提醒安全团队。
+D. Create an Amazon CloudFront distribution with Lambda@Edge in front of the API Gateway Regional API endpoint. Create an
+AWS Lambda function to block requests from IP addresses that exceed the predefined rate.
+在 API Gateway Regional API 端点前创建一个带有 Lambda@Edge 的 Amazon CloudFront 分配。创建一个 AWS Lambda 函数以
+阻止超过预定义速率的 IP 地址请求。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+本题考察的是如何保护 API Gateway 应用免受 HTTP Flood 攻击，同时要求解决方案具有最低的运维开销。
+涉及的知识点包括 AWS WAF、API Gateway、CloudFront、Lambda@Edge 和 CloudWatch 的功能与使用场景。
+2. 选项分析
+A. Create an Amazon CloudFront distribution in front of the API Gateway Regional API endpoint with a maximum TTL of
+24 hours.
+CloudFront 可以帮助缓存内容以减少后端负载，但 HTTP Flood 攻击通常是针对动态请求（如 API 调用），这些请求无法通过 TTL
+缓存有效缓解。
+此外，CloudFront 本身并没有内置的速率限制功能，无法直接防御 HTTP Flood 攻击。
+因此，此选项无法满足题目要求。
+B. Create a Regional AWS WAF web ACL with a rate-based rule. Associate the web ACL with the API Gateway stage.
+AWS WAF 是专门设计用于保护 Web 应用免受常见攻击（如 HTTP Flood）的服务。
+基于速率的规则可以有效限制每个 IP 的请求速率，从而防止 HTTP Flood 攻击。
+将 WAF Web ACL 直接关联到 API Gateway 阶段，操作简单，且运维开销最低。
+此选项完全满足题目要求。
+C. Use Amazon CloudWatch metrics to monitor the Count metric and alert the security team when the predefined rate is
+reached.
+CloudWatch 可以监控 API Gateway 的请求计数，但它只能提供监控和告警功能，无法主动阻止攻击。
+此选项需要人工干预，运维开销较高，且无法实时防御攻击。
+因此，此选项不符合题目要求。
+D. Create an Amazon CloudFront distribution with Lambda@Edge in front of the API Gateway Regional API endpoint.
+Create an AWS Lambda function to block requests from IP addresses that exceed the predefined rate.
+使用 Lambda@Edge 可以实现自定义逻辑来阻止恶意请求，但需要编写和维护 Lambda 函数代码，增加了运维开销。
+相比 AWS WAF 的内置功能，此方法复杂且不够高效。
+因此，此选项不符合题目要求。
+3. 我的答案
+B. Create a Regional AWS WAF web ACL with a rate-based rule. Associate the web ACL with the API Gateway stage.
+4. 官方答案
+B. Create a Regional AWS WAF web ACL with a rate-based rule. Associate the web ACL with the API Gateway stage.
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：AWS WAF 是专门设计用于防御 HTTP Flood 攻击的服务，基于速率的规则可以有效限制请求速率，且直接关联到 API
+Gateway 阶段，运维开销最低，完全符合题目要求。
+Community vote distribution
+社区投票分布
+B (100%)
+嬄信: " Examtopics "

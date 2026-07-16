@@ -1,0 +1,101 @@
+A solutions architect is designing a highly available Amazon ElastiCache for Redis based solution. The solutions architect needs to
+ensure that failures do not result in performance degradation or loss of data locally and within an AWS Region. The solution needs
+to provide high availability at the node level and at the Region level.
+Which solution will meet these requirements?
+A. Use Multi-AZ Redis replication groups with shards that contain multiple nodes. Most Voted
+B. Use Redis shards that contain multiple nodes with Redis append only files (AOF) turned on.
+C. Use a Multi-AZ Redis cluster with more than one read replica in the replication group.
+D. Use Redis shards that contain multiple nodes with Auto Scaling turned on.
+Comments
+pentium75 Highly Voted 1 year, 11 months ago
+Selected Answer: A
+It seems like "Multi-AZ Redis replication group" (A) and "Multi-AZ Redis cluster" (C) are different wordings for the same configuration. However, "to
+minimize the impact of a node failure, we recommend that your implementation use multiple nodes in each shard" - and that is mentioned only in A
+upvoted 6 times
+taustin2 Highly Voted 2 years, 2 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Replication.html
+upvoted 5 times
+Dookie00 Most Recent 5 months, 3 weeks ago
+Selected Answer: C
+è la c
+upvoted 1 times
+LocNV 1 year, 11 months ago
+Selected Answer: A
+high availability at the node level = shard and Multi A-Z = region level
+upvoted 5 times
+Cyberkayu 1 year, 11 months ago
+did client ask for improved performance, unfortunately they didn't, so C is good to have but not part of the business requirement.
+My answer A.
+upvoted 3 times
+SHAAHIBHUSHANAWS 2 years ago
+A
+Multi-AZ is only option. It is regional service so can use backup to replicate but can not use for failover.
+upvoted 2 times
+TariqKipkemei 2 years ago
+Selected Answer: A
+Multi-AZ is only supported on Redis clusters that have more than one node in each shard (node groups).
+https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html#:~:text=node%20in%20each-,shard.,-Topics
+Correct Answer: A
+Community vote distribution
+A (79%)
+13%
+8%
+upvoted 5 times
+t0nx 2 years ago
+Selected Answer: C
+C. Use a Multi-AZ Redis cluster with more than one read replica in the replication group.
+In summary, option C, using a Multi-AZ Redis cluster with more than one read replica, is designed to provide both node-level and AWS Region-level
+high availability, making it the most suitable choice for the given requirements.
+upvoted 2 times
+potomac 2 years, 1 month ago
+Selected Answer: A
+the replication structure is contained within a shard (called node group in the API/CLI) which is contained within a Redis cluster
+A shard (in the API and CLI, a node group) is a hierarchical arrangement of nodes, each wrapped in a cluster. Shards support replication. Within a
+shard, one node functions as the read/write primary node. All the other nodes in a shard function as read-only replicas of the primary node.
+upvoted 1 times
+thanhnv142 2 years, 1 month ago
+C is correct.
+Not A because in replication mode, shard have multiple nodes by default.
+B and D not correct because that not an option
+upvoted 1 times
+iwannabeawsgod 2 years, 1 month ago
+Selected Answer: C
+its c for me
+upvoted 1 times
+bsbs1234 2 years, 2 months ago
+C:
+Cluster mode will create multiple shards, when node level failure, request of shard that not impacted will not has any performance impact. If the issue
+at AZ level, spread traffic between multiple shards shall also reduce the performance degrade.
+upvoted 1 times
+loveaws 2 years, 2 months ago
+c.
+Option A is not ideal because it doesn't mention read replicas, and it's generally better to have read replicas for both performance and high
+availability.
+Option B mentions Redis append-only files (AOF), but AOF alone doesn't provide high availability or fault tolerance.
+Option D mentions Auto Scaling, but this doesn't directly address high availability at the Region level or data replication
+upvoted 1 times
+taustin2 2 years, 2 months ago
+Multi-AZ is only supported on Redis clusters that have more than one node in each shard.
+upvoted 1 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: A
+Multi-AZ replication groups provide automatic failover between AZs if there is an issue with the primary AZ. This provides high availability at the
+region level
+upvoted 3 times
+pentium75 1 year, 11 months ago
+What about "the node level"?
+upvoted 1 times
+xyb 2 years, 3 months ago
+Selected Answer: C
+Enabling ElastiCache Multi-AZ with automatic failover on your Redis cluster (in the API and CLI, replication group) improves your fault tolerance. This
+is true particularly in cases where your cluster's read/write primary cluster becomes unreachable or fails for any reason. Multi-AZ with automatic
+failover is only supported on Redis clusters that support replication
+upvoted 1 times
+Mll1975 2 years, 3 months ago
+Selected Answer: A
+I would go with A too
+I would go with A, Using AOF can't protect you from all failure scenarios.
+For example, if a node fails due to a hardware fault in an underlying physical server, ElastiCache will provision a new node on a different server. In thi
+case, the AOF is not available and can't be used to recover the data.
+upvoted 2 times

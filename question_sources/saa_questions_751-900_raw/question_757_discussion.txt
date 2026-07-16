@@ -1,0 +1,101 @@
+A company is running a legacy system on an Amazon EC2 instance. The application code cannot be modified, and the system
+cannot run on more than one instance. A solutions architect must design a resilient solution that can improve the recovery time
+for the system.
+What should the solutions architect recommend to meet these requirements?
+A. Enable termination protection for the EC2 instance.
+B. Configure the EC2 instance for Multi-AZ deployment.
+C. Create an Amazon CloudWatch alarm to recover the EC2 instance in case of failure. Most Voted
+D. Launch the EC2 instance with two Amazon Elastic Block Store (Amazon EBS) volumes that use RAID configurations for
+storage redundancy.
+Comments
+Andy_09 Highly Voted 2 years, 4 months ago
+Option C
+upvoted 11 times
+Typewriter101 2 years, 3 months ago
+i think D is the answer.
+Cause the question asks for a resilient solution and EBS with RAID config can balance between the performance and redundancy. EBS can also help
+with faster launch.
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+But how does that "improve the recovery time for the system"?
+upvoted 2 times
+_mavik_ 2 years, 3 months ago
+Your solution can't resolve the problem
+upvoted 3 times
+mohammadthainat Highly Voted 2 years, 2 months ago
+Selected Answer: C
+Question about """improve the recovery time for the system""" RAID improves data resilience, but won't recover the instance if the system itself fails.
+it's 100% C
+upvoted 6 times
+jacobtriestech Most Recent 8 months, 2 weeks ago
+Selected Answer: C
+The legacy app must run on a single instance and the code can't change, so you need fast recovery of that single instance if the underlying host or
+hardware fails. Amazon EC2 instance recovery (triggered by a CloudWatch alarm on the instance status checks) will automatically recover the instance
+onto healthy hardware while preserving the instance ID, attached EBS volumes, elastic IPs, and network configuration — delivering a much faster,
+transparent recovery than manual rebuilds.
+upvoted 2 times
+allanm 10 months ago
+Selected Answer: D
+Amazon EBS volume data is replicated across multiple servers in an Availability Zone to prevent the loss of data from the failure of any single
+component. This replication makes Amazon EBS volumes ten times more reliable than typical commodity disk drives.
+Correct Answer: C
+Community vote distribution
+C (58%)
+D (42%)
+https://docs.aws.amazon.com/ebs/latest/userguide/raid-config.html
+upvoted 1 times
+ln2718 10 months, 2 weeks ago
+Selected Answer: D
+Answer D is better because it is the closest thing to first level of prevention. Answer C is after the fact and so, yes you would have Cloudwatch as wel
+but it only ask for one answer and the better one is D for a better first level response, and of course you would have Cloudwatch. Really bad question
+should have asked for two answers.
+upvoted 1 times
+buzzinmumbai 2 years, 2 months ago
+Option should be B .They are not asking about storage anywhere. In muti-AZ you application runs on the primary and the secondary is kept in sync.
+upvoted 1 times
+dkw2342 2 years, 2 months ago
+Pretty sure option D is NOT correct.
+> RAID 5 and RAID 6 are not recommended for Amazon EBS (...).
+> RAID 1 is also not recommended for use with Amazon EBS.
+https://docs.aws.amazon.com/ebs/latest/userguide/raid-config.html#raid-config-options
+upvoted 3 times
+Awsbeginner87 2 years, 2 months ago
+So what is the answer?
+upvoted 2 times
+sandordini 2 years, 1 month ago
+C: You can create an Amazon CloudWatch alarm that monitors an Amazon EC2 instance and automatically recovers the instance if it becomes
+impaired due to an underlying hardware failure or a problem that requires AWS involvement to repair. Terminated instances cannot be recovered.
+A recovered instance is identical to the original instance, including the instance ID, private IP addresses, Elastic IP addresses, and all instance
+metadata.
+upvoted 3 times
+Salilgen 1 year, 5 months ago
+IMO answer is B.
+You could set Max desired capacity to 1 in autoscaling group then you always have one instance running
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Sorry. Answer is C.
+In multi-AZ deployment you must have at least one instance per AZ
+upvoted 1 times
+haci 2 years, 2 months ago
+For those who choose C, the question asks that "must design a resilient solution".. C may improve recovery time but it has nothing to do with
+resiliency.
+upvoted 1 times
+JackyCCK 2 years, 2 months ago
+"resilient solution that can improve the recovery time for the system" , resiliency here means only
+upvoted 2 times
+_mavik_ 2 years, 3 months ago
+Option C
+upvoted 2 times
+stephensimudemy 2 years, 3 months ago
+Selected Answer: C
+Can only run 1 instance.
+improve recovery time.
+upvoted 3 times
+stephensimudemy 2 years, 3 months ago
+Option B.
+Question never ask anything about storage.
+upvoted 1 times
+osmk 2 years, 3 months ago
+Selected Answer: D
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html
+upvoted 6 times

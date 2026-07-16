@@ -1,0 +1,162 @@
+A company needs to store contract documents. A contract lasts for 5 years. During the 5-year period, the company must ensure
+that the documents cannot be overwritten or deleted. The company needs to encrypt the documents at rest and rotate the
+encryption keys automatically every year.
+Which combination of steps should a solutions architect take to meet these requirements with the LEAST operational overhead?
+(Choose two.)
+A. Store the documents in Amazon S3. Use S3 Object Lock in governance mode.
+B. Store the documents in Amazon S3. Use S3 Object Lock in compliance mode. Most Voted
+C. Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Configure key rotation.
+D. Use server-side encryption with AWS Key Management Service (AWS KMS) customer managed keys. Configure key rotation.
+Most Voted
+E. Use server-side encryption with AWS Key Management Service (AWS KMS) customer provided (imported) keys. Configure
+key rotation.
+Comments
+[Removed] Highly Voted 3 years, 6 months ago
+Selected Answer: BD
+Originally answered B and C due to least operational overhead. after research its bugging me that the s3 key rotation is determined based on AWS
+master Key rotation which cannot guarantee the key is rotated with in a 365 day period. stated as "varies" in the documentation. also its impossible
+to configure this in the console.
+KMS-C is a tick box in the console to turn on annual key rotation but requires more operational overhead than SSE-S3.
+C - will not guarantee the questions objectives but requires little overhead.
+D - will guarantee the questions objective with more overhead.
+upvoted 26 times
+vadiminski_a 3 years, 5 months ago
+I‘d have to disagree on that. It states here that aws managed keys are rotated every year which is what the question asks:
+https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html so C would be correct.
+However, it also states that you cannot enable or disable rotation for aws managed keys which would again point towards D
+upvoted 4 times
+jdr75 3 years, 2 months ago
+You can't use this link
+https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
+to said that "sse-s3" rotates every year, cos' preciselly that link refers to "KMS", that is covered with option D.
+That the reason the solution is B+D.
+upvoted 3 times
+Dharmarajan 1 year, 4 months ago
+The doc says:
+"By default, when you enable automatic key rotation for a KMS key, AWS KMS generates new cryptographic material for the KMS key every year.
+You can also specify a custom rotation-period to define the number of days after you enable automatic key rotation that AWS KMS will rotate
+your key material, and the number of days between each automatic rotation thereafter. If you need to immediately initiate key material rotation,
+you can perform on-demand rotation, regardless of whether or not automatic key rotation is enabled. On-demand rotations do not change
+existing automatic rotation schedules."
+Per this, the KMS does allow annual rotation and with an option to set frequency.
+Correct Answer: BD
+Community vote distribution
+BD (79%)
+BC (20%)
+1
+upvoted 1 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: BD
+A - Governance mode allows exceptions
+B - Yes
+C - SSE-S3 rotates keys when AWS thinks is right, not when customer wants ("every year")
+D - Yes
+E - "customer provided (imported) keys" can obviously not be 'rotated automatically', the customer would have to provide/import new keys.
+upvoted 9 times
+celestial39 2 years, 4 months ago
+KMS indeed rotates keys every year, but the reason why C is wrong is that the Amazon managed keys can't be configured to rotate or not.
+REF: https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html#rotate-keys-how-it-works
+upvoted 2 times
+LoXoL 2 years, 4 months ago
+Agree with pentium75
+upvoted 3 times
+Yak_Yeti Most Recent 1 year, 2 months ago
+Selected Answer: BC
+SSE-S3 has the least operational overhead for encryption at rest with automatic key rotation because AWS fully manages the keys and their rotation
+(even if the schedule isn't user-configurable to be strictly annual).
+However, if the strict annual rotation is a non-negotiable requirement, then you would have to accept the slightly higher (but still relatively low)
+operational overhead of managing a KMS customer managed key with automatic annual rotation enabled. Option D.
+Given the wording of the original question prioritizing "least operational overhead," the intended answer likely leans towards the fully managed
+nature of SSE-S3's automatic rotation, even without a guaranteed annual cycle. If strict annual rotation was paramount, the question should have
+been phrased differently.
+IMHO
+upvoted 1 times
+bignatov 1 year, 9 months ago
+Selected Answer: BC
+For me it is B and C. C because it does everything automatically and this is the requirement. (with LEAST operational overhead)
+upvoted 1 times
+tch 1 year, 2 months ago
+I think Amazon S3 managed keys (SSE-S3) are designed for and exclusively support encryption of objects within Amazon S3 storage only.....
+upvoted 1 times
+Americanman 1 year, 9 months ago
+S3 Object Lock can help prevent Amazon S3 objects from being deleted or overwritten for a fixed amount of time or indefinitely.
+In compliance mode, a protected object version can't be overwritten or deleted by any user, including the root user in your AWS account.
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: BD
+BD for sure
+upvoted 2 times
+lofzee 2 years ago
+Selected Answer: BD
+basically what that pentium75 guy said - correct.
+upvoted 2 times
+sudohogan 2 years, 1 month ago
+"Least operational overhead": C
+upvoted 2 times
+huangyou2003 2 years, 1 month ago
+Selected Answer: BD
+C- you don't have control over rotation schedule for SSE-S3
+upvoted 2 times
+Tralfalgarlaw 2 years, 1 month ago
+Selected Answer: BD
+B. Using S3 Object Lock in compliance mode ensures that the documents cannot be substituted or deleted during the specified retention period,
+which in this case is 5 years. This helps meet the requirement of ensuring the documents remain immutable for the duration of the contract.
+D. Using server-side encryption with AWS Key Management Service (AWS KMS) customer managed keys allows for encryption of the documents at
+rest. Additionally, configuring key rotation for the customer managed keys ensures that the encryption keys are automatically rotated every year,
+meeting the requirement of rotating encryption keys automatically.
+upvoted 3 times
+MehulKapadia 2 years, 1 month ago
+Selected Answer: BD
+Answer: BD:
+B: S3 Compliance Mode ensures no one can overwrite or delete the object.
+D: Customer-managed KMS Key: (must be enabled) automatic every 1 year
+Options not right:
+A: Governance mode allows override and delete.
+C: SSE-S3 customer do not have control on rotation of keys(Which is once a year in our requirement)
+E: As per AWS Documentation, Customer Imported keys cannot be auto rotated.
+upvoted 2 times
+scar0909 2 years, 3 months ago
+Selected Answer: BD
+https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
+upvoted 1 times
+thewalker 2 years, 4 months ago
+Selected Answer: BD
+The best option to encrypt data at rest in Amazon S3 and rotate the keys every year is to use AWS KMS (Key Management Service).
+With AWS KMS:
+You can create a customer master key (CMK) and schedule automatic key rotation every year. This ensures the data is encrypted with a new key
+annually.
+When storing objects in S3, you can choose server-side encryption with AWS KMS (SSE-KMS). This will encrypt the data with the CMK you created.
+Even if the encrypted data is copied or transferred, it will remain encrypted since the keys are managed by KMS.
+You have full control over the keys and can define IAM policies for key access.
+AWS manages the encryption, key operations and auditing through integrated services like CloudTrail.
+It provides an end-to-end encryption solution within AWS without needing to handle encryption/decryption yourself.
+upvoted 1 times
+omarshaban 2 years, 4 months ago
+THIS WAS IN MY EXAM
+upvoted 3 times
+Mikado211 2 years, 5 months ago
+File cannot be overwitten = s3 compliance mode
+encryption AT REST = user-side encryption
+upvoted 1 times
+Mikado211 2 years, 5 months ago
+so the correct answer is BD
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+user side encryption?
+upvoted 1 times
+Mikado211 2 years, 5 months ago
+Selected Answer: BD
+File cannot be overwitten = compliance mode
+Encryption AT REST = user-side encryption
+upvoted 3 times
+ale_brd_111 2 years, 6 months ago
+Selected Answer: BD
+Question might be outdated.
+Amazon S3 now automatically applies server-side encryption with Amazon S3 managed keys (SSE-S3) as the default encryption for all buckets since
+January 5, 2023.
+Additionally, it encrypts the key itself with another key that undergoes regular rotation, enhancing security.
+Regarding key rotation, the document specifies that the key used to encrypt the S3 Encryption Key undergoes regular rotation. However, it does not
+explicitly mention the rotation frequency or the ability to customize it.
+Therefore, considering the requirement for key rotation and the lack of explicit details about rotation frequency, options B and D would be suitable
+choices.
+upvoted 4 times

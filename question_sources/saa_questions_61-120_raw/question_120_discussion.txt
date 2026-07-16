@@ -1,0 +1,145 @@
+A company has implemented a self-managed DNS solution on three Amazon EC2 instances behind a Network Load Balancer (NLB)
+in the us-west-2 Region. Most of the company's users are located in the United States and Europe. The company wants to improve
+the performance and availability of the solution. The company launches and configures three EC2 instances in the eu-west-1
+Region and adds the EC2 instances as targets for a new NLB.
+Which solution can the company use to route traffic to all the EC2 instances?
+A. Create an Amazon Route 53 geolocation routing policy to route requests to one of the two NLBs. Create an Amazon
+CloudFront distribution. Use the Route 53 record as the distribution’s origin.
+B. Create a standard accelerator in AWS Global Accelerator. Create endpoint groups in us-west-2 and eu-west-1. Add the two
+NLBs as endpoints for the endpoint groups. Most Voted
+C. Attach Elastic IP addresses to the six EC2 instances. Create an Amazon Route 53 geolocation routing policy to route requests
+to one of the six EC2 instances. Create an Amazon CloudFront distribution. Use the Route 53 record as the distribution's origin.
+D. Replace the two NLBs with two Application Load Balancers (ALBs). Create an Amazon Route 53 latency routing policy to
+route requests to one of the two ALBs. Create an Amazon CloudFront distribution. Use the Route 53 record as the distribution’s
+origin.
+Comments
+dokaedu Highly Voted 3 years, 7 months ago
+B is the correct one for seld manage DNS
+If need to use Route53, ALB (layar 7 ) needs to be used as end points for 2 reginal x 3 EC2s, if it the case answer would be the option 4
+upvoted 21 times
+RNess 2 years, 7 months ago
+Why I need replace NLB to ALB?
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Who said that?
+upvoted 3 times
+EllenLiu 1 year, 5 months ago
+A is not correct as should use NLB or ALB as the distribution origin?
+upvoted 1 times
+MutiverseAgent 2 years, 11 months ago
+After reading the discussion I think the right answer is B, as the service they use is DNS it does not make sense using a cloudfront distribution for
+this. The scenario would be different if the service were HTTP/HTTPS.
+upvoted 6 times
+MutiverseAgent 2 years, 11 months ago
+Just to complete my previous comment. If the scenario were that the company uses HTTP/HTTPS service, then the correct answer (as the original
+dokaedu message mentions) would be option D)
+upvoted 4 times
+LeGloupier Highly Voted 3 years, 7 months ago
+Selected Answer: B
+for me it is B
+upvoted 13 times
+Correct Answer: B
+Community vote distribution
+B (79%)
+A (18%)
+3%
+90c3163 Most Recent 10 months, 1 week ago
+Selected Answer: A
+I hate the wording in this. Like it is a DNS service as in DNS servers, or DNS service as in providing DNS selling services. Because the answer would be
+different if they provided just a bit more context.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: B
+AWS Global Accelerator is the most suitable here as it provides low latency and makes the AWS Network closer.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: B
+Ans B - "AWS Global Accelerator improves the availability and performance of your applications for global users by routing traffic to the optimal
+endpoint based on performance and policies."
+https://aws.amazon.com › global-accelerator › faqs
+upvoted 2 times
+rityoui 2 years, 3 months ago
+Selected Answer: B
+i choose a previous until i checked google that tells me "DNS is an Application-layer protocol"
+upvoted 3 times
+thewalker 2 years, 4 months ago
+Selected Answer: A
+A seems the right answer.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+Not A: CloudFront is not for DNS
+Not C: Involves CloudFront which is not needed, otherwise would work but ignore the NLBs
+Not D: ALB can't handle DNS
+Leaves B
+upvoted 5 times
+SaurabhTiwari1 2 years, 5 months ago
+Selected Answer: B
+Keyword-
+AWS global accelerator = Super cop (who direct the traffic and give you the best way to reach your destination)
+Geolocation is use for showing web content as you want to show your web content to particular country or continent.
+Geolocation has nothing to do with traffic.
+upvoted 3 times
+SaurabhTiwari1 2 years, 5 months ago
+Route 53 geolocation has nothing to do with traffic in the sense that it does not affect the amount or speed of traffic that reaches your resources. It
+only affects how Route 53 responds to DNS queries based on the location of your users.
+upvoted 2 times
+Masakichen 2 years, 6 months ago
+Option B. Create a standard accelerator in AWS Global Accelerator. Establish endpoint groups in us-west-2 and eu-west-1. Add two NLBs as
+endpoints of the endpoint group.
+AWS Global Accelerator is a network service that can provide a global traffic management solution. By creating a standard accelerator in AWS Global
+Accelerator, you can guide user traffic to the endpoint closest to them, thereby improving the performance and availability of the application. In this
+case, you can establish endpoint groups in the us-west-2 and eu-west-1 regions, and add two NLBs as endpoints. In this way, no matter where the
+user is located, their requests will be routed to the EC2 instance closest to them, thereby improving the performance and availability of DNS
+resolution. In addition, this design can also provide flexibility and scalability to handle a large amount of traffic. Therefore, this solution can meet you
+needs.
+upvoted 8 times
+Ruffyit 2 years, 7 months ago
+Global Accelerator: AWS Global Accelerator is designed to improve the availability and performance of applications by using static IP addresses
+(Anycast IPs) and routing traffic over the AWS global network infrastructure.
+Endpoint Groups: By creating endpoint groups in both the us-west-2 and eu-west-1 Regions, the company can effectively distribute traffic to the
+NLBs in both Regions. This improves availability and allows traffic to be directed to the closest Region based on latency.
+upvoted 2 times
+tom_cruise 2 years, 8 months ago
+Selected Answer: B
+Key: route traffic to all the EC2 instances
+upvoted 2 times
+Hassaoo 2 years, 9 months ago
+B. Create a standard accelerator in AWS Global Accelerator. Create endpoint groups in us-west-2 and eu-west-1. Add the two NLBs as endpoints for
+the endpoint groups.
+Here's why this option is the most suitable:
+Global Accelerator: AWS Global Accelerator is designed to improve the availability and performance of applications by using static IP addresses
+(Anycast IPs) and routing traffic over the AWS global network infrastructure.
+Endpoint Groups: By creating endpoint groups in both the us-west-2 and eu-west-1 Regions, the company can effectively distribute traffic to the
+NLBs in both Regions. This improves availability and allows traffic to be directed to the closest Region based on latency.
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+B is the best solution to route traffic to all the EC2 instances across regions.
+The key reasons are:
+AWS Global Accelerator allows routing traffic to endpoints in multiple AWS Regions. It uses the AWS global network to optimize availability and
+performance.
+Creating an accelerator with endpoint groups in us-west-2 and eu-west-1 allows traffic to be distributed across both regions.
+Adding the NLBs in each region as endpoints allows the traffic to be routed to the EC2 instances behind them.
+This provides improved performance and availability compared to just using Route 53 geolocation routing.
+upvoted 6 times
+MNotABot 2 years, 11 months ago
+B
+route requests to one of the two NLBs --> hence AD out / Attach Elastic IP addresses --> who will pay for it?
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: B
+Option B offers a global solution by utilizing Global Accelerator. By creating a standard accelerator and configuring endpoint groups in both Regions
+the company can route traffic to all the EC2 across multiple regions. Adding the two NLBs as endpoints ensures that traffic is distributed effectively.
+Option A does not directly address the requirement of routing traffic to all EC2 instances. It focuses on routing based on geolocation and using
+CloudFront as a distribution, which may not achieve the desired outcome.
+Option C involves managing Elastic IP addresses and routing based on geolocation. However, it may not provide the same level of performance and
+availability as AWS Global Accelerator.
+Option D focuses on ALBs and latency-based routing. While it can be a valid solution, it does not utilize AWS Global Accelerator and may require
+more configuration and management compared to option B.
+upvoted 4 times
+beginnercloud 3 years ago
+Selected Answer: B
+Correctly is B.
+if it is self-managed DNS, you cannot use Route 53. There can be only 1 DNS service for the domain.
+upvoted 5 times

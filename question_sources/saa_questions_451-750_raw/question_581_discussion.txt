@@ -1,0 +1,128 @@
+A company runs a stateful production application on Amazon EC2 instances. The application requires at least two EC2 instances to
+always be running.
+A solutions architect needs to design a highly available and fault-tolerant architecture for the application. The solutions architect
+creates an Auto Scaling group of EC2 instances.
+Which set of additional steps should the solutions architect take to meet these requirements?
+A. Set the Auto Scaling group's minimum capacity to two. Deploy one On-Demand Instance in one Availability Zone and one
+On-Demand Instance in a second Availability Zone.
+B. Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two
+On-Demand Instances in a second Availability Zone. Most Voted
+C. Set the Auto Scaling group's minimum capacity to two. Deploy four Spot Instances in one Availability Zone.
+D. Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two
+Spot Instances in a second Availability Zone.
+Comments
+luiscc Highly Voted 2 years, 10 months ago
+Selected Answer: B
+By setting the Auto Scaling group's minimum capacity to four, the architect ensures that there are always at least two running instances. Deploying
+two On-Demand Instances in each of two Availability Zones ensures that the application is highly available and fault-tolerant. If one Availability Zone
+becomes unavailable, the application can still run in the other Availability Zone.
+upvoted 19 times
+Ale1973 Highly Voted 2 years, 10 months ago
+Selected Answer: A
+My rational is: Highly available = 2 AZ, and then 2 EC2 instances always running is 1 EC2 in each AZ. If an entire AZ fails, SacalinGroup deploy the
+minimun instances (2) on the running AZ
+upvoted 15 times
+baba365 2 years, 8 months ago
+Ans: A.
+The application requires at least two EC2 instances to always be running = 2 minimum capacity… minimum cap of 4 ec2 will work but a waste of
+resources that doesn’t follow well archi. framework.
+upvoted 2 times
+Ramdi1 2 years, 8 months ago
+it says always have to have two running, hence you need 4. two in each AV. it might be a waste of resource but if that what is required by the
+company then so be it. Also you out the 4 you cannot use spot instances because if the two instances on the on demand go down and you need
+to use the spot instance they could be called back at any point.
+upvoted 5 times
+Ramdi1 2 years, 8 months ago
+AZ * not AV
+upvoted 3 times
+bora4motion Most Recent 1 year, 1 month ago
+Correct Answer: B
+Community vote distribution
+B (75%)
+A (25%)
+Selected Answer: B
+A and C are not compatible with the "fault tolerant" condition.
+upvoted 1 times
+emakid 1 year, 11 months ago
+Option A:
+Set the Auto Scaling group's minimum capacity to two. Deploy one On-Demand Instance in one Availability Zone and one On-Demand Instance in a
+second Availability Zone.
+This configuration ensures that you have two instances running across two different AZs, which provides high availability. However, it does not take
+advantage of additional capacity to handle failures or spikes in demand. If either AZ becomes unavailable, you will have one running instance, but
+this does not meet the requirement of having at least two running instances at all times.
+upvoted 1 times
+emakid 1 year, 11 months ago
+Selected Answer: B
+Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two On-Demand Instances in
+a second Availability Zone.
+This configuration provides high availability with four instances distributed across two AZs. The minimum capacity of four ensures that even if one
+instance fails, there are still two instances in each AZ to handle the load. This option is highly available and fault-tolerant but may be more than
+required if only two instances are needed to be always running.
+upvoted 2 times
+cjace 1 year, 12 months ago
+Answer is A: If one Availability Zone fails, the Auto Scaling group will automatically launch a new instance in a different, healthy Availability Zone to
+maintain the desired capacity of two instances. This is one of the key benefits of using Auto Scaling groups—they automatically maintain the desired
+number of instances across multiple Availability Zones, ensuring that your application is highly available and fault-tolerant. So even in the event of a
+failure in one Availability Zone, your application will continue to run on the required number of instances. This is why it’s recommended to distribute
+instances across multiple Availability Zones when designing architectures for high availability and fault tolerance.
+upvoted 1 times
+LuongTo 1 year, 7 months ago
+that is reasonable. but what do you think about "always"? With A, there's a moment there would be only one EC2 healthy.
+upvoted 2 times
+Marco_St 2 years, 5 months ago
+Selected Answer: B
+so indeed ASG can set up a new EC2 instance in another AZ if there is one AZ failed with fault but it failed to meet the need of always having 2
+instance running before the new instance replacement is done in the working AZ. so this is why we deploy 2 instances per AZ
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+If it would not mention the "stateful" application, and if it would only have to be "highly available" but NOT "fault-tolerant", A would be fine.
+upvoted 5 times
+1rob 2 years, 6 months ago
+Selected Answer: B
+From <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html : Spot Instances are not suitable for workloads that are
+inflexible, stateful, fault-intolerant, or tightly coupled between instance nodes. So C and D don't fit.
+From <https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/use-multiple-availability-zones.html : Within the
+constructs of AWS, customers are encouraged to run their workloads in more than one Availability Zone. This ensures that customer applications can
+withstand even a complete Availability Zone failure - a very rare event in itself.
+So a HA solution in this case implies a total of 4 instances, 2 per AZ.
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+The main requirement here is a 'highly available and fault-tolerant architecture for the application', this covered by option B.
+The application requires at least two EC2 instances to always be running, main word here being 'atleast' which means more than two is ok.
+upvoted 2 times
+Ramdi1 2 years, 8 months ago
+Selected Answer: B
+B - Need 2 in each AZ and you cant use spot instances as it could be recalled.
+upvoted 2 times
+Mandar15 2 years, 8 months ago
+Selected Answer: B
+Stateful is keyword here. 2 is minimum required all time.
+upvoted 2 times
+JA2018 1 year, 6 months ago
+minimum of 2x EC2 instances per AZ at all times.
+upvoted 1 times
+Mll1975 2 years, 9 months ago
+Selected Answer: A
+If a complete AZ fails, autoscale will lunch a second EC2 in the running AZ. If that short period of time is not always, which is not, then the answer is
+B, but I would take my chances and select A in the exam xD because the application is highly available and fault-tolerant.
+upvoted 1 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+° Minimum of 4 ensures at least 2 instances are always running in each AZ, meeting the HA requirement.
+° On-Demand instances provide consistent performance and availability, unlike Spot.
+° Spreading across 2 AZs adds fault tolerance, protecting from AZ failure.
+upvoted 4 times
+darkknight23 2 years, 10 months ago
+Selected Answer: B
+While Spot Instances can be used to reduce costs, they might not provide the same level of availability and guaranteed uptime that On-Demand
+Instances offer. So I will go with B and not D.
+upvoted 2 times
+Sat897 2 years, 10 months ago
+Selected Answer: B
+Highly available - 2 AZ and then 2 EC2 instances always running. 2 in each AZ.
+upvoted 3 times
+Sat897 2 years, 10 months ago
+Highly available - 2 AZ and then 2 EC2 instances always running. 2 in each AZ..
+upvoted 2 times

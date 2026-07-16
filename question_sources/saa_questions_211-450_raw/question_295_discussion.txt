@@ -1,0 +1,171 @@
+An ecommerce company stores terabytes of customer data in the AWS Cloud. The data contains personally identifiable
+information (PII). The company wants to use the data in three applications. Only one of the applications needs to process the PII.
+The PII must be removed before the other two applications process the data.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Store the data in an Amazon DynamoDB table. Create a proxy application layer to intercept and process the data that each
+application requests.
+B. Store the data in an Amazon S3 bucket. Process and transform the data by using S3 Object Lambda before returning the
+data to the requesting application. Most Voted
+C. Process the data and store the transformed data in three separate Amazon S3 buckets so that each application has its own
+custom dataset. Point each application to its respective S3 bucket.
+D. Process the data and store the transformed data in three separate Amazon DynamoDB tables so that each application has
+its own custom dataset. Point each application to its respective DynamoDB table.
+Comments
+Steve_4542636 Highly Voted 3 years, 3 months ago
+Selected Answer: B
+Actually this is what Macie is best used for.
+upvoted 21 times
+Mikado211 2 years, 6 months ago
+Yes. That's the problem here, Macie is the recommended tool in such case, but you do not have it in the answers.
+upvoted 3 times
+awsgeek75 2 years, 4 months ago
+Macie is for identifying the PII data. Here it's much simpler because one of the apps need the PII data and other apps don't so you don't need to
+identify the PII data as you know it is already there. You just need to identify the app that needs the data which is not the best use case for Macie
+upvoted 5 times
+1e22522 1 year, 10 months ago
+"Akshually" bro go to sleep
+upvoted 3 times
+fruto123 Highly Voted 3 years, 3 months ago
+Selected Answer: B
+B is the right answer and the proof is in this link.
+https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/
+upvoted 12 times
+Guru4Cloud 2 years, 9 months ago
+This is so wrong
+upvoted 1 times
+pentium75 2 years, 5 months ago
+But it matches the exact use case here.
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+B (90%)
+7%
+awsgeek75 2 years, 4 months ago
+Why do you think this is wrong?
+upvoted 2 times
+Rcosmos Most Recent 1 year, 4 months ago
+Selected Answer: B
+Por que esta é a melhor solução?
+Processamento sob demanda:
+O S3 Object Lambda permite que você processe e transforme objetos armazenados no S3 dinamicamente, com base na solicitação do aplicativo.
+Para os dois aplicativos que não precisam das PII, o Object Lambda pode remover essas informações no momento da solicitação, sem duplicar ou
+alterar os dados originais.
+upvoted 1 times
+AWSSURI 1 year, 9 months ago
+I miss you Burugudystunstuguy....Man's been conistent with his answers
+upvoted 2 times
+MikeJANG 2 years, 3 months ago
+Selected Answer: C
+[GPT4] while S3 Object Lambda is a powerful tool for real-time data transformation, it is not the best fit for processing very large datasets due to
+Lambda's execution limits(15 min). Instead, preprocessing the data and storing it in separate S3 buckets for each applicatin's needs is a more
+operationally efficient solution for the scenario describes.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+Because this is exactly what the AWS blog says.
+"When you store data in Amazon Simple Storage Service (Amazon S3), you can easily share it for use by multiple applications. However, each
+application has its own requirements and may need a different view of the data. For example, a dataset created by an e-commerce application may
+include personally identifiable information (PII) that is not needed when the same data is processed for analytics and should be redacted."
+upvoted 8 times
+pentium75 2 years, 5 months ago
+"Today, I’m very happy to announce the availability of S3 Object Lambda, a new capability that allows you to add your own code to process data
+retrieved from S3 before returning it to an application. S3 Object Lambda works with your existing applications and uses AWS Lambda functions to
+automatically process and transform your data as it is being retrieved from S3. The Lambda function is invoked inline with a standard S3 GET
+request, so you don’t need to change your application code."
+https://aws.amazon.com/de/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/
+upvoted 8 times
+meowruki 2 years, 6 months ago
+B. Store the data in an Amazon S3 bucket. Process and transform the data by using S3 Object Lambda before returning the data to the requesting
+application.
+This solution allows you to use S3 Object Lambda to process and transform the data on-the-fly as it is requested by each application. S3 Object
+Lambda enables you to apply custom code to your data retrieval requests, allowing you to remove PII before returning the data to the requesting
+application. This eliminates the need to create and manage separate storage locations for each application, reducing operational overhead.
+upvoted 3 times
+rvca231 2 years, 7 months ago
+Selected Answer: C
+Why would you reprocess the data every time you request it when you can just filter it once and be done?
+Because of this I think A and B are highly inefficient, leaving us with C and D as options.
+Since S3 is better suited for Data Lakes, I think C is the answer.
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Least operational overhead. The DevOps team is throwing this problem to the developers which is why C is not best.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Because this is exactly what the AWS blog says.
+"When you store data in Amazon Simple Storage Service (Amazon S3), you can easily share it for use by multiple applications. However, each
+application has its own requirements and may need a different view of the data. For example, a dataset created by an e-commerce application may
+include personally identifiable information (PII) that is not needed when the same data is processed for analytics and should be redacted. ... Today,
+I’m very happy to announce the availability of S3 Object Lambda, a new capability that allows you to add your own code to process data retrieved
+from S3 before returning it to an application. S3 Object Lambda works with your existing applications and uses AWS Lambda functions to
+automatically process and transform your data as it is being retrieved from S3."
+upvoted 2 times
+Abrar2022 3 years ago
+Selected Answer: B
+Store the data in an Amazon S3 bucket and using S3 Object Lambda to process and transform the data before returning it to the requesting
+application. This approach allows the PII to be removed in real-time and without the need to create separate datasets or tables for each application.
+upvoted 2 times
+antropaws 3 years ago
+Selected Answer: A
+@fruto123 and everyone that upvoted:
+Is it plausible that S3 Object Lambda can process terabytes of data in 60 seconds? The same link you shared states that the maximum duration for a
+Lambda function used by S3 Object Lambda is 60 seconds.
+Answer is A.
+upvoted 2 times
+antropaws 3 years ago
+Chat GPT:
+Isn't just 60 seconds the maximum duration for a Lambda function used by S3 Object Lambda? How can it process terabytes of data in 60 seconds?
+You are correct that the maximum duration for a Lambda function used by S3 Object Lambda is 60 seconds.
+Given the time constraint, it is not feasible to process terabytes of data within a single Lambda function execution.
+S3 Object Lambda is designed for lightweight and real-time transformations rather than extensive processing of large datasets.
+To handle terabytes of data, you would typically need to implement a distributed processing solution using services like Amazon EMR, AWS Glue, or
+AWS Batch. These services are specifically designed to handle big data workloads and provide scalability and distributed processing capabilities.
+So, while S3 Object Lambda can be useful for lightweight processing tasks, it is not the appropriate tool for processing terabytes of data within the
+execution time limits of a Lambda function.
+upvoted 2 times
+Kp88 2 years, 10 months ago
+Terabyte is just the storage. Lambda only need to process which application request. Think like removing/scratching off your social security
+number before sharing your doc to a third party.
+upvoted 3 times
+kruasan 3 years, 1 month ago
+Selected Answer: B
+• Storing the raw data in S3 provides a durable, scalable data lake. S3 requires little ongoing management overhead.
+• S3 Object Lambda can be used to filter and process the data on retrieval transparently. This minimizes operational overhead by avoiding the need
+to preprocess and store multiple transformed copies of the data.
+• Only one copy of the data needs to be stored and maintained in S3. S3 Object Lambda will transform the data on read based on the requesting
+application.
+• No additional applications or proxies need to be developed and managed to handle the data transformation. S3 Object Lambda provides this
+functionality.
+upvoted 4 times
+kruasan 3 years, 1 month ago
+Option A requires developing and managing a proxy app layer to handle data transformation, adding overhead.
+Options C and D require preprocessing and storing multiple copies of the transformed data, adding storage and management overhead.
+Option B using S3 Object Lambda minimizes operational overhead by handling data transformation on read transparently using the native S3
+functionality. Only one raw data copy is stored in S3, with no additional applications required.
+upvoted 2 times
+pagom 3 years, 3 months ago
+Selected Answer: B
+https://aws.amazon.com/ko/blogs/korea/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/
+upvoted 5 times
+LuckyAro 3 years, 3 months ago
+Selected Answer: B
+B is the correct answer.
+Amazon S3 Object Lambda allows you to add custom code to S3 GET requests, which means that you can modify the data before it is returned to the
+requesting application. In this case, you can use S3 Object Lambda to remove the PII before the data is returned to the two applications that do not
+need to process PII. This approach has the least operational overhead because it does not require creating separate datasets or proxy application
+layers, and it allows you to maintain a single copy of the data in an S3 bucket.
+upvoted 5 times
+NolaHOla 3 years, 3 months ago
+To meet the requirement of removing the PII before processing by two of the applications, it would be most efficient to use option B, which involves
+storing the data in an Amazon S3 bucket and using S3 Object Lambda to process and transform the data before returning it to the requesting
+application. This approach allows the PII to be removed in real-time and without the need to create separate datasets or tables for each application.
+S3 Object Lambda can be configured to automatically remove PII from the data before it is sent to the non-PII processing applications. This solution
+provides a cost-effective and scalable way to meet the requirement with the least operational overhead.
+upvoted 4 times
+minglu 3 years, 3 months ago
+Selected Answer: B
+I think it is B.
+upvoted 2 times
+skiwili 3 years, 3 months ago
+Selected Answer: C
+Looks like C is the correct answer
+upvoted 2 times

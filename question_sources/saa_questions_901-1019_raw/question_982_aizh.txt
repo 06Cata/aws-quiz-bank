@@ -1,0 +1,56 @@
+Question #982
+A company has an Amazon S3 bucket that contains sensitive data files. The company has an application that runs on virtual
+machines in an on-premises data center. The company currently uses AWS IAM Identity Center.
+The application requires temporary access to files in the S3 bucket. The company wants to grant the application secure access to
+the files in the S3 bucket.
+Which solution will meet these requirements?
+一家公司有一个 Amazon S3 bucket，其中包含敏感数据文件。该公司有一个运行在本地数据中心虚拟机上的应用程序。该公司目前
+使用 AWS IAM Identity Center。
+该应用程序需要临时访问 S3 bucket 中的文件。公司希望为应用程序提供安全访问 S3 bucket 文件的权限。
+哪种解决方案可以满足这些要求？
+A. Create an S3 bucket policy that permits access to the bucket from the public IP address range of the company’s on-premises
+data center.
+创建一个 S3 bucket policy，允许从公司本地数据中心的公共 IP 地址范围访问该 bucket。
+B. Use IAM Roles Anywhere to obtain security credentials in IAM Identity Center that grant access to the S3 bucket. Configure
+the virtual machines to assume the role by using the AWS CLI. Most Voted
+使用 IAM Roles Anywhere 从 IAM Identity Center 获取授予访问 S3 bucket 的安全凭证。通过 AWS CLI 配置虚拟机来承担该角
+色。
+C. Install the AWS CLI on the virtual machine. Configure the AWS CLI with access keys from an IAM user that has access to the
+bucket.
+在虚拟机上安装 AWS CLI。使用具有 bucket 访问权限的 IAM 用户的访问密钥配置 AWS CLI。
+D. Create an IAM user and policy that grants access to the bucket. Store the access key and secret key for the IAM user in AWS
+Secrets Manager. Configure the application to retrieve the access key and secret key at startup.
+创建一个 IAM 用户和策略，授予对 bucket 的访问权限。将 IAM 用户的访问密钥和秘密密钥存储在 AWS Secrets Manager 中。
+配置应用程序在启动时检索访问密钥和秘密密钥。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+Amazon S3访问控制与安全性
+IAM Roles Anywhere的使用
+如何安全地为本地应用程序提供临时访问AWS资源
+2. 选项分析
+A. Create an S3 bucket policy that permits access to the bucket from the public IP address range of the company’s on-
+premises data center.
+错误：通过IP地址范围限制访问虽然可以实现访问控制，但这种方法不够安全，尤其是对于敏感数据文件。IP地址可能会被伪造，
+且无法提供临时凭证。
+B. Use IAM Roles Anywhere to obtain security credentials in IAM Identity Center that grant access to the S3 bucket.
+Configure the virtual machines to assume the role by using the AWS CLI.
+正确：IAM Roles Anywhere允许本地应用程序安全地获取临时凭证并访问AWS资源。通过AWS CLI配置虚拟机以承担角色是安全且
+符合最佳实践的解决方案。
+C. Install the AWS CLI on the virtual machine. Configure the AWS CLI with access keys from an IAM user that has access to
+the bucket.
+错误：直接使用IAM用户的访问密钥和秘密密钥存在安全风险，因为这些密钥是长期凭证，容易被泄露或滥用。
+D. Create an IAM user and policy that grants access to the bucket. Store the access key and secret key for the IAM user in
+AWS Secrets Manager. Configure the application to retrieve the access key and secret key at startup.
+错误：虽然使用AWS Secrets Manager存储密钥可以提高安全性，但仍然依赖IAM用户的长期凭证，不符合临时访问的最佳实践。
+3. 我选的答案
+B
+4. 官方的答案
+B
+5. 与官方答案的比较
+我的答案与官方答案一致，无需重新思考。
+Community vote distribution
+社区投票分布
+B (89%)
+11%

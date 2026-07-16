@@ -1,0 +1,131 @@
+A company needs to keep user transaction data in an Amazon DynamoDB table. The company must retain the data for 7 years.
+What is the MOST operationally efficient solution that meets these requirements?
+A. Use DynamoDB point-in-time recovery to back up the table continuously.
+B. Use AWS Backup to create backup schedules and retention policies for the table. Most Voted
+C. Create an on-demand backup of the table by using the DynamoDB console. Store the backup in an Amazon S3 bucket. Set
+an S3 Lifecycle configuration for the S3 bucket.
+D. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to invoke an AWS Lambda function. Configure the
+Lambda function to back up the table and to store the backup in an Amazon S3 bucket. Set an S3 Lifecycle configuration for
+the S3 bucket.
+Comments
+123jhl0 Highly Voted 3 years, 7 months ago
+Selected Answer: B
+Answer is B
+"Amazon DynamoDB offers two types of backups: point-in-time recovery (PITR) and on-demand backups. (==> D is not the answer)
+PITR is used to recover your table to any point in time in a rolling 35 day window, which is used to help customers mitigate accidental deletes or
+writes to their tables from bad code, malicious access, or user error. (==> A isn't the answer)
+On demand backups are designed for long-term archiving and retention, which is typically used to help customers meet compliance and regulatory
+requirements.
+This is the second of a series of two blog posts about using AWS Backup to set up scheduled on-demand backups for Amazon DynamoDB. Part 1
+presents the steps to set up a scheduled backup for DynamoDB tables from the AWS Management Console." (==> Not the DynamoBD console and
+C isn't the answer either)
+https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon-dynamodb-using-aws-backup/
+upvoted 52 times
+LuckyAro 3 years, 4 months ago
+I think the answer is C because of storage time.
+upvoted 2 times
+jerryl 1 year, 2 months ago
+i think another reason for why C is not correct is the keyword "on-demand" which is not operation efficient (as this should be an ongoing practice)
+upvoted 1 times
+MutiverseAgent 2 years, 11 months ago
+Dynamo backups cannot be scheduled or sent to S3, so answer should be B)
+1) https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BackupRestore.html
+2) https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html
+upvoted 2 times
+app12 2 years, 5 months ago
+In the very same link you shared it says that you CAN send backups to S3
+https://youtu.be/4INEu_hw30Q?t=54
+upvoted 2 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: B
+The most operationally efficient solution that meets these requirements would be to use option B, which is to use AWS Backup to create backup
+schedules and retention policies for the table.
+Correct Answer: B
+Community vote distribution
+B (100%)
+AWS Backup is a fully managed backup service that makes it easy to centralize and automate the backup of data across AWS resources. It allows you
+to create backup policies and schedules to automatically back up your DynamoDB tables on a regular basis. You can also specify retention policies to
+ensure that your backups are retained for the required period of time. This solution is fully automated and requires minimal maintenance, making it
+the most operationally efficient option.
+upvoted 18 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Option A, using DynamoDB point-in-time recovery, is also a viable option but it requires continuous backup, which may be more resource-intensive
+and may incur higher costs compared to using AWS Backup.
+Option C, creating an on-demand backup of the table and storing it in an S3 bucket, is also a viable option but it requires manual intervention and
+does not provide the automation and scheduling capabilities of AWS Backup.
+Option D, using Amazon EventBridge (CloudWatch Events) and a Lambda function to back up the table and store it in an S3 bucket, is also a viable
+option but it requires more complex setup and maintenance compared to using AWS Backup.
+upvoted 15 times
+Dharmarajan Most Recent 1 year, 4 months ago
+Selected Answer: B
+Anytime the "Operational efficiency"comes into picture, one should consider the options with serverless or managed services. DynamoDB is a
+serverlessservice, and AWS Backup is a managed service. Others involve operational work in terms of maintenance of backups etc.
+upvoted 2 times
+satyaammm 1 year, 5 months ago
+Selected Answer: B
+Using AWS Backup is most suitable here for retaining data for 7 years.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: B
+Ans B - there are no special parameters specified for the backup (eg. PITR snapshots) so it doesn't need to be elaborate
+upvoted 2 times
+OctavioBatera 2 years, 2 months ago
+Selected Answer: B
+Agreed with option B is the right one. AWS backup retention goes from 1 day to 100 years (or even indefinitely, if you do not enter a retention
+period), so will meet the requirements.
+upvoted 2 times
+cheroh_tots 2 years, 3 months ago
+Why is the answer not C?
+upvoted 2 times
+1dfed2b 2 years, 3 months ago
+As I see, we are looking for the most operationally efficient solution. So it's B, but the most cost effective its - C (but it isn't a question).
+upvoted 2 times
+psyll0n 2 years, 4 months ago
+https://youtu.be/g4WPLFXLwDE?si=nTWqqDcBe_Y6dtl3
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: B
+Operational efficiency is always a managed service from AWS. AWS Backup is the right one in this case so B is right answer
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Answer is simply B as it if MOST operationally efficient. Other options are "distractors" to confuse everyone.
+upvoted 2 times
+viru 2 years, 5 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_HowItWorksAWS.html
+upvoted 1 times
+Mikado211 2 years, 6 months ago
+Selected Answer: B
+Well a 7 years TTL on the dynamoDB records could be the simpliest to answer the question, so B for the "retention policies". And since the B also
+propose AWS backup with a retention time at 7 years, why not.
+upvoted 2 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: B
+The key advantages of using AWS Backup are:
+Fully managed backup service requiring minimal operational overhead
+Built-in scheduling, retention policies, and backup monitoring
+Supports point-in-time restore for DynamoDB
+Automated and scalable solution
+upvoted 1 times
+tamefi5512 2 years, 11 months ago
+Selected Answer: B
+B - is the answer because its easy to setup via AWS Backup & It indicates the keyword "MOST Operational Efficient". Other answers are indicating
+Cost efficient
+upvoted 1 times
+cookieMr 2 years, 11 months ago
+AWS Backup is a fully managed backup service that simplifies the process of creating and managing backups across various AWS services, including
+DynamoDB. It allows you to define backup schedules and retention policies to automatically take backups and retain them for the desired duration.
+By using AWS Backup, you can offload the operational overhead of managing backups to the service itself, ensuring that your data is protected and
+retained according to the specified retention period.
+This solution is more efficient compared to the other options because it provides a centralized and automated backup management approach
+specifically designed for AWS services. It eliminates the need to manually configure and maintain backup processes, making it easier to ensure data
+retention compliance without significant operational effort.
+upvoted 2 times
+Rahul2212 2 years, 12 months ago
+A
+PITR is used to recover your table to any point in time in a rolling 35 day window, which is used to help customers mitigate accidental deletes or
+writes to their tables from bad code, malicious access, or user error. (==> A is the answer)
+upvoted 1 times
+Abrar2022 3 years ago
+using AWS Backup cheaper than DynamoDB point-in-time recovery
+upvoted 1 times

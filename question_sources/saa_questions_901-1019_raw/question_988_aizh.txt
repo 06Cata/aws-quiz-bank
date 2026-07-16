@@ -1,0 +1,70 @@
+Question #988
+A company is designing the architecture for a new mobile app that uses the AWS Cloud. The company uses organizational units
+(OUs) in AWS Organizations to manage its accounts. The company wants to tag Amazon EC2 instances with data sensitivity by
+using values of sensitive and nonsensitive. IAM identities must not be able to delete a tag or create instances without a tag.
+Which combination of steps will meet these requirements? (Choose two.)
+一家公司正在设计一个使用 AWS 云的新移动应用的架构。该公司在 AWS Organizations 中使用组织单元（OUs）来管理其账户。公
+司希望通过使用 sensitive 和 nonsensitive 值来为 Amazon EC2 实例添加数据敏感性标签。IAM 身份不得删除标签或创建没有标签
+的实例。
+哪些步骤组合可以满足这些要求？（选择两个。）
+A. In Organizations, create a new tag policy that specifies the data sensitivity tag key and the required values. Enforce the tag
+values for the EC2 instances. Attach the tag policy to the appropriate OU. Most Voted
+在 Organizations 中，创建一个新的标签策略（tag policy），指定数据敏感性标签键和所需值。强制执行 EC2 实例的标签值。
+将标签策略附加到适当的 OU。
+B. In Organizations, create a new service control policy (SCP) that specifies the data sensitivity tag key and the required tag
+values. Enforce the tag values for the EC2 instances. Attach the SCP to the appropriate OU.
+在 Organizations 中，创建一个新的服务控制策略（SCP），指定数据敏感性标签键和所需标签值。强制执行 EC2 实例的标签
+值。将 SCP 附加到适当的 OU。
+C. Create a tag policy to deny running instances when a tag key is not specified. Create another tag policy that prevents
+identities from deleting tags. Attach the tag policies to the appropriate OU.
+创建一个标签策略以拒绝运行没有指定标签键的实例。创建另一个标签策略以防止身份删除标签。将标签策略附加到适当的
+OU。
+D. Create a service control policy (SCP) to deny creating instances when a tag key is not specified. Create another SCP that
+prevents identities from deleting tags. Attach the SCPs to the appropriate OU. Most Voted
+创建一个服务控制策略（SCP）以拒绝创建没有指定标签键的实例。创建另一个 SCP 以防止身份删除标签。将 SCP 附加到适当
+的 OU。
+E. Create an AWS Config rule to check if EC2 instances use the data sensitivity tag and the specified values. Configure an AWS
+Lambda function to delete the resource if a noncompliant resource is found.
+创建一个 AWS Config 规则以检查 EC2 实例是否使用数据敏感性标签和指定值。配置一个 AWS Lambda 函数以删除发现的不合
+规资源。
+题目分析与解答
+1. 考察的知识点
+AWS Organizations中的服务控制策略（SCP）和标签策略（Tag Policy）的使用。
+如何强制执行资源标签的使用和防止标签被删除。
+IAM权限管理与资源合规性控制。
+2. 选项分析
+A. In Organizations, create a new tag policy that specifies the data sensitivity tag key and the required values. Enforce the
+tag values for the EC2 instances. Attach the tag policy to the appropriate OU.
+正确：标签策略（Tag Policy）可以强制要求资源使用特定的标签键和值，并且可以附加到OU以应用到相关账户。
+但标签策略无法直接阻止创建没有标签的实例或防止删除标签，因此需要结合其他策略（如SCP）。
+B. In Organizations, create a new service control policy (SCP) that specifies the data sensitivity tag key and the required
+tag values. Enforce the tag values for the EC2 instances. Attach the SCP to the appropriate OU.
+错误：SCP可以限制创建没有标签的实例，但无法直接强制资源使用特定的标签键和值。SCP的作用是限制权限，而不是管理标签的
+具体值。
+C. Create a tag policy to deny running instances when a tag key is not specified. Create another tag policy that prevents
+identities from deleting tags. Attach the tag policies to the appropriate OU.
+错误：标签策略（Tag Policy）无法直接实现“拒绝运行没有指定标签键的实例”或“防止删除标签”的功能。这些功能需要通过SCP来
+实现。
+D. Create a service control policy (SCP) to deny creating instances when a tag key is not specified. Create another SCP that
+prevents identities from deleting tags. Attach the SCPs to the appropriate OU.
+正确：SCP可以限制创建没有标签的实例，并且可以防止IAM身份删除标签。将SCP附加到OU后，可以在组织范围内强制执行这些
+限制。
+E. Create an AWS Config rule to check if EC2 instances use the data sensitivity tag and the specified values. Configure an
+AWS Lambda function to delete the resource if a noncompliant resource is found.
+错误：AWS Config规则可以检查资源是否符合标签要求，但它无法阻止创建没有标签的实例或防止删除标签。使用Lambda函数删
+除资源是一种事后处理方式，而题目要求的是预防性措施。
+3. 我选的答案
+A
+D
+4. 官方答案
+A
+D
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：标签策略（Tag Policy）用于强制资源使用特定的标签键和值，而服务控制策略（SCP）用于限制权限（如防止创建没有
+标签的实例和防止删除标签）。两者结合可以满足题目要求。
+Correct Answer: AD
+正确答案：AD
+Community vote distribution
+社区投票分布
+AD (100%)

@@ -1,0 +1,162 @@
+A bicycle sharing company is developing a multi-tier architecture to track the location of its bicycles during peak operating hours.
+The company wants to use these data points in its existing analytics platform. A solutions architect must determine the most
+viable multi-tier option to support this architecture. The data points must be accessible from the REST API.
+Which action meets these requirements for storing and retrieving location data?
+A. Use Amazon Athena with Amazon S3.
+B. Use Amazon API Gateway with AWS Lambda. Most Voted
+C. Use Amazon QuickSight with Amazon Redshift.
+D. Use Amazon API Gateway with Amazon Kinesis Data Analytics.
+Comments
+ArielSchivo Highly Voted 3 years, 7 months ago
+Selected Answer: B
+API Gateway is needed to get the data so option A and C are out.
+“The company wants to use these data points in its existing analytics platform” so there is no need to add Kynesis. Option D is also out.
+This leaves us with option B as the correct one.
+upvoted 111 times
+alfonso_ciampa 2 years, 11 months ago
+You are right, but it clearly say "store data".
+AWS Lambda don't store data, Kinesis could.
+upvoted 12 times
+FlyingHawk 1 year, 4 months ago
+AWS Lambda provides a serverless way to process incoming requests and interact with a storage backend.
+This solution can store location data in a service like Amazon DynamoDB or Amazon S3 and use Lambda functions to retrieve and serve this data
+through the API Gateway. This is cost-effective, scalable, and straightforward for real-time queries.
+upvoted 2 times
+ces26015 3 years, 4 months ago
+i dont understand the use of a lambda function here, maybe if there would be need to transform the data, can you explain?
+upvoted 6 times
+Tsige 1 year, 7 months ago
+While API Gateway and Lambda can work together for processing requests, this setup doesn't efficiently handle continuous real-time data
+streaming and analysis, which is required for tracking the bicycle locations. Lambda is stateless and is better suited for on-demand execution, not
+for real-time analytics of streaming data. So, the correct option is D
+upvoted 10 times
+MutiverseAgent 2 years, 11 months ago
+B might work but D works better. B requieres API gateway + lambda for data input & output, whereas D is a broader solution, as Kinesis Data
+Analytics APIs can be used to extract and process data better that API Gateway + Lambdas. Also, Kinesis is highly recommended for telemetry data
+which is the question scenario. @See Kinesys flexible API (https://aws.amazon.com/documentation-overview/kinesis-data-analytics/)
+upvoted 12 times
+MutiverseAgent 2 years, 11 months ago
+Also by using kinesis the analytics platform will have a storing buffer to take & process data through the kinesys API. The lambda aproach in the B
+scenario is to wide and leaves many loose ends.
+upvoted 5 times
+Correct Answer: B
+Community vote distribution
+B (48%)
+D (47%)
+6%
+Six_Fingered_Jose Highly Voted 3 years, 7 months ago
+Selected Answer: D
+I dont understand why you will vote B?
+how are you going to store data with just lambda?
+> Which action meets these requirements for storing and retrieving location data
+In this use case there will obviously be a ton of data and you want to get real-time location data of the bicycles, and to analyze all these info kinesis i
+the one that makes most sense here.
+upvoted 82 times
+a070112 3 years, 5 months ago
+Lambda isn't storing the data themselves. It's triggering the data store to the company's "existing data analytics platform"
+upvoted 10 times
+kmliuy73 3 years, 5 months ago
+Real-time analytics on Kinesis Data Streams & Firehose using SQL, not store db ...
+upvoted 5 times
+Six_Fingered_Jose 3 years, 7 months ago
+https://aws.amazon.com/blogs/aws/real-time-hotspot-detection-in-amazon-kinesis-analytics/
+upvoted 5 times
+UWSFish 3 years, 7 months ago
+I don't think you need to worry about storing data. The question states their is an existing platform.
+upvoted 4 times
+Tim2026 Most Recent 1 month, 2 weeks ago
+Selected Answer: B
+You need a REST API + real-time processing of location data → API Gateway exposes the REST endpoints, Lambda handles ingestion/logic.
+upvoted 1 times
+TEC65 1 year, 1 month ago
+Selected Answer: D
+better for streaming data
+upvoted 1 times
+Vivobook11 1 year, 2 months ago
+Selected Answer: D
+D. Use Amazon API Gateway with Amazon Kinesis Data Analytics.
+Why?
+Real-time Data Processing: Amazon Kinesis Data Analytics can process streaming data (e.g., bicycle locations) in real-time.
+REST API Access: Amazon API Gateway can provide a secure REST API for accessing the processed data.
+Scalability & Performance: Kinesis efficiently ingests large volumes of data during peak hours.
+Integration with Analytics: The processed data can be stored in Amazon S3, DynamoDB, or Redshift for further analytics.
+upvoted 2 times
+Faraz999 1 year, 2 months ago
+Selected Answer: B
+API Gateway is needed to get the data so option A and C are out.
+“The company wants to use these data points in its existing analytics platform” so there is no need to add Kynesis. Option D is also out.
+This leaves us with option B as the correct one.
+upvoted 1 times
+CloudExpert01 1 year, 2 months ago
+Selected Answer: B
+when choosing between B and D:
+"The company wants to use these data points in its existing analytics platform." so need for Lambda to integrate data points in its existing analytics
+platform
+upvoted 2 times
+Faraz999 1 year, 2 months ago
+Selected Answer: B
+API Gateway is needed to get the data so option A and C are out.
+“The company wants to use these data points in its existing analytics platform” so there is no need to add Kynesis. Option D is also out.
+This leaves us with option B as the correct one.
+upvoted 1 times
+Faraz999 1 year, 2 months ago
+Selected Answer: B
+API Gateway is needed to get the data so option A and C are out.
+“The company wants to use these data points in its existing analytics platform” so there is no need to add Kynesis. Option D is also out.
+This leaves us with option B as the correct one.
+upvoted 2 times
+Saloniip 1 year, 3 months ago
+Selected Answer: B
+lambda can store data in db which is not mentioned but can be implemented, wherein kinesis data analytics would be more complex to implement
+just for simple location tracking. Also, a data analytics tool is already there. Hence, B is more suitable.
+upvoted 2 times
+tch 1 year, 4 months ago
+Selected Answer: D
+Amazon Kinesis Data Analytics allows you to build more complex analytics applications that support flexible processing choices and robust fault-
+tolerance with exactly-once processing without duplicates, and analytics that can be performed over an entire data stream across multiple logical
+partitions. With KDA, you can analyze data over multiple types of aggregation windows (tumbling window, stagger window, sliding window, session
+window) using either the event time or the processing tim
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: D
+Lambda is not most viable, or real time
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+Given that the company already has an existing analytics platform and needs a solution for storing and retrieving location data that can be accessed
+through a REST API, the best choice is:
+B. Use Amazon API Gateway with AWS Lambda
+upvoted 3 times
+FlyingHawk 1 year, 4 months ago
+D. Amazon API Gateway with Amazon Kinesis Data Analytics: Kinesis Data Analytics is for continuous real-time stream processing. If the requiremen
+focuses only on storing and retrieving (not streaming) data, this adds unnecessary complexity.
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: D
+Kinesis is specifically designed for telemetry data, making it a better fit for tracking bicycle locations.
+upvoted 3 times
+FlyingHawk 1 year, 4 months ago
+I changed my mind to B now as there is existing analytic platform already, the data will be stored in the existing analytic platform, so you can use
+Lambda to process and store data in the existing analytic platform.
+upvoted 1 times
+Rcosmos 1 year, 5 months ago
+Selected Answer: D
+B. Amazon API Gateway com AWS Lambda:
+Essa combinação é útil para fornecer APIs REST, mas o Lambda não é otimizado para ingestão contínua de dados de localização em tempo real. Ele
+seria mais adequado para processos eventuais ou tarefas específicas.
+upvoted 2 times
+hashepsut 1 year, 5 months ago
+Selected Answer: B
+the best answer is B: Use Amazon API Gateway with AWS Lambda
+Reasoning:
+API Gateway provides the required REST API endpoint
+Lambda can handle real-time processing of location data
+This combination is cost-effective and scalable
+Can easily integrate with other AWS services for analytics
+Provides the necessary multi-tier architecture (API Layer, Processing Layer, Storage Layer)
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: D
+A common use is the real-time aggregation of data followed by loading the aggregate data into a data warehouse or map-reduce cluster.
+https://docs.aws.amazon.com/streams/latest/dev/introduction.html#using-the-service
+upvoted 1 times

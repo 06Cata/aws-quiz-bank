@@ -1,0 +1,113 @@
+A company performs tests on an application that uses an Amazon DynamoDB table. The tests run for 4 hours once a week. The
+company knows how many read and write operations the application performs to the table each second during the tests. The
+company does not currently use DynamoDB for any other use case. A solutions architect needs to optimize the costs for the table.
+Which solution will meet these requirements?
+A. Choose on-demand mode. Update the read and write capacity units appropriately.
+B. Choose provisioned mode. Update the read and write capacity units appropriately. Most Voted
+C. Purchase DynamoDB reserved capacity for a 1-year term.
+D. Purchase DynamoDB reserved capacity for a 3-year term.
+Comments
+OSHOAIB Highly Voted 1 year, 11 months ago
+Selected Answer: A
+On-demand mode Option A: On-demand mode is suitable for workloads that are unpredictable or that do not have significant or consistent
+database traffic. It automatically scales to accommodate workload demands and charges for the read and write throughput that the application
+consumes. For infrequent testing, this could be cost-effective because you only pay for what you use during the testing period and don't incur costs
+when the table is not being accessed.
+Whereas for the Option B, if you only run tests once a week for 4 hours, you might pay for unused capacity for the rest of the week unless you
+manually scale down the capacity after tests are completed, which adds operational overhead.
+upvoted 7 times
+allanm 10 months ago
+You're missing one key information - "The company knows how many read and write operations the application performs to the table each second
+during the tests." If you know the capacity, then on-demand doesn't make sense. You'll need to go with provisioned resources.
+upvoted 1 times
+1Alpha1 Highly Voted 1 year, 10 months ago
+Selected Answer: B
+With provisioned capacity mode, you specify the number of reads and writes per second that you expect your application to require, and you are
+billed based on that. Furthermore if you can forecast your capacity requirements you can also reserve a portion of DynamoDB provisioned capacity
+and optimize your costs even further.
+https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/capacity.html
+upvoted 6 times
+Pucmaster Most Recent 3 months, 2 weeks ago
+Selected Answer: A
+A is correct
+upvoted 1 times
+SnaxAttax 6 months, 2 weeks ago
+Selected Answer: A
+On demand means you are only paying for the read/write you use, which is very little here. B, C, D would all have you wasting money given how little
+this DB is actually used.
+upvoted 1 times
+jacobtriestech 8 months, 2 weeks ago
+Correct Answer: B
+Community vote distribution
+B (61%)
+A (39%)
+Selected Answer: A
+On-demand mode automatically scales to demand, and you only pay per request.
+upvoted 1 times
+111380c 10 months ago
+Selected Answer: A
+provisioned mode - charge by hours, even not used
+upvoted 1 times
+ln2718 10 months, 3 weeks ago
+Selected Answer: A
+This is either a poorly written or trick question. On one hand the performance is known, which would tend towards answer B and provisioned,
+however only 4 hours a week eliminates the gains from such.
+ChatGPT - running your DynamoDB tables in provisioned mode for only four hours a week can lead to suboptimal cost efficiency if not managed
+carefully. Recommendations for managing costs with intermittent workloads consider using on-demand capacity mode: For workloads that are truly
+unpredictable or only run for short periods, on-demand mode can simplify cost management and reduce expenses.
+upvoted 1 times
+Dz1990 1 year ago
+Selected Answer: B
+The exam writers are being EXTRA sneaky here! While on-demand seems logical for 4 hours/week usage, the key trap is this phrase: "The company
+knows how many read and write operations the application performs to the table each second."
+This is AWS exam code for "predictable workload - use provisioned mode."
+Known/Predictable Workload + Cost Optimization = Provisioned Mode
+Unknown/Variable Workload + Cost Optimization = On-Demand Mode
+When they give you specific performance data, they expect you to USE it (provisioned), not ignore it (on-demand). AWS exams reward recognizing
+keyword signals rather than doing obvious cost calculations.
+Answer B because the exam tests if you catch the "predictable workload pattern" over pure math. Classic AWS exam trickery!
+upvoted 1 times
+yangbo 1 year, 2 months ago
+Selected Answer: A
+if after 4hours change the RCU/WCU ,select B
+if after 4hours do not change the RCU/WCU ,select A
+upvoted 1 times
+mestule 1 year, 10 months ago
+Selected Answer: B
+DynamoDB On-Demand pricing is about 6.94x the cost of provisioned capacity. If your applications have predictable traffic patterns and you don't
+mind spending the time to understand those patterns, using DynamoDB's provisioned throughput capacity can save you money.
+Also can't set any capacity units for on-demand mode, so A is false in it's premise.
+https://www.serverless.com/blog/dynamodb-on-demand-serverless
+upvoted 5 times
+anikolov 1 year, 10 months ago
+Selected Answer: A
+A: is most cost effective (which is a question/requirement ) - 4h per week for Tests purpose
+upvoted 2 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: B
+CD are expensive as reserved capacity even with discounts would spend most time in idle mode (over paid, under utilized)
+A: On demand is good if you have unpredictable usage,
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.OnDemand
+B: Provisioned is good if you the usage: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html
+"The company knows how many read and write operations the application performs to the table each second during the tests." so ideally they can
+set this as max
+upvoted 4 times
+theonlyhero 1 year, 11 months ago
+I initially thought it would be A, but when they mentioned "Update the read and write capacity units appropriately." which are automatically set in
+"on-demand" switched to B
+upvoted 2 times
+skynetjay 1 year, 11 months ago
+Selected Answer: B
+Provisoned Mode shoud be the answer seeing that the workloads are predictable and DynamoDB isnt used for any other thing.
+upvoted 2 times
+pentium75 1 year, 11 months ago
+Selected Answer: B
+Agree with B, on-demand mode might not scale fast enough after the DB has been idle for 164 hours. As they know exactly the number of reads and
+writes per second, should use provisioned mode, and set capacity to 1 RCU and 1 WCU while the DB is not in use.
+upvoted 3 times
+meenkaza 1 year, 11 months ago
+Selected Answer: B
+Provisioned Mode (Option B): Provisioned mode allows you to specify the desired read and write capacity units. Since the workload occurs once a
+week for 4 hours, you can provision the read and write capacity units accordingly to handle the expected load during that time. This can be a more
+cost-effective option than on-demand pricing for predictable workloads.
+upvoted 2 times

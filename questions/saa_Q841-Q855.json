@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 841,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon EC2 執行個體和 Amazon Elastic Block Store (Amazon EBS) 來運行其自行管理的資料庫。該公司擁有分佈在所有 EBS 磁碟區中的 350 TB 資料。該公司每天拍攝 EBS 快照並將快照保留 1 個月。每日變化率為 EBS 數量的 5%。由於新規定，公司需要將每月快照保留 7 年。該公司需要改變其備份策略，以符合新法規並確保以最少的管理工作即可獲得資料。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company uses Amazon EC2 instances and Amazon Elastic Block Store (Amazon EBS) to run its self-managed database. The company has 350 TB of data spread across all EBS volumes. The company takes daily EBS snapshots and keeps the snapshots for 1 month. The daily change rate is 5% of the EBS volumes. Because of new regulations, the company needs to keep the monthly snapshots for 7 years. The company needs to change its backup strategy to comply with the new regulations and to ensure that data is available with minimal administrative effort. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "將每日快照保留在 EBS 快照標準層中 1 個月。將每月快照複製到 Amazon S3 Glacier Deep Archive，保留期為 7 年。",
+          "en": "Keep the daily snapshot in the EBS snapshot standard tier for 1 month. Copy the monthly snapshot to Amazon S3 Glacier Deep Archive with a 7-year retention period."
+        },
+        "B": {
+          "zh": "繼續目前的 EBS 快照策略。新增政策以將每月快照移至 Amazon EBS Snapshots Archive，保留期為 7 年。",
+          "en": "Continue with the current EBS snapshot policy. Add a new policy to move the monthly snapshot to Amazon EBS Snapshots Archive with a 7-year retention period."
+        },
+        "C": {
+          "zh": "將每日快照保留在 EBS 快照標準層中 1 個月。將每月快照保留在標準層 7 年。使用增量快照。",
+          "en": "Keep the daily snapshot in the EBS snapshot standard tier for 1 month. Keep the monthly snapshot in the standard tier for 7 years. Use incremental snapshots."
+        },
+        "D": {
+          "zh": "將每日快照保留在 EBS 快照標準層。使用 EBS 直接 API 每月拍攝所有 EBS 磁碟區的快照。將快照儲存在不頻繁存取層的 Amazon S3 儲存桶中 7 年。",
+          "en": "Keep the daily snapshot in the EBS snapshot standard tier. Use EBS direct APIs to take snapshots of all the EBS volumes every month. Store the snapshots in an Amazon S3 bucket in the Infrequent Access tier for 7 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon S3 Glacier Deep Archive 是一種成本極低的長期儲存選項，但 EBS 快照無法直接複製到 S3 Glacier Deep Archive。需要額外的工具或流程（例如匯出到 S3），這增加了複雜性和管理成本。此選項不符合「最小化管理工作」的要求。",
+          "en": "Incorrect. Amazon S3 Glacier Deep Archive is an extremely low-cost long-term storage option, but EBS snapshots cannot be copied directly to S3 Glacier Deep Archive. Additional tools or processes (such as exporting to S3) are required, which adds complexity and management costs. This option does not meet the requirement of \"minimizing administrative effort\"."
+        },
+        "B": {
+          "zh": "正確。Amazon EBS 快照存檔是一個低成本選項，專為 EBS 快照的長期儲存而設計。此方案直接利用EBS的歸檔功能，滿足成本最佳化和管理簡化的要求。這個選項是正確的。",
+          "en": "Correct. Amazon EBS Snapshots Archive is a low-cost option designed specifically for long-term storage of EBS snapshots. This option directly utilizes the archiving function of EBS and meets the requirements of cost optimization and management simplification. This option is correct."
+        },
+        "C": {
+          "zh": "錯誤。雖然增量快照可以降低儲存成本，但將快照保留在標準層7年會導致儲存成本過高，不符合「成本優化」的要求。此選項不滿足成本效益要求。",
+          "en": "Incorrect. Although incremental snapshots can reduce storage costs, keeping snapshots in the standard tier for 7 years will result in high storage costs and does not meet the requirements of \"cost optimization\". This option does not meet cost-effectiveness requirements."
+        },
+        "D": {
+          "zh": "錯誤。EBS快照不能直接儲存在S3中，需要匯出到S3，增加了管理複雜度。此外，S3 不頻繁存取層的成本可能高於 EBS 快照存檔。此選項不符合「最小化管理工作」的要求。",
+          "en": "Incorrect. EBS snapshots cannot be directly stored in S3 and need to be exported to S3, which increases management complexity. Additionally, the S3 Infrequent Access tier may cost more than EBS Snapshots Archive. This option does not meet the requirement of \"minimizing administrative effort\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 繼續目前的 EBS 快照策略。新增政策以將每月快照移至 Amazon EBS Snapshots Archive，保留期為 7 年。",
+        "en": "B. Continue with the current EBS snapshot policy. Add a new policy to move the monthly snapshot to Amazon EBS Snapshots Archive with a 7-year retention period."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (49%)； A (46%)。熱門討論與考點摘要：Amazon EBS 快照存檔是一個低成本選項，專為 EBS 快照的長期儲存而設計。此方案直接利用EBS的歸檔功能，滿足成本最佳化和管理簡化的要求。這個選項是正確的。",
+        "en": "Community vote as displayed: B (49%); A (46%). Popular discussion and key point summary: Amazon EBS Snapshots Archive is a low-cost option designed specifically for long-term storage of EBS snapshots. This option directly utilizes the archiving function of EBS and meets the requirements of cost optimization and management simplification. This option is correct."
+      }
+    },
+    {
+      "question_no": 842,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在多個 Amazon EC2 執行個體上運行應用程序，這些執行程序將持久性資料儲存在 Amazon Elastic File System (Amazon EFS) 檔案系統上。該公司需要使用 AWS 託管服務解決方案將資料複製到另一個 AWS 區域。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company runs an application on several Amazon EC2 instances that store persistent data on an Amazon Elastic File System (Amazon EFS) file system. The company needs to replicate the data to another AWS Region by using an AWS managed service solution. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 EFS 到 EFS 備份解決方案將資料複製到另一個區域中的 EFS 檔案系統。",
+          "en": "Use the EFS-to-EFS backup solution to replicate the data to an EFS file system in another Region."
+        },
+        "B": {
+          "zh": "執行夜間腳本以將資料從 EFS 檔案系統複製到 Amazon S3 儲存桶。在 S3 儲存桶上啟用 S3 跨區域複製。",
+          "en": "Run a nightly script to copy data from the EFS file system to an Amazon S3 bucket. Enable S3 Cross-Region Replication on the S3 bucket."
+        },
+        "C": {
+          "zh": "在另一個區域建立 VPC。建立跨Region的VPC對等體。每晚執行 rsync 將資料從原始區域複製到新區域。",
+          "en": "Create a VPC in another Region. Establish a cross-Region VPC peer. Run a nightly rsync to copy data from the original Region to the new Region."
+        },
+        "D": {
+          "zh": "使用 AWS Backup 建立備份計劃，並制定每日備份並將其複製到另一個區域的規則。將 EFS 檔案系統資源指派給備份計畫。",
+          "en": "Use AWS Backup to create a backup plan with a rule that takes a daily backup and replicates it to another Region. Assign the EFS file system resource to the backup plan."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項錯誤：EFS到EFS的備份解決方案不是AWS提供的官方服務，而是需要使用者自己實現的解決方案。這種方法可能需要額外的開發和維護成本。此外，EFS 到 EFS 的複製可能涉及複雜的配置，並且不如 AWS Backup 的跨區域複製功能那麼簡單且經濟高效。",
+          "en": "Incorrect. Use an EFS-to-EFS backup solution to copy data to an EFS file system in another region. Error: The EFS-to-EFS backup solution is not an official service provided by AWS, but a solution that requires users to implement it themselves. This approach may require additional development and maintenance costs. Additionally, EFS-to-EFS replication can involve complex configuration and is not as straightforward and cost-effective as AWS Backup's cross-region replication feature."
+        },
+        "B": {
+          "zh": "錯誤。執行夜間腳本以將資料從 EFS 檔案系統複製到 Amazon S3 儲存桶。在S3儲存桶上啟用S3跨區域複製。錯誤：雖然S3支援跨區域複製，但此解決方案需要額外的腳本開發和維護工作。將資料從 EFS 複製到 S3 會增加儲存和傳輸成本，並且不能直接滿足「使用 AWS 託管服務解決方案」的問題要求。",
+          "en": "Incorrect. Run a nightly script to copy data from an EFS file system to an Amazon S3 bucket. Enable S3 cross-region replication on the S3 bucket. Error: Although S3 supports cross-region replication, this solution requires additional script development and maintenance effort. Copying data from EFS to S3 increases storage and transfer costs and does not directly meet the question requirement of \"using an AWS managed service solution\"."
+        },
+        "C": {
+          "zh": "錯誤。在其他地域建立VPC。建立跨地域的VPC對等。每晚執行 rsync 將資料從原始區域複製到新區域。錯誤：此解決方案需要手動配置 VPC 對等和 rsync 腳本，增加了複雜性和維護成本。 rsync 的效能可能會受到網路延遲的影響，且不如 AWS Backup 的解決方案有效率。",
+          "en": "Incorrect. Create a VPC in another region. Establish cross-region VPC peering. Run a nightly rsync to copy the data from the original region to the new region. Error: This solution requires manual configuration of VPC peering and rsync scripts, adding complexity and maintenance costs. The performance of rsync may be affected by network latency and is not as efficient as AWS Backup's solution."
+        },
+        "D": {
+          "zh": "正確。使用 AWS Backup 建立備份計劃，其中包含每日備份規則並將其複製到另一個區域。將 EFS 檔案系統資源指派給備份計畫。正確：AWS Backup 是一項完全託管的服務，支援跨區域備份和複製，並與 EFS 整合。此解決方案最符合問題的要求，使用AWS管理服務，是最具成本效益的選擇。",
+          "en": "Correct. Use AWS Backup to create a backup plan that contains a rule for daily backups and copying them to another region. Allocate EFS file system resources to the backup plan. Correct: AWS Backup is a fully managed service that supports cross-region backup and replication and integrates with EFS. This solution best meets the requirements of the question, uses AWS management services, and is the most cost-effective option."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 AWS Backup 建立備份計劃，並制定每日備份並將其複製到另一個區域的規則。將 EFS 檔案系統資源指派給備份計畫。",
+        "en": "D. Use AWS Backup to create a backup plan with a rule that takes a daily backup and replicates it to another Region. Assign the EFS file system resource to the backup plan."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (70%)； A (30%)。熱門討論與考點摘要：使用 AWS Backup 建立備份計劃，其中包含每日備份規則並將其複製到另一個區域。將 EFS 檔案系統資源指派給備份計畫。正確：AWS Backup 是一項完全託管的服務，支援跨區域備份和複製，並與 EFS 整合。此解決方案最符合問題的要求，使用AWS管理服務，是最具成本效益的選擇。",
+        "en": "Community vote as displayed: D (70%); A (30%). Popular discussion and key point summary: Use AWS Backup to create a backup plan that contains a rule for daily backups and copying them to another region. Allocate EFS file system resources to the backup plan. Correct: AWS Backup is a fully managed service that supports cross-region backup and replication and integrates with EFS. This solution best meets the requirements of the question, uses AWS management services, and is the most cost-effective option."
+      }
+    },
+    {
+      "question_no": 843,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家電子商務公司正在將其本地工作負載遷移到 AWS 雲端。此工作負載目前由一個 Web 應用程式和一個用於儲存的後端 Microsoft SQL 資料庫組成。該公司預計促銷活動期間將有大量顧客。 AWS 雲端中的新基礎架構必須具有高可用性和可擴充性。哪種解決方案能夠以最少的管理開銷來滿足這些要求？",
+        "en": "An ecommerce company is migrating its on-premises workload to the AWS Cloud. The workload currently consists of a web application and a backend Microsoft SQL database for storage. The company expects a high volume of customers during a promotional event. The new infrastructure in the AWS Cloud must be highly available and scalable. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Web 應用程式移轉到應用程式負載平衡器後面兩個可用區中的兩個 Amazon EC2 執行個體。將資料庫移轉到 Amazon RDS for Microsoft SQL Server，並在兩個可用區中都有唯讀副本。",
+          "en": "Migrate the web application to two Amazon EC2 instances across two Availability Zones behind an Application Load Balancer. Migrate the database to Amazon RDS for Microsoft SQL Server with read replicas in both Availability Zones."
+        },
+        "B": {
+          "zh": "將 Web 應用程式移轉到跨 Application Load Balancer 後面兩個可用區的 Auto Scaling 群組中執行的 Amazon EC2 執行個體。透過資料庫複製將資料庫遷移到跨不同 AWS 區域的兩個 EC2 執行個體。",
+          "en": "Migrate the web application to an Amazon EC2 instance that runs in an Auto Scaling group across two Availability Zones behind an Application Load Balancer. Migrate the database to two EC2 instances across separate AWS Regions with database replication."
+        },
+        "C": {
+          "zh": "將 Web 應用程式移轉到跨 Application Load Balancer 後面兩個可用區的 Auto Scaling 群組中執行的 Amazon EC2 執行個體。透過多可用區部署將資料庫移轉到 Amazon RDS。",
+          "en": "Migrate the web application to Amazon EC2 instances that run in an Auto Scaling group across two Availability Zones behind an Application Load Balancer. Migrate the database to Amazon RDS with Multi-AZ deployment."
+        },
+        "D": {
+          "zh": "將 Web 應用程式移轉到應用程式負載平衡器後面跨三個可用區的三個 Amazon EC2 執行個體。將資料庫遷移到跨三個可用區的三個 EC2 執行個體。",
+          "en": "Migrate the web application to three Amazon EC2 instances across three Availability Zones behind an Application Load Balancer. Migrate the database to three EC2 instances across three Availability Zones."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：Web應用程式部分使用跨兩個可用區的EC2實例和ALB來提供高可用性。不過資料庫部分使用了Amazon RDS的唯讀副本，主要用於讀取擴充而非高可用。只讀副本無法提供自動故障轉移，因此無法完全滿足高可用性要求。",
+          "en": "Incorrect. Analysis: The web application part uses EC2 instances and ALB across two availability zones to provide high availability. However, the database part uses a read-only copy of Amazon RDS, which is mainly used for read expansion rather than high availability. Read-only replicas cannot provide automatic failover and therefore do not fully meet high availability requirements."
+        },
+        "B": {
+          "zh": "錯誤。分析：Web應用部分使用Auto Scaling群組和ALB來提供高可用性和可擴充性。但資料庫部分使用跨區域EC2實例和資料庫複製，增加了管理開銷，並且跨區域複製可能會導致延遲問題，這不是最佳實踐。",
+          "en": "Incorrect. Analysis: The Web application part uses Auto Scaling groups and ALB to provide high availability and scalability. However, the database part uses cross-region EC2 instances and database replication, which increases management overhead, and cross-region replication may cause latency problems, which is not a best practice."
+        },
+        "C": {
+          "zh": "正確。分析：Web應用部分使用Auto Scaling群組和ALB來提供高可用性和可擴充性。資料庫部分採用Amazon RDS的多AZ部署，提供自動故障轉移功能，完全滿足高可用性需求，並降低管理開銷。這個選項是正確的。",
+          "en": "Correct. Analysis: The Web application part uses Auto Scaling groups and ALB to provide high availability and scalability. The database part uses Amazon RDS's Multi-AZ deployment, which provides automatic failover functions, fully meets high availability requirements, and reduces management overhead. This option is correct."
+        },
+        "D": {
+          "zh": "錯誤。分析：Web應用程式部分使用跨三個可用區的EC2實例和ALB來提供高可用性。但資料庫部分使用EC2實例進行部署，需要主動管理資料庫複製和故障轉移，增加了管理開銷，並不是最佳實務。",
+          "en": "Incorrect. Analysis: The web application part uses EC2 instances and ALB across three availability zones to provide high availability. However, the database part uses EC2 instances for deployment, which requires active management of database replication and failover, which increases management overhead and is not a best practice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將 Web 應用程式移轉到跨 Application Load Balancer 後面兩個可用區的 Auto Scaling 群組中執行的 Amazon EC2 執行個體。透過多可用區部署將資料庫移轉到 Amazon RDS。",
+        "en": "C. Migrate the web application to Amazon EC2 instances that run in an Auto Scaling group across two Availability Zones behind an Application Load Balancer. Migrate the database to Amazon RDS with Multi-AZ deployment."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (86%)。熱門討論與考點摘要：分析：Web應用部分使用Auto Scaling群組和ALB來提供高可用性和可擴充性。資料庫部分採用Amazon RDS的多AZ部署，提供自動故障轉移功能，完全滿足高可用性需求，並降低管理開銷。這個選項是正確的。",
+        "en": "Community vote as displayed: C (86%). Popular discussion and key point summary: Analysis: The Web application part uses Auto Scaling groups and ALB to provide high availability and scalability. The database part uses Amazon RDS's Multi-AZ deployment, which provides automatic failover functions, fully meets high availability requirements, and reduces management overhead. This option is correct."
+      }
+    },
+    {
+      "question_no": 844,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個本地業務應用程序，每天會產生數百個文件。這些檔案儲存在 SMB 檔案共用上，並且需要與應用程式伺服器的低延遲連線。新的公司政策規定所有應用程式產生的檔案都必須複製到 AWS。已經有到 AWS 的 VPN 連線。應用程式開發團隊沒有時間進行必要的程式碼修改以將應用程式遷移到 AWS。解決方案架構師應該推薦哪種服務來允許應用程式將檔案複製到 AWS？",
+        "en": "A company has an on-premises business application that generates hundreds of files each day. These files are stored on an SMB file share and require a low-latency connection to the application servers. A new company policy states all application-generated files must be copied to AWS. There is already a VPN connection to AWS. The application development team does not have time to make the necessary code modifications to move the application to AWS. Which service should a solutions architect recommend to allow the application to copy files to AWS?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon 彈性檔案系統 (Amazon EFS)",
+          "en": "Amazon Elastic File System (Amazon EFS)"
+        },
+        "B": {
+          "zh": "適用於 Windows 檔案伺服器的 Amazon FSx",
+          "en": "Amazon FSx for Windows File Server"
+        },
+        "C": {
+          "zh": "AWS Snowball",
+          "en": "AWS Snowball"
+        },
+        "D": {
+          "zh": "AWS 儲存網關",
+          "en": "AWS Storage Gateway"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon EFS 是一項適用於 Linux 工作負載的可擴充檔案儲存服務。但是，這個問題提到檔案儲存在 SMB 檔案共用上。 SMB協定通常與Windows環境相關，EFS不支援SMB協定。所以。",
+          "en": "Incorrect. Amazon EFS is a scalable file storage service for Linux workloads. However, this question mentioned that files are stored on SMB file shares. The SMB protocol is usually associated with the Windows environment, and EFS does not support the SMB protocol. Therefore."
+        },
+        "B": {
+          "zh": "錯誤。支援SMB協議，可以提供低延遲的檔案共用服務。然而，這個問題需要將檔案從本地複製到AWS，而不是傳輸已移至AWS的檔案。此選項雖然支援 SMB，但無法滿足「將檔案複製到 AWS」的需求，因此會發生錯誤。",
+          "en": "Incorrect. supports the SMB protocol and can provide low-latency file sharing services. However, this question requires copying files from local to AWS, not transferring files that have been moved to AWS. This option, while supporting SMB, does not satisfy the need to \"copy files to AWS\", hence the error."
+        },
+        "C": {
+          "zh": "錯誤。是用於大規模資料遷移的實體設備。這個問題提到的檔案每天都會生成，所以需要一個一致的解決方案，而不是一次性的遷移工具。該選項不滿足要求，因此是一個錯誤。",
+          "en": "Incorrect. is a physical device used for large-scale data migration. The files mentioned in this question are generated every day, so a consistent solution is needed, not a one-time migration tool. This option does not meet the requirements and is therefore an error."
+        },
+        "D": {
+          "zh": "正確。是一種將本機檔案與 AWS 儲存整合的混合雲端儲存服務。它支援SMB協議，可以透過檔案網關將檔案複製到Amazon S3。此選項完全符合題目要求，因此是正確的。",
+          "en": "Correct. is a hybrid cloud storage service that integrates local files with AWS storage. It supports SMB protocol and can copy files to Amazon S3 via file gateway. This option fully meets the question requirements and is therefore correct."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. AWS 儲存網關",
+        "en": "D. AWS Storage Gateway"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (76%)； B (24%)。熱門討論與考點摘要：是一種將本機檔案與 AWS 儲存整合的混合雲端儲存服務。它支援SMB協議，可以透過檔案網關將檔案複製到Amazon S3。此選項完全符合題目要求，因此是正確的。",
+        "en": "Community vote as displayed: D (76%); B (24%). Popular discussion and key point summary: is a hybrid cloud storage service that integrates local files with AWS storage. It supports SMB protocol and can copy files to Amazon S3 via file gateway. This option fully meets the question requirements and is therefore correct."
+      }
+    },
+    {
+      "question_no": 845,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "某公司有15名員工。該公司將員工開始日期儲存在 Amazon DynamoDB 表中。該公司希望在員工工作週年紀念日向每位員工發送一封電子郵件。哪種解決方案能夠以最高的營運效率滿足這些要求？",
+        "en": "A company has 15 employees. The company stores employee start dates in an Amazon DynamoDB table. The company wants to send an email message to each employee on the day of the employee's work anniversary. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個腳本來掃描 DynamoDB 表並在必要時使用 Amazon Simple Notification Service (Amazon SNS) 向員工發送電子郵件。使用 cron 作業每天在 Amazon EC2 執行個體上執行此腳本。",
+          "en": "Create a script that scans the DynamoDB table and uses Amazon Simple Notification Service (Amazon SNS) to send email messages to employees when necessary. Use a cron job to run this script every day on an Amazon EC2 instance."
+        },
+        "B": {
+          "zh": "建立一個腳本來掃描 DynamoDB 資料表並在必要時使用 Amazon Simple Queue Service (Amazon SQS) 向員工發送電子郵件。使用 cron 作業每天在 Amazon EC2 執行個體上執行此腳本。",
+          "en": "Create a script that scans the DynamoDB table and uses Amazon Simple Queue Service (Amazon SQS) to send email messages to employees when necessary. Use a cron job to run this script every day on an Amazon EC2 instance."
+        },
+        "C": {
+          "zh": "建立一個 AWS Lambda 函數，用於掃描 DynamoDB 表並在必要時使用 Amazon Simple Notification Service (Amazon SNS) 向員工發送電子郵件。安排此 Lambda 函數每天執行。",
+          "en": "Create an AWS Lambda function that scans the DynamoDB table and uses Amazon Simple Notification Service (Amazon SNS) to send email messages to employees when necessary. Schedule this Lambda function to run every day."
+        },
+        "D": {
+          "zh": "建立一個 AWS Lambda 函數，用於掃描 DynamoDB 表格並在必要時使用 Amazon Simple Queue Service (Amazon SQS) 向員工發送電子郵件。安排此 Lambda 函數每天執行。",
+          "en": "Create an AWS Lambda function that scans the DynamoDB table and uses Amazon Simple Queue Service (Amazon SQS) to send email messages to employees when necessary. Schedule this Lambda function to run every day."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 EC2 執行個體執行腳本並透過 Amazon SNS 傳送電子郵件： 正確：可以達到目標，但需要維護 EC2 執行個體，增加了營運負擔。效率：EC2執行個體需要持續運作並定期啟動，成本較高，不符合「最優運作效率」的要求。",
+          "en": "Incorrect. Use an EC2 instance to run the script and send emails through Amazon SNS: Correct: The goal can be achieved, but the EC2 instance needs to be maintained, which increases the operational burden. Efficiency: EC2 instances need to be continuously run and started regularly, which is costly and does not meet the requirements of \"optimal operating efficiency\"."
+        },
+        "B": {
+          "zh": "錯誤。使用 EC2 執行個體執行腳本並透過 Amazon SQS 傳送電子郵件： 正確：可以實現目標，但 Amazon SQS 是一種排隊服務，不會直接傳送電子郵件，需要額外的處理步驟。效率：EC2實例也需要維護，增加了維運負擔。",
+          "en": "Incorrect. Use an EC2 instance to run the script and send the email through Amazon SQS: Correct: The goal can be achieved, but Amazon SQS is a queuing service and does not send emails directly, requiring additional processing steps. Efficiency: EC2 instances also need to be maintained, which increases the operational burden."
+        },
+        "C": {
+          "zh": "正確。使用 AWS Lambda 透過 Amazon SNS 傳送電子郵件： 正確：AWS Lambda 是一項支援自動調優的無伺服器服務，Amazon SNS 可以直接傳送電子郵件。效率：無需維護伺服器，完全託管，滿足「最佳運作效率」的要求。",
+          "en": "Correct. Use AWS Lambda to send emails through Amazon SNS: Correct: AWS Lambda is a serverless service that supports automated tuning, and Amazon SNS can send emails directly. Efficiency: There is no need to maintain the server, it is completely managed, and it meets the requirements of \"optimal operating efficiency\"."
+        },
+        "D": {
+          "zh": "錯誤。使用 AWS Lambda 並透過 Amazon SQS 傳送電子郵件：正確：AWS Lambda 是無伺服器服務，但 Amazon SQS 是佇列服務，不直接傳送電子郵件，需要額外的處理步驟。效率：雖然 Lambda 減輕了營運負擔，但使用 SQS 增加了複雜性，並不是最佳解決方案。",
+          "en": "Incorrect. Use AWS Lambda and send emails through Amazon SQS: Correct: AWS Lambda is a serverless service, but Amazon SQS is a queue service that does not send emails directly and requires additional processing steps. Efficiency: Although Lambda reduces the operational burden, using SQS increases complexity and is not the optimal solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立一個 AWS Lambda 函數，用於掃描 DynamoDB 表並在必要時使用 Amazon Simple Notification Service (Amazon SNS) 向員工發送電子郵件。安排此 Lambda 函數每天執行。",
+        "en": "C. Create an AWS Lambda function that scans the DynamoDB table and uses Amazon Simple Notification Service (Amazon SNS) to send email messages to employees when necessary. Schedule this Lambda function to run every day."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：使用 AWS Lambda 透過 Amazon SNS 傳送電子郵件： 正確：AWS Lambda 是一項支援自動調優的無伺服器服務，Amazon SNS 可以直接傳送電子郵件。效率：無需維護伺服器，完全託管，滿足「最佳運作效率」的要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Use AWS Lambda to send emails through Amazon SNS: Correct: AWS Lambda is a serverless service that supports automated tuning, and Amazon SNS can send emails directly. Efficiency: There is no need to maintain the server, it is completely managed, and it meets the requirements of \"optimal operating efficiency\"."
+      }
+    },
+    {
+      "question_no": 846,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的應用程式正在 Elastic Load Balancing (ELB) 負載平衡器後面的 Auto Scaling 群組內的 Amazon EC2 執行個體上執行。根據該應用程式的歷史記錄，該公司預計每年假期期間流量都會激增。解決方案架構師必須設計一項策略，以確保 Auto Scaling 群組主動增加容量，從而最大限度地減少對應用程式使用者的效能影響。哪種解決方案可以滿足這些要求？",
+        "en": "A company’s application is running on Amazon EC2 instances within an Auto Scaling group behind an Elastic Load Balancing (ELB) load balancer. Based on the application's history, the company anticipates a spike in traffic during a holiday each year. A solutions architect must design a strategy to ensure that the Auto Scaling group proactively increases capacity to minimize any performance impact on application users. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon CloudWatch 警報，以在 CPU 使用率超過 90% 時擴展 EC2 執行個體。",
+          "en": "Create an Amazon CloudWatch alarm to scale up the EC2 instances when CPU utilization exceeds 90%."
+        },
+        "B": {
+          "zh": "建立定期規劃操作，以在預期需求高峰期之前擴大 Auto Scaling 組的規模。",
+          "en": "Create a recurring scheduled action to scale up the Auto Scaling group before the expected period of peak demand."
+        },
+        "C": {
+          "zh": "在高峰需求期間增加 Auto Scaling 組中 EC2 執行個體的最小和最大數量。",
+          "en": "Increase the minimum and maximum number of EC2 instances in the Auto Scaling group during the peak demand period."
+        },
+        "D": {
+          "zh": "設定 Amazon Simple Notification Service (Amazon SNS) 通知以在存在 autoscaling:EC2_INSTANCE_LAUNCH 事件時傳送警報。",
+          "en": "Configure an Amazon Simple Notification Service (Amazon SNS) notification to send alerts when there are autoscaling:EC2_INSTANCE_LAUNCH events."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然 CloudWatch 警報可以根據 CPU 使用率等即時指標觸發擴展，但它們是反應性的且不受阻礙，可以提前響應預期的流量峰值。無條件的這個選項足以滿足「提前增加容量」的需要。",
+          "en": "Incorrect. While CloudWatch alarms can trigger scaling based on real-time metrics such as CPU usage, they are reactive and unblocked to respond to expected traffic spikes in advance. The unconditional this option is sufficient to satisfy the need to \"increase capacity in advance\"."
+        },
+        "B": {
+          "zh": "正確。排程操作可讓您在規劃時間點調整 Auto Scaling 群組的容量。該條帶是主動的，可以在流量高峰到來之前增加容量，以確保應用程式效能。這個選項完全符合問題的要求。",
+          "en": "Correct. Scheduled Actions allow you to adjust the capacity of an Auto Scaling group at scheduled points in time. This strip is proactive and can increase capacity before traffic peaks arrive to ensure application performance. this option completely meets the requirements of the question."
+        },
+        "C": {
+          "zh": "錯誤。雖然增加最小和最大實例數可確保 Auto Scaling 組有足夠的容量，但它需要手動操作、無紀律的自動化和主動擴展。第二種方案不如規劃作業靈活，不符合題中「設計策略」的要求。",
+          "en": "Incorrect. While increasing the minimum and maximum number of instances ensures adequate capacity for the Auto Scaling group, it requires manual effort, undisciplined automation, and proactive scaling. The second option is not as flexible as the planning operation, and does not meet the requirement of \"designing a strategy\" in the question."
+        },
+        "D": {
+          "zh": "錯誤。SNS 通知僅報告實例啟動事件，不會在已知的年度流量高峰之前主動增加容量。",
+          "en": "Incorrect. SNS notifications only report instance launch events and do not proactively increase capacity before the known annual traffic peak."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立定期規劃操作，以在預期需求高峰期之前擴大 Auto Scaling 組的規模。",
+        "en": "B. Create a recurring scheduled action to scale up the Auto Scaling group before the expected period of peak demand."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (84%)。熱門討論與考點摘要：排程操作可讓您在規劃時間點調整 Auto Scaling 群組的容量。該條帶是主動的，可以在流量高峰到來之前增加容量，以確保應用程式效能。這個選項完全符合問題的要求。",
+        "en": "Community vote as displayed: B (84%). Popular discussion and key point summary: Scheduled Actions allow you to adjust the capacity of an Auto Scaling group at scheduled points in time. This strip is proactive and can increase capacity before traffic peaks arrive to ensure application performance. this option completely meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 847,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon RDS for PostgreSQL 資料庫作為其資料層。公司必須對資料庫實施密碼輪換。哪種解決方案能夠以最少的營運開銷滿足此要求？",
+        "en": "A company uses Amazon RDS for PostgreSQL databases for its data tier. The company must implement password rotation for the databases. Which solution meets this requirement with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "將密碼儲存在 AWS Secrets Manager 中。啟用秘密的自動輪換。",
+          "en": "Store the password in AWS Secrets Manager. Enable automatic rotation on the secret."
+        },
+        "B": {
+          "zh": "將密碼儲存在 AWS Systems Manager Parameter Store 中。啟用參數自動輪換。",
+          "en": "Store the password in AWS Systems Manager Parameter Store. Enable automatic rotation on the parameter."
+        },
+        "C": {
+          "zh": "將密碼儲存在 AWS Systems Manager Parameter Store 中。編寫一個輪換密碼的 AWS Lambda 函數。",
+          "en": "Store the password in AWS Systems Manager Parameter Store. Write an AWS Lambda function that rotates the password."
+        },
+        "D": {
+          "zh": "將密碼儲存在 AWS Key Management Service (AWS KMS) 中。啟用 AWS KMS 金鑰自動輪換。",
+          "en": "Store the password in AWS Key Management Service (AWS KMS). Enable automatic rotation on the AWS KMS key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Secrets Manager 專門設計用於管理敏感資訊（例如資料庫密碼）並支援自動輪調功能。啟用自動輪調後，Secrets Manager 會自動更新密碼並確保應用程式可以無縫存取更新後的密碼。最小的操作開銷：無需編寫額外的程式碼或手動管理密碼輪換。",
+          "en": "Correct. AWS Secrets Manager is specifically designed to manage sensitive information (such as database passwords) and supports automatic rotation functionality. When automatic rotation is enabled, Secrets Manager automatically updates passwords and ensures that applications can seamlessly access updated passwords. Minimal operational overhead: No need to write additional code or manually manage password rotation."
+        },
+        "B": {
+          "zh": "錯誤。儘管 AWS Systems Manager Parameter Store 可以儲存敏感資訊，但它不支援自動輪調。需要額外的操作來實現密碼輪換，因此不滿足「最小操作開銷」的要求。",
+          "en": "Incorrect. Although AWS Systems Manager Parameter Store can store sensitive information, it does not support automatic rotation. Additional operations are required to implement password rotation and therefore do not meet the \"minimum operational overhead\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以透過自訂 Lambda 函數實現密碼輪換，但這需要額外的開發和維護工作。操作開銷較高，不符合問題要求的「最小操作開銷」。",
+          "en": "Incorrect. Although password rotation can be implemented through a custom Lambda function, this requires additional development and maintenance work. The operation overhead is high and does not meet the \"minimum operation overhead\" required by the question."
+        },
+        "D": {
+          "zh": "錯誤。AWS KMS 主要用於管理加密金鑰，而不是儲存和輪換資料庫密碼。密碼管理不是AWS KMS的設計目的，因此它不適合解決這個問題。",
+          "en": "Incorrect. AWS KMS is primarily used to manage encryption keys, not to store and rotate database passwords. Password management is not what AWS KMS was designed for, so it is not suitable to solve this problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將密碼儲存在 AWS Secrets Manager 中。啟用秘密的自動輪換。",
+        "en": "A. Store the password in AWS Secrets Manager. Enable automatic rotation on the secret."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：AWS Secrets Manager 專門設計用於管理敏感資訊（例如資料庫密碼）並支援自動輪調功能。啟用自動輪調後，Secrets Manager 會自動更新密碼並確保應用程式可以無縫存取更新後的密碼。最小的操作開銷：無需編寫額外的程式碼或手動管理密碼輪換。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Secrets Manager is specifically designed to manage sensitive information (such as database passwords) and supports automatic rotation functionality. When automatic rotation is enabled, Secrets Manager automatically updates passwords and ensures that applications can seamlessly access updated passwords. Minimal operational overhead: No need to write additional code or manually manage password rotation."
+      }
+    },
+    {
+      "question_no": 848,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Oracle 資料庫企業版上執行其應用程式。該公司需要將應用程式和資料庫遷移到AWS。該公司在遷移到 AWS 時可以使用自帶授權 (BYOL) 模型。該應用程式使用需要特權存取的第三方資料庫功能。解決方案架構師必須設計資料庫遷移的解決方案。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company runs its application on Oracle Database Enterprise Edition. The company needs to migrate the application and the database to AWS. The company can use the Bring Your Own License (BYOL) model while migrating to AWS. The application uses third-party database features that require privileged access. A solutions architect must design a solution for the database migration. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用本機工具將資料庫移轉到 Amazon RDS for Oracle。將第三方功能替換為 AWS Lambda。",
+          "en": "Migrate the database to Amazon RDS for Oracle by using native tools. Replace the third-party features with AWS Lambda."
+        },
+        "B": {
+          "zh": "使用本機工具將資料庫移轉到 Amazon RDS Custom for Oracle。自訂新的資料庫設定以支援第三方功能。",
+          "en": "Migrate the database to Amazon RDS Custom for Oracle by using native tools. Customize the new database settings to support the third-party features."
+        },
+        "C": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 將資料庫移轉到 Amazon DynamoDB。自訂新的資料庫設定以支援第三方功能。",
+          "en": "Migrate the database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS). Customize the new database settings to support the third-party features."
+        },
+        "D": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 將資料庫移轉到 Amazon RDS for PostgreSQL。重寫應用程式程式碼以消除對第三方功能的依賴。",
+          "en": "Migrate the database to Amazon RDS for PostgreSQL by using AWS Database Migration Service (AWS DMS). Rewrite the application code to remove the dependency on third-party features."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon RDS for Oracle 不支援資料庫的深度定製，無法滿足第三方功能所需的特權存取。錯誤：使用AWS Lambda取代第三方函數可能需要大量的程式碼重寫，成本高且複雜。",
+          "en": "Incorrect. Amazon RDS for Oracle does not support in-depth customization of the database and cannot meet the privileged access required by third-party functions. Error: Replacing third-party functions with AWS Lambda may require a large amount of code rewriting, which is costly and complex."
+        },
+        "B": {
+          "zh": "正確。Amazon RDS Custom for Oracle 允許對資料庫進行深度自訂，並支援第三方功能所需的特權存取。正確：使用原生工具遷移資料庫是一種高效率的遷移方法。正確：此選項符合 BYOL 模型的要求，是最具成本效益的解決方案。",
+          "en": "Correct. Amazon RDS Custom for Oracle allows deep customization of the database and supports privileged access required for third-party functionality. Correct: Using native tools to migrate databases is an efficient migration method. Correct: This option meets the requirements of the BYOL model and is the most cost-effective solution."
+        },
+        "C": {
+          "zh": "錯誤。Amazon DynamoDB是NoSQL資料庫，其結構與功能與Oracle資料庫完全不同，無法直接支援第三方功能。錯誤：遷移到 DynamoDB 需要重構應用程式訂單生成，這既昂貴又複雜。",
+          "en": "Incorrect. Amazon DynamoDB is a NoSQL database, which is completely different in structure and function from the Oracle database and cannot directly support third-party functions. Error: Migrating to DynamoDB requires refactoring the application order generation, which is costly and complex."
+        },
+        "D": {
+          "zh": "錯誤。Amazon RDS for PostgreSQL 不支援 Oracle 資料庫功能和第三方函數。錯誤：重寫應用程式碼去除第三方功能依賴會增加開發成本，不符合性價比最高的要求。",
+          "en": "Incorrect. Amazon RDS for PostgreSQL does not support Oracle database features and third-party functions. Error: Rewriting the application code to remove third-party functional dependencies increases development costs and does not meet the requirements of being the most cost-effective."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用本機工具將資料庫移轉到 Amazon RDS Custom for Oracle。自訂新的資料庫設定以支援第三方功能。",
+        "en": "B. Migrate the database to Amazon RDS Custom for Oracle by using native tools. Customize the new database settings to support the third-party features."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：Amazon RDS Custom for Oracle 允許對資料庫進行深度自訂，並支援第三方功能所需的特權存取。正確：使用原生工具遷移資料庫是一種高效率的遷移方法。正確：此選項符合 BYOL 模型的要求，是最具成本效益的解決方案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon RDS Custom for Oracle allows deep customization of the database and supports privileged access required for third-party functionality. Correct: Using native tools to migrate databases is an efficient migration method. Correct: This option meets the requirements of the BYOL model and is the most cost-effective solution."
+      }
+    },
+    {
+      "question_no": 849,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一所大型國際大學已將其所有運算服務部署在 AWS 雲端。這些服務包括 Amazon EC2、Amazon RDS 和 Amazon DynamoDB。該大學目前依賴許多自訂腳本來支援其基礎設施。然而，該大學希望透過使用 AWS 原生選項來盡可能集中管理和自動化資料備份。哪種解決方案可以滿足這些要求？",
+        "en": "A large international university has deployed all of its compute services in the AWS Cloud. These services include Amazon EC2, Amazon RDS, and Amazon DynamoDB. The university currently relies on many custom scripts to back up its infrastructure. However, the university wants to centralize management and automate data backups as much as possible by using AWS native options. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將第三方備份軟體與 AWS Storage Gateway 磁帶閘道虛擬磁帶庫結合使用。",
+          "en": "Use third-party backup software with an AWS Storage Gateway tape gateway virtual tape library."
+        },
+        "B": {
+          "zh": "使用 AWS Backup 設定和監控正在使用的服務的所有備份。",
+          "en": "Use AWS Backup to configure and monitor all backups for the services in use."
+        },
+        "C": {
+          "zh": "使用 AWS Config 設定生命週期管理以按計畫拍攝所有資料來源的快照。",
+          "en": "Use AWS Config to set lifecycle management to take snapshots of all data sources on a schedule."
+        },
+        "D": {
+          "zh": "使用 AWS Systems Manager 狀態管理器來管理備份任務的設定和監控。",
+          "en": "Use AWS Systems Manager State Manager to manage the configuration and monitoring of backup tasks."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。將第三方備份軟體與 AWS Storage Gateway 虛擬磁帶庫結合使用。錯誤：雖然可以使用AWS Storage Gateway進行備份，但需要第三方備份軟體來管理備份任務，這與「使用AWS原生選項」的問題需求不一致。另外，雲端管理系統主要用於與本地環境集成，並未集中管理雲端服務的備份。",
+          "en": "Incorrect. Use third-party backup software with AWS Storage Gateway virtual tape libraries. Error: Although AWS Storage Gateway can be used for backup, it requires third-party backup software to manage backup tasks, which is inconsistent with the question requirement of \"using AWS native options\". In addition, the cloud management system is mainly used to integrate with the local environment and not to centrally manage the backup of cloud services."
+        },
+        "B": {
+          "zh": "正確。使用 AWS Backup 設定和監控您使用的服務的所有備份。正確：AWS Backup 是專為集中管理和自動備份而設計的服務，支援 Amazon EC2、Amazon RDS、Amazon DynamoDB 等服務。完全滿足題主的要求，可以提供瘋狂的備份管控功能。",
+          "en": "Correct. Use AWS Backup to configure and monitor all backups for the services you use. Correct: AWS Backup is a service specifically designed for centralized management and automated backup, supporting Amazon EC2, Amazon RDS, Amazon DynamoDB and other services. It fully meets the requirements of the question and can provide crazy backup management and control functions."
+        },
+        "C": {
+          "zh": "錯誤。此選項錯誤：AWS Config 主要用於資源配置的審核和合規性檢查，而不是備份管理。雖然可以透過 AWS Config 觸發某些操作，但它不是備份的最佳選擇，並且不支援集中備份管理。",
+          "en": "Incorrect. Use AWS Config to set up lifecycle management to take snapshots of all data sources on a schedule. Error: AWS Config is mainly used for auditing and compliance checking of resource configuration, not backup management. While it is possible to trigger certain actions through AWS Config, it is not the best choice for backup and does not support centralized backup management."
+        },
+        "D": {
+          "zh": "錯誤。AWS Systems Manager 狀態管理器主要用於管理執行個體的狀態和配置，並不是專為備份任務設計的。無法提供集中的備份管理功能，也不支援備份業務資料的存取。",
+          "en": "Incorrect. AWS Systems Manager State Manager is primarily used to manage the state and configuration of instances and is not specifically designed for backup tasks. It cannot provide centralized backup management functions, nor does it support access to backup service data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Backup 設定和監控正在使用的服務的所有備份。",
+        "en": "B. Use AWS Backup to configure and monitor all backups for the services in use."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：使用 AWS Backup 設定和監控您使用的服務的所有備份。正確：AWS Backup 是專為集中管理和自動備份而設計的服務，支援 Amazon EC2、Amazon RDS、Amazon DynamoDB 等服務。完全滿足題主的要求，可以提供瘋狂的備份管控功能。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Use AWS Backup to configure and monitor all backups for the services you use. Correct: AWS Backup is a service specifically designed for centralized management and automated backup, supporting Amazon EC2, Amazon RDS, Amazon DynamoDB and other services. It fully meets the requirements of the question and can provide crazy backup management and control functions."
+      }
+    },
+    {
+      "question_no": 850,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望建立其 IT 基礎設施地圖，以識別和實施針對構成安全風險的資源的策略。公司的安全團隊必須能夠查詢IT基礎架構圖中的資料並快速識別安全風險。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company wants to build a map of its IT infrastructure to identify and enforce policies on resources that pose security risks. The company's security team must be able to query data in the IT infrastructure map and quickly identify security risks. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon RDS 儲存資料。使用SQL查詢資料以識別安全風險。",
+          "en": "Use Amazon RDS to store the data. Use SQL to query the data to identify security risks."
+        },
+        "B": {
+          "zh": "使用 Amazon Neptune 儲存資料。使用SPARQL查詢資料以識別安全風險。",
+          "en": "Use Amazon Neptune to store the data. Use SPARQL to query the data to identify security risks."
+        },
+        "C": {
+          "zh": "使用 Amazon Redshift 儲存資料。使用SQL查詢資料以識別安全風險。",
+          "en": "Use Amazon Redshift to store the data. Use SQL to query the data to identify security risks."
+        },
+        "D": {
+          "zh": "使用 Amazon DynamoDB 儲存資料。使用 PartiQL 查詢資料以識別安全風險。",
+          "en": "Use Amazon DynamoDB to store the data. Use PartiQL to query the data to identify security risks."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 Amazon RDS 儲存資料並使用 SQL 查詢資料以識別安全風險。 Amazon RDS 是一種關聯式資料庫服務，適合儲存結構化資料和使用 SQL 查詢。雖然可以滿足查詢需求，但RDS需要對資料庫執行個體進行管理（如備份、維護等），導致營運開銷較高。因此，不符合「最小營運開銷」的要求。",
+          "en": "Incorrect. Use Amazon RDS to store data and SQL to query the data to identify security risks. Amazon RDS is a relational database service suitable for storing structured data and using SQL queries. Although it can meet query requirements, RDS requires management of database instances (such as backup, maintenance, etc.), which results in high operational overhead. Therefore, it does not meet the requirement of \"minimum operational overhead\"."
+        },
+        "B": {
+          "zh": "正確。使用 Amazon Neptune 儲存資料並使用 SPARQL 查詢資料以識別安全風險。 Amazon Neptune 是一項專門用於儲存和查詢圖形資料的圖形資料庫服務。 SPARQL是一種適合處理圖資料的查詢語言，能夠快速查詢並識別複雜關係中的安全風險。 Neptune 是營運開銷較低的託管服務，符合「最低營運開銷」的要求。這是最好的選擇。",
+          "en": "Correct. Use Amazon Neptune to store data and SPARQL to query the data to identify security risks. Amazon Neptune is a graph database service specifically designed for storing and querying graph data. SPARQL is a query language suitable for processing graph data, capable of quickly querying and identifying security risks in complex relationships. Neptune is a managed service with low operational overhead and meets the requirement of \"minimum operational overhead\". This is the best option."
+        },
+        "C": {
+          "zh": "錯誤。使用 Amazon Redshift 儲存資料並使用 SQL 查詢資料以識別安全風險。 Amazon Redshift 是適合處理大規模分析查詢的資料倉儲服務。雖然可以使用SQL查詢，但Redshift主要用於分析而非即時查詢，且需要叢集管理，運行開銷較高。不符合「最低營運開銷」的要求。",
+          "en": "Incorrect. Use Amazon Redshift to store data and use SQL to query the data to identify security risks. Amazon Redshift is a data warehouse service suitable for processing large-scale analytical queries. Although SQL query can be used, Redshift is mainly used for analysis rather than real-time query, and it requires cluster management and high operational overhead. Does not meet the requirement of \"minimum operational overhead\"."
+        },
+        "D": {
+          "zh": "錯誤。使用 Amazon DynamoDB 儲存資料並使用 PartiQL 查詢資料以識別安全風險。 Amazon DynamoDB 是一種 NoSQL 資料庫服務，適合儲存鍵值對和文件資料。 PartiQL 是一種支援查詢 DynamoDB 資料的查詢語言。儘管 DynamoDB 是一種營運開銷較低的託管服務，但它不適合處理複雜的關係或圖形資料查詢。因此，不符合本題的要求。",
+          "en": "Incorrect. Use Amazon DynamoDB to store data and use PartiQL to query the data to identify security risks. Amazon DynamoDB is a NoSQL database service suitable for storing key-value pairs and document data. PartiQL is a query language that supports querying DynamoDB data. Although DynamoDB is a managed service with low operational overhead, it is not suitable for processing complex relational or graph data queries. Therefore, it does not meet the requirements of this question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon Neptune 儲存資料。使用SPARQL查詢資料以識別安全風險。",
+        "en": "B. Use Amazon Neptune to store the data. Use SPARQL to query the data to identify security risks."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (90%)。熱門討論與考點摘要：使用 Amazon Neptune 儲存資料並使用 SPARQL 查詢資料以識別安全風險。 Amazon Neptune 是一項專門用於儲存和查詢圖形資料的圖形資料庫服務。 SPARQL是一種適合處理圖資料的查詢語言，能夠快速查詢並識別複雜關係中的安全風險。 Neptune 是營運開銷較低的託管服務，符合「最低營運開銷」的要求。這是最好的選擇。",
+        "en": "Community vote as displayed: B (90%). Popular discussion and key point summary: Use Amazon Neptune to store data and SPARQL to query the data to identify security risks. Amazon Neptune is a graph database service specifically designed for storing and querying graph data. SPARQL is a query language suitable for processing graph data, capable of quickly querying and identifying security risks in complex relationships. Neptune is a managed service with low operational overhead and meets the requirement of \"minimum operational overhead\". This is the best option."
+      }
+    },
+    {
+      "question_no": 851,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家大公司希望為其全球開發人員提供單獨的、有限大小的託管 PostgreSQL 資料庫以用於開發目的。資料庫容量很小。開發人員只有在積極工作時才需要資料庫。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A large company wants to provide its globally located developers separate, limited size, managed PostgreSQL databases for development purposes. The databases will be low volume. The developers need the databases only when they are actively working. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使開發人員能夠啟動單獨的 Amazon Aurora 執行個體。設定一個流程以在工作日結束時關閉 Aurora 實例並在下一個工作日開始時啟動 Aurora 實例。",
+          "en": "Give the developers the ability to launch separate Amazon Aurora instances. Set up a process to shut down Aurora instances at the end of the workday and to start Aurora instances at the beginning of the next workday."
+        },
+        "B": {
+          "zh": "開發一個 AWS Service Catalog 產品，對啟動 Amazon Aurora 執行個體實作大小限制。當開發人員需要開發資料庫時，為他們提供啟動產品的權限。",
+          "en": "Develop an AWS Service Catalog product that enforces size restrictions for launching Amazon Aurora instances. Give the developers access to launch the product when they need a development database."
+        },
+        "C": {
+          "zh": "建立 Amazon Aurora Serverless 叢集。開發 AWS Service Catalog 產品以使用預設容量設定在叢集中啟動資料庫。授予開發人員存取產品的權限。",
+          "en": "Create an Amazon Aurora Serverless cluster. Develop an AWS Service Catalog product to launch databases in the cluster with the default capacity settings. Grant the developers access to the product."
+        },
+        "D": {
+          "zh": "監控 AWS Trusted Advisor 檢查是否有空閒的 Amazon RDS 資料庫。建立一個程序來終止已識別的空閒 RDS 資料庫。",
+          "en": "Monitor AWS Trusted Advisor checks for idle Amazon RDS databases. Create a process to terminate identified idle RDS databases."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。手動啟動和停止單獨配置的 Aurora 執行個體會增加調度開銷，並繼續產生儲存費用，使其在間歇性開發中的效率低於 Aurora Serverless。",
+          "en": "Incorrect. Manually starting and stopping separate provisioned Aurora instances adds scheduling overhead and continues to incur storage charges, making it less efficient than Aurora Serverless for intermittent development use."
+        },
+        "B": {
+          "zh": "錯誤。開發 AWS Service Catalog 產品以限制 Aurora 實例的大小：錯誤：儘管可以透過 Service Catalog 限制實例大小，但 Aurora 實例仍按實例計費。成本根據實際使用情況動態調整，開發者可能會啟動多個實例，增加成本。",
+          "en": "Incorrect. Develop AWS Service Catalog products to limit the size of Aurora instances: Error: Although the instance size can be limited through Service Catalog, Aurora instances are still billed on a per-instance basis. Costs are dynamically adjusted based on actual usage, and developers may start multiple instances, increasing costs."
+        },
+        "C": {
+          "zh": "正確。透過 AWS Service Catalog 建立 Amazon Aurora Serverless 叢集並啟動資料庫：Aurora Serverless 是一種按量付費的資料庫服務，可根據實際使用情況動態調整容量，避免產生閒置資源費用。與AWS Service Catalog結合，可為開發人員提供受控的按需資料庫資源，以滿足成本效益要求。",
+          "en": "Correct. Create an Amazon Aurora Serverless cluster and start the database through AWS Service Catalog: Aurora Serverless is a pay-as-you-go database service that can dynamically adjust capacity based on actual usage to avoid idle resource charges. Combined with AWS Service Catalog, it can provide developers with controlled on-demand database resources to meet cost-effectiveness requirements."
+        },
+        "D": {
+          "zh": "錯誤。監控 AWS Trusted Advisor 檢查空閒的 RDS 資料庫並終止： 錯誤：雖然可以透過控制空閒資料庫來節省成本，但它依賴開發人員主動建立和管理資料庫。它提供隨選自動化解決方案，Aurora Serverless更適合低流量場景。",
+          "en": "Incorrect. Monitoring AWS Trusted Advisor checks idle RDS databases and terminates: Error: Although costs can be saved by controlling idle databases, it relies on developers to actively create and manage databases. It provides on-demand automated solutions, and Aurora Serverless is more suitable for low-traffic scenarios."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 Amazon Aurora Serverless 叢集。開發 AWS Service Catalog 產品以使用預設容量設定在叢集中啟動資料庫。授予開發人員存取產品的權限。",
+        "en": "C. Create an Amazon Aurora Serverless cluster. Develop an AWS Service Catalog product to launch databases in the cluster with the default capacity settings. Grant the developers access to the product."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (81%)； B (19%)。熱門討論與考點摘要：透過 AWS Service Catalog 建立 Amazon Aurora Serverless 叢集並啟動資料庫：Aurora Serverless 是一種按量付費的資料庫服務，可根據實際使用情況動態調整容量，避免產生閒置資源費用。與AWS Service Catalog結合，可為開發人員提供受控的按需資料庫資源，以滿足成本效益要求。",
+        "en": "Community vote as displayed: C (81%); B (19%). Popular discussion and key point summary: Create an Amazon Aurora Serverless cluster and start the database through AWS Service Catalog: Aurora Serverless is a pay-as-you-go database service that can dynamically adjust capacity based on actual usage to avoid idle resource charges. Combined with AWS Service Catalog, it can provide developers with controlled on-demand database resources to meet cost-effectiveness requirements."
+      }
+    },
+    {
+      "question_no": 852,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在建立一個為內容管理系統提供服務的 Web 應用程式。內容管理系統在應用程式負載平衡器 (ALB) 後面的 Amazon EC2 執行個體上執行。 EC2 執行個體在跨多個可用區的 Auto Scaling 群組中執行。使用者不斷在內容管理系統中新增和更新文件、部落格和其他網站資產。解決方案架構師必須實作一個解決方案，使所有 EC2 執行個體以盡可能短的延遲時間分享最新的網站內容。哪種解決方案滿足這些要求？",
+        "en": "A company is building a web application that serves a content management system. The content management system runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The EC2 instances run in an Auto Scaling group across multiple Availability Zones. Users are constantly adding and updating files, blogs, and other website assets in the content management system. A solutions architect must implement a solution in which all the EC2 instances share up-to-date website content with the least possible lag time. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "更新 Auto Scaling 群組生命週期策略中的 EC2 使用者數據，以從最近啟動的 EC2 執行個體複製網站資產。配置 ALB 以僅在最新的 EC2 執行個體中對網站資產進行變更。",
+          "en": "Update the EC2 user data in the Auto Scaling group lifecycle policy to copy the website assets from the EC2 instance that was launched most recently. Configure the ALB to make changes to the website assets only in the newest EC2 instance."
+        },
+        "B": {
+          "zh": "將網站資產複製到 Amazon Elastic File System (Amazon EFS) 檔案系統。配置每個 EC2 執行個體以在本機掛載 EFS 檔案系統。配置網站託管應用程式以引用儲存在 EFS 檔案系統中的網站資產。",
+          "en": "Copy the website assets to an Amazon Elastic File System (Amazon EFS) file system. Configure each EC2 instance to mount the EFS file system locally. Configure the website hosting application to reference the website assets that are stored in the EFS file system."
+        },
+        "C": {
+          "zh": "將網站資產複製到 Amazon S3 儲存桶。確保每個 EC2 執行個體將網站資產從 S3 儲存桶下載到附加的 Amazon Elastic Block Store (Amazon EBS) 磁碟區。每小時執行一次 S3 同步命令以保持檔案最新。",
+          "en": "Copy the website assets to an Amazon S3 bucket. Ensure that each EC2 instance downloads the website assets from the S3 bucket to the attached Amazon Elastic Block Store (Amazon EBS) volume. Run the S3 sync command once each hour to keep files up to date."
+        },
+        "D": {
+          "zh": "使用網站資產還原 Amazon Elastic Block Store (Amazon EBS) 快照。啟動新的 EC2 執行個體時，將 EBS 快照附加為輔助 EBS 磁碟區。配置網站託管應用程式以引用儲存在輔助 EBS 卷中的網站資產。",
+          "en": "Restore an Amazon Elastic Block Store (Amazon EBS) snapshot with the website assets. Attach the EBS snapshot as a secondary EBS volume when a new EC2 instance is launched. Configure the website hosting application to reference the website assets that are stored in the secondary EBS volume."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。更新 Auto Scaling 群組生命週期策略中的 EC2 使用者數據，以從最近啟動的 EC2 執行個體複製網站資源。錯誤原因：此場景依賴單一EC2實例作為來源，這可能會導致單點故障問題。另外，ALB無法直接管理文件同步，無法保證低延遲和高可用性。",
+          "en": "Incorrect. Update EC2 user data in the Auto Scaling group lifecycle policy to copy website resources from the most recently launched EC2 instance. Reason for the error: This scenario relies on a single EC2 instance as the source, which may lead to single point of failure issues. Additionally, ALB cannot manage file synchronization directly, and low latency and high availability cannot be guaranteed this way."
+        },
+        "B": {
+          "zh": "正確。將網站資源複製到 Amazon Elastic File System (Amazon EFS) 檔案系統。 Amazon EFS 是一種完全託管的檔案儲存服務，支援多個 EC2 執行個體同時掛載和存取檔案。它提供低延遲和高可用性，適用於文件共享場景。此解滿足題目要求。",
+          "en": "Correct. Copy website resources to the Amazon Elastic File System (Amazon EFS) file system. Amazon EFS is a fully managed file storage service that supports multiple EC2 instances to mount and access files simultaneously. It provides low latency and high availability, and is suitable for file sharing scenarios. This solution meets the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。將網站資源複製到 Amazon S3 儲存桶並使用 S3 同步指令保持檔案更新。錯誤原因：S3雖然是高可用的物件儲存服務，但不適合頻繁的檔案更新和低延遲的存取場景。每小時執行一次 S3 同步命令可能會導致檔案更新落後於「最小延遲」要求。",
+          "en": "Incorrect. Copy the website resources to an Amazon S3 bucket and use the S3 sync command to keep the files updated. Reason for the error: Although S3 is a highly available object storage service, it is not suitable for frequent file updates and low-latency access scenarios. Running the S3 sync command every hour may cause file updates to lag behind the \"minimum latency\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。使用包含網站資源的 Amazon EBS 快照進行還原。錯誤原因：Amazon EBS 是區塊儲存服務，無法在多個 EC2 執行個體之間共用。每個實例都需要一個單獨的EBS卷，這使得無法即時共享和更新文件。",
+          "en": "Incorrect. Restore using an Amazon EBS snapshot containing the website resources. Error reason: Amazon EBS is a block storage service and cannot be shared between multiple EC2 instances. Each instance requires a separate EBS volume, which makes it impossible to share and update files in real time."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 將網站資產複製到 Amazon Elastic File System (Amazon EFS) 檔案系統。配置每個 EC2 執行個體以在本機掛載 EFS 檔案系統。配置網站託管應用程式以引用儲存在 EFS 檔案系統中的網站資產。",
+        "en": "B. Copy the website assets to an Amazon Elastic File System (Amazon EFS) file system. Configure each EC2 instance to mount the EFS file system locally. Configure the website hosting application to reference the website assets that are stored in the EFS file system."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：將網站資源複製到 Amazon Elastic File System (Amazon EFS) 檔案系統。 Amazon EFS 是一種完全託管的檔案儲存服務，支援多個 EC2 執行個體同時掛載和存取檔案。它提供低延遲和高可用性，適用於文件共享場景。此解滿足題目要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Copy website resources to the Amazon Elastic File System (Amazon EFS) file system. Amazon EFS is a fully managed file storage service that supports multiple EC2 instances to mount and access files simultaneously. It provides low latency and high availability, and is suitable for file sharing scenarios. This solution meets the question requirements."
+      }
+    },
+    {
+      "question_no": 853,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司的 Web 應用程式由多個 Amazon EC2 執行個體組成，這些執行個體在 VPC 中的應用程式負載平衡器後面執行。 Amazon RDS for MySQL 資料庫執行個體包含資料。該公司需要能夠自動偵測並回應 AWS 環境中的可疑或意外行為。該公司已經將 AWS WAF 加入其架構中。解決方案架構師接下來該做什麼來防範威脅？",
+        "en": "A company's web application consists of multiple Amazon EC2 instances that run behind an Application Load Balancer in a VPC. An Amazon RDS for MySQL DB instance contains the data. The company needs the ability to automatically detect and respond to suspicious or unexpected behavior in its AWS environment. The company already has added AWS WAF to its architecture. What should a solutions architect do next to protect against threats?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon GuardDuty 執行威脅偵測。配置 Amazon EventBridge 篩選 GuardDuty 結果並呼叫 AWS Lambda 函數來調整 AWS WAF 規則。",
+          "en": "Use Amazon GuardDuty to perform threat detection. Configure Amazon EventBridge to filter for GuardDuty findings and to invoke an AWS Lambda function to adjust the AWS WAF rules."
+        },
+        "B": {
+          "zh": "使用 AWS Firewall Manager 執行威脅偵測。配置 Amazon EventBridge 篩選 Firewall Manager 發現結果並呼叫 AWS Lambda 函數來調整 AWS WAF Web ACL。",
+          "en": "Use AWS Firewall Manager to perform threat detection. Configure Amazon EventBridge to filter for Firewall Manager findings and to invoke an AWS Lambda function to adjust the AWS WAF web ACL."
+        },
+        "C": {
+          "zh": "使用 Amazon Inspector 執行威脅偵測並更新 AWS WAF 規則。建立VPC網路ACL來限制對Web應用程式的存取。",
+          "en": "Use Amazon Inspector to perform threat detection and to update the AWS WAF rules. Create a VPC network ACL to limit access to the web application."
+        },
+        "D": {
+          "zh": "使用 Amazon Macie 執行威脅偵測並更新 AWS WAF 規則。建立VPC網路ACL來限制對Web應用程式的存取。",
+          "en": "Use Amazon Macie to perform threat detection and to update the AWS WAF rules. Create a VPC network ACL to limit access to the web application."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon GuardDuty 是 AWS 的託管威脅偵測服務，旨在偵測惡意活動和異常行為。正確：Amazon EventBridge 可以過濾 GuardDuty 發現結果並觸發 AWS Lambda 函數來調整 AWS WAF 規則以自動回應威脅。此選項滿足問題要求，並提供自動威脅偵測和回應的解決方案。",
+          "en": "Correct. Amazon GuardDuty is AWS's managed threat detection service, designed to detect malicious activity and anomalous behavior. Correct: Amazon EventBridge can filter GuardDuty findings and trigger AWS Lambda functions to adjust AWS WAF rules to automatically respond to threats. This option meets the question requirements and provides a solution for automated threat detection and response."
+        },
+        "B": {
+          "zh": "錯誤。AWS Firewall Manager 主要用於集中管理和部署安全性策略，而不是專門用於威脅偵測。錯誤：防火牆管理器的功能與問題所需的自動威脅偵測和回應不完全相符。",
+          "en": "Incorrect. AWS Firewall Manager is primarily used to centrally manage and deploy security policies, rather than specifically for threat detection. Error: The capabilities of Firewall Manager do not fully match the automatic threat detection and response required by the question."
+        },
+        "C": {
+          "zh": "錯誤。Amazon Inspector 主要用於評估 EC2 執行個體的安全漏洞，而非即時威脅偵測。錯誤：雖然創建VPC網路ACL可以限制訪問，但與問題所需的自動威脅偵測和回應無關。",
+          "en": "Incorrect. Amazon Inspector is primarily intended for assessing EC2 instances for security vulnerabilities rather than real-time threat detection. Error: Although creating a VPC network ACL can restrict access, it has nothing to do with the automated threat detection and response required by the question."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Macie 主要用於資料分類和敏感資料保護，而不是用於偵測網路威脅。錯誤：建立 VPC 網路 ACL 與問題所需的自動威脅偵測和回應無關。",
+          "en": "Incorrect. Amazon Macie is primarily used for data classification and sensitive data protection, not for the detection of cyber threats. Error: Creating a VPC network ACL has nothing to do with the automated threat detection and response required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon GuardDuty 執行威脅偵測。配置 Amazon EventBridge 篩選 GuardDuty 結果並呼叫 AWS Lambda 函數來調整 AWS WAF 規則。",
+        "en": "A. Use Amazon GuardDuty to perform threat detection. Configure Amazon EventBridge to filter for GuardDuty findings and to invoke an AWS Lambda function to adjust the AWS WAF rules."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：Amazon GuardDuty 是 AWS 的託管威脅偵測服務，旨在偵測惡意活動和異常行為。正確：Amazon EventBridge 可以過濾 GuardDuty 發現結果並觸發 AWS Lambda 函數來調整 AWS WAF 規則以自動回應威脅。此選項滿足問題要求，並提供自動威脅偵測和回應的解決方案。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon GuardDuty is AWS's managed threat detection service, designed to detect malicious activity and anomalous behavior. Correct: Amazon EventBridge can filter GuardDuty findings and trigger AWS Lambda functions to adjust AWS WAF rules to automatically respond to threats. This option meets the question requirements and provides a solution for automated threat detection and response."
+      }
+    },
+    {
+      "question_no": 854,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司計劃執行一組連接到 Amazon Aurora 資料庫的 Amazon EC2 執行個體。該公司建置了一個 AWS CloudFormation 範本來部署 EC2 執行個體和 Aurora 資料庫叢集。該公司希望允許實例以安全的方式對資料庫進行身份驗證。該公司不想維護靜態資料庫憑證。哪一種解決方案能夠以最少的操作工作量滿足這些要求？",
+        "en": "A company is planning to run a group of Amazon EC2 instances that connect to an Amazon Aurora database. The company has built an AWS CloudFormation template to deploy the EC2 instances and the Aurora DB cluster. The company wants to allow the instances to authenticate to the database in a secure way. The company does not want to maintain static database credentials. Which solution meets these requirements with the LEAST operational effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用使用者名稱和密碼建立資料庫使用者。將資料庫使用者名稱和密碼參數新增至 CloudFormation 範本中。當執行個體啟動時將參數傳遞給 EC2 執行個體。",
+          "en": "Create a database user with a user name and password. Add parameters for the database user name and password to the CloudFormation template. Pass the parameters to the EC2 instances when the instances are launched."
+        },
+        "B": {
+          "zh": "使用使用者名稱和密碼建立資料庫使用者。將使用者名稱和密碼儲存在 AWS Systems Manager Parameter Store 中。配置 EC2 執行個體以從 Parameter Store 檢索資料庫憑證。",
+          "en": "Create a database user with a user name and password. Store the user name and password in AWS Systems Manager Parameter Store. Configure the EC2 instances to retrieve the database credentials from Parameter Store."
+        },
+        "C": {
+          "zh": "配置資料庫叢集以使用 IAM 資料庫身份驗證。建立用於 IAM 身份驗證的資料庫使用者。將角色與 EC2 執行個體關聯以允許執行個體上的應用程式存取資料庫。",
+          "en": "Configure the DB cluster to use IAM database authentication. Create a database user to use with IAM authentication. Associate a role with the EC2 instances to allow applications on the instances to access the database."
+        },
+        "D": {
+          "zh": "將資料庫叢集配置為透過 IAM 使用者使用 IAM 資料庫驗證。建立名稱與 IAM 使用者相符的資料庫使用者。將 IAM 使用者與 EC2 執行個體關聯，以允許執行個體上的應用程式存取資料庫。",
+          "en": "Configure the DB cluster to use IAM database authentication with an IAM user. Create a database user that has a name that matches the IAM user. Associate the IAM user with the EC2 instances to allow applications on the instances to access the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用使用者名稱和密碼建立資料庫使用者。在CloudFormation範本中新增資料庫使用者名稱和密碼參數。當EC2實例啟動時，將參數傳遞給EC2實例。分析：此選項需要手動維護靜態資料庫憑證，這違反了問題要求「不想保護靜態資料庫憑證」。雖然可以透過CloudFormation模板傳遞參數，但使用者名稱和密碼仍需要手動管理，增加了操作複雜度。",
+          "en": "Incorrect. Create a database user with a username and password. Add parameters for database username and password in the CloudFormation template. Pass parameters to the EC2 instance when the instance starts. Analysis: This option requires manual maintenance of static database credentials, which violates the question requirement \"do not want to protect static database credentials\". Although parameters can be passed through CloudFormation templates, usernames and passwords still need to be manually managed, increasing operational complexity."
+        },
+        "B": {
+          "zh": "錯誤。此選項分析：此選項使用 AWS Systems Manager Parameter Store 來儲存憑證，從而增強安全性。但是，仍然需要維護靜態資料庫憑證，這違反了問題要求「不想維護靜態資料庫憑證」。",
+          "en": "Incorrect. Create a database user with a username and password. Store usernames and passwords in AWS Systems Manager Parameter Store. Configure the EC2 instance to retrieve database credentials from Parameter Store. Analysis: This option uses AWS Systems Manager Parameter Store to store credentials, which enhances security. However, it is still necessary to maintain static database credentials, which violates the question requirement \"do not want to maintain static database credentials\"."
+        },
+        "C": {
+          "zh": "正確。此選項分析：此選項使用 Amazon Aurora 的 IAM 資料庫驗證功能來避免靜態憑證的保護。透過將IAM角色連接到EC2實例，應用程式可以安全地存取資料庫，滿足問題的要求。操作複雜度極低，因為 IAM 驗證是 AWS 原生支援的功能，且自動化程度很高。",
+          "en": "Correct. Configure the database cluster to use IAM database authentication. Create a database user for IAM authentication. Associate a role with an EC2 instance to allow applications on the instance to access the database. Analysis: This option uses Amazon Aurora's IAM database authentication feature to avoid the protection of static credentials. By connecting the IAM role to the EC2 instance, the application can securely access the database, meeting the requirements of the question. Operational complexity is minimal because IAM authentication is a feature natively supported by AWS and has a high degree of automation."
+        },
+        "D": {
+          "zh": "錯誤。設定資料庫叢集以使用 IAM 使用者的 IAM 資料庫驗證。建立一個名稱與 IAM 使用者相符的資料庫使用者。將 IAM 使用者與 EC2 執行個體關聯，以允許執行個體上的應用程式存取資料庫。分析：此選項嘗試將 IAM 用戶連接到 EC2 實例，但 IAM 用戶通常用於人類用戶，而不是應用程式或服務。正確的方法是使用 IAM 角色而不是 IAM 使用者來關閉 EC2 執行個體。此選項增加了操作複雜性並且不符合最佳實務。",
+          "en": "Incorrect. Configure the database cluster to use IAM database authentication with an IAM user. Create a database user with a name that matches the IAM user. Associate an IAM user with an EC2 instance to allow applications on the instance to access the database. Analysis: This option attempts to connect an IAM user to an EC2 instance, but IAM users are typically used for human users, not application programs or services. The correct approach is to use an IAM role, not an IAM user, to close the EC2 instance. This option increases operational complexity and is inconsistent with best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置資料庫叢集以使用 IAM 資料庫身份驗證。建立用於 IAM 身份驗證的資料庫使用者。將角色與 EC2 執行個體關聯以允許執行個體上的應用程式存取資料庫。",
+        "en": "C. Configure the DB cluster to use IAM database authentication. Create a database user to use with IAM authentication. Associate a role with the EC2 instances to allow applications on the instances to access the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：此選項分析：此選項使用 Amazon Aurora 的 IAM 資料庫驗證功能來避免靜態憑證的保護。透過將IAM角色連接到EC2實例，應用程式可以安全地存取資料庫，滿足問題的要求。操作複雜度極低，因為 IAM 驗證是 AWS 原生支援的功能，且自動化程度很高。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Configure the database cluster to use IAM database authentication. Create a database user for IAM authentication. Associate a role with an EC2 instance to allow applications on the instance to access the database. Analysis: This option uses Amazon Aurora's IAM database authentication feature to avoid the protection of static credentials. By connecting the IAM role to the EC2 instance, the application can securely access the database, meeting the requirements of the question. Operational complexity is minimal because IAM authentication is a feature natively supported by AWS and has a high degree of automation."
+      }
+    },
+    {
+      "question_no": 855,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司想要將其 Amazon CloudFront 發行版設定為使用 SSL/TLS 憑證。該公司不想使用預設網域進行分發。相反，該公司希望使用不同的網域進行分發。哪種解決方案可以部署憑證而不會產生任何額外費用？",
+        "en": "A company wants to configure its Amazon CloudFront distribution to use SSL/TLS certificates. The company does not want to use the default domain name for the distribution. Instead, the company wants to use a different domain name for the distribution. Which solution will deploy the certificate without incurring any additional costs?"
+      },
+      "options": {
+        "A": {
+          "zh": "從 us-east-1 區域中的 AWS Certificate Manager (ACM) 要求 Amazon 核發的私有憑證。",
+          "en": "Request an Amazon issued private certificate from AWS Certificate Manager (ACM) in the us-east-1 Region."
+        },
+        "B": {
+          "zh": "從 us-west-1 區域中的 AWS Certificate Manager (ACM) 要求 Amazon 核發的私有憑證。",
+          "en": "Request an Amazon issued private certificate from AWS Certificate Manager (ACM) in the us-west-1 Region."
+        },
+        "C": {
+          "zh": "從 us-east-1 區域中的 AWS Certificate Manager (ACM) 要求 Amazon 核發的公共憑證。",
+          "en": "Request an Amazon issued public certificate from AWS Certificate Manager (ACM) in the us-east-1 Region."
+        },
+        "D": {
+          "zh": "從 us-west-1 區域中的 AWS Certificate Manager (ACM) 要求 Amazon 核發的公共憑證。",
+          "en": "Request an Amazon issued public certificate from AWS Certificate Manager (ACM) in the us-west-1 Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。CloudFront 不支援使用私有憑證。私有憑證通常用於內部應用程序，但 CloudFront 需要公共憑證來支援外部存取。",
+          "en": "Incorrect. CloudFront does not support the use of private certificates. Private certificates are typically used for internal applications, but CloudFront requires public certificates to support external access."
+        },
+        "B": {
+          "zh": "錯誤。與選項 A 類似，CloudFront 不支援現有憑證。此外，必須在 us-east-1 區域中建立 ACM 的憑證才能與 CloudFront 整合。",
+          "en": "Incorrect. Similar to option A, CloudFront does not support existing certificates. Additionally, ACM's certificate must be created in the us-east-1 region to integrate with CloudFront."
+        },
+        "C": {
+          "zh": "正確。CloudFront 支援公共證書，且這些證書必須透過 AWS Certificate Manager (ACM) 在 us-east-1 區域中建立。使用公共憑證不需要額外費用。",
+          "en": "Correct. CloudFront supports public certificates, and these certificates must be created in the us-east-1 region through AWS Certificate Manager (ACM). There is no additional cost for using a public certificate."
+        },
+        "D": {
+          "zh": "錯誤。雖然它是公共證書，但 CloudFront 要求必須在 us-east-1 區域中建立該證書才能與其整合。",
+          "en": "Incorrect. Although it is a public certificate, CloudFront requires that the certificate must be created in the us-east-1 region in order to integrate with it."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 從 us-east-1 區域中的 AWS Certificate Manager (ACM) 要求 Amazon 核發的公共憑證。",
+        "en": "C. Request an Amazon issued public certificate from AWS Certificate Manager (ACM) in the us-east-1 Region."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：CloudFront 支援公共證書，且這些證書必須透過 AWS Certificate Manager (ACM) 在 us-east-1 區域中建立。使用公共憑證不需要額外費用。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: CloudFront supports public certificates, and these certificates must be created in the us-east-1 region through AWS Certificate Manager (ACM). There is no additional cost for using a public certificate."
+      }
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+A solutions architect must design a highly available infrastructure for a website. The website is powered by Windows web servers
+that run on Amazon EC2 instances. The solutions architect must implement a solution that can mitigate a large-scale DDoS attack
+that originates from thousands of IP addresses. Downtime is not acceptable for the website.
+Which actions should the solutions architect take to protect the website from such an attack? (Choose two.)
+A. Use AWS Shield Advanced to stop the DDoS attack. Most Voted
+B. Configure Amazon GuardDuty to automatically block the attackers.
+C. Configure the website to use Amazon CloudFront for both static and dynamic content. Most Voted
+D. Use an AWS Lambda function to automatically add attacker IP addresses to VPC network ACLs.
+E. Use EC2 Spot Instances in an Auto Scaling group with a target tracking scaling policy that is set to 80% CPU utilization.
+Comments
+alvarez100 Highly Voted 3 years, 7 months ago
+Selected Answer: AC
+I think it is AC, reason is they require a solution that is highly available. AWS Shield can handle the DDoS attacks. To make the solution HA you can
+use cloud front. AC seems to be the best answer imo.
+AB seem like redundant answers. How do those answers make the solution HA?
+upvoted 26 times
+attila9778 3 years, 6 months ago
+A - AWS Shield Advanced
+C - (protecting this option) IMO: AWS Shield Advanced has to be attached. But it can not be attached directly to EC2 instances.
+According to the docs: https://aws.amazon.com/shield/
+It requires to be attached to services such as CloudFront, Route 53, Global Accelerator, ELB or (in the most direct way using) Elastic IP (attached to
+the EC2 instance)
+upvoted 34 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: AC
+Option A. Use AWS Shield Advanced to stop the DDoS attack.
+It provides always-on protection for Amazon EC2 instances, Elastic Load Balancers, and Amazon Route 53 resources. By using AWS Shield Advanced,
+the solutions architect can help protect the website from large-scale DDoS attacks.
+Option C. Configure the website to use Amazon CloudFront for both static and dynamic content.
+CloudFront is a content delivery network (CDN) that integrates with other Amazon Web Services products, such as Amazon S3 and Amazon EC2, to
+deliver content to users with low latency and high data transfer speeds. By using CloudFront, the solutions architect can distribute the website's
+content across multiple edge locations, which can help absorb the impact of a DDoS attack and reduce the risk of downtime for the website.
+upvoted 23 times
+satyaammm Most Recent 1 year, 5 months ago
+Selected Answer: AC
+AWS Shield Advanced protects form DDos attacks while CloudFront deals with the downtime.
+upvoted 1 times
+XXXXXlNN 1 year, 9 months ago
+Note great options for us to select but AC seem make more sense comparing to others
+upvoted 1 times
+Correct Answer: AC
+Community vote distribution
+AC (89%)
+6%
+KTEgghead 1 year, 10 months ago
+Selected Answer: AC
+CoPilot - "No, you do not need Amazon CloudFront to implement AWS Shield Advanced. AWS Shield Advanced provides protection for several AWS
+services, including Amazon EC2, Elastic Load Balancing (ELB), AWS Global Accelerator, and Amazon Route 53 resources, in addition to CloudFront
+distributions1. It’s designed to offer more sophisticated protection against Distributed Denial of Service (DDoS) attacks, regardless of the AWS service
+being used1. However, it’s important to note that while CloudFront is not a requirement, using AWS Shield Advanced with CloudFront can enhance
+your application’s security by providing additional DDoS protection."
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: AC
+A and C is the most logical combination, we implement cloudfront so we can use shield advanced. Both of these options mitigate the impact of a
+DDOS attack.
+upvoted 2 times
+jatric 1 year, 11 months ago
+Selected Answer: AC
+AC is more close to meet the requirenment
+upvoted 2 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: AC
+A: For DDoS attakcs
+C: For scalable available site
+B: Irrelevant
+D: How would Lambda identify the attacker IP even if this was possible (ACL has a limit of 40 rules each way)
+E: Scaling is not an issue here
+upvoted 5 times
+xdkonorek2 2 years, 7 months ago
+Selected Answer: AC
+A - use aws shield advanced for DDoS protection, but it cannot be used with EC2 instace if it's not using EIP, which is not mentioned
+C - but it can be used with cloudfront distribution
+thus AC is the answer
+upvoted 3 times
+Ruffyit 2 years, 7 months ago
+DDoS attack will choose the AWS Shield Advanced
+Cloudfront have attached the WAF
+upvoted 2 times
+Devsin2000 2 years, 8 months ago
+Selected Answer: AE
+A - no brainer
+E = "must design a highly available infrastructure". I am not sure if CloudFront addresses this requirement.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Is CloudFront not HA? Answer E uses Spot instances which might be unavailable, thus are NEVER an option for HA.
+upvoted 4 times
+sidharthwader 2 years, 3 months ago
+You are right if it was On demand instances we could think of E
+upvoted 2 times
+LoXoL 2 years, 5 months ago
+pentium75 is right.
+upvoted 1 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: AC
+Mitigate a large-scale DDoS attack = AWS Shield Advanced
+Downtime is not acceptable for the website = high availability = Amazon CloudFront
+upvoted 3 times
+mtmayer 2 years, 9 months ago
+Selected Answer: D
+yeah , AWS Shield Advanced can be used directly on EC2.....
+https://docs.aws.amazon.com/waf/latest/developerguide/ddos-protections-by-resource-type.html
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Why D then?
+upvoted 1 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: AC
+Cloud front supports SHIELD ADVANCED integration
+upvoted 3 times
+diabloexodia 2 years, 11 months ago
+Cloud front supports SHIELD ADVANCED integration
+upvoted 2 times
+Aash24 2 years, 11 months ago
+Selected Answer: D
+D should be the one here
+upvoted 3 times
+pentium75 2 years, 5 months ago
+"Use an AWS Lambda function to automatically add attacker IP addresses to VPC network ACLs"?????
+upvoted 2 times
+cookieMr 2 years, 11 months ago
+Selected Answer: AC
+A. AWS Shield Advanced provides advanced DDoS protection for AWS resources, including EC2. It includes features such as real-time threat
+intelligence, automatic protection, and DDoS cost protection.
+C. CloudFront is a CDN service that can help mitigate DDoS attacks. By routing traffic through CloudFront, requests to the website are distributed
+across multiple edge locations, which can absorb and mitigate DDoS attacks more effectively. CloudFront also provides additional DDoS protection
+features, such as rate limiting, SSL/TLS termination, and custom security policies.
+B. While GuardDuty can detect and provide insights into potential malicious activity, it is not specifically designed for DDoS mitigation.
+D. Network ACLs are not designed to handle high-volume traffic or DDoS attacks efficiently.
+E. Spot Instances are a cost optimization strategy and may not provide the necessary availability and protection against DDoS attacks compared to
+using dedicated instances with DDoS protection mechanisms like Shield Advanced and CloudFront.
+upvoted 4 times

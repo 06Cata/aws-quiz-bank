@@ -1,0 +1,80 @@
+A company runs thousands of AWS Lambda functions. The company needs a solution to securely store sensitive information that
+all the Lambda functions use. The solution must also manage the automatic rotation of the sensitive information.
+Which combination of steps will meet these requirements with the LEAST operational overhead? (Choose two.)
+A. Create HTTP security headers by using Lambda@Edge to retrieve and create sensitive information
+B. Create a Lambda layer that retrieves sensitive information Most Voted
+C. Store sensitive information in AWS Secrets Manager Most Voted
+D. Store sensitive information in AWS Systems Manager Parameter Store
+E. Create a Lambda consumer with dedicated throughput to retrieve sensitive information and create environmental variables
+Comments
+[Removed] Highly Voted 1 year, 9 months ago
+Selected Answer: BC
+C. Store sensitive information in AWS Secrets Manager.
+AWS Secrets Manager securely stores sensitive information and provides automatic rotation of secrets, reducing the need for manual management.
+B. Create a Lambda layer that retrieves sensitive information.
+Using a Lambda layer allows multiple Lambda functions to access the sensitive information stored in Secrets Manager without needing to duplicate
+retrieval logic in each function. This approach centralizes the retrieval process and reduces operational complexity.
+upvoted 9 times
+awisaw 1 year, 9 months ago
+chatgpt answer is now C and D
+upvoted 1 times
+sOI852POL 1 year, 7 months ago
+AWS public documentation and other professional forums instead, kindly!
+upvoted 3 times
+pujithacg8 Highly Voted 1 year, 10 months ago
+D doesn't provide automatic rotation
+Answer will be B and C
+upvoted 8 times
+c3c7e62 Most Recent 1 year, 1 month ago
+Selected Answer: BC
+A - not relate, as question does not mention the use of HTTP.
+D - technical works, but does not support automatic rotation.
+E - not secure to use the environmental variables.
+Question and Concern - for the exam, have to pick option B & C. However, really wonder if the approach is practical in real world for secure solution.
+1) Secrets Manager encrypt the sensitive info. Lambda Layer saves those sensitive information into /opt layer (in zip format etc) and shares with all
+other. However, I cannot see there is description the information is encrypted for certain format.
+2) After Secret Manager rotation, how can those saved content in /opt folder be refreshed ?
+Open for discussion. Thanks.
+upvoted 1 times
+Correct Answer: BC
+Community vote distribution
+BC (90%)
+10%
+c3c7e62 1 year, 1 month ago
+https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html
+upvoted 1 times
+Sarayounisaldossary 1 year, 2 months ago
+Selected Answer: BC
+A. Lambda@Edge: Not relevant for secrets; Used for CDN/CloudFront.
+D. Parameter Store: Doesn’t support auto-rotation as easily as Secrets Manager.
+E. Env Variables: Not secure and needs manual management.
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: BC
+A - Lambda@Edge is primarily used for managing HTTP request/response behavior in a CDN environment with Amazon CloudFront. It is not
+designed for securely storing or rotating sensitive information.
+B - By creating a layer that securely retrieves sensitive information (for example, from AWS Secrets Manager), we will reduce duplication and
+operational overhead. The layer can also handle the logic for retrieving updated information if needed.
+C - Automatic rotation is managed.
+D - Automatic rotation is NOT managed.
+E - Setting environment variables dynamically at runtime is not an efficient or scalable practice for "thousands of Lambda functions". Too much
+operational overhead.
+upvoted 5 times
+agbor_tambe 1 year, 8 months ago
+Selected Answer: BC
+BC is correct
+upvoted 2 times
+progounick 1 year, 9 months ago
+Selected Answer: BC
+B,C ChatGPT agrees with me
+upvoted 1 times
+komorebi 1 year, 10 months ago
+Selected Answer: CD
+Answer is CD
+upvoted 1 times
+example_ 1 year, 10 months ago
+Selected Answer: CD
+https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html
+https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/using-aws-secrets-manager-and-lambda-function-to-store-rotate-and-secure-
+keys/
+upvoted 1 times

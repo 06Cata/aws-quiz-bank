@@ -1,0 +1,94 @@
+A company is hosting a web application from an Amazon S3 bucket. The application uses Amazon Cognito as an identity provider
+to authenticate users and return a JSON Web Token (JWT) that provides access to protected resources that are stored in another
+S3 bucket.
+Upon deployment of the application, users report errors and are unable to access the protected content. A solutions architect
+must resolve this issue by providing proper permissions so that users can access the protected content.
+Which solution meets these requirements?
+A. Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content. Most Voted
+B. Update the S3 ACL to allow the application to access the protected content.
+C. Redeploy the application to Amazon S3 to prevent eventually consistent reads in the S3 bucket from affecting the ability of
+users to access the protected content.
+D. Update the Amazon Cognito pool to use custom attribute mappings within the identity pool and grant users the proper
+permissions to access the protected content.
+Comments
+alexandercamachop Highly Voted 2 years ago
+Selected Answer: A
+To resolve the issue and provide proper permissions for users to access the protected content, the recommended solution is:
+A. Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content.
+Explanation:
+Amazon Cognito provides authentication and user management services for web and mobile applications.
+In this scenario, the application is using Amazon Cognito as an identity provider to authenticate users and obtain JSON Web Tokens (JWTs).
+The JWTs are used to access protected resources stored in another S3 bucket.
+To grant users access to the protected content, the proper IAM role needs to be assumed by the identity pool in Amazon Cognito.
+By updating the Amazon Cognito identity pool with the appropriate IAM role, users will be authorized to access the protected content in the S3
+bucket.
+upvoted 17 times
+alexandercamachop 2 years ago
+Option B is incorrect because updating the S3 ACL (Access Control List) will only affect the permissions of the application, not the users accessing
+the content.
+Option C is incorrect because redeploying the application to Amazon S3 will not resolve the issue related to user access permissions.
+Option D is incorrect because updating custom attribute mappings in Amazon Cognito will not directly grant users the proper permissions to acces
+the protected content.
+upvoted 12 times
+LuckyAro Highly Voted 2 years, 3 months ago
+Selected Answer: A
+A is the best solution as it directly addresses the issue of permissions and grants authenticated users the necessary IAM role to access the protected
+content.
+Correct Answer: A
+Community vote distribution
+A (95%)
+5%
+A suggests updating the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content. This is a valid solution, as
+it would grant authenticated users the necessary permissions to access the protected content.
+upvoted 6 times
+Marco_St Most Recent 1 year, 6 months ago
+Selected Answer: A
+IAM role is assinged to IAM users or groups or assumed by AWS service. So IAM role is given to AWS Cognito service which provides temporary AWS
+credentials to authenticated users. so technically When a user is authenticated by Cognito, they receive temporary credentials based on the IAM role
+tied to the Cognito identity pool. If this IAM role has permissions to access certain S3 buckets or objects, the authenticated user will be able to access
+those resources as allowed by the role. This service is used under the hood by Cognito to provide these temporary credentials. The credentials are
+limited in time and scope based on the permissions defined in the IAM role.
+upvoted 2 times
+Guru4Cloud 1 year, 9 months ago
+Selected Answer: A
+A. Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content.
+upvoted 3 times
+Abrar2022 2 years ago
+Selected Answer: A
+Services access other services via IAM Roles. Hence why updating AWS Cognito identity pool to assume proper IAM Role is the right solution.
+upvoted 2 times
+shanwford 2 years, 2 months ago
+Selected Answer: A
+Amazon Cognito identity pools assign your authenticated users a set of temporary, limited-privilege credentials to access your AWS resources. The
+permissions for each user are controlled through IAM roles that you create. https://docs.aws.amazon.com/cognito/latest/developerguide/role-based
+access-control.html
+upvoted 3 times
+Brak 2 years, 3 months ago
+Selected Answer: D
+A makes no sense - Cognito is not accessing the S3 resource. It just returns the JWT token that will be attached to the S3 request.
+D is the right answer, using custom attributes that are added to the JWT and used to grant permissions in S3. See
+https://docs.aws.amazon.com/cognito/latest/developerguide/using-attributes-for-access-control-policy-example.html for an example.
+upvoted 2 times
+asoli 2 years, 2 months ago
+A says "Identity Pool"
+According to AWS: "With an identity pool, your users can obtain temporary AWS credentials to access AWS services, such as Amazon S3 and
+DynamoDB."
+So, answer is A
+upvoted 4 times
+Abhineet9148232 2 years, 3 months ago
+But even D requires setting up the permissions as bucket policy (as show in the shared example) which includes higher overhead than managing
+permissions attached to specific roles.
+upvoted 3 times
+Steve_4542636 2 years, 3 months ago
+Selected Answer: A
+Services access other services via IAM Roles.
+upvoted 2 times
+jennyka76 2 years, 3 months ago
+ANSWER - A
+https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-identity-pool.html
+You have to create an custom role such as read-only
+upvoted 5 times
+zTopic 2 years, 3 months ago
+Selected Answer: A
+Answer is A
+upvoted 3 times

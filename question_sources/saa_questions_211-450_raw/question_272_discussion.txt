@@ -1,0 +1,60 @@
+A company serves a dynamic website from a fleet of Amazon EC2 instances behind an Application Load Balancer (ALB). The
+website needs to support multiple languages to serve customers around the world. The website’s architecture is running in the us-
+west-1 Region and is exhibiting high request latency for users that are located in other parts of the world.
+The website needs to serve requests quickly and efficiently regardless of a user’s location. However, the company does not want to
+recreate the existing architecture across multiple Regions.
+What should a solutions architect do to meet these requirements?
+A. Replace the existing architecture with a website that is served from an Amazon S3 bucket. Configure an Amazon CloudFront
+distribution with the S3 bucket as the origin. Set the cache behavior settings to cache based on the Accept-Language request
+header.
+B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on
+the Accept-Language request header. Most Voted
+C. Create an Amazon API Gateway API that is integrated with the ALB. Configure the API to use the HTTP integration type. Set
+up an API Gateway stage to enable the API cache based on the Accept-Language request header.
+D. Launch an EC2 instance in each additional Region and configure NGINX to act as a cache server for that Region. Put all the
+EC2 instances and the ALB behind an Amazon Route 53 record set with a geolocation routing policy.
+Comments
+Yechi Highly Voted 3 years, 3 months ago
+Selected Answer: B
+Configuring caching based on the language of the viewer
+If you want CloudFront to cache different versions of your objects based on the language specified in the request, configure CloudFront to forward
+the Accept-Language header to your origin.
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html
+upvoted 13 times
+Trains Most Recent 2 years, 6 months ago
+Isn't CloudFront for static websites though? Question specifically states the content is dynamic
+upvoted 3 times
+Cloud_A 2 years, 4 months ago
+Cloudfront serves for both static and dynamic. If it was just static,then you can consider AWS S3.
+upvoted 6 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+By caching content based on the Accept-Language request header, CloudFront can serve the appropriate version of the website to users based on
+their language preferences. This solution allows the company to improve the website’s performance for users around the world without having to
+recreate the existing architecture in multiple Regions.
+upvoted 4 times
+A1975 2 years, 10 months ago
+Selected Answer: B
+CloudFront allows you to customize cache behavior based on various request headers. By setting the cache behavior to cache based on the Accept-
+Language request header, CloudFront can store and serve language-specific versions of the website content, reducing the need to repeatedly fetch
+Correct Answer: B
+Community vote distribution
+B (100%)
+the content from the ALB for users with the same language preference.
+upvoted 3 times
+kraken21 3 years, 2 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html#header-caching-web-language
+upvoted 1 times
+vherman 3 years, 3 months ago
+Selected Answer: B
+B is correct
+upvoted 1 times
+Steve_4542636 3 years, 3 months ago
+Selected Answer: B
+I think it's b
+upvoted 2 times
+LuckyAro 3 years, 3 months ago
+Selected Answer: B
+B is the correct answer
+upvoted 1 times

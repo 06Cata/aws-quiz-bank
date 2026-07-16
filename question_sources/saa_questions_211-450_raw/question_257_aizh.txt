@@ -1,0 +1,61 @@
+Question #257
+A company is building a solution that will report Amazon EC2 Auto Scaling events across all the applications in an AWS account.
+The company needs to use a serverless solution to store the EC2 Auto Scaling status data in Amazon S3. The company then will
+use the data in Amazon S3 to provide near-real-time updates in a dashboard. The solution must not affect the speed of EC2
+instance launches.
+How should the company move the data to Amazon S3 to meet these requirements?
+一家公司正在构建一个解决方案，用于报告一个 AWS 账户中所有应用程序的 Amazon EC2 Auto Scaling 事件。 该公司需要使用无
+服务器解决方案将 EC2 Auto Scaling 状态数据存储在 Amazon S3 中。 然后公司将使用存储在 Amazon S3 中的数据在仪表板中提供
+近实时更新。 该解决方案不得影响 EC2 实例启动的速度。
+公司应该如何将数据移动到 Amazon S3 以满足这些需求？
+A. Use an Amazon CloudWatch metric stream to send the EC2 Auto Scaling status data to Amazon Kinesis Data Firehose. Store
+the data in Amazon S3. Most Voted
+使用 Amazon CloudWatch metric stream 将 EC2 Auto Scaling 状态数据发送到 Amazon Kinesis Data Firehose。将数据存储在
+Amazon S3 中。
+B. Launch an Amazon EMR cluster to collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data
+Firehose. Store the data in Amazon S3.
+启动一个 Amazon EMR 集群以收集 EC2 Auto Scaling 状态数据，并将数据发送到 Amazon Kinesis Data Firehose。将数据存储
+在 Amazon S3 中。
+C. Create an Amazon EventBridge rule to invoke an AWS Lambda function on a schedule. Configure the Lambda function to
+send the EC2 Auto Scaling status data directly to Amazon S3.
+创建一个 Amazon EventBridge 规则以按计划调用 AWS Lambda 函数。配置 Lambda 函数将 EC2 Auto Scaling 状态数据直接发
+送到 Amazon S3。
+D. Use a bootstrap script during the launch of an EC2 instance to install Amazon Kinesis Agent. Configure Kinesis Agent to
+collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data Firehose. Store the data in Amazon S3.
+在 EC2 实例启动期间使用 bootstrap 脚本安装 Amazon Kinesis Agent。配置 Kinesis Agent 收集 EC2 Auto Scaling 状态数据，并
+将数据发送到 Amazon Kinesis Data Firehose。将数据存储在 Amazon S3 中。
+Correct Answer: A
+正确答案：A
+题目分析与解答
+1. 考察的知识点
+Amazon EC2 Auto Scaling事件的处理与数据流设计。
+使用无服务器架构（Serverless）实现数据存储与处理。
+Amazon CloudWatch、Amazon Kinesis Data Firehose和Amazon S3的集成与使用。
+2. 选项分析
+A. Use an Amazon CloudWatch metric stream to send the EC2 Auto Scaling status data to Amazon Kinesis Data Firehose.
+Store the data in Amazon S3.
+正确：Amazon CloudWatch metric stream可以实时捕获EC2 Auto Scaling事件数据，并将其发送到Amazon Kinesis Data Firehose。
+Amazon Kinesis Data Firehose可以直接将数据存储到Amazon S3，满足无服务器架构的要求。
+此方案不会影响EC2实例启动速度，因为数据流是异步的。
+B. Launch an Amazon EMR cluster to collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data
+Firehose. Store the data in Amazon S3.
+错误：Amazon EMR是一个大数据处理服务，通常用于复杂的批处理任务，而不是实时数据流处理。
+使用EMR会增加复杂性和成本，不符合无服务器架构的要求。
+C. Create an Amazon EventBridge rule to invoke an AWS Lambda function on a schedule. Configure the Lambda function
+to send the EC2 Auto Scaling status data directly to Amazon S3.
+错误：虽然EventBridge可以捕获事件并触发Lambda函数，但这种方法需要定期轮询，可能会导致延迟，无法实现近实时更新。
+直接将数据发送到S3可能缺乏数据流的灵活性和扩展性。
+D. Use a bootstrap script during the launch of an EC2 instance to install Amazon Kinesis Agent. Configure Kinesis Agent to
+collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data Firehose. Store the data in Amazon S3.
+错误：使用bootstrap脚本会增加EC2实例启动时间，直接影响实例启动速度。
+Kinesis Agent通常用于日志数据收集，而不是处理EC2 Auto Scaling事件数据。
+3. 我的选择
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+Community vote distribution
+社区投票分布
+A (88%)
+12%

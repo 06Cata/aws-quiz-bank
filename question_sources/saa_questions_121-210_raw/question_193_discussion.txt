@@ -1,0 +1,124 @@
+A company is running a batch application on Amazon EC2 instances. The application consists of a backend with multiple Amazon
+RDS databases. The application is causing a high number of reads on the databases. A solutions architect must reduce the number
+of database reads while ensuring high availability.
+What should the solutions architect do to meet this requirement?
+A. Add Amazon RDS read replicas. Most Voted
+B. Use Amazon ElastiCache for Redis.
+C. Use Amazon Route 53 DNS caching
+D. Use Amazon ElastiCache for Memcached.
+Comments
+leonnnn Highly Voted 3 years, 6 months ago
+Selected Answer: B
+Use ElastiCache to reduce reading and choose redis to ensure high availability.
+upvoted 49 times
+Lalo 3 years, 3 months ago
+Where is the high availability when the database fails and the cache time runs out?
+The answer is a.
+upvoted 26 times
+Mia2009687 2 years, 11 months ago
+They run multiple databases
+upvoted 1 times
+ruqui 3 years ago
+A can't be an answer because the requirement is"reduce the number of database reads"
+upvoted 11 times
+mandragon 3 years ago
+Elasticache for Redis ensures high availability by using read replicas and Multi AZ with failover. It is also faster since it uses cache.
+https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html
+upvoted 5 times
+JoeGuan 2 years, 9 months ago
+Caching Frequently Accessed Data: ElastiCache allows you to store frequently accessed or computationally expensive data in-memory within the
+cache nodes. This means that when an application requests data, ElastiCache can provide the data directly from the cache without having to query
+the RDS database. This reduces the number of reads on the RDS database because the data is retrieved from the faster in-memory cache.
+upvoted 6 times
+channn Highly Voted 3 years, 2 months ago
+Selected Answer: A
+A vs B:
+A: reduce the number of database reads on main + high availability provide
+B: only reduce the number of DB reads
+so A wins
+upvoted 32 times
+Correct Answer: A
+Community vote distribution
+A (60%)
+B (40%)
+pentium75 2 years, 5 months ago
+Why "only reduce the number of DB reads"? This is exactly what is asked.
+Elasticache for Redis can be HA (contrary to Elasticache for Memcached).
+upvoted 7 times
+LoXoL 2 years, 4 months ago
+pentium75 is right.
+upvoted 2 times
+46e1a46 Most Recent 1 month ago
+Selected Answer: A
+Two requirements need to be addressed:
+Reduce database reads → offload reads to replicas
+Ensure high availability → replicas provide redundancy
+Caching reduces database reads, BUT:
+Requires application code changes to implement cache logic. Cache misses still hit the database. Doesn't inherently provide HA for the database
+itself. More complex than just adding read replicas
+upvoted 1 times
+robst84 5 months, 2 weeks ago
+Selected Answer: B
+Using Replicas won't reduce the number of reads. The answer has to be ElastiCache.
+upvoted 1 times
+Darius_W 8 months ago
+Selected Answer: B
+B. Use Amazon ElastiCache for Redis.
+Why: A cache reduces repeated database reads. Redis supports Multi-AZ with replication and automatic failover, meeting the high availability
+requirement.
+A (RDS read replicas): Increases read capacity but doesn’t reduce total DB reads hitting RDS.
+D (Memcached): No HA/replication; a node failure loses cache and availability.
+C: DNS caching is unrelated to DB read load.
+upvoted 1 times
+MultipleWorkerMirroredStrategy 9 months, 1 week ago
+Selected Answer: B
+Since the question requires us to "reduce the number of database reads while ensuring high availability", a read replica would not meet this
+requirement.
+ElastiCache for Redis provides high availability, while Memcached doesn't. Therefore, B seems to be the right answer for me.
+upvoted 2 times
+Charlesvg 11 months, 4 weeks ago
+Selected Answer: B
+Elasticache allows to reduce the reads on the DB while assuring HA.
+https://aws.amazon.com/fr/blogs/database/introducing-99-99-availability-with-amazon-elasticache-for-redis-and-amazon-memorydb-for-redis/
+upvoted 1 times
+network_enthusiast 1 year, 1 month ago
+Selected Answer: B
+B is the correct answer
+upvoted 1 times
+kg508 1 year, 3 months ago
+Selected Answer: B
+I voted B because it was mentioned that the number of database reads should be reduced
+If I had to reduce the database read load, I would have done it to A
+upvoted 1 times
+satyaammm 1 year, 3 months ago
+Selected Answer: A
+RDS read replicas provide HA unlike Redis
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+Read replicas distribute read traffic but do not reduce the total number of reads. They scale read capacity but still require every read to hit a database
+instance.
+upvoted 1 times
+Qu_B 1 year, 8 months ago
+This question is stupid! Both answers can be correct!
+upvoted 5 times
+Omariox 1 year, 8 months ago
+Selected Answer: A
+for high availability, the answer should be A
+upvoted 4 times
+jaradat02 1 year, 10 months ago
+Selected Answer: B
+RDS read replicas are mainly used for higher performance, and not for higher availability, that's why I chose ElastiCache using Redis.
+upvoted 2 times
+Aws_aspr 1 year, 10 months ago
+Selected Answer: B
+I Vote B since question is asking to reduce the database reads. Using Read replicas offloads the reading operation from main db but doesn't reduce
+it.
+upvoted 2 times
+freedafeng 1 year, 11 months ago
+B is not correct. the effectiveness of caching depends on the application. it's not always a good solution.
+upvoted 1 times
+jatric 1 year, 11 months ago
+Selected Answer: A
+why not read replica when you get read performant with HA?
+upvoted 4 times

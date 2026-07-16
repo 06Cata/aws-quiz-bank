@@ -1,0 +1,94 @@
+A company has deployed a multiplayer game for mobile devices. The game requires live location tracking of players based on
+latitude and longitude. The data store for the game must support rapid updates and retrieval of locations.
+The game uses an Amazon RDS for PostgreSQL DB instance with read replicas to store the location data. During peak usage
+periods, the database is unable to maintain the performance that is needed for reading and writing updates. The game's user base
+is increasing rapidly.
+What should a solutions architect do to improve the performance of the data tier?
+A. Take a snapshot of the existing DB instance. Restore the snapshot with Multi-AZ enabled.
+B. Migrate from Amazon RDS to Amazon OpenSearch Service with OpenSearch Dashboards.
+C. Deploy Amazon DynamoDB Accelerator (DAX) in front of the existing DB instance. Modify the game to use DAX.
+D. Deploy an Amazon ElastiCache for Redis cluster in front of the existing DB instance. Modify the game to use Redis.
+Most Voted
+Comments
+Rhydian25 Highly Voted 1 year, 11 months ago
+Selected Answer: D
+Why are people voting for C? PostgreSQL is a relational DB. DynamoDB is NoSQL.
+It makes no sense
+upvoted 9 times
+1e22522 1 year, 10 months ago
+its bezos with his alt accounts.
+upvoted 6 times
+Dantecito Most Recent 1 year, 3 months ago
+Selected Answer: D
+To add more to all the answer Redis has built-in support for geospatial data, making it ideal for updates and retrieval of locations.
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: D
+Refer to https://www.examtopics.com/discussions/amazon/view/53854-exam-aws-certified-solutions-architect-associate-saa-c02/
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Specific to Redis, ElastiCache lets you “scale in” or “scale out” both reads and writes. Cluster mode offers added shard support, enabling write
+scaling.
+https://aws.amazon.com/blogs/database/building-a-real-time-gaming-leaderboard-with-amazon-elasticache-for-redis/
+upvoted 2 times
+Lin878 1 year, 11 months ago
+Selected Answer: D
+I confuse, Is DAX working with RDS?
+Correct Answer: D
+Community vote distribution
+D (76%)
+C (24%)
+upvoted 1 times
+Jacky_S 1 year, 11 months ago
+Selected Answer: D
+The answer C is not making any sense with "Deploy Amazon DynamoDB Accelerator (DAX) in front of the existing DB instance.", because AWS
+DynamoDB is a DBaaS.
+upvoted 2 times
+Scheldon 1 year, 11 months ago
+Selected Answer: D
+AnswerD
+ElastiCache is a fully managed, in-memory caching service that provides microsecond read and write latencies that support flexible, real-time use
+cases.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/creating-elasticache-cluster-with-RDS-settings.html
+upvoted 2 times
+Scheldon 1 year, 11 months ago
+Beside DAX is for DynamoDB and I think it will not work with RDS
+upvoted 1 times
+ug56c 1 year, 11 months ago
+Selected Answer: D
+Amazon ElastiCache for Redis for RDS
+upvoted 1 times
+sheilawu 2 years ago
+Selected Answer: C
+" writing updates" so it shoud be DAX.
+upvoted 2 times
+f07ed8f 2 years ago
+Selected Answer: C
+Vote for C (DAX) as ElastiCache for Redis cluster only helps on read operation but not white.
+upvoted 4 times
+f07ed8f 2 years ago
+Vote for C (DAX) as ElastiCache for Redis cluster only helps on read operation but not write operation.
+upvoted 1 times
+sirajtr47 2 years, 1 month ago
+Performance >> Amazon ElastiCache for Redis cluster
+upvoted 4 times
+Rylz 2 years ago
+Yeah, but this is an online game that need to update everything instantly so i don't think that caching is the right method here
+think about it, you are making movments in the online game its like loading new data all the time, so each time you move you load the cache for
+next time usage. what if you dont need to use it again?
+i dont think elasticache is the right method here so it leave us with DAX
+what do you think?
+upvoted 1 times
+Jacky_S 1 year, 11 months ago
+i agree with DAX, but how it can be deploying in front of DB instance? Since that is a DBaaS.
+upvoted 1 times
+FZA24 2 years, 3 months ago
+Selected Answer: D
+D looks correct
+upvoted 2 times
+Umuntu 2 years, 4 months ago
+D looks correct
+upvoted 4 times
+Andy_09 2 years, 4 months ago
+Looks correct
+upvoted 2 times

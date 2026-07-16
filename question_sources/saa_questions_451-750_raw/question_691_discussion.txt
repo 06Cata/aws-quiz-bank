@@ -1,0 +1,56 @@
+A solutions architect is designing a shared storage solution for a web application that is deployed across multiple Availability
+Zones. The web application runs on Amazon EC2 instances that are in an Auto Scaling group. The company plans to make
+frequent changes to the content. The solution must have strong consistency in returning the new content as soon as the changes
+occur.
+Which solutions meet these requirements? (Choose two.)
+A. Use AWS Storage Gateway Volume Gateway Internet Small Computer Systems Interface (iSCSI) block storage that is
+mounted to the individual EC2 instances.
+B. Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system on the individual EC2 instances.
+Most Voted
+C. Create a shared Amazon Elastic Block Store (Amazon EBS) volume. Mount the EBS volume on the individual EC2 instances.
+D. Use AWS DataSync to perform continuous synchronization of data between EC2 hosts in the Auto Scaling group.
+E. Create an Amazon S3 bucket to store the web content. Set the metadata for the Cache-Control header to no-cache. Use
+Amazon CloudFront to deliver the content. Most Voted
+Comments
+Andy_09 Highly Voted 2 years, 4 months ago
+Correct answer BE
+upvoted 8 times
+Cali182 Highly Voted 2 years, 4 months ago
+Selected Answer: BE
+B & E seems to be the most logic
+upvoted 5 times
+LeonSauveterre Most Recent 1 year, 5 months ago
+Selected Answer: BE
+A - Volume Gateway is typically on-prem and optimized for hybrid setups, not for fully cloud-based solutions.
+B - EFS provides a fully managed, shared file storage system that works across multiple AZs.
+C - Even with Multi-Attach, sharing EBS volumes across AZs is pretty complex and error-prone.
+D - DataSync is designed for periodic synchronization and not real-time, frequent updates.
+E - The "no-cache" header ensures the content is always fetched fresh, and CloudFront delivers it efficiently with reduced latency. Although S3 is less
+efficient for frequent updates compared to a shared file system like EFS, but not a problem here.
+upvoted 3 times
+Penjerla 1 year, 6 months ago
+Selected Answer: BC
+Option A is out as storage gateway is suited for hybrid cloud use cases where on-premises workloads need access to AWS cloud storage
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+C is wrong: you cannot share EBS in multiple AZ
+upvoted 1 times
+sandordini 2 years, 1 month ago
+Correct Answer: BE
+Community vote distribution
+BE (91%)
+9%
+Regarding storage, I'd go for EFS, although it never mentions the requirement for file storage.
+Datasync can copy data between several storage types, including EFS, agents can be installed on EC2, but you cannot perform continuous
+synchronization of EC2 instances. Only storage.
+Cloudfront can publish both passive (s3) and active content (EC2+EFS) but wording doesn't tell a thing about such a share. And if it's a passive site
+why do we even have 2 storage types...
+I'd say, for me, the least bad solution seems to be B + E.
+upvoted 2 times
+Hung23 2 years, 2 months ago
+Selected Answer: BE
+I choose BE
+upvoted 2 times
+alawada 2 years, 2 months ago
+BD looks most logical to me - continuous changes required an update via DataSync
+upvoted 2 times

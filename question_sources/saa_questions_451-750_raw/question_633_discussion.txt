@@ -1,0 +1,36 @@
+A company manages an application that stores data on an Amazon RDS for PostgreSQL Multi-AZ DB instance. Increases in traffic
+are causing performance problems. The company determines that database queries are the primary reason for the slow
+performance.
+What should a solutions architect do to improve the application's performance?
+A. Serve read traffic from the Multi-AZ standby replica.
+B. Configure the DB instance to use Transfer Acceleration.
+C. Create a read replica from the source DB instance. Serve read traffic from the read replica. Most Voted
+D. Use Amazon Kinesis Data Firehose between the application and Amazon RDS to increase the concurrency of database
+requests.
+Comments
+TariqKipkemei Highly Voted 2 years ago
+Selected Answer: C
+A Multi-AZ DB instance Creates a primary DB instance with one standby DB instance in a different Availability Zone. Using a Multi-AZ DB instance
+provides high availability, but the standby DB instance doesn't support connections for read workloads.
+Therefore you will need to create a read replica from the source DB instance then serve read traffic from the read replica.
+upvoted 7 times
+awsgeek75 Highly Voted 1 year, 11 months ago
+Selected Answer: C
+Read replica split for read traffic will distribute the overall load and improve the performance.
+A: Standby replica cannot serve traffic (Correct me if I am wrong here)
+B: Transfer Accelerator is to speed up S3 traffic. Not the case here
+D: Kiensis will increase concurrency but won't solve the DB performance issues
+upvoted 5 times
+potomac Most Recent 2 years, 1 month ago
+Selected Answer: C
+you can’t read from the standby DB instance. If applications require more read capacity, you should create or add additional read replicas.
+upvoted 3 times
+warp 2 years, 1 month ago
+Selected Answer: C
+After you create a read replica from a source DB instance, the source becomes the primary DB instance. When you make updates to the primary DB
+instance, Amazon RDS copies them asynchronously to the read replica.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
+upvoted 4 times
+Correct Answer: C
+Community vote distribution
+C (100%)

@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 601,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon RDS for PostgreSQL 資料庫執行個體上執行其關鍵資料庫。該公司希望遷移到 Amazon Aurora PostgreSQL，同時最大限度地減少停機時間和資料遺失。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company runs its critical database on an Amazon RDS for PostgreSQL DB instance. The company wants to migrate to Amazon Aurora PostgreSQL with minimal downtime and data loss. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 RDS for PostgreSQL 資料庫執行個體的資料庫快照以填入新的 Aurora PostgreSQL 資料庫叢集。",
+          "en": "Create a DB snapshot of the RDS for PostgreSQL DB instance to populate a new Aurora PostgreSQL DB cluster."
+        },
+        "B": {
+          "zh": "建立 RDS for PostgreSQL 資料庫實例的 Aurora 唯讀副本。將 Aurora 讀取複製提升到新的 Aurora PostgreSQL 資料庫叢集。",
+          "en": "Create an Aurora read replica of the RDS for PostgreSQL DB instance. Promote the Aurora read replicate to a new Aurora PostgreSQL DB cluster."
+        },
+        "C": {
+          "zh": "使用從 Amazon S3 匯入的資料將資料庫遷移到 Aurora PostgreSQL 資料庫叢集。",
+          "en": "Use data import from Amazon S3 to migrate the database to an Aurora PostgreSQL DB cluster."
+        },
+        "D": {
+          "zh": "使用 pg_dump 公用程式備份 RDS for PostgreSQL 資料庫。將備份還原到新的 Aurora PostgreSQL 資料庫叢集。",
+          "en": "Use the pg_dump utility to back up the RDS for PostgreSQL database. Restore the backup to a new Aurora PostgreSQL DB cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用快照遷移可能會導致長時間停機，因為快照是靜態的，無法即時更新資料。不符合「最少停機時間和資料遺失」的要求。",
+          "en": "Incorrect. Migrating using snapshots can cause long downtime because snapshots are static and cannot update data in real time. Does not meet the \"minimum downtime and data loss\" requirements."
+        },
+        "B": {
+          "zh": "正確。Aurora 支援直接建立 RDS PostgreSQL 的唯讀副本，並且可以將它們提升為獨立的 Aurora 叢集。這種方法可以實現即時資料同步，確保最大限度地減少停機時間和資料遺失。操作簡單，滿足「最小營運開銷」的要求。",
+          "en": "Correct. Aurora supports the direct creation of read-only replicas of RDS PostgreSQL, and they can be promoted to independent Aurora clusters. This approach enables real-time data synchronization, ensuring minimal downtime and data loss. The operation is simple and meets the requirements of \"minimum operating overhead\"."
+        },
+        "C": {
+          "zh": "錯誤。使用 S3 匯入資料需要額外的步驟，例如將資料匯出到 S3 並配置匯入任務。這種方式無法實現資料的即時同步，可能會導致資料遺失。操作複雜，不符合「最小操作開銷」的要求。",
+          "en": "Incorrect. Importing data using S3 requires additional steps, such as exporting the data to S3 and configuring the import task. This method cannot achieve real-time data synchronization and may result in data loss. The operation is complicated and does not meet the requirement of \"minimum operation overhead\"."
+        },
+        "D": {
+          "zh": "錯誤。pg_dump和recovery過程耗時較長，無法實現資料即時同步。這種方式導致停機時間較長，不符合「最短停機時間」的要求。",
+          "en": "Incorrect. The pg_dump and recovery processes take a long time, and real-time data synchronization cannot be achieved. This approach results in long downtime and does not meet the \"minimum downtime\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立 RDS for PostgreSQL 資料庫實例的 Aurora 唯讀副本。將 Aurora 讀取複製提升到新的 Aurora PostgreSQL 資料庫叢集。",
+        "en": "B. Create an Aurora read replica of the RDS for PostgreSQL DB instance. Promote the Aurora read replicate to a new Aurora PostgreSQL DB cluster."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (88%)。熱門討論與考點摘要：Aurora 支援直接建立 RDS PostgreSQL 的唯讀副本，並且可以將它們提升為獨立的 Aurora 叢集。這種方法可以實現即時資料同步，確保最大限度地減少停機時間和資料遺失。操作簡單，滿足「最小營運開銷」的要求。",
+        "en": "Community vote as displayed: B (88%). Popular discussion and key point summary: Aurora supports the direct creation of read-only replicas of RDS PostgreSQL, and they can be promoted to independent Aurora clusters. This approach enables real-time data synchronization, ensuring minimal downtime and data loss. The operation is simple and meets the requirements of \"minimum operating overhead\"."
+      }
+    },
+    {
+      "question_no": 602,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司的基礎架構由數百個使用 Amazon Elastic Block Store (Amazon EBS) 儲存的 Amazon EC2 執行個體組成。解決方案架構師必須確保每個 EC2 執行個體都可以在災難後復原。解決方案架構師應該如何做才能以最少的努力滿足此要求？",
+        "en": "A company's infrastructure consists of hundreds of Amazon EC2 instances that use Amazon Elastic Block Store (Amazon EBS) storage. A solutions architect must ensure that every EC2 instance can be recovered after a disaster. What should the solutions architect do to meet this requirement with the LEAST amount of effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "拍攝附加到每個 EC2 執行個體的 EBS 儲存的快照。建立 AWS CloudFormation 範本以從 EBS 儲存啟動新的 EC2 執行個體。",
+          "en": "Take a snapshot of the EBS storage that is attached to each EC2 instance. Create an AWS CloudFormation template to launch new EC2 instances from the EBS storage."
+        },
+        "B": {
+          "zh": "拍攝附加到每個 EC2 執行個體的 EBS 儲存的快照。使用AWS Elastic Beanstalk根據EC2模板設定環境並附加EBS儲存。",
+          "en": "Take a snapshot of the EBS storage that is attached to each EC2 instance. Use AWS Elastic Beanstalk to set the environment based on the EC2 template and attach the EBS storage."
+        },
+        "C": {
+          "zh": "使用 AWS Backup 為整個 EC2 執行個體群組設定備份計畫。使用 AWS Backup API 或 AWS CLI 加快多個 EC2 執行個體的復原程序。",
+          "en": "Use AWS Backup to set up a backup plan for the entire group of EC2 instances. Use the AWS Backup API or the AWS CLI to speed up the restore process for multiple EC2 instances."
+        },
+        "D": {
+          "zh": "建立一個 AWS Lambda 函數來拍攝附加到每個 EC2 執行個體的 EBS 儲存的快照並複製 Amazon 系統映像 (AMI)。建立另一個 Lambda 函數以使用複製的 AMI 執行復原並附加 EBS 儲存。",
+          "en": "Create an AWS Lambda function to take a snapshot of the EBS storage that is attached to each EC2 instance and copy the Amazon Machine Images (AMIs). Create another Lambda function to perform the restores with the copied AMIs and attach the EBS storage."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。手動為數百個實例拍攝快照並維護 CloudFormation 復原範本需要大量協調，且不提供集中式復原編排。",
+          "en": "Incorrect. Manually taking snapshots for hundreds of instances and maintaining CloudFormation recovery templates requires substantial coordination and does not provide centralized recovery orchestration."
+        },
+        "B": {
+          "zh": "錯誤。分析：Elastic Beanstalk主要用於應用程式的部署和管理，不用於復原。選項不得與問題相符。",
+          "en": "Incorrect. Analysis: Elastic Beanstalk is mainly used for deployment and management of application programs, not for recovery. The options must not match the question."
+        },
+        "C": {
+          "zh": "正確。分析：AWS Backup是專為集中管理備份和復原而設計的服務，支援EC2執行個體和EBS磁碟區的備份。使用 AWS Backup API 或 CLI 可以自動化復原流程，減少手動介入並滿足「最少工作量」要求。",
+          "en": "Correct. Analysis: AWS Backup is a service specially designed for centralized management of backup and recovery, supporting backup of EC2 instances and EBS volumes. Using the AWS Backup API or CLI can automate the recovery flow, reducing manual intervention and meeting the \"minimum effort\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。用於快照、AMI 複製和還原的自訂 Lambda 函數需要程式碼開發和維護，從而比託管備份計劃產生更多的操作工作。",
+          "en": "Incorrect. Custom Lambda functions for snapshot, AMI copy, and restoration require code development and maintenance, creating more operational effort than a managed backup plan."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Backup 為整個 EC2 執行個體群組設定備份計畫。使用 AWS Backup API 或 AWS CLI 加快多個 EC2 執行個體的復原程序。",
+        "en": "C. Use AWS Backup to set up a backup plan for the entire group of EC2 instances. Use the AWS Backup API or the AWS CLI to speed up the restore process for multiple EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：分析：AWS Backup是專為集中管理備份和復原而設計的服務，支援EC2執行個體和EBS磁碟區的備份。使用 AWS Backup API 或 CLI 可以自動化復原流程，減少手動介入並滿足「最少工作量」要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Analysis: AWS Backup is a service specially designed for centralized management of backup and recovery, supporting backup of EC2 instances and EBS volumes. Using the AWS Backup API or CLI can automate the recovery flow, reducing manual intervention and meeting the \"minimum effort\" requirement."
+      }
+    },
+    {
+      "question_no": 603,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司最近遷移到 AWS 雲端。該公司希望有一個無伺服器解決方案來大規模並行按需處理半結構化資料集。這些數據包括儲存在 Amazon S3 中的日誌、媒體檔案、銷售交易和 IoT 感測器資料。該公司希望該解決方案能夠並行處理資料集中的數千個項目。哪種解決方案能夠以最高的營運效率滿足這些要求？",
+        "en": "A company recently migrated to the AWS Cloud. The company wants a serverless solution for large-scale parallel on-demand processing of a semistructured dataset. The data consists of logs, media files, sales transactions, and IoT sensor data that is stored in Amazon S3. The company wants the solution to process thousands of items in the dataset in parallel. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "在內聯模式下使用 AWS Step Functions Map 狀態並行處理資料。",
+          "en": "Use the AWS Step Functions Map state in Inline mode to process the data in parallel."
+        },
+        "B": {
+          "zh": "在分散式模式下使用 AWS Step Functions Map 狀態並行處理資料。",
+          "en": "Use the AWS Step Functions Map state in Distributed mode to process the data in parallel."
+        },
+        "C": {
+          "zh": "使用 AWS Glue 並行處理資料。",
+          "en": "Use AWS Glue to process the data in parallel."
+        },
+        "D": {
+          "zh": "使用多個 AWS Lambda 函數並行處理資料。",
+          "en": "Use several AWS Lambda functions to process the data in parallel."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Step Functions 的 Map 狀態的 Inline 模式適合較小規模的平行處理，因為其平行度受到 Step Functions 執行限制的限制。對於大規模資料集（例如問題中所說的「處理數千個資料項」），Inline 模式可能無法滿足需求。因此該選項不符合題目要求。",
+          "en": "Incorrect. The Inline mode of the Map state of Step Functions is suitable for smaller-scale parallel processing because its degree of parallelism is limited by the execution limitations of Step Functions. For large-scale data sets (such as \"processing thousands of data items\" stated in the question), Inline mode may not be able to meet the needs. Therefore this option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。Step Functions 的 Map 狀態分散模式是專為大規模並行處理而設計的，可以高效處理數千項資料。分散式模式可以使用AWS Lambda函數並行處理數據，可擴展性高，維運負擔低。此選項符合題目要求，是最佳選擇。",
+          "en": "Correct. The Distributed mode of Map state of Step Functions is specially designed for large-scale parallel processing and can efficiently process thousands of items of data. Distributed mode can use AWS Lambda functions to process data in parallel, with high scalability and low operational burden. This option meets the question requirements and is the best choice."
+        },
+        "C": {
+          "zh": "錯誤。AWS Glue 是一種適合數據轉換和分析的 ETL 服務，但其主要目的是處理結構化或半結構化數據，而不是直接處理大規模並行任務。雖然AWS Glue可以處理數據，但其設計目標並不完全符合問題所要求的「高效並行處理」。此選項不是最佳選擇。",
+          "en": "Incorrect. AWS Glue is an ETL service suitable for data transformation and analysis, but its main purpose is to process structured or semi-structured data, rather than directly processing large-scale parallel tasks. Although AWS Glue can process data, its design goals do not completely match the \"efficient parallel processing\" required by the question. This option is not optimal."
+        },
+        "D": {
+          "zh": "錯誤。AWS Lambda 可以實現並行處理，但需要額外的邏輯來管理任務分配和協調。與Step Functions的分散式模式相比，直接使用Lambda函數會增加開發和維運的複雜度。雖然這個方案是可行的，但它並不是最優方案。",
+          "en": "Incorrect. AWS Lambda can implement parallel processing, but requires additional logic to manage task distribution and coordination. Compared with the Distributed mode of Step Functions, using Lambda functions directly will increase the complexity of development and operational. Although this option is feasible, it is not the optimal solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在分散式模式下使用 AWS Step Functions Map 狀態並行處理資料。",
+        "en": "B. Use the AWS Step Functions Map state in Distributed mode to process the data in parallel."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (96%)。熱門討論與考點摘要：Step Functions 的 Map 狀態分散模式是專為大規模並行處理而設計的，可以高效處理數千項資料。分散式模式可以使用AWS Lambda函數並行處理數據，可擴展性高，維運負擔低。此選項符合題目要求，是最佳選擇。",
+        "en": "Community vote as displayed: B (96%). Popular discussion and key point summary: The Distributed mode of Map state of Step Functions is specially designed for large-scale parallel processing and can efficiently process thousands of items of data. Distributed mode can use AWS Lambda functions to process data in parallel, with high scalability and low operational burden. This option meets the question requirements and is the best choice."
+      }
+    },
+    {
+      "question_no": 604,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司將在 6 週內將 10 PB 資料遷移到 Amazon S3。目前的資料中心具有 500 Mbps 的網際網路上行鏈路。其他本機應用程式共享上行鏈路。該公司可以使用 80% 的網路頻寬來完成這項一次性遷移任務。哪種解決方案可以滿足這些要求？",
+        "en": "A company will migrate 10 PB of data to Amazon S3 in 6 weeks. The current data center has a 500 Mbps uplink to the internet. Other on-premises applications share the uplink. The company can use 80% of the internet bandwidth for this one-time migration task. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 AWS DataSync 以將資料移轉到 Amazon S3 並自動驗證資料。",
+          "en": "Configure AWS DataSync to migrate the data to Amazon S3 and to automatically verify the data."
+        },
+        "B": {
+          "zh": "使用 rsync 將資料直接傳輸到 Amazon S3。",
+          "en": "Use rsync to transfer the data directly to Amazon S3."
+        },
+        "C": {
+          "zh": "使用 AWS CLI 和多個複製程序將資料直接傳送到 Amazon S3。",
+          "en": "Use the AWS CLI and multiple copy processes to send the data directly to Amazon S3."
+        },
+        "D": {
+          "zh": "訂購多個 AWS Snowball 裝置。將資料複製到設備。將裝置傳送到 AWS 以將資料複製到 Amazon S3。",
+          "en": "Order multiple AWS Snowball devices. Copy the data to the devices. Send the devices to AWS to copy the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS DataSync 適用於中小型資料遷移，依賴網路頻寬。目前的網路頻寬（500 Mbps，80% 可用）不足以在 6 週內遷移 10 PB 的資料。",
+          "en": "Incorrect. AWS DataSync is suitable for small and medium-sized data migration and relies on network bandwidth. The current network bandwidth (500 Mbps, 80% available) is not sufficient to migrate 10 PB of data in 6 weeks."
+        },
+        "B": {
+          "zh": "錯誤。rsync是一個適合小規模資料傳輸的開源工具。依賴網路頻寬，無法滿足10PB資料遷移的時間要求。",
+          "en": "Incorrect. rsync is an open source tool suitable for small-scale data transmission. It relies on network bandwidth and cannot meet the time requirements of 10 PB data migration."
+        },
+        "C": {
+          "zh": "錯誤。AWS CLI 可用於資料傳輸，但仍依賴網路頻寬。目前的網路條件無法在6週內完成10PB的資料遷移。",
+          "en": "Incorrect. The AWS CLI can be used for data transfer, but still relies on network bandwidth. The current network conditions cannot complete the 10 PB data migration within 6 weeks."
+        },
+        "D": {
+          "zh": "正確。AWS Snowball 是一款專為大規模資料遷移而設計的裝置。不依賴網路頻寬，短時間內可完成10PB資料遷移。",
+          "en": "Correct. AWS Snowball is a device specifically designed for large-scale data migration. It does not rely on network bandwidth and can complete 10 PB data migration in a short time."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 訂購多個 AWS Snowball 裝置。將資料複製到設備。將裝置傳送到 AWS 以將資料複製到 Amazon S3。",
+        "en": "D. Order multiple AWS Snowball devices. Copy the data to the devices. Send the devices to AWS to copy the data to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (93%)。熱門討論與考點摘要：AWS Snowball 是一款專為大規模資料遷移而設計的裝置。不依賴網路頻寬，短時間內可完成10PB資料遷移。",
+        "en": "Community vote as displayed: D (93%). Popular discussion and key point summary: AWS Snowball is a device specifically designed for large-scale data migration. It does not rely on network bandwidth and can complete 10 PB data migration in a short time."
+      }
+    },
+    {
+      "question_no": 605,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有多個本地 Internet 小型電腦系統介面 (ISCSI) 網路儲存伺服器。該公司希望透過遷移到 AWS 雲端來減少這些伺服器的數量。解決方案架構師必須提供對常用資料的低延遲訪問，並透過最少的基礎設施變更來減少對本地伺服器的依賴。哪種解決方案可以滿足這些要求？",
+        "en": "A company has several on-premises Internet Small Computer Systems Interface (ISCSI) network storage servers. The company wants to reduce the number of these servers by moving to the AWS Cloud. A solutions architect must provide low-latency access to frequently used data and reduce the dependency on on-premises servers with a minimal number of infrastructure changes. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "部署 Amazon S3 檔案閘道。",
+          "en": "Deploy an Amazon S3 File Gateway."
+        },
+        "B": {
+          "zh": "部署 Amazon Elastic Block Store (Amazon EBS) 儲存並將備份備份到 Amazon S3。",
+          "en": "Deploy Amazon Elastic Block Store (Amazon EBS) storage with backups to Amazon S3."
+        },
+        "C": {
+          "zh": "部署配置儲存磁碟區的 AWS Storage Gateway 磁碟區閘道。",
+          "en": "Deploy an AWS Storage Gateway volume gateway that is configured with stored volumes."
+        },
+        "D": {
+          "zh": "部署配置有快取磁碟區的 AWS Storage Gateway 磁碟區閘道。",
+          "en": "Deploy an AWS Storage Gateway volume gateway that is configured with cached volumes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon S3 檔案閘道主要用於將檔案儲存到 Amazon S3，同時提供對檔案的低延遲存取。然而，這個問題需要對常用資料進行低延遲存取並減少對本地伺服器的依賴。 S3 檔案閘道不適合 ISCSI 協定場景。",
+          "en": "Incorrect. Amazon S3 File Gateway is primarily used to store files to Amazon S3 while providing low-latency access to files. However, this problem requires low-latency access to frequently used data and reduced reliance on local servers. S3 File Gateway is not suitable for ISCSI protocol scenarios."
+        },
+        "B": {
+          "zh": "錯誤。Amazon EBS 是適用於 EC2 執行個體的區塊儲存服務，但它不會直接與本機 ISCSI 協定整合。此外，EBS 無法提供對本機伺服器的低延遲存取。",
+          "en": "Incorrect. Amazon EBS is a block storage service for EC2 instances, but it does not integrate directly with the native ISCSI protocol. Additionally, EBS cannot provide low-latency access to local servers."
+        },
+        "C": {
+          "zh": "錯誤。儲存卷模式將資料儲存在本機並定期備份到AWS雲端。儲存卷雖然可以提供低延遲的訪問，但仍然依賴本地儲存設備，無法減少對本地伺服器的依賴。",
+          "en": "Incorrect. Storage volume mode stores data locally and backs it up to the AWS cloud regularly. Although storage volumes can provide low-latency access, they still rely on local storage devices and cannot reduce dependence on local servers."
+        },
+        "D": {
+          "zh": "正確。快取磁碟區模式將頻繁存取的資料快取在本機，同時將主要資料儲存在 AWS 雲端。這種模式可以提供低延遲的訪問，減少對本地儲存伺服器的依賴，符合問題的要求，所以這個選項是正確的。",
+          "en": "Correct. The cache volume mode caches frequently accessed data locally while storing primary data in the AWS cloud. This mode can provide low-latency access and reduce dependence on the local storage server, which meets the requirements of the question, so this option is correct."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 部署配置有快取磁碟區的 AWS Storage Gateway 磁碟區閘道。",
+        "en": "D. Deploy an AWS Storage Gateway volume gateway that is configured with cached volumes."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：快取磁碟區模式將頻繁存取的資料快取在本機，同時將主要資料儲存在 AWS 雲端。這種模式可以提供低延遲的訪問，減少對本地儲存伺服器的依賴，符合問題的要求，所以這個選項是正確的。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The cache volume mode caches frequently accessed data locally while storing primary data in the AWS cloud. This mode can provide low-latency access and reduce dependence on the local storage server, which meets the requirements of the question, so this option is correct."
+      }
+    },
+    {
+      "question_no": 606,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師正在設計一個應用程序，允許業務用戶將物件上傳到 Amazon S3。此解決方案需要最大限度地提高物件的耐用性。物件也必須在任何時間、任何時間長度內都可以隨時使用。對像上傳後的前30天內，使用者會頻繁存取對象，但使用者存取超過30天的對象的可能性要小得多。哪種解決方案最經濟有效率地滿足這些要求？",
+        "en": "A solutions architect is designing an application that will allow business users to upload objects to Amazon S3. The solution needs to maximize object durability. Objects also must be readily available at any time and for any length of time. Users will access objects frequently within the first 30 days after the objects are uploaded, but users are much less likely to access objects that are older than 30 days. Which solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 S3 生命週期規則將所有物件儲存在 S3 Standard 中，以便在 30 天後將物件轉換到 S3 Glacier。",
+          "en": "Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 Glacier after 30 days."
+        },
+        "B": {
+          "zh": "使用 S3 生命週期規則將所有物件儲存在 S3 Standard 中，以便在 30 天後將物件轉換為 S3 Standard-Infrequent Access (S3 Standard-IA)。",
+          "en": "Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 30 days."
+        },
+        "C": {
+          "zh": "使用 S3 生命週期規則將所有物件儲存在 S3 Standard 中，以便在 30 天後將物件轉換為 S3 One Zone-Infrequent Access (S3 One Zone-IA)。",
+          "en": "Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 30 days."
+        },
+        "D": {
+          "zh": "使用 S3 生命週期規則將所有物件儲存在 S3 智慧分層中，以便在 30 天後將物件轉換為 S3 標準-不頻繁存取 (S3 標準-IA)。",
+          "en": "Store all the objects in S3 Intelligent-Tiering with an S3 Lifecycle rule to transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 30 days."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。S3 Glacier 是一種低成本存儲選項，但它主要用於長期資料存儲，且存取延遲較高（需要恢復時間）。此問題要求對象隨時可用，因為 S3 Glacier 不符合要求。",
+          "en": "Incorrect. S3 Glacier is a low-cost storage option, but it is mainly used for long-term data storage and has high access latency (requires recovery time). The problem requires that the object be readily available, because S3 Glacier does not meet the requirements."
+        },
+        "B": {
+          "zh": "正確。S3 Standard-IA 是一種儲存選項，適合不頻繁存取但需要高可用性和低延遲的情況。其成本低於S3標準，並且符合問題中的「即用型」要求。 30 天後將資料移至 S3 Standard-IA 的生命週期規則是一個合理的選擇。這是真的。",
+          "en": "Correct. S3 Standard-IA is a storage option suitable for infrequent access but where high availability and low latency are required. Its cost is lower than S3 Standard, and it meets the \"ready to use\" requirement in the question. A lifecycle rule to move data to S3 Standard-IA after 30 days is a reasonable choice. It’s true."
+        },
+        "C": {
+          "zh": "錯誤。S3 One Zone-IA 較便宜，但它僅儲存在一個可用區中，並提供與 S3 Standard-IA 相同的高可用性和持久性。問題是最大化物件的持久性，但這並不能滿足要求。",
+          "en": "Incorrect. S3 One Zone-IA is less expensive, but it only stores in one Availability Zone and provides the same high availability and durability as S3 Standard-IA. The question is to maximize object durability, but this does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。S3智慧分層是自動最佳化儲存成本的選項，適用於存取模式不確定的場景。問題明確指出了訪問方式（前30天頻繁訪問，之後不頻繁訪問），因為使用S3智慧分層會增加不必要的成本。",
+          "en": "Incorrect. S3 Intelligent-Tiering is an option to automatically optimize storage costs and is suitable for scenarios with uncertain access patterns. The question clearly points out the access mode (frequent access in the first 30 days, infrequent access thereafter), because using S3 Intelligent-Tiering will increase unnecessary costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 S3 生命週期規則將所有物件儲存在 S3 Standard 中，以便在 30 天後將物件轉換為 S3 Standard-Infrequent Access (S3 Standard-IA)。",
+        "en": "B. Store all the objects in S3 Standard with an S3 Lifecycle rule to transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 30 days."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (78%)； C (22%)。熱門討論與考點摘要：S3 Standard-IA 是一種儲存選項，適合不頻繁存取但需要高可用性和低延遲的情況。其成本低於S3標準，並且符合問題中的「即用型」要求。 30 天後將資料移至 S3 Standard-IA 的生命週期規則是一個合理的選擇。這是真的。",
+        "en": "Community vote as displayed: B (78%); C (22%). Popular discussion and key point summary: S3 Standard-IA is a storage option suitable for infrequent access but where high availability and low latency are required. Its cost is lower than S3 Standard, and it meets the \"ready to use\" requirement in the question. A lifecycle rule to move data to S3 Standard-IA after 30 days is a reasonable choice. It’s true."
+      }
+    },
+    {
+      "question_no": 607,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司已將兩層應用程式從其本地資料中心遷移到 AWS 雲端。資料層是 Amazon RDS for Oracle 的多可用區部署，具有 12 TB 通用 SSD Amazon Elastic Block Store (Amazon EBS) 儲存。該應用程式旨在將資料庫中的文件作為平均文檔大小為 6 MB 的二進位大物件 (blob) 進行處理和儲存。資料庫大小隨著時間的推移而增長，從而降低了效能並增加了儲存成本。該公司必須提高資料庫效能，並需要一個高可用性和彈性的解決方案。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company has migrated a two-tier application from its on-premises data center to the AWS Cloud. The data tier is a Multi-AZ deployment of Amazon RDS for Oracle with 12 TB of General Purpose SSD Amazon Elastic Block Store (Amazon EBS) storage. The application is designed to process and store documents in the database as binary large objects (blobs) with an average document size of 6 MB. The database size has grown over time, reducing the performance and increasing the cost of storage. The company must improve the database performance and needs a solution that is highly available and resilient. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "減少 RDS 資料庫實例大小。將儲存容量增加至 24 TiB。將儲存類型變更為磁性。",
+          "en": "Reduce the RDS DB instance size. Increase the storage capacity to 24 TiB. Change the storage type to Magnetic."
+        },
+        "B": {
+          "zh": "增加 RDS 資料庫執行個體大小。將儲存容量增加到 24 Ti，將儲存類型變更為預先配置 IOPS。",
+          "en": "Increase the RDS DB instance size. Increase the storage capacity to 24 TiChange the storage type to Provisioned IOPS."
+        },
+        "C": {
+          "zh": "建立 Amazon S3 儲存桶。更新應用程式以將文件儲存在 S3 儲存桶中。將物件元資料儲存在現有資料庫中。",
+          "en": "Create an Amazon S3 bucket. Update the application to store documents in the S3 bucket. Store the object metadata in the existing database."
+        },
+        "D": {
+          "zh": "建立 Amazon DynamoDB 資料表。更新應用程式以使用 DynamoDB。使用 AWS Database Migration Service (AWS DMS) 將資料從 Oracle 資料庫遷移到 DynamoDB。",
+          "en": "Create an Amazon DynamoDB table. Update the application to use DynamoDB. Use AWS Database Migration Service (AWS DMS) to migrate data from the Oracle database to DynamoDB."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。減少 RDS 資料庫實例的大小。將儲存容量增加至 24 TiB。將儲存類型變更為磁性儲存。錯誤原因：磁性儲存（Magnetic）是一種較舊的儲存類型，效能較低，不適合處理對效能要求較高的資料庫工作負載。減少實例大小會進一步降低效能，這與問題所要求的效能提升背道而馳。",
+          "en": "Incorrect. Reduce the size of the RDS database instance. Increase storage capacity to 24 TiB. Change the storage type to magnetic storage. Reason for the error: Magnetic storage (Magnetic) is an older storage type with lower performance and is not suitable for handling database workloads with high performance requirements. Reducing the instance size will further reduce performance, which is contrary to the performance improvement required by the question."
+        },
+        "B": {
+          "zh": "錯誤。增加 RDS 資料庫執行個體的大小。將儲存容量增加至 24 TiB。將儲存類型變更為預先配置 IOPS。錯誤原因：預先配置IOPS雖然可以提升效能，但成本較高，不符合問題所要求的「最具性價比」的解決方案。增加實例大小和儲存容量進一步增加成本。",
+          "en": "Incorrect. Increase the size of the RDS database instance. Increase storage capacity to 24 TiB. Change the storage type to Provisioned IOPS. Reason for the error: Although preconfigured IOPS can improve performance, the cost is higher and does not meet the \"most cost-effective\" solution required by the question. Increasing instance size and storage capacity further increases costs."
+        },
+        "C": {
+          "zh": "正確。此選項正確理由：在 Amazon S3 中儲存文件可以顯著降低儲存成本，同時減輕資料庫負載，從而提高效能。 Amazon S3 具有高可用性和彈性，適合儲存文件等大規模二進位物件。將元資料保留在資料庫中可以維護應用程式的功能完整性。",
+          "en": "Correct. Create an Amazon S3 bucket. Update the application to store documents in an S3 bucket. Store object metadata in an existing database. Why it's right: Storing documents in Amazon S3 can significantly reduce storage costs while offloading the load on your database, thereby improving performance. Amazon S3 is highly available and elastic, and is suitable for storing large-scale binary objects such as documents. Keeping metadata in the database maintains the functional integrity of your application."
+        },
+        "D": {
+          "zh": "錯誤。此選項錯誤原因：DynamoDB是NoSQL資料庫，適合處理鍵值對數據，而不是儲存大規模二進位物件（例如文件）。遷移到 DynamoDB 需要對應用程式進行重大更改，成本高且複雜。",
+          "en": "Incorrect. Create an Amazon DynamoDB table. Update the application to use DynamoDB. Use AWS Database Migration Service (AWS DMS) to migrate data from Oracle Database to DynamoDB. Reason for the error: DynamoDB is a NoSQL database, suitable for processing key-value pair data, rather than storing large-scale binary objects (such as documents). Migrating to DynamoDB requires significant changes to the application, which is costly and complex."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 建立 Amazon S3 儲存桶。更新應用程式以將文件儲存在 S3 儲存桶中。將物件元資料儲存在現有資料庫中。",
+        "en": "C. Create an Amazon S3 bucket. Update the application to store documents in the S3 bucket. Store the object metadata in the existing database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：此選項正確理由：在 Amazon S3 中儲存文件可以顯著降低儲存成本，同時減輕資料庫負載，從而提高效能。 Amazon S3 具有高可用性和彈性，適合儲存文件等大規模二進位物件。將元資料保留在資料庫中可以維護應用程式的功能完整性。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Create an Amazon S3 bucket. Update the application to store documents in an S3 bucket. Store object metadata in an existing database. Why it's right: Storing documents in Amazon S3 can significantly reduce storage costs while offloading the load on your database, thereby improving performance. Amazon S3 is highly available and elastic, and is suitable for storing large-scale binary objects such as documents. Keeping metadata in the database maintains the functional integrity of your application."
+      }
+    },
+    {
+      "question_no": 608,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個應用程序，為部署在全球 20,000 多個零售店面位置的客戶提供服務。該應用程式由透過連接埠 443 上的 HTTPS 公開的後端 Web 服務組成。該應用程式託管在應用程式負載平衡器 (ALB) 後面的 Amazon EC2 執行個體上。零售地點透過公共網際網路與 Web 應用程式進行通訊。該公司允許每個零售點註冊由其本地 ISP 分配的 IP 位址。該公司的安全團隊建議透過限制僅存取零售地點註冊的 IP 位址來提高應用程式端點的安全性。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company has an application that serves clients that are deployed in more than 20.000 retail storefront locations around the world. The application consists of backend web services that are exposed over HTTPS on port 443. The application is hosted on Amazon EC2 instances behind an Application Load Balancer (ALB). The retail locations communicate with the web application over the public internet. The company allows each retail location to register the IP address that the retail location has been allocated by its local ISP. The company's security team recommends to increase the security of the application endpoint by restricting access to only the IP addresses registered by the retail locations. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 AWS WAF Web ACL 與 ALB 關聯。使用 ALB 上的 IP 規則集來過濾流量。更新規則中的 IP 位址以包含註冊的 IP 位址。",
+          "en": "Associate an AWS WAF web ACL with the ALB. Use IP rule sets on the ALB to filter traffic. Update the IP addresses in the rule to include the registered IP addresses."
+        },
+        "B": {
+          "zh": "部署 AWS Firewall Manager 來管理 AL 設定防火牆規則以限制流向 AL 的流量修改防火牆規則以包含已註冊的 IP 位址。",
+          "en": "Deploy AWS Firewall Manager to manage the ALConfigure firewall rules to restrict traffic to the ALModify the firewall rules to include the registered IP addresses."
+        },
+        "C": {
+          "zh": "將 IP 位址儲存在 Amazon DynamoDB 表中。在 ALB 上設定 AWS Lambda 授權函數以驗證傳入請求是否來自註冊的 IP 位址。",
+          "en": "Store the IP addresses in an Amazon DynamoDB table. Configure an AWS Lambda authorization function on the ALB to validate that incoming requests are from the registered IP addresses."
+        },
+        "D": {
+          "zh": "在包含 ALB 公共介面的子網路上設定網路 ACL。使用每個註冊 IP 位址的條目更新網路 ACL 上的入口規則。",
+          "en": "Configure the network ACL on the subnet that contains the public interface of the ALB. Update the ingress rules on the network ACL with entries for each of the registered IP addresses."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS WAF 是一項專門為保護 Web 應用程式而設計的服務。 IP位址過濾規則可以透過Web ACL（存取控制清單）進行設定。正確：將 AWS WAF 與 ALB 整合後，您可以透過 IP 規則集限制訪問，僅允許註冊的 IP 位址存取應用程式。正確：此方法是AWS專家推薦的最佳實踐，可有效提高安全性。",
+          "en": "Correct. AWS WAF is a service specially designed to protect web applications. IP address filtering rules can be configured through Web ACL (Access Control List). Correct: Integrating AWS WAF with an ALB allows you to restrict access through an IP rule set, allowing only registered IP addresses to access the application. Correct: This method is a best practice recommended by AWS experts and can effectively increase security."
+        },
+        "B": {
+          "zh": "錯誤。AWS Firewall Manager 是一種集中式管理工具，主要用於管理多個帳戶和資源的安全性策略，而不是直接用於單一 ALB 的 IP 位址過濾。錯誤：Firewall Manager 的主要用途是管理 AWS WAF 規則和 VPC 防火牆規則，而不是直接配置 ALB 的存取控制。",
+          "en": "Incorrect. AWS Firewall Manager is a centralized management tool primarily used to manage security policies for multiple accounts and resources, rather than directly for IP address filtering of a single ALB. Error: The primary purpose of Firewall Manager is to manage AWS WAF rules and VPC firewall rules, not to directly configure access control for the ALB."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以使用 Lambda 函數進行自訂授權，但這種方法複雜、昂貴且不符合最佳實踐。錯誤：DynamoDB 的儲存和 Lambda 的驗證邏輯需要額外的開發和維護成本，並且效能可能會受到影響。",
+          "en": "Incorrect. Although it is possible to use Lambda functions for custom authorization, this method is complex, expensive, and does not comply with best practices. Error: DynamoDB's storage and Lambda's validation logic require additional development and maintenance costs, and performance may be affected."
+        },
+        "D": {
+          "zh": "錯誤。網路ACL用於子網路層級的流量控制，無法對ALB的特定用戶層流量進行細微過濾。錯誤：管理 20,000 個 IP 位址的網路 ACL 規則將非常複雜且難以維護。",
+          "en": "Incorrect. Network ACL is for subnet-level traffic control and cannot perform fine-grained filtering of the specific user-layer traffic of the ALB. Error: Managing network ACL rules for 20,000 IP addresses would be complex and difficult to maintain."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將 AWS WAF Web ACL 與 ALB 關聯。使用 ALB 上的 IP 規則集來過濾流量。更新規則中的 IP 位址以包含註冊的 IP 位址。",
+        "en": "A. Associate an AWS WAF web ACL with the ALB. Use IP rule sets on the ALB to filter traffic. Update the IP addresses in the rule to include the registered IP addresses."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (91%)。熱門討論與考點摘要：AWS WAF 是一項專門為保護 Web 應用程式而設計的服務。 IP位址過濾規則可以透過Web ACL（存取控制清單）進行設定。正確：將 AWS WAF 與 ALB 整合後，您可以透過 IP 規則集限制訪問，僅允許註冊的 IP 位址存取應用程式。正確：此方法是AWS專家推薦的最佳實踐，可有效提高安全性。",
+        "en": "Community vote as displayed: A (91%). Popular discussion and key point summary: AWS WAF is a service specially designed to protect web applications. IP address filtering rules can be configured through Web ACL (Access Control List). Correct: Integrating AWS WAF with an ALB allows you to restrict access through an IP rule set, allowing only registered IP addresses to access the application. Correct: This method is a best practice recommended by AWS experts and can effectively increase security."
+      }
+    },
+    {
+      "question_no": 609,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 AWS Lake Formation 在 AWS 上建立資料分析平臺。該平臺將從不同來源（例如 Amazon S3 和 Amazon RDS）獲取資料。該公司需要一個安全的解決方案來防止存取包含敏感資訊的部分資料。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company is building a data analysis platform on AWS by using AWS Lake Formation. The platform will ingest data from different sources such as Amazon S3 and Amazon RDS. The company needs a secure solution to prevent access to portions of the data that contain sensitive information. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個 IAM 角色，其中包含存取 Lake Formation 資料表的權限。",
+          "en": "Create an IAM role that includes permissions to access Lake Formation tables."
+        },
+        "B": {
+          "zh": "建立資料過濾器以實現行級安全性和單元級安全性。",
+          "en": "Create data filters to implement row-level security and cell-level security."
+        },
+        "C": {
+          "zh": "建立一個 AWS Lambda 函數，用於在 Lake Formation 提取資料之前刪除敏感資訊。",
+          "en": "Create an AWS Lambda function that removes sensitive information before Lake Formation ingests the data."
+        },
+        "D": {
+          "zh": "建立一個 AWS Lambda 函數，定期查詢並從 Lake Formation 表中刪除敏感資訊。",
+          "en": "Create an AWS Lambda function that periodically queries and removes sensitive information from Lake Formation tables."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。IAM 角色可以控制對 Lake Formation 表的訪問，但無法在行或單元格層級啟用細粒度的資料安全性。此選項無法滿足問題中「防止存取敏感資訊」的要求。",
+          "en": "Incorrect. IAM roles can control access to Lake Formation tables but cannot enable fine-grained data security at the row or cell level. This option cannot meet the requirement of \"preventing access to sensitive information\" in the question."
+        },
+        "B": {
+          "zh": "正確。AWS Lake Formation 透過資料過濾器支援行級和儲存格級安全性。這種方法直接滿足了問題的要求，並且運行開銷較低，因為 Lake Formation 本身就提供了這些功能。",
+          "en": "Correct. AWS Lake Formation supports row-level and cell-level security through data filters. This method directly meets the requirements of the question and has low operating overhead because Lake Formation itself provides these functions."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以透過 Lambda 函數對資料進行預處理，但這種方法會增加額外的開發和維護開銷。此外，預處理資料可能會導致資料遺失或無法滿足其他業務需求。",
+          "en": "Incorrect. Although data can be preprocessed through Lambda functions, this approach adds additional development and maintenance overhead. Additionally, preprocessing data may result in data loss or failure to meet other business needs."
+        },
+        "D": {
+          "zh": "錯誤。定期查詢和刪除敏感資訊是一種事後方法，無法阻止即時存取敏感資料。這種方式運行開銷較高，不符合「運行開銷最小」的要求。",
+          "en": "Incorrect. Periodic querying and removal of sensitive information is a post-hoc approach that cannot prevent access to sensitive data in real time. This method has high operating overhead and does not meet the requirement of \"minimum operating overhead\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立資料過濾器以實現行級安全性和單元級安全性。",
+        "en": "B. Create data filters to implement row-level security and cell-level security."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：AWS Lake Formation 透過資料過濾器支援行級和儲存格級安全性。這種方法直接滿足了問題的要求，並且運行開銷較低，因為 Lake Formation 本身就提供了這些功能。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: AWS Lake Formation supports row-level and cell-level security through data filters. This method directly meets the requirements of the question and has low operating overhead because Lake Formation itself provides these functions."
+      }
+    },
+    {
+      "question_no": 610,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司部署在 VPC 中執行的 Amazon EC2 執行個體。 EC2 執行個體將來源資料載入至 Amazon S3 儲存桶中，以便日後處理這些資料。根據合規法律，資料不得透過公共網路傳輸。公司本地資料中心的伺服器將使用在 EC2 執行個體上執行的應用程式的輸出。哪種解決方案可以滿足這些要求？",
+        "en": "A company deploys Amazon EC2 instances that run in a VPC. The EC2 instances load source data into Amazon S3 buckets so that the data can be processed in the future. According to compliance laws, the data must not be transmitted over the public internet. Servers in the company's on-premises data center will consume the output from an application that runs on the EC2 instances. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為 Amazon EC2 部署介面 VPC 終端節點。在公司和 VPC 之間建立 AWS Site-to-Site VPN 連線。",
+          "en": "Deploy an interface VPC endpoint for Amazon EC2. Create an AWS Site-to-Site VPN connection between the company and the VPC."
+        },
+        "B": {
+          "zh": "為 Amazon S3 部署閘道 VPC 終端節點。在本機網路和 VPC 之間設定 AWS Direct Connect 連線。",
+          "en": "Deploy a gateway VPC endpoint for Amazon S3. Set up an AWS Direct Connect connection between the on-premises network and the VPC."
+        },
+        "C": {
+          "zh": "設定從 VPC 到 S3 儲存桶的 AWS Transit Gateway 連線。在公司和 VPC 之間建立 AWS Site-to-Site VPN 連線。",
+          "en": "Set up an AWS Transit Gateway connection from the VPC to the S3 buckets. Create an AWS Site-to-Site VPN connection between the company and the VPC."
+        },
+        "D": {
+          "zh": "設定具有到 NAT 閘道的路由的代理 EC2 執行個體。配置代理 EC2 執行個體以取得 S3 資料並提供應用程式執行個體。",
+          "en": "Set up proxy EC2 instances that have routes to NAT gateways. Configure the proxy EC2 instances to fetch S3 data and feed the application instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。介面 VPC 終端節點用於服務（例如 Amazon EC2、Amazon SNS 等），而不用於 Amazon S3。此選項不解決如何私下存取 S3。 Site-to-Site VPN 可以建立安全連接，但此選項無法解決 S3 的私有存取問題。",
+          "en": "Incorrect. Interface VPC endpoints are used for services (such as Amazon EC2, Amazon SNS, etc.), not for Amazon S3. this option don't address how to access S3 privately. Site-to-Site VPN can establish a secure connection, but the option does not solve the problem of private access to S3."
+        },
+        "B": {
+          "zh": "正確。閘道 VPC 終端節點設計用於與 Amazon S3 搭配使用，確保資料不會到達公用 Internet。 AWS Direct Connect 提供專用網路連接，進一步確保資料傳輸的安全性和效能。",
+          "en": "Correct. Gateway VPC endpoints are designed for use with Amazon S3, ensuring that data does not reach the public Internet. AWS Direct Connect provides a dedicated network connection to further ensure the security and performance of data transmission."
+        },
+        "C": {
+          "zh": "錯誤。AWS Transit Gateway 用於連接多個 VPC 或本地網絡，但不能直接用於對 S3 的私人存取。 Site-to-Site VPN 可以建立安全連接，但此選項無法解決 S3 的私有存取問題。",
+          "en": "Incorrect. AWS Transit Gateway is used to connect multiple VPCs or local networks, but cannot be used directly for private access to S3. Site-to-Site VPN can establish a secure connection, but the option does not solve the problem of private access to S3."
+        },
+        "D": {
+          "zh": "錯誤。使用NAT網關會導致資料透過公共網際網路傳輸，這違反了問題。錯誤：此選項增加了複雜性，並且不能解決 S3 的私有存取問題。",
+          "en": "Incorrect. Using a NAT gateway will cause data to be transmitted over the public Internet, which violates the problem. Error: this option adds complexity and does not solve the problem of private access to S3."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 為 Amazon S3 部署閘道 VPC 終端節點。在本機網路和 VPC 之間設定 AWS Direct Connect 連線。",
+        "en": "B. Deploy a gateway VPC endpoint for Amazon S3. Set up an AWS Direct Connect connection between the on-premises network and the VPC."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (79%)； A (21%)。熱門討論與考點摘要：閘道 VPC 終端節點設計用於與 Amazon S3 搭配使用，確保資料不會到達公用 Internet。 AWS Direct Connect 提供專用網路連接，進一步確保資料傳輸的安全性和效能。",
+        "en": "Community vote as displayed: B (79%); A (21%). Popular discussion and key point summary: Gateway VPC endpoints are designed for use with Amazon S3, ensuring that data does not reach the public Internet. AWS Direct Connect provides a dedicated network connection to further ensure the security and performance of data transmission."
+      }
+    },
+    {
+      "question_no": 611,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個具有基於 REST 的介面的應用程序，允許從第三方供應商近乎即時地接收資料。一旦收到，應用程式就會處理並儲存資料以供進一步分析。該應用程式在 Amazon EC2 執行個體上執行。第三方供應商在向應用程式發送資料時收到許多 503 服務不可用錯誤。當資料量激增時，運算能力達到最大限制，應用程式無法處理所有請求。解決方案架構師應該推薦哪種設計來提供更具可擴展性的解決方案？",
+        "en": "A company has an application with a REST-based interface that allows data to be received in near-real time from a third-party vendor. Once received, the application processes and stores the data for further analysis. The application is running on Amazon EC2 instances. The third-party vendor has received many 503 Service Unavailable Errors when sending data to the application. When the data volume spikes, the compute capacity reaches its maximum limit and the application is unable to process all requests. Which design should a solutions architect recommend to provide a more scalable solution?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Kinesis Data Streams 擷取資料。使用 AWS Lambda 函數處理資料。",
+          "en": "Use Amazon Kinesis Data Streams to ingest the data. Process the data using AWS Lambda functions."
+        },
+        "B": {
+          "zh": "在現有應用程式之上使用 Amazon API Gateway。為第三方供應商建立具有配額限制的使用計畫。",
+          "en": "Use Amazon API Gateway on top of the existing application. Create a usage plan with a quota limit for the third-party vendor."
+        },
+        "C": {
+          "zh": "使用 Amazon Simple Notification Service (Amazon SNS) 擷取資料。將 EC2 執行個體放入應用程式負載平衡器後面的 Auto Scaling 群組中。",
+          "en": "Use Amazon Simple Notification Service (Amazon SNS) to ingest the data. Put the EC2 instances in an Auto Scaling group behind an Application Load Balancer."
+        },
+        "D": {
+          "zh": "將應用程式重新打包為容器。使用 EC2 啟動類型和 Auto Scaling 群組，使用 Amazon Elastic Container Service (Amazon ECS) 部署應用程式。",
+          "en": "Repackage the application as a container. Deploy the application using Amazon Elastic Container Service (Amazon ECS) using the EC2 launch type with an Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Kinesis Data Streams 在流量高峰期間緩衝和擴展攝取，而 Lambda 用戶則獨立擴展以處理記錄，而不會導致原始應用程式過載。",
+          "en": "Correct. Kinesis Data Streams buffers and scales ingestion during traffic spikes, while Lambda consumers scale independently to process records without overloading the original application."
+        },
+        "B": {
+          "zh": "錯誤。API閘道可以限制流量，但無法解決高流量下應用程式算力不足的問題。錯誤：設定配額限制可能會導致資料遺失，而不是解決問題的根本原因。",
+          "en": "Incorrect. API Gateway can limit traffic, but it does not solve the problem of insufficient computing power of applications under high traffic. Error: Setting quota limits may cause data loss rather than solving the root cause of the problem."
+        },
+        "C": {
+          "zh": "錯誤。Amazon SNS 是用於資訊分發的服務，不適合處理即時資料流攝取。 Auto Scaling 群組和 Application Load Balancer 可以提高 EC2 執行個體的可擴充性，但無法解決資料攝取的即時問題。",
+          "en": "Incorrect. Amazon SNS is a service used for information distribution and is not suitable for handling real-time data stream ingestion. Auto Scaling groups and Application Load Balancers can improve the scalability of EC2 instances, but they do not solve the real-time problem of data ingestion."
+        },
+        "D": {
+          "zh": "錯誤。具有 EC2 啟動類型的 ECS 仍然依賴擴展和啟動工作實例，並且不會引入持久的攝取緩慢區，因此突發可能會繼續淹沒服務。",
+          "en": "Incorrect. ECS with the EC2 launch type still depends on scaling and starting worker instances and does not introduce a durable ingestion buffer, so bursts can continue to overwhelm the service."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon Kinesis Data Streams 擷取資料。使用 AWS Lambda 函數處理資料。",
+        "en": "A. Use Amazon Kinesis Data Streams to ingest the data. Process the data using AWS Lambda functions."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (94%)。熱門討論與考點摘要：Kinesis Data Streams 在流量高峰期間緩衝和擴展攝取，而 Lambda 用戶則獨立擴展以處理記錄，而不會導致原始應用程式過載。",
+        "en": "Community vote as displayed: A (94%). Popular discussion and key point summary: Kinesis Data Streams buffers and scales ingestion during traffic spikes, while Lambda consumers scale independently to process records without overloading the original application."
+      }
+    },
+    {
+      "question_no": 612,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個在私有子網路中的 Amazon EC2 執行個體上執行的應用程式。應用程式需要處理來自 Amazon S3 儲存桶的敏感資訊。應用程式不得使用網路連接到 S3 儲存桶。哪種解決方案可以滿足這些要求？",
+        "en": "A company has an application that runs on Amazon EC2 instances in a private subnet. The application needs to process sensitive information from an Amazon S3 bucket. The application must not use the internet to connect to the S3 bucket. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定網際網路閘道。更新 S3 儲存桶策略以允許從網際網路閘道存取。更新應用程式以使用新的網際網路網關。",
+          "en": "Configure an internet gateway. Update the S3 bucket policy to allow access from the internet gateway. Update the application to use the new internet gateway."
+        },
+        "B": {
+          "zh": "設定 VPN 連線。更新 S3 儲存桶策略以允許透過 VPN 連線進行存取。更新應用程式以使用新的 VPN 連線。",
+          "en": "Configure a VPN connection. Update the S3 bucket policy to allow access from the VPN connection. Update the application to use the new VPN connection."
+        },
+        "C": {
+          "zh": "設定 NAT 閘道。更新 S3 儲存桶策略以允許從 NAT 閘道存取。更新應用程式以使用新的 NAT 網關。",
+          "en": "Configure a NAT gateway. Update the S3 bucket policy to allow access from the NAT gateway. Update the application to use the new NAT gateway."
+        },
+        "D": {
+          "zh": "設定 VPC 終端節點。更新 S3 儲存桶策略以允許從 VPC 終端節點進行存取。更新應用程式以使用新的 VPC 終端節點。",
+          "en": "Configure a VPC endpoint. Update the S3 bucket policy to allow access from the VPC endpoint. Update the application to use the new VPC endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：Internet網關用於提供Internet訪問，問題明確要求S3儲存桶無法透過Internet存取。",
+          "en": "Incorrect. Reason: Internet Gateway is used to provide Internet access, and the question clearly requires that the S3 bucket cannot be accessed through the Internet."
+        },
+        "B": {
+          "zh": "錯誤。原因：VPN 連線通常用於將本機資料中心連接到 AWS VPC，而不是存取 VPC 內的 AWS 服務。該選項不符合題目要求。",
+          "en": "Incorrect. Cause: VPN connections are typically used to connect an on-premises data center to an AWS VPC, not to access AWS services within a VPC. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。原因：NAT閘道用於允許私有子網路中的資源透過Internet存取外部服務，但問題需要避免使用Internet存取S3儲存桶。",
+          "en": "Incorrect. Reason: NAT Gateway is used to allow resources in a private subnet to access external services through the Internet, but the question requires avoiding using the Internet to access S3 buckets."
+        },
+        "D": {
+          "zh": "正確。原因：VPC Endpoint 允許私有子網路中的資源透過私有網路直接存取 AWS 服務（例如 S3），而無需透過 Internet。這個解完全滿足問題的要求。",
+          "en": "Correct. Reason: VPC Endpoint allows resources in a private subnet to directly access AWS services (such as S3) through a private network without going through the Internet. This solution fully meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 設定 VPC 終端節點。更新 S3 儲存桶策略以允許從 VPC 終端節點進行存取。更新應用程式以使用新的 VPC 終端節點。",
+        "en": "D. Configure a VPC endpoint. Update the S3 bucket policy to allow access from the VPC endpoint. Update the application to use the new VPC endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：原因：VPC Endpoint 允許私有子網路中的資源透過私有網路直接存取 AWS 服務（例如 S3），而無需透過 Internet。這個解完全滿足問題的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Reason: VPC Endpoint allows resources in a private subnet to directly access AWS services (such as S3) through a private network without going through the Internet. This solution fully meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 613,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon Elastic Kubernetes Service (Amazon EKS) 運行容器應用程式。 EKS 叢集將敏感資訊儲存在 Kubernetes 機密物件中。該公司希望確保訊息是加密的。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company uses Amazon Elastic Kubernetes Service (Amazon EKS) to run a container application. The EKS cluster stores sensitive information in the Kubernetes secrets object. The company wants to ensure that the information is encrypted. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用容器應用程式透過 AWS Key Management Service (AWS KMS) 加密資訊。",
+          "en": "Use the container application to encrypt the information by using AWS Key Management Service (AWS KMS)."
+        },
+        "B": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 在 EKS 叢集中啟用金鑰加密。",
+          "en": "Enable secrets encryption in the EKS cluster by using AWS Key Management Service (AWS KMS)."
+        },
+        "C": {
+          "zh": "實作 AWS Lambda 函數以使用 AWS Key Management Service (AWS KMS) 加密資訊。",
+          "en": "Implement an AWS Lambda function to encrypt the information by using AWS Key Management Service (AWS KMS)."
+        },
+        "D": {
+          "zh": "使用 AWS Systems Manager Parameter Store 透過 AWS Key Management Service (AWS KMS) 加密資訊。",
+          "en": "Use AWS Systems Manager Parameter Store to encrypt the information by using AWS Key Management Service (AWS KMS)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項錯誤：雖然可以透過容器應用程式呼叫AWS KMS進行加密，但這需要額外的開發工作和維護，並且增加了營運開銷。",
+          "en": "Incorrect. Use container applications to encrypt information with AWS Key Management Service (AWS KMS). Error: Although it is possible to call AWS KMS for encryption through a container application, this requires additional development work and maintenance, and increases operational overhead."
+        },
+        "B": {
+          "zh": "正確。透過 AWS Key Management Service (AWS KMS) 啟用 EKS 叢集中的金鑰加密。正確：EKS 本身支援使用 AWS KMS 進行 Kubernetes 機密加密、配置和連接，操作開銷極低。",
+          "en": "Correct. Enable encryption of secrets in an EKS cluster through AWS Key Management Service (AWS KMS). Correct: EKS natively supports the use of AWS KMS for Kubernetes secrets encryption, configuration and connection, with minimal operating overhead."
+        },
+        "C": {
+          "zh": "錯誤。此選項錯誤：使用 Lambda 函數進行加密需要額外的開發和維護工作，並會增加營運開銷。",
+          "en": "Incorrect. Implement an AWS Lambda function to encrypt information with AWS Key Management Service (AWS KMS). Error: Using Lambda functions for encryption requires additional development and maintenance work and increases operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。此選項錯誤：雖然 Parameter Store 支援加密，但其與 Kubernetes 機密的整合不如 EKS 的本機支持，從而增加了複雜性。",
+          "en": "Incorrect. Use AWS Systems Manager Parameter Store to encrypt information with AWS Key Management Service (AWS KMS). Error: Although Parameter Store supports encryption, its integration with Kubernetes secrets is not as good as EKS's native support, adding complexity."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Key Management Service (AWS KMS) 在 EKS 叢集中啟用金鑰加密。",
+        "en": "B. Enable secrets encryption in the EKS cluster by using AWS Key Management Service (AWS KMS)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：透過 AWS Key Management Service (AWS KMS) 啟用 EKS 叢集中的金鑰加密。正確：EKS 本身支援使用 AWS KMS 進行 Kubernetes 機密加密、配置和連接，操作開銷極低。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Enable encryption of secrets in an EKS cluster through AWS Key Management Service (AWS KMS). Correct: EKS natively supports the use of AWS KMS for Kubernetes secrets encryption, configuration and connection, with minimal operating overhead."
+      }
+    },
+    {
+      "question_no": 614,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在設計一個新的多層 Web 應用程序，該應用程式由以下元件組成： • 作為 Auto Scaling 群組的一部分在 Amazon EC2 實例上運行的 Web 和應用程式伺服器 • 用於資料儲存的 Amazon RDS 資料庫執行個體 解決方案架構師需要限制對應用程式的訪問，以便只有 Web 伺服器可以存取它們。哪種解決方案可以滿足這些要求？",
+        "en": "A company is designing a new multi-tier web application that consists of the following components: • Web and application servers that run on Amazon EC2 instances as part of Auto Scaling groups • An Amazon RDS DB instance for data storage A solutions architect needs to limit access to the application servers so that only the web servers can access them. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在應用程式伺服器前面部署 AWS PrivateLink。設定網路ACL，僅允許Web伺服器存取應用伺服器。",
+          "en": "Deploy AWS PrivateLink in front of the application servers. Configure the network ACL to allow only the web servers to access the application servers."
+        },
+        "B": {
+          "zh": "在應用程式伺服器前面部署 VPC 終端節點。設定安全群組，僅允許Web伺服器存取應用伺服器。",
+          "en": "Deploy a VPC endpoint in front of the application servers. Configure the security group to allow only the web servers to access the application servers."
+        },
+        "C": {
+          "zh": "部署網路負載平衡器，其目標群組包含應用程式伺服器的 Auto Scaling 群組。設定網路ACL，僅允許Web伺服器存取應用伺服器。",
+          "en": "Deploy a Network Load Balancer with a target group that contains the application servers' Auto Scaling group. Configure the network ACL to allow only the web servers to access the application servers."
+        },
+        "D": {
+          "zh": "部署應用程式負載平衡器，其目標群組包含應用程式伺服器的 Auto Scaling 群組。設定安全群組，僅允許Web伺服器存取應用伺服器。",
+          "en": "Deploy an Application Load Balancer with a target group that contains the application servers' Auto Scaling group. Configure the security group to allow only the web servers to access the application servers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS PrivateLink 主要用於跨 VPC 或帳戶的私有連接，而不用於限制同一 VPC 內的存取。網路 ACL 是無狀態的，管理複雜，並且通常不用於細粒度的存取控制。",
+          "en": "Incorrect. AWS PrivateLink is primarily used for private connections across VPCs or accounts, and is not used to restrict access within the same VPC. Network ACLs are stateless, complex to manage, and generally not used for fine-grained access control."
+        },
+        "B": {
+          "zh": "錯誤。VPC Endpoint 主要用於存取 AWS 服務（如 S3、DynamoDB），而不是限制 EC2 執行個體之間的存取。雖然安全群組可以限制訪問，但 VPC Endpoint 在此場景中不適用。",
+          "en": "Incorrect. VPC Endpoint is mainly used to access AWS services (such as S3, DynamoDB), rather than restricting access between EC2 instances. Although security groups can restrict access, VPC Endpoint is not applicable in this scenario."
+        },
+        "C": {
+          "zh": "錯誤。網路負載平衡器適合處理高吞吐量和低延遲的場景，但不支援基於HTTP/HTTPS的細粒度路由。網路ACL是無狀態的，管理複雜，不適合這種場景。",
+          "en": "Incorrect. Network Load Balancer is suitable for handling high throughput and low latency scenarios, but it does not support fine-grained routing based on HTTP/HTTPS. Network ACL is stateless, complex to manage, and not suitable for this scenario."
+        },
+        "D": {
+          "zh": "正確。應用負載平衡器支援基於HTTP/HTTPS的細粒度路由，非常適合Web應用場景。安全群組是有狀態的，適合限制訪問，並且易於管理。",
+          "en": "Correct. Application Load Balancer supports fine-grained routing based on HTTP/HTTPS, which is very suitable for Web application scenarios. Security groups are stateful, suitable for restricting access, and easy to manage."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 部署應用程式負載平衡器，其目標群組包含應用程式伺服器的 Auto Scaling 群組。設定安全群組，僅允許Web伺服器存取應用伺服器。",
+        "en": "D. Deploy an Application Load Balancer with a target group that contains the application servers' Auto Scaling group. Configure the security group to allow only the web servers to access the application servers."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (87%)。熱門討論與考點摘要：應用負載平衡器支援基於HTTP/HTTPS的細粒度路由，非常適合Web應用場景。安全群組是有狀態的，適合限制訪問，並且易於管理。",
+        "en": "Community vote as displayed: D (87%). Popular discussion and key point summary: Application Load Balancer supports fine-grained routing based on HTTP/HTTPS, which is very suitable for Web application scenarios. Security groups are stateful, suitable for restricting access, and easy to manage."
+      }
+    },
+    {
+      "question_no": 615,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon Elastic Kubernetes Service (Amazon EKS) 上運行面向客戶的關鍵應用程式。該應用程式具有微服務架構。該公司需要實施一個解決方案，在一個集中位置收集、聚合和匯總來自應用程式的指標和日誌。哪種解決方案滿足這些要求？",
+        "en": "A company runs a critical, customer-facing application on Amazon Elastic Kubernetes Service (Amazon EKS). The application has a microservices architecture. The company needs to implement a solution that collects, aggregates, and summarizes metrics and logs from the application in a centralized location. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在現有 EKS 叢集中執行 Amazon CloudWatch 代理程式。在 CloudWatch 控制臺中查看指標和日誌。",
+          "en": "Run the Amazon CloudWatch agent in the existing EKS cluster. View the metrics and logs in the CloudWatch console."
+        },
+        "B": {
+          "zh": "在現有 EKS 叢集中執行 AWS App Mesh。在 App Mesh 控制臺中查看指標和日誌。",
+          "en": "Run AWS App Mesh in the existing EKS cluster. View the metrics and logs in the App Mesh console."
+        },
+        "C": {
+          "zh": "配置 AWS CloudTrail 以擷取資料事件。使用 Amazon OpenSearch Service 查詢 CloudTrail。",
+          "en": "Configure AWS CloudTrail to capture data events. Query CloudTrail by using Amazon OpenSearch Service."
+        },
+        "D": {
+          "zh": "在現有 EKS 叢集中設定 Amazon CloudWatch Container Insights。在 CloudWatch 控制臺中查看指標和日誌。",
+          "en": "Configure Amazon CloudWatch Container Insights in the existing EKS cluster. View the metrics and logs in the CloudWatch console."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然 CloudWatch 代理程式可以收集指標和日誌，但它並不是專門為容器化環境設計的解決方案。 CloudWatch Container Insights 是 EKS 的更好工具，因為它會自動收集容器層級指標和日誌。",
+          "en": "Incorrect. Although the CloudWatch agent can collect metrics and logs, it is not a solution specifically designed for containerized environments. CloudWatch Container Insights is a better tool for EKS because it automatically collects container-level metrics and logs."
+        },
+        "B": {
+          "zh": "錯誤。AWS App Mesh 主要用於服務網格的流量管理和監控，而不是專門用於日誌和指標的集中收集和聚合。 App Mesh的功能與題目要求並不完全相符。",
+          "en": "Incorrect. AWS App Mesh is mainly used for traffic management and monitoring of service grids, rather than specifically for centralized collection and aggregation of logs and indicators. The functions of App Mesh do not completely match the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。CloudTrail 主要用於記錄 API 呼叫和事件，而不是收集應用程式的執行時間指標和日誌。 OpenSearch Service 可以查詢日誌，但這不是問題的最佳解決方案。",
+          "en": "Incorrect. CloudTrail is primarily intended for logging API calls and events, rather than collecting runtime metrics and logs for your application. OpenSearch Service can query logs, but this is not the best solution for the question."
+        },
+        "D": {
+          "zh": "正確。CloudWatch Container Insights 是專為容器化環境設計的解決方案，可自動收集和匯總 EKS 叢集的指標和日誌。支援微服務架構，可以在CloudWatch控制臺集中查看資料。",
+          "en": "Correct. CloudWatch Container Insights is a solution designed specifically for containerized environments that automatically collects and summarizes metrics and logs for EKS clusters. It supports microservices architecture and data can be viewed centrally in the CloudWatch console."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在現有 EKS 叢集中設定 Amazon CloudWatch Container Insights。在 CloudWatch 控制臺中查看指標和日誌。",
+        "en": "D. Configure Amazon CloudWatch Container Insights in the existing EKS cluster. View the metrics and logs in the CloudWatch console."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (94%)。熱門討論與考點摘要：CloudWatch Container Insights 是專為容器化環境設計的解決方案，可自動收集和匯總 EKS 叢集的指標和日誌。支援微服務架構，可以在CloudWatch控制臺集中查看資料。",
+        "en": "Community vote as displayed: D (94%). Popular discussion and key point summary: CloudWatch Container Insights is a solution designed specifically for containerized environments that automatically collects and summarizes metrics and logs for EKS clusters. It supports microservices architecture and data can be viewed centrally in the CloudWatch console."
+      }
+    }
+  ]
+}

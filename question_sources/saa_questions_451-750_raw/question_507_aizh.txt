@@ -1,0 +1,65 @@
+Question #507
+A company has a web application for travel ticketing. The application is based on a database that runs in a single data center in
+North America. The company wants to expand the application to serve a global user base. The company needs to deploy the
+application to multiple AWS Regions. Average latency must be less than 1 second on updates to the reservation database.
+The company wants to have separate deployments of its web platform across multiple Regions. However, the company must
+maintain a single primary reservation database that is globally consistent.
+Which solution should a solutions architect recommend to meet these requirements?
+一家公司有一个用于旅行票务的网络应用程序。该应用程序基于一个运行在北美单一数据中心的数据库。公司希望扩展该应用程
+序，以服务全球用户群。公司需要将应用程序部署到多个AWS区域。平均延迟必须小于1秒，以更新预订数据库。
+公司希望在多个区域中分别部署其网络平台。然而，公司必须维护一个全球一致的主预订数据库。
+解决方案架构师应该推荐哪种解决方案来满足这些需求？
+A. Convert the application to use Amazon DynamoDB. Use a global table for the center reservation table. Use the correct
+Regional endpoint in each Regional deployment. Most Voted
+将应用程序转换为使用Amazon DynamoDB。为中心预订表使用一个全球表。在每个区域部署中使用正确的区域端点。
+B. Migrate the database to an Amazon Aurora MySQL database. Deploy Aurora Read Replicas in each Region. Use the correct
+Regional endpoint in each Regional deployment for access to the database.
+将数据库迁移到Amazon Aurora MySQL数据库。在每个区域部署Aurora Read Replicas。在每个区域部署中使用正确的区域端点
+访问数据库。
+C. Migrate the database to an Amazon RDS for MySQL database. Deploy MySQL read replicas in each Region. Use the correct
+Regional endpoint in each Regional deployment for access to the database.
+将数据库迁移到Amazon RDS for MySQL数据库。在每个区域部署MySQL读副本。在每个区域部署中使用正确的区域端点访问数
+据库。
+D. Migrate the application to an Amazon Aurora Serverless database. Deploy instances of the database to each Region. Use the
+correct Regional endpoint in each Regional deployment to access the database. Use AWS Lambda functions to process event
+streams in each Region to synchronize the databases.
+将应用程序迁移到Amazon Aurora Serverless数据库。在每个区域部署数据库实例。在每个区域部署中使用正确的区域端点访问
+数据库。使用AWS Lambda函数处理每个区域的事件流以同步数据库。
+Correct Answer: A
+题目分析与解答
+1. 考察的知识点
+全球部署的架构设计
+数据库的全球一致性和低延迟更新
+AWS服务选择：Amazon DynamoDB、Amazon Aurora、Amazon RDS等
+跨区域数据同步和访问
+2. 选项分析
+A. Convert the application to use Amazon DynamoDB. Use a global table for the center reservation table. Use the correct
+Regional endpoint in each Regional deployment.
+正确：Amazon DynamoDB Global Tables支持跨区域的多主写入，能够实现全球一致性和低延迟更新。
+正确：DynamoDB的全球表可以在多个区域中自动同步数据，满足题目要求的单一主数据库和全球一致性。
+正确：使用区域端点可以确保每个区域的应用程序访问本地的DynamoDB实例，从而降低延迟。
+B. Migrate the database to an Amazon Aurora MySQL database. Deploy Aurora Read Replicas in each Region. Use the
+correct Regional endpoint in each Regional deployment for access to the database.
+错误：Aurora Read Replicas是只读副本，无法满足题目要求的“单一主数据库”和“全球一致性”。
+错误：Aurora Read Replicas的跨区域复制可能会导致延迟，无法保证平均更新延迟小于1秒。
+C. Migrate the database to an Amazon RDS for MySQL database. Deploy MySQL read replicas in each Region. Use the
+correct Regional endpoint in each Regional deployment for access to the database.
+错误：RDS MySQL的读副本也是只读的，无法满足题目要求的“单一主数据库”和“全球一致性”。
+错误：跨区域复制的延迟可能较高，无法保证低延迟更新。
+D. Migrate the application to an Amazon Aurora Serverless database. Deploy instances of the database to each Region.
+Use the correct Regional endpoint in each Regional deployment to access the database. Use AWS Lambda functions to
+process event streams in each Region to synchronize the databases.
+错误：Aurora Serverless不支持跨区域的自动同步，使用Lambda函数处理事件流进行同步可能会导致延迟和复杂性。
+错误：题目要求单一主数据库，而此方案是多个区域的独立数据库实例，无法满足全球一致性。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：Amazon DynamoDB Global Tables是唯一能够满足题目要求的解决方案，包括全球一致性、低延迟更新和单一主数据库。
+正确答案：A
+Community vote distribution
+社区投票分布
+A (51%)
+B (49%)

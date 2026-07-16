@@ -1,0 +1,41 @@
+A company wants to create an Amazon EMR cluster that multiple teams will use. The company wants to ensure that each team’s
+big data workloads can access only the AWS services that each team needs to interact with. The company does not want the
+workloads to have access to Instance Metadata Service Version 2 (IMDSv2) on the cluster’s underlying EC2 instances.
+Which solution will meet these requirements?
+A. Configure interface VPC endpoints for each AWS service that the teams need. Use the required interface VPC endpoints to
+submit the big data workloads.
+B. Create EMR runtime roles. Configure the cluster to use the runtime roles. Use the runtime roles to submit the big data
+workloads. Most Voted
+C. Create an EC2 IAM instance profile that has the required permissions for each team. Use the instance profile to submit the
+big data workloads.
+D. Create an EMR security configuration that has the EnableApplicationScopedIAMRole option set to false. Use the security
+configuration to submit the big data workloads.
+Comments
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+When you specify a runtime role for an Amazon EMR step, the jobs or queries that you submit can only access AWS resources that the policies
+attached to the runtime role allow. These jobs and queries can't access the Instance Metadata Service on the EC2 instances of the cluster or use the
+EC2 instance profile of the cluster to access any AWS resources.
+https://aws.amazon.com/blogs/big-data/introducing-runtime-roles-for-amazon-emr-steps-use-iam-roles-and-aws-lake-formation-for-access-
+control-with-amazon-emr/
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-steps-runtime-roles.html
+upvoted 3 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: B
+runtime role is used to resolve the issue that there is only union permissions for all jobs and queries we can use. just like it mentions, for ec2, IMDSv2
+is mandatory, however we can use runtime role to access instance metadata on ec2 avoid using IMDSv2
+upvoted 1 times
+martinadurcakova1 1 year, 8 months ago
+Selected Answer: B
+B. Creating EMR runtime roles and configuring the cluster to use them is the correct solution. EMR runtime roles allow you to grant specific
+permissions to the big data workloads, ensuring that each team's workloads can only access the required AWS services. Additionally, the runtime
+roles can be configured to disable access to IMDSv2, meeting the requirement.
+upvoted 2 times
+dhewa 1 year, 9 months ago
+Selected Answer: B
+This approach avoids the need for workloads to access the Instance Metadata Service (IMDSv2) on the underlying EC2 instances, as the permissions
+are managed through the runtime roles.
+upvoted 2 times
+Correct Answer: B
+Community vote distribution
+B (100%)

@@ -1,0 +1,86 @@
+A research company uses on-premises devices to generate data for analysis. The company wants to use the AWS Cloud to analyze
+the data. The devices generate .csv files and support writing the data to an SMB file share. Company analysts must be able to use
+SQL commands to query the data. The analysts will run queries periodically throughout the day.
+Which combination of steps will meet these requirements MOST cost-effectively? (Choose three.)
+A. Deploy an AWS Storage Gateway on premises in Amazon S3 File Gateway mode. Most Voted
+B. Deploy an AWS Storage Gateway on premises in Amazon FSx File Gateway made.
+C. Set up an AWS Glue crawler to create a table based on the data that is in Amazon S3. Most Voted
+D. Set up an Amazon EMR cluster with EMR File System (EMRFS) to query the data that is in Amazon S3. Provide access to
+analysts.
+E. Set up an Amazon Redshift cluster to query the data that is in Amazon S3. Provide access to analysts.
+F. Setup Amazon Athena to query the data that is in Amazon S3. Provide access to analysts. Most Voted
+Comments
+awsgeek75 Highly Voted 2 years, 5 months ago
+Selected Answer: ACF
+SQL Queries is Athena so DE are wrong and we are now dependant on S3
+A to get files into S3
+C Glue to convert CSV to S3 table data
+B irrelevant as we don't have anything to consume data from FSx in other options
+upvoted 6 times
+JA2018 1 year, 6 months ago
+err,,, pardon my ignorance but I did not recall seeing any mention of S3 in the stem
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+My only reservation with this answer is C.
+CSV is technically a table and Athena can query multiple csv from S3. Glue just seems overengineering over here
+upvoted 3 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: ACF
+A to upload the files to S3 via SMB
+C to convert the data from CSV format
+F to query with SQL
+Not B (we need the data in S3, not in FSx)
+Not D or E (we should provide the ability to run SQL queries)
+upvoted 5 times
+TariqKipkemei Most Recent 2 years, 6 months ago
+Selected Answer: ACF
+SMB + use SQL commands to query the data = Amazon S3 File Gateway mode + Amazon Athena
+upvoted 1 times
+wsdasdasdqwdaw 2 years, 7 months ago
+Correct Answer: ACF
+Community vote distribution
+ACF (96%)
+4%
+https://aws.amazon.com/storagegateway/file/s3/#:~:text=Amazon%20S3%20File%20Gateway%20provides,Amazon%20S3%20with%20local%20cach
+ng.
+"Amazon S3 File Gateway provides a seamless way to connect to the cloud in order to store application data files and backup images as durable
+objects in Amazon S3 cloud storage. Amazon S3 File Gateway offers SMB or NFS-based access to data in Amazon S3 with local caching"
+=> SMB and NFS is supported in Amazon S3 File Gateway => ACF
+upvoted 2 times
+iwannabeawsgod 2 years, 7 months ago
+Selected Answer: ACF
+ACF 100% sure
+upvoted 3 times
+Ramdi1 2 years, 8 months ago
+Selected Answer: ACF
+I thought the correct answer was BCF however I have changed my mind to BCF
+FSx does support SMB protocol. However so does s3 file gateway which is version 2 and 3 of the SMB protocol. Hence using it with athena ACF
+should be correct
+upvoted 4 times
+RDM10 2 years, 8 months ago
+SMB file share- is B incorrect?
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Yes because "FSx File Gateway" uploads the files to FSx, but we need it in S3.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: BCE
+BCF is the correct
+upvoted 1 times
+pentium75 2 years, 5 months ago
+No because FSx File Gateway (B) uploads it to FSx while we we need it in S3. S3 File Gateway provides access to S3 via SMB.
+upvoted 3 times
+Eminenza22 2 years, 9 months ago
+Selected Answer: ACF
+https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-csv-home.html
+https://aws.amazon.com/blogs/aws/amazon-athena-interactive-sql-queries-for-data-in-amazon-s3/
+https://aws.amazon.com/storagegateway/faqs/
+upvoted 3 times
+anikety123 2 years, 9 months ago
+Selected Answer: ACF
+It should be ACF
+upvoted 2 times
+ralfj 2 years, 9 months ago
+Selected Answer: ACF
+ACF use S3 File Gateway, Use Glue and Use Athena
+upvoted 3 times

@@ -1,0 +1,146 @@
+A company has deployed a web application on AWS. The company hosts the backend database on Amazon RDS for MySQL with a
+primary DB instance and five read replicas to support scaling needs. The read replicas must lag no more than 1 second behind the
+primary DB instance. The database routinely runs scheduled stored procedures.
+As traffic on the website increases, the replicas experience additional lag during periods of peak load. A solutions architect must
+reduce the replication lag as much as possible. The solutions architect must minimize changes to the application code and must
+minimize ongoing operational overhead.
+Which solution will meet these requirements?
+A. Migrate the database to Amazon Aurora MySQL. Replace the read replicas with Aurora Replicas, and configure Aurora Auto
+Scaling. Replace the stored procedures with Aurora MySQL native functions. Most Voted
+B. Deploy an Amazon ElastiCache for Redis cluster in front of the database. Modify the application to check the cache before
+the application queries the database. Replace the stored procedures with AWS Lambda functions.
+C. Migrate the database to a MySQL database that runs on Amazon EC2 instances. Choose large, compute optimized EC2
+instances for all replica nodes. Maintain the stored procedures on the EC2 instances.
+D. Migrate the database to Amazon DynamoDB. Provision a large number of read capacity units (RCUs) to support the
+required throughput, and configure on-demand capacity scaling. Replace the stored procedures with DynamoDB streams.
+Comments
+fkie4 Highly Voted 3 years, 3 months ago
+i hate this kind of question
+upvoted 70 times
+asoli Highly Voted 3 years, 2 months ago
+Selected Answer: A
+Using Cache required huge changes in the application. Several things need to change to use cache in front of the DB in the application. So, option B
+is not correct.
+Aurora will help to reduce replication lag for read replica
+upvoted 13 times
+sheilawu Most Recent 2 years ago
+Selected Answer: A
+You need to read the question carefully.
+The solutions architect must minimize changes to the application code = therefore A
+If this question without this statement, B will be a better choice.
+upvoted 4 times
+JackyCCK 2 years, 2 months ago
+minimize ongoing operational overhead = Not B
+Using ElastiCache require app change
+upvoted 4 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: A
+AWS Aurora and Native Functions are least application changes while providing better performance and minimum latency.
+https://aws.amazon.com/rds/aurora/faqs/
+Correct Answer: A
+Community vote distribution
+A (92%)
+8%
+B, C, D require lots of changes to the application so relatively speaking A is least code change and least maintenance/operational overhead.
+upvoted 9 times
+JA2018 1 year, 6 months ago
+from the same URL:
+Is Amazon Aurora MySQL compatible?
+Amazon Aurora is drop-in compatible with existing MySQL open-source databases and adds support for new releases regularly. This means you can
+easily migrate MySQL databases to and from Aurora using standard import/export tools or snapshots. It also means that most of the code,
+applications, drivers, and tools you already use with MySQL databases today can be used with Aurora with little or no change. This makes it easy to
+move applications between the two engines.
+You can see the current Amazon Aurora MySQL release compatibility information in the documentation.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: A
+A: Minimal changes to the application code, < 1 second lag
+B: Does not address the replication lag issue at all, requires code changes and adds overhead
+C: Moving from managed RDS to self-managed database on EC2 is ADDING, not minimizing, overhead, PLUS it does not address the replication lag
+issue
+D: DynamoDB is a NoSQL DB, would require MASSIVE changes to application code and probably even application logic
+upvoted 5 times
+Murtadhaceit 2 years, 6 months ago
+Selected Answer: A
+imho, B is not valid because it involves extra coding and the question specifically mentions no more coding. Therefore, replacing the current db with
+another one is not considered as more coding.
+upvoted 3 times
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: A
+Migrate the database to Amazon Aurora MySQL. Replace the read replicas with Aurora Replicas, and configure Aurora Auto Scaling. Replace the
+stored procedures with Aurora MySQL native functions
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: A
+Migrate the RDS MySQL database to Amazon Aurora MySQL
+Use Aurora Replicas for read scaling instead of RDS read replicas
+Configure Aurora Auto Scaling to handle load spikes
+Replace stored procedures with Aurora MySQL native functions
+upvoted 2 times
+MrAWSAssociate 2 years, 11 months ago
+Selected Answer: A
+First, Elasticache involves heavy change on application code. The question mentioned that "he solutions architect must minimize changes to the
+application code". Therefore B is not suitable and A is more appropriate for the question requirement.
+upvoted 3 times
+aaroncelestin 2 years, 9 months ago
+... but migrating their ENTIRE prod database and its replicas to a new platform is not a heavy change?
+upvoted 3 times
+KMohsoe 3 years ago
+Selected Answer: B
+Why not B? Please explain to me.
+upvoted 2 times
+Terion 2 years, 8 months ago
+It wouldn't have the most up to date info since it must no lag in relation to the main DB
+upvoted 2 times
+pentium75 2 years, 5 months ago
+How would adding a cache "reduce the replication lag" between the primary instance and the read replicas? Plus, it would require "changes to the
+application code" that we want to avoid. The "AWS Lambda functions" would create "ongoing operational overhead" that we're also asked to avoid
+upvoted 2 times
+kaushald 3 years, 3 months ago
+Option A is the most appropriate solution for reducing replication lag without significant changes to the application code and minimizing ongoing
+operational overhead. Migrating the database to Amazon Aurora MySQL allows for improved replication performance and higher scalability
+compared to Amazon RDS for MySQL. Aurora Replicas provide faster replication, reducing the replication lag, and Aurora Auto Scaling ensures that
+there are enough Aurora Replicas to handle the incoming traffic. Additionally, Aurora MySQL native functions can replace the stored procedures,
+reducing the load on the database and improving performance.
+Option B is not the best solution since adding an ElastiCache for Redis cluster does not address the replication lag issue, and the cache may not have
+the most up-to-date information. Additionally, replacing the stored procedures with AWS Lambda functions adds additional complexity and may not
+improve performance.
+upvoted 5 times
+njufi 2 years, 2 months ago
+I agree with your explanation. Additionally, considering the requirement that "the read replicas must lag no more than 1 second behind the primary
+DB instance," it's crucial to ensure that Elasticache for Redis also maintains this tight synchronization window. This implies that the main RDS
+instance would need to synchronize an additional database, potentially exacerbating lag during peak times rather than alleviating it.
+upvoted 1 times
+Nel8 3 years, 3 months ago
+Selected Answer: B
+By using ElastiCache you avoid a lot of common issues you might encounter. ElastiCache is a database caching solution. ElastiCache Redis per se,
+supports failover and Multi-AZ. And Most of all, ElastiCache is well suited to place in front of RDS.
+Migrating a database such as option A, requires operational overhead.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Database migration is one-time work, NOT "operational overhead". Plus, RDS for MySQL to Aurora with MySQL compatibility is not a big deal, and
+"minimizes changes to the application code" as requested.
+upvoted 2 times
+bdp123 3 years, 3 months ago
+Selected Answer: A
+Aurora can have up to 15 read replicas - much faster than RDS
+https://aws.amazon.com/rds/aurora/
+upvoted 5 times
+ChrisG1454 3 years, 3 months ago
+" As a result, all Aurora Replicas return the same data for query results with minimal replica lag. This lag is usually much less than 100 milliseconds
+after the primary instance has written an update "
+Reference:
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html
+upvoted 3 times
+ChrisG1454 3 years, 3 months ago
+You can invoke an Amazon Lambda function from an Amazon Aurora MySQL-Compatible Edition DB cluster with the "native function"....
+https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Integrating.Lambda.html
+upvoted 1 times
+jennyka76 3 years, 3 months ago
+Answer - A
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.html
+---------------------------------------------------------------------------------------
+You can scale reads for your Amazon RDS for PostgreSQL DB instance by adding read replicas to the instance. As with other Amazon RDS database
+engines, RDS for PostgreSQL uses the native replication mechanisms of PostgreSQL to keep read replicas up to date with changes on the source DB.
+For general information about read replicas and Amazon RDS, see Working with read replicas.
+upvoted 3 times

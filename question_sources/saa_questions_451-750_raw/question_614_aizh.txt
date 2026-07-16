@@ -1,0 +1,60 @@
+Question #614
+A company is designing a new multi-tier web application that consists of the following components:
+• Web and application servers that run on Amazon EC2 instances as part of Auto Scaling groups
+• An Amazon RDS DB instance for data storage
+A solutions architect needs to limit access to the application servers so that only the web servers can access them.
+Which solution will meet these requirements?
+一家公司正在设计一个新的多层Web应用程序，该应用程序由以下组件组成：
+• Web和应用服务器运行在Amazon EC2实例上，作为Auto Scaling组的一部分
+• 一个Amazon RDS DB实例用于数据存储
+解决方案架构师需要限制对应用服务器的访问，以便只有Web服务器可以访问它们。
+哪种解决方案可以满足这些要求？
+A. Deploy AWS PrivateLink in front of the application servers. Configure the network ACL to allow only the web servers to
+access the application servers.
+在应用服务器前部署AWS PrivateLink。配置网络ACL以仅允许Web服务器访问应用服务器。
+B. Deploy a VPC endpoint in front of the application servers. Configure the security group to allow only the web servers to
+access the application servers.
+在应用服务器前部署一个VPC endpoint。配置安全组以仅允许Web服务器访问应用服务器。
+C. Deploy a Network Load Balancer with a target group that contains the application servers' Auto Scaling group. Configure
+the network ACL to allow only the web servers to access the application servers.
+部署一个Network Load Balancer，并将目标组设置为包含应用服务器的Auto Scaling组。配置网络ACL以仅允许Web服务器访问
+应用服务器。
+D. Deploy an Application Load Balancer with a target group that contains the application servers' Auto Scaling group.
+Configure the security group to allow only the web servers to access the application servers. Most Voted
+部署一个Application Load Balancer，并将目标组设置为包含应用服务器的Auto Scaling组。配置安全组以仅允许Web服务器访
+问应用服务器。
+Correct Answer: D
+题目分析与解答
+1. 考察的知识点
+VPC网络安全：如何使用安全组和网络ACL限制访问。
+负载均衡器的类型及其适用场景：Application Load Balancer (ALB) 和 Network Load Balancer (NLB)。
+AWS服务之间的集成：Auto Scaling组与负载均衡器的结合。
+2. 选项分析
+A. Deploy AWS PrivateLink in front of the application servers. Configure the network ACL to allow only the web servers to
+access the application servers.
+错误：AWS PrivateLink主要用于跨VPC或跨账户的私有连接，而不是用于限制同一VPC内的访问。
+网络ACL是无状态的，管理起来复杂，通常不用于细粒度的访问控制。
+B. Deploy a VPC endpoint in front of the application servers. Configure the security group to allow only the web servers to
+access the application servers.
+错误：VPC Endpoint主要用于访问AWS服务（如S3、DynamoDB），而不是用于限制EC2实例之间的访问。
+虽然安全组可以限制访问，但VPC Endpoint在此场景中不适用。
+C. Deploy a Network Load Balancer with a target group that contains the application servers' Auto Scaling group.
+Configure the network ACL to allow only the web servers to access the application servers.
+错误：Network Load Balancer适用于处理高吞吐量和低延迟的场景，但它不支持基于HTTP/HTTPS的细粒度路由。
+网络ACL是无状态的，管理起来复杂，不适合此场景。
+D. Deploy an Application Load Balancer with a target group that contains the application servers' Auto Scaling group.
+Configure the security group to allow only the web servers to access the application servers.
+正确：Application Load Balancer支持基于HTTP/HTTPS的细粒度路由，非常适合Web应用场景。
+安全组是有状态的，适合限制访问，且易于管理。
+3. 我选的答案
+D
+4. 官方答案
+D
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因：Application Load Balancer与安全组的组合是最佳实践，能够满足题目要求。
+正确答案：D
+Community vote distribution
+社区投票分布
+D (87%)
+13%

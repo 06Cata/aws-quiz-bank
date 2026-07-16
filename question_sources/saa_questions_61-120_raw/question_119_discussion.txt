@@ -1,0 +1,157 @@
+A global company is using Amazon API Gateway to design REST APIs for its loyalty club users in the us-east-1 Region and the ap-
+southeast-2 Region. A solutions architect must design a solution to protect these API Gateway managed REST APIs across multiple
+accounts from SQL injection and cross-site scripting attacks.
+Which solution will meet these requirements with the LEAST amount of administrative effort?
+A. Set up AWS WAF in both Regions. Associate Regional web ACLs with an API stage.
+B. Set up AWS Firewall Manager in both Regions. Centrally configure AWS WAF rules. Most Voted
+C. Set up AWS Shield in bath Regions. Associate Regional web ACLs with an API stage.
+D. Set up AWS Shield in one of the Regions. Associate Regional web ACLs with an API stage.
+Comments
+Gil80 Highly Voted 3 years, 7 months ago
+Selected Answer: B
+If you want to use AWS WAF across accounts, accelerate WAF configuration, automate the protection of new resources, use Firewall Manager with
+AWS WAF
+upvoted 45 times
+slimen 2 years, 7 months ago
+they didn't mention multiple accounts! only 2 regoins
+upvoted 3 times
+lofzee 2 years ago
+wtf? the question says
+"to protect these API Gateway managed REST APIs across multiple accounts from SQL injection and cross-site scripting attack"
+upvoted 10 times
+baku98 2 years, 6 months ago
+B is wrong: AWS Firewall Manager cannot create security policies across regions.
+Q: Can I create security policies across regions? No, AWS Firewall Manager security policies are region specific. Each Firewall Manager policy can
+only include resources available in that specified AWS Region. You can create a new policy for each region where you operate.
+https://aws.amazon.com/firewall-
+manager/faqs/#:~:text=No%2C%20AWS%20Firewall%20Manager%20security,in%20that%20specified%20AWS%20Region.
+upvoted 9 times
+mauroicardi 2 years, 2 months ago
+AWS Firewall Manager is integrated with AWS Organizations so you can enable AWS WAF rules, AWS Shield Advanced protections, VPC security
+groups, AWS Network Firewalls, and Amazon Route 53 Resolver DNS Firewall rules across multiple AWS accounts and resources from a single
+place.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+That's why B says that you "set up AWS Firewall Manager IN BOTH REGIONS". Still you can "centrally configure" WAF per region, so that you don't
+have to attach WAF to every individual API.
+upvoted 5 times
+Nigma Highly Voted 3 years, 7 months ago
+B
+Using AWS WAF has several benefits. Additional protection against web attacks using criteria that you specify. You can define criteria using
+characteristics of web requests such as the following:
+Presence of SQL code that is likely to be malicious (known as SQL injection).
+Correct Answer: B
+Community vote distribution
+B (70%)
+A (29%)
+1
+Presence of a script that is likely to be malicious (known as cross-site scripting).
+AWS Firewall Manager simplifies your administration and maintenance tasks across multiple accounts and resources for a variety of protections.
+https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html
+upvoted 18 times
+JayBee65 3 years, 5 months ago
+Q: Can I create security policies across regions?
+No, AWS Firewall Manager security policies are region specific. Each Firewall Manager policy can only include resources available in that specified
+AWS Region. You can create a new policy for each region where you operate.
+So you could not centrally (i.e. in one place) configure policies, you would need to do this is each region
+upvoted 4 times
+pentium75 2 years, 5 months ago
+"Centrally" on the Firewall Manager per region, as opposed to individually for every single API.
+upvoted 3 times
+ln2718 Most Recent 9 months, 4 weeks ago
+Selected Answer: B
+Chat -
+A. Set up AWS WAF in both Regions. Associate Regional web ACLs with an API stage.
+Works, but requires managing rules in each region and account separately. Higher admin overhead.
+B. Set up AWS Firewall Manager in both Regions. Centrally configure AWS WAF rules.
+Correct. Firewall Manager lets you manage AWS WAF rules centrally across accounts and regions. This gives the least administrative effort.
+upvoted 1 times
+AwsAbhiKumar 1 year, 3 months ago
+Selected Answer: A
+AWF has Web ACL which has a rule regarding HTTP header, HHTP body or URL string protects from common attack - SQL Injection and cross site
+scripting.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+C&D are out of question as AWS Shield is only for DDoS attack prevention.
+B is not supported - one single policy cannot be used for multiple regions.
+That leaves out A.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+OK I stand corrected: the choice does say "Centrally manager rules" and not "use a sigle policy". In that view B is indeed the most appropriate.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+This is a tricky one. Again. AWS WAF is a product specifically for preventing SQL Injection attacks. So maybe A is indeed the right choice. I believe
+A is indeed the right answer now, after referring to the doc.
+https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-sqli-match.html
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+Centralized control with Firewall Manager means you can create and manage WAF rules once and apply them across multiple accounts and Regions,
+ensuring consistency and compliance.
+Firewall Manager automatically applies policies to new and existing resources across accounts, reducing the effort of manually associating web ACLs
+in each Region and account.
+upvoted 2 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: B
+If only a few accounts, A is more straight. but the question mentions "multiple accounts", may be B is better choice.
+upvoted 1 times
+tom_cruise 1 year, 6 months ago
+Selected Answer: C
+The keywords here is "across multiple accounts", not "across multiple regions".
+upvoted 1 times
+0de7d1b 1 year, 6 months ago
+Selected Answer: B
+AWS Firewall Manager:
+Centralized Management: Allows you to centrally manage security policies across multiple accounts and regions.
+WAF Rule Configuration: Enables you to create and manage WAF rules in a single location, simplifying the configuration process.
+Automatic Deployment: Automatically deploys WAF rules to protected resources, reducing manual effort.
+Policy-Based Control: Provides granular control over security policies, allowing you to tailor them to specific needs.
+upvoted 2 times
+leoo55 1 year, 7 months ago
+I recently purchased the Multiwood Ergonomic Office Chair, and it's a game changer! The comfort and support it provides have transformed my
+work-from-home experience. Plus, the value for the quality is unbeatable highly recommended for anyone looking to enhance their workspace.
+upvoted 2 times
+ChymKuBoy 1 year, 7 months ago
+Selected Answer: B
+B for sure
+Centralized management: AWS Firewall Manager allows you to centrally manage AWS WAF rules across multiple accounts and regions. This simplifies
+the configuration and management process.
+Consistent security policies: You can enforce consistent security policies across all your API Gateway APIs, ensuring that they are protected from the
+same threats.
+Scalability: AWS Firewall Manager can handle a large number of accounts and resources, making it suitable for global companies with many API
+Gateway APIs.
+upvoted 3 times
+PaulGa 1 year, 8 months ago
+Selected Answer: A
+Ans A - "With AWS WAF, you can create security rules that control bot traffic and block common attack patterns such as SQL injection or cross-site
+scripting (XSS). Use cases. Filter web traffic."
+https://aws.amazon.com › waf
+None of the other options can do it.
+upvoted 1 times
+Americanman 1 year, 9 months ago
+AWS WAF helps you to protect your application against common web exploits and bots that can affect availability, compromise security or consume
+excessive resources.
+You can create security rules that will control bot traffic and common attacks like SQL injection or Cross-site scripting (XSS)
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+Selected Answer: B
+A is valid, but B achieves the least operational overhead.
+upvoted 1 times
+TilTil 2 years, 2 months ago
+Selected Answer: A
+WAF deals well with the types of attacks mentioned. XSS and SQL Injection are both app level attacks hence needs a WAF.
+upvoted 2 times
+sirasdf 2 years, 3 months ago
+B
+Option A involves setting up AWS WAF in both regions and associating regional web ACLs with an API stage. While this can provide the necessary
+protection, it requires more manual configuration in each region, potentially leading to more administrative effort, especially if there are updates or
+changes needed to be made across multiple regions.
+Therefore, Option B is likely to require the least amount of administrative effort.
+upvoted 2 times
+killbots 2 years, 4 months ago
+Selected Answer: A
+Original architecture does not have WAFs. B assumes there are WAFs already in place and why would you want to deploy a Firewall Manager to
+manage 1 Firewall? it adds unnecessary administrative tasks and costs for a tool that is not needed. You would want that if you were managing 10+
+Firewalls not just one. A makes the most sense.
+upvoted 4 times

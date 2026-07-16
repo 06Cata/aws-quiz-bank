@@ -1,0 +1,33 @@
+A company is building an application on AWS. The application uses multiple AWS Lambda functions to retrieve sensitive data from
+a single Amazon S3 bucket for processing. The company must ensure that only authorized Lambda functions can access the data.
+The solution must comply with the principle of least privilege.
+Which solution will meet these requirements?
+A. Grant full S3 bucket access to all Lambda functions through a shared IAM role.
+B. Configure the Lambda functions to run within a VPC. Configure a bucket policy to grant access based on the Lambda
+functions' VPC endpoint IP addresses.
+C. Create individual IAM roles for each Lambda function. Grant the IAM roles access to the S3 bucket. Assign each IAM role as
+the Lambda execution role for its corresponding Lambda function. Most Voted
+D. Configure a bucket policy granting access to the Lambda functions based on their function ARNs.
+Comments
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - Full access? No!
+B - Theoretically possible but IP-based policies are harder to manage and not as secure as IAM roles.
+C - By creating separate IAM roles for each Lambda function, permissions can be narrowly scoped to each function's specific needs.
+D - This would actually work. It's just that bucket policies based on function ARNs are less flexible and scalable compared to IAM roles, especially
+when you need to manage permissions for multiple Lambda functions or add new functions.
+upvoted 3 times
+LeonSauveterre 1 year, 5 months ago
+Out of my instinct, least privilege leads to individually managing each function.
+upvoted 1 times
+56ce46c 1 year, 8 months ago
+i think D is also right
+S3 Bucket Policy: Use an S3 bucket policy that grants access to the specific Lambda functions based on their function ARNs. This ensures that only
+the authorized Lambda functions can retrieve data from the S3 bucket.
+upvoted 3 times
+swati1508 1 year, 10 months ago
+A, B and D wrong only C is right
+upvoted 2 times
+Correct Answer: C
+Community vote distribution
+C (100%)

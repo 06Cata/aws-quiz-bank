@@ -1,0 +1,148 @@
+A company wants to migrate its on-premises data center to AWS. According to the company's compliance requirements, the
+company can use only the ap-northeast-3 Region. Company administrators are not permitted to connect VPCs to the internet.
+Which solutions will meet these requirements? (Choose two.)
+A. Use AWS Control Tower to implement data residency guardrails to deny internet access and deny access to all AWS Regions
+except ap-northeast-3. Most Voted
+B. Use rules in AWS WAF to prevent internet access. Deny access to all AWS Regions except ap-northeast-3 in the AWS account
+settings.
+C. Use AWS Organizations to configure service control policies (SCPS) that prevent VPCs from gaining internet access. Deny
+access to all AWS Regions except ap-northeast-3. Most Voted
+D. Create an outbound rule for the network ACL in each VPC to deny all traffic from 0.0.0.0/0. Create an IAM policy for each
+user to prevent the use of any AWS Region other than ap-northeast-3.
+E. Use AWS Config to activate managed rules to detect and alert for internet gateways and to detect and alert for new
+resources deployed outside of ap-northeast-3.
+Comments
+Six_Fingered_Jose Highly Voted 3 years, 7 months ago
+Selected Answer: AC
+agree with A and C
+https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_vpc.html#example_vpc_2
+upvoted 21 times
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: AC
+A. By using Control Tower, the company can enforce data residency guardrails and restrict internet access for VPCs and denies access to all Regions
+except the required ap-northeast-3 Region.
+C. With Organizations, the company can configure SCPs to prevent VPCs from gaining internet access. By denying access to all Regions except ap-
+northeast-3, the company ensures that VPCs can only be deployed in the specified Region.
+Option B is incorrect because using rules in AWS WAF alone does not address the requirement of denying access to all AWS Regions except ap-
+northeast-3.
+Option D is incorrect because configuring outbound rules in network ACLs and IAM policies for users can help restrict traffic and access, but it does
+not enforce the company's requirement of denying access to all Regions except ap-northeast-3.
+Option E is incorrect because using AWS Config and managed rules can help detect and alert for specific resources and configurations, but it does
+not directly enforce the restriction of internet access or deny access to specific Regions.
+upvoted 20 times
+Clouddon Most Recent 11 months, 1 week ago
+Selected Answer: CE
+C. Use AWS Organizations to configure service control policies (SCPs) that prevent VPCs from gaining internet access. Deny access to all AWS Region
+except ap-northeast-3.
+Why it's correct:
+Service control policies (SCPs) are the best way to enforce organization-wide restrictions. You can prevent internet access (e.g., restrict
+ec2:AttachInternetGateway) and explicitly deny access to AWS services or Regions other than ap-northeast-3.
+Correct Answer: AC
+Community vote distribution
+AC (76%)
+14%
+5%
+E. Use AWS Config to activate managed rules to detect and alert for internet gateways and to detect and alert for new resources deployed outside of
+ap-northeast-3.
+Why it's correct:
+AWS Config lets you monitor compliance. You can use managed rules like:
+vpc-internet-gateway-attached to detect unwanted internet connectivity.
+cloudtrail-enabled, ec2-instance-region-check, etc., to detect deployments outside ap-northeast-3.
+upvoted 1 times
+iamroyalty_k 1 year, 3 months ago
+Selected Answer: CE
+❌ A. Control Tower does not directly prevent internet access; it only provides guardrails, but those can be bypassed in some cases.
+✅ C. SCPs (Service Control Policies) in AWS Organizations provide hard restrictions at the account level, making them more enforceable than
+Control Tower guardrails alone.
+E. AWS Config ensures continuous monitoring and alerts, which Control Tower does not provide as effectively.
+This ensures strong security controls, compliance enforcement, and real-time monitoring while maintaining AWS best practices.
+upvoted 2 times
+Skyskilo 1 year, 4 months ago
+Selected Answer: CE
+Option C provides centralized governance with SCPs, and Option E provides continuous monitoring and alerting for compliance. Together, these
+solutions meet the requirements of restricting internet access and ensuring usage of only the ap-northeast-3 region.
+upvoted 1 times
+PaulGa 1 year, 7 months ago
+Selected Answer: AC
+Ans A, C - Control Tower with Organisations configured. The two go together
+upvoted 2 times
+ChymKuBoy 1 year, 11 months ago
+Selected Answer: AC
+AC for sure
+upvoted 1 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: AC
+B: Irrelevant WAF
+D: This is confusing so I'll ignore it.
+E: Wrong product
+A: Control Tower can have residency guard rails and block internet access.
+C: SCP is like a duplicate of A IMHO but it stops admins from circumventing A as Org policies cannot be overridden by admins unless they are org
+admins.
+Too moany assumptions
+upvoted 3 times
+BrijMohan08 2 years, 8 months ago
+Selected Answer: AC
+A. Use AWS Control Tower to implement data residency guardrails to deny internet access and deny access to all AWS Regions except ap-northeast-
+3.
+C. Use AWS Organizations to configure service control policies (SCPs) that prevent VPCs from gaining internet access. Deny access to all AWS Region
+except ap-northeast-3.
+upvoted 3 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: AC
+Use Control Tower to implement data residency guardrails and Service Control Policies (SCPS) to prevent VPCs from gaining internet access.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: AC
+AWS Control Tower guardrails and AWS Organizations SCPs provide centralized, automated mechanisms to enforce no internet connectivity for VPCs
+and restrict Region access to only ap-northeast-3.
+upvoted 4 times
+Abrar2022 3 years ago
+Didn't know that SCPS (Service Control Policies) could be used to deny users internet access. Good to know. Always thought it's got controlling who
+can and can't access AWS Services.
+upvoted 5 times
+hicham0101 3 years, 1 month ago
+Agree with Aand C
+https://aws.amazon.com/blogs/aws/new-for-aws-control-tower-region-deny-and-guardrails-to-help-you-meet-data-residency-requirements/
+upvoted 2 times
+yallahool 3 years, 2 months ago
+I choose C and D.
+For control tower, it can't be A because ap-northeast-3 doesn't support it!
+Also, in the case of E, it is detection and warning, so it is difficult to prevent internet connection (although the view is a little obscure).
+upvoted 1 times
+michellemeloc 3 years, 1 month ago
+I just check, now it's supported!!!
+upvoted 3 times
+notacert 3 years, 2 months ago
+Selected Answer: AC
+A and C
+upvoted 1 times
+datz 3 years, 2 months ago
+Selected Answer: CD
+C/D
+A - CANNOT BE!!! AWS Control Tower is not available in ap-northeast-3! Check your
+B- for sure no
+C - SCPS (Service Control Policies)- For sure
+D - Deny outbound rule to be place in prod and also IAM Policy to deny Users creating services in AP-Northeast3
+E - it creates an alert, which means it happens but an alert is triggered. so I think it's not good either.
+upvoted 2 times
+darn 3 years, 1 month ago
+False, Control Tower is in Osaka NorthEast 3
+https://docs.aws.amazon.com/controltower/latest/userguide/region-how.html
+upvoted 3 times
+Kaireny54 3 years, 2 months ago
+Selected Answer: CD
+Control tower isn't available in AP-northeast-3 (only available in ap-northeast1 and 2 : https://www.aws-services.info/controltower.html)
+For answer E, it creates an alert, wich means it happens but an alert is triggered. so i think it's not good either.
+That's why i would go for C and D
+upvoted 2 times
+darn 3 years, 1 month ago
+same page you posted:
+ap-northeast-3 Asia Pacific (Osaka) 2023-04-20 https://aws.amazon.com/controltower
+upvoted 2 times
+Bmarodi 3 years ago
+It's availabe now on the same tink u pasted in earlier: ap-northeast-3 Asia Pacific (Osaka) 2023-04-20.
+upvoted 2 times
+darn 3 years, 1 month ago
+False, Control Tower is in Osaka NorthEast 3
+https://docs.aws.amazon.com/controltower/latest/userguide/region-how.html
+upvoted 2 times

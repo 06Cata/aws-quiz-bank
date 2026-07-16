@@ -1,0 +1,70 @@
+A company needs to give a globally distributed development team secure access to the company's AWS resources in a way that
+complies with security policies.
+The company currently uses an on-premises Active Directory for internal authentication. The company uses AWS Organizations to
+manage multiple AWS accounts that support multiple projects.
+The company needs a solution to integrate with the existing infrastructure to provide centralized identity management and access
+control.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Set up AWS Directory Service to create an AWS managed Microsoft Active Directory on AWS. Establish a trust relationship
+with the on-premises Active Directory. Use IAM rotes that are assigned to Active Directory groups to access AWS resources
+within the company's AWS accounts.
+B. Create an IAM user for each developer. Manually manage permissions for each IAM user based on each user's involvement
+with each project. Enforce multi-factor authentication (MFA) as an additional layer of security.
+C. Use AD Connector in AWS Directory Service to connect to the on-premises Active Directory. Integrate AD Connector with
+AWS IAM Identity Center. Configure permissions sets to give each AD group access to specific AWS accounts and resources.
+Most Voted
+D. Use Amazon Cognito to deploy an identity federation solution. Integrate the identity federation solution with the on-
+premises Active Directory. Use Amazon Cognito to provide access tokens for developers to access AWS accounts and
+resources.
+Comments
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - On-premises Active Directory already exists.
+B - "Manually" ? Oh hell no. But MFA is something I guess.
+C - AD Connector seamlessly connects AWS to the on-premises Active Directory without the need to synchronize or replicate the directory. Identity
+Center (formerly AWS SSO) allows centralized access management across AWS accounts in an AWS Organizations setup. Permissions sets can be
+configured to map Active Directory groups to specific AWS accounts and resources, making access control easy and secure.
+D - Amazon Cognito is better suited for application-level identity management (like customer-facing apps), not for internal teams working across
+multiple AWS accounts.
+upvoted 3 times
+GOTJ 1 year, 5 months ago
+Selected Answer: A
+Why not "A"? Check out the note of this link: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_ad_connector.html
+AD Connector cannot be shared with other AWS accounts. If this is a requirement, consider using AWS Managed Microsoft AD to Share your AWS
+Managed Microsoft AD. AD Connector is also not multi-VPC aware, which means that AWS applications like WorkSpaces are required to be
+provisioned into the same VPC as your AD Connector.
+And I think managing multiple aws accounts is, indeed, a requirement
+upvoted 3 times
+FlyingHawk 1 year, 4 months ago
+Correct Answer: C
+Community vote distribution
+C (80%)
+A (20%)
+While this option provides centralized identity management, it requires setting up a separate AWS managed Microsoft AD, which increases
+operational overhead. A trust relationship is also more complex to configure than AD Connector.
+upvoted 1 times
+GOTJ 1 year, 4 months ago
+I guess so, but... is the alternative configure one AD connector per account more operational friendly?
+upvoted 1 times
+trinh_le 1 year, 6 months ago
+Selected Answer: C
+C: AD Connector allows AWS to use the on-premises Active Directory for authentication without replicating directory data to AWS.
+• Maintains centralized identity management in the on-premises directory, adhering to the company’s security policies.
+A: Higher Overhead: Requires creating and maintaining a separate managed Active Directory instance in AWS.
+B: Scalability Issues: Manually creating and managing IAM users for a globally distributed team is cumbersome.
+D: Unnecessary Federation Layer: Cognito is more suited for customer identity use cases rather than managing internal developer access to AWS
+resources.
+upvoted 3 times
+78b9037 1 year, 6 months ago
+Selected Answer: C
+Once set up, it requires minimal ongoing management. User provisioning and deprovisioning are handled through the existing Active
+Directory.processes.
+upvoted 2 times
+xekiva3329 1 year, 7 months ago
+Selected Answer: C
+answer C
+upvoted 2 times
+aragon_saa 1 year, 8 months ago
+Selected Answer: C
+Answer is C
+upvoted 2 times

@@ -1,0 +1,60 @@
+Question #323
+A company’s facility has badge readers at every entrance throughout the building. When badges are scanned, the readers send a
+message over HTTPS to indicate who attempted to access that particular entrance.
+A solutions architect must design a system to process these messages from the sensors. The solution must be highly available, and
+the results must be made available for the company’s security team to analyze.
+Which system architecture should the solutions architect recommend?
+一家公司的设施在大楼的每个入口处都安装了门禁卡读取器。当门禁卡被扫描时，读取器会通过HTTPS发送一条消息，以指示谁尝
+试访问该特定入口。
+解决方案架构师必须设计一个系统来处理这些传感器发送的消息。该解决方案必须具有高可用性，并且结果必须提供给公司的安全
+团队进行分析。
+解决方案架构师应该推荐哪种系统架构？
+A. Launch an Amazon EC2 instance to serve as the HTTPS endpoint and to process the messages. Configure the EC2 instance
+to save the results to an Amazon S3 bucket.
+启动一个Amazon EC2实例作为HTTPS端点并处理消息。配置EC2实例将结果保存到Amazon S3存储桶中。
+B. Create an HTTPS endpoint in Amazon API Gateway. Configure the API Gateway endpoint to invoke an AWS Lambda function
+to process the messages and save the results to an Amazon DynamoDB table. Most Voted
+在Amazon API Gateway中创建一个HTTPS端点。配置API Gateway端点以调用一个AWS Lambda函数来处理消息，并将结果保存
+到Amazon DynamoDB表中。
+C. Use Amazon Route 53 to direct incoming sensor messages to an AWS Lambda function. Configure the Lambda function to
+process the messages and save the results to an Amazon DynamoDB table.
+使用Amazon Route 53将传感器消息定向到一个AWS Lambda函数。配置Lambda函数处理消息并将结果保存到Amazon
+DynamoDB表中。
+D. Create a gateway VPC endpoint for Amazon S3. Configure a Site-to-Site VPN connection from the facility network to the
+VPC so that sensor data can be written directly to an S3 bucket by way of the VPC endpoint.
+为Amazon S3创建一个网关VPC端点。配置一个站点到站点VPN连接，从设施网络连接到VPC，以便通过VPC端点将传感器数据
+直接写入S3存储桶。
+Correct Answer: B
+题目分析与解答
+1. 考察的知识点
+高可用架构设计
+AWS服务集成：API Gateway、Lambda、DynamoDB
+无服务器架构
+数据处理与存储
+2. 选项分析
+A. 启动一个Amazon EC2实例作为HTTPS端点并处理消息。配置EC2实例将结果保存到Amazon S3存储桶中。
+错误：EC2实例需要手动管理，可能会成为单点故障，无法满足高可用性要求。
+错误：虽然S3可以存储数据，但EC2实例的处理能力有限，且不符合无服务器架构的最佳实践。
+B. 在Amazon API Gateway中创建一个HTTPS端点。配置API Gateway端点以调用一个AWS Lambda函数来处理消息，并将结果
+保存到Amazon DynamoDB表中。
+正确：API Gateway提供高可用的HTTPS端点，Lambda函数是无服务器的，自动扩展，适合处理消息。
+正确：DynamoDB是高可用的数据库服务，适合存储结构化数据供后续分析。
+正确：此架构完全符合高可用性和无服务器架构的要求。
+C. 使用Amazon Route 53将传感器消息定向到一个AWS Lambda函数。配置Lambda函数处理消息并将结果保存到Amazon
+DynamoDB表中。
+错误：Route 53是DNS服务，不适合直接处理HTTPS请求。
+错误：Route 53无法充当HTTPS端点，无法满足题目要求。
+D. 为Amazon S3创建一个网关VPC端点。配置一个站点到站点VPN连接，从设施网络连接到VPC，以便通过VPC端点将传感器数据
+直接写入S3存储桶。
+错误：此选项没有提到如何处理消息，仅仅是将数据写入S3，不符合题目要求。
+错误：VPN连接增加了复杂性，且不符合无服务器架构的最佳实践。
+3. 我选的答案
+B
+4. 官方答案
+B
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)

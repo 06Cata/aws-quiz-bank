@@ -1,0 +1,89 @@
+Question #994
+A company hosts a multi-tier web application that uses an Amazon Aurora MySQL DB cluster for storage. The application tier is
+hosted on Amazon EC2 instances. The company's IT security guidelines mandate that the database credentials be encrypted and
+rotated every 14 days.
+What should a solutions architect do to meet this requirement with the LEAST operational effort?
+一家公司托管了一个使用 Amazon Aurora MySQL DB 集群作为存储的多层 Web 应用程序。应用程序层托管在 Amazon EC2 实例
+上。公司的 IT 安全指南要求数据库凭证必须加密并每 14 天轮换一次。
+解决方案架构师应该采取什么措施以最少的运营工作量满足这一要求？
+A. Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new secret
+that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a custom
+rotation period of 14 days. Most Voted
+创建一个新的 AWS Key Management Service (AWS KMS) 加密密钥。使用 AWS Secrets Manager 创建一个新的密钥，该密钥使
+用 KMS 密钥和适当的凭证。将密钥与 Aurora DB 集群关联。配置一个自定义的 14 天轮换周期。
+B. Create two parameters in AWS Systems Manager Parameter Store: one for the user name as a string parameter and one that
+uses the SecureString type for the password. Select AWS Key Management Service (AWS KMS) encryption for the password
+parameter, and load these parameters in the application tier. Implement an AWS Lambda function that rotates the password
+every 14 days.
+在 AWS Systems Manager Parameter Store 中创建两个参数：一个作为字符串参数存储用户名，另一个使用 SecureString 类型
+存储密码。为密码参数选择 AWS Key Management Service (AWS KMS) 加密，并在应用程序层加载这些参数。实现一个 AWS
+Lambda 函数，每 14 天轮换一次密码。
+C. Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon Elastic File
+System (Amazon EFS) file system. Mount the EFS file system in all EC2 instances of the application tier. Restrict the access to
+the file on the file system so that the application can read the file and that only super users can modify the file. Implement an
+AWS Lambda function that rotates the key in Aurora every 14 days and writes new credentials into the file.
+将包含凭证的文件存储在一个 AWS Key Management Service (AWS KMS) 加密的 Amazon Elastic File System (Amazon EFS) 文件
+系统中。在应用程序层的所有 EC2 实例中挂载 EFS 文件系统。限制对文件系统中文件的访问，以便应用程序可以读取文件，而
+只有超级用户可以修改文件。实现一个 AWS Lambda 函数，每 14 天轮换 Aurora 的密钥并将新凭证写入文件。
+D. Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon S3 bucket that
+the application uses to load the credentials. Download the file to the application regularly to ensure that the correct credentials
+are used. Implement an AWS Lambda function that rotates the Aurora credentials every 14 days and uploads these credentials
+to the file in the S3 bucket.
+将包含凭证的文件存储在一个 AWS Key Management Service (AWS KMS) 加密的 Amazon S3 存储桶中，应用程序用于加载这些
+凭证。定期将文件下载到应用程序以确保使用正确的凭证。实现一个 AWS Lambda 函数，每 14 天轮换 Aurora 凭证并将这些凭
+证上传到 S3 存储桶中的文件。
+题目分析与解答
+1. 考察的知识点
+Amazon Aurora数据库管理
+AWS Secrets Manager的使用
+数据库凭证加密与轮换
+AWS Key Management Service (KMS) 的集成
+2. 选项分析
+A. Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new
+secret that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a
+custom rotation period of 14 days.
+分析：
+AWS Secrets Manager支持自动轮换数据库凭证，并且可以与Aurora数据库直接集成。
+使用AWS KMS加密密钥确保凭证的安全性。
+配置自定义轮换周期（14天）完全符合题目要求。
+此选项操作简单，自动化程度高，符合“最少操作努力”的要求。
+结论： 正确。
+B. Create two parameters in AWS Systems Manager Parameter Store: one for the user name as a string parameter and one
+that uses the SecureString type for the password. Select AWS Key Management Service (AWS KMS) encryption for the
+password parameter, and load these parameters in the application tier. Implement an AWS Lambda function that rotates
+the password every 14 days.
+分析：
+AWS Systems Manager Parameter Store可以存储加密的参数，但它不支持自动轮换数据库凭证。
+需要额外实现一个AWS Lambda函数来轮换密码，增加了操作复杂性。
+相比Secrets Manager，此选项需要更多的手动配置和维护，不符合“最少操作努力”的要求。
+结论： 错误。
+C. Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon Elastic File
+System (Amazon EFS) file system. Mount the EFS file system in all EC2 instances of the application tier. Restrict the access
+to the file on the file system so that the application can read the file and that only super users can modify the file.
+Implement an AWS Lambda function that rotates the key in Aurora every 14 days and writes new credentials into the file.
+分析：
+使用EFS存储凭证文件并加密虽然可行，但需要额外的配置来挂载文件系统。
+需要实现一个AWS Lambda函数来轮换凭证，增加了操作复杂性。
+此方法不如Secrets Manager直接集成Aurora数据库方便，且操作复杂性较高。
+结论： 错误。
+D. Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon S3 bucket
+that the application uses to load the credentials. Download the file to the application regularly to ensure that the correct
+credentials are used. Implement an AWS Lambda function that rotates the Aurora credentials every 14 days and uploads
+Correct Answer: A
+正确答案：A
+Community vote distribution
+社区投票分布
+A (100%)
+these credentials to the file in the S3 bucket.
+分析：
+使用S3存储凭证文件并加密虽然可行，但需要额外的配置来定期下载文件。
+需要实现一个AWS Lambda函数来轮换凭证，增加了操作复杂性。
+此方法不如Secrets Manager直接集成Aurora数据库方便，且操作复杂性较高。
+结论： 错误。
+3. 我选的答案
+A
+4. 官方答案
+A
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：选项A使用AWS Secrets Manager直接集成Aurora数据库，支持自动轮换凭证，操作简单且符合“最少操作努力”的要求。

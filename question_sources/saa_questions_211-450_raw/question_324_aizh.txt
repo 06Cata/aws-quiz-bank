@@ -1,0 +1,72 @@
+Question #324
+A company wants to implement a disaster recovery plan for its primary on-premises file storage volume. The file storage volume is
+mounted from an Internet Small Computer Systems Interface (iSCSI) device on a local storage server. The file storage volume
+holds hundreds of terabytes (TB) of data.
+The company wants to ensure that end users retain immediate access to all file types from the on-premises systems without
+experiencing latency.
+Which solution will meet these requirements with the LEAST amount of change to the company's existing infrastructure?
+一家公司希望为其主要的本地文件存储卷实施灾难恢复计划。文件存储卷通过本地存储服务器上的Internet Small Computer
+Systems Interface (iSCSI)设备挂载。文件存储卷包含数百TB的数据。
+该公司希望确保终端用户能够从本地系统即时访问所有文件类型，而不会遇到延迟问题。
+哪种解决方案能够以最少的变更满足公司的现有基础设施要求？
+A. Provision an Amazon S3 File Gateway as a virtual machine (VM) that is hosted on premises. Set the local cache to 10 TB.
+Modify existing applications to access the files through the NFS protocol. To recover from a disaster, provision an Amazon EC2
+instance and mount the S3 bucket that contains the files.
+在本地作为虚拟机（VM）部署一个Amazon S3 File Gateway。将本地缓存设置为10 TB。修改现有应用程序以通过NFS协议访问
+文件。为了从灾难中恢复，部署一个Amazon EC2实例并挂载包含文件的S3桶。
+B. Provision an AWS Storage Gateway tape gateway. Use a data backup solution to back up all existing data to a virtual tape
+library. Configure the data backup solution to run nightly after the initial backup is complete. To recover from a disaster,
+provision an Amazon EC2 instance and restore the data to an Amazon Elastic Block Store (Amazon EBS) volume from the
+volumes in the virtual tape library.
+部署一个AWS Storage Gateway tape gateway。使用数据备份解决方案将所有现有数据备份到虚拟磁带库。配置数据备份解决方
+案在初始备份完成后每晚运行。为了从灾难中恢复，部署一个Amazon EC2实例并将数据从虚拟磁带库中的卷恢复到Amazon
+Elastic Block Store (Amazon EBS)卷。
+C. Provision an AWS Storage Gateway Volume Gateway cached volume. Set the local cache to 10 TB. Mount the Volume
+Gateway cached volume to the existing file server by using iSCSI, and copy all files to the storage volume. Configure scheduled
+snapshots of the storage volume. To recover from a disaster, restore a snapshot to an Amazon Elastic Block Store (Amazon
+EBS) volume and attach the EBS volume to an Amazon EC2 instance.
+部署一个AWS Storage Gateway Volume Gateway cached volume。将本地缓存设置为10 TB。通过iSCSI将Volume Gateway
+cached volume挂载到现有文件服务器，并将所有文件复制到存储卷。配置存储卷的定期快照。为了从灾难中恢复，将快照恢复
+到一个Amazon Elastic Block Store (Amazon EBS)卷，并将EBS卷附加到一个Amazon EC2实例。
+D. Provision an AWS Storage Gateway Volume Gateway stored volume with the same amount of disk space as the existing file
+storage volume. Mount the Volume Gateway stored volume to the existing file server by using iSCSI, and copy all files to the
+storage volume. Configure scheduled snapshots of the storage volume. To recover from a disaster, restore a snapshot to an
+Amazon Elastic Block Store (Amazon EBS) volume and attach the EBS volume to an Amazon EC2 instance. Most Voted
+部署一个AWS Storage Gateway Volume Gateway stored volume，其磁盘空间与现有文件存储卷相同。通过iSCSI将Volume
+Gateway stored volume挂载到现有文件服务器，并将所有文件复制到存储卷。配置存储卷的定期快照。为了从灾难中恢复，将
+快照恢复到一个Amazon Elastic Block Store (Amazon EBS)卷，并将EBS卷附加到一个Amazon EC2实例。
+题目分析与解答
+1. 考察的知识点
+本题主要考察AWS Storage Gateway的不同类型（File Gateway、Tape Gateway、Volume Gateway）的使用场景和功能。
+同时涉及灾难恢复（Disaster Recovery）解决方案的设计，重点是如何在最小化基础设施变更的情况下实现高效的灾难恢复。
+2. 选项分析
+A. Amazon S3 File Gateway
+正确性分析：S3 File Gateway适用于文件存储场景，支持通过NFS或SMB协议访问文件。但本题要求使用iSCSI协议，而S3 File
+Gateway不支持iSCSI协议。
+错误原因：需要修改现有应用程序以通过NFS协议访问文件，这会对现有基础设施造成较大变更，不符合题目要求的“最少变更”。
+B. AWS Storage Gateway Tape Gateway
+正确性分析：Tape Gateway主要用于备份和归档场景，数据存储在虚拟磁带库中。恢复时需要将数据从磁带库恢复到EBS卷。
+错误原因：Tape Gateway不适合实时文件访问场景，用户无法直接访问文件，且恢复过程可能会导致较高的延迟，不符合题目要求
+的“立即访问”。
+C. AWS Storage Gateway Volume Gateway cached volume
+正确性分析：Volume Gateway cached volume将数据主要存储在AWS云端，只有部分数据保留在本地缓存中。通过iSCSI协议访问
+数据，符合现有基础设施的要求。
+错误原因：由于数据主要存储在云端，用户访问文件时可能会受到网络延迟的影响，不符合题目要求的“无延迟访问”。
+D. AWS Storage Gateway Volume Gateway stored volume
+正确性分析：Volume Gateway stored volume将所有数据存储在本地，同时定期将快照备份到AWS云端。通过iSCSI协议访问数据，
+完全符合现有基础设施的要求。
+正确原因：用户可以立即访问所有文件，无需修改现有应用程序，且灾难恢复过程简单高效，符合题目要求的“最少变更”和“无延迟
+访问”。
+3. 我的答案
+我选择的答案是：D
+4. 官方答案
+官方答案是：D
+5. 与官方答案的比较
+我的答案与官方答案一致。
+原因分析：Volume Gateway stored volume完全满足题目要求，能够在最少变更的情况下实现无延迟访问和高效灾难恢复。
+Correct Answer: D
+正确答案：D
+Community vote distribution
+社区投票分布
+D (83%)
+C (17%)

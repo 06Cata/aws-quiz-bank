@@ -1,0 +1,121 @@
+A medical records company is hosting an application on Amazon EC2 instances. The application processes customer data files that
+are stored on Amazon S3. The EC2 instances are hosted in public subnets. The EC2 instances access Amazon S3 over the internet,
+but they do not require any other network access.
+A new requirement mandates that the network traffic for file transfers take a private route and not be sent over the internet.
+Which change to the network architecture should a solutions architect recommend to meet this requirement?
+A. Create a NAT gateway. Configure the route table for the public subnets to send traffic to Amazon S3 through the NAT
+gateway.
+B. Configure the security group for the EC2 instances to restrict outbound traffic so that only traffic to the S3 prefix list is
+permitted.
+C. Move the EC2 instances to private subnets. Create a VPC endpoint for Amazon S3, and link the endpoint to the route table
+for the private subnets. Most Voted
+D. Remove the internet gateway from the VPC. Set up an AWS Direct Connect connection, and route traffic to Amazon S3 over
+the Direct Connect connection.
+Comments
+cookieMr Highly Voted 2 years, 11 months ago
+Selected Answer: C
+Option A (creating a NAT gateway) would not meet the requirement since it still involves sending traffic to S3 over the internet. NAT gateway is used
+for outbound internet connectivity from private subnets, but it doesn't provide a private route for accessing S3.
+Option B (configuring security groups) focuses on controlling outbound traffic using security groups. While it can restrict outbound traffic, it doesn't
+provide a private route for accessing S3.
+Option D (setting up Direct Connect) involves establishing a dedicated private network connection between the on-premises environment and AWS.
+While it offers private connectivity, it is more suitable for hybrid scenarios and not necessary for achieving private access to S3 within the VPC.
+In summary, option C provides a straightforward solution by moving the EC2 instances to private subnets, creating a VPC endpoint for S3, and linking
+the endpoint to the route table for private subnets. This ensures that file transfer traffic between the EC2 instances and S3 remains within the private
+network without going over the internet.
+upvoted 16 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: C
+The correct answer is C. Move the EC2 instances to private subnets. Create a VPC endpoint for Amazon S3, and link the endpoint to the route table
+for the private subnets.
+To meet the new requirement of transferring files over a private route, the EC2 instances should be moved to private subnets, which do not have
+direct access to the internet. This ensures that the traffic for file transfers does not go over the internet.
+To enable the EC2 instances to access Amazon S3, a VPC endpoint for Amazon S3 can be created. VPC endpoints allow resources within a VPC to
+communicate with resources in other services without the traffic being sent over the internet. By linking the VPC endpoint to the route table for the
+private subnets, the EC2 instances can access Amazon S3 over a private connection within the VPC.
+upvoted 6 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Option A (Create a NAT gateway) would not work, as a NAT gateway is used to allow resources in private subnets to access the internet, while the
+requirement is to prevent traffic from going over the internet.
+Option B (Configure the security group for the EC2 instances to restrict outbound traffic) would not achieve the goal of routing traffic over a private
+Correct Answer: C
+Community vote distribution
+C (95%)
+5%
+connection, as the traffic would still be sent over the internet.
+Option D (Remove the internet gateway from the VPC and set up an AWS Direct Connect connection) would not be necessary, as the requirement
+can be met by simply creating a VPC endpoint for Amazon S3 and routing traffic through it.
+upvoted 1 times
+Kayamables 3 years, 5 months ago
+How about the question of moving the instances across subnets. Because according to AWS you can't do it.
+https://aws.amazon.com/premiumsupport/knowledge-center/move-ec2-
+instance/#:~:text=It%27s%20not%20possible%20to%20move,%2C%20Availability%20Zone%2C%20or%20VPC.
+Kindly clarify. Maybe I miss something.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+You can't just change the subnet in instance settings, but this article mentions how you CAN move the instance manually.
+upvoted 2 times
+Vandaman Most Recent 1 year, 3 months ago
+Selected Answer: C
+C is the best Answer. The requirement is for file transfers to take a private route and not be sent over the internet. This eliminates A and B. D is for
+Hybrid solutions.
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: D
+Ans C - I was going for Ans D...
+...but as well explained by Buruguduystunstugudunstuy (1 year, 8 mth ago), C is simpler:
+"Option C: Move the EC2 instances to private subnets. Create a VPC endpoint for Amazon S3, and link the endpoint to the route table for the private
+subnets.
+To meet the new requirement of transferring files over a private route, the EC2 instances should be moved to private subnets, which do not have
+direct access to the internet. This ensures that the traffic for file transfers does not go over the internet.
+"Option D (Remove the internet gateway from the VPC and set up an AWS Direct Connect connection) would not be necessary, as the requirement
+can be met by simply creating a VPC endpoint for Amazon S3 and routing traffic through it."
+upvoted 2 times
+jaradat02 1 year, 10 months ago
+Selected Answer: C
+C is the correct answer.
+upvoted 1 times
+Ruffyit 2 years, 7 months ago
+C. Move the EC2 instances to private subnets. Create a VPC endpoint for Amazon S3, and link the endpoint to the route table for the private subnets.
+upvoted 1 times
+TariqKipkemei 2 years, 9 months ago
+Selected Answer: C
+Move the EC2 instances to private subnets. Create a VPC endpoint for Amazon S3, and link the endpoint to the route table for the private subnets.
+upvoted 1 times
+sand444 2 years, 9 months ago
+Selected Answer: C
+link VPC endpoint in route tables ---- EC2 instance to communicate S3 with a private connection in VPC
+upvoted 2 times
+DavidNamy 3 years, 5 months ago
+Selected Answer: C
+According to the well-designed framework, option C is the safest and most efficient option.
+upvoted 3 times
+career360guru 3 years, 5 months ago
+Selected Answer: C
+Option C
+upvoted 1 times
+ocbn3wby 3 years, 6 months ago
+C is correct.
+There is no requirement for public access from internet.
+Application must be moved in Private subnet. This is a prerequisite in using VPC endpoints with S3
+https://aws.amazon.com/blogs/storage/managing-amazon-s3-access-with-vpc-endpoints-and-s3-access-points/
+upvoted 5 times
+Wpcorgan 3 years, 6 months ago
+C is correct
+upvoted 1 times
+Jtic 3 years, 6 months ago
+Selected Answer: C
+Use VPC endpoint
+upvoted 1 times
+Jtic 3 years, 7 months ago
+Selected Answer: C
+User VPC endpoint and make the EC2 private
+upvoted 1 times
+Jtic 3 years, 7 months ago
+Use VPC endpoint
+upvoted 1 times
+backbencher2022 3 years, 7 months ago
+Selected Answer: C
+VPC endpoint is the best choice to route S3 traffic without traversing internet. Option A alone can't be used as NAT Gateway requires an Internet
+gateway for outbound internet traffic. Option B would still require traversing through internet and option D is also not a suitable solution
+upvoted 4 times

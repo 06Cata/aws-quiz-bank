@@ -1,0 +1,55 @@
+Question #947
+A company runs a Node js function on a server in its on-premises data center. The data center stores data in a PostgreSQL
+database. The company stores the credentials in a connection string in an environment variable on the server. The company wants
+to migrate its application to AWS and to replace the Node.js application server with AWS Lambda. The company also wants to
+migrate to Amazon RDS for PostgreSQL and to ensure that the database credentials are securely managed.
+Which solution will meet these requirements with the LEAST operational overhead?
+一家公司在其本地数据中心的服务器上运行一个 Node.js 函数。数据中心将数据存储在一个 PostgreSQL 数据库中。公司将凭证存
+储在服务器环境变量中的连接字符串中。公司希望将其应用程序迁移到 AWS，并用 AWS Lambda 替换 Node.js 应用程序服务器。
+公司还希望迁移到 Amazon RDS for PostgreSQL，并确保数据库凭证被安全管理。
+哪种解决方案可以以昀少的运营开销满足这些需求？
+A. Store the database credentials as a parameter in AWS Systems Manager Parameter Store Configure Parameter Store to
+automatically rotate the secrets every 30 days. Update the Lambda function to retrieve the credentials from the parameter.
+将数据库凭证作为参数存储在 AWS Systems Manager Parameter Store 中。配置 Parameter Store 每 30 天自动轮换密钥。更新
+Lambda 函数以从参数中检索凭证。
+B. Store the database credentials as a secret in AWS Secrets Manager. Configure Secrets Manager to automatically rotate the
+credentials every 30 days. Update the Lambda function to retrieve the credentials from the secret. Most Voted
+将数据库凭证作为密钥存储在 AWS Secrets Manager 中。配置 Secrets Manager 每 30 天自动轮换凭证。更新 Lambda 函数以从
+密钥中检索凭证。
+C. Store the database credentials as an encrypted Lambda environment variable. Write a custom Lambda function to rotate the
+credentials. Schedule the Lambda function to run every 30 days.
+将数据库凭证作为加密的 Lambda 环境变量存储。编写一个自定义 Lambda 函数来轮换凭证。安排该 Lambda 函数每 30 天运行
+一次。
+D. Store the database credentials as a key in AWS Key Management Service (AWS KMS). Configure automatic rotation for the
+key. Update the Lambda function to retneve the credentials from the KMS key.
+将数据库凭证作为密钥存储在 AWS Key Management Service (AWS KMS) 中。配置密钥的自动轮换。更新 Lambda 函数以从
+KMS 密钥中检索凭证。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+如何在AWS中安全管理数据库凭证。
+使用AWS服务（如Secrets Manager、Parameter Store、KMS等）进行凭证存储和自动轮换。
+Lambda函数与凭证管理服务的集成。
+2. 选项分析
+A. Store the database credentials as a parameter in AWS Systems Manager Parameter Store...
+正确性：AWS Systems Manager Parameter Store可以存储参数并支持加密，但它不支持自动轮换数据库凭证。
+错误原因：虽然可以存储凭证，但需要额外的逻辑来实现自动轮换，增加了操作复杂性。
+B. Store the database credentials as a secret in AWS Secrets Manager...
+正确性：AWS Secrets Manager专门设计用于存储和管理敏感信息（如数据库凭证），并支持自动轮换。
+正确原因：Secrets Manager提供内置的自动轮换功能，减少了操作复杂性，符合题目要求的“LEAST operational overhead”。
+C. Store the database credentials as an encrypted Lambda environment variable...
+正确性：Lambda环境变量可以存储加密数据，但需要自定义逻辑来实现凭证轮换。
+错误原因：编写和维护自定义轮换逻辑增加了操作复杂性，不符合题目要求的“LEAST operational overhead”。
+D. Store the database credentials as a key in AWS Key Management Service (AWS KMS)...
+正确性：AWS KMS主要用于加密和解密数据，而不是专门设计用于存储和轮换数据库凭证。
+错误原因：KMS不支持自动轮换数据库凭证，且需要额外的逻辑来实现凭证管理。
+3. 我选的答案
+B
+4. 官方答案
+B
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。
+Community vote distribution
+社区投票分布
+B (100%)

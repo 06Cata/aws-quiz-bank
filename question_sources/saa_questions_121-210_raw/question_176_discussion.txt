@@ -1,0 +1,98 @@
+An application runs on Amazon EC2 instances in private subnets. The application needs to access an Amazon DynamoDB table.
+What is the MOST secure way to access the table while ensuring that the traffic does not leave the AWS network?
+A. Use a VPC endpoint for DynamoDB. Most Voted
+B. Use a NAT gateway in a public subnet.
+C. Use a NAT instance in a private subnet.
+D. Use the internet gateway attached to the VPC.
+Comments
+mabotega Highly Voted 2 years, 6 months ago
+Selected Answer: A
+VPC endpoints for service in private subnets
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/vpc-endpoints-dynamodb.html
+upvoted 18 times
+cookieMr Highly Voted 1 year, 11 months ago
+Option B (using a NAT gateway in a public subnet) and option C (using a NAT instance in a private subnet) are not the most secure options because
+they involve routing traffic through a network address translation (NAT) device, which requires an internet gateway and traverses the public internet.
+Option D (using the internet gateway attached to the VPC) would require routing traffic through the internet gateway, which would result in the
+traffic leaving the AWS network.
+Therefore, the recommended and most secure approach is to use a VPC endpoint for DynamoDB to ensure private and secure access to the
+DynamoDB table from your EC2 instances in private subnets, without the need to traverse the internet or leave the AWS network.
+upvoted 7 times
+satyaammm Most Recent 1 year, 4 months ago
+Selected Answer: A
+A gateway VPC endpoint is the most suitable for accessing DynamoDB and S3.
+upvoted 1 times
+8935983 8 months, 4 weeks ago
+Adding to your point VPC gateways are also suitable for accessing two components
+upvoted 1 times
+vijaykamal 1 year, 8 months ago
+Selected Answer: A
+Using an internet gateway (Option D) is used for enabling outbound internet connectivity from resources in your VPC. It's not the appropriate choice
+for securely accessing DynamoDB within your VPC.
+upvoted 3 times
+Ramdi1 1 year, 9 months ago
+Selected Answer: A
+A gateway VPC Endpoint is designed for supported AWS service such as dynamo db or s3 in this case i assume the endpoint is still the valid option
+upvoted 2 times
+TariqKipkemei 1 year, 9 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (100%)
+Use a VPC endpoint for DynamoDB. A VPC endpoint enables customers to privately connect to supported AWS services: Amazon DynamoDB or
+Amazon Simple Storage Service (Amazon S3).
+upvoted 3 times
+Guru4Cloud 1 year, 9 months ago
+Selected Answer: A
+A VPC endpoint enables private connectivity between VPCs and AWS services without requiring an internet gateway, NAT device, VPN connection, or
+AWS Direct Connect. Traffic remains within the AWS network.
+upvoted 2 times
+MikeDu 1 year, 10 months ago
+Selected Answer: A
+VPC endpoints for service in private subnets
+upvoted 2 times
+RashiJaiswal 1 year, 11 months ago
+Selected Answer: A
+VPC endpoint for dynamodb and S3
+upvoted 2 times
+markw92 1 year, 11 months ago
+VPC endpoints for DynamoDB can alleviate these challenges. A VPC endpoint for DynamoDB enables Amazon EC2 instances in your VPC to use their
+private IP addresses to access DynamoDB with no exposure to the public internet. Your EC2 instances do not require public IP addresses, and you
+don't need an internet gateway, a NAT device, or a virtual private gateway in your VPC. You use endpoint policies to control access to DynamoDB.
+Traffic between your VPC and the AWS service does not leave the Amazon network.
+upvoted 4 times
+dmt6263 2 years ago
+AAAAAAAAA
+upvoted 2 times
+gx2222 2 years, 2 months ago
+Selected Answer: A
+Option A: Use a VPC endpoint for DynamoDB - This is the correct option. A VPC endpoint for DynamoDB allows communication between resources
+in your VPC and Amazon DynamoDB without traversing the internet or a NAT instance, which is more secure.
+upvoted 3 times
+GalileoEC2 2 years, 3 months ago
+A
+The most secure way to access an Amazon DynamoDB table from Amazon EC2 instances in private subnets while ensuring that the traffic does not
+leave the AWS network is to use Amazon VPC Endpoints for DynamoDB.
+Amazon VPC Endpoints enable private communication between Amazon EC2 instances in a VPC and Amazon services such as DynamoDB, without
+the need for an internet gateway, NAT device, or VPN connection. When you create a VPC endpoint for DynamoDB, traffic from the EC2 instances to
+the DynamoDB table remains within the AWS network and does not traverse the public internet.
+upvoted 2 times
+AllGOD 2 years, 3 months ago
+private...backend Answer A
+upvoted 2 times
+bdp123 2 years, 4 months ago
+Selected Answer: A
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/vpc-endpointsdynamodb.
+html A VPC endpoint for DynamoDB enables Amazon EC2 instances in your VPC to use
+their private IP addresses to access DynamoDB with no exposure to the public internet. Your EC2
+instances do not require public IP addresses, and you don't need an internet gateway, a NAT device,
+or a virtual private gateway in your VPC. You use endpoint policies to control access to DynamoDB.
+Traffic between your VPC and the AWS service does not leave the Amazon network.
+upvoted 3 times
+ProfXsamson 2 years, 4 months ago
+ExamTopics.com should be sued for this answer tagged as Correct answer.
+upvoted 4 times
+mp165 2 years, 5 months ago
+Selected Answer: A
+A is correct. VPC end point. D exposed to the internet
+upvoted 4 times

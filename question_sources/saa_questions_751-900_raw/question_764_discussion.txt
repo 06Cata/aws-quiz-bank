@@ -1,0 +1,91 @@
+A company wants to migrate its three-tier application from on premises to AWS. The web tier and the application tier are running
+on third-party virtual machines (VMs). The database tier is running on MySQL.
+The company needs to migrate the application by making the fewest possible changes to the architecture. The company also
+needs a database solution that can restore data to a specific point in time.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Migrate the web tier and the application tier to Amazon EC2 instances in private subnets. Migrate the database tier to
+Amazon RDS for MySQL in private subnets.
+B. Migrate the web tier to Amazon EC2 instances in public subnets. Migrate the application tier to EC2 instances in private
+subnets. Migrate the database tier to Amazon Aurora MySQL in private subnets. Most Voted
+C. Migrate the web tier to Amazon EC2 instances in public subnets. Migrate the application tier to EC2 instances in private
+subnets. Migrate the database tier to Amazon RDS for MySQL in private subnets.
+D. Migrate the web tier and the application tier to Amazon EC2 instances in public subnets. Migrate the database tier to
+Amazon Aurora MySQL in public subnets.
+Comments
+haci Highly Voted 2 years, 3 months ago
+Selected Answer: B
+I'm between B and C. Since RDS requires an additional configuration for PTR, it adds an operational overhead. So I will go with B.
+Aurora provides automated backup and point-in-time recovery, simplifying backup management and data protection. Continuous incremental
+backups are taken automatically and stored in Amazon S3, and data retention periods can be specified to meet compliance requirements.
+RDS provides the same but first, the users should set a retention period for these backups, allowing historical data recovery in case of accidental data
+loss or corruption, and point-in-time recovery (PITR) allows users to restore the database to any specific moment within the set retention period.
+upvoted 13 times
+shahreh1 Highly Voted 2 years, 3 months ago
+B: Amazon Aurora is a fully managed relational database engine that’s compatible with both MySQL and PostgreSQL
+upvoted 5 times
+ln2718 Most Recent 9 months, 3 weeks ago
+Selected Answer: C
+Chat AI -
+Options A/D place tiers in the wrong subnet types;
+B adds an engine change to Aurora without need.
+upvoted 1 times
+ln2718 10 months, 2 weeks ago
+Selected Answer: C
+Also, with RDS you can restore for a specific point in time as well. I would spend the time to migrate all of this away from the current migration, but
+for now I would just keeping apples to apples and stick with answer C
+upvoted 1 times
+ln2718 10 months, 2 weeks ago
+Correct Answer: B
+Community vote distribution
+B (82%)
+C (18%)
+Selected Answer: C
+I'll go with answer C because moving from MySQL server on prem to a MySQL RDS will involve less schema work and changes.
+upvoted 1 times
+Bwhizzy 1 year, 8 months ago
+Selected Answer: B
+Answer is B. please see below article
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-pitr.html
+upvoted 2 times
+kbgsgsgs 1 year, 8 months ago
+Selected Answer: C
+Auroralo maigeuleisyeonhalyeomyeon MySQLboda akitegcheo byeongyeong-i deo pil-yohal su issseubnida. ganeunghamyeon choesohan-ui
+byeongyeong-eul yocheong
+67 / 5,000
+Migrating to Aurora may require more architectural changes than MySQL. Request minimal changes if possible.
+upvoted 1 times
+Scheldon 1 year, 11 months ago
+Selected Answer: B
+AnswerB
+The problem with this question is that we do not have enough information. We can execute task with both AURORA or RDS DB. I will go with
+AURORA as it is Amazon Proprietary and is developed by AWS teams, hence we do not need to think about updates etc. as it is done by AWS teams.
+upvoted 2 times
+MattBJ 2 years, 2 months ago
+Selected Answer: B
+B is the correct option.
+upvoted 2 times
+DEN_ZZ 2 years, 3 months ago
+Selected Answer: B
+PTR, it's Aurora
+upvoted 4 times
+stephensimudemy 2 years, 3 months ago
+Selected Answer: C
+It's C. Strictly speaking, there is no AWS DB call Amazon Aurora "MySQL"
+upvoted 1 times
+ogerber 2 years, 3 months ago
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.AuroraMySQL.html
+upvoted 3 times
+hajra313 2 years, 4 months ago
+C. This option aligns with the requirements by keeping the web tier in public subnets, migrating the application tier to EC2 instances in private
+subnets to enhance security, and using Amazon RDS for MySQL in private subnets to meet the database requirements with minimal operational
+overhead. option A:While migrating the web tier and application tier to EC2 instances in private subnets minimizes exposure to the internet. option
+B:. Migrating the database tier to Amazon Aurora MySQL introduces changes to the database engine, which might require additional testing and
+adjustments to the application. Additionally, Aurora MySQL does not directly support point-in-time recovery; instead, it uses continuous backups and
+snapshots for data recovery.
+upvoted 3 times
+Andy_09 2 years, 4 months ago
+Option A works better
+upvoted 2 times
+Andy_09 2 years, 4 months ago
+Option B
+upvoted 3 times

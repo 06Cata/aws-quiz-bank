@@ -1,0 +1,78 @@
+Question #478
+A law firm needs to share information with the public. The information includes hundreds of files that must be publicly readable.
+Modifications or deletions of the files by anyone before a designated future date are prohibited.
+Which solution will meet these requirements in the MOST secure way?
+一家律师事务所需要与公众共享信息。这些信息包括数百个必须公开可读的文件。在指定的未来日期之前，任何人不得修改或删除
+这些文件。
+哪种解决方案可以以昀安全的方式满足这些要求？
+A. Upload all files to an Amazon S3 bucket that is configured for static website hosting. Grant read-only IAM permissions to
+any AWS principals that access the S3 bucket until the designated date.
+将所有文件上传到配置为静态网站托管的 Amazon S3 存储桶。授予访问 S3 存储桶的任何 AWS 主体只读 IAM 权限，直到指定
+日期。
+B. Create a new Amazon S3 bucket with S3 Versioning enabled. Use S3 Object Lock with a retention period in accordance with
+the designated date. Configure the S3 bucket for static website hosting. Set an S3 bucket policy to allow read-only access to
+the objects. Most Voted
+创建一个启用了 S3 Versioning 的新的 Amazon S3 存储桶。使用 S3 Object Lock 并设置符合指定日期的保留期。将 S3 存储桶配
+置为静态网站托管。设置 S3 存储桶策略以允许对对象的只读访问。
+C. Create a new Amazon S3 bucket with S3 Versioning enabled. Configure an event trigger to run an AWS Lambda function in
+case of object modification or deletion. Configure the Lambda function to replace the objects with the original versions from a
+private S3 bucket.
+创建一个启用了 S3 Versioning 的新的 Amazon S3 存储桶。配置一个事件触发器以在对象修改或删除时运行 AWS Lambda 函
+数。配置 Lambda 函数以从私有 S3 存储桶中替换原始版本的对象。
+D. Upload all files to an Amazon S3 bucket that is configured for static website hosting. Select the folder that contains the files.
+Use S3 Object Lock with a retention period in accordance with the designated date. Grant read-only IAM permissions to any
+AWS principals that access the S3 bucket.
+将所有文件上传到配置为静态网站托管的 Amazon S3 存储桶。选择包含文件的文件夹。使用 S3 Object Lock 并设置符合指定日
+期的保留期。授予访问 S3 存储桶的任何 AWS 主体只读 IAM 权限。
+Correct Answer: B
+正确答案：B
+题目分析与解答
+1. 考察的知识点
+Amazon S3静态网站托管
+S3 Object Lock功能及其保留期设置
+S3 Versioning功能
+IAM权限管理
+S3存储桶策略
+2. 选项分析
+A. Upload all files to an Amazon S3 bucket that is configured for static website hosting. Grant read-only IAM permissions
+to any AWS principals that access the S3 bucket until the designated date.
+分析：
+虽然配置了静态网站托管和只读IAM权限，但没有使用S3 Object Lock功能，因此无法防止文件被修改或删除。
+此选项无法满足“禁止修改或删除”的要求。
+结论：错误。
+B. Create a new Amazon S3 bucket with S3 Versioning enabled. Use S3 Object Lock with a retention period in accordance
+with the designated date. Configure the S3 bucket for static website hosting. Set an S3 bucket policy to allow read-only
+access to the objects.
+分析：
+启用了S3 Versioning，可以保留对象的多个版本。
+使用了S3 Object Lock并设置了保留期，可以防止文件在指定日期之前被修改或删除。
+配置了静态网站托管和存储桶策略，允许只读访问。
+此选项全面满足题目要求。
+结论：正确。
+C. Create a new Amazon S3 bucket with S3 Versioning enabled. Configure an event trigger to run an AWS Lambda
+function in case of object modification or deletion. Configure the Lambda function to replace the objects with the original
+versions from a private S3 bucket.
+分析：
+启用了S3 Versioning，可以保留对象的多个版本。
+使用Lambda函数来恢复被修改或删除的对象，但这种方法复杂且无法完全防止文件被修改或删除。
+此选项不如使用S3 Object Lock直接防止修改或删除有效。
+结论：错误。
+D. Upload all files to an Amazon S3 bucket that is configured for static website hosting. Select the folder that contains the
+files. Use S3 Object Lock with a retention period in accordance with the designated date. Grant read-only IAM permissions
+to any AWS principals that access the S3 bucket.
+分析：
+虽然使用了S3 Object Lock并设置了保留期，但“选择文件夹”这一操作在S3中并不是直接支持的，因为S3是基于对象存储的，而不是
+基于文件夹的。
+此选项的描述存在技术上的不准确性。
+结论：错误。
+3. 我的答案
+B
+4. 官方答案
+B
+5. 与官方答案比较
+Community vote distribution
+社区投票分布
+B (100%)
+我的答案与官方答案一致。
+理由：选项B全面满足题目要求，使用了S3 Object Lock和S3 Versioning来确保文件的不可修改性，同时配置了静态网站托管和只读
+访问权限。

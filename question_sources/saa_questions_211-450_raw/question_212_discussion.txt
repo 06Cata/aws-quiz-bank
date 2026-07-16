@@ -1,0 +1,129 @@
+A company needs to export its database once a day to Amazon S3 for other teams to access. The exported object size varies
+between 2 GB and 5 GB. The S3 access pattern for the data is variable and changes rapidly. The data must be immediately
+available and must remain accessible for up to 3 months. The company needs the most cost-effective solution that will not
+increase retrieval time.
+Which S3 storage class should the company use to meet these requirements?
+A. S3 Intelligent-Tiering Most Voted
+B. S3 Glacier Instant Retrieval
+C. S3 Standard
+D. S3 Standard-Infrequent Access (S3 Standard-IA)
+Comments
+techhb Highly Voted 3 years, 4 months ago
+Selected Answer: A
+S3 Intelligent-Tiering monitors access patterns and moves objects that have not been accessed for 30 consecutive days to the Infrequent Access tier
+and after 90 days of no access to the Archive Instant Access tier.
+upvoted 21 times
+Devsin2000 3 years, 1 month ago
+https://aws.amazon.com/getting-started/hands-on/getting-started-using-amazon-s3-intelligent-tiering/
+upvoted 6 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: A
+I think it cannot be clearly answered because we know that the 'access pattern is variable and changes rapidly', but ultimately it depends on the total
+number and volume of accesses. All four options meet the "not increase retrieval time" requirement (even Glacier Instant Retrieval has "the same
+latency and access time as S3 Standard"). If data would be rarely accessed, B would be cheapest. If it would be constantly accessed, C would be
+cheapest (we'd pay the Intelligent Tiering fee but it would never move anything to a cheaper tier). Inbetween it would be D.
+But I guess the key is Amazon's clear recommendation to use Intelligent Tiering (A) for "unknown or changing access" patterns, which matches the
+statement in the question.
+upvoted 11 times
+satyaammm Most Recent 1 year, 3 months ago
+Selected Answer: A
+S3 intelligent tiering is the most suitable for unpredictable workloads.
+upvoted 1 times
+iamroyalty_k 1 year, 4 months ago
+Selected Answer: A
+S3 Intelligent-Tiering dynamically optimizes storage costs for changing access patterns, ensuring immediate availability and cost-efficiency, which
+makes it the best fit for the given requirements.
+Why not the other options?
+B. S3 Glacier Instant Retrieval:
+While it provides low retrieval latency, Glacier storage classes are optimized for archival data with infrequent access, not for variable and potentially
+high-frequency access patterns.
+Correct Answer: A
+Community vote distribution
+A (78%)
+10%
+8%
+C. S3 Standard:
+This provides immediate availability but is more expensive than Intelligent-Tiering for data with unpredictable access patterns.
+D. S3 Standard-Infrequent Access (S3 Standard-IA):
+S3 Standard-IA is optimized for data that is accessed infrequently but requires immediate availability. However, if the access pattern is variable or
+frequent, it could lead to higher costs due to retrieval and access fees.
+upvoted 1 times
+skybrink 1 year, 4 months ago
+Selected Answer: D
+A. S3 Intelligent-Tiering:
+Intelligent-Tiering automatically moves data between storage tiers based on access patterns. However, it incurs additional monitoring and
+automation costs. For data with a short, predictable retention period (3 months), S3 Standard-IA is more cost-effective.
+B. S3 Glacier Instant Retrieval:
+Although Glacier Instant Retrieval offers low-latency access at a lower cost than Standard-IA, it is more suited for archival workloads where retrieval is
+rare. It is not ideal for workloads with variable access patterns like this one.
+C. S3 Standard:
+S3 Standard provides low-latency access, but it is more expensive than S3 Standard-IA for infrequently accessed data. It is better suited for frequently
+accessed data.
+upvoted 2 times
+ensbrvsnss 1 year, 9 months ago
+Selected Answer: B
+Instant
+upvoted 1 times
+lofzee 2 years ago
+Selected Answer: A
+unknown / changing access patterns = intelligent tiering. memorise
+upvoted 5 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: A
+Unpredictable access pattern - Intelligent tiering
+upvoted 3 times
+MehulKapadia 2 years, 1 month ago
+Selected Answer: A
+Correct Answer A:
+When data access pattern is not known then Intelligent-tiering can help by monitoring data-access pattern and move object internally accordingly an
+still ensure faster retrieval. Also There is no object retrieval fees/changes for S3 Intelligent Tier(So cost savings).
+Option C is not a valid answer because name itself says Infrequent Access(IA): S3 Standard-IA is for data that is accessed less frequently.
+upvoted 3 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: C
+Immediate Availability: S3 Standard provides immediate access to the data upon upload. This ensures that the exported database is immediately
+available for other teams to access without any retrieval delays.
+Variable Access Pattern: S3 Standard is designed to handle variable access patterns efficiently. It can accommodate rapid changes in access patterns
+without any impact on performance or latency.
+Retention Period: S3 Standard is suitable for storing data that needs to remain accessible for up to 3 months. It does not have any retrieval fees or
+delays, making it ideal for this scenario where immediate access is required.
+upvoted 3 times
+escalibran 2 years, 3 months ago
+Feels like half the scenario or answers are missing. Where's the "remove objects after 90 days"? Intelligent Tiering has an upcharge for the provided
+convenience - does it even make sense, when objects won't remain long enough to be archived?
+Other classes trade storage cost for request costs. Dependent on how often objects are queried, IA might make sense. Even Glacier Instant Retrieval
+could come out ahead, given minimal access (and it has 90 days minimum storage duration, exact fit for the description).
+With no further details provided, this is just throwing darts blindly.
+upvoted 1 times
+escalibran 2 years, 3 months ago
+Given just the uncertain access patterns AND limited storage time, I would argue in favor of simple S3 Standard.
+If the question mentioned that the pattern of access varies across objects, but is relatively consistent for the individual objects, intelligent tiering
+may be worth it. Otherwise you just pay more to have objects monitored for Infrequent Access, and then suddenly become popular after being
+moved.
+upvoted 2 times
+MrPCarrot 2 years, 4 months ago
+A is the perfect answer - The S3 access pattern for the data is variable and changes rapidly.
+upvoted 2 times
+bujuman 2 years, 4 months ago
+Selected Answer: A
+With regard to "The S3 access pattern for the data is variable and changes rapidly"
+Even though Answer B cooudl fifull some requirements, Answer A is For long-lived data that have unpredictable access patterns.
+upvoted 2 times
+theochan 2 years, 4 months ago
+Selected Answer: B
+"immediately available" =>
+D is not immediately, and for cost B < A/C
+upvoted 3 times
+VladanO 2 years, 7 months ago
+Selected Answer: B
+https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/
+"Amazon S3 Glacier Instant Retrieval is an archive storage class that delivers the lowest-cost storage for long-lived data that is rarely accessed and
+requires retrieval in milliseconds"
+upvoted 3 times
+ivan_riqueros12 2 years, 7 months ago
+Selected Answer: A
+A. El patrón de acceso a los datos es variable y cambia rápidamente = S3 Intelligent-Tiering
+upvoted 1 times
+Abdou1604 2 years, 8 months ago
+very important note , S3 Intelligent-Tiering got no retrival charges
+upvoted 4 times

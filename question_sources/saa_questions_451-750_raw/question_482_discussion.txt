@@ -1,0 +1,149 @@
+A company wants to migrate 100 GB of historical data from an on-premises location to an Amazon S3 bucket. The company has a
+100 megabits per second (Mbps) internet connection on premises. The company needs to encrypt the data in transit to the S3
+bucket. The company will store new data directly in Amazon S3.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Use the s3 sync command in the AWS CLI to move the data directly to an S3 bucket
+B. Use AWS DataSync to migrate the data from the on-premises location to an S3 bucket Most Voted
+C. Use AWS Snowball to move the data to an S3 bucket
+D. Set up an IPsec VPN from the on-premises location to AWS. Use the s3 cp command in the AWS CLI to move the data
+directly to an S3 bucket
+Comments
+cloudenthusiast Highly Voted 3 years ago
+Selected Answer: B
+AWS DataSync is a fully managed data transfer service that simplifies and automates the process of moving data between on-premises storage and
+Amazon S3. It provides secure and efficient data transfer with built-in encryption, ensuring that the data is encrypted in transit.
+By using AWS DataSync, the company can easily migrate the 100 GB of historical data from their on-premises location to an S3 bucket. DataSync will
+handle the encryption of data in transit and ensure secure transfer.
+upvoted 13 times
+luiscc Highly Voted 3 years ago
+Selected Answer: B
+Using DataSync, the company can easily migrate the 100 GB of historical data to an S3 bucket. DataSync will handle the encryption of data in transit,
+so the company does not need to set up a VPN or worry about managing encryption keys.
+Option A, using the s3 sync command in the AWS CLI to move the data directly to an S3 bucket, would require more operational overhead as the
+company would need to manage the encryption of data in transit themselves. Option D, setting up an IPsec VPN from the on-premises location to
+AWS, would also require more operational overhead and would be overkill for this scenario. Option C, using AWS Snowball, could work but would
+require more time and resources to order and set up the physical device.
+upvoted 8 times
+JustEugen Most Recent 8 months, 3 weeks ago
+Selected Answer: B
+I think the question is unfair and has a significant grey area. I have personally selected B to use DataSync over S3, despite DataSync having a larger
+operational overhead.
+I selected DataSync because S3 sync uses just HTTPS on the application layer, which is primarily not the best option for migrating the data on
+premises, while DataSync uses Transport Layer and enforces the usage of TLS 1.2.
+Additionally tothe security question, we have 100 GB of data and only 100 Mbp, which would require 2 - 2.5 hours to complete a job, and in case of
+failure, we would have to manually handle errors and retires, while DataSync will do that for us
+upvoted 1 times
+ln2718 9 months, 3 weeks ago
+Selected Answer: A
+Chat says A -
+-The AWS CLI uses HTTPS (TLS) by default, so data is encrypted in transit without extra setup.
+-100 GB over a 100 Mbps link is only a few hours, so no need for Snowball or VPN.
+Correct Answer: B
+Community vote distribution
+B (62%)
+A (38%)
+-s3 sync is simple and low-overhead for a one-time migration and can be reused if you need to re-run to catch any changes.
+-DataSync works too but requires deploying/maintaining an agent—unnecessary overhead for 100 GB.
+-A VPN adds setup/ops complexity with no benefit here.
+upvoted 1 times
+ln2718 10 months, 4 weeks ago
+Selected Answer: A
+In reading through the threads, option A seems to be the better choice based on comments regarding bandwidth and transfer times, S3 sync is the
+least overhead. Not a well written question, but have to consider reading into what they are trying to convey.
+upvoted 1 times
+Dz1990 1 year ago
+Selected Answer: B
+s3 sync Disadvantages:
+Manual process = You handle errors, retries, progress monitoring
+Basic tool = No optimization for large transfers
+Network issues = Manual restart if connection drops
+No built-in throttling = Could saturate bandwidth
+Higher operational overhead = More hands-on management needed
+upvoted 1 times
+Manimgh 1 year, 1 month ago
+Selected Answer: B
+encrypted = DataSync
+upvoted 1 times
+bora4motion 1 year, 1 month ago
+Selected Answer: B
+I will not use cli (A) to send 100GB to s3 from web. This means I will have to stay by computer? or use a different ec2 to login into it and initiate cli
+from there? hell no!!
+B Datasync is the elegant way.
+upvoted 1 times
+dollykidurian 1 year, 2 months ago
+My counter to all those, picking choice A, you will have to manually re-run the command if on-premise internet goes down however with datasync
+the service auto resume. (less operational overhead and less monitoring)
+upvoted 1 times
+zdi561 1 year, 4 months ago
+Selected Answer: B
+You can also copy or synchronize data from on-premises to AWS manually with the AWS CLI, but doing so requires a fair bit of system tuning see
+https://aws.amazon.com/blogs/storage/migrating-and-managing-large-datasets-on-amazon-s3/
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: A
+For A, it is more straightforward approach, with 100Mbps = 12.5MBs, 100 GB = 100 * 1024 MB = 102,400 MB, 102400 / 12.5 = 8192s = 2.3 hours, so
+if the network is stable, it should be less operational overhead than B which requires the installation of agent and network configuration, so
+compared to S3 sync, DataSync requires more upfront configuration but provides more robust, automated transfer capabilities.In an AWS
+certification exam, they typically expect you to choose the solution that provides the most straightforward, efficient approach with the least
+operational overhead while meeting all specified requirements.
+For this scenario, they would likely expect you to choose A.
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+In the context of AWS exam, AWS may expect we choose B as AWS DataSync is a managed service designed specifically for data migration tasks, A
+is more ad-hoc approach suit for small data-set. 100 GB will take 2.22 hours, although it is acceptable.
+upvoted 2 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: A
+Option A meets all the requirements with the LEAST operational overhead (while option B will introduce unnecessary complexity for a one-time
+transfer). The data will be encrypted in transit (via HTTPS), and a 100 Mbps connection is sufficient to transfer data of 100 GB.
+If the task involves periodic transfers or error recovery, DataSync (option B) could be considered as an alternative.
+upvoted 2 times
+1e22522 1 year, 10 months ago
+Selected Answer: B
+Why would u u se the CLI
+upvoted 2 times
+bujuman 2 years, 2 months ago
+Selected Answer: A
+Assertions:
+- needs to encrypt the data in transit to the S3 bucket.
+- The company will store new data directly in Amazon S3.
+Requirements:
+- with the LEAST operational overhead
+Even Though options A and B could do the job, option A requires VM maintenance because it is not a once-off migration (The company will store
+new data directly in Amazon S3)
+NB: According to me, we must stuck to the question and avoid to interpret
+upvoted 3 times
+bujuman 2 years, 2 months ago
+Erratum:
+Assertions:
+- needs to encrypt the data in transit to the S3 bucket.
+- The company will store new data directly in Amazon S3.
+Requirements:
+- with the LEAST operational overhead
+Even Though options A and B could do the job, option B requires VM maintenance because it is not a once-off migration (The company will store
+new data directly in Amazon S3)
+NB: According to me, we must stuck to the question and avoid to interpret
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Selected Answer: A
+A - one single command, uses encryption automatically
+B - Must install, configure and eventually decommission DataSync
+C - Overkill
+D - No need for VPN
+upvoted 5 times
+awsgeek75 2 years, 4 months ago
+I agree, A is a million times simpler than B in terms of operational setup. AWS CLI is just one install on a server on client side and one command
+(literally) to sync the data.
+upvoted 3 times
+1rob 2 years, 5 months ago
+Selected Answer: A
+By default, all data transmitted from the client computer running the AWS CLI and AWS service endpoints is encrypted by sending everything
+through a HTTPS/TLS connection. You don't need to do anything to enable the use of HTTPS/TLS. It is always enabled unless you explicitly disable it
+for an individual command by using the --no-verify-ssl command line option.
+This is simpler compared to datasync, which will cost operational overhead to configure.
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+storage data (including metadata) is encrypted in transit, but how it's encrypted throughout the transfer depends on your source and destination
+locations.
+upvoted 2 times

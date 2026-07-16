@@ -1,0 +1,120 @@
+A company is designing a containerized application that will use Amazon Elastic Container Service (Amazon ECS). The application
+needs to access a shared file system that is highly durable and can recover data to another AWS Region with a recovery point
+objective (RPO) of 8 hours. The file system needs to provide a mount target m each Availability Zone within a Region.
+A solutions architect wants to use AWS Backup to manage the replication to another Region.
+Which solution will meet these requirements?
+A. Amazon FSx for Windows File Server with a Multi-AZ deployment
+B. Amazon FSx for NetApp ONTAP with a Multi-AZ deployment
+C. Amazon Elastic File System (Amazon EFS) with the Standard storage class Most Voted
+D. Amazon FSx for OpenZFS
+Comments
+elmogy Highly Voted 2 years, 6 months ago
+Selected Answer: C
+https://aws.amazon.com/efs/faq/
+Q: What is Amazon EFS Replication?
+EFS Replication can replicate your file system data to another Region or within the same Region without requiring additional infrastructure or a
+custom process. Amazon EFS Replication automatically and transparently replicates your data to a second file system in a Region or AZ of your
+choice. You can use the Amazon EFS console, AWS CLI, and APIs to activate replication on an existing file system. EFS Replication is continual and
+provides a recovery point objective (RPO) and a recovery time objective (RTO) of minutes, helping you meet your compliance and business continuity
+goals.
+upvoted 13 times
+wizcloudifa Most Recent 1 year, 7 months ago
+Selected Answer: C
+The key thing to notice here in the question is "with a recovery point objective (RPO) of 8 hours", as it is 8 hours of time it recovery can be easily
+managed by EFS, no need to go for costlier and not built for this use-case(share file system) options like NetApp ONTAP(proprietary data cluster),
+OpenZFS(not a built in filesystem in AWS) or FSx for windows(file system for windows compatible workloads)
+upvoted 3 times
+awsgeek75 1 year, 11 months ago
+Selected Answer: C
+A: ECS is not Windows File Server so won't work
+B: ONTAP is proprietary data cluster completely unrelated to this question
+D: OpenZFS needs a Linux kind of host for access. Not a built-in filesystem in AWS by default
+upvoted 2 times
+pentium75 1 year, 11 months ago
+Selected Answer: C
+"The file systemhttps://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/view/48/# needs to provide a
+mount target in each (!) Availability Zone within a Region", most regions have three AZs, but FSx Multi-AZ provides only nodes "spread across two
+AZs". While "or Amazon EFS file systems that use Regional storage classes [such as Standard], you can create a mount target in each Availability Zone
+in an AWS Region."
+upvoted 3 times
+pentium75 1 year, 11 months ago
+Correct Answer: C
+Community vote distribution
+C (89%)
+11%
+Huh, comment has been scrambled a bit. Anyway
+FSx Multi-AZ: Mount targets in two AZs
+EFS Standard: Can create mount target in each AZ
+upvoted 3 times
+Goutham4981 2 years ago
+Selected Answer: C
+In the absence of this information, we can only make an assumption based on the provided requirements. The requirement for a shared file system
+that can recover data to another AWS Region with a recovery point objective (RPO) of 8 hours, and the need for a mount target in each Availability
+Zone within a Region, are all natively supported by Amazon EFS with the Standard storage class.
+While Amazon FSx for NetApp ONTAP does provide shared file systems and supports both Windows and Linux, it does not natively support
+replication to another region through AWS Backup.
+upvoted 3 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C. Amazon Elastic File System (Amazon EFS) with the Standard storage class
+upvoted 2 times
+cd93 2 years, 3 months ago
+Selected Answer: B
+B or C, but since question didn't mention operating system type, I guess we should go with B because it is more versatile (EFS supports Linux only),
+although ECS containers do support windows instances...
+upvoted 2 times
+TariqKipkemei 2 years, 5 months ago
+Selected Answer: C
+Both option B and C will support this requirement.
+https://aws.amazon.com/efs/faq/#:~:text=What%20is%20Amazon%20EFS%20Replication%3F
+https://aws.amazon.com/fsx/netapp-
+ontap/faqs/#:~:text=How%20do%20I%20configure%20cross%2Dregion%20replication%20for%20the%20data%20in%20my%20file%20system%3F
+upvoted 2 times
+omoakin 2 years, 6 months ago
+BBBBBBBBBBBBBBB
+upvoted 1 times
+Anmol_1010 2 years, 6 months ago
+Efs, can be mounted only in 1 region
+So the answer is B
+upvoted 3 times
+Rob1L 2 years, 6 months ago
+Selected Answer: C
+C: EFS
+upvoted 3 times
+y0 2 years, 6 months ago
+Selected Answer: C
+AWS Backup can manage replication of EFS to another region as mentioned below
+https://docs.aws.amazon.com/efs/latest/ug/awsbackup.html
+upvoted 2 times
+norris81 2 years, 6 months ago
+https://aws.amazon.com/efs/faq/
+During a disaster or fault within an AZ affecting all copies of your data, you might experience loss of data that has not been replicated using Amazon
+EFS Replication. EFS Replication is designed to meet a recovery point objective (RPO) and recovery time objective (RTO) of minutes. You can use AWS
+Backup to store additional copies of your file system data and restore them to a new file system in an AZ or Region of your choice. Amazon EFS file
+system backup data created and managed by AWS Backup is replicated to three AZs and is designed for 99.999999999% (11 nines) durability.
+upvoted 2 times
+nosense 2 years, 6 months ago
+Amazon EFS is a scalable and durable elastic file system that can be used with Amazon ECS. However, it does not support replication to another
+AWS Region.
+upvoted 1 times
+fakrap 2 years, 6 months ago
+To use EFS replication in a Region that is disabled by default, you must first opt in to the Region, so it does support.
+upvoted 2 times
+elmogy 2 years, 6 months ago
+it does support replication to another AWS Region
+check the same link you are replying to :/
+https://aws.amazon.com/efs/faq/
+Q: What is Amazon EFS Replication?
+EFS Replication can replicate your file system data to another Region or within the same Region without requiring additional infrastructure or a
+custom process. Amazon EFS Replication automatically and transparently replicates your data to a second file system in a Region or AZ of your
+choice. You can use the Amazon EFS console, AWS CLI, and APIs to activate replication on an existing file system. EFS Replication is continual and
+provides a recovery point objective (RPO) and a recovery time objective (RTO) of minutes, helping you meet your compliance and business
+continuity goals.
+upvoted 2 times
+nosense 2 years, 6 months ago
+Selected Answer: B
+shared file system that is highly durable and can recover data
+upvoted 2 times
+Efren 2 years, 6 months ago
+Why not EFS?
+upvoted 2 times

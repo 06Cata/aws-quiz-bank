@@ -1,0 +1,63 @@
+Question #1006
+A company uses AWS Systems Manager for routine management and patching of Amazon EC2 instances. The EC2 instances are in
+an IP address type target group behind an Application Load Balancer (ALB).
+New security protocols require the company to remove EC2 instances from service during a patch. When the company attempts to
+follow the security protocol during the next patch, the company receives errors during the patching window.
+Which combination of solutions will resolve the errors? (Choose two.)
+一家公司使用 AWS Systems Manager 来进行例行管理和修补 Amazon EC2 实例。这些 EC2 实例位于一个 IP 地址类型的目标组中，
+并且在一个 Application Load Balancer (ALB) 后面。
+新的安全协议要求公司在修补期间将 EC2 实例从服务中移除。当公司尝试在下一次修补期间遵循安全协议时，公司在修补窗口期间
+收到错误。
+哪种解决方案组合可以解决这些错误？（选择两个）
+A. Change the target type of the target group from IP address type to instance type.
+将目标组的目标类型从 IP 地址类型更改为实例类型。
+B. Continue to use the existing Systems Manager document without changes because it is already optimized to handle
+instances that are in an IP address type target group behind an ALB.
+继续使用现有的 Systems Manager 文档而不进行更改，因为它已经优化为处理位于 ALB 后面的 IP 地址类型目标组中的实例。
+C. Implement the AWSEC2-PatchLoadBalanacerInstance Systems Manager Automation document to manage the patching
+process. Most Voted
+实施 AWSEC2-PatchLoadBalancerInstance Systems Manager Automation 文档来管理修补过程。
+D. Use Systems Manager Maintenance Windows to automatically remove the instances from service to patch the instances.
+Most Voted
+使用 Systems Manager Maintenance Windows 自动将实例从服务中移除以修补实例。
+E. Configure Systems Manager State Manager to remove the instances from service and manage the patching schedule. Use
+ALB health checks to re-route traffic.
+配置 Systems Manager State Manager 来移除实例并管理修补计划。使用 ALB 健康检查重新路由流量。
+Correct Answer: CD
+题目分析与解答
+1. 考察的知识点
+AWS Systems Manager的功能，包括Automation、Maintenance Windows和State Manager。
+如何管理EC2实例的修补过程，同时确保负载均衡器（ALB）的流量正确路由。
+目标组类型（IP地址类型 vs 实例类型）的影响。
+2. 选项分析
+A. Change the target type of the target group from IP address type to instance type.
+错误：更改目标组类型可能会影响现有的架构和配置。题目并未提到需要更改目标组类型，且问题的核心是如何在修补期间正确管
+理流量，而不是目标组类型。
+B. Continue to use the existing Systems Manager document without changes because it is already optimized to handle
+instances that are in an IP address type target group behind an ALB.
+错误：题目明确指出当前的修补流程会导致错误，因此继续使用现有文档无法解决问题。
+C. Implement the AWSEC2-PatchLoadBalanacerInstance Systems Manager Automation document to manage the patching
+process.
+正确：AWSEC2-PatchLoadBalancerInstance是专门设计用于管理负载均衡器后端实例修补的Automation文档，可以确保实例在修补
+期间被正确移除并重新加入服务。
+D. Use Systems Manager Maintenance Windows to automatically remove the instances from service to patch the
+instances.
+正确：Maintenance Windows允许您定义修补的时间窗口，并可以自动将实例从服务中移除以进行修补，符合题目要求。
+E. Configure Systems Manager State Manager to remove the instances from service and manage the patching schedule.
+Use ALB health checks to re-route traffic.
+错误：虽然State Manager可以管理配置和修补，但它并不是专门设计用于处理负载均衡器后端实例的修补流程。使用ALB健康检查
+重新路由流量是一个补充措施，但题目要求的是解决修补期间的错误问题。
+3. 我选的答案
+C
+D
+4. 官方答案
+C
+D
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因分析：选项C和D提供了专门的解决方案来管理修补期间的实例移除和流量路由问题，符合题目要求。
+正确答案：CD
+Community vote distribution
+社区投票分布
+CD (92%)
+8%

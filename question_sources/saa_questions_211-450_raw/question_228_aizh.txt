@@ -1,0 +1,58 @@
+Question #228
+A company has an API that receives real-time data from a fleet of monitoring devices. The API stores this data in an Amazon RDS
+DB instance for later analysis. The amount of data that the monitoring devices send to the API fluctuates. During periods of heavy
+traffic, the API often returns timeout errors.
+After an inspection of the logs, the company determines that the database is not capable of processing the volume of write traffic
+that comes from the API. A solutions architect must minimize the number of connections to the database and must ensure that
+data is not lost during periods of heavy traffic.
+Which solution will meet these requirements?
+一家公司有一个 API，该 API 从一组监控设备接收实时数据。API 将这些数据存储在 Amazon RDS DB 实例中，以供后续分析。监控
+设备发送到 API 的数据量波动较大。在高流量期间，API 经常返回超时错误。
+在检查日志后，公司确定数据库无法处理来自 API 的写入流量量。解决方案架构师必须尽量减少与数据库的连接数量，并确保在高
+流量期间数据不会丢失。
+哪种解决方案可以满足这些要求？
+A. Increase the size of the DB instance to an instance type that has more available memory.
+将 DB 实例的大小增加到具有更多可用内存的实例类型。
+B. Modify the DB instance to be a Multi-AZ DB instance. Configure the application to write to all active RDS DB instances.
+将 DB 实例修改为 Multi-AZ DB 实例。配置应用程序写入所有活动的 RDS DB 实例。
+C. Modify the API to write incoming data to an Amazon Simple Queue Service (Amazon SQS) queue. Use an AWS Lambda
+function that Amazon SQS invokes to write data from the queue to the database. Most Voted
+修改 API，将接收到的数据写入 Amazon Simple Queue Service (Amazon SQS) 队列。使用一个 AWS Lambda 函数，由 Amazon
+SQS 触发，从队列中将数据写入数据库。
+D. Modify the API to write incoming data to an Amazon Simple Notification Service (Amazon SNS) topic. Use an AWS Lambda
+function that Amazon SNS invokes to write data from the topic to the database.
+修改 API，将接收到的数据写入 Amazon Simple Notification Service (Amazon SNS) 主题。使用一个 AWS Lambda 函数，由
+Amazon SNS 触发，从主题中将数据写入数据库。
+Correct Answer: C
+正确答案：C
+题目分析与解答
+1. 考察的知识点
+Amazon RDS性能优化与扩展
+Amazon SQS队列的使用场景
+AWS Lambda与事件驱动架构
+Amazon SNS与消息分发
+2. 选项分析
+A. 增加 DB 实例的大小
+正确性分析：增加实例大小可以提升数据库性能，但无法解决高峰期的写入压力问题，也无法减少数据库连接数。
+结论：错误。此选项无法满足“减少数据库连接数”和“确保数据不丢失”的要求。
+B. 修改为 Multi-AZ DB 实例
+正确性分析：Multi-AZ主要用于高可用性和灾难恢复，不能直接提升写入性能。此外，应用程序无法同时写入多个活动实例。
+结论：错误。此选项无法解决写入压力问题，也无法减少数据库连接数。
+C. 使用 Amazon SQS 和 AWS Lambda
+正确性分析：Amazon SQS可以缓冲写入请求，减少数据库连接数。AWS Lambda可以异步处理队列中的数据，确保数据不丢失并
+平滑写入数据库。
+结论：正确。此选项满足所有要求：减少数据库连接数、确保数据不丢失、处理高峰期写入压力。
+D. 使用 Amazon SNS 和 AWS Lambda
+正确性分析：Amazon SNS主要用于消息分发，而非缓冲。它无法减少数据库连接数，也无法有效处理高峰期的写入压力。
+结论：错误。此选项不适合解决问题。
+3. 我选的答案
+C. 使用 Amazon SQS 和 AWS Lambda
+4. 官方答案
+C. 使用 Amazon SQS 和 AWS Lambda
+5. 与官方答案比较
+比较结果：我的答案与官方答案一致。
+原因分析：Amazon SQS提供了缓冲机制，可以减少数据库连接数并处理高峰期的写入压力。AWS Lambda可以异步处理队列中的
+数据，确保数据不丢失。
+Community vote distribution
+社区投票分布
+C (100%)

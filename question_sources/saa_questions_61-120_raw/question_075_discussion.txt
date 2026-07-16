@@ -1,0 +1,127 @@
+A company wants to move a multi-tiered application from on premises to the AWS Cloud to improve the application's
+performance. The application consists of application tiers that communicate with each other by way of RESTful services.
+Transactions are dropped when one tier becomes overloaded. A solutions architect must design a solution that resolves these
+issues and modernizes the application.
+Which solution meets these requirements and is the MOST operationally efficient?
+A. Use Amazon API Gateway and direct transactions to the AWS Lambda functions as the application layer. Use Amazon Simple
+Queue Service (Amazon SQS) as the communication layer between application services. Most Voted
+B. Use Amazon CloudWatch metrics to analyze the application performance history to determine the servers' peak utilization
+during the performance failures. Increase the size of the application server's Amazon EC2 instances to meet the peak
+requirements.
+C. Use Amazon Simple Notification Service (Amazon SNS) to handle the messaging between application servers running on
+Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SNS queue length and scale up and down as
+required.
+D. Use Amazon Simple Queue Service (Amazon SQS) to handle the messaging between application servers running on Amazon
+EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SQS queue length and scale up when communication
+failures are detected.
+Comments
+gcmrjbr Highly Voted 3 years, 7 months ago
+Agree with A>>> Lambda = serverless + autoscale (modernize), SQS= decouple (no more drops)
+upvoted 46 times
+LuckyAro Highly Voted 3 years, 4 months ago
+Selected Answer: A
+The catch phrase is "scale up when communication failures are detected" Scaling should not be based on communication failures, that'll be crying
+over spilled milk ! or rather too late. So D is wrong.
+upvoted 26 times
+mauroicardi 2 years, 3 months ago
+Spot on
+upvoted 1 times
+remand 3 years, 4 months ago
+it says "one tier becomes overloaded" , Not communication failure...
+upvoted 3 times
+LuckyAro 3 years, 4 months ago
+D says: "Use Amazon CloudWatch to monitor the SQS queue length and scale up when communication failures are detected".
+upvoted 4 times
+mc0226 Most Recent 1 year, 3 months ago
+Selected Answer: A
+B. Analyze performance with CloudWatch and increase EC2 instance size:
+Vertical scaling (increasing instance size) can address temporary performance issues but is less cost-effective and scalable. It does not modernize the
+architecture or address dropped transactions due to overloading.
+C. Use SNS with EC2 instances and Auto Scaling:
+Correct Answer: A
+Community vote distribution
+A (82%)
+Other
+While SNS can facilitate messaging, it is a publish/subscribe model, which is less suited for tier-to-tier decoupling. SQS is a better fit for reliable
+message queuing and processing.
+D. Use SQS with EC2 instances and Auto Scaling:
+While this addresses decoupling and scaling, it retains the burden of managing and scaling EC2 instances. A serverless solution like Lambda and API
+Gateway provides greater operational efficiency and modernization.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+Clearly A, it significantly reduces operational work. All the other options involve some maintenance and cause additional operational work to
+maintain the EC2instances and ASG.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: A
+Using serverless services like API Gateway and AWS Lambda and SQS helps resolve this problem with the least operational overhead.
+upvoted 1 times
+19d92c7 1 year, 7 months ago
+why its not c?
+upvoted 1 times
+manabpokhrel7 1 year, 7 months ago
+Operational overhead plus SNS isnt durable like SQS
+upvoted 2 times
+PaulGa 1 year, 8 months ago
+Selected Answer: A
+Ans A - keep it simple: API Gateway + Lambda + SQS
+D won't work: it relies upon a failure detected - by then its too late)
+upvoted 2 times
+344bba0 1 year, 11 months ago
+Selected Answer: A
+The answer choice D cannot be the answer because CloudWatch is not an appropriate way to monitor transaction failures. I would have been more
+confused about it if CloudWatch hadn't been mentioned.
+upvoted 2 times
+SMALLE 2 years, 4 months ago
+RESTful services = API Gateways
+https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html
+upvoted 4 times
+awsgeek75 2 years, 4 months ago
+Selected Answer: A
+Least operational overhead = API Gateway + Lambda + SQS
+BC wrong applications
+D: Will work but more operational overhead than A with less resilience to failures
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: A
+You want to "modernize the application", that a modern application is serverless, in any case a modern application does NOT use EC2 instances. Also
+managing EC2 instances (with the OS etc pp) is NOT "operationally efficient". Thus not D.
+upvoted 4 times
+anikolov 2 years, 5 months ago
+Selected Answer: C
+For me the solution could be based on using SNS with multiple topics to organize communication between different tiers ( Using Subscriber for one
+and Producer for another topic to proceed with transactions over multi-tiers ). CloudWatch to monitor SNS topics queue length and scale up/down
+based on counts of messages (NumberOfMessagesPublished)
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Wouldn't the scaling take some time? If there is queue length, then one tier IS already overloaded.
+upvoted 2 times
+MadMarc 1 year, 11 months ago
+The question asks for the most operationally efficient solution. The answer A is serverless, while the answer C is VM-based. There is no scenario
+where managin VMs is operationally more efficient than going serverless.
+If Operational Efficiency is what you look for, then you should always consider going serverless.
+upvoted 2 times
+MrPCarrot 2 years, 6 months ago
+A is the perfect answer no need for the ASG
+upvoted 2 times
+xdkonorek2 2 years, 7 months ago
+Selected Answer: D
+D is better because in answer A there is a bottleneck on a SQS - service app,
+D is as operationally efficient as A and solves the above issue
+upvoted 2 times
+tom_cruise 2 years, 8 months ago
+Selected Answer: A
+ASG is not as efficient as Lambda!
+upvoted 2 times
+vijaykamal 2 years, 8 months ago
+I feel the answer is D, Lambda would increase the complexity and overhead and it has limitation of running for 15 min.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+How would Lambda increase the operational (!) complexity over handling and scaling servers (and their operating systems and patches etc.) on
+EC2?
+upvoted 2 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: A
+MOST operationally efficient = Serverless = AWS Lambda functions, Amazon Simple Queue Service
+upvoted 1 times

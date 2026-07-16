@@ -1,0 +1,51 @@
+An ecommerce company wants a disaster recovery solution for its Amazon RDS DB instances that run Microsoft SQL Server
+Enterprise Edition. The company's current recovery point objective (RPO) and recovery time objective (RTO) are 24 hours.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create a cross-Region read replica and promote the read replica to the primary instance.
+B. Use AWS Database Migration Service (AWS DMS) to create RDS cross-Region replication.
+C. Use cross-Region replication every 24 hours to copy native backups to an Amazon S3 bucket.
+D. Copy automatic snapshots to another Region every 24 hours. Most Voted
+Comments
+TiagueteVital Highly Voted 2 years, 9 months ago
+Selected Answer: D
+Snapshots are always a cost-efficience way to have a DR plan.
+upvoted 5 times
+awsgeek75 Highly Voted 2 years, 5 months ago
+Selected Answer: D
+Cross region data transfer is billable so think of smallest amount of data to transfer every 24 hours
+upvoted 5 times
+MatAlves Most Recent 1 year, 8 months ago
+A, B, C => cross-region $$
+D => copy snapshots -> most cost-effectively.
+upvoted 2 times
+emakid 1 year, 11 months ago
+Selected Answer: D
+Option D: Copy automatic snapshots to another Region every 24 hours.
+Explanation: This option involves copying RDS automatic snapshots to another Region. It is a straightforward way to ensure that snapshots are
+available in the event of a disaster. Since RDS snapshots are typically incremental and copied periodically, this solution matches the 24-hour RPO
+requirement effectively and is cost-effective compared to maintaining constant cross-Region replication.
+upvoted 2 times
+potomac 2 years, 7 months ago
+Selected Answer: D
+Amazon RDS creates and saves automated backups of your DB instance or Multi-AZ DB cluster during the backup window of your DB instance. RDS
+creates a storage volume snapshot of your DB instance, backing up the entire DB instance and not just individual databases. RDS saves the
+automated backups of your DB instance according to the backup retention period that you specify. If necessary, you can recover your DB instance to
+any point in time during the backup retention period.
+upvoted 3 times
+wsdasdasdqwdaw 2 years, 7 months ago
+most cost-effective way is just copying the snapshot (24h delta in the storage). => D
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (100%)
+Dddddddddd
+upvoted 4 times
+Eminenza22 2 years, 9 months ago
+Selected Answer: D
+This is the most cost-effective solution because it does not require any additional AWS services. Amazon RDS automatically creates snapshots of you
+DB instances every hour. You can copy these snapshots to another Region every 24 hours to meet your RPO and RTO requirements.
+The other solutions are more expensive because they require additional AWS services. For example, AWS DMS is a more expensive service than AWS
+RDS.
+upvoted 4 times

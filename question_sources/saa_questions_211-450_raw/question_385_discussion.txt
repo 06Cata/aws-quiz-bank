@@ -1,0 +1,59 @@
+A solutions architect is creating a new VPC design. There are two public subnets for the load balancer, two private subnets for web
+servers, and two private subnets for MySQL. The web servers use only HTTPS. The solutions architect has already created a security
+group for the load balancer allowing port 443 from 0.0.0.0/0. Company policy requires that each resource has the least access
+required to still be able to perform its tasks.
+Which additional configuration strategy should the solutions architect use to meet these requirements?
+A. Create a security group for the web servers and allow port 443 from 0.0.0.0/0. Create a security group for the MySQL servers
+and allow port 3306 from the web servers security group.
+B. Create a network ACL for the web servers and allow port 443 from 0.0.0.0/0. Create a network ACL for the MySQL servers
+and allow port 3306 from the web servers security group.
+C. Create a security group for the web servers and allow port 443 from the load balancer. Create a security group for the
+MySQL servers and allow port 3306 from the web servers security group. Most Voted
+D. Create a network ACL for the web servers and allow port 443 from the load balancer. Create a network ACL for the MySQL
+servers and allow port 3306 from the web servers security group.
+Comments
+WherecanIstart Highly Voted 2 years, 8 months ago
+Selected Answer: C
+Load balancer is public facing accepting all traffic coming towards the VPC (0.0.0.0/0). The web server needs to trust traffic originating from the ALB.
+The DB will only trust traffic originating from the Web server on port 3306 for Mysql
+upvoted 6 times
+TheFivePips Most Recent 1 year, 9 months ago
+Selected Answer: C
+Option C aligns with the least access principle and provides a clear and granular control over the communication between different components in
+the architecture.
+Option D suggests using network ACLs, but security groups are more suitable for controlling access to individual instances based on their security
+group membership, which is why Option C is the more appropriate choice in this contex
+upvoted 3 times
+TariqKipkemei 2 years, 1 month ago
+Selected Answer: C
+Create a security group for the web servers and allow port 443 from the load balancer. Create a security group for the MySQL servers and allow port
+3306 from the web servers security group.
+upvoted 3 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C) Create a security group for the web servers and allow port 443 from the load balancer. Create a security group for the MySQL servers and allow
+port 3306 from the web servers security group.
+This option follows the principle of least privilege by only allowing necessary access:
+Web server SG allows port 443 from load balancer SG (not open to world)
+MySQL SG allows port 3306 only from web server SG
+upvoted 4 times
+Correct Answer: C
+Community vote distribution
+C (100%)
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+Create a security group for the web servers and allow port 443 from the load balancer. Create a security group for the MySQL servers and allow port
+3306 from the web servers security group
+upvoted 2 times
+elearningtakai 2 years, 8 months ago
+Selected Answer: C
+Option C is the correct choice.
+upvoted 2 times
+fkie4 2 years, 9 months ago
+Selected Answer: C
+Just C. plain and simple
+upvoted 2 times
+aragon_saa 2 years, 9 months ago
+C
+https://www.examtopics.com/discussions/amazon/view/43796-exam-aws-certified-solutions-architect-associate-saa-c02/
+upvoted 3 times

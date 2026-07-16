@@ -1,0 +1,33 @@
+A company is creating a prototype of an ecommerce website on AWS. The website consists of an Application Load Balancer, an
+Auto Scaling group of Amazon EC2 instances for web servers, and an Amazon RDS for MySQL DB instance that runs with the
+Single-AZ configuration.
+The website is slow to respond during searches of the product catalog. The product catalog is a group of tables in the MySQL
+database that the company does not update frequently. A solutions architect has determined that the CPU utilization on the DB
+instance is high when product catalog searches occur.
+What should the solutions architect recommend to improve the performance of the website during searches of the product
+catalog?
+A. Migrate the product catalog to an Amazon Redshift database. Use the COPY command to load the product catalog tables.
+B. Implement an Amazon ElastiCache for Redis cluster to cache the product catalog. Use lazy loading to populate the cache.
+Most Voted
+C. Add an additional scaling policy to the Auto Scaling group to launch additional EC2 instances when database response is
+slow.
+D. Turn on the Multi-AZ configuration for the DB instance. Configure the EC2 instances to throttle the product catalog queries
+that are sent to the database.
+Comments
+aragon_saa Highly Voted 1 year, 8 months ago
+Selected Answer: B
+Answer is B
+upvoted 7 times
+LeonSauveterre Highly Voted 1 year, 5 months ago
+Selected Answer: B
+A - For transactional or low-latency queries like product catalog searches in an ecommerce website, Redshift is not suitable because it's a data
+warehouse solution optimized for analytical queries.
+B - ElastiCache for Redis is a highly performant, in-memory caching service that can significantly reduce database load by caching frequent queries.
+C - Adding more web servers can't help alleviate the load on the database. The database remains the bottleneck for product catalog queries.
+D - If you turn on throttle queries, customers may gradually ask for a refund :) Let's get rid of the bad things in database instead of user experience.
+BTW, what Lazy Loading means: Data is added to the cache only when requested. If not found in the cache, it is fetched from the database and
+added to the cache for subsequent requests.
+upvoted 6 times
+Correct Answer: B
+Community vote distribution
+B (100%)

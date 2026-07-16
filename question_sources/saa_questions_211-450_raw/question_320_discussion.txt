@@ -1,0 +1,134 @@
+A company is using a fleet of Amazon EC2 instances to ingest data from on-premises data sources. The data is in JSON format and
+ingestion rates can be as high as 1 MB/s. When an EC2 instance is rebooted, the data in-flight is lost. The company’s data science
+team wants to query ingested data in near-real time.
+Which solution provides near-real-time data querying that is scalable with minimal data loss?
+A. Publish data to Amazon Kinesis Data Streams, Use Kinesis Data Analytics to query the data. Most Voted
+B. Publish data to Amazon Kinesis Data Firehose with Amazon Redshift as the destination. Use Amazon Redshift to query the
+data.
+C. Store ingested data in an EC2 instance store. Publish data to Amazon Kinesis Data Firehose with Amazon S3 as the
+destination. Use Amazon Athena to query the data.
+D. Store ingested data in an Amazon Elastic Block Store (Amazon EBS) volume. Publish data to Amazon ElastiCache for Redis.
+Subscribe to the Redis channel to query the data.
+Comments
+LuckyAro Highly Voted 3 years, 3 months ago
+Selected Answer: A
+A: is the solution for the company's requirements. Publishing data to Amazon Kinesis Data Streams can support ingestion rates as high as 1 MB/s and
+provide real-time data processing. Kinesis Data Analytics can query the ingested data in real-time with low latency, and the solution can scale as
+needed to accommodate increases in ingestion rates or querying needs. This solution also ensures minimal data loss in the event of an EC2 instance
+reboot since Kinesis Data Streams has a persistent data store for up to 7 days by default.
+upvoted 15 times
+bogobob Highly Voted 2 years, 6 months ago
+Selected Answer: B
+The fact they specifically mention "near real-time" twice tells me the correct answer is KDF. On top of which its easier to setup and maintain. KDS is
+really only needed if you need real-time. Also using redshift will mean permanent data retention. The data in A could be lost after a year. Redshift
+queries are slow but you're still querying near real-time data
+upvoted 8 times
+Ernestokoro 2 years, 6 months ago
+You are very correct. see supporting link https://jayendrapatil.com/aws-kinesis-data-streams-vs-kinesis-
+firehose/#:~:text=vs%20Kine...-,Purpose,into%20AWS%20products%20for%20processing.
+upvoted 2 times
+Kp002 Most Recent 1 year ago
+Selected Answer: A
+Publish data to Amazon Kinesis Data Streams. Use Kinesis Data Analytics to query the data.
+• Kinesis Data Streams is designed for real-time data ingestion and can handle high throughput (1 MB/s is well within its capabilities).
+• Data durability: Kinesis Data Streams stores data for up to 7 days (default is 24 hours), which helps prevent data loss during EC2 instance reboots.
+• Kinesis Data Analytics allows you to run SQL queries on streaming data in near real-time, which satisfies the data science team’s requirement.
+• Scalable: Kinesis is designed to automatically scale with data volume, making it highly suitable for fluctuating ingestion
+upvoted 1 times
+Dantecito 1 year, 4 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (71%)
+B (29%)
+Also A because "The company’s data science team wants to query ingested data in near-real time" and kinesis data analytics is doing that. With
+option B we query the tada once is in the data lake.
+upvoted 1 times
+Dantecito 1 year, 4 months ago
+Selected Answer: A
+Option a for me. I will assume that the EC2 instance is responsible for placing the data into the correct database. Therefore, we just need to wait for
+the instance to reboot. Since we can store the data in Kinesis Data Streams for up to 7 days, we are covered in that regard.
+For option B, we are forced to use Amazon Redshift, and the problem statement does not mention anything related to that. I would choose option A
+because it does not affect the original requirements, and it helps us avoid in-flight data loss as requested.
+upvoted 1 times
+wwwxxch 1 year, 5 months ago
+Selected Answer: B
+near-real time --> Kinesis Data Firehose
+And retention day of Kinesis Data Streams cannot be longer than 365 days
+upvoted 1 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: A
+A: focus on performing complex data processing without in-flight data lost, not mention data persistence
+B: focus on data persist for later analysis
+upvoted 1 times
+LeonSauveterre 1 year, 6 months ago
+Selected Answer: A
+Instance store & ElasiCache are all temporary storages, which cannot address data loss. That rules out C & D.
+B: Kinesis Data Firehose is optimized for batch processing rather than real-time querying. It can indeed deliver data to S3 or Redshift, but there's a
+good chance the delay between ingestion and query availability cannot meet the "near-real-time" requirement.
+upvoted 1 times
+Lin878 2 years ago
+Selected Answer: B
+https://aws.amazon.com/pm/kinesis/?gclid=CjwKCAjwvIWzBhAlEiwAHHWgvRQuJmBubZDnO2GasDWwc2iBapfVD6GBeIgj2JV6qkldm-
+K_CmMzmxoCdCwQAvD_BwE&trk=ee1218b7-7c10-4762-97df-
+274836a44566&sc_channel=ps&ef_id=CjwKCAjwvIWzBhAlEiwAHHWgvRQuJmBubZDnO2GasDWwc2iBapfVD6GBeIgj2JV6qkldm-
+K_CmMzmxoCdCwQAvD_BwE:G:s&s_kwcid=AL!4422!3!651510255264!p!!g!!kinesis%20stream!19836376690!149589222920
+upvoted 2 times
+ray320x 2 years, 4 months ago
+Option A is actually correct. The question ask for minimal data loss and that query of data should be near real time, not the ingestion. Kinesis data
+analytics is near real time.
+Recent changes to Redshift actually make B correct as well, but A is also correct.
+upvoted 2 times
+dkw2342 2 years, 3 months ago
+Streaming ingestion provides low-latency, high-speed ingestion of stream data from Amazon Kinesis Data Streams and Amazon Managed
+Streaming for Apache Kafka into an Amazon Redshift provisioned or Amazon Redshift Serverless materialized view.[1]
+Option B mentions Kinesis Data Firehose (now just Firehose), so this won't work.
+Option A is the correct answer.
+[1]https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html
+upvoted 2 times
+farnamjam 2 years, 4 months ago
+Selected Answer: A
+Comparison to other options:
+B. Kinesis Data Firehose with Redshift: While Redshift is scalable, it doesn't offer real-time querying capabilities. Data needs to be loaded into Redshif
+from Firehose, introducing latency.
+C. EC2 instance store with Kinesis Data Firehose and S3: Storing data in an EC2 instance store is not persistent and data will be lost during reboots.
+EBS volumes are more appropriate for persistent storage, but the architecture becomes more complex.
+D. EBS volume with ElastiCache and Redis: While ElastiCache offers fast in-memory storage, it's not designed for high-volume data ingestion like 1
+MB/s. It might struggle with scalability and persistence.
+upvoted 3 times
+Firdous586 2 years, 5 months ago
+I don't understand why people are giving wrong information
+in the QUESTION its clearly mentioned near Real Time
+Kinesis Data Streams is for Real time
+Where are Kinesis Datafirehose is for Near real time there for answer is B only
+upvoted 5 times
+Marco_St 2 years, 6 months ago
+Selected Answer: A
+Read the question: near real-time querying of data.... it is more about real-time data query once the data is ingested, It does not mention how long
+time the data needs to be stored. A is better option. B introduces delay of data buffer before it can be queried in redshift
+upvoted 1 times
+practice_makes_perfect 2 years, 7 months ago
+Selected Answer: B
+A is not correct because Kinesis can only store data up to 1 year. The solution need to support querying ALL data instead of "recent" data.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Says who? They want to "query ingested data in near-real time", it does not say anything about historical data.
+upvoted 2 times
+Ruffyit 2 years, 7 months ago
+A: is the solution for the company's requirements. Publishing data to Amazon Kinesis Data Streams can support ingestion rates as high as 1 MB/s and
+provide real-time data processing. Kinesis Data Analytics can query the ingested data in real-time with low latency, and the solution can scale as
+needed to accommodate increases in ingestion rates or querying needs. This solution also ensures minimal data loss in the event of an EC2 instance
+reboot since Kinesis Data Streams has a persistent data store for up to 7 days by default.
+upvoted 2 times
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: A
+Publish data to Amazon Kinesis Data Streams, Use Kinesis Data Analytics to query the data
+upvoted 3 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: A
+• Provide near-real-time data ingestion into Kinesis Data Streams with the ability to handle the 1 MB/s ingestion rate. Data would be stored
+redundantly across shards.
+• Enable near-real-time querying of the data using Kinesis Data Analytics. SQL queries can be run directly against the Kinesis data stream.
+• Minimize data loss since data is replicated across shards. If an EC2 instance is rebooted, the data stream is still accessible.
+• Scale seamlessly to handle varying ingestion and query rates.
+upvoted 4 times

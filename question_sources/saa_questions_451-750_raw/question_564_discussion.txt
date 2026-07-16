@@ -1,0 +1,80 @@
+A company is building an ecommerce application and needs to store sensitive customer information. The company needs to give
+customers the ability to complete purchase transactions on the website. The company also needs to ensure that sensitive
+customer data is protected, even from database administrators.
+Which solution meets these requirements?
+A. Store sensitive data in an Amazon Elastic Block Store (Amazon EBS) volume. Use EBS encryption to encrypt the data. Use an
+IAM instance role to restrict access.
+B. Store sensitive data in Amazon RDS for MySQL. Use AWS Key Management Service (AWS KMS) client-side encryption to
+encrypt the data. Most Voted
+C. Store sensitive data in Amazon S3. Use AWS Key Management Service (AWS KMS) server-side encryption to encrypt the
+data. Use S3 bucket policies to restrict access.
+D. Store sensitive data in Amazon FSx for Windows Server. Mount the file share on application servers. Use Windows file
+permissions to restrict access.
+Comments
+Guru4Cloud Highly Voted 2 years, 3 months ago
+Selected Answer: B
+The key reasons are:
+RDS MySQL provides a fully managed database service well suited for an ecommerce application.
+AWS KMS client-side encryption allows encrypting sensitive data before it hits the database. The data remains encrypted at rest.
+This protects sensitive customer data from database admins and privileged users.
+EBS encryption (Option A) protects data at rest but not in use. IAM roles don't prevent admin access.
+S3 (Option C) encrypts data at rest on the server side. Bucket policies don't restrict admin access.
+FSx file permissions (Option D) don't prevent admin access to unencrypted data.
+upvoted 12 times
+pentium75 Highly Voted 1 year, 11 months ago
+Selected Answer: B
+A, C and D would allow the administrator of the storage to access the data. Besides, it is data about "purchase transactions" which is usually stored in
+a transactional database (such as RDS for MySQL), not in a file or object storage.
+upvoted 8 times
+sidharthwader 1 year, 7 months ago
+Good thought purchase transactions I had missed that part
+upvoted 2 times
+SHAAHIBHUSHANAWS Most Recent 2 years ago
+B
+I want to go with B as question is for database administrator. Also client key encryption is possible in code and KMS can be used for encryption but
+not using KMS keys. Encrypted data available in DB is of no use to DB admin.
+upvoted 2 times
+riyasara 2 years ago
+Answer is option C. option B is not ideal because Amazon RDS for MySQL is a relational database service that is optimized for structured data, not fo
+storing sensitive customer information. Moreover, by using client-side encryption with AWS KMS, you need to encrypt and decrypt the data in your
+application code, which increases the risk of exposing your data in transit or at rest. You also need to manage the encryption keys yourself, which
+adds complexity and overhead to your application.
+Correct Answer: B
+Community vote distribution
+B (100%)
+upvoted 2 times
+pentium75 1 year, 11 months ago
+"optimized for structured data, not for storing sensitive customer information" ... Data related to "purchase transactions" is usually structured; that it
+contains "sensitive customer information" doesn't change the structured nature.
+upvoted 4 times
+awsgeek75 1 year, 11 months ago
+eCommerce data and transaction data are ideal for RDS which, when encrypted, is secure even from the DBA.
+upvoted 2 times
+wsdasdasdqwdaw 2 years, 1 month ago
+I would go for B, because RDS (database admins), but I would like to see as well encryption at rest as well, not only in transit.
+upvoted 2 times
+mrsoa 2 years, 4 months ago
+Selected Answer: B
+Using client-side encryption we can protect
+specific fields and guarantee only decryption
+if the client has access to an API key, we can
+protect specific fields even from database
+admins
+upvoted 3 times
+D10SJoker 2 years, 4 months ago
+Selected Answer: B
+For me it's B because of "client-side encryption to encrypt the data"
+upvoted 2 times
+h8er 2 years, 4 months ago
+keyword - database administrators
+upvoted 5 times
+allanm 10 months ago
+False correlation. Just because it says "database administrators" doesn't mean RDS is the answer to this.
+upvoted 1 times
+Kiki_Pass 2 years, 4 months ago
+Selected Answer: B
+"even from database administrators" -> "Client Side encryption"
+upvoted 4 times
+Bmaster 2 years, 4 months ago
+My choice is B
+upvoted 4 times

@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 946,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在包含六個 Aurora 副本的 Amazon Aurora MySQL 資料庫叢集上執行其生產工作負載。該公司希望其一個部門的近乎即時的報告查詢能夠自動分散到三個 Aurora 副本中。這三個副本具有與資料庫叢集的其他副本不同的計算和記憶體規格。哪種解決方案滿足這些要求？",
+        "en": "A company runs its production workload on an Amazon Aurora MySQL DB cluster that includes six Aurora Replicas. The company wants near-real-time reporting queries from one of its departments to be automatically distributed across three of the Aurora Replicas. Those three replicas have a different compute and memory specification from the rest of the DB cluster. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為工作負載建立並使用自訂端點",
+          "en": "Create and use a custom endpoint for the workload"
+        },
+        "B": {
+          "zh": "建立三節點群集克隆並使用讀取器端點",
+          "en": "Create a three-node cluster clone and use the reader endpoint"
+        },
+        "C": {
+          "zh": "使用所選三個節點的任何實例端點",
+          "en": "Use any of the instance endpoints for the selected three nodes"
+        },
+        "D": {
+          "zh": "使用讀取器端點自動分配唯讀工作負載",
+          "en": "Use the reader endpoint to automatically distribute the read-only workload"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon Aurora 支援建立自訂節點，允許使用者將流量指派到特定執行個體群組。這樣就可以將流量引導到三個不同計算和記憶體規格的Aurora副本來滿足問題需求。",
+          "en": "Correct. Amazon Aurora supports the creation of custom nodes, allowing users to allocate traffic to specific instance groups. In this way, traffic can be directed to three Aurora Replicas with different computing and memory specifications to meet the problem requirements."
+        },
+        "B": {
+          "zh": "錯誤。建立叢集克隆會複製整個資料庫，這會增加管理複雜性和成本。此問題不需要建立新集群，而是需要在現有 Aurora 副本之間分配流量。",
+          "en": "Incorrect. Creating a cluster clone copies the entire database, which increases management complexity and cost. The question does not require the creation of a new cluster, but rather the distribution of traffic among existing Aurora Replicas."
+        },
+        "C": {
+          "zh": "錯誤。實例點無法實現自動分配流量的功能。該問題要求流量自動分配到三個特定的 Aurora 副本，而不是手動選擇實例位置。",
+          "en": "Incorrect. The function of automatically distributing traffic cannot be implemented using instance points. The question requires that traffic be automatically distributed to three specific Aurora Replicas, rather than manually selecting instance locations."
+        },
+        "D": {
+          "zh": "錯誤。Aurora 的預設讀取點會將流量指派給所有 Aurora 副本，而不僅僅是三個特定實例。該問題要求流量僅分配到三個不同規格的 Aurora 副本。",
+          "en": "Incorrect. Aurora's default read points will distribute traffic to all Aurora Replicas, not just three specific instances. The question requires that traffic be distributed only to three Aurora Replicas with different specifications."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 為工作負載建立並使用自訂端點",
+        "en": "A. Create and use a custom endpoint for the workload"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：Amazon Aurora 支援建立自訂節點，允許使用者將流量指派到特定執行個體群組。這樣就可以將流量引導到三個不同計算和記憶體規格的Aurora副本來滿足問題需求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon Aurora supports the creation of custom nodes, allowing users to allocate traffic to specific instance groups. In this way, traffic can be directed to three Aurora Replicas with different computing and memory specifications to meet the problem requirements."
+      }
+    },
+    {
+      "question_no": 947,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在其本地資料中心的伺服器上運行 Node js 功能。資料中心將資料儲存在PostgreSQL資料庫中。該公司將憑證儲存在伺服器上環境變數的連接字串中。該公司希望將其應用程式遷移到 AWS，並用 AWS Lambda 取代 Node.js 應用程式伺服器。該公司還希望遷移到 Amazon RDS for PostgreSQL 並確保資料庫憑證得到安全管理。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company runs a Node js function on a server in its on-premises data center. The data center stores data in a PostgreSQL database. The company stores the credentials in a connection string in an environment variable on the server. The company wants to migrate its application to AWS and to replace the Node.js application server with AWS Lambda. The company also wants to migrate to Amazon RDS for PostgreSQL and to ensure that the database credentials are securely managed. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "將資料庫憑證作為參數儲存在 AWS Systems Manager Parameter Store 中 配置 Parameter Store 以每 30 天自動輪換一次金鑰。更新 Lambda 函數以從參數中檢索憑證。",
+          "en": "Store the database credentials as a parameter in AWS Systems Manager Parameter Store Configure Parameter Store to automatically rotate the secrets every 30 days. Update the Lambda function to retrieve the credentials from the parameter."
+        },
+        "B": {
+          "zh": "將資料庫憑證儲存在 AWS Secrets Manager 中作為金鑰。將 Secrets Manager 配置為每 30 天自動輪調一次憑證。更新 Lambda 函數以從金鑰中檢索憑證。",
+          "en": "Store the database credentials as a secret in AWS Secrets Manager. Configure Secrets Manager to automatically rotate the credentials every 30 days. Update the Lambda function to retrieve the credentials from the secret."
+        },
+        "C": {
+          "zh": "將資料庫憑證儲存為加密的 Lambda 環境變數。編寫自訂 Lambda 函數來輪換憑證。將 Lambda 函數安排為每 30 天運行一次。",
+          "en": "Store the database credentials as an encrypted Lambda environment variable. Write a custom Lambda function to rotate the credentials. Schedule the Lambda function to run every 30 days."
+        },
+        "D": {
+          "zh": "將資料庫憑證儲存為 AWS Key Management Service (AWS KMS) 中的金鑰。配置密鑰的自動輪換。更新 Lambda 函數以從 KMS 金鑰檢索憑證。",
+          "en": "Store the database credentials as a key in AWS Key Management Service (AWS KMS). Configure automatic rotation for the key. Update the Lambda function to retneve the credentials from the KMS key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。缺陷：AWS Systems Manager Parameter Store 可以儲存參數並支援加密，但不支援資料庫憑證的自動輪調。錯誤原因：雖然可以儲存憑證，但是需要額外的邏輯來實現自動輪換，增加了操作複雜度。",
+          "en": "Incorrect. Flaw: AWS Systems Manager Parameter Store can store parameters and supports encryption, but it does not support automatic rotation of database credentials. Reason for the error: Although credentials can be stored, additional logic is required to implement automatic rotation, which increases operational complexity."
+        },
+        "B": {
+          "zh": "正確。特點：AWS Secrets Manager 專門用於儲存和管理敏感資訊（例如資料庫憑證）並支援自動輪調。 Secrets Manager 提供了內建的自動輪調功能，降低了操作複雜度，滿足問題所要求的「LEAST 操作開銷」。",
+          "en": "Correct. Characteristics: AWS Secrets Manager is specifically designed to store and manage sensitive information (such as database credentials) and supports automatic rotation. Secrets Manager provides a built-in automatic rotation function, which reduces operational complexity and meets the \"LEAST operational overhead\" required by the question."
+        },
+        "C": {
+          "zh": "錯誤。功能：Lambda 環境變數可以儲存加密數據，但需要自訂邏輯來實現憑證輪換。錯誤原因：編寫和維護自訂輪換邏輯會增加操作複雜性，且不符合問題所要求的「LEAST 操作開銷」。",
+          "en": "Incorrect. Feature: Lambda environment variables can store encrypted data, but custom logic is required to implement credential rotation. Reason for the error: Writing and maintaining custom rotation logic increases operational complexity and does not meet the \"LEAST operational overhead\" required by the question."
+        },
+        "D": {
+          "zh": "錯誤。特徵：AWS KMS 主要用於加密和解密數據，並不是專門為儲存和輪換資料庫憑證而設計的。錯誤原因：KMS不支援資料庫憑證自動輪換，需要額外的邏輯來實現憑證管理。",
+          "en": "Incorrect. Characteristics: AWS KMS is primarily used to encrypt and decrypt data and is not specifically designed to store and rotate database credentials. Reason for the error: KMS does not support automatic rotation of database credentials and requires additional logic to implement credential management."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 將資料庫憑證儲存在 AWS Secrets Manager 中作為金鑰。將 Secrets Manager 配置為每 30 天自動輪調一次憑證。更新 Lambda 函數以從金鑰中檢索憑證。",
+        "en": "B. Store the database credentials as a secret in AWS Secrets Manager. Configure Secrets Manager to automatically rotate the credentials every 30 days. Update the Lambda function to retrieve the credentials from the secret."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：特點：AWS Secrets Manager 專門用於儲存和管理敏感資訊（例如資料庫憑證）並支援自動輪調。 Secrets Manager 提供了內建的自動輪調功能，降低了操作複雜度，滿足問題所要求的「LEAST 操作開銷」。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Characteristics: AWS Secrets Manager is specifically designed to store and manage sensitive information (such as database credentials) and supports automatic rotation. Secrets Manager provides a built-in automatic rotation function, which reduces operational complexity and meets the \"LEAST operational overhead\" required by the question."
+      }
+    },
+    {
+      "question_no": 948,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將現有和正在進行的資料變更從本機 Oracle 資料庫複製到 Amazon RDS for Oracle。每天要複製的資料量各不相同。該公司希望使用 AWS Database Migration Service (AWS DMS) 進行資料複製。此解決方案必須僅指派複製實例所需的容量。哪種解決方案可以滿足這些要求？",
+        "en": "A company wants to replicate existing and ongoing data changes from an on-premises Oracle database to Amazon RDS for Oracle. The amount of data to replicate varies throughout each day. The company wants to use AWS Database Migration Service (AWS DMS) for data replication. The solution must allocate only the capacity that the replication instance requires. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用多可用區部署配置 AWS DMS 複製實例，以跨多個可用區預置實例。",
+          "en": "Configure the AWS DMS replication instance with a Multi-AZ deployment to provision instances across multiple Availability Zones."
+        },
+        "B": {
+          "zh": "建立 AWS DMS Serverless 複製任務來分析和複製數據，同時預置所需的容量。",
+          "en": "Create an AWS DMS Serverless replication task to analyze and replicate the data while provisioning the required capacity."
+        },
+        "C": {
+          "zh": "使用 Amazon EC2 Auto Scaling 根據要複製的資料量向上或向下擴展 AWS DMS 複製執行個體的大小。",
+          "en": "Use Amazon EC2 Auto Scaling to scale the size of the AWS DMS replication instance up or down based on the amount of data toreplicate."
+        },
+        "D": {
+          "zh": "透過使用具有 AWS Fargate 啟動類型的 Amazon Elastic Container Service (Amazon ECS) 來配置 AWS DMS 複製容量，以分析和複製數據，同時配置所需的容量。",
+          "en": "Provision AWS DMS replication capacity by using Amazon Elastic Container Service (Amazon ECS) with an AWS Fargate launch type to analyze and replicate the data while provisioning the required capacity."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Multi-AZ部分主要用於提高高可用性，不會動態調整容量以滿足資料複製需求。此選項不解決動態容量分配的問題。",
+          "en": "Incorrect. The Multi-AZ part is mainly used to improve high availability and does not dynamically adjust capacity to meet data replication needs. this option does not address the issue of dynamic capacity allocation."
+        },
+        "B": {
+          "zh": "正確。AWS DMS Serverless 可以根據工作負載動態分配所需的容量，但這還不夠。此方案直接解決了動態容量分配的問題，是最佳選擇。",
+          "en": "Correct. AWS DMS Serverless can dynamically allocate the required capacity based on the workload, which is not enough. this option directly solves the problem of dynamic capacity allocation and is the best choice."
+        },
+        "C": {
+          "zh": "錯誤。AWS DMS 不支援透過 EC2 Auto Scaling 進行動態容量調整。此選項與 AWS DMS 的實際功能不符。",
+          "en": "Incorrect. AWS DMS does not support dynamic capacity adjustment through EC2 Auto Scaling. this option do not match the actual capabilities of AWS DMS."
+        },
+        "D": {
+          "zh": "錯誤。雖然 ECS 和 Fargate 可以動態分配資源，但它們不是 AWS DMS 的本機解決方案。此選項不直接使用AWS DMS Serverless功能，偏離了問題。",
+          "en": "Incorrect. Although ECS and Fargate can dynamically allocate resources, they are not native solutions for AWS DMS. This option does not directly use the AWS DMS Serverless function, which deviates from the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立 AWS DMS Serverless 複製任務來分析和複製數據，同時預置所需的容量。",
+        "en": "B. Create an AWS DMS Serverless replication task to analyze and replicate the data while provisioning the required capacity."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (94%)。熱門討論與考點摘要：AWS DMS Serverless 可以根據工作負載動態分配所需的容量，但這還不夠。此方案直接解決了動態容量分配的問題，是最佳選擇。",
+        "en": "Community vote as displayed: B (94%). Popular discussion and key point summary: AWS DMS Serverless can dynamically allocate the required capacity based on the workload, which is not enough. this option directly solves the problem of dynamic capacity allocation and is the best choice."
+      }
+    },
+    {
+      "question_no": 949,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個多層 Web 應用程式。應用程式的內部服務組件部署在 Amazon EC2 實例上。內部服務組件需要訪問託管在 AWS 上的第三方軟體即服務 (SaaS) API。公司需要提供從應用程式的內部服務到第三方 SaaS 應用程式的安全且私密的連接。公司需要確保儘量減少公共網際網路暴露。哪種解決方案可以滿足這些要求？",
+        "en": "A company has a multi-tier web application. The application's internal service components are deployed on Amazon EC2 instances. The internal service components need to access third-party software as a service (SaaS) APIs that are hosted on AWS. The company needs to provide secure and private connectivity from the application's internal services to the third-party SaaS application. The company needs to ensure that there is minimal public internet exposure. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "實作 AWS 站對站 VPN 以與第三方 SaaS 供應商建立安全連線。",
+          "en": "Implement an AWS Site-to-Site VPN to establish a secure connection with the third-party SaaS provider."
+        },
+        "B": {
+          "zh": "部署 AWS Transit Gateway 以管理和路由應用程式的 VPC 與第三方 SaaS 供應商之間的流量。",
+          "en": "Deploy AWS Transit Gateway to manage and route traffic between the application's VPC and the third-party SaaS provider."
+        },
+        "C": {
+          "zh": "將 AWS PrivateLink 配置為僅允許來自 VPC 的出站流量，而不允許第三方 SaaS 供應商建立。",
+          "en": "Configure AWS PrivateLink to allow only outbound traffic from the VPC without enabling the third-party SaaS provider to establish."
+        },
+        "D": {
+          "zh": "使用 AWS PrivateLink 在應用程式的 VPC 和第三方 SaaS 供應商之間建立私有連線。",
+          "en": "Use AWS PrivateLink to create a private connection between the application's VPC and the third-party SaaS provider."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Site-to-Site VPN 主要用於連接本機資料中心和 AWS 環境，而不是連接 VPC 和第三方 SaaS 服務。此選項不符合「私人連線」和「減少對公共網路的暴露」的要求。",
+          "en": "Incorrect. AWS Site-to-Site VPN is mainly used to connect local data centers and AWS environments, rather than connecting VPCs and third-party SaaS services. This option does not meet the requirements of \"private connection\" and \"reduced exposure to the public internet\"."
+        },
+        "B": {
+          "zh": "錯誤。AWS Transit Gateway 主要用於管理多個 VPC 之間的流量或連接本地網絡，但它不直接向第三方 SaaS 服務提供私人連接。此選項不符合「專用連線」要求。",
+          "en": "Incorrect. AWS Transit Gateway is mainly used to manage traffic between multiple VPCs or connect local networks, but it does not directly provide private connections to third-party SaaS services. This option does not meet the \"private connection\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。此選項所描述的功能並不完全正確。 AWS PrivateLink 的主要功能是建立私有連接，而不僅僅是限制出站流量。此選項的描述與 AWS PrivateLink 的實際用途不符。",
+          "en": "Incorrect. The functionality described by this option is not entirely correct. The primary function of AWS PrivateLink is to create private connections, rather than just restricting outbound traffic. The description of this option does not match what AWS PrivateLink actually does."
+        },
+        "D": {
+          "zh": "正確。AWS PrivateLink 允許 VPC 與第三方 SaaS 服務之間的私有連接，以避免流量通過公用 Internet。此選項完全滿足問題要求，提供安全、私密的連接，並減少對公共網際網路的暴露。",
+          "en": "Correct. AWS PrivateLink allows private connections between VPCs and third-party SaaS services to avoid traffic passing through the public Internet. This option fully meets the question requirements, provides a secure, private connection, and reduces exposure to the public Internet."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 AWS PrivateLink 在應用程式的 VPC 和第三方 SaaS 供應商之間建立私有連線。",
+        "en": "D. Use AWS PrivateLink to create a private connection between the application's VPC and the third-party SaaS provider."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：AWS PrivateLink 允許 VPC 與第三方 SaaS 服務之間的私有連接，以避免流量通過公用 Internet。此選項完全滿足問題要求，提供安全、私密的連接，並減少對公共網際網路的暴露。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS PrivateLink allows private connections between VPCs and third-party SaaS services to avoid traffic passing through the public Internet. This option fully meets the question requirements, provides a secure, private connection, and reduces exposure to the public Internet."
+      }
+    },
+    {
+      "question_no": 950,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師需要將公司的企業網絡連接到其 VPC，以允許本地訪問其 AWS 資源。該解決方案必須在網絡層和會話層對企業網絡和 VPC 之間的所有流量提供加密。該解決方案還必須提供安全控制，以防止 AWS 和本機系統之間的無限制存取。哪種解決方案滿足這些要求？",
+        "en": "A solutions architect needs to connect a company's corporate network to its VPC to allow on-premises access to its AWS resources. The solution must provide encryption of all traffic between the corporate network and the VPC at the network layer and the session layer. The solution also must provide security controls to prevent unrestricted access between AWS and the on- premises systems. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 AWS Direct Connect 以連接到 VPC。配置 VPC 路由表以根據需要允許和拒絕 AWS 與本地之間的流量。",
+          "en": "Configure AWS Direct Connect to connect to the VPC. Configure the VPC route tables to allow and deny traffic between AWS and on premises as required."
+        },
+        "B": {
+          "zh": "建立 IAM 政策以僅允許從一組定義的公司 IP 位址存取 AWS 管理主控臺。使用 IAM 策略和角色根據工作職責限制使用者存取。",
+          "en": "Create an IAM policy to allow access to the AWS Management Console only from a defined set of corporate IP addresses. Restrict user access based on job responsibility by using an IAM policy and roles."
+        },
+        "C": {
+          "zh": "設定 AWS Site-to-Site VPN 以連接到 VPConfigure 路由表條目，將流量從本地定向到 VPConfigure 實例安全群組和網路 ACL，以僅允許來自本地的所需流量。",
+          "en": "Configure AWS Site-to-Site VPN to connect to the VPConfigure route table entries to direct traffic from on premises to the VPConfigure instance security groups and network ACLs to allow only required traffic from on premises."
+        },
+        "D": {
+          "zh": "設定 AWS Transit Gateway 以連接到 VPC。配置路由表條目以將流量從本地定向到 VPC。設定實例安全性群組和網路 ACL 以僅允許來自本機的所需流量。",
+          "en": "Configure AWS Transit Gateway to connect to the VPC. Configure route table entries to direct traffic from on premises to the VPC. Configure instance security groups and network ACLs to allow only required traffic from on premises."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Direct Connect 提供專線連接，但它本身不提供流量加密，也不需要解決問題所需的網路層和會話層加密。錯誤：雖然可以透過路由表控制流量，但 Direct Connect 不會直接實施所需的安全控制。",
+          "en": "Incorrect. AWS Direct Connect provides dedicated line connections, but it does not provide traffic encryption itself, and there is no network layer and session layer encryption required to solve the problem. Error: Although traffic can be controlled through routing tables, Direct Connect does not implement the required security controls directly."
+        },
+        "B": {
+          "zh": "錯誤。IAM策略和角色用於使用者存取權限的管理，與網路層和會話層的加密無關。錯誤：此選項不涵蓋 VPC 連接，也不包含問題所需的加密和安全控制。",
+          "en": "Incorrect. IAM policies and roles are for the management of user access rights and have nothing to do with the encryption of the network layer and session layer. Error: This option does not cover VPC connections and does not contain the encryption and security controls required by the problem."
+        },
+        "C": {
+          "zh": "正確。AWS Site-to-Site VPN 提供網路層和會話層加密，因此請注意此問題。可透過路由表、執行個體安全群組、網路ACL等方式實現流量控制，滿足安全控制需求。",
+          "en": "Correct. AWS Site-to-Site VPN provides network-layer and session-layer encryption, so please note the problem. Traffic control can be implemented through routing tables, instance security groups, and network ACLs to meet security control requirements."
+        },
+        "D": {
+          "zh": "錯誤。AWS Transit Gateway 可以連接多個 VPC 和本地網絡，但它本身不提供流量加密。錯誤：雖然可以透過路由表、執行個體安全群組、網路ACL等方式實現流量控制，但問題所需的加密能力還不夠。",
+          "en": "Incorrect. AWS Transit Gateway can connect multiple VPCs and local networks, but it does not provide traffic encryption itself. Error: Although traffic control can be implemented through routing tables, instance security groups, and network ACLs, the encryption capabilities required by the problem are not sufficient."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 設定 AWS Site-to-Site VPN 以連接到 VPConfigure 路由表條目，將流量從本地定向到 VPConfigure 實例安全群組和網路 ACL，以僅允許來自本地的所需流量。",
+        "en": "C. Configure AWS Site-to-Site VPN to connect to the VPConfigure route table entries to direct traffic from on premises to the VPConfigure instance security groups and network ACLs to allow only required traffic from on premises."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (96%)。熱門討論與考點摘要：AWS Site-to-Site VPN 提供網路層和會話層加密，因此請注意此問題。可透過路由表、執行個體安全群組、網路ACL等方式實現流量控制，滿足安全控制需求。",
+        "en": "Community vote as displayed: C (96%). Popular discussion and key point summary: AWS Site-to-Site VPN provides network-layer and session-layer encryption, so please note the problem. Traffic control can be implemented through routing tables, instance security groups, and network ACLs to meet security control requirements."
+      }
+    },
+    {
+      "question_no": 951,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個帶有嵌入式憑證的自訂應用程序，用於從 Amazon RDS for MySQL 資料庫叢集中的資料庫檢索資訊。該公司需要以最少的程式設計工作使應用程式更加安全。該公司已為應用程式使用者在 RDS for MySQL 資料庫上建立了憑證。哪種解決方案可以滿足這些要求？",
+        "en": "A company has a custom application with embedded credentials that retrieves information from a database in an Amazon RDS for MySQL DB cluster. The company needs to make the application more secure with minimal programming effort. The company has created credentials on the RDS for MySQL database for the application user. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將憑證儲存在 AWS Key Management Service (AWS KMS) 中。在 AWS KMS 中建立金鑰。配置應用程式以從 AWS KMS 載入資料庫憑證。啟用自動密鑰輪換",
+          "en": "Store the credentials in AWS Key Management Service (AWS KMS). Create keys in AWS KMS. Configure the application to load the database credentials from AWS KMS. Enable automatic key rotation"
+        },
+        "B": {
+          "zh": "將憑證儲存在加密的本機儲存中。配置應用程式以從本機儲存載入資料庫憑證。透過建立 cron 作業來設定憑證輪替計畫。",
+          "en": "Store the credentials in encrypted local storage. Configure the application to load the database credentials from the local storage. Set up a credentials rotation schedule by creating a cron job."
+        },
+        "C": {
+          "zh": "將憑證儲存在 AWS Secrets Manager 中。配置應用程式以從 Secrets Manager 載入資料庫憑證。透過為 Secrets Manager 建立 AWS Lambda 函數來設定憑證輪替計畫。",
+          "en": "Store the credentials in AWS Secrets Manager. Configure the application to load the database credentials from Secrets Manager. Set up a credentials rotation schedule by creating an AWS Lambda function for Secrets Manager."
+        },
+        "D": {
+          "zh": "將憑證儲存在 AWS Systems Manager Parameter Store 中。配置應用程式以從 Parameter Store 載入資料庫憑證。使用 Parameter Store 在 RDS for MySQL 資料庫中設定憑證輪替計畫。",
+          "en": "Store the credentials in AWS Systems Manager Parameter Store. Configure the application to load the database credentials from Parameter Store. Set up a credentials rotation schedule in the RDS for MySQL database by using Parameter Store."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS KMS 是一項用於加密金鑰管理的服務，但它不直接用於儲存和輪換資料庫憑證。儘管可以使用 KMS 加密憑證，但它不提供自動憑證輪換。",
+          "en": "Incorrect. AWS KMS is a service for encryption key management, but it is not directly used to store and rotate database credentials. Although it is possible to encrypt credentials using KMS, it does not provide automatic credential rotation."
+        },
+        "B": {
+          "zh": "錯誤。將憑證儲存在本機儲存中並使用 cron 作業輪替它們是一種手動且不安全的方式。這種方法需要額外的程式設計工作，並且不符合 AWS 最佳實踐。",
+          "en": "Incorrect. Storing credentials in local storage and rotating them using a cron job is a manual and unsafe way. This approach requires additional programming effort and is inconsistent with AWS best practices."
+        },
+        "C": {
+          "zh": "正確。AWS Secrets Manager 是一項專門用於安全儲存和輪調憑證的服務。它支援自動憑證輪換，並透過 AWS Lambda 函數實現無縫整合。這種方法需要最少的程式設計工作，同時提供較高的安全性。",
+          "en": "Correct. AWS Secrets Manager is a service specifically designed to securely store and rotate credentials. It supports automatic credential rotation and enables seamless integration through AWS Lambda functions. This approach requires minimal programming effort while providing high security."
+        },
+        "D": {
+          "zh": "錯誤。儘管 AWS Systems Manager Parameter Store 可以儲存憑證，但它不支援自動憑證輪替。需要額外的編程工作來實現輪換功能，因此不滿足問題的「最小編程工作」要求。",
+          "en": "Incorrect. Although AWS Systems Manager Parameter Store can store credentials, it does not support automatic credential rotation. Additional programming effort is required to implement the rotation functionality and therefore does not meet the \"minimum programming effort\" requirement of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將憑證儲存在 AWS Secrets Manager 中。配置應用程式以從 Secrets Manager 載入資料庫憑證。透過為 Secrets Manager 建立 AWS Lambda 函數來設定憑證輪替計畫。",
+        "en": "C. Store the credentials in AWS Secrets Manager. Configure the application to load the database credentials from Secrets Manager. Set up a credentials rotation schedule by creating an AWS Lambda function for Secrets Manager."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：AWS Secrets Manager 是一項專門用於安全儲存和輪調憑證的服務。它支援自動憑證輪換，並透過 AWS Lambda 函數實現無縫整合。這種方法需要最少的程式設計工作，同時提供較高的安全性。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS Secrets Manager is a service specifically designed to securely store and rotate credentials. It supports automatic credential rotation and enables seamless integration through AWS Lambda functions. This approach requires minimal programming effort while providing high security."
+      }
+    },
+    {
+      "question_no": 952,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將其應用程式遷移到無伺服器解決方案。 Serverless解決方案需要使用SQL來分析現有數據和新數據。該公司將資料儲存在 Amazon S3 儲存桶中。數據必須靜態加密並複製到不同的 AWS 區域。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company wants to move its application to a serverless solution. The serverless solution needs to analyze existing data and new data by using SQL. The company stores the data in an Amazon S3 bucket. The data must be encrypted at rest and replicated to a different AWS Region. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個新的 S3 儲存桶，使用具有 AWS KMS 多區域金鑰 (SSE-KMS) 的伺服器端加密。配置跨區域複製 (CRR)。將資料載入到新的 S3 儲存桶中。使用 Amazon Athena 查詢資料。",
+          "en": "Create a new S3 bucket that uses server-side encryption with AWS KMS multi-Region keys (SSE-KMS). Configure Cross- Region Replication (CRR). Load the data into the new S3 bucket. Use Amazon Athena to query the data."
+        },
+        "B": {
+          "zh": "建立一個新的 S3 儲存桶，使用帶有 Amazon S3 託管金鑰 (SSE-S3) 的伺服器端加密。配置跨區域複製 (CRR)。將資料載入到新的 S3 儲存桶中。使用 Amazon RDS 查詢資料。",
+          "en": "Create a new S3 bucket that uses server-side encryption with Amazon S3 managed keys (SSE-S3). Configure Cross-Region Replication (CRR). Load the data into the new S3 bucket. Use Amazon RDS to query the data."
+        },
+        "C": {
+          "zh": "在現有 S3 儲存桶上配置跨區域複製 (CRR)。使用 Amazon S3 託管金鑰 (SSE-S3) 的伺服器端加密。使用 Amazon Athena 查詢資料。",
+          "en": "Configure Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with Amazon S3 managed keys (SSE-S3). Use Amazon Athena to query the data."
+        },
+        "D": {
+          "zh": "在現有 S3 儲存桶上配置 S3 跨區域複製 (CRR)。使用具有 AWS KMS 多區域金鑰 (SSE-KMS) 的伺服器端加密。使用 Amazon RDS 查詢資料。",
+          "en": "Configure S3 Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with AWS KMS multi- Region keys (SSE-KMS). Use Amazon RDS to query the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。建立新的 S3 儲存桶，使用 AWS KMS 多區域金鑰 (SSE-KMS) 進行伺服器端加密，配置 CRR，並使用 Amazon Athena 查詢資料。 SSE-KMS提供了高級加密功能，CRR實現了跨區域複製，Amazon Athena是無伺服器查詢服務，滿足問題的要求。建立新的S3儲存桶會增加額外的步驟，並且該問題不需要建立新的儲存桶。雖然滿足要求，但建立新的儲存桶會增加操作開銷，並不是最佳選擇。",
+          "en": "Incorrect. Create a new S3 bucket, use AWS KMS multi-Region keys (SSE-KMS) for server-side encryption, configure CRR, and use Amazon Athena to query the data. SSE-KMS provides advanced encryption functions, CRR enables cross-region replication, and Amazon Athena is a serverless query service, which meets the requirements of the question. Creating a new S3 bucket will add additional steps, and the question does not require the creation of a new bucket. Although it meets the requirements, creating a new bucket increases operational overhead and is not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。建立新的 S3 儲存桶，使用 Amazon S3 託管金鑰 (SSE-S3) 進行伺服器端加密，設定 CRR，並使用 Amazon RDS 查詢資料。 SSE-S3提供基礎加密功能，CRR實現跨地域複製。 Amazon RDS是託管服務，需要對執行個體進行管理，不符合無伺服器架構的要求；建立新儲存桶會增加營運開銷。不符合Serverless架構的要求，增加了運維開銷。",
+          "en": "Incorrect. Create a new S3 bucket, use Amazon S3 managed keys (SSE-S3) for server-side encryption, configure CRR, and use Amazon RDS to query the data. SSE-S3 provides basic encryption functions, and CRR enables cross-region replication. Amazon RDS is a managed service and requires management of instances, which does not meet the requirements of a serverless architecture; creating new buckets increases operational overhead. It does not meet the requirements of serverless architecture and increases operational overhead."
+        },
+        "C": {
+          "zh": "正確。在現有 S3 儲存桶上設定 CRR，使用 Amazon S3 託管金鑰 (SSE-S3) 進行伺服器端加密，並使用 Amazon Athena 查詢資料。直接使用現有的S3桶，避免額外的操作開銷； SSE-S3提供基本的加密功能； CRR實作跨區域複製； Amazon Athena 是一種無伺服器查詢服務，滿足問題的要求。 SSE-S3的加密功能沒有SSE-KMS先進，但仍符合問題要求。滿足問題的要求，並且運行費用最低，所以是最好的選擇。",
+          "en": "Correct. Configure CRR on an existing S3 bucket, use Amazon S3 managed keys (SSE-S3) for server-side encryption, and use Amazon Athena to query the data. Directly use the existing S3 bucket to avoid additional operating overhead; SSE-S3 provides basic encryption functions; CRR realizes cross-region replication; Amazon Athena is a serverless query service, which meets the requirements of the question. The encryption function of SSE-S3 is not as advanced as SSE-KMS, but it still meets the question requirements. It meets the requirements of the question and has the lowest operating expenses, so it is the best choice."
+        },
+        "D": {
+          "zh": "錯誤。在現有 S3 儲存桶上設定 CRR，使用 AWS KMS 多區域金鑰 (SSE-KMS) 進行伺服器端加密，並使用 Amazon RDS 查詢資料。 SSE-KMS提供高階加密能力，CRR實現跨區域複製。 Amazon RDS 是一種託管服務，需要管理實例，不符合無伺服器架構的要求。不滿足無伺服器架構要求。",
+          "en": "Incorrect. Configure CRR on an existing S3 bucket, use AWS KMS multi-Region keys (SSE-KMS) for server-side encryption, and use Amazon RDS to query the data. SSE-KMS provides advanced encryption capabilities, and CRR enables cross-region replication. Amazon RDS is a managed service that requires management of instances and does not meet the requirements of a serverless architecture. Does not meet serverless architecture requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在現有 S3 儲存桶上配置跨區域複製 (CRR)。使用 Amazon S3 託管金鑰 (SSE-S3) 的伺服器端加密。使用 Amazon Athena 查詢資料。",
+        "en": "C. Configure Cross-Region Replication (CRR) on the existing S3 bucket. Use server-side encryption with Amazon S3 managed keys (SSE-S3). Use Amazon Athena to query the data."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (50%)； A (50%)。熱門討論與考點摘要：在現有 S3 儲存桶上設定 CRR，使用 Amazon S3 託管金鑰 (SSE-S3) 進行伺服器端加密，並使用 Amazon Athena 查詢資料。直接使用現有的S3桶，避免額外的操作開銷； SSE-S3提供基本的加密功能； CRR實作跨區域複製； Amazon Athena 是一種無伺服器查詢服務，滿足問題的要求。 SSE-S3的加密功能沒有SSE-KMS先進，但仍符合問題要求。滿足問題的要求，並且運行費用最低，所以是最好的選擇。",
+        "en": "Community vote as displayed: C (50%); A (50%). Popular discussion and key point summary: Configure CRR on an existing S3 bucket, use Amazon S3 managed keys (SSE-S3) for server-side encryption, and use Amazon Athena to query the data. Directly use the existing S3 bucket to avoid additional operating overhead; SSE-S3 provides basic encryption functions; CRR realizes cross-region replication; Amazon Athena is a serverless query service, which meets the requirements of the question. The encryption function of SSE-S3 is not as advanced as SSE-KMS, but it still meets the question requirements. It meets the requirements of the question and has the lowest operating expenses, so it is the best choice."
+      }
+    },
+    {
+      "question_no": 953,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有一個擁有數千名用戶的 Web 應用程式。該應用程式使用 8-10 張用戶上傳的圖像來生成 AI 圖像。使用者每6小時可以下載一次產生的AI影像。該公司還提供高級用戶選項，使用戶能夠隨時下載生成的人工智慧圖像。該公司使用用戶上傳的圖像每年運行兩次人工智慧模型訓練。該公司需要一個儲存解決方案來儲存影像。哪種儲存解決方案最經濟有效率地滿足這些要求？",
+        "en": "A company has a web application that has thousands of users. The application uses 8-10 user-uploaded images to generate AI images. Users can download the generated AI images once every 6 hours. The company also has a premium user option that gives users the ability to download the generated AI images anytime. The company uses the user-uploaded images to run AI model training twice a year. The company needs a storage solution to store the images. Which storage solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "將上傳的影像移至 Amazon S3 Glacier Deep Archive。將優質的用戶生成的 AI 影像移至 S3 標準。將非高級使用者產生的 AI 影像移至 S3 標準-不頻繁存取 (S3 標準-IA)。",
+          "en": "Move uploaded images to Amazon S3 Glacier Deep Archive. Move premium user-generated AI images to S3 Standard. Move non-premium user-generated AI images to S3 Standard-Infrequent Access (S3 Standard-IA)."
+        },
+        "B": {
+          "zh": "將上傳的影像移至 Amazon S3 Glacier Deep Archive 將所有產生的 AI 影像移至 S3 Glacier 靈活檢索。",
+          "en": "Move uploaded images to Amazon S3 Glacier Deep Archive Move all generated AI images to S3 Glacier Flexible Retrieval."
+        },
+        "C": {
+          "zh": "將上傳的映像移至 Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)。將優質的用戶生成的 AI 影像移至 S3 標準。將非高級使用者產生的 AI 影像移至 S3 標準-不頻繁存取 (S3 標準-IA)。",
+          "en": "Move uploaded images to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA). Move premium user-generated AI images to S3 Standard. Move non-premium user-generated AI images to S3 Standard-Infrequent Access (S3 Standard-IA)."
+        },
+        "D": {
+          "zh": "將上傳的映像移至 Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)。將所有產生的 AI 影像移至 S3 Glacier 靈活檢索。",
+          "en": "Move uploaded images to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA). Move all generated AI images to S3 Glacier Flexible Retrieval."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。將上傳的影像移至 Amazon S3 Glacier Deep Archive：正確。用戶上傳的圖片僅用於AI模型訓練。每年僅使用兩個文件，訪問頻率極低。 S3 Glacier Deep Archive 是最具成本效益的選擇。將高級用戶生成的 AI 影像移至 S3 標準：正確。高階用戶可以隨時下載產生的AI圖像。由於這種方式需要高頻訪問，S3標準是一個合適的選擇。將非痔瘡使用者產生的 AI 影像移至 S3 標準-不頻繁存取（S3 標準-IA）：正確。非痔瘡使用者每6小時下載一次文件，造訪頻率較低。 S3 標準-IA 是成本優化的選擇。",
+          "en": "Correct. Moving uploaded images to Amazon S3 Glacier Deep Archive: Correct. The pictures uploaded by users are only used for AI model training. Only two files are used every year, and the access frequency is extremely low. S3 Glacier Deep Archive is the most cost-effective choice. Move high-level user-generated AI images to S3 Standard: correct. High-end users can download the generated AI images at any time. Since the this approach requires high-frequency access, S3 Standard is a suitable choice. Moving AI images generated by non-hemorrhoid users to S3 Standard-Infrequent Access (S3 Standard-IA): Correct. Non-hemorrhoid users can download files every 6 hours and access frequency is low. S3 Standard-IA is a cost-optimized choice."
+        },
+        "B": {
+          "zh": "錯誤。將上傳的影像移至 Amazon S3 Glacier Deep Archive：正確。用戶上傳的圖片存取頻率極低，因此S3 Glacier Deep Archive是一個合適的選擇。將所有產生的 AI 影像移至 S3 Glacier 靈活檢索：錯誤。產生的AI圖片需要根據使用者類型提供不同的存取頻率。 S3 Glacier 靈活檢索不適合訪問頻率較高的使用者。",
+          "en": "Incorrect. Moving uploaded images to Amazon S3 Glacier Deep Archive: Correct. The access frequency of images uploaded by users is extremely low, so S3 Glacier Deep Archive is a suitable choice. Move all generated AI images to S3 Glacier Flexible Retrieval: Error. The generated AI pictures need to provide different access frequencies according to the user's type. S3 Glacier Flexible Retrieval is not suitable for users with high frequency of access."
+        },
+        "C": {
+          "zh": "錯誤。S3 One Zone-IA 將資料儲存在一個可用區中，並且不適合必須保留用於未來模型訓練的來源影像，儘管為生成的影像提出了適當的層。",
+          "en": "Incorrect. S3 One Zone-IA stores data in one Availability Zone and is unsuitable for source images that must be retained for future model training, despite the appropriate tiers proposed for generated images."
+        },
+        "D": {
+          "zh": "錯誤。將上傳的影像移至 Amazon S3 一區-不頻繁存取 (S3 一區-I​​A)：錯誤。 S3 One Zone-IA 是無條帶的，並且滿足資料持久性要求。將所有產生的 AI 影像移至 S3 Glacier 靈活檢索：錯誤。產生的AI圖片需要根據使用者類型提供不同的存取頻率。 S3 Glacier 靈活檢索不適合訪問頻率較高的使用者。",
+          "en": "Incorrect. Moving uploaded images to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA): Error. S3 One Zone-IA is stripe-free and meets data durability requirements. Move all generated AI images to S3 Glacier Flexible Retrieval: Error. The generated AI pictures need to provide different access frequencies according to the user's type. S3 Glacier Flexible Retrieval is not suitable for users with high frequency of access."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 將上傳的影像移至 Amazon S3 Glacier Deep Archive。將優質的用戶生成的 AI 影像移至 S3 標準。將非高級使用者產生的 AI 影像移至 S3 標準-不頻繁存取 (S3 標準-IA)。",
+        "en": "A. Move uploaded images to Amazon S3 Glacier Deep Archive. Move premium user-generated AI images to S3 Standard. Move non-premium user-generated AI images to S3 Standard-Infrequent Access (S3 Standard-IA)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (63%)； C (30%)。熱門討論與考點摘要：將上傳的影像移至 Amazon S3 Glacier Deep Archive：正確。用戶上傳的圖片僅用於AI模型訓練。每年僅使用兩個文件，訪問頻率極低。 S3 Glacier Deep Archive 是最具成本效益的選擇。將高級用戶生成的 AI 影像移至 S3 標準：正確。高階用戶可以隨時下載產生的AI圖像。由於這種方式需要高頻訪問，S3標準是一個合適的選擇。將非痔瘡使用者產生的 AI 影像移至 S3 標準-不頻繁存取（S3 標準-IA）：正確。非痔瘡使用者每6小時下載一次文件，造訪頻率較低。 S3 標準-IA 是成本優化的選擇。",
+        "en": "Community vote as displayed: A (63%); C (30%). Popular discussion and key point summary: Moving uploaded images to Amazon S3 Glacier Deep Archive: Correct. The pictures uploaded by users are only used for AI model training. Only two files are used every year, and the access frequency is extremely low. S3 Glacier Deep Archive is the most cost-effective choice. Move high-level user-generated AI images to S3 Standard: correct. High-end users can download the generated AI images at any time. Since the this approach requires high-frequency access, S3 Standard is a suitable choice. Moving AI images generated by non-hemorrhoid users to S3 Standard-Infrequent Access (S3 Standard-IA): Correct. Non-hemorrhoid users can download files every 6 hours and access frequency is low. S3 Standard-IA is a cost-optimized choice."
+      }
+    },
+    {
+      "question_no": 954,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上開發機器學習 (ML) 模型。該公司正在將機器學習模型開發為獨立的微服務。微服務在啟動時從 Amazon S3 獲取大約 1 GB 的模型資料並將資料載入到記憶體中。使用者透過非同步 API 存取 ML 模型。用戶可以發送一個請求或一批請求。該公司向數百名用戶提供機器學習模型。模型的使用模式是不規則的。有些模型幾天或幾週都沒有使用。其他模型一次接收數千個批次的請求。哪種解決方案可以滿足這些要求？",
+        "en": "A company is developing machine learning (ML) models on AWS. The company is developing the ML models as independent microservices. The microservices fetch approximately 1 GB of model data from Amazon S3 at startup and load the data into memory. Users access the ML models through an asynchronous API. Users can send a request or a batch of requests. The company provides the ML models to hundreds of users. The usage patterns for the models are irregular. Some models are not used for days or weeks. Other models receive batches of thousands of requests at a time. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將來自 API 的請求導向至網路負載平衡器 (NLB)。將 ML 模型部署為 NLB 將呼叫的 AWS Lambda 函數。使用自動擴充根據 NLB 接收的流量來擴展 Lambda 函數。",
+          "en": "Direct the requests from the API to a Network Load Balancer (NLB). Deploy the ML models as AWS Lambda functions that the NLB will invoke. Use auto scaling to scale the Lambda functions based on the traffic that the NLB receives."
+        },
+        "B": {
+          "zh": "將請求從 API 定向到應用程式負載平衡器 (ALB)。將 ML 模型部署為 ALB 將呼叫的 Amazon Elastic Container Service (Amazon ECS) 服務。使用自動伸縮功能，根據ALB接收的流量來伸縮ECS叢集執行個體。",
+          "en": "Direct the requests from the API to an Application Load Balancer (ALB). Deploy the ML models as Amazon Elastic Container Service (Amazon ECS) services that the ALB will invoke. Use auto scaling to scale the ECS cluster instances based on the traffic that the ALB receives."
+        },
+        "C": {
+          "zh": "將來自 API 的請求導向至 Amazon Simple Queue Service (Amazon SQS) 佇列。將 ML 模型部署為 SQS 事件將呼叫的 AWS Lambda 函數。使用自動縮放根據 SQS 佇列的大小增加 Lambda 函數的 vCPU 數量。",
+          "en": "Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the ML models as AWS Lambda functions that SQS events will invoke. Use auto scaling to increase the number of vCPUs for the Lambda functions based on the size of the SQS queue."
+        },
+        "D": {
+          "zh": "將來自 API 的請求導向至 Amazon Simple Queue Service (Amazon SQS) 佇列。將 ML 模型部署為從佇列中讀取的 Amazon Elastic Container Service (Amazon ECS) 服務。使用 Amazon ECS 的自動擴充功能，根據 SQS 佇列的大小擴展叢集容量和服務數量。",
+          "en": "Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the ML models as Amazon Elastic Container Service (Amazon ECS) services that read from the queue. Use auto scaling for Amazon ECS to scale both the cluster capacity and number of the services based on the size of the SQS queue."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。NLB 無法呼叫 Lambda 函數作為目標，並且在 Lambda 初始化期間重複載入 1 GB 模型對於這種非同步突發工作負載來說效率低下。",
+          "en": "Incorrect. An NLB cannot invoke Lambda functions as targets, and repeatedly loading a 1 GB model during Lambda initialization is inefficient for this asynchronous, bursty workload."
+        },
+        "B": {
+          "zh": "錯誤。雖然ECS可以處理模型加載，但ALB是同步請求處理方式，不適合異步API架構。錯誤：沒有條帶可以有效處理不規則的使用模式和批次請求。",
+          "en": "Incorrect. Although ECS can handle model loading, ALB is a synchronous request processing method and is not suitable for asynchronous API architecture. Error: No strips efficiently handle irregular usage patterns and batch requests."
+        },
+        "C": {
+          "zh": "錯誤。AWS Lambda 函數冷啟動時間較長，將 1GB 模型資料載入記憶體可能會導致效能問題。錯誤：Lambda 函數直接增加 vCPU 數量而不進行剝離。擴容的方法就是增加並發執行實例的數量。",
+          "en": "Incorrect. The AWS Lambda function has a long cold start time, and loading 1GB of model data into memory can cause performance issues. Error: The Lambda function directly increases the number of vCPUs without stripping. The expansion method is to increase the number of concurrently executed instances."
+        },
+        "D": {
+          "zh": "正確。SQS佇列可以有效處理非同步請求和批次請求。 ECS服務可以將1GB的模型資料載入到記憶體中，並將模型常駐在記憶體中，適合處理不規則的使用模式。 ECS支援基於SQS佇列大小的自動擴容，可以動態調整服務數量和叢集容量。",
+          "en": "Correct. SQS queues can effectively handle asynchronous requests and batch requests. The ECS service can load 1GB of model data into memory and keep the model resident in memory, which is suitable for handling irregular usage patterns. ECS supports automatic expansion based on SQS queue size, and can dynamically adjust the number of services and cluster capacity."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將來自 API 的請求導向至 Amazon Simple Queue Service (Amazon SQS) 佇列。將 ML 模型部署為從佇列中讀取的 Amazon Elastic Container Service (Amazon ECS) 服務。使用 Amazon ECS 的自動擴充功能，根據 SQS 佇列的大小擴展叢集容量和服務數量。",
+        "en": "D. Direct the requests from the API into an Amazon Simple Queue Service (Amazon SQS) queue. Deploy the ML models as Amazon Elastic Container Service (Amazon ECS) services that read from the queue. Use auto scaling for Amazon ECS to scale both the cluster capacity and number of the services based on the size of the SQS queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (67%)； B (17%)； C (17%)。熱門討論與考點摘要：SQS佇列可以有效處理非同步請求和批次請求。 ECS服務可以將1GB的模型資料載入到記憶體中，並將模型常駐在記憶體中，適合處理不規則的使用模式。 ECS支援基於SQS佇列大小的自動擴容，可以動態調整服務數量和叢集容量。",
+        "en": "Community vote as displayed: D (67%); B (17%); C (17%). Popular discussion and key point summary: SQS queues can effectively handle asynchronous requests and batch requests. The ECS service can load 1GB of model data into memory and keep the model resident in memory, which is suitable for handling irregular usage patterns. ECS supports automatic expansion based on SQS queue size, and can dynamically adjust the number of services and cluster capacity."
+      }
+    },
+    {
+      "question_no": 955,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在應用程式負載平衡器 (ALB) 後面的 Auto Scaling 群組中的 Amazon EC2 執行個體上執行 Web 應用程式。該應用程式將資料儲存在 Amazon Aurora MySQL 資料庫叢集中。該公司需要創建災難復原 (DR) 解決方案。災難復原解決方案可接受的復原時間最長為 30 分鐘。當主要基礎設施運作狀況良好時，災難復原解決方案不需要支援客戶使用。哪種解決方案可以滿足這些要求？",
+        "en": "A company runs a web application on Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer (ALB). The application stores data in an Amazon Aurora MySQL DB cluster. The company needs to create a disaster recovery (DR) solution. The acceptable recovery time for the DR solution is up to 30 minutes. The DR solution does not need to support customer usage when the primary infrastructure is healthy. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在具有 ALB 和 Auto Scaling 組的第二個 AWS 區域中部署 DR 基礎架構。將 Auto Scaling 組的所需容量和最大容量設定為最小值。將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫。配置 Amazon Route 53 以使用 ALB 終端節點進行主動-被動故障轉移。",
+          "en": "Deploy the DR infrastructure in a second AWS Region with an ALB and an Auto Scaling group. Set the desired capacity and maximum capacity of the Auto Scaling group to a minimum value. Convert the Aurora MySQL DB cluster to an Aurora global database. Configure Amazon Route 53 for an active-passive failover with ALB endpoints."
+        },
+        "B": {
+          "zh": "使用 AL 在第二個 AWS 區域中部署 DR 基礎架構更新 Auto Scaling 群組以包含來自第二個區域的 EC2 執行個體。使用 Amazon Route 53 配置主動-主動故障轉移。將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫。",
+          "en": "Deploy the DR infrastructure in a second AWS Region with an ALUpdate the Auto Scaling group to include EC2 instances from the second Region. Use Amazon Route 53 to configure active-active failover. Convert the Aurora MySQL DB cluster to an Aurora global database."
+        },
+        "C": {
+          "zh": "使用 AWS Backup 備份 Aurora MySQL 資料庫叢集資料。使用 ALB 在第二個 AWS 區域中部署災難復原基礎架構。更新 Auto Scaling 群組以包含第二個區域的 EC2 執行個體。使用 Amazon Route 53 配置主動-主動故障轉移。在第二個區域中建立 Aurora MySQL 資料庫叢集 從備份中還原資料。",
+          "en": "Back up the Aurora MySQL DB cluster data by using AWS Backup. Deploy the DR infrastructure in a second AWS Region with an ALB. Update the Auto Scaling group to include EC2 instances from the second Region. Use Amazon Route 53 to configure active-active failover. Create an Aurora MySQL DB cluster in the second Region Restore the data from the backup."
+        },
+        "D": {
+          "zh": "使用 AWS Backup 備份基礎架構配置。使用備份在第二個 AWS 區域中建立所需的基礎架構。將 Auto Scaling 組所需容量設為零。使用 Amazon Route 53 配置主動-被動故障轉移。將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫。",
+          "en": "Back up the infrastructure configuration by using AWS Backup. Use the backup to create the required infrastructure in a second AWS Region. Set the Auto Scaling group desired capacity to zero. Use Amazon Route 53 to configure active-passive failover. Convert the Aurora MySQL DB cluster to an Aurora global database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。在兩個AWS區域中間設置容災基礎設施，並將Auto Scaling組的目標容量和最大容量設定為最小值，以確保資源不會浪費。正確：將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫，以支援跨區域複製並滿足災難復原需求。正確：使用 Amazon Route 53 配置主動-被動故障轉移，以確保在主區域發生故障時快速故障轉移到備份區域。",
+          "en": "Correct. Set up DR base facilities in the middle of two AWS regions, and set the target capacity and maximum capacity of the Auto Scaling group to the minimum to ensure that resources are not wasted. Correct: Convert the Aurora MySQL DB cluster to the Aurora global database to support cross-region replication and meet disaster recovery needs. Correct: Use Amazon Route 53 to configure active-passive failover to ensure rapid failover to the backup region if the primary region fails."
+        },
+        "B": {
+          "zh": "錯誤。雙活故障轉移不符合問題的要求，因為問題明確指出災難復原解決方案不需要在主基礎設施運作狀況良好的情況下支援客戶使用。正確：Aurora全域資料庫支援跨區域複製，滿足災難復原需求。",
+          "en": "Incorrect. Active-active failover does not meet the requirements of the question because the question clearly states that the DR solution does not need to support customer use while the primary infrastructure is healthy. Correct: Aurora global database supports cross-region replication to meet disaster recovery needs."
+        },
+        "C": {
+          "zh": "錯誤。使用 AWS Backup 備份 Aurora MySQL 資料庫叢集資料並在發生災難時復原資料可能無法滿足 30 分鐘復原時間需求。錯誤：主動-主動故障轉移不符合問題的要求。",
+          "en": "Incorrect. Using AWS Backup to back up Aurora MySQL DB cluster data and restore it when a disaster occurs may not meet the 30-minute recovery time requirement. Error: Active-active failover does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。在災難發生時備份基礎架構配置並建立所需的基礎架構可能無法滿足 30 分鐘復原時間要求。正確：Aurora全域資料庫支援跨區域複製，滿足災難復原需求。正確：主動-被動故障轉移滿足問題要求。",
+          "en": "Incorrect. Backing up the infrastructure configuration and creating the required infrastructure in the event of a disaster may not meet the 30-minute recovery time requirement. Correct: Aurora global database supports cross-region replication to meet disaster recovery needs. Correct: Active-passive failover meets the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在具有 ALB 和 Auto Scaling 組的第二個 AWS 區域中部署 DR 基礎架構。將 Auto Scaling 組的所需容量和最大容量設定為最小值。將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫。配置 Amazon Route 53 以使用 ALB 終端節點進行主動-被動故障轉移。",
+        "en": "A. Deploy the DR infrastructure in a second AWS Region with an ALB and an Auto Scaling group. Set the desired capacity and maximum capacity of the Auto Scaling group to a minimum value. Convert the Aurora MySQL DB cluster to an Aurora global database. Configure Amazon Route 53 for an active-passive failover with ALB endpoints."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (71%)； D (29%)。熱門討論與考點摘要：在兩個AWS區域中間設置容災基礎設施，並將Auto Scaling組的目標容量和最大容量設定為最小值，以確保資源不會浪費。正確：將 Aurora MySQL 資料庫叢集轉換為 Aurora 全域資料庫，以支援跨區域複製並滿足災難復原需求。正確：使用 Amazon Route 53 配置主動-被動故障轉移，以確保在主區域發生故障時快速故障轉移到備份區域。",
+        "en": "Community vote as displayed: A (71%); D (29%). Popular discussion and key point summary: Set up DR base facilities in the middle of two AWS regions, and set the target capacity and maximum capacity of the Auto Scaling group to the minimum to ensure that resources are not wasted. Correct: Convert the Aurora MySQL DB cluster to the Aurora global database to support cross-region replication and meet disaster recovery needs. Correct: Use Amazon Route 53 to configure active-passive failover to ensure rapid failover to the backup region if the primary region fails."
+      }
+    },
+    {
+      "question_no": 956,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在將其資料處理應用程式遷移到 AWS 雲端。該應用程式處理多個無法中斷的短期批次作業。每個批次作業完成後都會產生資料。資料的存取期限為 30 天，保留期限為 2 年。該公司希望盡可能降低在 AWS 雲端中運行應用程式的成本。哪種解決方案可以滿足這些要求？",
+        "en": "A company is migrating its data processing application to the AWS Cloud. The application processes several short-lived batch jobs that cannot be disrupted. Data is generated after each batch job is completed. The data is accessed for 30 days and retained for 2 years. The company wants to keep the cost of running the application in the AWS Cloud as low as possible. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將資料處理應用程式移轉到 Amazon EC2 Spot 執行個體。將資料儲存在 Amazon S3 Standard 中。將資料移至 Amazon S3 Glacier Instant。 30天後檢索。設定期限以在 2 年後刪除資料。",
+          "en": "Migrate the data processing application to Amazon EC2 Spot Instances. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Instant. Retrieval after 30 days. Set an expiration to delete the data after 2 years."
+        },
+        "B": {
+          "zh": "將資料處理應用程式移轉到 Amazon EC2 隨選執行個體。將資料儲存在 Amazon S3 Glacier Instant Retrieval 中。 30 天後將數據移至 S3 Glacier Deep Archive。設定期限以在 2 年後刪除資料。",
+          "en": "Migrate the data processing application to Amazon EC2 On-Demand Instances. Store the data in Amazon S3 Glacier Instant Retrieval. Move the data to S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years."
+        },
+        "C": {
+          "zh": "部署 Amazon EC2 Spot 執行個體以執行批次作業。將資料儲存在 Amazon S3 Standard 中。 30 天後將資料移至 Amazon S3 Glacier 彈性檢索。設定期限以在 2 年後刪除資料。",
+          "en": "Deploy Amazon EC2 Spot Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Flexible Retrieval after 30 days. Set an expiration to delete the data after 2 years."
+        },
+        "D": {
+          "zh": "部署 Amazon EC2 隨選執行個體以執行批次作業。將資料儲存在 Amazon S3 Standard 中。 30 天後將資料移至 Amazon S3 Glacier Deep Archive。設定期限以在 2 年後刪除資料。",
+          "en": "Deploy Amazon EC2 On-Demand Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。EC2 Spot 執行個體可能會中斷，不適合執行無法中斷的批次任務。正確：S3 Standard 適合長期存儲，S3 Glacier Instant Retrieval 適合需要快速存取的歸檔資料。錯誤：雖然儲存策略合理，但Spot實例的選擇不符合問題的要求。",
+          "en": "Incorrect. EC2 Spot Instances may be interrupted and are not suitable for running batch tasks that cannot be interrupted. Correct: S3 Standard is suitable for long-term storage, and S3 Glacier Instant Retrieval is suitable for archived data that requires fast access. Error: Although the storage strategy is reasonable, the selection of Spot Instances does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。EC2 按需執行個體適合執行無法中斷的任務。錯誤：S3 Glacier 即時檢索不適合儲存 30 天內頻繁存取的數據，且成本較高。正確：S3 Glacier Deep Archive 適合長期存儲，成本最低。錯誤：初始儲存類別選擇不符合題目要求。",
+          "en": "Incorrect. EC2 On-Demand Instances are suitable for running tasks that cannot be interrupted. Error: S3 Glacier Instant Retrieval is not suitable for storing data that is frequently accessed within 30 days, and the cost is high. Correct: S3 Glacier Deep Archive is suitable for long-term storage and has the lowest cost. Error: The initial storage category selection does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。EC2 Spot 執行個體可能會中斷，不適合執行無法中斷的批次任務。正確：S3 Standard 適合長期存儲，S3 Glacier 靈活檢索適合偶爾需要存取的歸檔資料。錯誤：Spot 實例的選擇不符合問題的要求。",
+          "en": "Incorrect. EC2 Spot Instances may be interrupted and are not suitable for running batch tasks that cannot be interrupted. Correct: S3 Standard is suitable for long-term storage, and S3 Glacier Flexible Retrieval is suitable for archived data that needs to be accessed occasionally. Error: The selection of Spot Instances does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "正確。EC2 按需執行個體適合執行無法中斷的任務。正確：S3 Standard 適合短期存儲，S3 Glacier Deep Archive 適合長期存儲，成本最低。正確：生命週期策略滿足問題要求。",
+          "en": "Correct. EC2 On-Demand Instances are suitable for running tasks that cannot be interrupted. Correct: S3 Standard is suitable for short-term storage, and S3 Glacier Deep Archive is suitable for long-term storage with the lowest cost. Correct: The life cycle strategy meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 部署 Amazon EC2 隨選執行個體以執行批次作業。將資料儲存在 Amazon S3 Standard 中。 30 天後將資料移至 Amazon S3 Glacier Deep Archive。設定期限以在 2 年後刪除資料。",
+        "en": "D. Deploy Amazon EC2 On-Demand Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (81%)。熱門討論與考點摘要：EC2 按需執行個體適合執行無法中斷的任務。正確：S3 Standard 適合短期存儲，S3 Glacier Deep Archive 適合長期存儲，成本最低。正確：生命週期策略滿足問題要求。",
+        "en": "Community vote as displayed: D (81%). Popular discussion and key point summary: EC2 On-Demand Instances are suitable for running tasks that cannot be interrupted. Correct: S3 Standard is suitable for short-term storage, and S3 Glacier Deep Archive is suitable for long-term storage with the lowest cost. Correct: The life cycle strategy meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 957,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "某公司需要設計混合網路架構。該公司的工作負載目前儲存在 AWS 雲端和本地資料中心中。工作負載需要個位數的延遲才能進行通訊。該公司使用 AWS Transit Gateway 中轉網關連接多個 VPC。哪一種步驟組合能夠最經濟有效地滿足這些要求？ （選兩個。）",
+        "en": "A company needs to design a hybrid network architecture. The company's workloads are currently stored in the AWS Cloud and in on-premises data centers. The workloads require single-digit latencies to communicate. The company uses an AWS Transit Gateway transit gateway to connect multiple VPCs. Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "與每個 VPC 建立 AWS Site-to-Site VPN 連線。",
+          "en": "Establish an AWS Site-to-Site VPN connection to each VPC."
+        },
+        "B": {
+          "zh": "將 AWS Direct Connect 閘道與附加到 VPC 的中轉網關關聯。",
+          "en": "Associate an AWS Direct Connect gateway with the transit gateway that is attached to the VPCs."
+        },
+        "C": {
+          "zh": "建立與 AWS Direct Connect 閘道的 AWS Site-to-Site VPN 連線。",
+          "en": "Establish an AWS Site-to-Site VPN connection to an AWS Direct Connect gateway."
+        },
+        "D": {
+          "zh": "建立 AWS Direct Connect 連線。建立至 Direct Connect 閘道的中轉虛擬介面 (VIF)。",
+          "en": "Establish an AWS Direct Connect connection. Create a transit virtual interface (VIF) to a Direct Connect gateway."
+        },
+        "E": {
+          "zh": "將 AWS Site-to-Site VPN 連線與附加到 VPC 的中轉網關關聯。",
+          "en": "Associate AWS Site-to-Site VPN connections with the transit gateway that is attached to the VPCs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。為每個 VPC 建立 AWS 站點到站點 VPN 連線。錯誤：Site-to-Site VPN 連線通常用於低成本解決方案，但它們無法提供個位數的延遲，而為每個 VPC 建立 VPN 連線會增加複雜性和成本。",
+          "en": "Incorrect. Establish an AWS Site-to-Site VPN connection for each VPC. Wrong: Site-to-Site VPN connections are often used for low-cost solutions, but they cannot provide single-digit latency, and establishing VPN connections for each VPC adds complexity and cost."
+        },
+        "B": {
+          "zh": "正確。將 AWS Direct Connect 閘道與連接到 VPC 的中轉網關關聯。正確：Direct Connect 網關可以與 Transit Gateway 關聯以實現高效率的網路連線。此方式支援低時延通信，可以連接多個VPC，降低成本。",
+          "en": "Correct. Associate an AWS Direct Connect gateway with the transit gateway connected to the VPC. Correct: Direct Connect gateway can be associated with Transit Gateway to achieve efficient network connectivity. This method supports low-latency communication and can connect multiple VPCs, reducing costs."
+        },
+        "C": {
+          "zh": "錯誤。為 AWS Direct Connect 閘道建立 AWS 站對站 VPN 連線。錯誤：雖然可以透過 VPN 連接到 Direct Connect 網關，但 VPN 連線不提供個位數的延遲，並且不符合問題所需的「最具成本效益」的解決方案。",
+          "en": "Incorrect. Establish an AWS Site-to-Site VPN connection for the AWS Direct Connect gateway. Error: Although it is possible to connect to the Direct Connect gateway via VPN, the VPN connection does not provide single-digit latency and does not qualify as the \"most cost-effective\" solution required by the question."
+        },
+        "D": {
+          "zh": "正確。建立 AWS Direct Connect 連線。為 Direct Connect 閘道建立中轉虛擬介面 (VIF)。正確：Direct Connect 提供專用的低延遲連接，中轉虛擬介面 (VIF) 允許 Direct Connect 網關與 Transit Gateway 集成，以支援跨多個 VPC 的連接。這是一種高效且成本優化的解決方案。",
+          "en": "Correct. Establish an AWS Direct Connect connection. Create a transit virtual interface (VIF) for the Direct Connect gateway. Correct: Direct Connect provides a dedicated low-latency connection, and the transit virtual interface (VIF) allows the Direct Connect gateway to be integrated with the Transit Gateway to support connections across multiple VPCs. This is an efficient and cost-optimized solution."
+        },
+        "E": {
+          "zh": "錯誤。將 AWS Site-to-Site VPN 連線與連接到 VPC 的中轉網關關聯。錯誤：雖然可以透過 VPN 連接到 Transit Gateway，但 VPN 無法提供個位數的延遲，並且不符合問題中「最具成本效益」解決方案的要求。",
+          "en": "Incorrect. Associate the AWS Site-to-Site VPN connection with the transit gateway connected to the VPC. Error: Although it is possible to connect to the Transit Gateway through a VPN, the VPN cannot provide single-digit latency and does not meet the question's requirement of being the \"most cost-effective\" solution."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "B. 將 AWS Direct Connect 閘道與附加到 VPC 的中轉網關關聯。；D. 建立 AWS Direct Connect 連線。建立至 Direct Connect 閘道的中轉虛擬介面 (VIF)。",
+        "en": "B. Associate an AWS Direct Connect gateway with the transit gateway that is attached to the VPCs.; D. Establish an AWS Direct Connect connection. Create a transit virtual interface (VIF) to a Direct Connect gateway."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：BD (92%)。熱門討論與考點摘要：將 AWS Direct Connect 閘道與連接到 VPC 的中轉網關關聯。正確：Direct Connect 網關可以與 Transit Gateway 關聯以實現高效率的網路連線。此方式支援低時延通信，可以連接多個VPC，降低成本。；建立 AWS Direct Connect 連線。為 Direct Connect 閘道建立中轉虛擬介面 (VIF)。正確：Direct Connect 提供專用的低延遲連接，中轉虛擬介面 (VIF) 允許 Direct Connect 網關與 Transit Gateway 集成，以支援跨多個 VPC 的連接。這是一種高效且成本優化的解決方案。",
+        "en": "Community vote as displayed: BD (92%). Popular discussion and key point summary: Associate an AWS Direct Connect gateway with the transit gateway connected to the VPC. Correct: Direct Connect gateway can be associated with Transit Gateway to achieve efficient network connectivity. This method supports low-latency communication and can connect multiple VPCs, reducing costs.; Establish an AWS Direct Connect connection. Create a transit virtual interface (VIF) for the Direct Connect gateway. Correct: Direct Connect provides a dedicated low-latency connection, and the transit virtual interface (VIF) allows the Direct Connect gateway to be integrated with the Transit Gateway to support connections across multiple VPCs. This is an efficient and cost-optimized solution."
+      }
+    },
+    {
+      "question_no": 958,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家全球電子商務公司在 AWS 上運作其關鍵工作負載。工作負載使用為多可用區部署配置的 Amazon RDS for PostgreSQL 資料庫執行個體。當公司進行資料庫故障轉移時，客戶報告了應用程式逾時。該公司需要一個有彈性的解決方案來減少故障轉移時間。哪種解決方案可以滿足這些要求？",
+        "en": "A global ecommerce company runs its critical workloads on AWS. The workloads use an Amazon RDS for PostgreSQL DB instance that is configured for a Multi-AZ deployment. Customers have reported application timeouts when the company undergoes database failovers. The company needs a resilient solution to reduce failover time. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon RDS 代理程式。將代理程式分配給資料庫執行個體。",
+          "en": "Create an Amazon RDS Proxy. Assign the proxy to the DB instance."
+        },
+        "B": {
+          "zh": "為資料庫實例建立唯讀副本。將讀取流量移至唯讀副本。",
+          "en": "Create a read replica for the DB instance. Move the read traffic to the read replica."
+        },
+        "C": {
+          "zh": "啟用效能洞察。監視 CPU 負載以識別逾時。",
+          "en": "Enable Performance Insights. Monitor the CPU load to identify the timeouts."
+        },
+        "D": {
+          "zh": "定期自動拍攝快照。將自動快照複製到多個 AWS 區域。",
+          "en": "Take regular automatic snapshots. Copy the automatic snapshots to multiple AWS Regions."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon RDS 代理可以幫助減少資料庫故障轉移時間，因為它在伺服器和資料庫之間提供連接池，從而能夠快速切換到備用執行個體。此外，RDS Proxy 可以管理連線並減少常見的逾時問題。",
+          "en": "Correct. Amazon RDS Proxy can help reduce database failover time because it provides a connection pool between the server and the database, enabling rapid switchover to a standby instance. In addition, RDS Proxy can manage connections and reduce common timeout issues."
+        },
+        "B": {
+          "zh": "錯誤。只讀副本主要用於共享讀取流量，並不能解決故障轉移時間的問題。當發生故障轉移時，主執行個體的寫入流量仍然會受到影響，且無法解決問題。",
+          "en": "Incorrect. Read-only replicas are mainly used to share read traffic and do not solve the problem of failover time. When a failover occurs, the write traffic of the primary instance will still be affected, and the problem in question cannot be solved."
+        },
+        "C": {
+          "zh": "錯誤。Performance Insights是用來分析資料庫效能問題的控制工具，但它不能直接減少故障轉移時間。此選項與問題所需的「減少故障轉移時間」無關。",
+          "en": "Incorrect. Performance Insights is a control tool used to analyze database performance issues, but it cannot directly reduce failover time. This option has nothing to do with the \"reduce failover time\" required by the question."
+        },
+        "D": {
+          "zh": "錯誤。用於備份和災難恢復，不解決故障轉移時間問題。恢復過程需要時間，無法滿足問題中「減少故障轉移時間」的要求。",
+          "en": "Incorrect. It is used for backup and disaster recovery and does not solve the problem of failover time. The recovery process takes time and cannot meet the requirement of \"reducing failover time\" in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 建立 Amazon RDS 代理程式。將代理程式分配給資料庫執行個體。",
+        "en": "A. Create an Amazon RDS Proxy. Assign the proxy to the DB instance."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：Amazon RDS 代理可以幫助減少資料庫故障轉移時間，因為它在伺服器和資料庫之間提供連接池，從而能夠快速切換到備用執行個體。此外，RDS Proxy 可以管理連線並減少常見的逾時問題。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon RDS Proxy can help reduce database failover time because it provides a connection pool between the server and the database, enabling rapid switchover to a standby instance. In addition, RDS Proxy can manage connections and reduce common timeout issues."
+      }
+    },
+    {
+      "question_no": 959,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有多個在開發 AWS 帳戶中執行的 Amazon RDS 資料庫執行個體。所有實例都有標籤來將它們標識為開發資源。該公司需要開發資料庫執行個體僅在工作時間內按計劃運行。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company has multiple Amazon RDS DB instances that run in a development AWS account. All the instances have tags to identify them as development resources. The company needs the development DB instances to run on a schedule only during business hours. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立 Amazon CloudWatch 警報以識別需要停止的 RDS 執行個體。建立 AWS Lambda 函數來啟動和停止 RDS 執行個體。",
+          "en": "Create an Amazon CloudWatch alarm to identify RDS instances that need to be stopped. Create an AWS Lambda function to start and stop the RDS instances."
+        },
+        "B": {
+          "zh": "建立 AWS Trusted Advisor 報告以識別要啟動和停止的 RDS 執行個體。建立 AWS Lambda 函數來啟動和停止 RDS 執行個體。",
+          "en": "Create an AWS Trusted Advisor report to identify RDS instances to be started and stopped. Create an AWS Lambda function to start and stop the RDS instances."
+        },
+        "C": {
+          "zh": "建立 AWS Systems Manager 狀態管理器關聯以啟動和停止 RDS 執行個體。",
+          "en": "Create AWS Systems Manager State Manager associations to start and stop the RDS instances."
+        },
+        "D": {
+          "zh": "建立呼叫 AWS Lambda 函數來啟動和停止 RDS 執行個體的 Amazon EventBridge 規則。",
+          "en": "Create an Amazon EventBridge rule that invokes AWS Lambda functions to start and stop the RDS instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。CloudWatch Alarms主要用於監控指標和觸發操作，但不適合直接用於基於時間表的資源調度。雖然可以透過 Lambda 函數實現啟動和停止，但使用 CloudWatch Alarms 來識別需要停止的執行個體並未滿足問題的「基於計劃」的要求。",
+          "en": "Incorrect. CloudWatch Alarms is mainly used to monitor indicators and trigger actions, but it is not suitable for direct use in schedule-based resource scheduling. Although starting and stopping can be achieved through Lambda functions, using CloudWatch Alarms to identify instances that need to be stopped does not meet the \"schedule-based\" requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。AWS Trusted Advisor 主要用於提供最佳化建議，例如節省成本、安全性和效能改進。它不是調度工具，不能直接用於基於調度的資源管理。此選項不符合問題的「基於時間表」的要求。",
+          "en": "Incorrect. AWS Trusted Advisor is primarily used to provide optimization recommendations, such as cost savings, security, and performance improvements. It is not a scheduling tool and cannot be used directly for schedule-based resource management. This option does not match the \"schedule-based\" requirement of the question."
+        },
+        "C": {
+          "zh": "錯誤。AWS Systems Manager 狀態管理器主要用於管理執行個體的狀態配置，例如安裝軟體或套用修補程式。它不適合基於計劃的資源啟動和停止。此選項的功能與問題的「基於時間表」的要求不符。",
+          "en": "Incorrect. AWS Systems Manager State Manager is mainly used to manage the state configuration of instances, such as installing software or applying patches. It is not suitable for schedule-based resource starting and stopping. The functionality of this option does not match the \"schedule-based\" requirements of the question."
+        },
+        "D": {
+          "zh": "正確。Amazon EventBridge 可以根據計劃觸發事件，非常適合實現基於時間的資源調度。透過EventBridge規則，您可以設定RDS實例在工作時間啟動，在非工作時間停止RDS實例，以滿足問題要求。結合AWS Lambda函數，您可以啟動和停止RDS執行個體。",
+          "en": "Correct. Amazon EventBridge can trigger events based on schedules, which is very suitable for implementing time-based resource scheduling. Through EventBridge rules, you can set up the RDS instance to start during working hours and stop the RDS instance during non-working hours to meet the question requirements. Combined with AWS Lambda functions, you can start and stop RDS instances."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 建立呼叫 AWS Lambda 函數來啟動和停止 RDS 執行個體的 Amazon EventBridge 規則。",
+        "en": "D. Create an Amazon EventBridge rule that invokes AWS Lambda functions to start and stop the RDS instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (57%)； C (43%)。熱門討論與考點摘要：Amazon EventBridge 可以根據計劃觸發事件，非常適合實現基於時間的資源調度。透過EventBridge規則，您可以設定RDS實例在工作時間啟動，在非工作時間停止RDS實例，以滿足問題要求。結合AWS Lambda函數，您可以啟動和停止RDS執行個體。",
+        "en": "Community vote as displayed: D (57%); C (43%). Popular discussion and key point summary: Amazon EventBridge can trigger events based on schedules, which is very suitable for implementing time-based resource scheduling. Through EventBridge rules, you can set up the RDS instance to start during working hours and stop the RDS instance during non-working hours to meet the question requirements. Combined with AWS Lambda functions, you can start and stop RDS instances."
+      }
+    },
+    {
+      "question_no": 960,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家消費者調查公司多年來從特定地理區域收集了數據。該公司將此資料儲存在 AWS 區域的 Amazon S3 儲存桶中。該公司已開始與新地理區域的一家行銷公司分享這些數據。該公司已授予該公司的 AWS 帳戶存取 S3 儲存桶的權限。當行銷公司從 S3 儲存桶請求資料時，該公司希望最大限度地降低資料傳輸成本。哪種解決方案可以滿足這些要求？",
+        "en": "A consumer survey company has gathered data for several years from a specific geographic region. The company stores this data in an Amazon S3 bucket in an AWS Region. The company has started to share this data with a marketing firm in a new geographic region. The company has granted the firm's AWS account access to the S3 bucket. The company wants to minimize the data transfer costs when the marketing firm requests data from the S3 bucket. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公司的 S3 儲存桶上設定請求者付款功能。",
+          "en": "Configure the Requester Pays feature on the company’s S3 bucket."
+        },
+        "B": {
+          "zh": "配置從公司的 S3 儲存桶到行銷公司的 S3 儲存桶之一的 S3 跨區域複製 (CRR)。",
+          "en": "Configure S3 Cross-Region Replication (CRR) from the company’s S3 bucket to one of the marketing firm’s S3 buckets."
+        },
+        "C": {
+          "zh": "設定 AWS Resource Access Manager 以與行銷公司 AWS 帳戶共用 S3 儲存桶。",
+          "en": "Configure AWS Resource Access Manager to share the S3 bucket with the marketing firm AWS account."
+        },
+        "D": {
+          "zh": "配置公司的 S3 儲存桶以使用 S3 智慧分層 將 S3 儲存桶同步到行銷公司的 S3 儲存桶之一。",
+          "en": "Configure the company’s S3 bucket to use S3 Intelligent-Tiering Sync the S3 bucket to one of the marketing firm’s S3 buckets."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。請求者付費功能允許資料請求者承擔資料傳輸的費用，而不是資料擁有者。這符合問題要求，即盡量減少公司承擔的傳輸成本。",
+          "en": "Correct. The Requester Pays feature allows the data requester to bear the cost of data transmission, not the data owner. This is in line with the question requirement, which is to minimize the transmission costs borne by the company."
+        },
+        "B": {
+          "zh": "錯誤。CRR會將資料複製到另一個區域的S3儲存桶中，這會產生額外的儲存和傳輸成本，並且不符合問題中「最小化資料傳輸成本」的要求。",
+          "en": "Incorrect. CRR will copy the data to an S3 bucket in another region, which will incur additional storage and transmission costs and does not meet the \"minimize data transmission cost\" requirement of the question."
+        },
+        "C": {
+          "zh": "錯誤。AWS Resource Access Manager 用於共用資源（例如 VPC、子網路等），但不適合連接共用 S3 儲存桶。此選項與題目要求無關。",
+          "en": "Incorrect. AWS Resource Access Manager is used for shared resources (such as VPC, subnets, etc.), but it is not suitable for connecting shared S3 buckets. This option has nothing to do with the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。S3智慧分層是用於最佳化儲存成本的功能，與資料傳輸成本無關。同步到另一個 S3 儲存桶會增加額外的儲存和傳輸成本。",
+          "en": "Incorrect. S3 Intelligent-Tiering is a function used to optimize storage costs and has nothing to do with data transmission costs. Synchronizing to another S3 bucket adds additional storage and transfer costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在公司的 S3 儲存桶上設定請求者付款功能。",
+        "en": "A. Configure the Requester Pays feature on the company’s S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (83%)； B (17%)。熱門討論與考點摘要：請求者付費功能允許資料請求者承擔資料傳輸的費用，而不是資料擁有者。這符合問題要求，即盡量減少公司承擔的傳輸成本。",
+        "en": "Community vote as displayed: A (83%); B (17%). Popular discussion and key point summary: The Requester Pays feature allows the data requester to bear the cost of data transmission, not the data owner. This is in line with the question requirement, which is to minimize the transmission costs borne by the company."
+      }
+    }
+  ]
+}

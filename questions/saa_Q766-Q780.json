@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 766,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司的開發人員希望透過一種安全的方式來取得該公司運行最新版本 Amazon Linux 的 Amazon EC2 執行個體的 SSH 存取權限。開發人員在公司辦公室遠端工作。該公司希望使用 AWS 服務作為解決方案的一部分。 EC2 執行個體託管在 VPC 私人子網路中，並透過部署在公有子網路中的 NAT 閘道存取 Internet。解決方案架構師應該如何做才能最經濟有效地滿足這些要求？",
+        "en": "A company’s developers want a secure way to gain SSH access on the company's Amazon EC2 instances that run the latest version of Amazon Linux. The developers work remotely and in the corporate office. The company wants to use AWS services as a part of the solution. The EC2 instances are hosted in a VPC private subnet and access the internet through a NAT gateway that is deployed in a public subnet. What should a solutions architect do to meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在與 EC2 執行個體相同的子網路中建立堡壘主機。向開發人員授予 ec2:CreateVpnConnection IAM 權限。安裝 EC2 Instance Connect 以便開發人員可以連線到 EC2 執行個體。",
+          "en": "Create a bastion host in the same subnet as the EC2 instances. Grant the ec2:CreateVpnConnection IAM permission to the developers. Install EC2 Instance Connect so that the developers can connect to the EC2 instances."
+        },
+        "B": {
+          "zh": "在公司網路和 VPC 之間建立 AWS Site-to-Site VPN 連線。當開發人員位於公司網路時，指導開發人員使用 Site-to-Site VPN 連線來存取 EC2 執行個體。指導開發人員建立另一個VPN連接，以便在遠端工作時進行存取。",
+          "en": "Create an AWS Site-to-Site VPN connection between the corporate network and the VPC. Instruct the developers to use the Site-to-Site VPN connection to access the EC2 instances when the developers are on the corporate network. Instruct the developers to set up another VPN connection for access when they work remotely."
+        },
+        "C": {
+          "zh": "在 VP 的公有子網路中建立堡壘主機，將堡壘主機的安全性群組和 SSH 金鑰配置為僅允許來自開發人員的公司和遠端網路的連線和 SSH 驗證。指導開發人員使用 SSH 透過堡壘主機連線來存取 EC2 執行個體。",
+          "en": "Create a bastion host in the public subnet of the VPConfigure the security groups and SSH keys of the bastion host to only allow connections and SSH authentication from the developers’ corporate and remote networks. Instruct the developers to connect through the bastion host by using SSH to reach the EC2 instances."
+        },
+        "D": {
+          "zh": "將 AmazonSSMManagedInstanceCore IAM 策略附加到與 EC2 執行個體關聯的 IAM 角色。指導開發人員使用 AWS Systems Manager 會話管理器存取 EC2 執行個體。",
+          "en": "Attach the AmazonSSMManagedInstanceCore IAM policy to an IAM role that is associated with the EC2 instances. Instruct the developers to use AWS Systems Manager Session Manager to access the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。建立堡壘主機並使用 EC2 Instance Connect：錯誤：堡壘主機需要額外的 EC2 實例，這會增加成本，並且不是最具成本效益的解決方案。錯誤：ec2:CreateVpnConnection IAM 權限與問題要求無關。錯誤：EC2 Instance Connect 僅支援 Amazon Linux 2 和 Ubuntu，並且需要公用 IP 位址，而相關 EC2 執行個體位於私人子網路上。",
+          "en": "Incorrect. Create a bastion host and use EC2 Instance Connect: Error: The bastion host requires additional EC2 instances, which increases costs and is not the most cost-effective solution. Error: ec2:CreateVpnConnection IAM permissions have nothing to do with the question requirements. Error: EC2 Instance Connect only supports Amazon Linux 2 and Ubuntu and requires a public IP address, while the EC2 instance in question is on a private subnet."
+        },
+        "B": {
+          "zh": "錯誤。使用 AWS 站臺到站臺 VPN 進行連線：錯誤：站臺到站臺 VPN 需要額外的設定和成本（VPN 閘道和安裝費用）。錯誤：要求開發人員設定多個VPN連線增加了複雜性，並且不符合「最具成本效益」的要求。",
+          "en": "Incorrect. Connecting using AWS Site-to-Site VPN: Error: Site-to-Site VPN requires additional configuration and cost (VPN gateway and installation fees). Error: Requiring developers to set up multiple VPN connections adds complexity and does not meet the \"most cost-effective\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。在公有子網路中建立堡壘主機：錯誤：堡壘主機需要額外的 EC2 實例，從而增加成本。錯誤：雖然透過堡壘主機可以實現安全訪問，但需要額外的管理和維護工作，並不是最優方案。",
+          "en": "Incorrect. Creating a bastion host in a public subnet: Error: The bastion host requires additional EC2 instances, increasing costs. Error: Although secure access can be achieved through the bastion host, it requires additional management and maintenance work and is not an optimal solution."
+        },
+        "D": {
+          "zh": "正確。使用 AWS Systems Manager 會話管理器：正確：會話管理器允許開發人員透過瀏覽器和 AWS CLI 安全地存取 EC2 實例，而無需 SSH 或堡壘主機。正確：Session Manager 不需要額外的 EC2 執行個體和 VPN 連接，且成本最低。正確：透過 IAM 角色和 AmazonSSMManagedInstanceCore 策略確保存取安全且可控。",
+          "en": "Correct. Using AWS Systems Manager Session Manager: Correct: Session Manager allows developers to securely access EC2 instances through a browser and the AWS CLI, without the need for SSH or a bastion host. Correct: Session Manager does not require additional EC2 instances and VPN connections, and is the lowest cost. Correct: Ensure access is secure and controllable through IAM roles and AmazonSSMManagedInstanceCore policies."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將 AmazonSSMManagedInstanceCore IAM 策略附加到與 EC2 執行個體關聯的 IAM 角色。指導開發人員使用 AWS Systems Manager 會話管理器存取 EC2 執行個體。",
+        "en": "D. Attach the AmazonSSMManagedInstanceCore IAM policy to an IAM role that is associated with the EC2 instances. Instruct the developers to use AWS Systems Manager Session Manager to access the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：使用 AWS Systems Manager 會話管理器：正確：會話管理器允許開發人員透過瀏覽器和 AWS CLI 安全地存取 EC2 實例，而無需 SSH 或堡壘主機。正確：Session Manager 不需要額外的 EC2 執行個體和 VPN 連接，且成本最低。正確：透過 IAM 角色和 AmazonSSMManagedInstanceCore 策略確保存取安全且可控。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Using AWS Systems Manager Session Manager: Correct: Session Manager allows developers to securely access EC2 instances through a browser and the AWS CLI, without the need for SSH or a bastion host. Correct: Session Manager does not require additional EC2 instances and VPN connections, and is the lowest cost. Correct: Ensure access is secure and controllable through IAM roles and AmazonSSMManagedInstanceCore policies."
+      }
+    },
+    {
+      "question_no": 767,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家製藥公司正在開發一種新藥。過去幾個月，該公司產生的數據量呈指數級增長。該公司的研究人員經常要求以最小的延遲立即提供整個資料集的子集。但是，不需要每天存取整個資料集。目前所有數據都駐留在本地儲存陣列中，該公司希望減少持續的資本支出。解決方案架構師應該推薦哪種儲存解決方案來滿足這些要求？",
+        "en": "A pharmaceutical company is developing a new drug. The volume of data that the company generates has grown exponentially over the past few months. The company's researchers regularly require a subset of the entire dataset to be immediately available with minimal lag. However, the entire dataset does not need to be accessed on a daily basis. All the data currently resides in on- premises storage arrays, and the company wants to reduce ongoing capital expenses. Which storage solution should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 AWS DataSync 作為計畫的 cron 作業運行，以持續將資料遷移到 Amazon S3 儲存桶。",
+          "en": "Run AWS DataSync as a scheduled cron job to migrate the data to an Amazon S3 bucket on an ongoing basis."
+        },
+        "B": {
+          "zh": "部署 AWS Storage Gateway 檔案網關，並將 Amazon S3 儲存桶作為目標儲存。將資料遷移到 Storage Gateway 設備。",
+          "en": "Deploy an AWS Storage Gateway file gateway with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+        },
+        "C": {
+          "zh": "部署具有快取磁碟區的 AWS Storage Gateway 磁碟區網關，並將 Amazon S3 儲存桶作為目標儲存。將資料遷移到 Storage Gateway 設備。",
+          "en": "Deploy an AWS Storage Gateway volume gateway with cached volumes with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+        },
+        "D": {
+          "zh": "設定從本機環境到 AWS 的 AWS Site-to-Site VPN 連線。將資料移轉到 Amazon Elastic File System (Amazon EFS) 檔案系統。",
+          "en": "Configure an AWS Site-to-Site VPN connection from the on-premises environment to AWS. Migrate data to an Amazon Elastic File System (Amazon EFS) file system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：AWS DataSync可用於有效率地將資料遷移到Amazon S3，但僅適合定期一次性遷移數據，且不提供對資料的低延遲存取。錯誤原因：標題要求「Bisu人員需要可以以最小延遲立即存取的資料子集」。 S3本身不支援低延遲存取。",
+          "en": "Incorrect. Analysis: AWS DataSync can be used to efficiently migrate data to Amazon S3, but it is only suitable for one-time migration of data on a regular basis, and does not provide low latency access to data. Reason for the error: The title requires \"Bisu personnel need a subset of data that can be accessed immediately with minimal latency.\" S3 itself does not support low latency access."
+        },
+        "B": {
+          "zh": "錯誤。分析：AWS Storage Gateway檔案閘道可以將檔案儲存到S3並提供檔案存取。錯誤原因：File access適合文件訪問，但是問題沒有明確提到需要文件訪問，這是為了減少後期訪問和資料子集的需要。",
+          "en": "Incorrect. Analysis: AWS Storage Gateway file gateway can store files to S3 and provide file access. Reason for the error: File access is suitable for file access, but the question does not clearly mention the need for file access, which is to reduce the need for late access and data subsets."
+        },
+        "C": {
+          "zh": "正確。分析：AWS Storage Gateway 磁碟區閘道（模組）允許將資料儲存在 Amazon S3 中，同時將最近存取的資料儲存在本機以提供低延遲存取。為什麼正確：該架構滿足了資料庫人員以最小的延遲立即存取資料子集的需求，同時將資料遷移到雲端以減少資本支出。",
+          "en": "Correct. Analysis: AWS Storage Gateway volume gateways (modules) allow data to be stored in Amazon S3 while storing recently accessed data locally to provide low-latency access. Why it’s right: This architecture satisfies the need for database personnel to have immediate access to subsets of data with minimal latency, while migrating data to the cloud to reduce capital expenditures."
+        },
+        "D": {
+          "zh": "錯誤。分析：Amazon EFS是一種檔案儲存服務，適合低速訪問，但通常用於支援多個EC2實例的共用檔案。錯誤原因：問題沒有提到需要共享文件的場景，EFS的成本可能會更高，不符合「減少資本支出」的要求。",
+          "en": "Incorrect. Analysis: Amazon EFS is a file storage service, suitable for low-speed access, but it is usually used to support shared files of multiple EC2 instances. Reason for the error: The question does not mention the scenario where files need to be shared, and the cost of EFS may be higher, which does not meet the requirement of \"reducing capital expenditures\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 部署具有快取磁碟區的 AWS Storage Gateway 磁碟區網關，並將 Amazon S3 儲存桶作為目標儲存。將資料遷移到 Storage Gateway 設備。",
+        "en": "C. Deploy an AWS Storage Gateway volume gateway with cached volumes with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (91%)。熱門討論與考點摘要：分析：AWS Storage Gateway 磁碟區閘道（模組）允許將資料儲存在 Amazon S3 中，同時將最近存取的資料儲存在本機以提供低延遲存取。為什麼正確：該架構滿足了資料庫人員以最小的延遲立即存取資料子集的需求，同時將資料遷移到雲端以減少資本支出。",
+        "en": "Community vote as displayed: C (91%). Popular discussion and key point summary: Analysis: AWS Storage Gateway volume gateways (modules) allow data to be stored in Amazon S3 while storing recently accessed data locally to provide low-latency access. Why it’s right: This architecture satisfies the need for database personnel to have immediate access to subsets of data with minimal latency, while migrating data to the cloud to reduce capital expenditures."
+      }
+    },
+    {
+      "question_no": 768,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個在 Amazon EC2 執行個體上執行的關鍵業務應用程式。該應用程式將資料儲存在 Amazon DynamoDB 表中。公司必須能夠將表恢復到過去 24 小時內的任何點。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company has a business-critical application that runs on Amazon EC2 instances. The application stores data in an Amazon DynamoDB table. The company must be able to revert the table to any point within the last 24 hours. Which solution meets these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "為表格配置時間點復原。",
+          "en": "Configure point-in-time recovery for the table."
+        },
+        "B": {
+          "zh": "對錶使用 AWS Backup。",
+          "en": "Use AWS Backup for the table."
+        },
+        "C": {
+          "zh": "使用 AWS Lambda 函數每小時對資料表進行一次按需備份。",
+          "en": "Use an AWS Lambda function to make an on-demand backup of the table every hour."
+        },
+        "D": {
+          "zh": "打開表上的流以捕獲過去 24 小時內表的所有更改的日誌。將流的副本儲存在 Amazon S3 儲存桶中。",
+          "en": "Turn on streams on the table to capture a log of all changes to the table in the last 24 hours. Store a copy of the stream in an Amazon S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。DynamoDB的時間點復原功能允許使用者將表格還原到過去的任意時間點（最多35天），而且操作簡單，幾乎不需要額外的管理工作。這是滿足問題要求的最佳解決方案，因為它以最小的營運開銷提供了自動恢復功能。",
+          "en": "Correct. DynamoDB's point-in-time recovery function allows users to restore tables to any point in time in the past (up to 35 days), and the operation is simple and requires almost no additional management work. This is the best solution to meet the problem requirements because it provides automated recovery capabilities with minimal operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。AWS Backup雖然可以備份DynamoDB表，但需要手動配置備份計劃，無法直接支援「恢復到過去24小時內的任何時間點」的需求。與時間點恢復相比，AWS Backup 的營運開銷更高。",
+          "en": "Incorrect. Although AWS Backup can back up DynamoDB tables, it requires manual configuration of the backup plan and cannot directly support the requirement of \"recovering to any point in time within the past 24 hours\". Compared with point-in-time recovery, AWS Backup has higher operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。使用Lambda函數進行按需備份需要額外的開發和維護工作，且備份頻率（每小時）無法完全滿足「還原到任意時間點」的要求。操作開銷較高，不是最佳選擇。",
+          "en": "Incorrect. Using Lambda functions for on-demand backup requires additional development and maintenance work, and the backup frequency (hourly) cannot fully meet the requirement of \"recovering to any point in time\". The operation overhead is high and not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。DynamoDB Streams 主要用於擷取表格變更記錄，適用於即時資料處理或事件驅動架構，但不支援直接復原到過去任何時間點。需要額外的開發工作來實現資料恢復，並且營運開銷很高。",
+          "en": "Incorrect. DynamoDB Streams is mainly used to capture table change records and is suitable for real-time data processing or event-driven architecture, but it does not support direct recovery to any point in time in the past. Additional development work is required to achieve data recovery, and the operational overhead is high."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 為表格配置時間點復原。",
+        "en": "A. Configure point-in-time recovery for the table."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：DynamoDB的時間點復原功能允許使用者將表格還原到過去的任意時間點（最多35天），而且操作簡單，幾乎不需要額外的管理工作。這是滿足問題要求的最佳解決方案，因為它以最小的營運開銷提供了自動恢復功能。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: DynamoDB's point-in-time recovery function allows users to restore tables to any point in time in the past (up to 35 days), and the operation is simple and requires almost no additional management work. This is the best solution to meet the problem requirements because it provides automated recovery capabilities with minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 769,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司託管一個用於將檔案上傳到 Amazon S3 儲存桶的應用程式。上傳後，系統會處理檔案以提取元數據，整個過程不到 5 秒。上傳的數量和頻率各不相同，從每小時幾個文件到數百個並發上傳。該公司已要求解決方案架構師設計一種經濟高效的架構來滿足這些要求。解決方案架構師該推薦什麼？",
+        "en": "A company hosts an application used to upload files to an Amazon S3 bucket. Once uploaded, the files are processed to extract metadata, which takes less than 5 seconds. The volume and frequency of the uploads varies from a few files each hour to hundreds of concurrent uploads. The company has asked a solutions architect to design a cost-effective architecture that will meet these requirements. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 AWS CloudTrail 追蹤以記錄 S3 API 呼叫。使用 AWS AppSync 處理文件。",
+          "en": "Configure AWS CloudTrail trails to log S3 API calls. Use AWS AppSync to process the files."
+        },
+        "B": {
+          "zh": "在 S3 儲存桶中設定物件建立事件通知，以呼叫 AWS Lambda 函數來處理檔案。",
+          "en": "Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the files."
+        },
+        "C": {
+          "zh": "設定 Amazon Kinesis Data Streams 以處理資料並將資料傳送至 Amazon S3。呼叫 AWS Lambda 函數來處理檔案。",
+          "en": "Configure Amazon Kinesis Data Streams to process and send data to Amazon S3. Invoke an AWS Lambda function to process the files."
+        },
+        "D": {
+          "zh": "設定 Amazon Simple Notification Service (Amazon SNS) 主題以處理上傳至 Amazon S3 的檔案。呼叫 AWS Lambda 函數來處理檔案。",
+          "en": "Configure an Amazon Simple Notification Service (Amazon SNS) topic to process the files uploaded to Amazon S3. Invoke an AWS Lambda function to process the files."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。CloudTrail 主要用於記錄 API 呼叫以進行審核和監控，而不是即時處理檔案。錯誤：AWS AppSync 是用於建立 GraphQL API 的服務，不適合處理檔案上傳後的即時處理需求。",
+          "en": "Incorrect. CloudTrail is primarily used for logging API calls for auditing and monitoring purposes, rather than processing files in real time. Error: AWS AppSync is a service used to build GraphQL APIs and is not suitable for handling real-time processing needs after file upload."
+        },
+        "B": {
+          "zh": "正確。S3 支援事件通知，可以在建立物件時觸發 Lambda 函數。正確：AWS Lambda 是一種無伺服器運算服務，可以快速、便宜地處理文件，適合處理不確定的負載。",
+          "en": "Correct. S3 supports event notification, which can trigger Lambda functions when objects are created. Correct: AWS Lambda is a serverless computing service that can process files quickly and cheaply and is suitable for handling uncertain loads."
+        },
+        "C": {
+          "zh": "錯誤。Kinesis Data Streams主要用於即時串流資料處理，但問題沒有提到對流資料的要求。錯誤：將資料傳送到S3後處理檔案會增加複雜度和成本，不符合問題的成本最佳化要求。",
+          "en": "Incorrect. Kinesis Data Streams is mainly used for real-time streaming data processing, but the question does not mention the requirement for streaming data. Error: Processing the file after sending the data to S3 will increase complexity and cost, and does not meet the cost optimization requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。SNS主要用於訊息分發，而不是直接處理S3事件通知。錯誤：S3 事件通知可以直接觸發 Lambda 函數，而無需透過 SNS 中繼。",
+          "en": "Incorrect. SNS is mainly used for message distribution, rather than directly handling S3 event notifications. Error: S3 event notifications can directly trigger Lambda functions without being relayed through SNS."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 S3 儲存桶中設定物件建立事件通知，以呼叫 AWS Lambda 函數來處理檔案。",
+        "en": "B. Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the files."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：S3 支援事件通知，可以在建立物件時觸發 Lambda 函數。正確：AWS Lambda 是一種無伺服器運算服務，可以快速、便宜地處理文件，適合處理不確定的負載。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: S3 supports event notification, which can trigger Lambda functions when objects are created. Correct: AWS Lambda is a serverless computing service that can process files quickly and cheaply and is suitable for handling uncertain loads."
+      }
+    },
+    {
+      "question_no": 770,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司的應用程式部署在 Amazon EC2 執行個體上，並使用 AWS Lambda 函數來實現事件驅動的架構。該公司在將功能部署到生產環境之前，使用不同 AWS 帳戶中的非生產開發環境來測試新功能。由於客戶位於不同時區，生產實例顯示持續的使用情況。該公司僅在工作日的工作時間使用非生產實例。該公司不會在周末使用非生產實例。該公司希望優化在 AWS 上運行其應用程式的成本。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A company’s application is deployed on Amazon EC2 instances and uses AWS Lambda functions for an event-driven architecture. The company uses nonproduction development environments in a different AWS account to test new features before the company deploys the features to production. The production instances show constant usage because of customers in different time zones. The company uses nonproduction instances only during business hours on weekdays. The company does not use the nonproduction instances on the weekends. The company wants to optimize the costs to run its application on AWS. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "對生產實例使用按需實例。僅在週末將專用主機用於非生產實例。",
+          "en": "Use On-Demand Instances for the production instances. Use Dedicated Hosts for the nonproduction instances on weekends only."
+        },
+        "B": {
+          "zh": "對生產實例和非生產實例使用預留實例。不使用時關閉非生產實例。",
+          "en": "Use Reserved Instances for the production instances and the nonproduction instances. Shut down the nonproduction instances when not in use."
+        },
+        "C": {
+          "zh": "對生產實例使用計算節省計劃。對非生產實例使用按需實例。不使用時關閉非生產實例。",
+          "en": "Use Compute Savings Plans for the production instances. Use On-Demand Instances for the nonproduction instances. Shut down the nonproduction instances when not in use."
+        },
+        "D": {
+          "zh": "對生產實例使用專用主機。對非生產執行個體使用 EC2 執行個體節省計劃。",
+          "en": "Use Dedicated Hosts for the production instances. Use EC2 Instance Savings Plans for the nonproduction instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。將按需實例用於生產實例是合理的，因為它們需要全天候運行，而按需實例提供了靈活性。非生產實例只在週末使用專用主機是不合理的，因為問題明確指出週末不使用非生產實例。專用主機較昂貴，且不適合這種存根間使用模型。此選項不符合成本優化的標準。",
+          "en": "Incorrect. It is reasonable to use On-Demand Instances for production instances because they need to run around the clock and On-Demand provides flexibility. It is unreasonable for non-production instances to use Dedicated Hosts only on weekends, because the question clearly states that non-production instances are not used on weekends. Dedicated Hosts are more expensive and are not suitable for this inter-stub usage model. this option does not meet the criteria for cost optimization."
+        },
+        "B": {
+          "zh": "錯誤。將預留實例用於生產實例是合理的，因為它們需要全天候運行，並且預留實例可以提供長期成本節省。非生產實例使用預留實例是不合理的，因為非生產實例僅在工作日的營業時間內使用，而預留實例全年都需要付費。五推充分發揮了成本優勢。此選項不符合非生產實例的存根使用模式。",
+          "en": "Incorrect. It is reasonable to use Reserved Instances for production instances because they need to run around the clock and Reserved Instances provide long-term cost savings. It is unreasonable to use Reserved Instances for non-production instances, because non-production instances are only used during business hours on working days, and Reserved Instances require payment throughout the year. Wutui takes full advantage of its cost advantages. this option does not comply with the stub usage pattern for non-production instances."
+        },
+        "C": {
+          "zh": "正確。對生產實例使用計算節省計劃是有意義的，因為它們需要全天候運行，而節省計劃提供了靈活性並節省了成本。對於非生產實例使用按需實例是有意義的，因為它們僅在工作日的工作時間內使用，並且按需提供了按需計費的靈活性。關閉非生產實例進一步優化成本並滿足問題的要求。此選項滿足成本優化的要求。",
+          "en": "Correct. It makes sense to use Compute Savings Plans for production instances because they need to run around the clock and Savings Plans provide flexibility and cost savings. It makes sense to use On-Demand Instances for non-production instances because they are only used during business hours on weekdays, and On-Demand provides the flexibility of on-demand billing. Closing non-production instances further optimizes costs and meets the requirements of the problem. this option meets the requirements of cost optimization."
+        },
+        "D": {
+          "zh": "錯誤。專用主機的成本高於沒有規定許可要求的共享租賃，並且全年節省計劃與僅在工作日工作時間運行的非生產實例不太匹配。",
+          "en": "Incorrect. Dedicated Hosts cost more than shared tenancy without a stated licensing requirement, and a year-round Savings Plan is poorly matched to nonproduction instances that run only during weekday business hours."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 對生產實例使用計算節省計劃。對非生產實例使用按需實例。不使用時關閉非生產實例。",
+        "en": "C. Use Compute Savings Plans for the production instances. Use On-Demand Instances for the nonproduction instances. Shut down the nonproduction instances when not in use."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (87%)。熱門討論與考點摘要：對生產實例使用計算節省計劃是有意義的，因為它們需要全天候運行，而節省計劃提供了靈活性並節省了成本。對於非生產實例使用按需實例是有意義的，因為它們僅在工作日的工作時間內使用，並且按需提供了按需計費的靈活性。關閉非生產實例進一步優化成本並滿足問題的要求。此選項滿足成本優化的要求。",
+        "en": "Community vote as displayed: C (87%). Popular discussion and key point summary: It makes sense to use Compute Savings Plans for production instances because they need to run around the clock and Savings Plans provide flexibility and cost savings. It makes sense to use On-Demand Instances for non-production instances because they are only used during business hours on weekdays, and On-Demand provides the flexibility of on-demand billing. Closing non-production instances further optimizes costs and meets the requirements of the problem. this option meets the requirements of cost optimization."
+      }
+    },
+    {
+      "question_no": 771,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司將資料儲存在本機 Oracle 關聯式資料庫中。該公司需要在 Amazon Aurora PostgreSQL 中提供資料以供分析。該公司使用 AWS 站點到站點 VPN 連線將其本地網路連接到 AWS。公司必須捕獲在遷移到 Aurora PostgreSQL 期間來源資料庫發生的變更。哪種解決方案可以滿足這些要求？",
+        "en": "A company stores data in an on-premises Oracle relational database. The company needs to make the data available in Amazon Aurora PostgreSQL for analysis. The company uses an AWS Site-to-Site VPN connection to connect its on-premises network to AWS. The company must capture the changes that occur to the source database during the migration to Aurora PostgreSQL. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Schema Conversion Tool (AWS SCT) 將 Oracle 架構轉換為 Aurora PostgreSQL 架構。使用 AWS Database Migration Service (AWS DMS) 滿載遷移任務來遷移資料。",
+          "en": "Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use the AWS Database Migration Service (AWS DMS) full-load migration task to migrate the data."
+        },
+        "B": {
+          "zh": "使用 AWS DataSync 將資料移轉到 Amazon S3 儲存桶。使用 Aurora PostgreSQL aws_s3 擴充功能將 S3 資料匯入到 Aurora PostgreSQL。",
+          "en": "Use AWS DataSync to migrate the data to an Amazon S3 bucket. Import the S3 data to Aurora PostgreSQL by using the Aurora PostgreSQL aws_s3 extension."
+        },
+        "C": {
+          "zh": "使用 AWS Schema Conversion Tool (AWS SCT) 將 Oracle 架構轉換為 Aurora PostgreSQL 架構。使用 AWS Database Migration Service (AWS DMS) 遷移現有資料並複製正在進行的變更。",
+          "en": "Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use AWS Database Migration Service (AWS DMS) to migrate the existing data and replicate the ongoing changes."
+        },
+        "D": {
+          "zh": "使用 AWS Snowball 裝置將資料移轉到 Amazon S3 儲存桶。使用 Aurora PostgreSQL aws_s3 擴充功能將 S3 資料匯入到 Aurora PostgreSQL。",
+          "en": "Use an AWS Snowball device to migrate the data to an Amazon S3 bucket. Import the S3 data to Aurora PostgreSQL by using the Aurora PostgreSQL aws_s3 extension."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項提到使用 AWS SCT 進行架構轉換並使用 AWS DMS 進行完整遷移，但沒有提到擷取對來源資料庫的變更（CDC，變更資料擷取）。因此，不符合題目要求。",
+          "en": "Incorrect. This option mentions using AWS SCT for schema conversion and AWS DMS for full migration, but does not mention capturing changes to the source database (CDC, Change Data Capture). Therefore, the question requirements are not met."
+        },
+        "B": {
+          "zh": "錯誤。AWS DataSync 主要用於檔案和其他資料遷移，而非相關資料庫的遷移。此外，aws_s3 擴充功能無法擷取對來源資料庫的變更。該選項不符合題目要求。",
+          "en": "Incorrect. AWS DataSync is mainly used for file and other data migration, not for migration of related databases. Additionally, the aws_s3 extension cannot capture changes to the source database. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "正確。此選項提到使用 AWS SCT 進行架構轉換，使用 AWS DMS 進行資料遷移和變更擷取 (CDC)。完全滿足題目要求。正確的。",
+          "en": "Correct. This option mentions using AWS SCT for schema conversion and AWS DMS for data migration and change capture (CDC). Fully meet the question requirements. Correct."
+        },
+        "D": {
+          "zh": "錯誤。AWS Snowball主要用於大規模資料遷移，但無法擷取來源資料庫的變更。此外，aws_s3擴展無法滿足變更捕獲的需求。該選項不符合題目要求。",
+          "en": "Incorrect. AWS Snowball is mainly used for large-scale data migration, but it cannot capture changes in the source database. Additionally, the aws_s3 extension cannot meet the needs of change capture. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Schema Conversion Tool (AWS SCT) 將 Oracle 架構轉換為 Aurora PostgreSQL 架構。使用 AWS Database Migration Service (AWS DMS) 遷移現有資料並複製正在進行的變更。",
+        "en": "C. Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use AWS Database Migration Service (AWS DMS) to migrate the existing data and replicate the ongoing changes."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (100%)。熱門討論與考點摘要：此選項提到使用 AWS SCT 進行架構轉換，使用 AWS DMS 進行資料遷移和變更擷取 (CDC)。完全滿足題目要求。正確的。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: This option mentions using AWS SCT for schema conversion and AWS DMS for data migration and change capture (CDC). Fully meet the question requirements. Correct."
+      }
+    },
+    {
+      "question_no": 772,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Docker 容器建立了一個應用程序，需要在 AWS 雲端中運行該應用程式。該公司希望使用託管服務來託管該應用程式。此解決方案必須根據各個容器服務的需求適當地擴展和擴展。該解決方案還不得導致額外的營運開銷或需要管理的基礎設施。哪些解決方案可以滿足這些要求？ （選兩個。）",
+        "en": "A company built an application with Docker containers and needs to run the application in the AWS Cloud. The company wants to use a managed service to host the application. The solution must scale in and out appropriately according to demand on the individual container services. The solution also must not result in additional operational overhead or infrastructure to manage. Which solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Amazon Elastic Container Service (Amazon ECS) 與 AWS Fargate 結合使用。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate."
+        },
+        "B": {
+          "zh": "將 Amazon Elastic Kubernetes Service (Amazon EKS) 與 AWS Fargate 結合使用。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with AWS Fargate."
+        },
+        "C": {
+          "zh": "設定 Amazon API Gateway API。將 API 連接到 AWS Lambda 以執行容器。",
+          "en": "Provision an Amazon API Gateway API. Connect the API to AWS Lambda to run the containers."
+        },
+        "D": {
+          "zh": "將 Amazon Elastic Container Service (Amazon ECS) 與 Amazon EC2 工作執行緒節點結合使用。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with Amazon EC2 worker nodes."
+        },
+        "E": {
+          "zh": "將 Amazon Elastic Kubernetes Service (Amazon EKS) 與 Amazon EC2 工作執行緒節點結合使用。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 worker nodes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon ECS 與 AWS Fargate 結合是一種完全託管的解決方案，支援容器的無伺服器運行，從而減少營運開銷。支援容器服務按需動態擴展，滿足問題需求。",
+          "en": "Correct. Amazon ECS combined with AWS Fargate is a fully managed solution that supports serverless running of containers, reducing operational overhead. Supports dynamic expansion of container services as needed to meet problem requirements."
+        },
+        "B": {
+          "zh": "正確。Amazon EKS 與 AWS Fargate 結合也是一種完全託管的解決方案，支援容器的無伺服器運行，從而減少營運開銷。支援容器服務按需動態擴展，滿足問題需求。",
+          "en": "Correct. Amazon EKS combined with AWS Fargate is also a fully managed solution that supports serverless running of containers, reducing operational overhead. Supports dynamic expansion of container services as needed to meet problem requirements."
+        },
+        "C": {
+          "zh": "錯誤。AWS Lambda 不適合直接運行容器，API Gateway 與 Lambda 的結合主要用於無伺服器函數運算而非容器服務。不符合問題要求的「託管容器服務」場景。",
+          "en": "Incorrect. AWS Lambda is not suitable for running containers directly, and the combination of API Gateway and Lambda is mainly used for serverless function computing rather than container services. A \"managed container service\" scenario that does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。使用 Amazon EC2 工作執行緒節點需要對 EC2 執行個體進行額外管理，這會增加營運開銷。不符合問題中「減少營運費用」的條件。",
+          "en": "Incorrect. Using Amazon EC2 worker nodes requires additional management of EC2 instances, which increases operational overhead. It does not meet the condition of \"reducing operational expenses\" as stated in the question."
+        },
+        "E": {
+          "zh": "錯誤。使用 Amazon EC2 工作執行緒節點需要對 EC2 執行個體進行額外管理，這會增加營運開銷。不符合問題中「減少營運費用」的條件。",
+          "en": "Incorrect. Using Amazon EC2 worker nodes requires additional management of EC2 instances, which increases operational overhead. It does not meet the condition of \"reducing operational expenses\" as stated in the question."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 將 Amazon Elastic Container Service (Amazon ECS) 與 AWS Fargate 結合使用。；B. 將 Amazon Elastic Kubernetes Service (Amazon EKS) 與 AWS Fargate 結合使用。",
+        "en": "A. Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate.; B. Use Amazon Elastic Kubernetes Service (Amazon EKS) with AWS Fargate."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AB (69%)； AC (31%)。熱門討論與考點摘要：Amazon ECS 與 AWS Fargate 結合是一種完全託管的解決方案，支援容器的無伺服器運行，從而減少營運開銷。支援容器服務按需動態擴展，滿足問題需求。；Amazon EKS 與 AWS Fargate 結合也是一種完全託管的解決方案，支援容器的無伺服器運行，從而減少營運開銷。支援容器服務按需動態擴展，滿足問題需求。",
+        "en": "Community vote as displayed: AB (69%); AC (31%). Popular discussion and key point summary: Amazon ECS combined with AWS Fargate is a fully managed solution that supports serverless running of containers, reducing operational overhead. Supports dynamic expansion of container services as needed to meet problem requirements.; Amazon EKS combined with AWS Fargate is also a fully managed solution that supports serverless running of containers, reducing operational overhead. Supports dynamic expansion of container services as needed to meet problem requirements."
+      }
+    },
+    {
+      "question_no": 773,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家電子商務公司正在進行季節性線上銷售。該公司將其網站託管在跨多個可用區的 Amazon EC2 執行個體上。該公司希望其網站能夠管理銷售期間突然增加的流量。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "An ecommerce company is running a seasonal online sale. The company hosts its website on Amazon EC2 instances spanning multiple Availability Zones. The company wants its website to manage sudden traffic increases during the sale. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個足夠大的 Auto Scaling 群組來處理尖峰流量負載。停止一半的 Amazon EC2 執行個體。配置 Auto Scaling 組以在流量增加時使用已停止的執行個體進行擴充。",
+          "en": "Create an Auto Scaling group that is large enough to handle peak traffic load. Stop half of the Amazon EC2 instances. Configure the Auto Scaling group to use the stopped instances to scale out when traffic increases."
+        },
+        "B": {
+          "zh": "為網站建立 Auto Scaling 群組。設定 Auto Scaling 群組的最小大小，使其能夠處理高流量而無需橫向擴展。",
+          "en": "Create an Auto Scaling group for the website. Set the minimum size of the Auto Scaling group so that it can handle high traffic volumes without the need to scale out."
+        },
+        "C": {
+          "zh": "使用 Amazon CloudFront 和 Amazon ElastiCache 快取動態內容，並將 Auto Scaling 群組設定為來源。使用填充 CloudFront 和 ElastiCache 所需的實例來設定 Auto Scaling 群組。快取完全填充後進行縮減。",
+          "en": "Use Amazon CloudFront and Amazon ElastiCache to cache dynamic content with an Auto Scaling group set as the origin. Configure the Auto Scaling group with the instances necessary to populate CloudFront and ElastiCache. Scale in after the cache is fully populated."
+        },
+        "D": {
+          "zh": "設定 Auto Scaling 組以隨著流量增加而擴展。建立啟動範本以從預先配置的 Amazon 系統映像 (AMI) 啟動新執行個體。",
+          "en": "Configure an Auto Scaling group to scale out as traffic increases. Create a launch template to start new instances from a preconfigured Amazon Machine Image (AMI)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。建立一個足夠大的 Auto Scaling 群組來處理尖峰流量負載。停止一半的 Amazon EC2 執行個體。將 Auto Scaling 群組配置為使用已停止的執行個體在流量增加時進行擴充。錯誤：Auto Scaling 無條帶連線使用已停止的執行個體進行擴充。已停止的執行個體不會自動啟動。 Auto Scaling 通常會啟動新執行個體來滿足需求。成本低效率：預啟動和停止執行個體會產生額外成本（例如儲存費用），且不影響流量變化。",
+          "en": "Incorrect. Create an Auto Scaling group that is large enough to handle peak traffic loads. Stop half of the Amazon EC2 instances. Configure the Auto Scaling group to use stopped instances to scale as traffic increases. Error: Auto Scaling stripeless connection uses stopped instances for scaling. Stopped instances are not automatically started. Auto Scaling usually starts new instances to meet demand. Cost inefficiency: Pre-starting and stopping instances incurs additional costs (such as storage fees) and does not affect traffic changes."
+        },
+        "B": {
+          "zh": "錯誤。建立 Auto Scaling 群組。設定 Auto Scaling 群組的最小大小，以便它可以在不擴展的情況下處理高流量負載。錯誤：此行為可能會導致資源過度配置，因為最小大小設定為高流量負載的密度，即使流量較低也會消耗資源。成本效率低：根據流量趨勢不必要地調整資源，造成不必要的支出。",
+          "en": "Incorrect. Create an Auto Scaling group. Set the minimum size for your Auto Scaling group so that it can handle high traffic loads without scaling. Error: This behavior can cause resources to be over-provisioned because the minimum size is set to a density for high traffic loads, consuming resources even when traffic is low. Low cost efficiency: Unnecessarily adjusting resources according to traffic trends, resulting in unnecessary expenses."
+        },
+        "C": {
+          "zh": "錯誤。使用 Amazon CloudFront 和 Amazon ElastiCache 快取動態內容並將 Auto Scaling 群組設定為來源。設定 Auto Scaling 群組以使用必要的實例填充 CloudFront 和 ElastiCache。收縮發生在緩存完全填充之後。 CloudFront 和 ElastiCache 確實可以優化效能，但它們主要用於靜態和動態工作負載，並非設計用於直接處理流量增加的需求。錯誤：如何動態擴展計算資源來處理流量增加的問題沒有直接的解決方案。",
+          "en": "Incorrect. Use Amazon CloudFront and Amazon ElastiCache to cache dynamic content and set an Auto Scaling group as the origin. Configure the Auto Scaling group to populate CloudFront and ElastiCache with the necessary instances. Shrinking occurs after the cache is fully populated. CloudFront and ElastiCache can indeed optimize performance, but they are primarily used for static and dynamic workloads and are not designed to directly handle the need to handle increased traffic. Error: There is no direct solution to the problem of how to dynamically expand computing resources to handle traffic increases."
+        },
+        "D": {
+          "zh": "正確。此選項Auto Scaling 群組可根據流量動態擴充執行個體，啟動範本和預先配置的 AMI 可快速啟動新執行個體以滿足需求。經濟高效：僅在流量增加時才啟動新實例，避免資源消耗。",
+          "en": "Correct. Configure an Auto Scaling group to scale as traffic increases. Create a launch template to launch new instances from a preconfigured Amazon Machine Image (AMI). Auto Scaling groups can scale instances based on traffic dynamics, and launch templates and preconfigured AMIs can quickly spin up new instances to meet demand. Cost-effective: only launch new instances when traffic increases, avoiding resource consumption."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 設定 Auto Scaling 組以隨著流量增加而擴展。建立啟動範本以從預先配置的 Amazon 系統映像 (AMI) 啟動新執行個體。",
+        "en": "D. Configure an Auto Scaling group to scale out as traffic increases. Create a launch template to start new instances from a preconfigured Amazon Machine Image (AMI)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (89%)。熱門討論與考點摘要：此選項Auto Scaling 群組可根據流量動態擴充執行個體，啟動範本和預先配置的 AMI 可快速啟動新執行個體以滿足需求。經濟高效：僅在流量增加時才啟動新實例，避免資源消耗。",
+        "en": "Community vote as displayed: D (89%). Popular discussion and key point summary: Configure an Auto Scaling group to scale as traffic increases. Create a launch template to launch new instances from a preconfigured Amazon Machine Image (AMI). Auto Scaling groups can scale instances based on traffic dynamics, and launch templates and preconfigured AMIs can quickly spin up new instances to meet demand. Cost-effective: only launch new instances when traffic increases, avoiding resource consumption."
+      }
+    },
+    {
+      "question_no": 774,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師必須為公司的合規性策略提供自動化解決方案，該策略規定安全群組不能包含允許來自 0.0.0.0/0 的 SSH 的規則。如果有任何違反政策的情況，需要通知公司。需要盡快找到解決方案。解決方案架構師應該如何做才能以最少的營運開銷來滿足這些要求？",
+        "en": "A solutions architect must provide an automated solution for a company's compliance policy that states security groups cannot include a rule that allows SSH from 0.0.0.0/0. The company needs to be notified if there is any breach in the policy. A solution is needed as soon as possible. What should the solutions architect do to meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "編寫一個 AWS Lambda 腳本，用於監控向 0.0.0.0/0 位址開放的 SSH 的安全性群組，並在每次發現時建立通知。",
+          "en": "Write an AWS Lambda script that monitors security groups for SSH being open to 0.0.0.0/0 addresses and creates a notification every time it finds one."
+        },
+        "B": {
+          "zh": "啟用restricted-ssh AWS Config 託管規則並在建立不合規規則時產生 Amazon Simple Notification Service (Amazon SNS) 通知。",
+          "en": "Enable the restricted-ssh AWS Config managed rule and generate an Amazon Simple Notification Service (Amazon SNS) notification when a noncompliant rule is created."
+        },
+        "C": {
+          "zh": "建立一個具有全域開放安全群組和網路 ACL 權限的 IAM 角色。建立 Amazon Simple Notification Service (Amazon SNS) 主題，以便在使用者每次代入該角色時產生通知。",
+          "en": "Create an IAM role with permissions to globally open security groups and network ACLs. Create an Amazon Simple Notification Service (Amazon SNS) topic to generate a notification every time the role is assumed by a user."
+        },
+        "D": {
+          "zh": "設定服務控制政策 (SCP)，以防止非管理使用者建立或編輯安全性群組。當使用者要求需要管理員權限的規則時，在票證系統中建立通知。",
+          "en": "Configure a service control policy (SCP) that prevents non-administrative users from creating or editing security groups. Create a notification in the ticketing system when a user requests a rule that needs administrator permissions."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然Lambda可以實現控制和通知功能，但需要手動編寫腳本和維護，增加了操作複雜度和維護成本。錯誤原因：該選項不符合「最小營運開銷」的要求，因為AWS提供了託管規則（Managed Rules）來解決這個問題。",
+          "en": "Incorrect. Although Lambda can implement control and notification functions, it requires manual scripting and maintenance, which increases operational complexity and maintenance costs. Reason for the error: This option does not meet the requirement of \"minimum operational overhead\" because AWS has provided managed rules (Managed Rules) to solve this problem."
+        },
+        "B": {
+          "zh": "正確。AWS Config 託管規則「re​​stricted-ssh」專門用於偵測安全群組是否允許從 0.0.0.0/0 進行 SSH 存取。啟用此規則後，您可以透過SNS自動控制和發送通知。正確理由：此選項完全符合「最低營運開銷」的要求，因為它利用 AWS 的託管服務，無需額外的代理或複雜的配置。",
+          "en": "Correct. The AWS Config hosting rule \"restricted-ssh\" is specifically used to detect whether the security group allows SSH access from 0.0.0.0/0. After enabling this rule, you can automatically control and send notifications via SNS. Why it's right: This option perfectly meets the requirement of \"minimum operational overhead\" because it leverages AWS's managed services without requiring additional agency or complex configuration."
+        },
+        "C": {
+          "zh": "錯誤。此選項不符合問題的要求，因為它著重於IAM角色的使用，並沒有直接解決安全群組規則的合規問題。錯誤原因：此選項並沒有直接解決SSH規則的控制問題，且操作複雜度較高。",
+          "en": "Incorrect. This option does not meet the requirements of the question because it focuses on the use of IAM roles and does not directly solve the compliance issue of security group rules. Reason for the error: This option does not directly solve the control problem of SSH rules, and the operation complexity is high."
+        },
+        "D": {
+          "zh": "錯誤。SCP可以限制使用者權限，但無法直接控制安全群組規則的合規性，也無法自動通知違規行為。錯誤原因：此選項無法滿足問題所要求的自動化控制和通知功能。",
+          "en": "Incorrect. SCP can limit user permissions, but it cannot directly control the compliance of security group rules, nor can it automatically notify violations. Reason for the error: This option cannot meet the automated control and notification functions required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 啟用restricted-ssh AWS Config 託管規則並在建立不合規規則時產生 Amazon Simple Notification Service (Amazon SNS) 通知。",
+        "en": "B. Enable the restricted-ssh AWS Config managed rule and generate an Amazon Simple Notification Service (Amazon SNS) notification when a noncompliant rule is created."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：AWS Config 託管規則「re​​stricted-ssh」專門用於偵測安全群組是否允許從 0.0.0.0/0 進行 SSH 存取。啟用此規則後，您可以透過SNS自動控制和發送通知。正確理由：此選項完全符合「最低營運開銷」的要求，因為它利用 AWS 的託管服務，無需額外的代理或複雜的配置。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: The AWS Config hosting rule \"restricted-ssh\" is specifically used to detect whether the security group allows SSH access from 0.0.0.0/0. After enabling this rule, you can automatically control and send notifications via SNS. Why it's right: This option perfectly meets the requirement of \"minimum operational overhead\" because it leverages AWS's managed services without requiring additional agency or complex configuration."
+      }
+    },
+    {
+      "question_no": 775,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "將 Amazon Elastic Kubernetes Service (Amazon EKS) 與 Amazon EC2 工作執行緒節點結合使用。一家公司已在 AWS 帳戶中部署了一個應用程式。該應用程式由在 AWS Lambda 和 Amazon Elastic Kubernetes Service (Amazon EKS) 上執行的微服務組成。每個微服務都有一個單獨的團隊支援。該公司擁有多個 AWS 帳戶，並希望為每個團隊提供自己的微服務帳戶。解決方案架構師需要設計一個透過 HTTPS（連接埠 443）提供服務到服務通訊的解決方案。該解決方案還必須提供用於服務發現的服務註冊表。哪種解決方案能夠以最少的管理開銷來滿足這些要求？",
+        "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 worker nodes. A company has deployed an application in an AWS account. The application consists of microservices that run on AWS Lambda and Amazon Elastic Kubernetes Service (Amazon EKS). A separate team supports each microservice. The company has multiple AWS accounts and wants to give each team its own account for its microservices. A solutions architect needs to design a solution that will provide service-to-service communication over HTTPS (port 443). The solution also must provide a service registry for service discovery. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立檢查 VPC。將 AWS Network Firewall 防火牆部署到檢查 VPC。將檢查 VPC 連接到新的中轉網關。將 VPC 到 VPC 的流量路由到檢查 VPC。應用防火牆規則以僅允許 HTTPS 通訊。",
+          "en": "Create an inspection VPC. Deploy an AWS Network Firewall firewall to the inspection VPC. Attach the inspection VPC to a new transit gateway. Route VPC-to-VPC traffic to the inspection VPC. Apply firewall rules to allow only HTTPS communication."
+        },
+        "B": {
+          "zh": "建立 VPC Lattice 服務網。將微服務與服務網路關聯起來。為每個服務定義 HTTPS 偵聽器。將微服務計算資源註冊為目標。識別需要與服務通訊的 VPC。將這些 VPC 與服務網路關聯。",
+          "en": "Create a VPC Lattice service network. Associate the microservices with the service network. Define HTTPS listeners for each service. Register microservice compute resources as targets. Identify VPCs that need to communicate with the services. Associate those VPCs with the service network."
+        },
+        "C": {
+          "zh": "使用 HTTPS 偵聽器和每個微服務的目標群組建立網路負載平衡器 (NLB)。為每個微服務建立一個 AWS PrivateLink 終端節點服務。在需要使用該微服務的每個 VPC 中建立一個介面 VPC 終端節點。",
+          "en": "Create a Network Load Balancer (NLB) with an HTTPS listener and target groups for each microservice. Create an AWS PrivateLink endpoint service for each microservice. Create an interface VPC endpoint in each VPC that needs to consume that microservice."
+        },
+        "D": {
+          "zh": "在包含微服務的 VPC 之間建立對等連接。為每個需要連接到客戶端的服務建立一個前綴清單。建立路由表以將流量路由到適當的 VPC。建立安全群組以僅允許 HTTPS 通訊。",
+          "en": "Create peering connections between VPCs that contain microservices. Create a prefix list for each service that requires a connection to a client. Create route tables to route traffic to the appropriate VPC. Create security groups to allow only HTTPS communication."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：使用 AWS 網路防火牆和 Transit Gateway 檢查和控制跨 VPC 流量。雖然可以將流量限制為 HTTPS，但沒有提及服務註冊和服務發現功能。由於防火牆規則和路由需要手動配置，因此管理開銷較高。",
+          "en": "Incorrect. Analysis: Use AWS Network Firewall and Transit Gateway to inspect and control cross-VPC traffic. While it is possible to restrict traffic to HTTPS, there is no mention of service registration and service discovery capabilities. Management overhead is higher because firewall rules and routing need to be configured manually."
+        },
+        "B": {
+          "zh": "正確。分析：VPC Lattice是專為跨VPC、跨帳戶的服務通訊而設計的解決方案。支援服務註冊和服務發現功能，簡化服務間通訊的管理。支援HTTPS監聽，滿足安全通訊需求。由於 VPC Lattice 自動處理服務註冊和通信，因此管理開銷極低。",
+          "en": "Correct. Analysis: VPC Lattice is a solution specifically designed for service communication across VPCs and across accounts. Supports service registration and service discovery functions, simplifying the management of communication between services. Supports HTTPS listener to meet secure communication needs. Management overhead is minimal because VPC Lattice handles service registration and communication automatically."
+        },
+        "C": {
+          "zh": "錯誤。分析：使用PrivateLink實現跨VPC服務通訊。需要為每個微服務建立單獨的NLB和PrivateLink端點，這需要很高的管理開銷。沒有提及服務註冊和服務發現功能。",
+          "en": "Incorrect. Analysis: Use PrivateLink to achieve cross-VPC service communication. It is necessary to create separate NLB and PrivateLink endpoints for each microservice, which requires high management overhead. There is no mention of service registration and service discovery functions."
+        },
+        "D": {
+          "zh": "錯誤。分析：VPC Peering可以實現跨VPC通信，但不支援跨帳戶通信。路由表和安全群組需要手動配置，管理開銷較高。沒有提及服務註冊和服務發現功能。",
+          "en": "Incorrect. Analysis: VPC Peering can implement cross-VPC communication, but does not support cross-account communication. Routing tables and security groups need to be manually configured, which requires high management overhead. There is no mention of service registration and service discovery functions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 建立 VPC Lattice 服務網。將微服務與服務網路關聯起來。為每個服務定義 HTTPS 偵聽器。將微服務計算資源註冊為目標。識別需要與服務通訊的 VPC。將這些 VPC 與服務網路關聯。",
+        "en": "B. Create a VPC Lattice service network. Associate the microservices with the service network. Define HTTPS listeners for each service. Register microservice compute resources as targets. Identify VPCs that need to communicate with the services. Associate those VPCs with the service network."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：分析：VPC Lattice是專為跨VPC、跨帳戶的服務通訊而設計的解決方案。支援服務註冊和服務發現功能，簡化服務間通訊的管理。支援HTTPS監聽，滿足安全通訊需求。由於 VPC Lattice 自動處理服務註冊和通信，因此管理開銷極低。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Analysis: VPC Lattice is a solution specifically designed for service communication across VPCs and across accounts. Supports service registration and service discovery functions, simplifying the management of communication between services. Supports HTTPS listener to meet secure communication needs. Management overhead is minimal because VPC Lattice handles service registration and communication automatically."
+      }
+    },
+    {
+      "question_no": 776,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一款手機遊戲，它從 Amazon RDS 資料庫執行個體讀取其大部分元資料。隨著遊戲越來越受歡迎，開發人員注意到與遊戲元資料載入時間相關的速度減慢。效能指標表明，簡單地擴展資料庫是沒有幫助的。解決方案架構師必須探索所有選項，包括快照、複製和亞毫秒回應時間功能。解決方案架構師應該建議什麼來解決這些問題？",
+        "en": "A company has a mobile game that reads most of its metadata from an Amazon RDS DB instance. As the game increased in popularity, developers noticed slowdowns related to the game's metadata load times. Performance metrics indicate that simply scaling the database will not help. A solutions architect must explore all options that include capabilities for snapshots, replication, and sub-millisecond response times. What should the solutions architect recommend to solve these issues?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Aurora 副本將資料庫移轉到 Amazon Aurora。",
+          "en": "Migrate the database to Amazon Aurora with Aurora Replicas."
+        },
+        "B": {
+          "zh": "將資料庫移轉到具有全域資料表的 Amazon DynamoDB。",
+          "en": "Migrate the database to Amazon DynamoDB with global tables."
+        },
+        "C": {
+          "zh": "在資料庫前面新增 Amazon ElastiCache for Redis 圖層。",
+          "en": "Add an Amazon ElastiCache for Redis layer in front of the database."
+        },
+        "D": {
+          "zh": "在資料庫前面新增 Amazon ElastiCache for Memcached 層。",
+          "en": "Add an Amazon ElastiCache for Memcached layer in front of the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：Amazon Aurora 提供了高效能和自動複製功能，但問題中明確指出「性能指標表明資料庫的簡單擴展是無效的」，因此遷移到 Aurora 並不能解決問題。",
+          "en": "Incorrect. Analysis: Amazon Aurora provides high performance and automatic replication functions, but the question clearly states that \"performance indicators indicate that simple expansion of the database is ineffective\", so migrating to Aurora does not solve the problem."
+        },
+        "B": {
+          "zh": "錯誤。分析：DynamoDB是NoSQL資料庫，適合處理高吞吐量和低延遲的需求，但問題沒有提到需要遷移到NoSQL資料庫，遷移可能會導致應用程式發生重大變化。",
+          "en": "Incorrect. Analysis: DynamoDB is a NoSQL database, suitable for handling high throughput and low latency requirements, but the question does not mention the need to migrate to a NoSQL database, and migration may lead to major changes to the application."
+        },
+        "C": {
+          "zh": "正確。分析：ElastiCache for Redis是一種高效能的內部快取服務，支援亞毫秒響應時間，適合用作資料庫的快取層，減少直接查詢資料庫的壓力。",
+          "en": "Correct. Analysis: ElastiCache for Redis is a high-performance internal cache service that supports sub-millisecond response times and is suitable for use as a cache layer for the database to reduce the pressure of directly querying the database."
+        },
+        "D": {
+          "zh": "錯誤。分析：ElastiCache for Memcached也可以用作快取層，但與Redis相比，Memcached缺乏高階功能（例如持久快取和複製），並且無法完全滿足問題中所說的「複製和複製」要求。",
+          "en": "Incorrect. Analysis: ElastiCache for Memcached can also be used as a cache layer, but compared with Redis, Memcached lacks advanced features (such as persistent cache and replication) and does not fully meet the \"copy and copy\" requirements stated in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在資料庫前面新增 Amazon ElastiCache for Redis 圖層。",
+        "en": "C. Add an Amazon ElastiCache for Redis layer in front of the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (80%)； B (20%)。熱門討論與考點摘要：分析：ElastiCache for Redis是一種高效能的內部快取服務，支援亞毫秒響應時間，適合用作資料庫的快取層，減少直接查詢資料庫的壓力。",
+        "en": "Community vote as displayed: C (80%); B (20%). Popular discussion and key point summary: Analysis: ElastiCache for Redis is a high-performance internal cache service that supports sub-millisecond response times and is suitable for use as a cache layer for the database to reduce the pressure of directly querying the database."
+      }
+    },
+    {
+      "question_no": 777,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Organizations 進行多重帳戶 AWS 設定。本公司的安全組織單元 (OU) 需要與開發 OU 共用核准的 Amazon 系統映像 (AMI)。 AMI 是使用 AWS Key Management Service (AWS KMS) 加密快照建立的。哪種解決方案可以滿足這些要求？ （選兩個。）",
+        "en": "A company uses AWS Organizations for its multi-account AWS setup. The security organizational unit (OU) of the company needs to share approved Amazon Machine Images (AMIs) with the development OU. The AMIs are created by using AWS Key Management Service (AWS KMS) encrypted snapshots. Which solution will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將開發團隊的 OU Amazon 資源名稱 (ARN) 新增至 AMI 的啟動權限清單。",
+          "en": "Add the development team's OU Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "B": {
+          "zh": "將組織根 Amazon 資源名稱 (ARN) 新增至 AMI 的啟動權限清單。",
+          "en": "Add the Organizations root Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "C": {
+          "zh": "更新金鑰策略以允許開發團隊的 OU 使用用於解密快照的 AWS KMS 金鑰。",
+          "en": "Update the key policy to allow the development team's OU to use the AWS KMS keys that are used to decrypt the snapshots."
+        },
+        "D": {
+          "zh": "將開發團隊的帳戶 Amazon 資源名稱 (ARN) 新增至 AMI 的啟動權限清單。",
+          "en": "Add the development team’s account Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "E": {
+          "zh": "重新建立 AWS KMS 金鑰。新增金鑰策略以允許組織根 Amazon 資源名稱 (ARN) 使用 AWS KMS 金鑰。",
+          "en": "Recreate the AWS KMS key. Add a key policy to allow the Organizations root Amazon Resource Name (ARN) to use the AWS KMS key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。此選項允許開發團隊的 OU 透過將其 ARN 新增至 AMI 的啟動權限清單來存取這些 AMI。這是實現跨帳戶或 OU 共享 AMI 的必要步驟之一。",
+          "en": "Correct. this option allows the development team's OU to access these AMIs by adding their ARN to the AMIs' launch permissions list. This is one of the necessary steps to implement sharing of AMIs across accounts or OUs."
+        },
+        "B": {
+          "zh": "錯誤。組織根 ARN 代表整個組織，而不是特定的開發 OU。這樣做可能會導致權限過於寬泛且不符合問題的要求。",
+          "en": "Incorrect. The Organizations root ARN represents the entire organization, not the specific development OU. Doing so may result in permissions that are too broad and do not meet the requirements of the question."
+        },
+        "C": {
+          "zh": "正確。AMI 是基於加密金鑰建立的，因此開發團隊的 OU 需要使用關聯的 AWS KMS 金鑰解密金鑰的權限。更新關鍵政策是實現這一目標的必經之路。",
+          "en": "Correct. AMIs are created based on encrypted keys, so the development team's OU needs permission to decrypt the key using the associated AWS KMS key. Updating the key policy is a surefire way to achieve this goal."
+        },
+        "D": {
+          "zh": "錯誤。問題應該是關於開發OU，而不是單一帳戶。如果此選項不夠，則應標記該問題。",
+          "en": "Incorrect. The question should be about the development OU, not a single account. The question should be marked if there are not enough this option."
+        },
+        "E": {
+          "zh": "錯誤。重新建立金鑰並在組織根 ARN 中新增權限過於複雜且不必要。更新現有的關鍵策略就足夠了。",
+          "en": "Incorrect. Recreating the key and adding permissions to the Organizations root ARN is overly complex and unnecessary. Updating the existing key policy is sufficient."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 將開發團隊的 OU Amazon 資源名稱 (ARN) 新增至 AMI 的啟動權限清單。；C. 更新金鑰策略以允許開發團隊的 OU 使用用於解密快照的 AWS KMS 金鑰。",
+        "en": "A. Add the development team's OU Amazon Resource Name (ARN) to the launch permission list for the AMIs.; C. Update the key policy to allow the development team's OU to use the AWS KMS keys that are used to decrypt the snapshots."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AC (100%)。熱門討論與考點摘要：此選項允許開發團隊的 OU 透過將其 ARN 新增至 AMI 的啟動權限清單來存取這些 AMI。這是實現跨帳戶或 OU 共享 AMI 的必要步驟之一。；AMI 是基於加密金鑰建立的，因此開發團隊的 OU 需要使用關聯的 AWS KMS 金鑰解密金鑰的權限。更新關鍵政策是實現這一目標的必經之路。",
+        "en": "Community vote as displayed: AC (100%). Popular discussion and key point summary: this option allows the development team's OU to access these AMIs by adding their ARN to the AMIs' launch permissions list. This is one of the necessary steps to implement sharing of AMIs across accounts or OUs.; AMIs are created based on encrypted keys, so the development team's OU needs permission to decrypt the key using the associated AWS KMS key. Updating the key policy is a surefire way to achieve this goal."
+      }
+    },
+    {
+      "question_no": 778,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家資料分析公司擁有 80 個辦事處，分佈在全球。每個辦公室託管 1 PB 的數據，並擁有 1 到 2 Gbps 的網路頻寬。該公司需要將大量資料從其辦公室一次遷移到 Amazon S3。公司必須在 4 週內完成遷移。哪一種解決方案能夠最具成本效益地滿足這些要求？",
+        "en": "A data analytics company has 80 offices that are distributed globally. Each office hosts 1 PB of data and has between 1 and 2 Gbps of internet bandwidth. The company needs to perform a one-time migration of a large amount of data from its offices to Amazon S3. The company must complete the migration within 4 weeks. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "與每個辦公室建立新的 10 Gbps AWS Direct Connect 連線。將資料傳輸到 Amazon S3。",
+          "en": "Establish a new 10 Gbps AWS Direct Connect connection to each office. Transfer the data to Amazon S3."
+        },
+        "B": {
+          "zh": "使用多個 AWS Snowball Edge 儲存最佳化裝置來儲存資料並傳輸到 Amazon S3。",
+          "en": "Use multiple AWS Snowball Edge storage-optimized devices to store and transfer the data to Amazon S3."
+        },
+        "C": {
+          "zh": "使用 AWS Snowmobile 將資料儲存並傳輸到 Amazon S3。",
+          "en": "Use an AWS Snowmobile to store and transfer the data to Amazon S3."
+        },
+        "D": {
+          "zh": "設定 AWS Storage Gateway 磁碟區閘道以將資料傳輸至 Amazon S3。",
+          "en": "Set up an AWS Storage Gateway Volume Gateway to transfer the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因：為每個辦公室設定 10 Gbps 直接連線的成本過高，尤其是全球 80 個辦公室。另外，辦公室現有頻寬只有1-2Gbps，無法充分利用10Gbps連線。",
+          "en": "Incorrect. Reason: The cost of setting up 10 Gbps Direct Connect to each office is prohibitive, especially 80 offices around the world. In addition, the existing bandwidth in the office is only 1-2 Gbps, which cannot fully utilize the 10 Gbps connection."
+        },
+        "B": {
+          "zh": "正確。原因：AWS Snowball Edge 是一種高效且成本優化的大規模資料遷移解決方案。支援離線資料傳輸，避免頻寬限制問題，並可在4週內完成遷移。",
+          "en": "Correct. Reason: AWS Snowball Edge is an efficient and cost-optimized solution for large-scale data migration. It supports offline data transfer, avoids bandwidth limitation issues, and can complete migration within 4 weeks."
+        },
+        "C": {
+          "zh": "錯誤。原因：AWS Snowmobile適合非常大規模的資料遷移（例如數十PB或更多），而每個辦公室只有1PB的資料。對於這種情況，使用雪地車的成本和複雜性令人望而卻步。",
+          "en": "Incorrect. Reason: AWS Snowmobile is suitable for very large-scale data migration (such as tens of PB or more), while each office only has 1 PB of data. The cost and complexity of using Snowmobile are prohibitive for this scenario."
+        },
+        "D": {
+          "zh": "錯誤。原因：AWS Storage Gateway 依賴現有網路頻寬進行線上資料傳輸。由於辦公室的頻寬只有1-2Gbps，1PB資料的遷移不可能在4週內完成。",
+          "en": "Incorrect. Cause: AWS Storage Gateway relies on existing network bandwidth for online data transfer. Since the bandwidth in the office is only 1-2 Gbps, the migration of 1 PB of data cannot be completed in 4 weeks."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用多個 AWS Snowball Edge 儲存最佳化裝置來儲存資料並傳輸到 Amazon S3。",
+        "en": "B. Use multiple AWS Snowball Edge storage-optimized devices to store and transfer the data to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (91%)。熱門討論與考點摘要：原因：AWS Snowball Edge 是一種高效且成本優化的大規模資料遷移解決方案。支援離線資料傳輸，避免頻寬限制問題，並可在4週內完成遷移。",
+        "en": "Community vote as displayed: B (91%). Popular discussion and key point summary: Reason: AWS Snowball Edge is an efficient and cost-optimized solution for large-scale data migration. It supports offline data transfer, avoids bandwidth limitation issues, and can complete migration within 4 weeks."
+      }
+    },
+    {
+      "question_no": 779,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司擁有一個包含參考資料集的 Amazon Elastic File System (Amazon EFS) 檔案系統。該公司在 Amazon EC2 執行個體上有需要讀取資料集的應用程式。但是，應用程式不得更改資料集。該公司希望使用 IAM 存取控制來防止應用程式修改或刪除資料集。哪種解決方案可以滿足這些要求？",
+        "en": "A company has an Amazon Elastic File System (Amazon EFS) file system that contains a reference dataset. The company has applications on Amazon EC2 instances that need to read the dataset. However, the applications must not be able to change the dataset. The company wants to use IAM access control to prevent the applications from being able to modify or delete the dataset. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "從 EC2 執行個體以唯讀模式掛載 EFS 檔案系統。",
+          "en": "Mount the EFS file system in read-only mode from within the EC2 instances."
+        },
+        "B": {
+          "zh": "為 EFS 檔案系統建立資源原則，拒絕對附加到 EC2 執行個體的 IAM 角色執行 elasticfilesystem:ClientWrite 操作。",
+          "en": "Create a resource policy for the EFS file system that denies the elasticfilesystem:ClientWrite action to the IAM roles that are attached to the EC2 instances."
+        },
+        "C": {
+          "zh": "為 EFS 檔案系統建立一個身分原則，拒絕 EFS 檔案系統上的 elasticfilesystem:ClientWrite 操作。",
+          "en": "Create an identity policy for the EFS file system that denies the elasticfilesystem:ClientWrite action on the EFS file system."
+        },
+        "D": {
+          "zh": "為每個應用程式建立一個 EFS 存取點。使用可移植作業系統介面 (POSIX) 檔案權限允許對根目錄中的檔案進行唯讀存取。",
+          "en": "Create an EFS access point for each application. Use Portable Operating System Interface (POSIX) file permissions to allow read-only access to files in the root directory."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。分析：此選項透過掛載時設定唯讀模式來限制訪問，但不會透過IAM控制權限，也不會阻止使用者手動變更掛載模式。由於該方法與問題不符，該問題將被標記。",
+          "en": "Incorrect. Analysis: this option restricts access by setting read-only mode when mounting, but it does not control permissions through IAM and does not prevent users from manually changing the mount mode. Because the this approach does not match the question, the question will be marked."
+        },
+        "B": {
+          "zh": "正確。分析：此選項透過資源策略明確拒絕EC2實例的IAM角色執行寫入操作，並滿足問題的要求。資源策略是控制對 EFS 檔案系統的存取的建議方法。",
+          "en": "Correct. Analysis: this option explicitly denies the IAM role of the EC2 instance to perform write operations through the resource policy, which meets the requirements of the question. Resource policies are the recommended method for controlling access to EFS file systems."
+        },
+        "C": {
+          "zh": "錯誤。分析：身分策略是針對使用者或角色的權限設置，但它直接應用於EFS檔案系統資源，沒有條帶化。該題必須使用資源策略，因為該選項不正確。",
+          "en": "Incorrect. Analysis: Identity policy is a permission setting for a user or role, but it is directly applied to EFS file system resources without stripes. The question must use the resource strategy because this option is incorrect."
+        },
+        "D": {
+          "zh": "錯誤。POSIX 權限可以提供唯讀檔案系統存取權限，但此要求特別要求 IAM 強制執行；單獨的存取點不會建立要求的 IAM 拒絕控制。",
+          "en": "Incorrect. POSIX permissions can provide read-only filesystem access, but the requirement specifically calls for IAM enforcement; access points alone do not create the requested IAM deny control."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 為 EFS 檔案系統建立資源原則，拒絕對附加到 EC2 執行個體的 IAM 角色執行 elasticfilesystem:ClientWrite 操作。",
+        "en": "B. Create a resource policy for the EFS file system that denies the elasticfilesystem:ClientWrite action to the IAM roles that are attached to the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (73%)； C (23%)。熱門討論與考點摘要：分析：此選項透過資源策略明確拒絕EC2實例的IAM角色執行寫入操作，並滿足問題的要求。資源策略是控制對 EFS 檔案系統的存取的建議方法。",
+        "en": "Community vote as displayed: B (73%); C (23%). Popular discussion and key point summary: Analysis: this option explicitly denies the IAM role of the EC2 instance to perform write operations through the resource policy, which meets the requirements of the question. Resource policies are the recommended method for controlling access to EFS file systems."
+      }
+    },
+    {
+      "question_no": 780,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司已聘請外部供應商在該公司的 AWS 帳戶中執行工作。供應商使用託管在供應商擁有的 AWS 帳戶中的自動化工具。供應商沒有對公司 AWS 帳戶的 IAM 存取權。公司需要授予供應商存取公司 AWS 帳戶的權限。哪一種解決方案將最安全地滿足這些要求？",
+        "en": "A company has hired an external vendor to perform work in the company’s AWS account. The vendor uses an automated tool that is hosted in an AWS account that the vendor owns. The vendor does not have IAM access to the company’s AWS account. The company needs to grant the vendor access to the company’s AWS account. Which solution will meet these requirements MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公司帳戶中建立 IAM 角色，以委派對供應商 IAM 角色的存取權限。將適當的 IAM 策略附加到角色以獲得供應商所需的權限。",
+          "en": "Create an IAM role in the company’s account to delegate access to the vendor’s IAM role. Attach the appropriate IAM policies to the role for the permissions that the vendor requires."
+        },
+        "B": {
+          "zh": "在公司帳戶中建立一個 IAM 用戶，其密碼符合密碼複雜性要求。將適當的 IAM 策略附加到使用者以獲得供應商所需的權限。",
+          "en": "Create an IAM user in the company’s account with a password that meets the password complexity requirements. Attach the appropriate IAM policies to the user for the permissions that the vendor requires."
+        },
+        "C": {
+          "zh": "在公司帳戶中建立 IAM 群組。將自動化工具的 IAM 使用者從供應商帳戶新增至群組。將適當的 IAM 策略附加到群組以獲得供應商所需的權限。",
+          "en": "Create an IAM group in the company’s account. Add the automated tool’s IAM user from the vendor account to the group. Attach the appropriate IAM policies to the group for the permissions that the vendor requires."
+        },
+        "D": {
+          "zh": "在公司帳戶中建立一個 IAM 用戶，該用戶具有允許供應商帳戶的權限邊界。將適當的 IAM 策略附加到使用者以獲得供應商所需的權限。",
+          "en": "Create an IAM user in the company’s account that has a permission boundary that allows the vendor’s account. Attach the appropriate IAM policies to the user for the permissions that the vendor requires."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。這是 AWS 建議的跨帳戶存取最佳實務。透過建立 IAM 角色並使用信任策略，允許存取供應商 AWS 帳戶中的 IAM 角色。這樣可以避免直接建立使用者或共享密碼，並確保安全。額外的 IAM 策略可以限制供應商的權限，並遵守最小權限原則。",
+          "en": "Correct. This is the best practice recommended by AWS for cross-account access. Allow access to the IAM role in the vendor's AWS account by creating an IAM role and using a trust policy. This avoids directly creating users or sharing passwords, ensuring security. Additional IAM policies can limit the permissions of suppliers, complying with the principle of least privilege."
+        },
+        "B": {
+          "zh": "錯誤。建立 IAM 使用者並共用密碼不符合安全最佳實務。密碼可能會被洩露或濫用，自動化工具無法跨帳戶存取。",
+          "en": "Incorrect. Creating IAM users and sharing passwords is inconsistent with security best practices. Passwords can be compromised or misused, and automated tools cannot be accessed across accounts."
+        },
+        "C": {
+          "zh": "錯誤。IAM群組僅適用於同一帳戶內的使用者管理，且無法跨帳戶使用。供應商的IAM用戶不能直接加入公司帳戶的IAM群組。",
+          "en": "Incorrect. IAM groups are only applicable to user management within the same account and cannot be used across accounts. The supplier's IAM user cannot directly join the company account's IAM group."
+        },
+        "D": {
+          "zh": "錯誤。權限邊界用於限制IAM使用者或角色的權限，但無法實現跨帳戶存取。建立 IAM 使用者仍然涉及密碼管理問題，並且不符合安全最佳實務。",
+          "en": "Incorrect. Permission boundaries are used to limit the permissions of IAM users or roles, but cross-account access cannot be achieved. Creating an IAM user still involves password management issues and does not comply with security best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在公司帳戶中建立 IAM 角色，以委派對供應商 IAM 角色的存取權限。將適當的 IAM 策略附加到角色以獲得供應商所需的權限。",
+        "en": "A. Create an IAM role in the company’s account to delegate access to the vendor’s IAM role. Attach the appropriate IAM policies to the role for the permissions that the vendor requires."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (100%)。熱門討論與考點摘要：這是 AWS 建議的跨帳戶存取最佳實務。透過建立 IAM 角色並使用信任策略，允許存取供應商 AWS 帳戶中的 IAM 角色。這樣可以避免直接建立使用者或共享密碼，並確保安全。額外的 IAM 策略可以限制供應商的權限，並遵守最小權限原則。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This is the best practice recommended by AWS for cross-account access. Allow access to the IAM role in the vendor's AWS account by creating an IAM role and using a trust policy. This avoids directly creating users or sharing passwords, ensuring security. Additional IAM policies can limit the permissions of suppliers, complying with the principle of least privilege."
+      }
+    }
+  ]
+}

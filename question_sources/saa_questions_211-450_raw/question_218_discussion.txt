@@ -1,0 +1,142 @@
+A company has a web server running on an Amazon EC2 instance in a public subnet with an Elastic IP address. The default security
+group is assigned to the EC2 instance. The default network ACL has been modified to block all traffic. A solutions architect needs
+to make the web server accessible from everywhere on port 443.
+Which combination of steps will accomplish this task? (Choose two.)
+A. Create a security group with a rule to allow TCP port 443 from source 0.0.0.0/0. Most Voted
+B. Create a security group with a rule to allow TCP port 443 to destination 0.0.0.0/0.
+C. Update the network ACL to allow TCP port 443 from source 0.0.0.0/0.
+D. Update the network ACL to allow inbound/outbound TCP port 443 from source 0.0.0.0/0 and to destination 0.0.0.0/0.
+E. Update the network ACL to allow inbound TCP port 443 from source 0.0.0.0/0 and outbound TCP port 32768-65535 to
+destination 0.0.0.0/0. Most Voted
+Comments
+Parsons Highly Voted 3 years, 4 months ago
+Selected Answer: AE
+A, E is perfect the combination. To be more precise, We should add outbound with "outbound TCP port 32768-65535 to destination 0.0.0.0/0." as an
+ephemeral port due to the stateless of NACL.
+upvoted 20 times
+oguzbeliren 2 years, 10 months ago
+What is the main reason that you are using the TCP port 32768-65535> In the question, it doesn't ask you any requirement about it.
+upvoted 5 times
+MohammadTofic8787 2 years, 8 months ago
+i Think AD because acl is stateless we must open the port outbound and inbound , in option c we only open 443 on inbound
+upvoted 3 times
+bora4motion 1 year, 1 month ago
+with d you only alow replies using port 443 which is wrong.
+upvoted 1 times
+MohammadTofic8787 2 years, 8 months ago
+i Think AD because acl is stateless we must open the port outbound and inbound , in option E we only open 443 on inbound
+upvoted 3 times
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: E
+For me it's grammatically unclear whether "port 443" and "port 32768-65535" in answers D and E are referring to the source or destination ports of
+the outbound traffic. If source ports then it would be D. If destination ports (which seems more likely) then it's E.
+"On Windows, the ephemeral port range is usually from 49152 to 65535.
+On Linux, it is often from 32768 to 61000."
+Thus 32768-65535 would cover both Windows and Linux.
+upvoted 10 times
+Omariox Most Recent 1 year, 8 months ago
+Correct Answer: AE
+Community vote distribution
+AE (74%)
+13%
+8%
+Selected Answer: AD
+Option A: Creating a security group that allows inbound traffic on TCP port 443 from all sources (0.0.0.0/0) ensures that the web server can accept
+incoming HTTPS requests.
+Option D: Updating the network ACL to allow inbound traffic on TCP port 443 from all sources (0.0.0.0/0) allows the requests to reach the EC2
+instance. Additionally, it is necessary to allow outbound traffic on TCP port 443 to enable responses to clients, which is crucial for HTTPS
+communication.
+upvoted 3 times
+bora4motion 1 year, 1 month ago
+D is wrong: when the ec2 replies back it will use a random port not the same port (443) for the incoming traffic. AE.
+upvoted 1 times
+srinibas.velumuri 1 year, 8 months ago
+Higher priority NACL to allow inbound and outbound traffic on 443 with take the precedence over default blocked NACL
+upvoted 1 times
+ChinthaGurumurthi 1 year, 10 months ago
+Selected Answer: AD
+AD
+How can E be the answer. How can we assure that the port range is definitely from the given port range in the option E?
+upvoted 1 times
+lofzee 2 years ago
+Selected Answer: AE
+Security group only needs inbound rules.
+ACL needs inbound and outbound.. Outbound traffic is going to be dynamic ports. Answer is A and E
+upvoted 4 times
+sidharthwader 2 years, 3 months ago
+AE
+Security group is a stateful resource and can understand to allow traffic from source 0.0.0.0/0 with port 443 but ACL is stateless so traffic that is
+allowed inside the network we must configure the same to go outside the network as well.
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: AE
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-basics
+"NACLs are stateless, which means that information about previously sent or received traffic is not saved. If, for example, you create a NACL rule to
+allow specific inbound traffic to a subnet, responses to that traffic are not automatically allowed. This is in contrast to how security groups work.
+Security groups are stateful, which means that information about previously sent or received traffic is saved. If, for example, a security group allows
+inbound traffic to an EC2 instance, responses are automatically allowed regardless of outbound security group rules."
+A fulfils the security group requirement
+E is the only option that explicitly covers outbound traffic and ports.
+D covers outbound destination but given that all traffic is blocked (as per the question) this won't work
+upvoted 6 times
+[Removed] 2 years, 6 months ago
+Selected Answer: AC
+For typical web server scenarios, such as serving content over HTTPS (port 443), you generally do not need to explicitly open outbound ports in the
+network ACL (NACL) for the return traffic.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+But NACLs are stateless."The default network ACL has been modified to block all traffic"; if you don't allow any outbound traffic then the web server
+won't be able to reply to clients.
+upvoted 2 times
+TariqKipkemei 2 years, 8 months ago
+Selected Answer: AE
+ACL is stateless. you have to define both inbound and outbound rules.
+upvoted 3 times
+MohammadTofic8787 2 years, 8 months ago
+i Think AD because acl is stateless we must open the port outbound and inbound , in option c we only open 443 on inbound
+upvoted 2 times
+MohammadTofic8787 2 years, 8 months ago
+i Think AD because acl is stateless we must open the port outbound and inbound , in option D we only open 443 on inbound
+upvoted 1 times
+MohammadTofic8787 2 years, 8 months ago
+please admin delete this , sorry
+upvoted 1 times
+MohammadTofic8787 2 years, 8 months ago
+please admin delete this , sorry
+upvoted 1 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: AE
+A, E is perfect the combination. To be more precise, We should add outbound with "outbound TCP port 32768-65535 to destination 0.0.0.0/0." as an
+ephemeral port due to the stateless of NACL.
+upvoted 4 times
+beginnercloud 2 years, 9 months ago
+Selected Answer: AE
+AE is the best answer here, but in reality, E is not good enough. Here, it says that the client chooses the ephemeral port, and it can start from 1024.
+Only Linux clients have the range starting at 32768 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports
+Unless the destination advertises the ephemeral ports, which I don't think is the case
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"On Windows, the ephemeral port range is usually from 49152 to 65535.
+On Linux, it is often from 32768 to 61000."
+Combined: 32768 - 65535 ...
+upvoted 3 times
+Thornessen 2 years, 10 months ago
+Selected Answer: AE
+AE is the best answer here, but in reality, E is not good enough.
+Here, it says that the client chooses the ephemeral port, and it can start from 1024. Only Linux clients have the range starting at 32768
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports
+Unless the destination advertises the ephemeral ports, which I don't think is the case
+upvoted 3 times
+Abrar2022 3 years ago
+32768-65535 ports Allows outbound IPv4 responses to clients on the internet (for example, serving webpages to people visiting the web servers in
+the subnet).
+upvoted 2 times
+WherecanIstart 3 years, 3 months ago
+Selected Answer: AE
+NACL blocks outgoing traffic since it is infact stateless..Option E allows outbound traffic from ephemeral ports going outside of the VPC back to the
+web.
+upvoted 3 times
+Brak 3 years, 3 months ago
+It can't be C, since the current NACL blocks all traffic, including outbound. Need to allow outbound traffic through the NACL.
+But E is a bad answer, since ephemeral ports start at 1024, not 32768.
+upvoted 2 times

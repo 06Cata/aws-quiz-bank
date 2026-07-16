@@ -1,0 +1,129 @@
+A company wants to build a logging solution for its multiple AWS accounts. The company currently stores the logs from all
+accounts in a centralized account. The company has created an Amazon S3 bucket in the centralized account to store the VPC flow
+logs and AWS CloudTrail logs. All logs must be highly available for 30 days for frequent analysis, retained for an additional 60 days
+for backup purposes, and deleted 90 days after creation.
+Which solution will meet these requirements MOST cost-effectively?
+A. Transition objects to the S3 Standard storage class 30 days after creation. Write an expiration action that directs Amazon S3
+to delete objects after 90 days.
+B. Transition objects to the S3 Standard-Infrequent Access (S3 Standard-IA) storage class 30 days after creation. Move all
+objects to the S3 Glacier Flexible Retrieval storage class after 90 days. Write an expiration action that directs Amazon S3 to
+delete objects after 90 days.
+C. Transition objects to the S3 Glacier Flexible Retrieval storage class 30 days after creation. Write an expiration action that
+directs Amazon S3 to delete objects after 90 days. Most Voted
+D. Transition objects to the S3 One Zone-Infrequent Access (S3 One Zone-IA) storage class 30 days after creation. Move all
+objects to the S3 Glacier Flexible Retrieval storage class after 90 days. Write an expiration action that directs Amazon S3 to
+delete objects after 90 days.
+Comments
+alexandercamachop Highly Voted 3 years ago
+Selected Answer: C
+C seems the most sutiable.
+Is the lowest cost.
+After 30 days is backup only, doesn't specify frequent access.
+Therefor we must transition the items after 30 days to Glacier Flexible Retrieval.
+Also it says deletion after 90 days, so all answers specifying a transition after 90 days makes no sense.
+upvoted 18 times
+MAMADOUG 3 years ago
+Agree with you
+upvoted 3 times
+deechean Highly Voted 2 years, 9 months ago
+Selected Answer: A
+The Glacier min storage duration is 90 days. All the options using Glacier are wrong. Only A is feasible.
+upvoted 10 times
+daniel33 2 years, 8 months ago
+S3 Standard is priced at $0.023 per GB for the first 50 TB stored per month
+S3 Glacier Flexible Retrieval costs $0.0036 per GB stored per month
+If you move or delete data in Glacier within 90-days since their creation, you will pay an additional charge, that is called an early deletion fee. In US
+East you will pay $0.004/GB if you have deleted 1 GB in 2 months, $0.008/GB if you have deleted 1 GB in 1 month and $0.012 if you have deleted 1
+GB within 3 months.
+Even with the early deletion fee, it appears to me that answer 'A' would still be cheaper.
+upvoted 3 times
+Correct Answer: C
+Community vote distribution
+C (69%)
+A (25%)
+6%
+awsgeek75 2 years, 4 months ago
+But the objects are deleted after 90 days so how is this charge applicable?
+upvoted 2 times
+pentium75 2 years, 5 months ago
+But why 'transition to the S3 Standard storage class', aren't they there already by default?
+upvoted 4 times
+LeonSauveterre Most Recent 1 year, 6 months ago
+Selected Answer: C
+A: When logs are created, they are initially automatically created to S3 Standard. What are you transitioning anyway?
+B & D: You could've just deleted logs after 90 days. No need to move them somewhere else then delete them. That's just money down the drain.
+upvoted 1 times
+awsgeek75 2 years, 5 months ago
+Selected Answer: C
+C: Lowest cost
+upvoted 2 times
+awsgeek75 2 years, 5 months ago
+A: Standard storage is default so this is wrong.
+B: Looks wrong because it moves object to S3GFR after 90 days when they could just be deleted so extra cost
+D: Same problem as B
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Selected Answer: C
+Not A: Objects are created in S3 Standard, so it doesn't make sense to 'transition' them there "30 days after creation"
+Not B or C: No need to "move all objects to the S3 Glacier Flexible Retrieval storage class after 90 days" because we want to delete, not archive, them
+Even if we would delete them right after moving, we would pay 90 days minimum storage duration. Plus, we are using "Infrequent Access" classes
+here, but we have no access at all.
+upvoted 3 times
+Rhydian25 1 year, 11 months ago
+I guess you wanted to write "Not B or D"
+upvoted 3 times
+ftaws 2 years, 5 months ago
+Selected Answer: A
+requirement : frequently analysis
+search cost : S3 STD 0.0004 vs IA 0.001
+so IA is more expensive than STD(A)
+upvoted 1 times
+EdenWang 2 years, 6 months ago
+Selected Answer: C
+C is most cost-effective
+upvoted 3 times
+Hades2231 2 years, 9 months ago
+Selected Answer: C
+Things to note are: 30 days frequent access and 90 days after creation, so you only need to do 2 things, not 3. Objects in S3 will be stored by default
+for 30 days before you can move it to somewhere else, so C is the answer.
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html
+upvoted 5 times
+rjbihari 2 years, 9 months ago
+C is the correct one .
+As after 30 days it doesn't says about access / retrieval , only backup so move items after 30 days to Glacier Flexible Retrieval.
+And after it says deletion , so expiration action will ensure that the objects are deleted after 90 days, even if they are not accessed
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+I think - it is B
+The first 30 days, the logs need to be highly available for frequent analysis. The S3 Standard storage class is the most expensive storage class, but it
+also provides the highest availability.
+After 30 days, the logs still need to be retained for backup purposes, but they do not need to be accessed frequently. The S3 Standard-IA storage
+class is a good option for this, as it is less expensive than the S3 Standard storage class.
+After 90 days, the logs can be moved to the S3 Glacier Flexible Retrieval storage class. This is the most cost-effective storage class for long-term
+archiving.
+The expiration action will ensure that the objects are deleted after 90 days, even if they are not accessed
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"After 90 days, the logs can be moved to the S3 Glacier Flexible Retrieval storage class. This is the most cost-effective storage class for long-term
+archiving." yeah but we don't need long-term archiving, we want to delete them after 90 days.
+upvoted 3 times
+TariqKipkemei 2 years, 10 months ago
+Selected Answer: C
+C is the most cost effective solution.
+upvoted 2 times
+antropaws 2 years, 11 months ago
+Selected Answer: C
+C most likely.
+upvoted 2 times
+y0eri 2 years, 12 months ago
+Selected Answer: A
+Question says "All logs must be highly available for 30 days for frequent analysis" I think the answer is A. Glacier is not made for frequent access.
+upvoted 2 times
+y0eri 2 years, 12 months ago
+I take that back. Moderator, please delete my comment.
+upvoted 4 times
+KMohsoe 2 years, 12 months ago
+Selected Answer: B
+I think B
+upvoted 1 times

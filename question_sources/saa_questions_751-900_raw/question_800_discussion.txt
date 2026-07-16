@@ -1,0 +1,61 @@
+A company needs to create an AWS Lambda function that will run in a VPC in the company's primary AWS account. The Lambda
+function needs to access files that the company stores in an Amazon Elastic File System (Amazon EFS) file system. The EFS file
+system is located in a secondary AWS account. As the company adds files to the file system, the solution must scale to meet the
+demand.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create a new EFS file system in the primary account. Use AWS DataSync to copy the contents of the original EFS file system
+to the new EFS file system.
+B. Create a VPC peering connection between the VPCs that are in the primary account and the secondary account. Most Voted
+C. Create a second Lambda function in the secondary account that has a mount that is configured for the file system. Use the
+primary account's Lambda function to invoke the secondary account's Lambda function.
+D. Move the contents of the file system to a Lambda layer. Configure the Lambda layer's permissions to allow the company's
+secondary account to use the Lambda layer.
+Comments
+lenotc Highly Voted 2 years, 3 months ago
+Selected Answer: B
+B -> VPC peering allows the Lambda access secondary account securely and efficiently
+A -> redundancy
+C -> additional complexity
+D -> sharing code libraries
+upvoted 9 times
+LeonSauveterre Most Recent 1 year, 5 months ago
+Selected Answer: B
+A - Duplicating the EFS file system leads to unnecessary storage costs and additional complexity.
+B - VPC peering connection allows seamless access without additional manual scaling.
+C - Well... I don't know, but you could've directly enabled access to the EFS file system. Why make it even more complex?
+D - Lambda layers are intended for shared libraries or dependencies. You would be crazy to store large amounts of data there.
+upvoted 1 times
+Scheldon 1 year, 12 months ago
+Selected Answer: B
+AnswerB
+You can configure a function to mount an Amazon EFS file system in another AWS account. Before you mount the file system, you must ensure the
+following:
+VPC peering must be configured, and appropriate routes must be added to the route tables in each VPC.
+.
+.
+.
+https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem-cross-account.html
+upvoted 1 times
+Nm55569 2 years ago
+Selected Answer: B
+https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html#configuration-filesystem-cross-account
+Correct Answer: B
+Community vote distribution
+B (100%)
+upvoted 1 times
+osmk 2 years, 3 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/efs/latest/ug/efs-different-vpc.html
+upvoted 3 times
+asdfcdsxdfc 2 years, 3 months ago
+Shouldn't it be B?
+upvoted 1 times
+1dd 2 years, 3 months ago
+I thinks AWS DataSync less costly
+upvoted 1 times
+[Removed] 2 years, 2 months ago
+setting up a peering connection is free. same for data transfer in the same AZ. data sync at the end of the day cost $$$ to move data.
+upvoted 3 times
+Scheldon 1 year, 12 months ago
+When you will SyncData you need to have secondary storage for which you need to pay so it is not cheap solution.
+upvoted 1 times

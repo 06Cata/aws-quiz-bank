@@ -1,0 +1,186 @@
+A media company is evaluating the possibility of moving its systems to the AWS Cloud. The company needs at least 10 TB of
+storage with the maximum possible I/O performance for video processing, 300 TB of very durable storage for storing media
+content, and 900 TB of storage to meet requirements for archival media that is not in use anymore.
+Which set of services should a solutions architect recommend to meet these requirements?
+A. Amazon EBS for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for archival storage
+B. Amazon EBS for maximum performance, Amazon EFS for durable data storage, and Amazon S3 Glacier for archival storage
+C. Amazon EC2 instance store for maximum performance, Amazon EFS for durable data storage, and Amazon S3 for archival
+storage
+D. Amazon EC2 instance store for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for
+archival storage Most Voted
+Comments
+Sauran Highly Voted 3 years, 7 months ago
+Selected Answer: D
+Max instance store possible at this time is 30TB for NVMe which has the higher I/O compared to EBS.
+is4gen.8xlarge 4 x 7,500 GB (30 TB) NVMe SSD
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes
+upvoted 40 times
+ishitamodi4 3 years, 5 months ago
+instance store volume for the root volume, the size of this volume varies by AMI, but the maximum size is 10 GB
+upvoted 1 times
+JayBee65 3 years, 5 months ago
+This link shows a max capacity of 30TB, so what is the problem?
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes
+upvoted 2 times
+JayBee65 3 years, 5 months ago
+Only the following instance types support an instance store volume as the root device: C3, D2, G2, I2, M3, and R3, and we're using an I3, so an
+instance store volume is irrelevant.
+upvoted 5 times
+antropaws 3 years ago
+THE CORRECT ANSWER IS A.
+The biggest Instance Store Storage Optimized option (is4gen.8xlarge) has a capacity of only 3TB.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-store-volumes.html#instance-store-vol-so
+upvoted 3 times
+michellemeloc 3 years, 1 month ago
+Update: i3en.metal and i3en.24xlarge = 8 x 7500 GB (60TB)
+upvoted 3 times
+Tsige 1 year, 7 months ago
+Correct Answer: D
+Community vote distribution
+D (57%)
+A (43%)
+1
+Answer is A
+While instance store provides fast local storage, it is ephemeral (data is lost when the instance stops or terminates). It’s not suitable for workloads
+that require persistence, like video processing that may span across multiple EC2 instances over time. EBS provides persistent, high-performance
+storage.
+upvoted 8 times
+JA2018 1 year, 6 months ago
+err, stem did not mention requirement for durable storage for the 10TB used for video processing....
+upvoted 2 times
+MiniYang Highly Voted 2 years, 6 months ago
+Selected Answer: A
+The correct Answer is A :
+Amazon EC2 instance store (Instance Store) is usually not the best choice because the storage it provides is temporary and tied to the life cycle of the
+instance. When an instance is stopped or terminated, data on the instance store is lost.
+In this scenario, the company's requirements were to have the maximum possible I/O performance and required durable data storage. Therefore,
+using Amazon EC2 Instance Store does not meet these requirements because it lacks durability.
+In contrast, Amazon EBS (Elastic Block Store) provides persistent regional block storage and can meet the needs of high-performance I/O. Therefore,
+the answer should include Amazon EBS, not Amazon EC2 instance storage.
+upvoted 27 times
+pentium75 2 years, 5 months ago
+"The company's requirements were to have the maximum possible I/O performance and required durable data storage." Yeah, but not for the same
+data.
+10 TB "maximum possible I/O performance" for processing (= temporary)
+300 TB "very durable" (= S3)
+900 TB "for archival" (= Glacier)
+upvoted 17 times
+LoXoL 2 years, 5 months ago
+pentium75 is right.
+upvoted 6 times
+Jarranymo Most Recent 9 months, 1 week ago
+Selected Answer: A
+Option A: Amazon EBS for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for archival storage
+EBS is great for high-performance storage, so this is a good choice for the 10 TB video processing.
+S3 offers the required durability for the 300 TB of media content.
+S3 Glacier is a suitable option for the archival storage (900 TB) as it’s low-cost and durable.
+upvoted 1 times
+DougZ 12 months ago
+Selected Answer: A
+At least 10 TB of storage with the maximum possible I/O performance for video processing.
+Amazon EBS (Elastic Block Store): Provides persistent block storage volumes that can be attached to EC2 instances. It offers various volume types,
+including Provisioned IOPS SSD (io1/io2 Block Express) and General Purpose SSD (gp3), which are designed for high-performance workloads like
+video processing. EBS volumes are highly available within an Availability Zone.
+Amazon EC2 Instance Store: Provides temporary block-level storage for your EC2 instance. It offers very high random I/O performance because it's
+physically attached to the host machine. However, the data persists only for the lifetime of the instance. If the instance stops or terminates, the data
+is lost. This makes it unsuitable for long-term video processing data unless you have a robust way to move data in and out quickly and handle
+transient failures.
+upvoted 1 times
+Bhuvan_D 1 year ago
+Selected Answer: A
+Explanation:
+1. Maximum I/O Performance for Video Processing (10 TB)
+Amazon EBS (Elastic Block Store) provides high-performance block storage that can scale to meet IOPS-intensive workloads like video processing.
+You can use EBS io2 or io2 Block Express volumes for maximum performance and durability.
+2. Durable Storage for Media Content (300 TB)
+Amazon S3 offers 11 nines (99.999999999%) of durability, making it ideal for storing large volumes of media content that needs to be safely
+preserved and frequently accessed.
+3. Archival Storage (900 TB)
+Amazon S3 Glacier is built for long-term archival at very low cost. It's perfect for media content that is rarely accessed but must be retained for long
+periods.
+upvoted 1 times
+MortisG 1 year ago
+Selected Answer: A
+Correct answer is A. EC2 instance store is not well suited for this scenario since data could be lost if the instance stops or terminates
+upvoted 1 times
+CloudExpert01 1 year, 2 months ago
+Selected Answer: A
+Amazon EBS Provisioned IOPS SSD (io2) for the 10 TB of storage needed for high I/O performance video processing.
+upvoted 1 times
+Mimine87 1 year, 2 months ago
+Selected Answer: A
+At least 10 TB of storage with max I/O performance (for video processing):
+Amazon EBS (Elastic Block Store) provides high-performance block storage for EC2.
+Provisioned IOPS SSD (io2) volumes offer the maximum performance and consistency required for intensive workloads like video processing.
+❌ EC2 instance store is fast but ephemeral — data is lost if the instance stops or fails.
+upvoted 1 times
+SirDNS 1 year, 2 months ago
+Selected Answer: D
+Can be a bit confusing due to the presence of option A: EBS Provisioned IOPS SSD, Durable = S3, Archive = Glacier, but maximum performance is
+always equal to instance store. Here they do not need a permanent storage with maximum performance. It will only be used for processing and then
+sent to a highly durable storage.
+D logically cannot be the answer
+upvoted 1 times
+sk1974 1 year, 3 months ago
+Selected Answer: A
+Instance storage is ephimeral data that gets destroyed when EC2 is stopped/restarted. Unless the question says that data is not important , I will
+assume that every data that app processed is imporant . So , I will go with A
+upvoted 1 times
+kyd0nix 1 year, 4 months ago
+Selected Answer: D
+Ans D.
+The requirements for every kind of data is specific. So, you need:
+10 TB high I/O / performance = Instance Store ( the reqs. doesn't mention anything about durability, just performance )
+300 TB very durable = S3
+900 TB archival = Glacier
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: D
+EC2 Instance Store Volumes provide the highest storage performance in AWS and S3 provides durable storage while S3 Glacier is best for archival
+storage.
+upvoted 2 times
+DavidPhyo 1 year, 5 months ago
+Selected Answer: A
+answer is A
+upvoted 1 times
+Mischi 1 year, 5 months ago
+Selected Answer: A
+The combination of Amazon EBS , Amazon S3 and Amazon S3 Glacier (option A) is the most suitable solution for this media company. It offers:
+Maximum I/O performance for video processing with Amazon EBS.
+Durability and reliability for media content with Amazon S3.
+Cost-effective storage for archived data with Amazon S3 Glacier.
+upvoted 2 times
+salman7540 1 year, 5 months ago
+Selected Answer: A
+I prefer A over D.
+instance storage is not recommended for video processing because it's designed for temporary storage and doesn't provide the durability and
+persistence needed for video processing. Instead, Amazon EBS is a better choice for video processing because it provides the required performance,
+durability, and persistence.
+Here's some more information about instance storage and Amazon EBS:
+Instance storage
+A temporary storage volume that acts as a physical hard drive. It's located on disks that are physically attached to the host computer. Instance
+storage is ideal for temporary storage of information that changes frequently, such as buffers, caches, and scratch data. Data in an instance store
+persists during the lifetime of its instance, but it's not persistent through instance stops, terminations, or hardware failures.
+upvoted 2 times
+kimm_10 1 year, 6 months ago
+Selected Answer: B
+Why not EC2 instance store?
+Instance store is ephemeral (data is lost when the instance stops or terminates).
+It lacks durability, making it unsuitable for critical video processing.
+upvoted 1 times
+0de7d1b 1 year, 6 months ago
+Selected Answer: A
+Explanation:
+Amazon EBS (Elastic Block Store) for maximum performance:
+Amazon EBS provides high IOPS and low latency storage, which is ideal for video processing workloads that require fast performance.
+Amazon S3 for durable data storage:
+Amazon S3 is highly durable, scalable, and designed for storing large amounts of data, such as media content (300 TB). It also provides
+99.999999999% (11 nines) durability, making it suitable for this requirement.
+Amazon S3 Glacier for archival storage:
+Amazon S3 Glacier is a cost-effective storage solution for archiving large amounts of data (900 TB) that is infrequently accessed but still needs to be
+stored securely and durably.
+upvoted 3 times
+0de7d1b 1 year, 6 months ago
+C & D. Amazon EC2 instance store for maximum performance: EC2 instance store provides temporary block storage tied to the lifecycle of an
+instance, so it is not durable or persistent, making it unsuitable for video processing workflows that require consistent data availability
+upvoted 1 times

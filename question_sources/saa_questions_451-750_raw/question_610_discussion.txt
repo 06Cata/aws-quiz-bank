@@ -1,0 +1,113 @@
+A company deploys Amazon EC2 instances that run in a VPC. The EC2 instances load source data into Amazon S3 buckets so that
+the data can be processed in the future. According to compliance laws, the data must not be transmitted over the public internet.
+Servers in the company's on-premises data center will consume the output from an application that runs on the EC2 instances.
+Which solution will meet these requirements?
+A. Deploy an interface VPC endpoint for Amazon EC2. Create an AWS Site-to-Site VPN connection between the company and
+the VPC.
+B. Deploy a gateway VPC endpoint for Amazon S3. Set up an AWS Direct Connect connection between the on-premises
+network and the VPC. Most Voted
+C. Set up an AWS Transit Gateway connection from the VPC to the S3 buckets. Create an AWS Site-to-Site VPN connection
+between the company and the VPC.
+D. Set up proxy EC2 instances that have routes to NAT gateways. Configure the proxy EC2 instances to fetch S3 data and feed
+the application instances.
+Comments
+taustin2 Highly Voted 2 years, 8 months ago
+Selected Answer: B
+Gateway VPC Endpoint = no internet to access S3. Direct Connect = secure access to VPC.
+upvoted 11 times
+awsgeek75 Highly Voted 2 years, 5 months ago
+Selected Answer: B
+No public internet != encrypted public internet (VPN)
+Direct connect is the only option.
+upvoted 6 times
+zdi561 Most Recent 1 year, 4 months ago
+Selected Answer: A
+While not as ideal for high-traffic scenarios, a properly configured Site-to-Site VPN can also create a private connection between your on-premise
+network and AWS. Gateway endpoint is not working for on-premise
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+Selected Answer: B
+Deploy a gateway VPC endpoint for Amazon S3 = so traffic between EC2 and S3 doesn't live AWS private network.
+Set up an AWS Direct Connect connection between the on-premises network and the VPC = servers on-premises can consume the output from ec2
+instances via private connection.
+upvoted 2 times
+OSHOAIB 2 years, 5 months ago
+Selected Answer: B
+A gateway VPC endpoint for Amazon S3 allows the EC2 instances within the VPC to access Amazon S3 buckets without using the public internet. The
+traffic between the VPC and S3 is routed within the AWS network.
+AWS Direct Connect establishes a private connection between the on-premises data center and AWS infrastructure, avoiding data transfer over the
+public internet and ensuring compliance with the specified requirements. It provides a dedicated network link with higher bandwidth options and
+potentially more consistent network performance than internet-based connections.
+Correct Answer: B
+Community vote distribution
+B (79%)
+A (21%)
+Whereas Option A uses Site-to-Site VPN connection which is secure. However it typically runs over the public internet, which would not meet the
+company's requirement of avoiding public internet data transit.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+Selected Answer: B
+I think the last sentence ("Servers in the company's on-premises data center will consume the output from an application that runs on the EC2
+instances") refers to a different application. Purely from the wording, it does NOT seem to refer to the data 'loaded into S3 buckets so that it can be
+processed in the future' before. So the EC2 instances could write to S3, the on-premises servers can talk to the EC2 application, and data would not
+be transmitted over the public internet.
+Not A: There's no such thing as a "VPC endpoint for Amazon EC2 (!)"
+Not C: Transit Gateway is not for EC2->S3, VPN is over public internet
+Not D: Would address only the first part and use public Internet
+upvoted 2 times
+wizcloudifa 2 years, 1 month ago
+Interface endpoint is a thing, the only reason A is not true is because of the presence of site-to-site vpn which is essentially accessing public interne
+upvoted 2 times
+ale_brd_111 2 years, 5 months ago
+Selected Answer: A
+I would go for A, for two reasons:
+1) "S3 gateway endpoints do not currently support access from resources in a different Region, different VPC, or from an on-premises (non-AWS)
+environment.
+2) we tryna access an output from an application hosted in e2 instances and not to access the s3 stored data so ideally we should use Interface
+Endpoints for the applications running in ec2.
+upvoted 3 times
+MatAlves 1 year, 8 months ago
+You forgot the traffic from EC2 to S3. Without the Gateway Endpoint, that would go via public internet.
+1. Deploy a gateway VPC endpoint for Amazon S3 = so traffic between EC2 and S3 doesn't live AWS private network.
+2. Set up an AWS Direct Connect connection between the on-premises network and the VPC = servers on-premises can consume the output from
+ec2 instances via private connection.
+upvoted 2 times
+pentium75 2 years, 5 months ago
+Plus, in A you deploy a VPC endpoint "for EC2" (!) which doesn't exist
+upvoted 3 times
+elmyth 1 year, 9 months ago
+exists, check the docs, interface VPS endpoint != gateway VPC endpoint, they have different range of services
+upvoted 2 times
+pentium75 2 years, 5 months ago
+"Data must not be transmitted over the public internet", as it would with A (VPN).
+upvoted 3 times
+ftaws 2 years, 5 months ago
+I standhood answer is B, but why not A?
+upvoted 1 times
+pentium75 2 years, 5 months ago
+there's no such things a 'VPC endpoint for EC2', and it uses public Internet
+upvoted 2 times
+achechen 2 years, 6 months ago
+Selected Answer: A
+https://aws.amazon.com/blogs/architecture/choosing-your-vpc-endpoint-strategy-for-amazon-s3/ According to this document, " S3 gateway
+endpoints do not currently support access from resources in a different Region, different VPC, or from an on-premises (non-AWS) environment.
+However, if you’re willing to manage a complex custom architecture, you can use proxies. In all those scenarios, where access is from resources
+external to VPC, S3 interface endpoints access S3 in a secure way." so, the answer is A.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+A uses a VPC endpoint "for Amazon EC2", not S3. Also it uses public Internet.
+upvoted 3 times
+elmyth 1 year, 9 months ago
+interface VPC endpoint works with PrivateLink, so it can be connected to huge amount of services, and to EC2. Gateway VPC endpoint can't work
+for on-prem
+upvoted 2 times
+TariqKipkemei 2 years, 6 months ago
+Selected Answer: B
+data must not be transmitted over the public internet = gateway VPC endpoint for Amazon S3 and AWS Direct Connect connection between the on-
+premises network and the VPC.
+upvoted 2 times
+Guru4Cloud 2 years, 8 months ago
+Selected Answer: B
+Gateway VPC Endpoint = no internet to access S3. Direct Connect = secure access to VPC
+I agree with you @taustin2- Happy Learning all
+upvoted 5 times

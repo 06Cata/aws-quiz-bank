@@ -1,0 +1,68 @@
+A company uses Salesforce. The company needs to load existing data and ongoing data changes from Salesforce to Amazon
+Redshift for analysis. The company does not want the data to travel over the public internet.
+Which solution will meet these requirements with the LEAST development effort?
+A. Establish a VPN connection from the VPC to Salesforce. Use AWS Glue DataBrew to transfer data.
+B. Establish an AWS Direct Connect connection from the VPC to Salesforce. Use AWS Glue DataBrew to transfer data.
+C. Create an AWS PrivateLink connection in the VPC to Salesforce. Use Amazon AppFlow to transfer data. Most Voted
+D. Create a VPC peering connection to Salesforce. Use Amazon AppFlow to transfer data.
+Comments
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - VPN connection, public internet, no.
+B - Significant setup effort and cost. Also, DataBrew is not suitable for loading ongoing data changes.
+C - Amazon AppFlow is a fully managed integration service that natively supports Salesforce and Amazon Redshift.
+D - VPC peering is for connecting two AWS VPCs. Salesforce is external to AWS, so no.
+upvoted 3 times
+LeonSauveterre 1 year, 5 months ago
+Also, maybe this will help you along the way (things after "==>" are their disadvantages):
+1. VPN Connection: For secure, encrypted traffic between on-premises and AWS over the public internet. ==> Relies on public internet (higher
+latency)
+2. Direct Connect: For dedicated private network connectivity between on-premises and AWS (like data centers with large workloads). ==> Higher
+cost, longer setup time.
+3. PrivateLink: For secure private connectivity to AWS services or third-party services (like Salesforce) within AWS. ==> Simple setup but limited to
+services configured with PrivateLink (not general connectivity).
+4. VPC Peering: For direct connectivity between two AWS VPCs (like multi-account or region scenarios). ==> Does not support transitive
+connections; not suitable for external services like Salesforce.
+upvoted 2 times
+mk168898 1 year, 7 months ago
+3rd party SaaS salesforce integration => Use AWS AppFlow
+So left C and D
+Not D because VPC Peering need 2 VPC and 3rd party SaaS does not have a VPC
+upvoted 2 times
+MatAlves 1 year, 8 months ago
+Selected Answer: C
+AWS PrivateLink: This service enables private connectivity between VPCs and supported AWS services, effectively keeping data off the public internet
+It allows secure communication without exposing your data to the internet.
+Amazon AppFlow: This is a fully managed integration service that simplifies data transfer between SaaS applications (like Salesforce) and AWS
+services (like Amazon Redshift).
+upvoted 2 times
+Johnoppong101 1 year, 9 months ago
+Correct Answer: C
+Community vote distribution
+C (100%)
+Selected Answer: C
+C is the answer
+upvoted 2 times
+KennethNg923 1 year, 12 months ago
+Selected Answer: C
+Private link for sure
+upvoted 2 times
+Scheldon 2 years ago
+Selected Answer: C
+AnswerC
+To connect your own VPC with third-party VPC we need to use ProvateLink.
+AWS PrivateLink is a highly available, scalable technology that you can use to privately connect your VPC to services as if they were in your VPC. You
+do not need to use an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site-to-Site VPN connection to allow
+communication with the service from your private subnets. Therefore, you control the specific API endpoints, sites, and services that are reachable
+from your VPC.
+https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html
+upvoted 4 times
+Kaula 2 years, 2 months ago
+Selected Answer: C
+Should be C
+upvoted 2 times
+Kaula 2 years, 2 months ago
+C
+https://docs.aws.amazon.com/connect/latest/adminguide/integrate-salesforce-tasks.html
+https://docs.aws.amazon.com/connect/latest/adminguide/vpc-interface-endpoints.html
+upvoted 3 times

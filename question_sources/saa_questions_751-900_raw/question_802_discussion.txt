@@ -1,0 +1,60 @@
+A company wants to run its payment application on AWS. The application receives payment notifications from mobile devices.
+Payment notifications require a basic validation before they are sent for further processing.
+The backend processing application is long running and requires compute and memory to be adjusted. The company does not
+want to manage the infrastructure.
+Which solution will meet these requirements with the LEAST operational overhead?
+A. Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to
+receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the
+notifications to the backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS)
+Anywhere. Create a standalone cluster.
+B. Create an Amazon API Gateway API. Integrate the API with an AWS Step Functions state machine to receive payment
+notifications from mobile devices. Invoke the state machine to validate payment notifications and send the notifications to the
+backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS). Configure an EKS
+cluster with self-managed nodes.
+C. Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to
+receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the
+notifications to the backend application. Deploy the backend application on Amazon EC2 Spot Instances. Configure a Spot
+Fleet with a default allocation strategy.
+D. Create an Amazon API Gateway API. Integrate the API with AWS Lambda to receive payment notifications from mobile
+devices. Invoke a Lambda function to validate payment notifications and send the notifications to the backend application.
+Deploy the backend application on Amazon Elastic Container Service (Amazon ECS). Configure Amazon ECS with an AWS
+Fargate launch type. Most Voted
+Comments
+Mikado211 Highly Voted 2 years, 2 months ago
+Selected Answer: D
+We want to have least overhead and no infrastructure (aka no server).
+So no infrastructure == not C
+least overhead == ECS better than EKS == not B and not A
+Fargate is serverless so D is still valid.
+So the answer is D.
+upvoted 5 times
+Cpso Most Recent 1 year, 6 months ago
+Selected Answer: D
+D= less operation. But should have SQS to buffer a job.
+upvoted 2 times
+Scheldon 1 year, 12 months ago
+Selected Answer: D
+Correct Answer: D
+Community vote distribution
+D (100%)
+AnswerD
+I would go with Lambda function to do basic validation it should not take more then 15min hence Lambda is perfect for that job. Then we have
+information that backend processing application is long running and we need to make compute and memory adjustment, and everythink need to be
+automatic as company do not want to manage infrastucture. In that situation Fargate with ECS will be ideal as it can run background application for
+every paymant separetly we need only adjust amunt of resources in use. More payments more application running, mmore resources in use and
+oposite,
+upvoted 1 times
+sandordini 2 years, 1 month ago
+Selected Answer: D
+Lot of grip in this question, but to keep it short:
+No infra: B, C Out.
+EKS Anywhere: Onprem + AWS: Not needed.
+ECS Fargate: Serverless, Least Ops Overhead, SQS fine for the queue, Lambda good for basic validation.
+upvoted 3 times
+seetpt 2 years, 3 months ago
+Selected Answer: D
+D is correct
+upvoted 4 times
+asdfcdsxdfc 2 years, 3 months ago
+shouldn't it be D?
+upvoted 3 times

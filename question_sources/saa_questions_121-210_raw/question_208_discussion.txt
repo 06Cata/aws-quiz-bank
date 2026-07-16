@@ -1,0 +1,195 @@
+A company needs to move data from an Amazon EC2 instance to an Amazon S3 bucket. The company must ensure that no API
+calls and no data are routed through public internet routes. Only the EC2 instance can have access to upload data to the S3
+bucket.
+Which solution will meet these requirements?
+A. Create an interface VPC endpoint for Amazon S3 in the subnet where the EC2 instance is located. Attach a resource policy to
+the S3 bucket to only allow the EC2 instance’s IAM role for access. Most Voted
+B. Create a gateway VPC endpoint for Amazon S3 in the Availability Zone where the EC2 instance is located. Attach appropriate
+security groups to the endpoint. Attach a resource policy to the S3 bucket to only allow the EC2 instance’s IAM role for access.
+C. Run the nslookup tool from inside the EC2 instance to obtain the private IP address of the S3 bucket’s service API endpoint.
+Create a route in the VPC route table to provide the EC2 instance with access to the S3 bucket. Attach a resource policy to the
+S3 bucket to only allow the EC2 instance’s IAM role for access.
+D. Use the AWS provided, publicly available ip-ranges.json file to obtain the private IP address of the S3 bucket’s service API
+endpoint. Create a route in the VPC route table to provide the EC2 instance with access to the S3 bucket. Attach a resource
+policy to the S3 bucket to only allow the EC2 instance’s IAM role for access.
+Comments
+SSASSWS Highly Voted 3 years, 6 months ago
+Selected Answer: A
+I think answer should be A and not B.
+as we cannot "Attach a security groups to a gateway endpoint."
+upvoted 42 times
+A_New_Guy 3 years, 5 months ago
+It's possible:
+https://aws.amazon.com/premiumsupport/knowledge-center/connect-s3-vpc-endpoint/
+upvoted 5 times
+kruasan 3 years, 1 month ago
+No, it’s not
+upvoted 3 times
+smartegnine 3 years ago
+Create a security group that allows the resources in your VPC to communicate with the endpoint network interfaces for the VPC endpoint. To
+ensure that tools such as the AWS CLI can make requests over HTTPS from resources in the VPC to the AWS service, the security group must
+allow inbound HTTPS traffic.
+For Security groups, select the security groups to associate with the endpoint network interfaces for the VPC endpoint. By default, we associate
+the default security group for the VPC.
+upvoted 2 times
+slackbot 2 years, 9 months ago
+this is valid for interface endpoint, not for gateway endpoint, which option B mentioned
+upvoted 5 times
+Correct Answer: A
+Community vote distribution
+A (56%)
+B (44%)
+markw92 2 years, 11 months ago
+Gateway endpoint must be used as a target in a route table does not use security groups.
+upvoted 10 times
+Iconique 2 years, 8 months ago
+Go to console and test it yourself! With Interface Endpoint you can add security groups.
+upvoted 2 times
+elmyth 1 year, 7 months ago
+interface VPC endpoint is A))))
+upvoted 2 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: B
+The correct solution to meet the requirements is Option B. A gateway VPC endpoint for Amazon S3 should be created in the Availability Zone where
+the EC2 instance is located. This will allow the EC2 instance to access the S3 bucket directly, without routing through the public internet. The
+endpoint should also be configured with appropriate security groups to allow access to the S3 bucket. Additionally, a resource policy should be
+attached to the S3 bucket to only allow the EC2 instance's IAM role for access.
+upvoted 38 times
+Buruguduystunstugudunstuy 3 years, 5 months ago
+Option A is incorrect because an interface VPC endpoint for Amazon S3 would not provide a direct connection between the EC2 instance and the S3
+bucket.
+Option C is incorrect because using the nslookup tool to obtain the private IP address of the S3 bucket's service API endpoint would not provide a
+secure connection between the EC2 instance and the S3 bucket.
+Option D is incorrect because using the ip-ranges.json file to obtain the private IP address of the S3 bucket's service API endpoint is not a secure
+method to connect the EC2 instance to the S3 bucket.
+upvoted 4 times
+mhmt4438 3 years, 5 months ago
+An interface VPC endpoint does provide a direct connection between the EC2 instance and the S3 bucket. It enables private communication
+between instances in your VPC and resources in other services without requiring an internet gateway, a NAT device, or a VPN connection.
+Option A , which recommends creating an interface VPC endpoint for Amazon S3 in the subnet where the EC2 instance is located and attaching a
+resource policy to the S3 bucket to only allow the EC2 instance's IAM role for access, is the correct solution for the given scenario. It meets the
+requirement to ensure that no API calls and no data are routed through public internet routes and that only the EC2 instance can have access to
+upload data to the S3 bucket.
+upvoted 7 times
+Omok 3 years, 4 months ago
+In support, see https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html#types-of-vpc-endpoints-for-s3
+upvoted 8 times
+ChrisG1454 3 years, 3 months ago
+There are two types VPC Endpoint:
+Gateway endpoint
+Interface endpoint
+A Gateway endpoint:
+1) Helps you to securely connect to Amazon S3 and DynamoDB
+2) Endpoint serves as a target in your route table for traffic
+3) Provide access to endpoint (endpoint, identity and resource policies)
+An Interface endpoint:
+1) Help you to securely connect to AWS services EXCEPT FOR Amazon S3 and DynamoDB
+2) Powered by PrivateLink (keeps network traffic within AWS network)
+3) Needs a elastic network interface (ENI) (entry point for traffic)
+upvoted 35 times
+slackbot 2 years, 9 months ago
+interface endpoint exists for S3 as well
+upvoted 10 times
+JustEugen 9 months, 2 weeks ago
+Yes, but only if you need to use the PrivateLink
+upvoted 1 times
+JA2018 1 year, 6 months ago
+check this out: https://www.examtopics.com/discussions/amazon/view/83857-exam-aws-certified-solutions-architect-associate-saa-c02/
+Selected answer: B
+So which is the correct answer?!!!!
+upvoted 1 times
+111380c Most Recent 10 months ago
+Selected Answer: B
+interface VPC endpoint 's used for SNS, SQS, KMS, Secrets Manager, but excepted S3
+upvoted 1 times
+607d657 10 months, 2 weeks ago
+Selected Answer: B
+B. Create a gateway VPC endpoint for Amazon S3
+upvoted 1 times
+Clouddon 11 months, 1 week ago
+Selected Answer: B
+B. Create a gateway VPC endpoint for Amazon S3 in the Availability Zone where the EC2 instance is located. Attach appropriate security groups to
+the endpoint. Attach a resource policy to the S3 bucket to only allow the EC2 instance’s IAM role for access.
+✅ Why this is the correct solution:
+The requirements are:
+B No API calls or data should go through the public internet
+ Only the EC2 instance should be able to upload to S3
+( Minimize public exposure and securely control access
+upvoted 1 times
+Smith3136 11 months, 2 weeks ago
+Selected Answer: B
+Only Gateway Endpoint can be attached to S3. Interface Endpoint is not an option with S3
+upvoted 1 times
+TEC65 1 year, 1 month ago
+Selected Answer: B
+Here's why this option is suitable:
+Gateway VPC Endpoint for Amazon S3: A gateway VPC endpoint allows you to privately connect your VPC to supported AWS services, such as
+Amazon S3, without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection. Traffic between your VPC and
+the service does not leave the Amazon network.
+Resource Policy: By attaching a resource policy to the S3 bucket that only allows access from the EC2 instance's IAM role, you ensure that only
+authorized instances can access the bucket.
+Here's why the other options are not as suitable:
+A. Create an interface VPC endpoint for Amazon S3:
+Amazon S3 uses gateway VPC endpoints, not interface VPC endpoints. Interface VPC endpoints are used for services that are not supported by
+gateway endpoints.
+upvoted 1 times
+7dcef09 1 year, 2 months ago
+Selected Answer: B
+Interface Endpoint = AWS PrivateLink
+Gateway Endpoint = Supports S3 and DynamoDB
+upvoted 1 times
+nadeerm 1 year, 3 months ago
+Reasons for B:
+Simplicity: Gateway VPC endpoints are easier to configure and manage compared to interface VPC endpoints.
+Cost: Gateway VPC endpoints are free to use, whereas interface VPC endpoints incur costs for each hour and per GB of data processed.
+Performance: Gateway VPC endpoints are highly scalable and optimized for S3 and DynamoDB traffic.
+upvoted 1 times
+chir827389_3 1 year, 4 months ago
+Selected Answer: A
+gateway endpoint does not have any SG.
+upvoted 1 times
+certifiedlegend 1 year, 4 months ago
+Selected Answer: B
+A VPC gateway endpoint is primarily used for accessing specific AWS services like Amazon S3 and DynamoDB privately within your VPC by specifying
+a route in your route table, while a VPC interface endpoint offers more flexible connectivity to a wider range of AWS services through AWS
+PrivateLink, allowing access from both within your VPC and from other VPCs using peering or Transit Gateways, typically with a dedicated private IP
+address within your VPC network; essentially, gateway endpoints are simpler and often free, while interface endpoints provide greater control and
+may incur additional costs depending on usage.
+Gateway endpoints are ideal for simple private access to S3 and DynamoDB, while interface endpoints are better suited for more complex scenarios
+where you need to access various AWS services from different VPCs or on-premises networks.
+upvoted 1 times
+DeliKadir 1 year, 4 months ago
+Selected Answer: A
+Even though Amazon S3 typically uses a Gateway VPC Endpoint, AWS now provides Interface VPC Endpoints for Amazon S3 as well via AWS
+PrivateLink....and "Attach a security groups to a gateway endpoint." makes the option B - false
+upvoted 1 times
+FlyingHawk 1 year, 4 months ago
+Selected Answer: A
+B will be correct if removing the "Attach appropriate security group to the endpoint" and gateway point is free of charge.
+upvoted 1 times
+MaxMingxing 1 year, 5 months ago
+Selected Answer: B
+Option A uses an interface VPC endpoint, which is typically used for services that require a private IP address within your VPC. For S3, a gateway VPC
+endpoint is more appropriate and cost-effective1
+upvoted 1 times
+hilker1983 1 year, 5 months ago
+Selected Answer: B
+Interface VPC Endpoint: Interface endpoints are generally used for other AWS services and do not provide the same direct access optimization for S3
+that gateway endpoints do.
+upvoted 1 times
+LizavetaD 1 year, 5 months ago
+Selected Answer: B
+In this context, a Gateway VPC Endpoint is the correct choice for S3, as it provides direct, private access to S3 and routes traffic internally within the
+AWS networ
+upvoted 1 times
+dipenich 1 year, 5 months ago
+Selected Answer: B
+Why Option B is Correct:
+Gateway VPC Endpoint for Amazon S3:
+S3 does not require an interface endpoint; it uses a gateway VPC endpoint.
+Gateway endpoints ensure that requests stay within the AWS network, meeting the requirement of no public internet routes.
+Resource Policy:
+Attaching a bucket policy ensures that only the EC2 instance's IAM role has access to the bucket.
+Appropriate Security Controls:
+The gateway endpoint can be secured further using policies and security group configurations.
+upvoted 1 times

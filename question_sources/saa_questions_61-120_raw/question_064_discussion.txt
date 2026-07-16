@@ -1,0 +1,149 @@
+A company has more than 5 TB of file data on Windows file servers that run on premises. Users and applications interact with the
+data each day.
+The company is moving its Windows workloads to AWS. As the company continues this process, the company requires access to
+AWS and on-premises file storage with minimum latency. The company needs a solution that minimizes operational overhead and
+requires no significant changes to the existing file access patterns. The company uses an AWS Site-to-Site VPN connection for
+connectivity to AWS.
+What should a solutions architect do to meet these requirements?
+A. Deploy and configure Amazon FSx for Windows File Server on AWS. Move the on-premises file data to FSx for Windows File
+Server. Reconfigure the workloads to use FSx for Windows File Server on AWS.
+B. Deploy and configure an Amazon S3 File Gateway on premises. Move the on-premises file data to the S3 File Gateway.
+Reconfigure the on-premises workloads and the cloud workloads to use the S3 File Gateway.
+C. Deploy and configure an Amazon S3 File Gateway on premises. Move the on-premises file data to Amazon S3. Reconfigure
+the workloads to use either Amazon S3 directly or the S3 File Gateway. depending on each workload's location.
+D. Deploy and configure Amazon FSx for Windows File Server on AWS. Deploy and configure an Amazon FSx File Gateway on
+premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File
+Server on AWS. Configure the on-premises workloads to use the FSx File Gateway. Most Voted
+Comments
+sba21 Highly Voted 3 years, 8 months ago
+Selected Answer: D
+https://www.examtopics.com/discussions/amazon/view/83281-exam-aws-certified-solutions-architect-associate-saa-c02/
+upvoted 26 times
+MutiverseAgent 2 years, 11 months ago
+Agree answer is D)
+---
+Requirements are:
+- "Users and applications interact with the data each day"
+- "the company requires access to AWS and on-premises file storage with minimum latency"
+---
+Explanation: Answer A) will work with the same on-prem <> aws latency as in answer D) as both use the VPN Connection. Having said this, by using
+an Amazon FSx File Gateway on premise as the D) scenario mentioned, all users will have a great benefit on using the cache that the FSx File
+Gateway has on their daily workloads. And that is part of the requierements: "users", "each day", "latency"
+upvoted 5 times
+MrAWS Highly Voted 3 years, 4 months ago
+D IS WRONG - Its used for caching. you cannot 'Move the on-premises file data to the FSx File Gateway.' which is stated in answer D. It pretty sure
+AWS employee's are spamming this site with the wrong answers intentionally.
+upvoted 20 times
+DarthVaper 2 years, 8 months ago
+What's the problem with it being a cache? They did say "the company requires access to AWS and on-premises file storage with minimum latency."
+Not discarding what you said but what's wrong here?
+upvoted 4 times
+chagantik90 2 years, 6 months ago
+you don't move data to gateway, its cached when people use those files from Fsx server
+Correct Answer: D
+Community vote distribution
+D (76%)
+A (22%)
+2%
+upvoted 1 times
+dsshahu01 2 years, 3 months ago
+The problem with cache is - It needs to refreshed, which is an overkill for a migration project
+The cache refresh requires another solution since the users/applications interact with it daily which means it does modify often.
+upvoted 2 times
+Rabbit117 2 years ago
+I think D is correct. The FSx File gateway will look like any other Windows file share to the on-prem clients so when they write, or "Copy" data to the
+share it will be be cached locally and also written to the FSx service in the cloud. https://docs.aws.amazon.com/filegateway/latest/filefsxw/file-
+gateway-fsx-concepts.html
+upvoted 3 times
+Clouddon Most Recent 11 months, 1 week ago
+Selected Answer: D
+FSx for Windows + FSx File Gateway provides the best hybrid file system for Windows environments with low-latency on-prem access, fully managed
+cloud storage, and no major app changes.
+upvoted 3 times
+senrix 1 year ago
+Selected Answer: D
+D will address the "latency" requirement
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: D
+On reconsidering, A might be incorrect. First part of te answer looks ok, but later it says "Configure apps to use FSx in AWS". So that doesnt make
+sense - what about the on prem data?
+So perhaps its better to simply move all data to FSx on AWS. I think none of the choices are perfect. So D comes close.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: A
+D is incorrect choice.The documentation describes the FSx File Gateway as:
+"FSx for Windows File Server makes all the shares on the server available as shares on your Amazon FSx File Gateway." - so it is simply a fronting for
+the FSx Windows File Server, not an independent storage FSx system.
+So I would choose A as a more appropriate response.
+upvoted 1 times
+dariar 1 year, 4 months ago
+Selected Answer: A
+You can't migrate data to FSx File Gateway
+---
+Migrate your files to FSx for Windows File Server. For more information, see Migrating existing file storage to FSx for Windows File Server.
+upvoted 1 times
+PaulGa 1 year, 9 months ago
+Selected Answer: A
+Ans A - it can only be A or D. With D introducing unnecessary operations for an eventual AWS migration
+upvoted 1 times
+iyiola_daniel 1 year, 9 months ago
+Selected Answer: A
+The question says the company is moving it's workload from windows to AWS. Plus D involves operational overhead.
+upvoted 3 times
+MatAlves 1 year, 10 months ago
+Selected Answer: D
+Bad question.
+A - Doesn't meet the "low latency" requirement due to VPN connection.
+D - It's not possible to "move file data to FSx File Gateway". Instead, it provides improved latency with local caching.
+B and C - wrong, since the question requires "no significant changes to the existing file access patterns"
+I'd go with D, but not 100% happy with it.
+upvoted 5 times
+hieunt.hus 1 year, 10 months ago
+Selected Answer: A
+A. Deploy and configure Amazon FSx for Windows File Server on AWS. Move the on-premises file data to FSx for Windows File Server. Reconfigure
+the workloads to use FSx for Windows File Server on AWS.
+upvoted 2 times
+jatric 1 year, 11 months ago
+Selected Answer: D
+keyword as company continue to migrate workload from om-prem to cloud
+upvoted 2 times
+Abhi2024 2 years ago
+I would go with option A as question mentions "solution that minimizes operational overhead" . Adding FSx File Gateway would add more
+complexity. They already have Site to Site VPN. This way min change required.
+upvoted 2 times
+ManikRoy 2 years, 1 month ago
+Selected Answer: D
+Will go with option D as option A is missing the Fsx File gateway component deployed on-premise which will provide the low latency access.
+upvoted 3 times
+3680113 2 years ago
+Option D is Correct, D provides low latency options for both of premium and the cloud loads.
+upvoted 2 times
+3680113 2 years ago
+*on-prem*
+upvoted 1 times
+stormbreaker7 2 years, 1 month ago
+Selected Answer: A
+min. operational overhead.
+upvoted 1 times
+Uzbekistan 2 years, 2 months ago
+Selected Answer: A
+Option D suggests deploying both Amazon FSx for Windows File Server on AWS and an Amazon FSx File Gateway on premises. While this option
+may provide a solution for accessing on-premises file data in AWS, it introduces additional complexity and potential overhead that may not be
+necessary given the company's existing AWS Site-to-Site VPN connectivity.
+Here are some reasons why Option D may not be the most suitable choice:
+Complexity, Cost, Redundancy and Operational Overhead.
+upvoted 1 times
+Rabbit117 2 years ago
+A VPN or DX connection is required for FSx File gateway. Option D provides low mantiance as FSx for Windows is a managed service and the file
+gateway will provide the low latency access required by the on-prem services.
+upvoted 1 times
+3680113 2 years ago
+Both Amazon FSx file gateway on-prem and Amazon FSx for windows file server goes hand in hand. So there is no way you can use the file gateway
+on-Prem and not use the Fsx for windows file server. Your conclusion of adding more overhead does not hold. Hence D is the perfect answer.
+Configure the cloud workloads to use FSx for Windows File Server on AWS. Configure the on-premises workloads to use the FSx File Gateway.
+upvoted 1 times
+LIORAGE 2 years, 2 months ago
+Selected Answer: D
+D: FSX File gateway is nessary for communication between on-premise and aws FSX for window
+upvoted 2 times

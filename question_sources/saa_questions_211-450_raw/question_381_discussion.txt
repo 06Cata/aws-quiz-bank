@@ -1,0 +1,116 @@
+A company hosts a three-tier web application that includes a PostgreSQL database. The database stores the metadata from
+documents. The company searches the metadata for key terms to retrieve documents that the company reviews in a report each
+month. The documents are stored in Amazon S3. The documents are usually written only once, but they are updated frequently.
+The reporting process takes a few hours with the use of relational queries. The reporting process must not prevent any document
+modifications or the addition of new documents. A solutions architect needs to implement a solution to speed up the reporting
+process.
+Which solution will meet these requirements with the LEAST amount of change to the application code?
+A. Set up a new Amazon DocumentDB (with MongoDB compatibility) cluster that includes a read replica. Scale the read replica
+to generate the reports.
+B. Set up a new Amazon Aurora PostgreSQL DB cluster that includes an Aurora Replica. Issue queries to the Aurora Replica to
+generate the reports. Most Voted
+C. Set up a new Amazon RDS for PostgreSQL Multi-AZ DB instance. Configure the reporting module to query the secondary
+RDS node so that the reporting module does not affect the primary node.
+D. Set up a new Amazon DynamoDB table to store the documents. Use a fixed write capacity to support new document entries.
+Automatically scale the read capacity to support the reports.
+Comments
+Guru4Cloud Highly Voted 2 years, 8 months ago
+Selected Answer: B
+The key reasons are:
+Aurora PostgreSQL provides native PostgreSQL compatibility, so minimal code changes would be required.
+Using an Aurora Replica separates the reporting workload from the main workload, preventing any slowdown of document updates/inserts.
+Aurora can auto-scale read replicas to handle the reporting load.
+This allows leveraging the existing PostgreSQL database without major changes. DynamoDB would require more significant rewrite of data access
+code.
+RDS Multi-AZ alone would not fully separate the workloads, as the secondary is for HA/failover more than scaling read workloads.
+upvoted 13 times
+TariqKipkemei Highly Voted 3 years ago
+Selected Answer: B
+Load balancing = Read replica
+High availability = Multi AZ
+upvoted 8 times
+BillaRanga 2 years, 4 months ago
+No Modifications allowerd = Read Replica
+upvoted 4 times
+JosephKY Most Recent 7 months, 1 week ago
+Selected Answer: B
+This is a perfect example of the kind of ambiguous requirement that an actual person in an actual job would push back on. What exactly do you wan
+the report to return? Are you wanting a report of meta data, or the actual files themselves? Are you upset that it's currently a relational query?
+upvoted 1 times
+Correct Answer: B
+Community vote distribution
+B (96%)
+2%
+terminator69 1 year, 9 months ago
+How in the bloody hell it's D?????
+upvoted 1 times
+TruthWS 2 years, 2 months ago
+B is correct
+upvoted 2 times
+ExamGuru727 2 years, 2 months ago
+Selected Answer: B
+We also have a requirement for the Least amount of change to the code.
+Since our DB is PostgreSQL, A & D are immediately out.
+Multi-AZ won't help with offloading read requests, hence the answer is B ;)
+upvoted 5 times
+Buck12345 2 years, 3 months ago
+It is B
+upvoted 2 times
+Cyberkayu 2 years, 5 months ago
+Selected Answer: C
+D. Reporting process Must not prevent = allow modification and addition of new document.
+all read replica were wrong.
+upvoted 1 times
+pentium75 2 years, 5 months ago
+How would 'issuing queries to the read replica' prevent modifications or updates?
+upvoted 2 times
+KMohsoe 3 years ago
+Selected Answer: A
+Why not A? :(
+upvoted 1 times
+wRhlH 2 years, 11 months ago
+"The reporting process takes a few hours with the use of RELATIONAL queries."
+upvoted 4 times
+Murtadhaceit 2 years, 6 months ago
+DocumentDB (For MongoDB) is no SQL. DynamoDB is also No SQL. Therefore, options A and D are out.
+upvoted 5 times
+lexotan 3 years, 1 month ago
+Selected Answer: B
+B is the right one. why admin does not correct these wrong answers?
+upvoted 4 times
+imvb88 3 years, 1 month ago
+Selected Answer: B
+The reporting process queries the metadata (not the documents) and use relational queries-> A, D out
+C: wrong since secondary RDS node in MultiAZ setup is in standby mode, not available for querying
+B: reporting using a Replica is a design pattern. Using Aurora is an exam pattern.
+upvoted 5 times
+WherecanIstart 3 years, 2 months ago
+Selected Answer: B
+B is right..
+upvoted 2 times
+Maximus007 3 years, 2 months ago
+Selected Answer: B
+While both B&D seems to be a relevant, ChatGPT suggest B as a correct one
+upvoted 2 times
+cegama543 3 years, 3 months ago
+Selected Answer: B
+Option B (Set up a new Amazon Aurora PostgreSQL DB cluster that includes an Aurora Replica. Issue queries to the Aurora Replica to generate the
+reports) is the best option for speeding up the reporting process for a three-tier web application that includes a PostgreSQL database storing
+metadata from documents, while not impacting document modifications or additions, with the least amount of change to the application code.
+upvoted 3 times
+UnluckyDucky 3 years, 3 months ago
+Selected Answer: B
+"LEAST amount of change to the application code"
+Aurora is a relational database, it supports PostgreSQL and with the help of read replicas we can issue the reporting proccess that take several hours
+to the replica, therefore not affecting the primary node which can handle new writes or document modifications.
+upvoted 2 times
+Ashukaushal619 3 years, 3 months ago
+its D only ,recorrected
+upvoted 2 times
+Murtadhaceit 2 years, 6 months ago
+DynamoDB is no SQL. A and D are out!
+upvoted 2 times
+Ashukaushal619 3 years, 3 months ago
+Selected Answer: B
+bbbbbbbb
+upvoted 2 times

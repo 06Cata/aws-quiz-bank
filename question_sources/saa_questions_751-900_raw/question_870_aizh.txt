@@ -1,0 +1,55 @@
+Question #870
+A company has two AWS accounts: Production and Development. The company needs to push code changes in the Development
+account to the Production account. In the alpha phase, only two senior developers on the development team need access to the
+Production account. In the beta phase, more developers will need access to perform testing.
+Which solution will meet these requirements?
+一家公司有两个AWS账户：Production和Development。该公司需要将Development账户中的代码更改推送到Production账户。在
+alpha阶段，只有开发团队中的两位高级开发人员需要访问Production账户。在beta阶段，更多开发人员需要访问以进行测试。
+哪种解决方案能够满足这些需求？
+A. Create two policy documents by using the AWS Management Console in each account. Assign the policy to developers who
+need access.
+使用AWS Management Console在每个账户中创建两个策略文档。将策略分配给需要访问的开发人员。
+B. Create an IAM role in the Development account. Grant the IAM role access to the Production account. Allow developers to
+assume the role.
+在Development账户中创建一个IAM角色。授予该IAM角色访问Production账户的权限。允许开发人员假设该角色。
+C. Create an IAM role in the Production account. Define a trust policy that specifies the Development account. Allow
+developers to assume the role. Most Voted
+在Production账户中创建一个IAM角色。定义一个信任策略，指定Development账户。允许开发人员假设该角色。
+D. Create an IAM group in the Production account. Add the group as a principal in a trust policy that specifies the Production
+account. Add developers to the group.
+在Production账户中创建一个IAM组。将该组作为信任策略中的主体，指定Production账户。将开发人员添加到该组。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (72%)
+D (22%)
+6%
+题目分析与解答
+1. 考察的知识点
+IAM角色与信任策略的使用
+跨账户访问的实现
+权限管理与安全性最佳实践
+2. 选项分析
+A. Create two policy documents by using the AWS Management Console in each account. Assign the policy to developers
+who need access.
+错误：此选项没有涉及跨账户访问的实现，仅在每个账户中创建策略文档并分配给开发人员。这无法满足开发人员从Development
+账户访问Production账户的需求。
+B. Create an IAM role in the Development account. Grant the IAM role access to the Production account. Allow developers
+to assume the role.
+错误：IAM角色需要在目标账户（Production账户）中创建，并定义信任策略以允许来源账户（Development账户）中的用户或角
+色进行访问。此选项在Development账户中创建角色，逻辑不正确。
+C. Create an IAM role in the Production account. Define a trust policy that specifies the Development account. Allow
+developers to assume the role.
+正确：这是跨账户访问的标准实现方式。在目标账户（Production账户）中创建IAM角色，并定义信任策略以允许来源账户
+（Development账户）中的用户或角色进行访问。开发人员可以通过AssumeRole操作来访问Production账户。
+D. Create an IAM group in the Production account. Add the group as a principal in a trust policy that specifies the
+Production account. Add developers to the group.
+错误：IAM组不能作为信任策略中的主体。信任策略只能指定用户、角色或账户作为主体。此选项的实现方式不符合AWS的权限管
+理逻辑。
+3. 我选的答案
+C
+4. 官方答案
+C
+5. 与官方答案的比较
+我的答案与官方答案一致。

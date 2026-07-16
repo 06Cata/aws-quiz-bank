@@ -1,0 +1,118 @@
+A company has an on-premises data center that is running out of storage capacity. The company wants to migrate its storage
+infrastructure to AWS while minimizing bandwidth costs. The solution must allow for immediate retrieval of data at no additional
+cost.
+How can these requirements be met?
+A. Deploy Amazon S3 Glacier Vault and enable expedited retrieval. Enable provisioned retrieval capacity for the workload.
+B. Deploy AWS Storage Gateway using cached volumes. Use Storage Gateway to store data in Amazon S3 while retaining
+copies of frequently accessed data subsets locally. Most Voted
+C. Deploy AWS Storage Gateway using stored volumes to store data locally. Use Storage Gateway to asynchronously back up
+point-in-time snapshots of the data to Amazon S3.
+D. Deploy AWS Direct Connect to connect with the on-premises data center. Configure AWS Storage Gateway to store data
+locally. Use Storage Gateway to asynchronously back up point-in-time snapshots of the data to Amazon S3.
+Comments
+67a3f49 Highly Voted 2 years, 3 months ago
+B is the correct one because:
+"A company has an on-premises data center that is running out of storage capacity".
+So when they keep data on-premis and do the backup to S3 they'll run out of data and this is not their purpose.
+upvoted 10 times
+Sergantus 1 year, 7 months ago
+Storage Gateway in Stored mode DOS does NOT improve capacity – the main copy of data is stored on the gateway. It's B for that same reason
+upvoted 1 times
+JCVDB23 Highly Voted 2 years, 2 months ago
+Selected Answer: B
+B. Deploy AWS Storage Gateway using cached volumes. Use Storage Gateway to store data in Amazon S3 while retaining copies of frequently
+accessed data subsets locally.
+AWS Storage Gateway’s cached volumes let you use Amazon S3 as your primary data storage while retaining frequently accessed data locally in your
+storage gateway. Cached volumes minimize the need to scale your on-premises storage infrastructure, while still providing your applications with
+low-latency access to their frequently accessed data. All data transferred between your gateway and AWS storage is encrypted for security. You can
+also save on data transfer costs as AWS Storage Gateway compresses all data transferred between the gateway and AWS, allowing you to store more
+data in AWS while reducing your data transfer costs.
+upvoted 7 times
+ln2718 Most Recent 10 months, 2 weeks ago
+Selected Answer: C
+I'm going with answer C for all the reasons mentioned. The stored volumes is better in this case for the parameters specified including cost.
+upvoted 1 times
+TEC65 1 year, 1 month ago
+Selected Answer: B
+they want to limit onsite storage
+upvoted 1 times
+tch 1 year, 4 months ago
+Correct Answer: B
+Community vote distribution
+B (58%)
+C (42%)
+Selected Answer: B
+In the cached Volume Gateway mode, your primary data is stored in Amazon S3, while retaining your frequently accessed data locally in the cache fo
+low latency access. In the stored Volume Gateway mode, your primary data is stored locally and your entire dataset is available for low latency access
+on premises while also asynchronously getting backed up to Amazon S3
+upvoted 2 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: B
+Another headache one. Well, I'll go for B for now.
+A - Really cost-effective, but immediate retrievals incurs additional costs.
+B - Less optimal for datasets where most data is accessed frequently and must be immediately available locally.
+C - The on-prem data center "is running out of storage capacity". Then why store everything locally? Why even migrate storage infrastructure to
+AWS...
+D - Like C, and also, bandwidth costs are not acceptable.
+upvoted 1 times
+Lin878 1 year, 11 months ago
+Selected Answer: C
+I vote "C" because Question doesn't mention to access frequent data. If they want access frequent data, I will vote "B" with cached volume.
+upvoted 1 times
+1e22522 1 year, 10 months ago
+you don't fool me bezos boy
+upvoted 3 times
+Scheldon 1 year, 11 months ago
+Selected Answer: B
+AnswerB
+I think B answer is the best option here. We will store only data which are frequently accessed and all other we will sent to the cloud. So we will have
+access to all data but hence most frequently accessed data will be stored in On-Premises Cache we will not pay a lot of additionally $$ for data
+transfer if any.
+upvoted 1 times
+ike001 1 year, 12 months ago
+C is the correct. answer
+upvoted 1 times
+mohammadthainat 2 years, 2 months ago
+Selected Answer: B
+1- "The company wants to migrate its storage infrastructure to AWS" ->> B as data will be migrated to AWS.
+2- "The solution must allow for immediate retrieval of data at no additional cost." ->> B as data will be stored in S3 Standard storage class which
+provide immediate data retrieval
+upvoted 3 times
+gsgdga 2 years, 2 months ago
+Selected Answer: C
+immediate retrieval of data → shoud have full data set on-premises => stored volumes AWS Storage Gateway
+upvoted 4 times
+rubiteb 2 years, 3 months ago
+B - as the company is migrating their data to AWS so data has to be stored in the cloud.
+upvoted 2 times
+osmk 2 years, 3 months ago
+C>>>
+Cached Mode: In this mode, your primary data resides in Amazon S3, while frequently accessed data is cached locally for low-latency access.
+Stored Mode: Here, your entire dataset is stored locally, allowing low-latency access on premises. Simultaneously, the data is asynchronously backed
+up to Amazon S3.
+upvoted 4 times
+MatAlves 1 year, 8 months ago
+How does that address the fact the company is "running out of storage capacity"?
+upvoted 1 times
+BillaRanga 2 years, 3 months ago
+Selected Answer: C
+D -> It takes One month to set up AWS Direct Connect setup
+A -> No sense as it talks nothing about On-Prem
+B -> Cached volume only stores frequently access data On-Prem, But requirement tells "Data" so we assume it tells All data
+C -> Correct, as Stored volumes stores everything in Storage Gateway On-Prem while asynchronously backing up to the cloud
+upvoted 5 times
+xBUGx 2 years, 2 months ago
+i was voting for C, but C doesnt solve on prem out of capacity issue.
+upvoted 1 times
+sandordini 2 years, 1 month ago
+D: It never said one month would be a problem.. Question doesn't state a matter of urgency, but it still stores the data on-prem, and synchronizes
+to AWS.
+C: The same issue as D. Stores data locally, but our on-prem storage is full. Thats why the company wants cloud.
+A: Has retrieval costs.
+upvoted 1 times
+jaswantn 2 years, 4 months ago
+option C... data being accessible through stored volume reduces bandwidth cost and provides immediate retrieval of data.
+upvoted 2 times
+Andy_09 2 years, 4 months ago
+Option C, as it makes all the data available for low-latency access.
+upvoted 2 times

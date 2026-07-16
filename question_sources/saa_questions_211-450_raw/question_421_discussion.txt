@@ -1,0 +1,152 @@
+A company runs a highly available SFTP service. The SFTP service uses two Amazon EC2 Linux instances that run with elastic IP
+addresses to accept traffic from trusted IP sources on the internet. The SFTP service is backed by shared storage that is attached to
+the instances. User accounts are created and managed as Linux users in the SFTP servers.
+The company wants a serverless option that provides high IOPS performance and highly configurable security. The company also
+wants to maintain control over user permissions.
+Which solution will meet these requirements?
+A. Create an encrypted Amazon Elastic Block Store (Amazon EBS) volume. Create an AWS Transfer Family SFTP service with a
+public endpoint that allows only trusted IP addresses. Attach the EBS volume to the SFTP service endpoint. Grant users access
+to the SFTP service.
+B. Create an encrypted Amazon Elastic File System (Amazon EFS) volume. Create an AWS Transfer Family SFTP service with
+elastic IP addresses and a VPC endpoint that has internet-facing access. Attach a security group to the endpoint that allows
+only trusted IP addresses. Attach the EFS volume to the SFTP service endpoint. Grant users access to the SFTP service.
+Most Voted
+C. Create an Amazon S3 bucket with default encryption enabled. Create an AWS Transfer Family SFTP service with a public
+endpoint that allows only trusted IP addresses. Attach the S3 bucket to the SFTP service endpoint. Grant users access to the
+SFTP service.
+D. Create an Amazon S3 bucket with default encryption enabled. Create an AWS Transfer Family SFTP service with a VPC
+endpoint that has internal access in a private subnet. Attach a security group that allows only trusted IP addresses. Attach the
+S3 bucket to the SFTP service endpoint. Grant users access to the SFTP service.
+Comments
+pentium75 Highly Voted 2 years, 5 months ago
+Selected Answer: B
+Not A - Transfer Family canj't use EBS
+B - Possible and meets requirement
+Not C - S3 doesn't guarantee "high IOPS performance"; also there is no "public endpoint that allows only trusted IP addresses" (you can assign a
+Security Group to a public endpoint but that is not mentioned here)
+Not D - Endpoint would be in private subnet, not accessible from Internet at all
+upvoted 10 times
+alexandercamachop Highly Voted 3 years ago
+Selected Answer: B
+First Serverless - EFS
+Second it says it is attached to the Linux instances at the same time, only EFS can do that.
+upvoted 8 times
+bora4motion 1 year ago
+dude, if you have linux instances that's no longer serverless =)))
+upvoted 1 times
+bora4motion Most Recent 1 year ago
+Selected Answer: C
+I'm going with C. EFS needs to be attached to something, used with a server/instance.
+Correct Answer: B
+Community vote distribution
+B (85%)
+Other
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: B
+D, the description "VPC endpoint that has internal access in a private subnet" is technically incorrect and doesn't make sense for AWS Transfer Family
+AWS Transfer Family actually supports:
+Public endpoints (internet-facing)
+VPC endpoints (private network access)
+The VPC endpoint doesn't have "internal access" - it's about how the SFTP service is configured to interact with your VPC network resources.
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+A more accurate description for a VPC-based AWS Transfer Family SFTP service would be:
+Create an AWS Transfer Family SFTP service with a VPC endpoint
+Place the endpoint in a private subnet
+Configure security groups to allow only trusted IP sources
+Attach the S3 bucket to the SFTP service endpoint
+So while the overall strategy in option D (using S3 with VPC endpoint and security group restrictions) could be valid, the specific wording about
+"internal access" is incorrect.
+This technical inaccuracy in the description would make D an incorrect answer in a certification or technical assessment.
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+C public endpoint that allows only trusted IP addresses does not sound technical correct as only the security group can restrict the IP address. the
+correct description should " Create an AWS Transfer Family SFTP service in public subnet with security group allows only trusted IP address, create
+the vpc endpoint (gateway endpoint here for saving the cost) of S3 bucket to allow the SFTP service can access it privately, grant user access to the
+SFTP service via IAM policies and grant the access of S3 to SFTP service via IAM role
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+Selected Answer: C
+Amazon S3 provides high throughput and performance suitable for many use cases, including those requiring high IOPS (Input/Output Operations
+Per Second). S3 is not a block storage solution (like EBS) or a file system (like EFS). While its performance is exceptional for its intended use case
+(object storage), it may not match the millisecond latency or consistent high IOPS required for transactional databases or other ultra-low latency
+applications.
+For applications where sub-millisecond latency or extremely high random IOPS (e.g., 64,000 IOPS) is required, solutions like EBS or EFS would be
+better.
+upvoted 1 times
+FlyingHawk 1 year, 6 months ago
+After read the description of C, I feel the description of "an AWS Transfer Family SFTP service with a public endpoint that allows only trusted IP
+addresses" does not sound correct, the endpoint itself cannot restrict the IP address from internet, only the security group. the correct description
+should be: Create an AWS Transfer Family SFTP service with a public endpoint and security group that allows only trusted IP addresses. create the
+vpc endpoint (gateway endpoint here for saving the cost) of S3 bucket to allow the SFTP service can access it privately, grant user access to the
+SFTP service via IAM policies and grant the access of S3 to SFTP service via IAM role
+upvoted 1 times
+JA2018 1 year, 6 months ago
+Selected Answer: B
+Actually AWS Transfer Family can use S3, so it's a toss-up between Options B & C but I tend to favour Option B for the following reasons (based on
+the keys in STEM):
+company runs a highly available SFTP service. The SFTP service uses two Amazon EC2 Linux instances that run with elastic IP addresses to accept
+traffic from trusted IP sources on the internet. The SFTP service is backed by shared storage that is attached to the instances. User accounts are
+created and managed as Linux users in the SFTP servers.
+1. Requires a serverless option that provides high IOPS performance and highly configurable security.
+2. User also wants to maintain control over user permissions
+upvoted 1 times
+523db89 1 year, 9 months ago
+Option B best meets the company's requirements by leveraging AWS Transfer Family with an EFS volume, ensuring high availability, security, and
+performance.
+upvoted 2 times
+NickGordon 2 years, 7 months ago
+Selected Answer: B
+A is incorrect as EBS is not an option
+C is incorrect as when I select public accessible, I don't see an option I can set up trusted IP address
+D isi incorrect as it is internal.
+B, followed the steps and I can set up a sftp in this way
+upvoted 4 times
+potomac 2 years, 7 months ago
+Selected Answer: B
+B
+EFS has lower latency and higher throughput than S3 when accessed from within the same availability zone.
+upvoted 3 times
+thanhnv142 2 years, 7 months ago
+C: Because it is server-less. deffinitely not A or B because it utilizes server.
+upvoted 1 times
+warp 2 years, 7 months ago
+Amazon Elastic File System - Serverless, fully elastic file storage:
+https://aws.amazon.com/efs/
+upvoted 5 times
+bsbs1234 2 years, 8 months ago
+B,
+A), transfer family does not support EBS
+C,D), S3 has lower IOPS than EFS
+upvoted 4 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+Create an encrypted Amazon Elastic File System (Amazon EFS) volume. Create an AWS Transfer Family SFTP service with elastic IP addresses and a
+VPC endpoint that has internet-facing access. Attach a security group to the endpoint that allows only trusted IP addresses. Attach the EFS volume to
+the SFTP service endpoint. Grant users access to the SFTP service.
+upvoted 2 times
+Axeashes 2 years, 12 months ago
+https://aws.amazon.com/blogs/storage/use-ip-whitelisting-to-secure-your-aws-transfer-for-sftp-servers/
+upvoted 2 times
+TariqKipkemei 3 years ago
+Selected Answer: B
+EFS is best to serve this purpose.
+upvoted 2 times
+envest 3 years ago
+Answer C (from abylead.com)
+Transfer Family offers fully managed serverless support for B2B file transfers via SFTP, AS2, FTPS, & FTP directly in & out of S3 or EFS. For a controlled
+internet access you can use internet-facing endpts with Transfer SFTP servers & restrict trusted internet sources with VPC's default Sgrp. In addition,
+S3 Access Points aliases allows you to use S3 bkt names for a unique access control plcy on shared S3 datasets.
+Transfer SFTP & S3: https://aws.amazon.com/blogs/apn/how-to-use-aws-transfer-family-to-replace-and-scale-sftp-servers/
+A)Transfer SFTP doesn’t support EBS, not for share data, & not serverless: infeasible.
+B)EFS mounts via ENIs not endpts: infeasible.
+D)pub endpt for internet access is missing: infeasible.
+upvoted 4 times
+omoakin 3 years ago
+BBBBBBBBBBBBBB
+upvoted 1 times
+vesen22 3 years ago
+Selected Answer: B
+EFS all day
+upvoted 2 times

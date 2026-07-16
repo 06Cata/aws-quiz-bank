@@ -1,0 +1,88 @@
+A company is expanding a secure on-premises network to the AWS Cloud by using an AWS Direct Connect connection. The on-
+premises network has no direct internet access. An application that runs on the on-premises network needs to use an Amazon S3
+bucket.
+Which solution will meet these requirements MOST cost-effectively?
+A. Create a public virtual interface (VIF). Route the AWS traffic over the public VIF.
+B. Create a VPC and a NAT gateway. Route the AWS traffic from the on-premises network to the NAT gateway.
+C. Create a VPC and an Amazon S3 interface endpoint. Route the AWS traffic from the on-premises network to the S3 interface
+endpoint. Most Voted
+D. Create a VPC peering connection between the on-premises network and Direct Connect. Route the AWS traffic over the
+peering connection.
+Comments
+c7e80cd 8 months, 3 weeks ago
+Selected Answer: A
+In short: C only works if the traffic originates inside a VPC, but your requirement is from on-premises outside AWS. That’s why A is the correct, cost-
+effective solution.
+upvoted 1 times
+0c21057 1 year, 1 month ago
+Selected Answer: A
+AWS Direct Connect links your internal network to an AWS Direct Connect location over a standard Ethernet fiber-optic cable. One end of the cable is
+connected to your router, and the other to an AWS Direct Connect router. With this connection, you can create virtual interfaces directly to public
+AWS services (for example, to Amazon S3) or to Amazon VPC, bypassing internet service providers in your network path. An AWS Direct Connect
+location provides access to AWS in the Region with which it is associated. You can use a single connection in a public Region or AWS GovCloud (US)
+to access public AWS services in all other public Regions.
+upvoted 1 times
+Salilgen 1 year, 5 months ago
+Selected Answer: A
+https://aws.amazon.com/blogs/networking-and-content-delivery/optimizing-amazon-s3-data-transfers-over-direct-connect/
+upvoted 1 times
+LeonSauveterre 1 year, 5 months ago
+Selected Answer: C
+A - Public VIFs route traffic over the public internet, but on-premises network has no direct internet access.
+B - NAT gateways provide internet access for resources within a VPC, but, again, on-premises network has no direct internet access.
+C - The traffic stays within AWS and the Direct Connect connection, ensuring security and compliance with the no-internet requirement. Also, this is
+cost-effective because it avoids the need for additional NAT gateways or public VIFs.
+D - Peering connections don't even support access to AWS public services like S3.
+upvoted 3 times
+EllenLiu 1 year, 5 months ago
+Selected Answer: A
+public VIF allows on-premises networks to access AWS public services, like S3
+it eliminates the need for internet access & interface endpoints while being cost-effective
+upvoted 2 times
+Correct Answer: C
+Community vote distribution
+C (65%)
+A (35%)
+EllenLiu 1 year, 5 months ago
+https://aws.amazon.com/privatelink/pricing/
+upvoted 1 times
+AMEJack 1 year, 6 months ago
+Selected Answer: A
+Option A is the correct answer:
+1) I need to connect to public services only, thus public VIF will be enough.
+2) Interface endpoints is charged per hour, not cost effective.
+upvoted 2 times
+Scheldon 2 years ago
+Selected Answer: C
+AnswerC
+Amazon S3 interface endpoint seems to be the best and only option as we are forced to use Private IP addressation.
+Interface endpoints for Amazon S3
+Your network traffic remains on the AWS network.
+Use private IP addresses from your VPC to access Amazon S3
+Require endpoint-specific Amazon S3 DNS names
+Allow access from on premises
+Allow access from a VPC in another AWS Region by using VPC peering or AWS Transit Gateway
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html#types-of-vpc-endpoints-for-s3
+upvoted 4 times
+0bdf3af 2 years ago
+A. https://repost.aws/knowledge-center/s3-bucket-access-direct-connect
+upvoted 1 times
+elmyth 1 year, 9 months ago
+This article says "Use a private IP address over Direct Connect (with an interface VPC endpoint)" - C
+upvoted 3 times
+0bdf3af 2 years ago
+A. public VIF is the way you can connect on-premise with S3 via DirectConnect
+upvoted 1 times
+waldirlsantos 2 years, 1 month ago
+Selected Answer: C
+B Need internet
+A,D doesn't conect to the s3
+IMO, C is the solution for this question.
+upvoted 4 times
+TruthWS 2 years, 2 months ago
+Option C
+upvoted 2 times
+Kaula 2 years, 2 months ago
+Selected Answer: C
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html
+upvoted 2 times

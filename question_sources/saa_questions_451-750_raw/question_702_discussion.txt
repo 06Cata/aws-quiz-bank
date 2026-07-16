@@ -1,0 +1,118 @@
+A company copies 200 TB of data from a recent ocean survey onto AWS Snowball Edge Storage Optimized devices. The company
+has a high performance computing (HPC) cluster that is hosted on AWS to look for oil and gas deposits. A solutions architect must
+provide the cluster with consistent sub-millisecond latency and high-throughput access to the data on the Snowball Edge Storage
+Optimized devices. The company is sending the devices back to AWS.
+Which solution will meet these requirements?
+A. Create an Amazon S3 bucket. Import the data into the S3 bucket. Configure an AWS Storage Gateway file gateway to use
+the S3 bucket. Access the file gateway from the HPC cluster instances.
+B. Create an Amazon S3 bucket. Import the data into the S3 bucket. Configure an Amazon FSx for Lustre file system, and
+integrate it with the S3 bucket. Access the FSx for Lustre file system from the HPC cluster instances. Most Voted
+C. Create an Amazon S3 bucket and an Amazon Elastic File System (Amazon EFS) file system. Import the data into the S3
+bucket. Copy the data from the S3 bucket to the EFS file system. Access the EFS file system from the HPC cluster instances.
+D. Create an Amazon FSx for Lustre file system. Import the data directly into the FSx for Lustre file system. Access the FSx for
+Lustre file system from the HPC cluster instances.
+Comments
+Linuslin Highly Voted 2 years ago
+Selected Answer: B
+No direct integration between Snowball and Fsx for Lustre. It must be via S3.
+Snowball Edge (Storage Optimized) --> S3 --integrate--> FSx for Lustre
+https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html
+https://aws.amazon.com/tw/blogs/aws/enhanced-amazon-s3-integration-for-amazon-fsx-for-lustre/
+upvoted 16 times
+Cali182 Highly Voted 2 years, 4 months ago
+Selected Answer: D
+Option D
+Option A, B, and C involve using Amazon S3 or Amazon EFS as an intermediary storage layer, which may introduce additional latency and overhead,
+not meeting the requirement of consistent sub-millisecond latency. Therefore, Option D is the most suitable solution for this scenario.
+upvoted 13 times
+domper20232023 2 years, 3 months ago
+The format on the Snowball device would be s3 compatible only. The FSx for Lustre file system can be created and then linked to the S3 bucket. The
+Lustre file system can then be mounted on the HPC workloads that need sub-millisecond latency to storge data. Option B would be the correct
+option, assuming only S3 support on snowball.
+upvoted 9 times
+46a8566 Most Recent 4 months, 3 weeks ago
+Selected Answer: B
+FSx for Lustre can lazily load data from S3 on first access and automatically sync changes back to S3 — perfect for large datasets like 200 TB.
+upvoted 1 times
+a8a1e0e 1 year, 4 months ago
+Selected Answer: B
+Integration from Snowall to Fsc only with S3
+Correct Answer: B
+Community vote distribution
+B (65%)
+D (35%)
+upvoted 1 times
+FlyingHawk 1 year, 5 months ago
+Selected Answer: B
+it is not possible to import data directly from Snowball Edge Storage Optimized devices to Amazon FSx for Lustre,
+FSx for Lustre is designed to work seamlessly with data stored in Amazon S3, providing integration for high-performance access and lazy loading.
+Snowball Edge devices are designed to securely transfer data to AWS services, particularly Amazon S3.
+https://aws.amazon.com/blogs/storage/automatically-import-objects-from-amazon-s3-into-amazon-fsx-for-lustre/
+upvoted 1 times
+Abdullah2004 1 year, 9 months ago
+Selected Answer: D
+The correct answer is D for sure
+upvoted 1 times
+MatAlves 1 year, 8 months ago
+You cannot import data from snowball in any other destination other than S3. So no, D is INCORRECT. Don't get tricked just because they
+mentioned HPC.
+upvoted 2 times
+n999 1 year, 10 months ago
+Selected Answer: B
+B for sure
+upvoted 4 times
+DZRomero 1 year, 11 months ago
+Selected Answer: D
+Import data to AWS services: When AWS receives the device, the data is automatically imported into the designated AWS service or Amazon S3
+bucket based on your configuration. For example, if you need to access the data from an HPC cluster running on AWS, you would import the data
+into an Amazon FSx for Lustre file system or Amazon S3, and then access it from your HPC cluster instances.
+No need S3 bucket
+upvoted 1 times
+trinh_le 2 years, 1 month ago
+Selected Answer: B
+You cannot access the FSx for Lustre file system from the HPC cluster instances and this is only possible via S3
+upvoted 5 times
+sandordini 2 years, 1 month ago
+Selected Answer: D
+HPC = Lustre
+upvoted 3 times
+sandordini 2 years, 1 month ago
+Extension: HPC= Lustre, but Snowball = S3, therefore: B
+Sync from Snowball to S3 -> Link/integrate with Lustre
+Correct answer: C
+upvoted 2 times
+sandordini 2 years, 1 month ago
+Which is of course not C but B... :D Sorry...
+So correct answer: :D
+upvoted 2 times
+sukjubae 2 years, 2 months ago
+B is right
+upvoted 3 times
+alawada 2 years, 2 months ago
+Selected Answer: D is right answer because it mentions sub-millisecond latency and high-throughput access
+upvoted 1 times
+mgrimandi 2 years, 2 months ago
+B
+https://medium.com/@abylead/amazon-fsx-for-migration-and-certification-f3cb7b4dd843
+upvoted 2 times
+MattBJ 2 years, 2 months ago
+Selected Answer: B
+B is correct
+upvoted 3 times
+iczcezar 2 years, 3 months ago
+Selected Answer: D
+Option D, creating an Amazon FSx for Lustre file system and importing the data directly into it, is indeed the most suitable solution for this scenario.
+By bypassing an intermediary storage layer and directly importing the data into FSx for Lustre, the solution ensures optimal performance with
+consistent sub-millisecond latency and high throughput, meeting the requirements of the HPC cluster. Thank you for pointing out the clarity.
+upvoted 1 times
+FZA24 2 years, 3 months ago
+Selected Answer: B
+It should be B.
+No direct integration between Snowball and Fsx for Lustre
+upvoted 4 times
+FZA24 2 years, 3 months ago
+It must be via S3
+upvoted 2 times
+67a3f49 2 years, 3 months ago
+Cali182 you cannot directly copy from Snowball Edge to FSx for luster
+upvoted 1 times

@@ -1,0 +1,54 @@
+Question #769
+A company hosts an application used to upload files to an Amazon S3 bucket. Once uploaded, the files are processed to extract
+metadata, which takes less than 5 seconds. The volume and frequency of the uploads varies from a few files each hour to
+hundreds of concurrent uploads. The company has asked a solutions architect to design a cost-effective architecture that will meet
+these requirements.
+What should the solutions architect recommend?
+一家公司托管了一个用于将文件上传到 Amazon S3 bucket 的应用程序。文件上传后会被处理以提取元数据，这个过程耗时不到 5
+秒。上传的文件数量和频率从每小时几个文件到数百个并发上传不等。该公司要求解决方案架构师设计一个成本有效的架构来满足
+这些需求。
+解决方案架构师应该推荐什么？
+A. Configure AWS CloudTrail trails to log S3 API calls. Use AWS AppSync to process the files.
+配置 AWS CloudTrail trails 来记录 S3 API 调用。使用 AWS AppSync 来处理文件。
+B. Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the files.
+Most Voted
+在 S3 bucket 中配置一个对象创建事件通知，以调用 AWS Lambda 函数来处理文件。
+C. Configure Amazon Kinesis Data Streams to process and send data to Amazon S3. Invoke an AWS Lambda function to
+process the files.
+配置 Amazon Kinesis Data Streams 来处理并发送数据到 Amazon S3。调用 AWS Lambda 函数来处理文件。
+D. Configure an Amazon Simple Notification Service (Amazon SNS) topic to process the files uploaded to Amazon S3. Invoke
+an AWS Lambda function to process the files.
+配置一个 Amazon Simple Notification Service (Amazon SNS) topic 来处理上传到 Amazon S3 的文件。调用 AWS Lambda 函数
+来处理文件。
+Correct Answer: B
+正确答案：B
+Community vote distribution
+社区投票分布
+B (100%)
+题目分析与解答
+1. 考察的知识点
+Amazon S3事件通知机制
+AWS Lambda的无服务器计算能力
+如何设计成本优化的架构
+2. 选项分析
+A. Configure AWS CloudTrail trails to log S3 API calls. Use AWS AppSync to process the files.
+错误：CloudTrail主要用于记录API调用以进行审计和监控，而不是实时处理文件。
+错误：AWS AppSync是用于构建GraphQL API的服务，不适合处理文件上传后的实时处理需求。
+B. Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the
+files.
+正确：S3支持事件通知，可以在对象创建时触发Lambda函数。
+正确：AWS Lambda是无服务器计算服务，能够快速处理文件，且成本低，适合处理不确定的负载。
+C. Configure Amazon Kinesis Data Streams to process and send data to Amazon S3. Invoke an AWS Lambda function to
+process the files.
+错误：Kinesis Data Streams主要用于实时流数据处理，而题目中没有提到流数据的需求。
+错误：将数据发送到S3后再处理文件会增加复杂性和成本，不符合题目要求的成本优化。
+D. Configure an Amazon Simple Notification Service (Amazon SNS) topic to process the files uploaded to Amazon S3.
+Invoke an AWS Lambda function to process the files.
+错误：SNS主要用于消息分发，而不是直接处理S3事件通知。
+错误：S3事件通知可以直接触发Lambda函数，无需通过SNS中转。
+3. 我的答案
+B
+4. 官方答案
+B
+5. 与官方答案比较
+我的答案与官方答案一致，无需重新思考。

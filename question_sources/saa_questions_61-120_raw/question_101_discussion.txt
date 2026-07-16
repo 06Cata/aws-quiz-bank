@@ -1,0 +1,120 @@
+A solutions architect is designing a VPC with public and private subnets. The VPC and subnets use IPv4 CIDR blocks. There is one
+public subnet and one private subnet in each of three Availability Zones (AZs) for high availability. An internet gateway is used to
+provide internet access for the public subnets. The private subnets require access to the internet to allow Amazon EC2 instances to
+download software updates.
+What should the solutions architect do to enable Internet access for the private subnets?
+A. Create three NAT gateways, one for each public subnet in each AZ. Create a private route table for each AZ that forwards
+non-VPC traffic to the NAT gateway in its AZ. Most Voted
+B. Create three NAT instances, one for each private subnet in each AZ. Create a private route table for each AZ that forwards
+non-VPC traffic to the NAT instance in its AZ.
+C. Create a second internet gateway on one of the private subnets. Update the route table for the private subnets that forward
+non-VPC traffic to the private internet gateway.
+D. Create an egress-only internet gateway on one of the public subnets. Update the route table for the private subnets that
+forward non-VPC traffic to the egress-only Internet gateway.
+Comments
+Gil80 Highly Voted 3 years, 7 months ago
+Selected Answer: A
+NAT Instances - OUTDATED BUT CAN STILL APPEAR IN THE EXAM!
+However, given that A provides the newer option of NAT Gateway, then A is the correct answer.
+B would be correct if NAT Gateway wasn't an option.
+upvoted 19 times
+Shrestwt 3 years, 1 month ago
+NAT instance or NAT Gateway always created in public subnet to provide internet access to private subnet. In option B. they are creating NAT
+Instance in private subnet which is not correct.
+upvoted 30 times
+Buruguduystunstugudunstuy Highly Voted 3 years, 5 months ago
+Selected Answer: A
+The correct answer is option A.
+To enable Internet access for the private subnets, the solutions architect should create three NAT gateways, one for each public subnet in each
+Availability Zone (AZ). NAT gateways allow private instances to initiate outbound traffic to the Internet but do not allow inbound traffic from the
+Internet to reach the private instances.
+The solutions architect should then create a private route table for each AZ that forwards non-VPC traffic to the NAT gateway in its AZ. This will allow
+instances in the private subnets to access the Internet through the NAT gateways in the public subnets.
+upvoted 13 times
+SirDNS Most Recent 1 year, 2 months ago
+Selected Answer: A
+NAT Gateways always have to part of public subnet. We can then create a destination to these NAT Gateways in the private route table.
+upvoted 1 times
+satyaammm 1 year, 5 months ago
+Selected Answer: A
+Correct Answer: A
+Community vote distribution
+A (98%)
+2%
+NAT Gateways are much better here as they can easily scale and provide high availability. NAT instances cant provide scalability and HA. Internet
+Gateway is 2-way and not suitable here. Egress-only is used for IPv6.
+upvoted 1 times
+kernel1973 1 year, 6 months ago
+You have to create 3 NAT gateways but in the private subnet.
+Public and Private Subnets are the name of the concept . A public subnet is a subnet with a route to the internet gateway , private subnet doesn't
+have a route to the internet gateway.
+In this case the private subnets must have the NAT Gateway/NAT Instances , not the public subnet because if we are defined a subnet as public it
+means that this subnet has a route to the IG.
+upvoted 1 times
+87217f5 9 months, 4 weeks ago
+NAT GW is deployed in the public subnet I believe..
+upvoted 1 times
+PaulGa 1 year, 8 months ago
+Selected Answer: A
+Ans A - it can only be A or B and NAT Gateways are preferred over NAT Instances.
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+Selected Answer: A
+the correct answer is A, to connect a private subnet to the internet using internet gateways is irrelevant, you have to use either NAT gateway or NAT
+instance, and NAT gateway is the better choice.
+upvoted 1 times
+soufiyane 2 years, 2 months ago
+Selected Answer: A
+Nat instances can do the same except it's not cost effective also it need a lot of managment, going with nat gateways makes more sense
+upvoted 1 times
+ronin201 2 years, 7 months ago
+in Azure there is 1 NAT GW multi AZ, 1 per network, I think this is example for AWS to change
+upvoted 1 times
+pentium75 2 years, 5 months ago
+But in AWS a NAT GW is attached to a subnet, and a subnet resides in a single AZ. Can't create multi-AZ NAT GW without changing whole
+architecture. You CAN use one NAT GW from multiple subnets in multiple AZs I think, but then it would not be HA.
+upvoted 1 times
+Ruffyit 2 years, 7 months ago
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-example-private-subnets-nat.html
+upvoted 3 times
+Guru4Cloud 2 years, 10 months ago
+Selected Answer: A
+The best solution is to create a NAT gateway in each public subnet (one per availability zone), and update the route tables for the private subnets to
+send internet traffic to the NAT gateway.
+NAT gateways allow private subnets to access the internet for things like software updates, without exposing those instances directly to the internet.
+An egress-only internet gateway would allow outbound access, but also allow inbound internet traffic, which is not desired for the private subnets.
+upvoted 5 times
+james2033 2 years, 10 months ago
+Selected Answer: A
+"Egress" means outbound connection, remove D. "Second gateway", remove C.
+Now has only A and B. The different between A versus B is "1 NAT gateway, 1 for public subnet in each AZ" (A) and "1 NAT gateway, 1 for private
+subnet in each AZ" (B).
+Choose A.
+upvoted 4 times
+cookieMr 2 years, 11 months ago
+By creating a NAT gateway in each public subnet, the private subnets can route their Internet-bound traffic through the NAT gateways. This allows
+EC2 in the private subnets to download software updates and access other resources on the Internet.
+Additionally, a separate private route table should be created for each AZ. The private route tables should have a default route that forwards non-
+VPC traffic (0.0.0.0/0) to the corresponding NAT gateway in the same AZ. This ensures that the private subnets use the appropriate NAT gateway for
+Internet access.
+B is incorrect because NAT instances require manual management and configuration compared to NAT gateways, which are a fully managed service.
+NAT instances are also being deprecated in favor of NAT gateways.
+C is incorrect because creating a second internet gateway on a private subnet is not a valid solution. Internet gateways are associated with public
+subnets and cannot be directly associated with private subnets.
+D is incorrect because egress-only internet gateways are used for IPv6 traffic.
+upvoted 5 times
+Jeeva28 3 years ago
+NAT Gateway will be created Public Subnet and Provide access to Private Subnet
+upvoted 1 times
+cheese929 3 years, 1 month ago
+Selected Answer: A
+A is correct.
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-example-private-subnets-nat.html
+upvoted 2 times
+Heric 3 years, 1 month ago
+Selected Answer: A
+Now NAT Instances is avoided by AWS. Then choose the NAT Gateway
+upvoted 3 times
+alexiscloud 3 years, 2 months ago
+A: NAT Gateway
+upvoted 1 times

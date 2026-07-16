@@ -1,0 +1,68 @@
+A company is creating an application that runs on containers in a VPC. The application stores and accesses data in an Amazon S3
+bucket. During the development phase, the application will store and access 1 TB of data in Amazon S3 each day. The company
+wants to minimize costs and wants to prevent traffic from traversing the internet whenever possible.
+Which solution will meet these requirements?
+A. Enable S3 Intelligent-Tiering for the S3 bucket
+B. Enable S3 Transfer Acceleration for the S3 bucket
+C. Create a gateway VPC endpoint for Amazon S3. Associate this endpoint with all route tables in the VPC Most Voted
+D. Create an interface endpoint for Amazon S3 in the VPC. Associate this endpoint with all route tables in the VPC
+Comments
+litos168 Highly Voted 2 years, 4 months ago
+Amazon S3 supports both gateway endpoints and interface endpoints. With a gateway endpoint, you can access Amazon S3 from your VPC, without
+requiring an internet gateway or NAT device for your VPC, and with no additional cost. However, gateway endpoints do not allow access from on-
+premises networks, from peered VPCs in other AWS Regions, or through a transit gateway. For those scenarios, you must use an interface endpoint,
+which is available for an additional cost.
+upvoted 14 times
+cloudenthusiast Highly Voted 2 years, 6 months ago
+Selected Answer: C
+Gateway VPC Endpoint: A gateway VPC endpoint enables private connectivity between a VPC and Amazon S3. It allows direct access to Amazon S3
+without the need for internet gateways, NAT devices, VPN connections, or AWS Direct Connect.
+Minimize Internet Traffic: By creating a gateway VPC endpoint for Amazon S3 and associating it with all route tables in the VPC, the traffic between
+the VPC and Amazon S3 will be kept within the AWS network. This helps in minimizing data transfer costs and prevents the need for traffic to traverse
+the internet.
+Cost-Effective: With a gateway VPC endpoint, the data transfer between the application running in the VPC and the S3 bucket stays within the AWS
+network, reducing the need for data transfer across the internet. This can result in cost savings, especially when dealing with large amounts of data.
+upvoted 8 times
+cloudenthusiast 2 years, 6 months ago
+Option B (Enable S3 Transfer Acceleration for the S3 bucket) is a feature that uses the CloudFront global network to accelerate data transfers to and
+from Amazon S3. While it can improve data transfer speed, it still involves traffic traversing the internet and doesn't directly address the goal of
+minimizing costs and preventing internet traffic whenever possible.
+upvoted 3 times
+awsgeek75 Most Recent 1 year, 10 months ago
+Selected Answer: C
+https://aws.amazon.com/blogs/architecture/choosing-your-vpc-endpoint-strategy-for-amazon-s3/
+A: Storage cost is not described as an issue here
+B: Tx Accelerator is for external (global user) traffic acceleration
+D: Interface endpoint is on-prem to S3
+C: gateway VPC is specifically for S3 to AWS resources
+upvoted 4 times
+dkw2342 1 year, 9 months ago
+Interface endpoints are not exclusively for on-prem to S3.
+Correct Answer: C
+Community vote distribution
+C (100%)
+The only reason why option D is wrong is because "Associate this endpoint with all route tables in the VPC" makes no sense.
+upvoted 1 times
+bsbs1234 2 years, 2 months ago
+I think both C&D will works.
+But D will have extra cost. So C is correct.
+upvoted 3 times
+Guru4Cloud 2 years, 3 months ago
+Selected Answer: C
+C. Create a gateway VPC endpoint for Amazon S3. Associate this endpoint with all route tables in the VPC
+upvoted 2 times
+TariqKipkemei 2 years, 5 months ago
+Selected Answer: C
+Prevent traffic from traversing the internet = Gateway VPC endpoint for S3.
+upvoted 4 times
+Anmol_1010 2 years, 6 months ago
+Key word transversing to internet
+upvoted 2 times
+Efren 2 years, 6 months ago
+Selected Answer: C
+Gateway endpoint for S3
+upvoted 3 times
+nosense 2 years, 6 months ago
+Selected Answer: C
+vpc endpoint for s3
+upvoted 5 times

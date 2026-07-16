@@ -1,0 +1,56 @@
+Question #646
+A solutions architect needs to host a high performance computing (HPC) workload in the AWS Cloud. The workload will run on
+hundreds of Amazon EC2 instances and will require parallel access to a shared file system to enable distributed processing of large
+datasets. Datasets will be accessed across multiple instances simultaneously. The workload requires access latency within 1 ms.
+After processing has completed, engineers will need access to the dataset for manual postprocessing.
+Which solution will meet these requirements?
+一个解决方案架构师需要在AWS云中托管一个高性能计算（HPC）工作负载。 该工作负载将运行在数百个Amazon EC2实例上，并
+需要并行访问一个共享文件系统， 以实现对大型数据集的分布式处理。数据集将被多个实例同时访问。 工作负载要求访问延迟在1
+毫秒以内。处理完成后，工程师需要访问数据集进行手动后处理。
+哪种解决方案可以满足这些需求？
+A. Use Amazon Elastic File System (Amazon EFS) as a shared file system. Access the dataset from Amazon EFS.
+使用Amazon Elastic File System (Amazon EFS)作为共享文件系统。从Amazon EFS访问数据集。
+B. Mount an Amazon S3 bucket to serve as the shared file system. Perform postprocessing directly from the S3 bucket.
+挂载一个Amazon S3 bucket作为共享文件系统。直接从S3 bucket进行后处理。
+C. Use Amazon FSx for Lustre as a shared file system. Link the file system to an Amazon S3 bucket for postprocessing.
+Most Voted
+使用Amazon FSx for Lustre作为共享文件系统。将文件系统链接到一个Amazon S3 bucket以进行后处理。
+D. Configure AWS Resource Access Manager to share an Amazon S3 bucket so that it can be mounted to all instances for
+processing and postprocessing.
+配置AWS Resource Access Manager以共享一个Amazon S3 bucket，使其可以挂载到所有实例以进行处理和后处理。
+Correct Answer: C
+正确答案：C
+Community vote distribution
+社区投票分布
+C (100%)
+题目分析与解答
+1. 考察的知识点
+高性能计算 (HPC) 工作负载的文件系统选择。
+Amazon FSx for Lustre 的特性及其与 Amazon S3 的集成能力。
+Amazon EFS 和 Amazon S3 的适用场景。
+文件系统的访问延迟要求（1ms以内）。
+2. 选项分析
+A. 使用Amazon Elastic File System (Amazon EFS)作为共享文件系统。从Amazon EFS访问数据集。
+分析：Amazon EFS 是一个分布式文件系统，适合处理通用文件存储需求，但其访问延迟通常在毫秒级别，无法保证 1ms 的延迟要
+求。此外，EFS 的性能在高性能计算场景中可能不如 FSx for Lustre。
+结论：错误。
+B. 挂载一个Amazon S3 bucket作为共享文件系统。直接从S3 bucket进行后处理。
+分析：Amazon S3 是对象存储服务，不是文件系统，无法直接挂载到 EC2 实例作为共享文件系统。此外，S3 的访问延迟通常在几
+十毫秒级别，远高于 1ms 的要求。
+结论：错误。
+C. 使用Amazon FSx for Lustre作为共享文件系统。将文件系统链接到一个Amazon S3 bucket以进行后处理。
+分析：Amazon FSx for Lustre 是专为高性能计算设计的文件系统，支持低于 1ms 的访问延迟，并且可以与 Amazon S3 集成，方便
+后处理数据的存储和访问。此选项完全满足题目要求。
+结论：正确。
+D. 配置AWS Resource Access Manager以共享一个Amazon S3 bucket，使其可以挂载到所有实例以进行处理和后处理。
+分析：AWS Resource Access Manager (RAM) 用于跨账户共享资源，但 S3 仍然是对象存储服务，无法直接挂载为文件系统。此
+外，S3 的访问延迟无法满足 1ms 的要求。
+结论：错误。
+3. 我的答案
+C. 使用Amazon FSx for Lustre作为共享文件系统。将文件系统链接到一个Amazon S3 bucket以进行后处理。
+4. 官方答案
+C. 使用Amazon FSx for Lustre作为共享文件系统。将文件系统链接到一个Amazon S3 bucket以进行后处理。
+5. 与官方答案比较
+我的答案与官方答案一致。
+原因：Amazon FSx for Lustre 是专为高性能计算设计的文件系统，能够满足低延迟和高吞吐量的要求，同时支持与 Amazon S3 的
+集成，完全符合题目需求。

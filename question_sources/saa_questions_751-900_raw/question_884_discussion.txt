@@ -1,0 +1,47 @@
+A solutions architect is designing a three-tier web application. The architecture consists of an internet-facing Application Load
+Balancer (ALB) and a web tier that is hosted on Amazon EC2 instances in private subnets. The application tier with the business
+logic runs on EC2 instances in private subnets. The database tier consists of Microsoft SQL Server that runs on EC2 instances in
+private subnets. Security is a high priority for the company.
+Which combination of security group configurations should the solutions architect use? (Choose three.)
+A. Configure the security group for the web tier to allow inbound HTTPS traffic from the security group for the ALB. Most Voted
+B. Configure the security group for the web tier to allow outbound HTTPS traffic to 0.0.0.0/0.
+C. Configure the security group for the database tier to allow inbound Microsoft SQL Server traffic from the security group for
+the application tier. Most Voted
+D. Configure the security group for the database tier to allow outbound HTTPS traffic and Microsoft SQL Server traffic to the
+security group for the web tier.
+E. Configure the security group for the application tier to allow inbound HTTPS traffic from the security group for the web tier.
+Most Voted
+F. Configure the security group for the application tier to allow outbound HTTPS traffic and Microsoft SQL Server traffic to the
+security group for the web tier.
+Comments
+EdricHoang Highly Voted 1 year, 12 months ago
+Selected Answer: ACE
+Security group is stateful, just need allow Inbound.
+upvoted 6 times
+KennethNg923 1 year, 12 months ago
+Agree since security group is stateful so allow inbound is enough
+upvoted 2 times
+sk1974 Most Recent 1 year, 3 months ago
+Selected Answer: ACE
+Since SG's are stateful , allow inbound only. Ignore all outbound roles
+upvoted 1 times
+Scheldon 2 years ago
+Selected Answer: ACE
+AnswerACE:
+Security Group is protecting instances, it's statefull. by defoult is allowing for outgoing traffic but not incomming.
+hence we need to allow for inboud traffic. path looks like below
+ALB >>HTTPS>> WEB tier >>HTTPS>> Application >>SQL traffic>> SQL DB
+hence we need allow for
+incoming https traffic on web tier
+then
+incomming http on app tier
+and on the end for
+incomming sql traffic on DB tier
+Correct Answer: ACE
+Community vote distribution
+ACE (100%)
+upvoted 4 times
+sandordini 2 years, 1 month ago
+Selected Answer: ACE
+ALB >>HTTPS>> WEB tier >>HTTPS>> Application >>SQL traffic>> SQL DB
+upvoted 4 times

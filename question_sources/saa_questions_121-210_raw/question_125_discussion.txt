@@ -1,0 +1,158 @@
+A company runs its two-tier ecommerce website on AWS. The web tier consists of a load balancer that sends traffic to Amazon
+EC2 instances. The database tier uses an Amazon RDS DB instance. The EC2 instances and the RDS DB instance should not be
+exposed to the public internet. The EC2 instances require internet access to complete payment processing of orders through a
+third-party web service. The application must be highly available.
+Which combination of configuration options will meet these requirements? (Choose two.)
+A. Use an Auto Scaling group to launch the EC2 instances in private subnets. Deploy an RDS Multi-AZ DB instance in private
+subnets. Most Voted
+B. Configure a VPC with two private subnets and two NAT gateways across two Availability Zones. Deploy an Application Load
+Balancer in the private subnets.
+C. Use an Auto Scaling group to launch the EC2 instances in public subnets across two Availability Zones. Deploy an RDS Multi-
+AZ DB instance in private subnets.
+D. Configure a VPC with one public subnet, one private subnet, and two NAT gateways across two Availability Zones. Deploy
+an Application Load Balancer in the public subnet.
+D. Configure a VPC with two public subnets, two private subnets, and two NAT gateways across two Availability Zones. Deploy
+an Application Load Balancer in the public subnets. Most Voted
+Comments
+HayLLlHuK Highly Voted 3 years, 5 months ago
+A and E!
+Application has to be highly available while the instance and database should not be exposed to the public internet, but the instances still requires
+access to the internet. NAT gateway has to be deployed in public subnets in this case while instances and database remain in private subnets in the
+VPC, therefore answer is (A) and (E).
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+If the instances did not require access to the internet, then the answer could have been
+(B) to use a private NAT gateway and keep it in the private subnets to communicate only to the VPCs.
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html
+upvoted 33 times
+darn 3 years, 1 month ago
+your link is right but your voting is wrong, should be AD, although that still doesnt explain why 2 NAT gateways
+upvoted 3 times
+cheroh_tots 2 years, 3 months ago
+Because NAT gateways are availability zone specific, if you need HA you will need a NAT gateway in each availability zone.
+upvoted 1 times
+ale_brd_111 2 years, 6 months ago
+cus application has to be HA, if one NAT gateway fails the other could take the traffic
+upvoted 4 times
+JA2018 1 year, 6 months ago
+It looks like there could be a typo error in the list of option. HayLLiHuK is referring to Option 'E' which is missing.
+upvoted 1 times
+mabotega Highly Voted 3 years, 7 months ago
+Correct Answer: AD
+Community vote distribution
+AD (62%)
+AB (18%)
+A (17%)
+2%
+Selected Answer: AD
+Answer A for: The EC2 instances and the RDS DB instance should not be exposed to the public internet. Answer D for: The EC2 instances require
+internet access to complete payment processing of orders through a third-party web service. Answer A for: The application must be highly available.
+upvoted 28 times
+oguzbeliren 2 years, 10 months ago
+D allows public internet access which is not desired. The answer is not d.
+The most accurate answers are AB
+upvoted 2 times
+pentium75 2 years, 5 months ago
+B is wrong because you can't deploy NAT GW in a private subnet. Correct answer is E (mislabelled as a second D). Stem says that the EC2 instances
+(!) must not be exposed to the Internet, the Load Balancer can be exposed.
+upvoted 3 times
+AbhiJo 3 years, 6 months ago
+We will require 2 private subnets, D does mention 1 subnet
+upvoted 4 times
+pentium75 2 years, 5 months ago
+There's two D options ;) second is correct
+upvoted 5 times
+OluwaZettai 1 year, 5 months ago
+Why do we require 2?
+upvoted 1 times
+smd_ 3 years, 1 month ago
+why not option B.The EC2 instances can be launched in private subnets across two Availability Zones, and the Application Load Balancer can be
+deployed in the private subnets. NAT gateways can be configured in each private subnet to provide internet access for the EC2 instances to
+communicate with the third-party web service.
+upvoted 2 times
+ruqui 3 years ago
+B option wrong! NAT gateways must be created in public subnets!!
+upvoted 8 times
+x33 2 years, 9 months ago
+I think you are wrong on this. In fact, NAT gateways are typically created in private subnets.
+upvoted 3 times
+RNess 2 years, 7 months ago
+NAT Gateway can’t be used by EC2 instance in the same subnet (only from other
+subnets)
+upvoted 4 times
+bora4motion Most Recent 1 year, 1 month ago
+Selected Answer: A
+Correct the answers already! Last option is E not D!
+AE
+upvoted 1 times
+CloudExpert01 1 year, 2 months ago
+Selected Answer: AD
+If D is chosen: An additional private subnet in the second Availability Zone is needed for high availability.
+upvoted 1 times
+Dharmarajan 1 year, 4 months ago
+Selected Answer: AD
+Theright one is A and D. The last option (with numbering incorrectly shown as the second "D") is not correct, since a load balancer is not per AZ,
+rather for the entire VPC.
+upvoted 1 times
+mzeynalli 1 year, 7 months ago
+Selected Answer: AD
+AE
+The goal is to create a highly available architecture with EC2 instances and RDS instances that are not exposed to the public internet, while still
+allowing the EC2 instances to access external services.
+upvoted 2 times
+PaulGa 1 year, 8 months ago
+Selected Answer: AD
+And A,D - keeps EC2 and RDS private and highly available, but with public front-end
+(Not sure why Author's highlighted answer is C?)
+upvoted 1 times
+Shailesh1717 1 year, 8 months ago
+AD are correct ans
+upvoted 1 times
+scaredSquirrel 1 year, 10 months ago
+AE
+A because the EC2 can't be exposed to public
+E because each subnet must reside entirely within one Availability Zone and cannot span zones.
+source: https://docs.aws.amazon.com/vpc/latest/userguide/configure-
+subnets.html#:~:text=Delete%20a%20subnet-,Subnet%20basics,of%20a%20single%20Availability%20Zone.
+upvoted 1 times
+jaradat02 1 year, 10 months ago
+A and D is the best combination, it achieves all of the desired requirements.
+upvoted 1 times
+shil_31 2 years ago
+Selected Answer: AD
+Option A ensures that EC2 instances and RDS DB instance are not exposed to the public internet, as they are launched in private subnets. Auto
+Scaling group will also ensure high availability of EC2 instances.
+Option D configures a VPC with a public subnet for the load balancer, and a private subnet for the EC2 instances and RDS DB instance. NAT gateways
+in both Availability Zones will allow EC2 instances to access the internet for payment processing, while keeping them private.
+upvoted 3 times
+lofzee 2 years ago
+A and E (the second D option) .
+upvoted 2 times
+Yash2804 2 years ago
+There might be error in question. i modified it now CE answer seems to be correct
+A company runs its two-tier ecommerce website on AWS. The web tier consists of a load balancer that sends traffic to Amazon EC2 instances. The
+database tier uses an Amazon RDS DB instance. The RDS DB instance should not be exposed to the public internet. The The RDS DB instance require
+internet access to complete payment processing of orders through a third-party web service. The application must be highly available.
+Which combination of configuration options will meet these requirements? (Choose two.)
+upvoted 1 times
+Solomon2001 2 years, 1 month ago
+Selected Answer: AB
+Use an Auto Scaling group to launch the EC2 instances in private subnets. Deploy an RDS Multi-AZ DB instance in private subnets.
+This ensures that the EC2 instances and the RDS DB instance are not exposed to the public internet.
+Configure a VPC with two private subnets and two NAT gateways across two Availability Zones. Deploy an Application Load Balancer in the private
+subnets.
+This allows the EC2 instances in private subnets to access the internet for payment processing through the NAT gateways while keeping them private
+upvoted 2 times
+EMPERBACH 2 years, 1 month ago
+App layer & DB Layer does not expose to Internet -> both in private subnet, access through NAT Gateway
+It's enough for all requirements!
+upvoted 1 times
+SaurabhTiwari1 2 years, 5 months ago
+Selected Answer: AD
+AD is right , last one D
+upvoted 1 times
+rlamberti 2 years, 7 months ago
+Selected Answer: AD
+AE
+Two public subnets = two addresses for ALB = high availability
+two private subnets with NAT gateway to allow eggress traffic to internet - application tier will be able to complete payment
+upvoted 5 times

@@ -1,0 +1,138 @@
+A company hosts a three-tier web application on Amazon EC2 instances in a single Availability Zone. The web application uses a
+self-managed MySQL database that is hosted on an EC2 instance to store data in an Amazon Elastic Block Store (Amazon EBS)
+volume. The MySQL database currently uses a 1 TB Provisioned IOPS SSD (io2) EBS volume. The company expects traffic of 1,000
+IOPS for both reads and writes at peak traffic.
+The company wants to minimize any disruptions, stabilize performance, and reduce costs while retaining the capacity for double
+the IOPS. The company wants to move the database tier to a fully managed solution that is highly available and fault tolerant.
+Which solution will meet these requirements MOST cost-effectively?
+A. Use a Multi-AZ deployment of an Amazon RDS for MySQL DB instance with an io2 Block Express EBS volume.
+B. Use a Multi-AZ deployment of an Amazon RDS for MySQL DB instance with a General Purpose SSD (gp2) EBS volume.
+Most Voted
+C. Use Amazon S3 Intelligent-Tiering access tiers.
+D. Use two large EC2 instances to host the database in active-passive mode.
+Comments
+AlmeroSenior Highly Voted 3 years, 3 months ago
+Selected Answer: B
+RDS does not support IO2 or IO2express . GP2 can do the required IOPS
+RDS supported Storage >
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+GP2 max IOPS >
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/general-purpose.html#gp2-performance
+upvoted 16 times
+sophieb Highly Voted 2 years, 2 months ago
+Selected Answer: B
+RDS now supports io2 but it might still be an overkill given Gp2 is enough and we are looking for the most cost effective solution.
+upvoted 9 times
+EllenLiu Most Recent 1 year, 5 months ago
+Selected Answer: B
+gp2: 1,000 GiB => 3000 Baseline performance (IOPS) match the requirement which is 2000 only
+Baseline IOPS performance : 100 ~16,000 at a rate of 3 IOPS per GiB of volume size.
+upvoted 2 times
+Guru4Cloud 2 years, 9 months ago
+Selected Answer: B
+RDS does not support IO2 or IO2express . GP2 can do the required IOPS
+upvoted 4 times
+Gooniegoogoo 2 years, 11 months ago
+The Options is A only because it is sufficient.. Provisioned IOPS are available but overkill.. just want to make sure we understand why its A for the
+right reason
+Correct Answer: B
+Community vote distribution
+B (92%)
+8%
+upvoted 1 times
+dkw2342 2 years, 3 months ago
+Provisioned IOPS are available, but not io2, just io1.
+upvoted 1 times
+Abrar2022 3 years ago
+Simplified by Almero - thanks.
+RDS does not support IO2 or IO2express . GP2 can do the required IOPS
+upvoted 2 times
+TariqKipkemei 3 years, 1 month ago
+Selected Answer: B
+I tried on the portal and only gp3 and i01 are supported.
+This is 11 May 2023.
+upvoted 4 times
+ruqui 3 years ago
+it doesn't matter whether or no io* is supported, using io2 is overkill, you only need 1K IOPS, B is the correct answer
+upvoted 2 times
+SimiTik 3 years, 1 month ago
+A
+Amazon RDS supports the use of Amazon EBS Provisioned IOPS (io2) volumes. When creating a new DB instance or modifying an existing one, you
+can select the io2 volume type and specify the amount of IOPS and storage capacity required. RDS also supports the newer io2 Block Express
+volumes, which can deliver even higher performance for mission-critical database workloads.
+upvoted 2 times
+TariqKipkemei 3 years, 1 month ago
+Impossible. I just tried on the portal and only io1 and gp3 are supported.
+upvoted 2 times
+klayytech 3 years, 2 months ago
+Selected Answer: B
+he most cost-effective solution that meets the requirements is to use a Multi-AZ deployment of an Amazon RDS for MySQL DB instance with a
+General Purpose SSD (gp2) EBS volume. This solution will provide high availability and fault tolerance while minimizing disruptions and stabilizing
+performance. The gp2 EBS volume can handle up to 16,000 IOPS. You can also scale up to 64 TiB of storage.
+Amazon RDS for MySQL provides automated backups, software patching, and automatic host replacement. It also provides Multi-AZ deployments
+that automatically replicate data to a standby instance in another Availability Zone. This ensures that data is always available even in the event of a
+failure.
+upvoted 2 times
+test_devops_aws 3 years, 2 months ago
+Selected Answer: B
+RDS does not support io2 !!!
+upvoted 1 times
+Maximus007 3 years, 2 months ago
+B:gp3 would be the better option, but considering we have only gp2 option and such storage volume - gp2 will be the right choice
+upvoted 4 times
+Nel8 3 years, 2 months ago
+Selected Answer: B
+I thought the answer here is A. But when I found the link from Amazon website; as per AWS:
+Amazon RDS provides three storage types: General Purpose SSD (also known as gp2 and gp3), Provisioned IOPS SSD (also known as io1), and
+magnetic (also known as standard). They differ in performance characteristics and price, which means that you can tailor your storage performance
+and cost to the needs of your database workload. You can create MySQL, MariaDB, Oracle, and PostgreSQL RDS DB instances with up to 64 tebibytes
+(TiB) of storage. You can create SQL Server RDS DB instances with up to 16 TiB of storage. For this amount of storage, use the Provisioned IOPS SSD
+and General Purpose SSD storage types.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+upvoted 1 times
+JA2018 1 year, 6 months ago
+[updated - 21 Nove 2024]
+Amazon RDS provides three storage types: Provisioned IOPS SSD (also known as io1 and io2 Block Express), General Purpose SSD (also known as
+gp2 and gp3), and magnetic (also known as standard). They differ in performance characteristics and price, which means that you can tailor your
+storage performance and cost to the needs of your database workload. You can create Db2, MySQL, MariaDB, Oracle, SQL Server, and PostgreSQL
+RDS DB instances with up to 64 tebibytes (TiB) of storage. RDS for Db2 doesn't support the gp2 and magnetic storage types.
+upvoted 1 times
+Steve_4542636 3 years, 3 months ago
+Selected Answer: B
+for DB instances between 1 TiB and 4 TiB, storage is striped across four Amazon EBS volumes providing burst performance of up to 12,000 IOPS.
+from "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html"
+upvoted 2 times
+TungPham 3 years, 3 months ago
+Selected Answer: B
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+Amazon RDS provides three storage types: General Purpose SSD (also known as gp2 and gp3), Provisioned IOPS SSD (also known as io1), and
+magnetic (also known as standard)
+B - MOST cost-effectively
+upvoted 4 times
+KZM 3 years, 3 months ago
+The baseline IOPS performance of gp2 volumes is 3 IOPS per GB, which means that a 1 TB gp2 volume will have a baseline performance of 3,000
+IOPS. However, the volume can also burst up to 16,000 IOPS for short periods, but this burst performance is limited and may not be sustained for
+long durations.
+So, I am more prefer option A.
+upvoted 1 times
+KZM 3 years, 3 months ago
+If a 1 TB gp3 EBS volume is used, the maximum available IOPS according to calculations is 3000. This means that the storage can support a
+requirement of 1000 IOPS, and even 2000 IOPS if the requirement is doubled.
+I am confusing between choosing A or B.
+upvoted 2 times
+mark16dc 3 years, 3 months ago
+Selected Answer: A
+Option A is the correct answer. A Multi-AZ deployment provides high availability and fault tolerance by automatically replicating data to a standby
+instance in a different Availability Zone. This allows for seamless failover in the event of a primary instance failure. Using an io2 Block Express EBS
+volume provides the needed IOPS performance and capacity for the database. It is also designed for low latency and high durability, which makes it a
+good choice for a database tier.
+upvoted 1 times
+CapJackSparrow 3 years, 2 months ago
+How will you select io2 when RDS only offers io1....magic?
+upvoted 1 times
+bdp123 3 years, 3 months ago
+Selected Answer: B
+Correction - hit wrong answer button - meant 'B'
+Amazon RDS provides three storage types: General Purpose SSD (also known as gp2 and gp3), Provisioned IOPS SSD (also known as io1)
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+upvoted 2 times

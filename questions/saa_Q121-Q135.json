@@ -1,0 +1,855 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 121,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上執行線上事務處理 (OLTP) 工作負載。此工作負載在多可用區部署中使用未加密的 Amazon RDS 資料庫執行個體。每日資料庫快照均從此實例中取得。解決方案架構師應該做什麼來確保資料庫和快照始終加密？",
+        "en": "A company is running an online transaction processing (OLTP) workload on AWS. This workload uses an unencrypted Amazon RDS DB instance in a Multi-AZ deployment. Daily database snapshots are taken from this instance. What should a solutions architect do to ensure the database and snapshots are always encrypted moving forward?"
+      },
+      "options": {
+        "A": {
+          "zh": "加密最新資料庫快照的副本。透過還原加密快照來取代現有資料庫實例。",
+          "en": "Encrypt a copy of the latest DB snapshot. Replace existing DB instance by restoring the encrypted snapshot."
+        },
+        "B": {
+          "zh": "建立一個新的加密 Amazon Elastic Block Store (Amazon EBS) 磁碟區並將快照複製到其中。在資料庫實例上啟用加密。",
+          "en": "Create a new encrypted Amazon Elastic Block Store (Amazon EBS) volume and copy the snapshots to it. Enable encryption on the DB instance."
+        },
+        "C": {
+          "zh": "複製快照並使用 AWS Key Management Service (AWS KMS) 啟用加密 將加密快照還原到現有資料庫執行個體。",
+          "en": "Copy the snapshots and enable encryption using AWS Key Management Service (AWS KMS) Restore encrypted snapshot to an existing DB instance."
+        },
+        "D": {
+          "zh": "將快照複製到使用 AWS Key Management Service (AWS KMS) 託管金鑰 (SSE-KMS) 的伺服器端加密進行加密的 Amazon S3 儲存桶。",
+          "en": "Copy the snapshots to an Amazon S3 bucket that is encrypted using server-side encryption with AWS Key Management Service (AWS KMS) managed keys (SSE-KMS)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。這是 AWS 推薦的方法。無法直接在RDS實例上啟用加密；必須透過建立加密快照並從該快照還原新的加密實例來完成。此方法可確保資料庫和未來快照均已加密。",
+          "en": "Correct. This is the AWS recommended approach. Encryption cannot be enabled directly on an RDS instance; it must be done by creating an encrypted snapshot and restoring a new encrypted instance from that snapshot. This method ensures that both the database and future snapshots are encrypted."
+        },
+        "B": {
+          "zh": "錯誤。RDS 實例的加密獨立於 EBS 磁碟區的加密。無法透過建立加密的EBS磁碟區直接為RDS實例啟用加密。 RDS實例的加密只能透過加密快照復原來實現。",
+          "en": "Incorrect. The encryption of the RDS instance is independent of the encryption of the EBS volume. Encryption cannot be enabled directly for an RDS instance by creating an encrypted EBS volume. Encryption of RDS instances can only be achieved through encrypted snapshot recovery."
+        },
+        "C": {
+          "zh": "錯誤。雖然您可以使用 KMS 加密快照，但無法將加密快照還原到現有的未加密實例。必須建立新的加密實例，而不是還原到現有實例。",
+          "en": "Incorrect. Although you can encrypt snapshots using KMS, you cannot restore an encrypted snapshot to an existing unencrypted instance. A new encrypted instance must be created rather than restored to an existing instance."
+        },
+        "D": {
+          "zh": "錯誤。將快照複製到S3並加密不會影響RDS實例本身的加密狀態。此方法僅用於備份目的，不會對RDS實例啟用加密。",
+          "en": "Incorrect. Copying the snapshot to S3 and encrypting it does not affect the encryption status of the RDS instance itself. This method is only for backup purposes and does not enable encryption for the RDS instance."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 加密最新資料庫快照的副本。透過還原加密快照來取代現有資料庫實例。",
+        "en": "A. Encrypt a copy of the latest DB snapshot. Replace existing DB instance by restoring the encrypted snapshot."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (85%)。熱門討論與考點摘要：這是 AWS 推薦的方法。無法直接在RDS實例上啟用加密；必須透過建立加密快照並從該快照還原新的加密實例來完成。此方法可確保資料庫和未來快照均已加密。",
+        "en": "Community vote as displayed: A (85%). Popular discussion and key point summary: This is the AWS recommended approach. Encryption cannot be enabled directly on an RDS instance; it must be done by creating an encrypted snapshot and restoring a new encrypted instance from that snapshot. This method ensures that both the database and future snapshots are encrypted."
+      }
+    },
+    {
+      "question_no": 122,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望建立一個可擴展的金鑰管理基礎設施，以支援需要加密應用程式中的資料的開發人員。解決方案架構師該怎麼做才能減輕營運負擔？",
+        "en": "A company wants to build a scalable key management infrastructure to support developers who need to encrypt data in their applications. What should a solutions architect do to reduce the operational burden?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用多重驗證 (MFA) 來保護加密金鑰。",
+          "en": "Use multi-factor authentication (MFA) to protect the encryption keys."
+        },
+        "B": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 保護加密金鑰。",
+          "en": "Use AWS Key Management Service (AWS KMS) to protect the encryption keys."
+        },
+        "C": {
+          "zh": "使用 AWS Certificate Manager (ACM) 建立、儲存和指派加密金鑰。",
+          "en": "Use AWS Certificate Manager (ACM) to create, store, and assign the encryption keys."
+        },
+        "D": {
+          "zh": "使用 IAM 策略來限制具有存取權限的使用者範圍，以保護加密金鑰。",
+          "en": "Use an IAM policy to limit the scope of users who have access permissions to protect the encryption keys."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。單獨使用 Amazon EC2 無法提供問題所需的託管持久性資料層和彈性架構，並且會增加伺服器管理和擴展的營運負擔。",
+          "en": "Incorrect. Using Amazon EC2 alone cannot provide the managed persistence data layer and elastic architecture required by the problem, and will increase the operational burden of server management and scaling."
+        },
+        "B": {
+          "zh": "正確。分析：AWS KMS 是一項託管服務，旨在建立、管理和保護加密金鑰。它提供自動密鑰輪換、存取控制和審核功能，可顯著減輕營運負擔。結論：。",
+          "en": "Correct. Analysis: AWS KMS is a managed service designed to create, manage, and protect encryption keys. It provides automated key rotation, access control, and auditing capabilities that significantly reduce operational burden. Conclusion:."
+        },
+        "C": {
+          "zh": "錯誤。分析：ACM主要用於管理SSL/TLS證書，而非加密金鑰管理。不適合支援開發者加密資料的場景。結論：錯誤。",
+          "en": "Incorrect. Analysis: ACM is mainly used to manage SSL/TLS certificates, not encryption key management. It is not suitable for scenarios that support developers encrypting data. Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "錯誤。分析：IAM策略可以限制使用者存取權限，但屬於存取控制的一部分，不能直接減輕加密金鑰管理的營運負擔。結論：錯誤。",
+          "en": "Incorrect. Analysis: IAM policy can limit user access rights, but it is part of access control and cannot directly reduce the operational burden of encryption key management. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Key Management Service (AWS KMS) 保護加密金鑰。",
+        "en": "B. Use AWS Key Management Service (AWS KMS) to protect the encryption keys."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：分析：AWS KMS 是一項託管服務，旨在建立、管理和保護加密金鑰。它提供自動密鑰輪換、存取控制和審核功能，可顯著減輕營運負擔。結論：。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Analysis: AWS KMS is a managed service designed to create, manage, and protect encryption keys. It provides automated key rotation, access control, and auditing capabilities that significantly reduce operational burden. Conclusion:."
+      }
+    },
+    {
+      "question_no": 123,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個動態 Web 應用程式託管在兩個 Amazon EC2 執行個體上。該公司擁有自己的 SSL 證書，該證書在每個實例上執行 SSL 終止。最近流量增加，營運團隊確定 SSL 加密和解密導致 Web 伺服器的運算能力達到最大限制。解決方案架構師應該怎麼做才能提高應用程式的效能？",
+        "en": "A company has a dynamic web application hosted on two Amazon EC2 instances. The company has its own SSL certificate, which is on each instance to perform SSL termination. There has been an increase in traffic recently, and the operations team determined that SSL encryption and decryption is causing the compute capacity of the web servers to reach their maximum limit. What should a solutions architect do to increase the application's performance?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Certificate Manager (ACM) 建立新的 SSL 憑證。在每個實例上安裝 ACM 憑證。",
+          "en": "Create a new SSL certificate using AWS Certificate Manager (ACM). Install the ACM certificate on each instance."
+        },
+        "B": {
+          "zh": "建立 Amazon S3 儲存桶 將 SSL 憑證移轉到 S3 儲存桶。配置 EC2 執行個體以引用儲存桶以進行 SSL 終止。",
+          "en": "Create an Amazon S3 bucket Migrate the SSL certificate to the S3 bucket. Configure the EC2 instances to reference the bucket for SSL termination."
+        },
+        "C": {
+          "zh": "建立另一個 EC2 執行個體作為代理伺服器。將 SSL 憑證遷移到新執行個體並將其配置為直接連接到現有 EC2 執行個體。",
+          "en": "Create another EC2 instance as a proxy server. Migrate the SSL certificate to the new instance and configure it to direct connections to the existing EC2 instances."
+        },
+        "D": {
+          "zh": "將 SSL 憑證匯入 AWS Certificate Manager (ACM)。建立具有 HTTPS 偵聽器的應用程式負載平衡器，該偵聽器使用來自 ACM 的 SSL 憑證。",
+          "en": "Import the SSL certificate into AWS Certificate Manager (ACM). Create an Application Load Balancer with an HTTPS listener that uses the SSL certificate from ACM."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。儘管 ACM 可以管理 SSL 證書，但它無法直接安裝在 EC2 執行個體上。 ACM 的憑證只能與 AWS 服務（例如負載平衡器或 CloudFront）一起使用。",
+          "en": "Incorrect. Although ACM can manage SSL certificates, it cannot be installed directly on EC2 instances. ACM's certificates can only be used with AWS services (such as Load Balancer or CloudFront)."
+        },
+        "B": {
+          "zh": "錯誤。S3 不支援 SSL 終止。 S3 是一種物件儲存服務，不能用於處理 SSL 加密和解密。",
+          "en": "Incorrect. S3 does not support SSL termination. S3 is an object storage service and cannot be used to handle SSL encryption and decryption."
+        },
+        "C": {
+          "zh": "錯誤。雖然可以透過代理伺服器處理 SSL 終止，但這增加了體系結構的複雜性，並且仍然需要手動管理憑證。與使用 ALB 相比，此方法效率較低且可擴展性較差。",
+          "en": "Incorrect. While SSL termination can be handled through a proxy server, this adds architectural complexity and still requires manual management of certificates. This approach is less efficient and less scalable than using ALB."
+        },
+        "D": {
+          "zh": "正確。將 SSL 憑證匯入 ACM 後，您可以使用 Application Load Balancer (ALB) 的 HTTPS 偵聽器來處理 SSL 終止。這種方法可以減輕 EC2 執行個體的負載，同時提供高可用性和可擴充性。",
+          "en": "Correct. After you import the SSL certificate into ACM, you can use the Application Load Balancer's (ALB) HTTPS listener to handle SSL termination. This approach offloads EC2 instances while providing high availability and scalability."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 將 SSL 憑證匯入 AWS Certificate Manager (ACM)。建立具有 HTTPS 偵聽器的應用程式負載平衡器，該偵聽器使用來自 ACM 的 SSL 憑證。",
+        "en": "D. Import the SSL certificate into AWS Certificate Manager (ACM). Create an Application Load Balancer with an HTTPS listener that uses the SSL certificate from ACM."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (96%)。熱門討論與考點摘要：將 SSL 憑證匯入 ACM 後，您可以使用 Application Load Balancer (ALB) 的 HTTPS 偵聽器來處理 SSL 終止。這種方法可以減輕 EC2 執行個體的負載，同時提供高可用性和可擴充性。",
+        "en": "Community vote as displayed: D (96%). Popular discussion and key point summary: After you import the SSL certificate into ACM, you can use the Application Load Balancer's (ALB) HTTPS listener to handle SSL termination. This approach offloads EC2 instances while providing high availability and scalability."
+      }
+    },
+    {
+      "question_no": 124,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司有一個高度動態的批次作業，該作業使用許多 Amazon EC2 執行個體來完成。這份作業本質上是無狀態的，可以在任何給定時間啟動和停止，不會產生負面影響，並且通常總共需要 60 分鐘以上才能完成。該公司已要求解決方案架構師設計一個可擴展且經濟高效的解決方案，以滿足工作要求。解決方案架構師該推薦什麼？",
+        "en": "A company has a highly dynamic batch processing job that uses many Amazon EC2 instances to complete it. The job is stateless in nature, can be started and stopped at any given time with no negative impact, and typically takes upwards of 60 minutes total to complete. The company has asked a solutions architect to design a scalable and cost-effective solution that meets the requirements of the job. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "實施 EC2 Spot 執行個體。",
+          "en": "Implement EC2 Spot Instances."
+        },
+        "B": {
+          "zh": "購買 EC2 預留執行個體。",
+          "en": "Purchase EC2 Reserved Instances."
+        },
+        "C": {
+          "zh": "實施 EC2 按需執行個體。",
+          "en": "Implement EC2 On-Demand Instances."
+        },
+        "D": {
+          "zh": "在 AWS Lambda 上實作處理。",
+          "en": "Implement the processing on AWS Lambda."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Spot實例是EC2的一種定價模式，適用於無狀態、高容錯的應用場景。它們比按需實例便宜得多，非常適合動態批次任務。由於問題明確指出任務是無狀態的，可以隨時啟動和停止，因此 Spot 實例是最具成本效益的選擇。",
+          "en": "Correct. Spot Instances is a pricing model of EC2, suitable for stateless, high fault-tolerant application scenarios. They are much cheaper than On-Demand Instances and are ideal for dynamic batch processing tasks. Since the question clearly states that tasks are stateless and can be started and stopped at any time, Spot Instances are the most cost-effective option."
+        },
+        "B": {
+          "zh": "錯誤。預留實例適用於長期固定工作負載，通常需要提前購買並鎖定一段時間（1年或3年）。問題中的批次任務是動態的，不適合使用預留實例。",
+          "en": "Incorrect. Reserved Instances are suitable for long-term fixed workloads and usually need to be purchased in advance and locked for a period of time (1 or 3 years). The batch processing task in the question is dynamic and is not suitable for using Reserved Instances."
+        },
+        "C": {
+          "zh": "錯誤。按需實例適用於週期性、不可預測的工作負載，但價格較高。雖然可以滿足動態需求，但題目要求性價比，Spot 實例更適合。",
+          "en": "Incorrect. On-Demand Instances are suitable for periodic, unpredictable workloads, but they are more expensive. Although it can meet dynamic needs, the topic requires cost-effectiveness, and Spot Instances is more suitable."
+        },
+        "D": {
+          "zh": "錯誤。AWS Lambda 適用於以秒級執行的無伺服器運算任務，最長執行時間為 15 分鐘。問題中的批次任務需要超過60分鐘，因此Lambda無法滿足需求。",
+          "en": "Incorrect. AWS Lambda is suitable for serverless computing tasks that run in seconds, with a maximum execution time of 15 minutes. The batch processing task in the question takes more than 60 minutes, so Lambda cannot meet the demand."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 實施 EC2 Spot 執行個體。",
+        "en": "A. Implement EC2 Spot Instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (96%)。熱門討論與考點摘要：Spot實例是EC2的一種定價模式，適用於無狀態、高容錯的應用場景。它們比按需實例便宜得多，非常適合動態批次任務。由於問題明確指出任務是無狀態的，可以隨時啟動和停止，因此 Spot 實例是最具成本效益的選擇。",
+        "en": "Community vote as displayed: A (96%). Popular discussion and key point summary: Spot Instances is a pricing model of EC2, suitable for stateless, high fault-tolerant application scenarios. They are much cheaper than On-Demand Instances and are ideal for dynamic batch processing tasks. Since the question clearly states that tasks are stateless and can be started and stopped at any time, Spot Instances are the most cost-effective option."
+      }
+    },
+    {
+      "question_no": 125,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上經營其兩層電子商務網站。 Web 層由負載平衡器組成，將流量傳送至 Amazon EC2 執行個體。資料庫層使用 Amazon RDS 資料庫執行個體。 EC2 執行個體和 RDS 資料庫執行個體不應暴露於公共網際網路。 EC2 執行個體需要網際網路存取才能透過第三方 Web 服務完成訂單的付款處理。該應用程式必須具有高可用性。哪種配置選項組合可以滿足這些要求？ （選兩個。）",
+        "en": "A company runs its two-tier ecommerce website on AWS. The web tier consists of a load balancer that sends traffic to Amazon EC2 instances. The database tier uses an Amazon RDS DB instance. The EC2 instances and the RDS DB instance should not be exposed to the public internet. The EC2 instances require internet access to complete payment processing of orders through a third-party web service. The application must be highly available. Which combination of configuration options will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Auto Scaling 群組在私有子網路中啟動 EC2 執行個體。在私有子網路中部署 RDS 多重可用區資料庫執行個體。",
+          "en": "Use an Auto Scaling group to launch the EC2 instances in private subnets. Deploy an RDS Multi-AZ DB instance in private subnets."
+        },
+        "B": {
+          "zh": "配置跨兩個可用區的具有兩個私有子網路和兩個 NAT 閘道的 VPC。在私有子網路中部署應用程式負載平衡器。",
+          "en": "Configure a VPC with two private subnets and two NAT gateways across two Availability Zones. Deploy an Application Load Balancer in the private subnets."
+        },
+        "C": {
+          "zh": "使用 Auto Scaling 群組在跨兩個可用區的公有子網路中啟動 EC2 執行個體。在私有子網路中部署 RDS 多重可用區資料庫執行個體。",
+          "en": "Use an Auto Scaling group to launch the EC2 instances in public subnets across two Availability Zones. Deploy an RDS Multi- AZ DB instance in private subnets."
+        },
+        "D": {
+          "zh": "跨兩個可用區配置具有兩個公有子網路、兩個私有子網路和兩個 NAT 閘道的 VPC。在公有子網路中部署應用程式負載平衡器。",
+          "en": "Configure a VPC with two public subnets, two private subnets, and two NAT gateways across two Availability Zones. Deploy an Application Load Balancer in the public subnets."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。私有子網路中的EC2實例可以避免直接暴露在Internet上，這滿足了問題的要求。 RDS多可用區部署在私有子網路中，確保資料庫的高可用性，同時避免暴露在網際網路上。",
+          "en": "Correct. EC2 instances in private subnets can avoid being directly exposed to the Internet, which meets the requirements of the question. RDS Multi-AZ is deployed in a private subnet to ensure high availability of the database while avoiding exposure to the Internet."
+        },
+        "B": {
+          "zh": "錯誤。應用程式負載平衡器需要部署在公有子網路中才能接收來自 Internet 的流量。兩個私有子網路和兩個NAT閘道的設定保證了私有子網路中資源的高可用性和Internet存取。",
+          "en": "Incorrect. The Application Load Balancer needs to be deployed in a public subnet in order to receive traffic from the Internet. The configuration of two private subnets and two NAT gateways ensures high availability and Internet access for resources in the private subnets."
+        },
+        "C": {
+          "zh": "錯誤。部署在公共子網路中的EC2實例將暴露在網際網路上，這不符合問題的要求。 RDS多可用區部署在私有子網路中，確保資料庫的高可用性。",
+          "en": "Incorrect. EC2 instances deployed in public subnets will be exposed to the Internet, which does not meet the requirements of the question. RDS Multi-AZ is deployed in a private subnet to ensure high availability of the database."
+        },
+        "D": {
+          "zh": "正確。應用程式負載平衡器部署在公有子網路中，可以接收來自 Internet 的流量。兩個NAT網關跨越兩個可用區，保證高可用性並允許私有子網路中的資源存取Internet。",
+          "en": "Correct. The Application Load Balancer is deployed in the public subnet and can receive traffic from the Internet. Two NAT gateways span two Availability Zones, ensuring high availability and allowing resources in the private subnet to access the Internet."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Auto Scaling 群組在私有子網路中啟動 EC2 執行個體。在私有子網路中部署 RDS 多重可用區資料庫執行個體。；D. 跨兩個可用區配置具有兩個公有子網路、兩個私有子網路和兩個 NAT 閘道的 VPC。在公有子網路中部署應用程式負載平衡器。",
+        "en": "A. Use an Auto Scaling group to launch the EC2 instances in private subnets. Deploy an RDS Multi-AZ DB instance in private subnets.; D. Configure a VPC with two public subnets, two private subnets, and two NAT gateways across two Availability Zones. Deploy an Application Load Balancer in the public subnets."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AD (62%)； AB (18%)； A (17%)。熱門討論與考點摘要：私有子網路中的EC2實例可以避免直接暴露在Internet上，這滿足了問題的要求。 RDS多可用區部署在私有子網路中，確保資料庫的高可用性，同時避免暴露在網際網路上。；應用程式負載平衡器部署在公有子網路中，可以接收來自 Internet 的流量。兩個NAT網關跨越兩個可用區，保證高可用性並允許私有子網路中的資源存取Internet。",
+        "en": "Community vote as displayed: AD (62%); AB (18%); A (17%). Popular discussion and key point summary: EC2 instances in private subnets can avoid being directly exposed to the Internet, which meets the requirements of the question. RDS Multi-AZ is deployed in a private subnet to ensure high availability of the database while avoiding exposure to the Internet.; The Application Load Balancer is deployed in the public subnet and can receive traffic from the Internet. Two NAT gateways span two Availability Zones, ensuring high availability and allowing resources in the private subnet to access the Internet."
+      }
+    },
+    {
+      "question_no": 126,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解決方案架構師需要實施一個解決方案來降低公司的儲存成本。本公司的所有資料都位於 Amazon S3 標準儲存類別中。公司必須將所有資料保存至少 25 年。最近 2 年的資料必須高度可用且可立即檢索。哪種解決方案可以滿足這些要求？",
+        "en": "A solutions architect needs to implement a solution to reduce a company's storage costs. All the company's data is in the Amazon S3 Standard storage class. The company must keep all data for at least 25 years. Data from the most recent 2 years must be highly available and immediately retrievable. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "設定 S3 生命週期策略以立即將物件轉移到 S3 Glacier Deep Archive。",
+          "en": "Set up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive immediately."
+        },
+        "B": {
+          "zh": "設定 S3 生命週期策略，以在 2 年後將物件過渡到 S3 Glacier Deep Archive。",
+          "en": "Set up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive after 2 years."
+        },
+        "C": {
+          "zh": "使用 S3 智能分層。啟動存檔選項以確保資料存檔在 S3 Glacier Deep Archive 中。",
+          "en": "Use S3 Intelligent-Tiering. Activate the archiving option to ensure that data is archived in S3 Glacier Deep Archive."
+        },
+        "D": {
+          "zh": "設定 S3 生命週期策略，立即將物件轉換為 S3 One Zone-Infrequent Access (S3 One Zone-IA)，並在 2 年後轉換為 S3 Glacier Deep Archive。",
+          "en": "Set up an S3 Lifecycle policy to transition objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) immediately and to S3 Glacier Deep Archive after 2 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因 雖然 S3 Glacier Deep Archive 是成本最低的儲存選項，但問題要求過去 2 年的資料必須「高度可用且可立即檢測」。立即將所有資料移至 S3 Glacier Deep Archive 將導致過去 2 年的資料無法滿足可用性和檢查要求。",
+          "en": "Incorrect. Reason for the Although S3 Glacier Deep Archive is the lowest-cost storage option, the question requires that the data in the last 2 years must be \"highly available and immediately detectable.\" Immediately moving all data to S3 Glacier Deep Archive would result in the last 2 years of data being unable to meet availability and inspection requirements."
+        },
+        "B": {
+          "zh": "正確。原因：此選項符合問題要求。最近 2 年的資料保留在 S3 標準儲存中，確保其高度可用且可立即檢測。超過 2 年的資料將轉移到 S3 Glacier Deep Archive，以降低儲存成本，同時滿足 25 年的資料保留要求。",
+          "en": "Correct. reason: This option meets the question requirements. The most recent 2 years of data are retained in S3 Standard storage, ensuring that it is highly available and immediately detectable. Data older than 2 years is transferred to S3 Glacier Deep Archive to reduce storage costs while meeting the 25-year data retention requirement."
+        },
+        "C": {
+          "zh": "錯誤。原因：S3智慧分層雖然可以自動優化儲存成本，但無法明確保證最近2年的資料保留在高可用儲存層。此外，在啟動歸檔選項後，資料可能會傳輸到S3 Glacier Deep Archive，這不符合問題對最近2年資料的可用性要求。 2 年後",
+          "en": "Incorrect. reason: Although S3 Intelligent-Tiering can automatically optimize storage costs, it cannot explicitly guarantee that the data in the last 2 years will be retained in the highly available storage tier. In addition, after activating the archiving option, the data may be transferred to S3 Glacier Deep Archive, which does not meet the question's availability requirements for the last 2 years of data."
+        },
+        "D": {
+          "zh": "錯誤。到 S3 Glacier Deep Archive。 S3 One Zone-IA 可用性低，不具備跨可用區冗餘的原因。將最近2年的資料轉移到S3 One Zone-IA會降低資料的可用性，不符合問題的要求。",
+          "en": "Incorrect. to S3 Glacier Deep Archive after 2 years. Cause of S3 One Zone-IA has low availability and does not have cross-zone redundancy. Transferring the data of the last 2 years to S3 One Zone-IA will reduce the availability of the data and does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 設定 S3 生命週期策略，以在 2 年後將物件過渡到 S3 Glacier Deep Archive。",
+        "en": "B. Set up an S3 Lifecycle policy to transition objects to S3 Glacier Deep Archive after 2 years."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (83%)。熱門討論與考點摘要：原因：此選項符合問題要求。最近 2 年的資料保留在 S3 標準儲存中，確保其高度可用且可立即檢測。超過 2 年的資料將轉移到 S3 Glacier Deep Archive，以降低儲存成本，同時滿足 25 年的資料保留要求。",
+        "en": "Community vote as displayed: B (83%). Popular discussion and key point summary: reason: This option meets the question requirements. The most recent 2 years of data are retained in S3 Standard storage, ensuring that it is highly available and immediately detectable. Data older than 2 years is transferred to S3 Glacier Deep Archive to reduce storage costs while meeting the 25-year data retention requirement."
+      }
+    },
+    {
+      "question_no": 127,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家媒體公司正在評估將其係統遷移到 AWS 雲端的可能性。該公司需要至少 10 TB 的儲存空間（具有最大可能的 I/O 效能）用於視訊處理，300 TB 的非常耐用的儲存空間用於儲存媒體內容，以及 900 TB 的儲存空間以滿足不再使用的存檔媒體的要求。解決方案架構師應該推薦哪一組服務來滿足這些要求？",
+        "en": "A media company is evaluating the possibility of moving its systems to the AWS Cloud. The company needs at least 10 TB of storage with the maximum possible I/O performance for video processing, 300 TB of very durable storage for storing media content, and 900 TB of storage to meet requirements for archival media that is not in use anymore. Which set of services should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon EBS 用於實現最佳性能，Amazon S3 用於持久性資料存儲，Amazon S3 Glacier 用於歸檔存儲",
+          "en": "Amazon EBS for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for archival storage"
+        },
+        "B": {
+          "zh": "Amazon EBS 用於實現最佳性能，Amazon EFS 用於持久性資料存儲，Amazon S3 Glacier 用於歸檔存儲",
+          "en": "Amazon EBS for maximum performance, Amazon EFS for durable data storage, and Amazon S3 Glacier for archival storage"
+        },
+        "C": {
+          "zh": "Amazon EC2 執行個體存儲可實現最佳效能，Amazon EFS 可實現持久性資料存儲，Amazon S3 可實現歸檔存儲",
+          "en": "Amazon EC2 instance store for maximum performance, Amazon EFS for durable data storage, and Amazon S3 for archival storage"
+        },
+        "D": {
+          "zh": "Amazon EC2 執行個體存儲可實現最佳效能，Amazon S3 可實現持久性資料存儲，Amazon S3 Glacier 可實現歸檔存儲",
+          "en": "Amazon EC2 instance store for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for archival storage"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon EBS 可以提供高效能持久性區塊存儲，但問題需要視訊處理以獲得最大可能的本機 I/O 效能。 EC2執行個體儲存更適合這種臨時處理需求； S3和S3冰川的選擇本身就是合理的。",
+          "en": "Incorrect. Amazon EBS can provide high-performance persistent block storage, but the question requires video processing to obtain the maximum possible local I/O performance. EC2 instance storage is more suitable for this temporary processing requirement; the choice of S3 and S3 Glacier is reasonable in itself."
+        },
+        "B": {
+          "zh": "錯誤。Amazon EBS 並不是實現最大本地 I/O 效能的最佳選擇，而且 Amazon EFS 的共享檔案系統模型並不像 Amazon S3 那樣適合大規模、極其持久的媒體物件儲存。",
+          "en": "Incorrect. Amazon EBS is not the best choice for maximum local I/O performance, and Amazon EFS's shared file system model is not as suitable as Amazon S3 for large-scale, extremely durable media object storage."
+        },
+        "C": {
+          "zh": "錯誤。EC2 執行個體儲存適合高 I/O 即席視訊處理，但 Amazon EFS 不如 S3 適合 300 TB 持久性媒體內容，S3 標準儲存不如 S3 Glacier 適合 900 TB 檔案。",
+          "en": "Incorrect. EC2 instance storage is suitable for high I/O ad-hoc video processing, but Amazon EFS is not as suitable as S3 for 300 TB of persistent media content, and S3 Standard storage is not as suitable as S3 Glacier for 900 TB of archives."
+        },
+        "D": {
+          "zh": "正確。EC2 執行個體儲存為可再生的臨時視訊處理資料提供最高的本地 I/O 效能； Amazon S3 提供高持久性媒體物件存儲，S3 Glacier 適合低成本長期歸檔。",
+          "en": "Correct. EC2 instance storage provides the highest local I/O performance for regenerable, temporary video processing data; Amazon S3 provides high-durability media object storage, and S3 Glacier is suitable for low-cost long-term archiving."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. Amazon EC2 執行個體存儲可實現最佳效能，Amazon S3 可實現持久性資料存儲，Amazon S3 Glacier 可實現歸檔存儲",
+        "en": "D. Amazon EC2 instance store for maximum performance, Amazon S3 for durable data storage, and Amazon S3 Glacier for archival storage"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (57%)； A (43%)。熱門討論與考點摘要：EC2 執行個體儲存為可再生的臨時視訊處理資料提供最高的本地 I/O 效能； Amazon S3 提供高持久性媒體物件存儲，S3 Glacier 適合低成本長期歸檔。",
+        "en": "Community vote as displayed: D (57%); A (43%). Popular discussion and key point summary: EC2 instance storage provides the highest local I/O performance for regenerable, temporary video processing data; Amazon S3 provides high-durability media object storage, and S3 Glacier is suitable for low-cost long-term archiving."
+      }
+    },
+    {
+      "question_no": 128,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望在 AWS 雲端中的容器中執行應用程式。這些應用程式是無狀態的，可以容忍底層基礎設施內的中斷。該公司需要一種能夠最大限度地降低成本和營運開銷的解決方案。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company wants to run applications in containers in the AWS Cloud. These applications are stateless and can tolerate disruptions within the underlying infrastructure. The company needs a solution that minimizes cost and operational overhead. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon EC2 Auto Scaling 群組中的 Spot 執行個體來執行應用程式容器。",
+          "en": "Use Spot Instances in an Amazon EC2 Auto Scaling group to run the application containers."
+        },
+        "B": {
+          "zh": "在 Amazon Elastic Kubernetes Service (Amazon EKS) 託管節點群組中使用 Spot 執行個體。",
+          "en": "Use Spot Instances in an Amazon Elastic Kubernetes Service (Amazon EKS) managed node group."
+        },
+        "C": {
+          "zh": "使用 Amazon EC2 Auto Scaling 群組中的按需執行個體來執行應用程式容器。",
+          "en": "Use On-Demand Instances in an Amazon EC2 Auto Scaling group to run the application containers."
+        },
+        "D": {
+          "zh": "在 Amazon Elastic Kubernetes Service (Amazon EKS) 託管節點群組中使用隨選執行個體。",
+          "en": "Use On-Demand Instances in an Amazon Elastic Kubernetes Service (Amazon EKS) managed node group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。本質分析：使用Spot實例可以顯著降低成本，並且Auto Scaling組可以提供彈性擴展能力。原因雖然成本較低，但直接使用EC2 Auto Scaling組運行容器需要額外的操作工作（例如手動管理容器編排），增加了操作開銷。",
+          "en": "Incorrect. ness analysis: Using Spot Instances can significantly reduce costs, and the Auto Scaling group can provide elastic expansion capabilities. Reason for the Although the cost is low, directly using an EC2 Auto Scaling group to run containers requires additional operational work (such as manual management of container orchestration), which increases operational overhead."
+        },
+        "B": {
+          "zh": "正確。原因：EKS託管節點群組自動管理節點的生命週期，Spot實例可以滿足問題中「最小化成本和營運費用」的要求。",
+          "en": "Correct. reason: EKS managed node group automatically manages the life cycle of nodes, and Spot Instances can meet the requirement of \"minimizing costs and operating expenses\" in the question."
+        },
+        "C": {
+          "zh": "錯誤。本質分析：按需實例提供確定性，但成本較高。原因雖然容器可以運行，但沒有使用容器編排服務（如EKS），增加了營運開銷，而沒有進行成本最佳化。",
+          "en": "Incorrect. ness analysis: On-Demand Instances provide certainty, but the cost is higher. Reason for the Although the container can be run, container orchestration services (such as EKS) are not used, which increases operational overhead without cost optimization."
+        },
+        "D": {
+          "zh": "錯誤。性質分析：EKS 託管節點組減少了營運開銷。原因雖然EKS降低了營運費用，但使用按需實例會增加成本，不符合問題中「成本最小化」的要求。",
+          "en": "Incorrect. ness analysis: EKS managed node group reduces operational overhead. Reason for the Although EKS reduces operating expenses, using On-Demand Instances will increase costs, which does not meet the requirement of \"minimizing costs\" in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon Elastic Kubernetes Service (Amazon EKS) 託管節點群組中使用 Spot 執行個體。",
+        "en": "B. Use Spot Instances in an Amazon Elastic Kubernetes Service (Amazon EKS) managed node group."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (72%)； A (26%)。熱門討論與考點摘要：原因：EKS託管節點群組自動管理節點的生命週期，Spot實例可以滿足問題中「最小化成本和營運費用」的要求。",
+        "en": "Community vote as displayed: B (72%); A (26%). Popular discussion and key point summary: reason: EKS managed node group automatically manages the life cycle of nodes, and Spot Instances can meet the requirement of \"minimizing costs and operating expenses\" in the question."
+      }
+    },
+    {
+      "question_no": 129,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在本地運行多層 Web 應用程式。該 Web 應用程式是容器化的，並在連接到包含使用者記錄的 PostgreSQL 資料庫的多個 Linux 主機上運行。維護基礎設施和容量規劃的營運開銷限制了公司的成長。解決方案架構師必須改進應用程式的基礎架構。解決方案架構師應該採取哪些行動組合來實現這個目標？ （選兩個。）",
+        "en": "A company is running a multi-tier web application on premises. The web application is containerized and runs on a number of Linux hosts connected to a PostgreSQL database that contains user records. The operational overhead of maintaining the infrastructure and capacity planning is limiting the company's growth. A solutions architect must improve the application's infrastructure. Which combination of actions should the solutions architect take to accomplish this? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "將 PostgreSQL 資料庫移轉到 Amazon Aurora。",
+          "en": "Migrate the PostgreSQL database to Amazon Aurora."
+        },
+        "B": {
+          "zh": "將 Web 應用程式移轉到 Amazon EC2 執行個體上託管。",
+          "en": "Migrate the web application to be hosted on Amazon EC2 instances."
+        },
+        "C": {
+          "zh": "為 Web 應用程式內容設定 Amazon CloudFront 指派。",
+          "en": "Set up an Amazon CloudFront distribution for the web application content."
+        },
+        "D": {
+          "zh": "在 Web 應用程式和 PostgreSQL 資料庫之間設定 Amazon ElastiCache。",
+          "en": "Set up Amazon ElastiCache between the web application and the PostgreSQL database."
+        },
+        "E": {
+          "zh": "使用 Amazon Elastic Container Service (Amazon ECS) 將 Web 應用程式移轉到 AWS Fargate 上託管。",
+          "en": "Migrate the web application to be hosted on AWS Fargate with Amazon Elastic Container Service (Amazon ECS)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon Aurora 是一種支援 PostgreSQL 的高效能、可擴充託管資料庫服務。遷移到 Aurora 可以減少資料庫管理開銷，同時提高效能和可用性。",
+          "en": "Correct. Amazon Aurora is a high-performance, scalable managed database service that supports PostgreSQL. Moving to Aurora reduces database management overhead while improving performance and availability."
+        },
+        "B": {
+          "zh": "錯誤。雖然 EC2 可以託管應用程序，但它仍然需要手動管理執行個體、擴展和容器化環境，這並不能顯著降低營運開銷。",
+          "en": "Incorrect. While EC2 can host applications, it still requires manual management of instances, scaling, and containerized environments, which does not significantly reduce operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。CloudFront是一個內容傳遞網路（CDN），主要用於加速靜態和動態內容的分發。但該題並沒有提到需要優化內容分佈，因此與題目要求不完全相關。",
+          "en": "Incorrect. CloudFront is a content delivery network (CDN), mainly used to accelerate the delivery of static and dynamic content. However, the question does not mention the need to optimize content distribution, so it is not completely relevant to the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。雖然ElastiCache可以最佳化資料庫查詢效能，但問題的重點是減少運維開銷而不是直接最佳化資料庫效能。",
+          "en": "Incorrect. Although ElastiCache can optimize database query performance, the focus of the question is to reduce operation and maintenance overhead rather than directly optimizing database performance."
+        },
+        "E": {
+          "zh": "正確。AWS Fargate 是一種無伺服器容器管理服務，可大幅降低容器化應用程式的營運開銷，同時支援自動擴充。",
+          "en": "Correct. AWS Fargate is a serverless container management service that significantly reduces the operational overhead of containerized applications while supporting automatic scaling."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 將 PostgreSQL 資料庫移轉到 Amazon Aurora。；E. 使用 Amazon Elastic Container Service (Amazon ECS) 將 Web 應用程式移轉到 AWS Fargate 上託管。",
+        "en": "A. Migrate the PostgreSQL database to Amazon Aurora.; E. Migrate the web application to be hosted on AWS Fargate with Amazon Elastic Container Service (Amazon ECS)."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：AE (98%)。熱門討論與考點摘要：Amazon Aurora 是一種支援 PostgreSQL 的高效能、可擴充託管資料庫服務。遷移到 Aurora 可以減少資料庫管理開銷，同時提高效能和可用性。；AWS Fargate 是一種無伺服器容器管理服務，可大幅降低容器化應用程式的營運開銷，同時支援自動擴充。",
+        "en": "Community vote as displayed: AE (98%). Popular discussion and key point summary: Amazon Aurora is a high-performance, scalable managed database service that supports PostgreSQL. Moving to Aurora reduces database management overhead while improving performance and availability.; AWS Fargate is a serverless container management service that significantly reduces the operational overhead of containerized applications while supporting automatic scaling."
+      }
+    },
+    {
+      "question_no": 130,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "應用程式在跨多個可用區的 Amazon EC2 執行個體上執行。這些執行個體在 Application Load Balancer 後面的 Amazon EC2 Auto Scaling 群組中運作。當 EC2 執行個體的 CPU 使用率等於或接近 40% 時，應用程式效能最佳。解決方案架構師應該怎麼做才能維持群組中所有實例的所需效能？",
+        "en": "An application runs on Amazon EC2 instances across multiple Availability Zones. The instances run in an Amazon EC2 Auto Scaling group behind an Application Load Balancer. The application performs best when the CPU utilization of the EC2 instances is at or near 40%. What should a solutions architect do to maintain the desired performance across all instances in the group?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用簡單的擴充策略來動態擴展 Auto Scaling 群組。",
+          "en": "Use a simple scaling policy to dynamically scale the Auto Scaling group."
+        },
+        "B": {
+          "zh": "使用目標追蹤策略動態擴展 Auto Scaling 群組。",
+          "en": "Use a target tracking policy to dynamically scale the Auto Scaling group."
+        },
+        "C": {
+          "zh": "使用 AWS Lambda 函數更新所需的 Auto Scaling 群組容量。",
+          "en": "Use an AWS Lambda function ta update the desired Auto Scaling group capacity."
+        },
+        "D": {
+          "zh": "使用計劃的擴展操作來擴大和縮小 Auto Scaling 組。",
+          "en": "Use scheduled scaling actions to scale up and scale down the Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。簡單擴展策略會根據一定的閾值觸發擴展或擴展操作，但不適合維持目標CPU利用率（例如40%）。",
+          "en": "Incorrect. The Simple Scaling Policy triggers scaling or scaling operations based on a certain threshold, but it is not suitable for maintaining target CPU utilization (such as 40%)."
+        },
+        "B": {
+          "zh": "正確。目標追蹤策略是專門為維護指定指標（例如CPU利用率）的目標值而設計的。它會自動調整 Auto Scaling 組的容量，使 CPU 使用率保持在 40% 左右。",
+          "en": "Correct. Target Tracking Policy is specifically designed to maintain target values ​​for specified indicators (such as CPU utilization). It automatically adjusts the capacity of the Auto Scaling group to keep CPU utilization around 40%."
+        },
+        "C": {
+          "zh": "錯誤。使用 AWS Lambda 函數手動更新 Auto Scaling 群組的容量是一種複雜且不建議的方法。這種方法需要額外的開發和維護工作，並且沒有條形自動動態調整。",
+          "en": "Incorrect. Manually updating the capacity of an Auto Scaling group using an AWS Lambda function is a complex and not recommended approach. Such approachs require additional development and maintenance work, and no bars automatically adjust dynamically."
+        },
+        "D": {
+          "zh": "錯誤。計劃的擴展操作會根據預先定義的計劃進行擴展或縮小，但會根據即時指標（例如 CPU 使用率）進行動態調整。",
+          "en": "Incorrect. Scheduled Scaling Actions scale up or down based on a predefined schedule, but are dynamically adjusted based on real-time metrics (such as CPU utilization)."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用目標追蹤策略動態擴展 Auto Scaling 群組。",
+        "en": "B. Use a target tracking policy to dynamically scale the Auto Scaling group."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：B (100%)。熱門討論與考點摘要：目標追蹤策略是專門為維護指定指標（例如CPU利用率）的目標值而設計的。它會自動調整 Auto Scaling 組的容量，使 CPU 使用率保持在 40% 左右。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Target Tracking Policy is specifically designed to maintain target values ​​for specified indicators (such as CPU utilization). It automatically adjusts the capacity of the Auto Scaling group to keep CPU utilization around 40%."
+      }
+    },
+    {
+      "question_no": 131,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在開發一個文件共享應用程序，該應用程式將使用 Amazon S3 儲存桶進行儲存。該公司希望透過 Amazon CloudFront 發行版提供所有文件。該公司不希望透過直接導航到 S3 URL 來存取這些文件。解決方案架構師應該怎麼做才能滿足這些要求？",
+        "en": "A company is developing a file-sharing application that will use an Amazon S3 bucket for storage. The company wants to serve all the files through an Amazon CloudFront distribution. The company does not want the files to be accessible through direct navigation to the S3 URL. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "為每個 S3 儲存桶編寫單獨的策略，以僅授予 CloudFront 存取的讀取權限。",
+          "en": "Write individual policies for each S3 bucket to grant read permission for only CloudFront access."
+        },
+        "B": {
+          "zh": "建立 IAM 使用者。授予使用者對 S3 儲存桶中物件的讀取權限。將用戶分配到 CloudFront。",
+          "en": "Create an IAM user. Grant the user read permission to objects in the S3 bucket. Assign the user to CloudFront."
+        },
+        "C": {
+          "zh": "撰寫一個 S3 儲存桶策略，將 CloudFront 指派 ID 指派為主體，並將目標 S3 儲存桶指派為 Amazon 資源名稱 (ARN)。",
+          "en": "Write an S3 bucket policy that assigns the CloudFront distribution ID as the Principal and assigns the target S3 bucket as the Amazon Resource Name (ARN)."
+        },
+        "D": {
+          "zh": "建立來源存取身分 (OAI)。將 OAI 指派給 CloudFront 指派。配置S3儲存桶權限，僅OAI具有讀取權限。",
+          "en": "Create an origin access identity (OAI). Assign the OAI to the CloudFront distribution. Configure the S3 bucket permissions so that only the OAI has read permission."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。雖然可以透過 S3 儲存桶策略限制訪問，但直接為每個儲存桶編寫單獨的策略效率不高，並且不能直接與 CloudFront 的 OAI 整合。此外，CloudFront存取權限通常是透過OAI或其他機制來實現的，而不是直接透過桶策略來實現。",
+          "en": "Incorrect. While it is possible to restrict access via S3 bucket policies, directly writing separate policies for each bucket is not efficient and does not integrate directly with CloudFront's OAI. In addition, CloudFront access permissions are usually implemented through OAI or other mechanisms, rather than directly through bucket policies."
+        },
+        "B": {
+          "zh": "錯誤。IAM 使用者的權限是針對使用者的，而不是針對 CloudFront。 CloudFront無法直接使用IAM使用者的權限來存取S3儲存桶。這種方法不符合最佳實踐，也不符合問題的要求。",
+          "en": "Incorrect. The IAM user's permissions are for the user, not CloudFront. CloudFront cannot directly use the IAM user's permissions to access the S3 bucket. This approach does not conform to best practices and does not meet the requirements of the question."
+        },
+        "C": {
+          "zh": "錯誤。CloudFront 分配 ID 不能直接用作委託人。正確的做法是使用OAI來限制對S3儲存桶的存取。此方法無法實現問題中要求的限制直接存取S3 URL的功能。",
+          "en": "Incorrect. CloudFront distribution ID cannot be used directly as a Principal. The correct approach is to use OAI to restrict access to the S3 bucket. This method cannot achieve the function of restricting direct access to S3 URL required in the question."
+        },
+        "D": {
+          "zh": "正確。OAI 是一種專門設計用於限制對 S3 儲存桶的直接存取的機制。透過將OAI分配到CloudFront分配並配置S3儲存桶權限，使得只有OAI可以存取S3儲存桶，可以有效滿足問題需求。該方法是AWS官方推薦的最佳實踐。",
+          "en": "Correct. OAI is a mechanism specifically designed to restrict direct access to an S3 bucket. By assigning OAI to CloudFront distribution and configuring S3 bucket permissions so that only OAI can access the S3 bucket, the question requirements can be effectively met. This method is an officially recommended best practice by AWS."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 建立來源存取身分 (OAI)。將 OAI 指派給 CloudFront 指派。配置S3儲存桶權限，僅OAI具有讀取權限。",
+        "en": "D. Create an origin access identity (OAI). Assign the OAI to the CloudFront distribution. Configure the S3 bucket permissions so that only the OAI has read permission."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：OAI 是一種專門設計用於限制對 S3 儲存桶的直接存取的機制。透過將OAI分配到CloudFront分配並配置S3儲存桶權限，使得只有OAI可以存取S3儲存桶，可以有效滿足問題需求。該方法是AWS官方推薦的最佳實踐。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: OAI is a mechanism specifically designed to restrict direct access to an S3 bucket. By assigning OAI to CloudFront distribution and configuring S3 bucket permissions so that only OAI can access the S3 bucket, the question requirements can be effectively met. This method is an officially recommended best practice by AWS."
+      }
+    },
+    {
+      "question_no": 132,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司的網站為使用者提供可下載的歷史績效報告。該網站需要一個能夠擴展的解決方案，以滿足公司在全球範圍內的網站需求。此解決方案應該具有成本效益，限制基礎設施資源的配置，並提供盡可能最快的回應時間。解決方案架構師應該推薦哪一種組合來滿足這些要求？",
+        "en": "A company’s website provides users with downloadable historical performance reports. The website needs a solution that will scale to meet the company’s website demands globally. The solution should be cost-effective, limit the provisioning of infrastructure resources, and provide the fastest possible response time. Which combination should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon CloudFront 與 Amazon S3",
+          "en": "Amazon CloudFront and Amazon S3"
+        },
+        "B": {
+          "zh": "AWS Lambda 與 Amazon DynamoDB",
+          "en": "AWS Lambda and Amazon DynamoDB"
+        },
+        "C": {
+          "zh": "具有 Amazon EC2 Auto Scaling 的應用程式負載平衡器",
+          "en": "Application Load Balancer with Amazon EC2 Auto Scaling"
+        },
+        "D": {
+          "zh": "具有內部應用程式負載平衡器的 Amazon Route 53",
+          "en": "Amazon Route 53 with internal Application Load Balancers"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Amazon CloudFront 是一個全球內容傳遞網路 (CDN)，可快速向世界各地的使用者交付內容，並提供低延遲和高吞吐量。 Amazon S3 是一種高度可用且高度可擴充的儲存服務，適合儲存靜態檔案（例如歷史報告）。 CloudFront和Amazon S3的結合完全滿足了主題需求：全球分佈、成本效益、無伺服器架構和快速回應時間。",
+          "en": "Correct. Amazon CloudFront is a global content delivery network (CDN) that quickly delivers content to users around the world, providing low latency and high throughput. Amazon S3 is a highly available and highly scalable storage service suitable for storing static files (such as historical reports). the combination of CloudFront and Amazon S3 fully meets the topic requirements: global distribution, cost-effectiveness, serverless architecture, and fast response time."
+        },
+        "B": {
+          "zh": "錯誤。AWS Lambda 是一種無伺服器運算服務，適合處理動態請求或事件驅動的應用程式。 Amazon DynamoDB 是一種無伺服器 NoSQL 資料庫，適合用來儲存結構化資料。",
+          "en": "Incorrect. AWS Lambda is a serverless computing service suitable for processing dynamic requests or event-driven applications. Amazon DynamoDB is a serverless NoSQL database suitable for storing structured data."
+        },
+        "C": {
+          "zh": "錯誤。應用程式負載平衡器和 EC2 Auto Scaling 適用於動態應用程式的負載平衡和擴充。",
+          "en": "Incorrect. Application Load Balancer and EC2 Auto Scaling are suitable for load balancing and scaling of dynamic applications."
+        },
+        "D": {
+          "zh": "錯誤。Amazon Route 53 是一項適用於網域名稱解析和流量路由的 DNS 服務。內部應用程式負載平衡器適合內部網路上的負載平衡，但不適合全球內容分發。",
+          "en": "Incorrect. Amazon Route 53 is a DNS service suitable for domain name resolution and traffic routing. Internal Application Load Balancers are suitable for load balancing on internal networks, but are not suitable for global content distribution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. Amazon CloudFront 與 Amazon S3",
+        "en": "A. Amazon CloudFront and Amazon S3"
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：A (96%)。熱門討論與考點摘要：Amazon CloudFront 是一個全球內容傳遞網路 (CDN)，可快速向世界各地的使用者交付內容，並提供低延遲和高吞吐量。 Amazon S3 是一種高度可用且高度可擴充的儲存服務，適合儲存靜態檔案（例如歷史報告）。 CloudFront和Amazon S3的結合完全滿足了主題需求：全球分佈、成本效益、無伺服器架構和快速回應時間。",
+        "en": "Community vote as displayed: A (96%). Popular discussion and key point summary: Amazon CloudFront is a global content delivery network (CDN) that quickly delivers content to users around the world, providing low latency and high throughput. Amazon S3 is a highly available and highly scalable storage service suitable for storing static files (such as historical reports). the combination of CloudFront and Amazon S3 fully meets the topic requirements: global distribution, cost-effectiveness, serverless architecture, and fast response time."
+      }
+    },
+    {
+      "question_no": 133,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在本地運行 Oracle 資料庫。作為公司遷移到 AWS 的一部分，該公司希望將資料庫升級到最新的可用版本。該公司還希望為資料庫設定災難復原（DR）。公司需要最大限度地減少正常營運和災難復原設定的營運開銷。該公司還需要維護對資料庫底層作業系統的存取。哪種解決方案可以滿足這些要求？",
+        "en": "A company runs an Oracle database on premises. As part of the company’s migration to AWS, the company wants to upgrade the database to the most recent available version. The company also wants to set up disaster recovery (DR) for the database. The company needs to minimize the operational overhead for normal operations and DR setup. The company also needs to maintain access to the database's underlying operating system. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "將 Oracle 資料庫移轉到 Amazon EC2 執行個體。設定資料庫複製到不同的 AWS 區域。",
+          "en": "Migrate the Oracle database to an Amazon EC2 instance. Set up database replication to a different AWS Region."
+        },
+        "B": {
+          "zh": "將 Oracle 資料庫移轉到 Amazon RDS for Oracle。啟動跨區域自動備份以將快照複製到另一個 AWS 區域。",
+          "en": "Migrate the Oracle database to Amazon RDS for Oracle. Activate Cross-Region automated backups to replicate the snapshots to another AWS Region."
+        },
+        "C": {
+          "zh": "將 Oracle 資料庫移轉到 Amazon RDS Custom for Oracle。為另一個 AWS 區域中的資料庫建立唯讀副本。",
+          "en": "Migrate the Oracle database to Amazon RDS Custom for Oracle. Create a read replica for the database in another AWS Region."
+        },
+        "D": {
+          "zh": "將 Oracle 資料庫移轉到 Amazon RDS for Oracle。在另一個可用區建立備用資料庫。",
+          "en": "Migrate the Oracle database to Amazon RDS for Oracle. Create a standby database in another Availability Zone."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。本質分析：雖然遷移到EC2實例可以提供對底層作業系統的訪問，但這種方法需要手動設定和管理資料庫複製，增加了操作開銷，不符合「最小化操作開銷」的要求。結論：錯誤。",
+          "en": "Incorrect. ness analysis: Although migrating to EC2 instances can provide access to the underlying operating system, this method requires manual setup and management of database replication, which increases operational overhead and does not meet the requirement of \"minimizing operational overhead\". Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。問題分析：Amazon RDS for Oracle支援跨區域備份，但不允許存取底層作業系統，不符合問題要求。結論：錯誤。",
+          "en": "Incorrect. ness analysis: Amazon RDS for Oracle supports cross-region backup, but it does not allow access to the underlying operating system, which does not meet the requirements of the question. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "正確。本質分析：Amazon RDS Custom for Oracle允許存取底層作業系統，並支援跨區域唯讀副本，以滿足災難復原需求並最大限度地減少營運開銷。結論：。",
+          "en": "Correct. ness analysis: Amazon RDS Custom for Oracle allows access to the underlying operating system and supports cross-region read-only replicas to meet disaster recovery needs and minimize operational overhead. Conclusion:."
+        },
+        "D": {
+          "zh": "錯誤。問題分析：Amazon RDS for Oracle 支援同區域建立備庫（多可用區部署），但不支援跨區域容災，也不允許存取底層作業系統。結論：錯誤。",
+          "en": "Incorrect. ness analysis: Amazon RDS for Oracle supports the creation of standby databases in the same region (multi-AZ deployment), but does not support cross-region disaster recovery and does not allow access to the underlying operating system. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將 Oracle 資料庫移轉到 Amazon RDS Custom for Oracle。為另一個 AWS 區域中的資料庫建立唯讀副本。",
+        "en": "C. Migrate the Oracle database to Amazon RDS Custom for Oracle. Create a read replica for the database in another AWS Region."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (50%)； A (40%)。熱門討論與考點摘要：本質分析：Amazon RDS Custom for Oracle允許存取底層作業系統，並支援跨區域唯讀副本，以滿足災難復原需求並最大限度地減少營運開銷。結論：。",
+        "en": "Community vote as displayed: C (50%); A (40%). Popular discussion and key point summary: ness analysis: Amazon RDS Custom for Oracle allows access to the underlying operating system and supports cross-region read-only replicas to meet disaster recovery needs and minimize operational overhead. Conclusion:."
+      }
+    },
+    {
+      "question_no": 134,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望將其應用程式遷移到無伺服器解決方案。無伺服器解決方案需要使用 SQL 分析現有資料和新資料。該公司將資料儲存在 Amazon S3 儲存桶中。資料需要加密並且必須複製到不同的 AWS 區域。哪種解決方案能夠以最少的營運開銷滿足這些要求？",
+        "en": "A company wants to move its application to a serverless solution. The serverless solution needs to analyze existing and new data by using SQL. The company stores the data in an Amazon S3 bucket. The data requires encryption and must be replicated to a different AWS Region. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "建立一個新的 S3 儲存桶。將資料載入到新的 S3 儲存桶中。使用 S3 跨區域複製 (CRR) 將加密物件複製到另一個區域中的 S3 儲存桶。將伺服器端加密與 AWS KMS 多區域金鑰 (SSE-KMS) 結合使用。使用 Amazon Athena 查詢資料。",
+          "en": "Create a new S3 bucket. Load the data into the new S3 bucket. Use S3 Cross-Region Replication (CRR) to replicate encrypted objects to an S3 bucket in another Region. Use server-side encryption with AWS KMS multi-Region keys (SSE-KMS). Use Amazon Athena to query the data."
+        },
+        "B": {
+          "zh": "建立一個新的 S3 儲存桶。將資料載入到新的 S3 儲存桶中。使用 S3 跨區域複製 (CRR) 將加密物件複製到另一個區域中的 S3 儲存桶。將伺服器端加密與 AWS KMS 多區域金鑰 (SSE-KMS) 結合使用。使用 Amazon RDS 查詢資料。",
+          "en": "Create a new S3 bucket. Load the data into the new S3 bucket. Use S3 Cross-Region Replication (CRR) to replicate encrypted objects to an S3 bucket in another Region. Use server-side encryption with AWS KMS multi-Region keys (SSE-KMS). Use Amazon RDS to query the data."
+        },
+        "C": {
+          "zh": "將資料載入到現有的 S3 儲存桶中。使用 S3 跨區域複製 (CRR) 將加密物件複製到另一個區域中的 S3 儲存桶。使用 Amazon S3 託管加密金鑰 (SSE-S3) 的伺服器端加密。使用 Amazon Athena 查詢資料。",
+          "en": "Load the data into the existing S3 bucket. Use S3 Cross-Region Replication (CRR) to replicate encrypted objects to an S3 bucket in another Region. Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Use Amazon Athena to query the data."
+        },
+        "D": {
+          "zh": "Load the data into the existing S3 bucket.使用 S3 跨區域複製 (CRR) 將加密物件複製到另一個區域中的 S3 儲存桶。 Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3).使用 Amazon RDS 查詢資料。",
+          "en": "Load the data into the existing S3 bucket. Use S3 Cross-Region Replication (CRR) to replicate encrypted objects to an S3 bucket in another Region. Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Use Amazon RDS to query the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。點：使用AWS KMS多區域金鑰（SSE-KMS）進行加密，滿足加密需求。正確點：使用Amazon Athena查詢數據，符合Serverless架構的要求。錯誤點：建立新的S3儲存桶會增加額外的操作開銷，不符合「最小操作開銷」的要求。",
+          "en": "Incorrect. point: Use AWS KMS multi-region key (SSE-KMS) for encryption, which meets the encryption requirements. Correct point: Use Amazon Athena to query data, which meets the requirements of serverless architecture. Error point: Creating a new S3 bucket adds additional operational overhead and does not meet the requirements of \"minimum operational overhead\"."
+        },
+        "B": {
+          "zh": "錯誤。點：使用AWS KMS多區域金鑰（SSE-KMS）進行加密，滿足加密需求。錯誤點：使用Amazon RDS查詢資料不符合Serverless架構的要求，因為RDS需要管理實例，增加了營運開銷。錯誤點：建立新的S3儲存桶會增加額外的操作開銷，不符合「最小操作開銷」的要求。",
+          "en": "Incorrect. point: Use AWS KMS multi-region key (SSE-KMS) for encryption, which meets the encryption requirements. Error point: Using Amazon RDS to query data does not meet the requirements of serverless architecture, because RDS needs to manage instances, which increases operational overhead. Error point: Creating a new S3 bucket adds additional operational overhead and does not meet the requirements of \"minimum operational overhead\"."
+        },
+        "C": {
+          "zh": "正確。點：使用S3跨區域複製（CRR）實現跨區域複製，滿足要求。使用 Amazon S3 託管加密金鑰 (SSE-S3) 進行加密，滿足加密要求。正確點：使用Amazon Athena查詢數據，符合Serverless架構的要求。",
+          "en": "Correct. point: Use S3 Cross-Region Replication (CRR) to achieve cross-region replication, which meets the requirements. Use Amazon S3 Managed Encryption Keys (SSE-S3) for encryption, which meets encryption requirements. Correct point: Use Amazon Athena to query data, which meets the requirements of serverless architecture."
+        },
+        "D": {
+          "zh": "錯誤。點：使用S3跨區域複製（CRR）實現跨區域複製，滿足要求。使用 Amazon S3 託管加密金鑰 (SSE-S3) 進行加密，滿足加密要求。錯誤點：使用Amazon RDS查詢資料不符合Serverless架構的要求，因為RDS需要管理實例，增加了營運開銷。",
+          "en": "Incorrect. point: Use S3 Cross-Region Replication (CRR) to achieve cross-region replication, which meets the requirements. Use Amazon S3 Managed Encryption Keys (SSE-S3) for encryption, which meets encryption requirements. Error point: Using Amazon RDS to query data does not meet the requirements of serverless architecture, because RDS needs to manage instances, which increases operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 將資料載入到現有的 S3 儲存桶中。使用 S3 跨區域複製 (CRR) 將加密物件複製到另一個區域中的 S3 儲存桶。使用 Amazon S3 託管加密金鑰 (SSE-S3) 的伺服器端加密。使用 Amazon Athena 查詢資料。",
+        "en": "C. Load the data into the existing S3 bucket. Use S3 Cross-Region Replication (CRR) to replicate encrypted objects to an S3 bucket in another Region. Use server-side encryption with Amazon S3 managed encryption keys (SSE-S3). Use Amazon Athena to query the data."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：C (53%)； A (47%)。熱門討論與考點摘要：點：使用S3跨區域複製（CRR）實現跨區域複製，滿足要求。使用 Amazon S3 託管加密金鑰 (SSE-S3) 進行加密，滿足加密要求。正確點：使用Amazon Athena查詢數據，符合Serverless架構的要求。",
+        "en": "Community vote as displayed: C (53%); A (47%). Popular discussion and key point summary: point: Use S3 Cross-Region Replication (CRR) to achieve cross-region replication, which meets the requirements. Use Amazon S3 Managed Encryption Keys (SSE-S3) for encryption, which meets encryption requirements. Correct point: Use Amazon Athena to query data, which meets the requirements of serverless architecture."
+      }
+    },
+    {
+      "question_no": 135,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上運作工作負載。該公司需要連接到外部提供者的服務。該服務託管在提供者的 VPC 中。據該公司的安全團隊稱，連接必須是私有的，並且必須僅限於目標服務。連接必須僅從公司的 VPC 發起。哪種解決方案能夠滿足這些要求？",
+        "en": "A company runs workloads on AWS. The company needs to connect to a service from an external provider. The service is hosted in the provider's VPC. According to the company’s security team, the connectivity must be private and must be restricted to the target service. The connection must be initiated only from the company’s VPC. Which solution will mast these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "Create a VPC peering connection between the company's VPC and the provider's VPC. Update the route table to connect to the target service.",
+          "en": "Create a VPC peering connection between the company's VPC and the provider's VPC. Update the route table to connect to the target service."
+        },
+        "B": {
+          "zh": "要求提供者在其 VPC 中建立虛擬專用閘道。 Use AWS PrivateLink to connect to the target service.",
+          "en": "Ask the provider to create a virtual private gateway in its VPC. Use AWS PrivateLink to connect to the target service."
+        },
+        "C": {
+          "zh": "在公司 VP 的公有子網路中建立 NAT 閘道更新路由表以連接到目標服務。",
+          "en": "Create a NAT gateway in a public subnet of the company’s VPUpdate the route table to connect to the target service."
+        },
+        "D": {
+          "zh": "Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the target service.",
+          "en": "Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the target service."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。連線到目標服務。 VPC Peering 允許兩個 VPC 之間私人連接，但它是跨整個網路互連的，並且不受限制地連接到目標服務。另外，VPC Peering需要雙方協同配置，可能無法滿足「僅從公司VPC發起連線」的問題要求。",
+          "en": "Incorrect. connect to the target service. VPC Peering allows private connections between two VPCs, but it is interconnected across the entire network and connects to the target service without restrictions. In addition, VPC Peering requires the collaborative configuration of both parties, which may not meet the question requirement of \"only initiate connections from the company's VPC\"."
+        },
+        "B": {
+          "zh": "錯誤。虛擬專用網關通常用於 VPN嬻Direct Connect 連接，而不是用於 AWS PrivateLink。此選項是一個技術選項。 AWS PrivateLink 需要 VPC 終端節點，而不是虛擬私人閘道。",
+          "en": "Incorrect. Virtual Private Gateway is usually used for VPN𪥿Direct Connect connections, not for AWS PrivateLink. This option is a technical one. AWS PrivateLink requires a VPC Endpoint, not a virtual private gateway."
+        },
+        "C": {
+          "zh": "錯誤。NAT 網關用於將流量從私有子網路路由到 Internet 和其他公共網絡，但它不是私有連接的解決方案。問題需求是連線必須是私有的，而NAT網關會將流量暴露到公網，所以不滿足問題需求。",
+          "en": "Incorrect. NAT Gateway is used to route traffic from a private subnet to the Internet and other public networks, but it is not a solution for private connections. The problem requirement is that the connection must be private, and NAT Gateway will expose traffic to the public network, so it does not meet the problem requirement."
+        },
+        "D": {
+          "zh": "正確。AWS PrivateLink 允許透過 VPC 終端節點進行私有連接，並可限制與某些服務的連接。 Luan提供的解決方案完全滿足問題的要求：連接是私有的，僅限於目標服務，連接由公司VPC發起。",
+          "en": "Correct. AWS PrivateLink allows private connections through VPC Endpoints and can restrict connections to certain services. The solution provided by Luan fully meets the requirements of the question: the connection is private, limited to the target service, and the connection is initiated by the company's VPC."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the target service.",
+        "en": "D. Ask the provider to create a VPC endpoint for the target service. Use AWS PrivateLink to connect to the target service."
+      },
+      "discussion": {
+        "zh": "社群投票原始顯示：D (100%)。熱門討論與考點摘要：AWS PrivateLink 允許透過 VPC 終端節點進行私有連接，並可限制與某些服務的連接。 Luan提供的解決方案完全滿足問題的要求：連接是私有的，僅限於目標服務，連接由公司VPC發起。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS PrivateLink allows private connections through VPC Endpoints and can restrict connections to certain services. The solution provided by Luan fully meets the requirements of the question: the connection is private, limited to the target service, and the connection is initiated by the company's VPC."
+      }
+    }
+  ]
+}

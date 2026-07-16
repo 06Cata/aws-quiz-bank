@@ -1,0 +1,128 @@
+A company needs a backup strategy for its three-tier stateless web application. The web application runs on Amazon EC2
+instances in an Auto Scaling group with a dynamic scaling policy that is configured to respond to scaling events. The database tier
+runs on Amazon RDS for PostgreSQL. The web application does not require temporary local storage on the EC2 instances. The
+company’s recovery point objective (RPO) is 2 hours.
+The backup strategy must maximize scalability and optimize resource utilization for this environment.
+Which solution will meet these requirements?
+A. Take snapshots of Amazon Elastic Block Store (Amazon EBS) volumes of the EC2 instances and database every 2 hours to
+meet the RPO.
+B. Configure a snapshot lifecycle policy to take Amazon Elastic Block Store (Amazon EBS) snapshots. Enable automated
+backups in Amazon RDS to meet the RPO.
+C. Retain the latest Amazon Machine Images (AMIs) of the web and application tiers. Enable automated backups in Amazon
+RDS and use point-in-time recovery to meet the RPO. Most Voted
+D. Take snapshots of Amazon Elastic Block Store (Amazon EBS) volumes of the EC2 instances every 2 hours. Enable automated
+backups in Amazon RDS and use point-in-time recovery to meet the RPO.
+Comments
+elearningtakai Highly Voted 3 years, 2 months ago
+Selected Answer: C
+that if there is no temporary local storage on the EC2 instances, then snapshots of EBS volumes are not necessary. Therefore, if your application does
+not require temporary storage on EC2 instances, using AMIs to back up the web and application tiers is sufficient to restore the system after a failure
+Snapshots of EBS volumes would be necessary if you want to back up the entire EC2 instance, including any applications and temporary data stored
+on the EBS volumes attached to the instances. When you take a snapshot of an EBS volume, it backs up the entire contents of that volume. This
+ensures that you can restore the entire EC2 instance to a specific point in time more quickly. However, if there is no temporary data stored on the EB
+volumes, then snapshots of EBS volumes are not necessary.
+upvoted 37 times
+MssP 3 years, 2 months ago
+I think "temporal local storage" refers to "instance store", no instance store is required. EBS is durable storage, not temporal.
+upvoted 4 times
+MssP 3 years, 2 months ago
+Look at the first paragraph. https://repost.aws/knowledge-center/instance-store-vs-ebs
+upvoted 2 times
+MatAlves 1 year, 9 months ago
+Considering it's a "stateless web application", that would still be no reason to back up the EBS volumes.
+upvoted 2 times
+CloudForFun Highly Voted 3 years, 2 months ago
+Selected Answer: C
+The web application does not require temporary local storage on the EC2 instances => No EBS snapshot is required, retaining the latest AMI is
+enough.
+upvoted 16 times
+Correct Answer: C
+Community vote distribution
+C (89%)
+10%
+JustEugen Most Recent 8 months, 4 weeks ago
+Selected Answer: C
+In question, it says that the EC2 instances are stateless, which means that we do not care about the data on the attached EBS, so no reason to make
+EBS snapshots
+upvoted 1 times
+Mikado211 2 years, 6 months ago
+Selected Answer: C
+The web application does not require temporary local storage on the EC2 instances so we do not care about ECS.
+We only need two things here , the image of the instance (AMI) and a database backup.
+C
+upvoted 4 times
+TariqKipkemei 2 years, 7 months ago
+Selected Answer: C
+"The web application does not require temporary local storage on the EC2 instances" rules out any option to back up the EC2 EBS volumes.
+upvoted 3 times
+darekw 2 years, 10 months ago
+Question says: ...stateless web application.. that means application doesn't store any data, so no EBS required
+upvoted 2 times
+kruasan 3 years, 1 month ago
+Selected Answer: C
+Since the application has no local data on instances, AMIs alone can meet the RPO by restoring instances from the most recent AMI backup. When
+combined with automated RDS backups for the database, this provides a complete backup solution for this environment.
+The other options involving EBS snapshots would be unnecessary given the stateless nature of the instances. AMIs provide all the backup needed for
+the app tier.
+This uses native, automated AWS backup features that require minimal ongoing management:
+- AMI automated backups provide point-in-time recovery for the stateless app tier.
+- RDS automated backups provide point-in-time recovery for the database.
+upvoted 4 times
+neosis91 3 years, 1 month ago
+Selected Answer: B
+BBBBBBBBBB
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Why back up EBS volumes of the autoscaled instances?
+upvoted 2 times
+Rob1L 3 years, 2 months ago
+Selected Answer: D
+I vote for D
+upvoted 1 times
+pentium75 2 years, 5 months ago
+Why back up EBS volumes of the autoscaled instances?
+upvoted 2 times
+CapJackSparrow 3 years, 2 months ago
+Selected Answer: C
+makes more sense.
+upvoted 3 times
+nileshlg 3 years, 2 months ago
+Selected Answer: C
+Answer is C. Keyword to notice "Stateless"
+upvoted 3 times
+cra2yk 3 years, 2 months ago
+Selected Answer: C
+why B? I mean "stateless" and "does not require temporary local storage" have indicate that we don't need to take snapshot for ec2 volume.
+upvoted 4 times
+ktulu2602 3 years, 3 months ago
+Selected Answer: B
+Option B is the most appropriate solution for the given requirements.
+With this solution, a snapshot lifecycle policy can be created to take Amazon Elastic Block Store (Amazon EBS) snapshots periodically, which will
+ensure that EC2 instances can be restored in the event of an outage. Additionally, automated backups can be enabled in Amazon RDS for PostgreSQ
+to take frequent backups of the database tier. This will help to minimize the RPO to 2 hours.
+Taking snapshots of Amazon EBS volumes of the EC2 instances and database every 2 hours (Option A) may not be cost-effective and efficient, as this
+approach would require taking regular backups of all the instances and volumes, regardless of whether any changes have occurred or not. Retaining
+the latest Amazon Machine Images (AMIs) of the web and application tiers (Option C) would provide only an image backup and not a data backup,
+which is required for the database tier. Taking snapshots of Amazon EBS volumes of the EC2 instances every 2 hours and enabling automated
+backups in Amazon RDS and using point-in-time recovery (Option D) would result in higher costs and may not be necessary to meet the RPO
+requirement of 2 hours.
+upvoted 4 times
+pentium75 2 years, 5 months ago
+Why back up EBS volumes of the autoscaled instances?
+"Retaining the latest Amazon Machine Images (AMIs) of the web and application tiers (Option C) would provide only an image backup and not a
+data backup, which is required for the database tier." False because option C also includes "automated backups in Amazon RDS".
+upvoted 2 times
+cegama543 3 years, 3 months ago
+Selected Answer: B
+B. Configure a snapshot lifecycle policy to take Amazon Elastic Block Store (Amazon EBS) snapshots. Enable automated backups in Amazon RDS to
+meet the RPO.
+The best solution is to configure a snapshot lifecycle policy to take Amazon Elastic Block Store (Amazon EBS) snapshots, and enable automated
+backups in Amazon RDS to meet the RPO. An RPO of 2 hours means that the company needs to ensure that the backup is taken every 2 hours to
+minimize data loss in case of a disaster. Using a snapshot lifecycle policy to take Amazon EBS snapshots will ensure that the web and application tier
+can be restored quickly and efficiently in case of a disaster. Additionally, enabling automated backups in Amazon RDS will ensure that the database
+tier can be restored quickly and efficiently in case of a disaster. This solution maximizes scalability and optimizes resource utilization because it uses
+automated backup solutions built into AWS.
+upvoted 3 times
+pentium75 2 years, 5 months ago
+No need to back up the EBS volumes of autoscaled instances.
+upvoted 3 times
