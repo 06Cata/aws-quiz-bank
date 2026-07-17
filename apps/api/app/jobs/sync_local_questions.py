@@ -25,8 +25,8 @@ class SyncStats:
     skipped_count: int = 0
 
 
-def get_sync_target() -> SyncTarget:
-    exam = settings.quiz_exam.strip().lower()
+def get_sync_target(exam: str | None = None) -> SyncTarget:
+    exam = (exam or settings.quiz_exam).strip().lower()
     targets = {
         "clf": SyncTarget("clf", "questions", "sync_runs"),
         "saa": SyncTarget("saa", "saa_questions", "saa_sync_runs"),
@@ -136,8 +136,8 @@ def pending_questions(
     return pending
 
 
-async def sync_local_questions() -> SyncStats:
-    target = get_sync_target()
+async def sync_local_questions(exam: str | None = None) -> SyncStats:
+    target = get_sync_target(exam)
     directory = Path(settings.questions_dir).expanduser().resolve()
     questions = load_local_questions(directory, target.exam)
     client = SupabaseRestClient(target)
@@ -167,14 +167,19 @@ async def sync_local_questions() -> SyncStats:
 
 
 def main() -> None:
-    target = get_sync_target()
     parser = argparse.ArgumentParser(description="增量同步 questions 目錄中的 JSON 題庫")
+    parser.add_argument(
+        "--exam",
+        choices=("clf", "saa"),
+        help="要同步的考試題庫（未指定時使用 QUIZ_EXAM）",
+    )
     parser.add_argument(
         "--validate-only",
         action="store_true",
         help="只驗證本機 JSON 並顯示最後題號，不連線 Supabase",
     )
     args = parser.parse_args()
+    target = get_sync_target(args.exam)
     if args.validate_only:
         directory = Path(settings.questions_dir).expanduser().resolve()
         questions = load_local_questions(directory, target.exam)
@@ -184,7 +189,7 @@ def main() -> None:
         )
         return
 
-    stats = asyncio.run(sync_local_questions())
+    stats = asyncio.run(sync_local_questions(args.exam))
     print(
         f"Local JSON sync completed for {target.exam}: "
         f"scanned={stats.scanned_count}, inserted={stats.inserted_count}, "
