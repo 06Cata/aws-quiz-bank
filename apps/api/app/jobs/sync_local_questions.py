@@ -115,7 +115,12 @@ class SupabaseRestClient:
                 headers={**self.headers, "Prefer": "return=minimal"},
                 json=payload,
             )
-            response.raise_for_status()
+            if response.is_error:
+                detail = response.text.strip() or response.reason_phrase
+                raise RuntimeError(
+                    f"Supabase insert failed for {self.target.exam.upper()} "
+                    f"Q{payload.get('question_no')}: HTTP {response.status_code}: {detail}"
+                )
 
 
 def pending_questions(

@@ -232,6 +232,18 @@ def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
     if numbers != expected:
         missing = sorted(set(expected) - set(numbers))
         raise ValueError(f"本機題庫必須從 Q1 開始且不可跳號，目前缺少：{missing}")
+
+    seen_hashes: dict[str, int] = {}
+    for item in result:
+        content_hash = str(item.payload["content_hash"])
+        previous_question_no = seen_hashes.get(content_hash)
+        if previous_question_no is not None:
+            raise ValueError(
+                f"{normalized_exam.upper()} Q{item.question_no} 與 "
+                f"Q{previous_question_no} 的同步內容完全重複；"
+                "請重新查閱對應 PDF 並修正 JSON"
+            )
+        seen_hashes[content_hash] = item.question_no
     return result
 
 
