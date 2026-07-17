@@ -42,7 +42,7 @@ aws-quiz-bank/
 │           └── services/supabase.py # CLF/SAA 白名單資料表與 Supabase REST 查詢服務
 ├── packages/ # 共用規格
 │   └── shared/question-schema.md # 題目 JSON 欄位格式
-```
+``` 
 
 ## Next Step
 
