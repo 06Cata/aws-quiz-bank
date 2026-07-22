@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 136,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将其本地 PostgreSQL 数据库迁移到 Amazon Aurora PostgreSQL。本地数据库必须在迁移期间保持在线且可访问。 Aurora 数据库必须与本机数据库保持同步。解决方案架构师必须采取哪些操作组合才能满足这些要求？ （选两个。）",
+        "en": "A company is migrating its on-premises PostgreSQL database to Amazon Aurora PostgreSQL. The on-premises database must remain online and accessible during the migration. The Aurora database must remain synchronized with the on-premises database. Which combination of actions must a solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "创建正在进行的复制任务。",
+          "en": "Create an ongoing replication task."
+        },
+        "B": {
+          "zh": "Create a database backup of the on-premises database.",
+          "en": "Create a database backup of the on-premises database."
+        },
+        "C": {
+          "zh": "Create an AWS Database Migration Service (AWS DMS) replication server.",
+          "en": "Create an AWS Database Migration Service (AWS DMS) replication server."
+        },
+        "D": {
+          "zh": "Convert the database schema by using the AWS Schema Conversion Tool (AWS SCT).",
+          "en": "Convert the database schema by using the AWS Schema Conversion Tool (AWS SCT)."
+        },
+        "E": {
+          "zh": "Create an Amazon EventBridge (Amazon CloudWatch Events) rule to monitor the database synchronization.",
+          "en": "Create an Amazon EventBridge (Amazon CloudWatch Events) rule to monitor the database synchronization."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS DMS 支持创建连续复制任务以保持来源数据库和目标数据库同步。这是实现实时同步的关键一步。",
+          "en": "Correct. Technical reason: AWS DMS supports the creation of continuous replication tasks to keep the source and target databases in sync. This is a critical step to achieve real-time synchronization."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：创建数据库备份是静态操作，无法满足问题中的「保持同步」要求。",
+          "en": "Incorrect. Technical reason: Creating a database backup is a static operation and cannot meet the \"maintain synchronization\" requirement in the question."
+        },
+        "C": {
+          "zh": "正確。技术原因：AWS DMS 需要复制服务器来运行迁移任务，这是实现数据库迁移和同步的必要组件。",
+          "en": "Correct. Technical reason: AWS DMS requires a replication server to perform migration tasks, which is a necessary component to achieve database migration and synchronization."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS SCT用来转换数据库schema，但问题中没有提到需要转换schema，而这个工具并没有直接涉及同步操作。",
+          "en": "Incorrect. Technical reason: AWS SCT is used to convert the database schema, but the question does not mention the need to convert the schema, and this tool does not directly involve synchronization operations."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：EventBridge用于事件驱动的自动化操作，与数据库同步没有直接关系。",
+          "en": "Incorrect. Technical reason: EventBridge is used for event-driven automated operations and has no direct relationship with database synchronization."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 创建正在进行的复制任务。；C. Create an AWS Database Migration Service (AWS DMS) replication server.",
+        "en": "A. Create an ongoing replication task.; C. Create an AWS Database Migration Service (AWS DMS) replication server."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：AC (92%) 7%。热门讨论与考点摘要：AWS DMS 支持创建连续复制任务以保持来源数据库和目标数据库同步。这是实现实时同步的关键一步。；AWS DMS 需要复制服务器来运行迁移任务，这是实现数据库迁移和同步的必要组件。",
+        "en": "Community vote as displayed: AC (92%) 7%. Popular discussion and key point summary: AWS DMS supports the creation of continuous replication tasks to keep the source and target databases in sync. This is a critical step to achieve real-time synchronization.; AWS DMS requires a replication server to perform migration tasks, which is a necessary component to achieve database migration and synchronization."
+      }
+    },
+    {
+      "question_no": 137,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Organizations 为每个业务部门创建专用 AWS 账户，以便根据请求独立管理每个业务部门的账户。根电子邮件收件者错过了发送到一个账户的根用户电子邮件地址的通知。该公司希望确保不会错过所有未来的通知。未来的通知必须仅限于账户管理员。哪种解决方案可以满足这些要求？",
+        "en": "A company uses AWS Organizations to create dedicated AWS accounts for each business unit to manage each business unit's account independently upon request. The root email recipient missed a notification that was sent to the root user email address of one account. The company wants to ensure that all future notifications are not missed. Future notifications must be limited to account administrators. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置公司的电子邮件服务器，将发送至 AWS 账户根用户电子邮件地址的通知电子邮件转送给组织中的所有用户。",
+          "en": "Configure the company’s email server to forward notification email messages that are sent to the AWS account root user email address to all users in the organization."
+        },
+        "B": {
+          "zh": "Configure all AWS account root user email addresses as distribution lists that go to a few administrators who can respond to alerts. Configure AWS account alternate contacts in the AWS Organizations console.",
+          "en": "Configure all AWS account root user email addresses as distribution lists that go to a few administrators who can respond to alerts. Configure AWS account alternate contacts in the AWS Organizations console or programmatically."
+        },
+        "C": {
+          "zh": "将所有 AWS 账户根用户电子邮件配置为发送给一名管理员，该管理员负责监控警报并将这些警报转发到适当的群组。",
+          "en": "Configure all AWS account root user email messages to be sent to one administrator who is responsible for monitoring alerts and forwarding those alerts to the appropriate groups."
+        },
+        "D": {
+          "zh": "将所有现有 AWS 账户和所有新创建的账户配置为使用相同的根用户电子邮件地址。在 AWS Organizations 控制台中或以编程方式配置 AWS 账户备用联系人。",
+          "en": "Configure all existing AWS accounts and all newly created accounts to use the same root user email address. Configure AWS account alternate contacts in the AWS Organizations console or programmatically."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：此外，这种类型的限制可能会导致通知发送给不相关的用户，而取消限制的通知仅发送给账户管理员。此外，此方法需要额外的电子邮件服务器配置，从而增加了复杂性。",
+          "en": "Incorrect. Technical reason: Additionally, This type of bar may cause notifications to be sent to unrelated users, with unbarred notifications being sent only to account administrators. Additionally, this approach requires additional email server configuration, adding complexity."
+        },
+        "B": {
+          "zh": "正確。技术原因：通信群组清单可确保将通知发送给少数管理员，从而避免遗失重要地址的风险。备用联系人配置是 AWS 建议的最佳实践，以确保将通知发送给指定的账户管理员。",
+          "en": "Correct. Technical reason: Distribution lists ensure that notifications are sent to a small number of administrators, avoiding the risk of losing important addresses. Alternate contact configuration is an AWS recommended best practice to ensure notifications are sent to designated account administrators."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：这种解决方案依赖单一管理员，并且存在单点故障的风险。如果管理员无法及时处理通知，可能会发生错误。它不符合问题中「通知必须仅限于账户管理员」的最佳实践。",
+          "en": "Incorrect. Technical reason: This kind of solution relies on a single administrator and runs the risk of a single point of failure. If the administrator fails to handle notifications in a timely manner, errors may occur. It does not comply with the best practice of \"Notifications must be limited to account administrators\" in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此外，使用相同的根用户电子邮件地址会导致管理混乱，并且无法区分不同账户的通知来源。虽然备用联系人配置正确，但根用户电子邮件地址的统一设置不符合 AWS 建议的做法。",
+          "en": "Incorrect. Technical reason: Additionally, Using the same root user email address will lead to management chaos and no way to distinguish the notification sources of different accounts. While the alternate contact configuration is correct, the unified setting of the root user email address does not comply with AWS recommended practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. Configure all AWS account root user email addresses as distribution lists that go to a few administrators who can respond to alerts. Configure AWS account alternate contacts in the AWS Organizations console.",
+        "en": "B. Configure all AWS account root user email addresses as distribution lists that go to a few administrators who can respond to alerts. Configure AWS account alternate contacts in the AWS Organizations console or programmatically."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (86%) 14%。热门讨论与考点摘要：通信群组清单可确保将通知发送给少数管理员，从而避免遗失重要地址的风险。备用联系人配置是 AWS 建议的最佳实践，以确保将通知发送给指定的账户管理员。",
+        "en": "Community vote as displayed: B (86%) 14%. Popular discussion and key point summary: Distribution lists ensure that notifications are sent to a small number of administrators, avoiding the risk of losing important addresses. Alternate contact configuration is an AWS recommended best practice to ensure notifications are sent to designated account administrators."
+      }
+    },
+    {
+      "question_no": 138,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上运行其电子商务应用程序。每个新订单都会作为消息发布到在单一可用区的 Amazon EC2 实例上运行的 RabbitMQ 队列中。这些消息由在单独的 EC2 实例上运行的不同应用程序处理。该应用程序将详细信息保存在另一个 EC2 实例上的 PostgreSQL 数据库中。所有 EC2 实例都位于同一可用区。该公司需要重新设计其架构，以最少的运维开销提供最高的可用性。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A company runs its ecommerce application on AWS. Every new order is published as a message in a RabbitMQ queue that runs on an Amazon EC2 instance in a single Availability Zone. These messages are processed by a different application that runs on a separate EC2 instance. This application stores the details in a PostgreSQL database on another EC2 instance. All the EC2 instances are in the same Availability Zone. The company needs to redesign its architecture to provide the highest availability with the least operational overhead. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将队列迁移到 Amazon MQ 上的一对冗余（主动/备用）RabbitMQ 实例。为托管应用程序的 EC2 实例创建多可用区 Auto Scaling 组。为托管 PostgreSQL 数据库的 EC2 实例创建另一个多可用区 Auto Scaling 组。",
+          "en": "Migrate the queue to a redundant pair (active/standby) of RabbitMQ instances on Amazon MQ. Create a Multi-AZ Auto Scaling group for EC2 instances that host the application. Create another Multi-AZ Auto Scaling group for EC2 instances that host the PostgreSQL database."
+        },
+        "B": {
+          "zh": "将队列迁移到 Amazon MQ 上的一对冗余（主动/备用）RabbitMQ 实例。为托管应用程序的 EC2 实例创建多可用区 Auto Scaling 组。迁移数据库以在 Amazon RDS for PostgreSQL 的多可用区部署上运行。",
+          "en": "Migrate the queue to a redundant pair (active/standby) of RabbitMQ instances on Amazon MQ. Create a Multi-AZ Auto Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon RDS for PostgreSQL."
+        },
+        "C": {
+          "zh": "为托管 RabbitMQ 队列的 EC2 实例创建多可用区 Auto Scaling 组。为托管应用程序的 EC2 实例创建另一个多可用区 Auto Scaling 群组。迁移数据库以在 Amazon RDS for PostgreSQL 的多可用区部署上运行。",
+          "en": "Create a Multi-AZ Auto Scaling group for EC2 instances that host the RabbitMQ queue. Create another Multi-AZ Auto Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon RDS for PostgreSQL."
+        },
+        "D": {
+          "zh": "为托管 RabbitMQ 队列的 EC2 实例创建多可用区 Auto Scaling 组。为托管应用程序的 EC2 实例创建另一个多可用区 Auto Scaling 组。为托管 PostgreSQL 数据库的 EC2 实例创建第三个多可用区 Auto Scaling 群组",
+          "en": "Create a Multi-AZ Auto Scaling group for EC2 instances that host the RabbitMQ queue. Create another Multi-AZ Auto Scaling group for EC2 instances that host the application. Create a third Multi-AZ Auto Scaling group for EC2 instances that host the PostgreSQL database"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：将队列迁移到Amazon MQ是正确的，因为Amazon MQ是托管服务，支持高可用性并减少运维开销。陷阱：为 PostgreSQL 数据库创建多可用区 Auto Scaling 群组是不合适的，因为 PostgreSQL 数据库应使用 Amazon RDS 多可用区部署，而不是主动管理 EC2 实例。",
+          "en": "Incorrect. Technical reason: analysis: Migrating the queue to Amazon MQ is correct because Amazon MQ is a managed service, supports high availability and reduces operation and maintenance overhead. Pitfall: Creating a Multi-AZ Auto Scaling group for a PostgreSQL database is inappropriate because the PostgreSQL database should be deployed using Amazon RDS Multi-AZ instead of actively managing EC2 instances. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因：将队列迁移到Amazon MQ是正确的，因为它提供了高可用性并减少了运维开销。为冷应用创建多可用区弹性伸缩组是正确的，因为它提供了高可用性。将数据库迁移到Amazon RDS的多可用区部署是正确的，因为它是托管服务，支持高可用性并减少运维开销。",
+          "en": "Correct. Technical reason: analysis: Migrating the queue to Amazon MQ is correct because it provides high availability and reduces operation and maintenance overhead. Correct analysis: Creating a Multi-AZ Auto Scaling group for cold applications is correct because it provides high availability. Correct analysis: Migrating the database to Multi-AZ deployment of Amazon RDS is correct because it is a managed service, supports high availability and reduces operation and maintenance overhead. Conclusion:."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：托管应用程序的 EC2 实例的扩展组。迁移数据库以在 Amazon RDS for PostgreSQL 的多可用区部署上运行。陷阱：为 RabbitMQ 队列创建多可用区 Auto Scaling 群组是不合适的，因为 Amazon MQ 是更好的选择，可以提供托管服务和高可用性。针对冷应用创建多可用区弹性伸缩组是正确的。将数据库迁移到 Amazon RDS 的多可用区部署",
+          "en": "Incorrect. Technical reason: Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon RDS for PostgreSQL. Pitfall: Creating a Multi-AZ Auto Scaling group for a RabbitMQ queue is inappropriate because Amazon MQ is a better choice, providing managed services and high availability. It is correct to create Multi-AZ Auto Scaling groups for cold applications. Correct point: Migrating the database to a Multi-AZ deployment of Amazon RDS is Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：托管应用程序的 EC2 实例的扩展组。为托管 PostgreSQL 数据库的 EC2 实例创建第三个多可用区 Auto Scaling 群组。陷阱：为 RabbitMQ 队列创建多可用区 Auto Scaling 群组是不合适的，因为 Amazon MQ 是更好的选择，可以提供托管服务和高可用性。针对冷应用创建多可用区弹性伸缩组是正确的。陷阱：为 PostgreSQL 数据库创建多可用区 Auto Scaling 群组并不合适，因为 Amazon RDS 的多可用区部署是更好的选择。",
+          "en": "Incorrect. Technical reason: Scaling group for EC2 instances that host the application. Create a third Multi-AZ Auto Scaling group for EC2 instances that host the PostgreSQL database. Pitfall: Creating a Multi-AZ Auto Scaling group for RabbitMQ queues is inappropriate because Amazon MQ is a better choice, providing managed services and high availability. It is correct to create Multi-AZ Auto Scaling groups for cold applications. Pitfall: Creating a Multi-AZ Auto Scaling group for a PostgreSQL database is not appropriate as a Multi-AZ deployment of Amazon RDS is a better option. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将队列迁移到 Amazon MQ 上的一对冗余（主动/备用）RabbitMQ 实例。为托管应用程序的 EC2 实例创建多可用区 Auto Scaling 组。迁移数据库以在 Amazon RDS for PostgreSQL 的多可用区部署上运行。",
+        "en": "B. Migrate the queue to a redundant pair (active/standby) of RabbitMQ instances on Amazon MQ. Create a Multi-AZ Auto Scaling group for EC2 instances that host the application. Migrate the database to run on a Multi-AZ deployment of Amazon RDS for PostgreSQL."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：分析：将队列迁移到Amazon MQ是正确的，因为它提供了高可用性并减少了运维开销。为冷应用创建多可用区弹性伸缩组是正确的，因为它提供了高可用性。将数据库迁移到Amazon RDS的多可用区部署是正确的，因为它是托管服务，支持高可用性并减少运维开销。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: analysis: Migrating the queue to Amazon MQ is correct because it provides high availability and reduces operation and maintenance overhead. Correct analysis: Creating a Multi-AZ Auto Scaling group for cold applications is correct because it provides high availability. Correct analysis: Migrating the database to Multi-AZ deployment of Amazon RDS is correct because it is a managed service, supports high availability and reduces operation and maintenance overhead. Conclusion:."
+      }
+    },
+    {
+      "question_no": 139,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "报告团队每天都会收到 Amazon S3 存储桶中的文档。报告团队每天同时手动查看此初始 S3 存储桶中的文档并将其复制到分析 S3 存储桶，以与 Amazon QuickSight 一起使用。更多团队开始将更多更大尺寸的文档发送到初始 S3 存储桶。报告团队希望在文档进入初始 S3 存储桶时将文档自动移至分析 S3 存储桶。报告团队也希望使用 AWS Lambda 函数对复制的数据运行模式来匹配代码。此外，报告团队希望将数据文档发送到 Amazon SageMaker Pipelines 中的管道。解决方案架构师应该如何做才能以最少的运维开销来满足这些要求？",
+        "en": "A reporting team receives files each day in an Amazon S3 bucket. The reporting team manually reviews and copies the files from this initial S3 bucket to an analysis S3 bucket each day at the same time to use with Amazon QuickSight. Additional teams are starting to send more files in larger sizes to the initial S3 bucket. The reporting team wants to move the files automatically to the analysis S3 bucket as the files enter the initial S3 bucket. The reporting team also wants to use AWS Lambda functions to run pattern-matching code on the copied data. In addition, the reporting team wants to send the data files to a pipeline in Amazon SageMaker Pipelines. What should a solutions architect do to meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Lambda 函数以将文档复制到分析 S3 存储桶。为分析 S3 存储桶创建 S3 事件通知。将 Lambda 和 SageMaker Pipelines 配置为事件通知的目标。将 s3:ObjectCreated:Put 配置为事件类型。",
+          "en": "Create a Lambda function to copy the files to the analysis S3 bucket. Create an S3 event notification for the analysis S3 bucket. Configure Lambda and SageMaker Pipelines as destinations of the event notification. Configure s3:ObjectCreated:Put as the event type."
+        },
+        "B": {
+          "zh": "创建 Lambda 函数以将文档复制到分析 S3 存储桶。配置分析 S3 存储桶以将事件通知发送至 Amazon EventBridge (Amazon CloudWatch Events)。在 EventBridge (CloudWatch Events) 中配置 ObjectCreated 规则。将 Lambda 和 SageMaker Pipelines 配置为规则的目标。",
+          "en": "Create a Lambda function to copy the files to the analysis S3 bucket. Configure the analysis S3 bucket to send event notifications to Amazon EventBridge (Amazon CloudWatch Events). Configure an ObjectCreated rule in EventBridge (CloudWatch Events). Configure Lambda and SageMaker Pipelines as targets for the rule."
+        },
+        "C": {
+          "zh": "配置 S3 存储桶之间的 S3 复制。为分析 S3 存储桶创建 S3 事件通知。将 Lambda 和 SageMaker Pipelines 设置为事件通知的目标。将 s3:ObjectCreated:Put 配置为事件类型。",
+          "en": "Configure S3 replication between the S3 buckets. Create an S3 event notification for the analysis S3 bucket. Configure Lambda and SageMaker Pipelines as destinations of the event notification. Configure s3:ObjectCreated:Put as the event type."
+        },
+        "D": {
+          "zh": "配置 S3 存储桶之间的 S3 复制。配置分析 S3 存储桶以将事件通知发送至 Amazon EventBridge (Amazon CloudWatch Events)。在 EventBridge (CloudWatch Events) 中配置 ObjectCreated 规则。将 Lambda 和 SageMaker Pipelines 配置为规则的目标。",
+          "en": "Configure S3 replication between the S3 buckets. Configure the analysis S3 bucket to send event notifications to Amazon EventBridge (Amazon CloudWatch Events). Configure an ObjectCreated rule in EventBridge (CloudWatch Events). Configure Lambda and SageMaker Pipelines as targets for the rule."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：此选项需要手动创建 Lambda 函数来复制文档，这增加了操作开销，并且不符合问题所要求的「最小操作开销」。 S3事件通知无法直接支持多目标（例如Lambda和SageMaker Pipelines），需要EventBridge来实现多目标支持。",
+          "en": "Incorrect. Technical reason: This option requires manual creation of a Lambda function to copy files, which increases operational overhead and does not meet the \"minimum operational overhead\" required by the question. S3 event notification cannot directly support multiple targets (such as Lambda and SageMaker Pipelines), and requires EventBridge to achieve multi-target support."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：CloudWatch 事件）。在 EventBridge (CloudWatch Events) 中配置 ObjectCreated 规则。将 Lambda 和 SageMaker Pipelines 设置为此规则的目标。此外，此选项仍然需要手动创建 Lambda 函数来复制文档，从而增加了操作开销。 EventBridge可以支持多个目标，但手动复制文档不符合「最小操作开销」要求。",
+          "en": "Incorrect. Technical reason: CloudWatch Events). Configure an ObjectCreated rule in EventBridge (CloudWatch Events). Configure Lambda and SageMaker Pipelines as targets for this rule. Additionally, This option still requires manual creation of a Lambda function to copy the files, adding operational overhead. EventBridge can support multiple targets, but manually copying files does not meet the \"minimum operational overhead\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：S3事件通知无法直接支持多目标（例如Lambda和SageMaker Pipelines），需要EventBridge来实现多目标支持。 S3复制可以自动将文档从初始S3存储桶复制到分析S3存储桶，从而减少操作开销。",
+          "en": "Incorrect. Technical reason: S3 event notification cannot directly support multiple targets (such as Lambda and SageMaker Pipelines), and requires EventBridge to achieve multi-target support. S3 replication can automatically copy files from the initial S3 bucket to the analysis S3 bucket, reducing operational overhead."
+        },
+        "D": {
+          "zh": "正確。技术原因：S3 复制自动处理文档复制，减少操作开销。 EventBridge支持多个目标（例如Lambda和SageMaker Pipelines），满足问题要求。此选项完全满足问题要求，且操作开销最小。",
+          "en": "Correct. Technical reason: S3 Replication handles file copying automatically, reducing operational overhead. EventBridge supports multiple targets (such as Lambda and SageMaker Pipelines), which meets the question requirements. This option fully meets the question requirements and has the least operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 配置 S3 存储桶之间的 S3 复制。配置分析 S3 存储桶以将事件通知发送至 Amazon EventBridge (Amazon CloudWatch Events)。在 EventBridge (CloudWatch Events) 中配置 ObjectCreated 规则。将 Lambda 和 SageMaker Pipelines 配置为规则的目标。",
+        "en": "D. Configure S3 replication between the S3 buckets. Configure the analysis S3 bucket to send event notifications to Amazon EventBridge (Amazon CloudWatch Events). Configure an ObjectCreated rule in EventBridge (CloudWatch Events). Configure Lambda and SageMaker Pipelines as targets for the rule."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (76%) 13% 9%。热门讨论与考点摘要：S3 复制自动处理文档复制，减少操作开销。 EventBridge支持多个目标（例如Lambda和SageMaker Pipelines），满足问题要求。此选项完全满足问题要求，且操作开销最小。",
+        "en": "Community vote as displayed: D (76%) 13% 9%. Popular discussion and key point summary: S3 Replication handles file copying automatically, reducing operational overhead. EventBridge supports multiple targets (such as Lambda and SageMaker Pipelines), which meets the question requirements. This option fully meets the question requirements and has the least operational overhead."
+      }
+    },
+    {
+      "question_no": 140,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师需要协助公司优化在 AWS 上运行应用程序的成本。该应用程序将使用 Amazon EC2 实例、AWS Fargate 和 AWS Lambda 在架构内进行计算。 EC2 实例将运行应用程序的数据截取层。 EC2 的使用将是零星且不可预测的。在 EC2 实例上运行的工作负载可以随时中断。应用程序前端将在 Fargate 上运行，Lambda 将服务 API 层。明年的前端利用率和 API 层利用率将是可预测的。哪种购买选项组合将为托管此应用程序提供最具成本效益的解决方案？ （选两个。）",
+        "en": "A solutions architect needs to help a company optimize the cost of running an application on AWS. The application will use Amazon EC2 instances, AWS Fargate, and AWS Lambda for compute within the architecture. The EC2 instances will run the data ingestion layer of the application. EC2 usage will be sporadic and unpredictable. Workloads that run on EC2 instances can be interrupted at any time. The application front end will run on Fargate, and Lambda will serve the API layer. The front-end utilization and API layer utilization will be predictable over the course of the next year. Which combination of purchasing options will provide the MOST cost-effective solution for hosting this application? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Spot 实例用于数据截取层",
+          "en": "Use Spot Instances for the data ingestion layer"
+        },
+        "B": {
+          "zh": "对数据截取层使用按需实例",
+          "en": "Use On-Demand Instances for the data ingestion layer"
+        },
+        "C": {
+          "zh": "为前端和 API 层购买 1 年计算节省计划。",
+          "en": "Purchase a 1-year Compute Savings Plan for the front end and API layer."
+        },
+        "D": {
+          "zh": "为数据摄取层购买 1 年期的预付费用预留实例。",
+          "en": "Purchase 1-year All Upfront Reserved instances for the data ingestion layer."
+        },
+        "E": {
+          "zh": "为前端和 API 层购买 1 年期 EC2 实例 Savings Plan。",
+          "en": "Purchase a 1-year EC2 instance Savings Plan for the front end and API layer."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Spot 实例适合可以以较低成本中断的工作负载。该问题明确指出，EC2 对数据摄取层的使用是「零星且不可预测的」并且可以中断，因此 Spot 实例是最合适的选择。",
+          "en": "Correct. Technical reason: Spot Instances are suitable for workloads that can be interrupted at a lower cost. The question clearly states that the EC2 usage of the data ingestion layer is \"sporadic and unpredictable\" and can be interrupted, so Spot Instances are the most suitable choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：按需实例价格较高，适合需要连续运作且无法中断的工作负载。问题明确指出数据摄取层可以中断，因此不需要使用按需实例。",
+          "en": "Incorrect. Technical reason: On-Demand Instances are more expensive and suitable for workloads that need to run continuously and cannot be interrupted. The question clearly states that the data ingestion layer can be interrupted, so there is no need to use On-Demand Instances."
+        },
+        "C": {
+          "zh": "正確。技术原因：计算节省计划提供弹性，可应用于 Fargate 和 Lambda，并且适合更具预测性的工作负载。该问题指出，前端和 API 层的使用率是「可预测的」，因此计算节省计划是最具成本效益的选项。",
+          "en": "Correct. Technical reason: Compute Savings Plan provides flexibility, can be applied to Fargate and Lambda, and is suitable for more predictive workloads. The question states that the utilization of the front-end and API layers is \"predictable\", so the Compute Savings Plan is the most cost-effective option."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：预留实例适合长期稳定的工作负载，而数据摄取层的使用是「零星且不可预测的」，不适合使用预留实例。",
+          "en": "Incorrect. Technical reason: Reserved Instances are suitable for long-term stable workloads, while the use of the data ingestion layer is \"sporadic and unpredictable\" and is not suitable for using Reserved Instances."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：EC2实例Savings Plan仅适用于EC2实例，问题中的前端运行在Fargate上，API层运行在Lambda上，因此EC2实例Savings Plan不涵盖这些服务。",
+          "en": "Incorrect. Technical reason: EC2 instance Savings Plan is only applicable to EC2 instances, and the front end in the question runs on Fargate and the API layer runs on Lambda, so EC2 instance Savings Plan does not cover these services."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 将 Spot 实例用于数据截取层；C. 为前端和 API 层购买 1 年计算节省计划。",
+        "en": "A. Use Spot Instances for the data ingestion layer; C. Purchase a 1-year Compute Savings Plan for the front end and API layer."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：AC (90%) 10%。热门讨论与考点摘要：Spot 实例适合可以以较低成本中断的工作负载。该问题明确指出，EC2 对数据摄取层的使用是「零星且不可预测的」并且可以中断，因此 Spot 实例是最合适的选择。；计算节省计划提供弹性，可应用于 Fargate 和 Lambda，并且适合更具预测性的工作负载。该问题指出，前端和 API 层的使用率是「可预测的」，因此计算节省计划是最具成本效益的选项。",
+        "en": "Community vote as displayed: AC (90%) 10%. Popular discussion and key point summary: Spot Instances are suitable for workloads that can be interrupted at a lower cost. The question clearly states that the EC2 usage of the data ingestion layer is \"sporadic and unpredictable\" and can be interrupted, so Spot Instances are the most suitable choice.; Compute Savings Plan provides flexibility, can be applied to Fargate and Lambda, and is suitable for more predictive workloads. The question states that the utilization of the front-end and API layers is \"predictable\", so the Compute Savings Plan is the most cost-effective option."
+      }
+    },
+    {
+      "question_no": 141,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司经营一个基于网络的门户网站，为用户提供全球突发新闻、本地警报和天气更新。此门户网站通过混合使用静态和动态内容为每个用户提供个人化视图。内容通过在应用程序负载均衡器 (ALB) 后面的 Amazon EC2 实例上运行的 API 服务器通过 HTTPS 提供。该公司希望该门户网站尽快向世界各地的用户提供此内容。解决方案架构师应如何设计应用程序以确保所有用户的延迟最少？",
+        "en": "A company runs a web-based portal that provides users with global breaking news, local alerts, and weather updates. The portal delivers each user a personalized view by using mixture of static and dynamic content. Content is served over HTTPS through an API server running on an Amazon EC2 instance behind an Application Load Balancer (ALB). The company wants the portal to provide this content to its users across the world as quickly as possible. How should a solutions architect design the application to ensure the LEAST amount of latency for all users?"
+      },
+      "options": {
+        "A": {
+          "zh": "在单一 AWS 区域中部署应用程序堆栈。通过指定 ALB 作为来源，使用 Amazon CloudFront 提供所有静态和动态内容。",
+          "en": "Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve all static and dynamic content by specifying the ALB as an origin."
+        },
+        "B": {
+          "zh": "在两个 AWS 区域中部署应用程序堆栈。使用 Amazon Route 53 延迟路由策略提供来自最近区域中 ALB 的所有内容。",
+          "en": "Deploy the application stack in two AWS Regions. Use an Amazon Route 53 latency routing policy to serve all content from the ALB in the closest Region."
+        },
+        "C": {
+          "zh": "在单一 AWS 区域中部署应用程序堆栈。使用 Amazon CloudFront 提供静态内容。直接从 ALB 提供动态内容。",
+          "en": "Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve the static content. Serve the dynamic content directly from the ALB."
+        },
+        "D": {
+          "zh": "在两个 AWS 区域中部署应用程序堆栈。使用 Amazon Route 53 地理位置路由策略在最近的区域提供来自 ALB 的所有内容。",
+          "en": "Deploy the application stack in two AWS Regions. Use an Amazon Route 53 geolocation routing policy to serve all content from the ALB in the closest Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：指定 ALB 为源站。分析：Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存和交付静态和动态内容，从而显著减少延迟。通过将 ALB 指定为 CloudFront 来源，您可以确保动态内容也通过 CloudFront 的边缘网站快速分发。单区域部署结合CloudFront的全球分发能力是一种高效率、低延迟的解决方案。",
+          "en": "Correct. Technical reason: specifying the ALB as an origin. Analysis: Amazon CloudFront is a global content delivery network (CDN) that caches and delivers static and dynamic content, significantly reducing latency. By specifying an ALB as a CloudFront origin, you ensure that dynamic content is also quickly distributed through CloudFront's edge locations. Single-region deployment combined with CloudFront's global distribution capabilities is an efficient and low-latency solution."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：来自最近区域中的 ALB。分析：跨区域部署可以减少延迟，但需要额外的管理和成本。 Route 53的延迟路由策略可以根据用户的延迟来选择最近的区域，但没有提到如何优化内容分发。",
+          "en": "Incorrect. Technical reason: from the ALB in the closest Region. Analysis: Cross-region deployment can reduce latency, but requires additional management and cost. Route 53's delay routing policy can select the closest area based on the user's delay, but it does not mention how to optimize content distribution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：直接来自 ALB 的动态内容。分析：CloudFront 可以优化静态内容的交付，但直接从 ALB 提供动态内容可能会导致更高的延迟，特别是对于偏远地区的用户而言。",
+          "en": "Incorrect. Technical reason: dynamic content directly from the ALB. Analysis: CloudFront can optimize the delivery of static content, but serving dynamic content directly from the ALB can result in higher latency, especially for users in remote regions."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：内容。分析：地理位置路由策略可以根据用户的地理位置选择最近的区域，但没有提到如何优化内容分发。跨区域部署增加了复杂性和成本，并且无法利用 CloudFront 的全球分发功能。应用在.",
+          "en": "Incorrect. Technical reason: content from the ALB in the closest Region. Analysis: The geographical location routing strategy can select the closest region based on the user's geographical location, but does not mention how to optimize content distribution. Cross-region deployment adds complexity and cost and does not take advantage of CloudFront's global distribution capabilities. Applications in."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在单一 AWS 区域中部署应用程序堆栈。通过指定 ALB 作为来源，使用 Amazon CloudFront 提供所有静态和动态内容。",
+        "en": "A. Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve all static and dynamic content by specifying the ALB as an origin."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (71%) B (24%) 3%。热门讨论与考点摘要：指定 ALB 为源站。分析：Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存和交付静态和动态内容，从而显著减少延迟。通过将 ALB 指定为 CloudFront 来源，您可以确保动态内容也通过 CloudFront 的边缘网站快速分发。单区域部署结合CloudFront的全球分发能力是一种高效率、低延迟的解决方案。",
+        "en": "Community vote as displayed: A (71%) B (24%) 3%. Popular discussion and key point summary: specifying the ALB as an origin. Analysis: Amazon CloudFront is a global content delivery network (CDN) that caches and delivers static and dynamic content, significantly reducing latency. By specifying an ALB as a CloudFront origin, you ensure that dynamic content is also quickly distributed through CloudFront's edge locations. Single-region deployment combined with CloudFront's global distribution capabilities is an efficient and low-latency solution."
+      }
+    },
+    {
+      "question_no": 142,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家游戏公司正在设计一个高度可用的架构。该应用程序在修改后的 Linux 内核上运行，并且仅支持基于 UDP 的流量。该公司需要前端层来提供最佳的用户体验。此层必须具有低延迟、将流量路由到最近的边缘位置，并提供用于进入应用程序端点的静态 IP 地址。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A gaming company is designing a highly available architecture. The application runs on a modified Linux kernel and supports only UDP-based traffic. The company needs the front-end tier to provide the best possible user experience. That tier must have low latency, route traffic to the nearest edge location, and provide static IP addresses for entry into the application endpoints. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Amazon Route 53 以将请求转送至 Application Load Balancer。将 AWS Lambda 用于 AWS Application Auto Scaling 中的应用程序。",
+          "en": "Configure Amazon Route 53 to forward requests to an Application Load Balancer. Use AWS Lambda for the application in AWS Application Auto Scaling."
+        },
+        "B": {
+          "zh": "设置 Amazon CloudFront 将请求转送至网络负载均衡器。将 AWS Lambda 用于 AWS Application Auto Scaling 群组中的应用程序。",
+          "en": "Configure Amazon CloudFront to forward requests to a Network Load Balancer. Use AWS Lambda for the application in an AWS Application Auto Scaling group."
+        },
+        "C": {
+          "zh": "设置 AWS Global Accelerator 以将请求转送至网络负载均衡器。将 Amazon EC2 实例用于 EC2 Auto Scaling 群组中的应用程序。",
+          "en": "Configure AWS Global Accelerator to forward requests to a Network Load Balancer. Use Amazon EC2 instances for the application in an EC2 Auto Scaling group."
+        },
+        "D": {
+          "zh": "设置 Amazon API Gateway 以将请求转送至 Application Load Balancer。将 Amazon EC2 实例用于 EC2 Auto Scaling 群组中的应用程序。",
+          "en": "Configure Amazon API Gateway to forward requests to an Application Load Balancer. Use Amazon EC2 instances for the application in an EC2 Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Application Load Balancer 不支持 UDP 流量，仅支持 HTTP/HTTPS 流量。 AWS Lambda 无法运行需要修改 Linux 内核的应用程序。 Route 53 主要用于 DNS 解析，不提供低延迟路由或静态 IP 功能。应用在.",
+          "en": "Incorrect. Technical reason: Application Load Balancer does not support UDP traffic, only HTTP/HTTPS traffic. AWS Lambda cannot run applications that require modifications to the Linux kernel. Route 53 is primarily used for DNS resolution and does not provide low-latency routing or static IP capabilities. Applications in the."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：CloudFront 主要用于内容分发，不支持 UDP 流量。 AWS Lambda 无法运行需要修改 Linux 内核的应用程序。网络负载均衡器支持 UDP 流量，但 CloudFront 和 NLB 的组合不符合问题的要求。",
+          "en": "Incorrect. Technical reason: CloudFront is primarily used for content distribution and does not support UDP traffic. AWS Lambda cannot run applications that require modifications to the Linux kernel. Network Load Balancer supports UDP traffic, but the combination of CloudFront and NLB does not meet the requirements of the question."
+        },
+        "C": {
+          "zh": "正確。技术原因：AWS Global Accelerator提供低延迟路由和静态IP地址功能，满足问题的要求。网络负载均衡器支持UDP流量，满足问题的要求。 Amazon EC2 实例可以运行需要修改 Linux 内核的应用程序，并且可以通过 Auto Scaling 实现高可用性。",
+          "en": "Correct. Technical reason: AWS Global Accelerator provides low-latency routing and static IP address functions, which meets the requirements of the question. Network Load Balancer supports UDP traffic, which meets the requirements of the question. Amazon EC2 instances can run applications that require modifications to the Linux kernel and can achieve high availability through Auto Scaling."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Application Load Balancer 不支持 UDP 流量，仅支持 HTTP/HTTPS 流量。 API网关主要用于处理HTTP/HTTPS API请求，不支持UDP流量。 Amazon EC2实例可以运行需要修改Linux内核的应用程序，但整体架构不符合问题的要求。 虽然AWS Lambda和API Gateway可以实现无服务器架构并减少运维开销，但问题提到保留现有的前后端代码并将应用程序拆分为多个小应用程序。 Lambda 适合运行小型函数而不是托管复杂的应用程序。此外，Lambda 可能需要重构代码以适应其事件驱动模型。",
+          "en": "Incorrect. Technical reason: Application Load Balancer does not support UDP traffic, only HTTP/HTTPS traffic. API Gateway is mainly used to process HTTP/HTTPS API requests and does not support UDP traffic. Amazon EC2 instances can run applications that require modifications to the Linux kernel, but the overall architecture does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 设置 AWS Global Accelerator 以将请求转送至网络负载均衡器。将 Amazon EC2 实例用于 EC2 Auto Scaling 群组中的应用程序。",
+        "en": "C. Configure AWS Global Accelerator to forward requests to a Network Load Balancer. Use Amazon EC2 instances for the application in an EC2 Auto Scaling group."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：AWS Global Accelerator提供低延迟路由和静态IP地址功能，满足问题的要求。网络负载均衡器支持UDP流量，满足问题的要求。 Amazon EC2 实例可以运行需要修改 Linux 内核的应用程序，并且可以通过 Auto Scaling 实现高可用性。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS Global Accelerator provides low-latency routing and static IP address functions, which meets the requirements of the question. Network Load Balancer supports UDP traffic, which meets the requirements of the question. Amazon EC2 instances can run applications that require modifications to the Linux kernel and can achieve high availability through Auto Scaling."
+      }
+    },
+    {
+      "question_no": 143,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将其现有的本地整体应用程序迁移到 AWS。该公司希望保留尽可能多的前端代码和后端代码。然而，该公司希望将应用程序分解为更小的应用程序。不同的团队将管理每个应用程序。该公司需要一个高度可扩展的解决方案，以最大限度地减少运维开销。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to migrate its existing on-premises monolithic application to AWS. The company wants to keep as much of the front-end code and the backend code as possible. However, the company wants to break the application into smaller applications. A different team will manage each application. The company needs a highly scalable solution that minimizes operational overhead. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Lambda 上托管应用程序。将应用程序与 Amazon API Gateway 集成。",
+          "en": "Host the application on AWS Lambda. Integrate the application with Amazon API Gateway."
+        },
+        "B": {
+          "zh": "使用 AWS Amplify 托管应用程序。将应用程序连接到与 AWS Lambda 集成的 Amazon API Gateway API。",
+          "en": "Host the application with AWS Amplify. Connect the application to an Amazon API Gateway API that is integrated with AWS Lambda."
+        },
+        "C": {
+          "zh": "在 Amazon EC2 实例上托管应用程序。设置应用程序负载均衡器，以 Auto Scaling 群组中的 EC2 实例作为目标。",
+          "en": "Host the application on Amazon EC2 instances. Set up an Application Load Balancer with EC2 instances in an Auto Scaling group as targets."
+        },
+        "D": {
+          "zh": "在 Amazon Elastic Container Service (Amazon ECS) 上托管应用程序。设置以 Amazon ECS 为目标的应用程序负载均衡器。",
+          "en": "Host the application on Amazon Elastic Container Service (Amazon ECS). Set up an Application Load Balancer with Amazon ECS as the target."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然AWS Lambda和API Gateway可以实现无服务器架构并减少运维开销，但问题提到保留现有的前后端代码并将应用程序拆分为多个小应用程序。 Lambda 适合运行小型函数而不是托管复杂的应用程序。此外，Lambda 可能需要重构代码以适应其事件驱动模型。",
+          "en": "Incorrect. Technical reason: ness analysis: Although AWS Lambda and API Gateway can implement a serverless architecture and reduce operation and maintenance overhead, the question mentions retaining the existing front-end and back-end code and splitting the application into multiple small applications. Lambda is suitable for running small functions rather than hosting complex applications. Additionally, Lambda may need to refactor code to fit its event-driven model. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Amplify 主要用于构建和部署前端应用程序，而不是托管后端代码。虽然可以通过API Gateway和Lambda连接后端，但这并不能满足问题所要求的「保留现有的前后端代码」的要求。",
+          "en": "Incorrect. Technical reason: ness Analysis: AWS Amplify is primarily used to build and deploy front-end applications, not to host back-end code. Although the backend can be connected through API Gateway and Lambda, this does not meet the requirement of \"retaining the existing front-end and back-end code\" required by the question. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：EC2实例可以托管现有的前端和后端代码，并通过负载均衡器实现高可用性。但EC2实例的管理和维护需要较高的运维开销，不符合问题所要求的「最小化运维开销」。",
+          "en": "Incorrect. Technical reason: ness analysis: EC2 instances can host existing front-end and back-end code and achieve high availability through load balancers. However, the management and maintenance of EC2 instances require high operation and maintenance overhead, which does not meet the \"minimize operation and maintenance overhead\" required by the question. Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon ECS支持容器化应用程序，可以将单一应用程序拆分为多个容器，每个容器由不同的团队管理。 ECS和Application Load Balancer的集成可以实现高扩展性，并且容器化减少了运维开销，满足了问题的要求。",
+          "en": "Correct. Technical reason: ness analysis: Amazon ECS supports containerized applications, which can split a single application into multiple containers, and each container is managed by a different team. The integration of ECS and Application Load Balancer can achieve high scalability, and containerization reduces operation and maintenance overhead, which meets the requirements of the question. Conclusion:."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 Amazon Elastic Container Service (Amazon ECS) 上托管应用程序。设置以 Amazon ECS 为目标的应用程序负载均衡器。",
+        "en": "D. Host the application on Amazon Elastic Container Service (Amazon ECS). Set up an Application Load Balancer with Amazon ECS as the target."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (78%) B (19%) 2%。热门讨论与考点摘要：Amazon ECS支持容器化应用程序，可以将单一应用程序拆分为多个容器，每个容器由不同的团队管理。 ECS和Application Load Balancer的集成可以实现高扩展性，并且容器化减少了运维开销，满足了问题的要求。",
+        "en": "Community vote as displayed: D (78%) B (19%) 2%. Popular discussion and key point summary: ness analysis: Amazon ECS supports containerized applications, which can split a single application into multiple containers, and each container is managed by a different team. The integration of ECS and Application Load Balancer can achieve high scalability, and containerization reduces operation and maintenance overhead, which meets the requirements of the question. Conclusion:."
+      }
+    },
+    {
+      "question_no": 144,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司最近开始使用 Amazon Aurora 作为其全球电子商务应用程序的数据保存。运行大型报告时，开发人员报告电子商务应用程序性能不佳。在检查 Amazon CloudWatch 中的指针后，解决方案架构师发现 ReadIOPS 和 CPUUtilization 指针在每月报告运行时出现高峰。最具成本效益的解决方案是什么？",
+        "en": "A company recently started using Amazon Aurora as the data store for its global ecommerce application. When large reports are run, developers report that the ecommerce application is performing poorly. After reviewing metrics in Amazon CloudWatch, a solutions architect finds that the ReadIOPS and CPUUtilization metrics are spiking when monthly reports run. What is the MOST cost-effective solution?"
+      },
+      "options": {
+        "A": {
+          "zh": "将每月报告迁移到 Amazon Redshift。",
+          "en": "Migrate the monthly reporting to Amazon Redshift."
+        },
+        "B": {
+          "zh": "将每月报告迁移到 Aurora 副本。",
+          "en": "Migrate the monthly reporting to an Aurora Replica."
+        },
+        "C": {
+          "zh": "将 Aurora 数据库迁移到更大的实例类别。",
+          "en": "Migrate the Aurora database to a larger instance class."
+        },
+        "D": {
+          "zh": "增加 Aurora 实例上的预先配置 IOPS。",
+          "en": "Increase the Provisioned IOPS on the Aurora instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Redshift 是专为数据仓库设计的服务，适合处理复杂的分析查找。但迁移到Redshift需要额外的架构调整和数据迁移工作，成本较高，也不是最直接的解决方案。",
+          "en": "Incorrect. Technical reason: Amazon Redshift is a service designed specifically for data warehouses and is suitable for processing complex analytical queries. However, migrating to Redshift requires additional architecture adjustment and data migration work, which is costly and is not the most direct solution."
+        },
+        "B": {
+          "zh": "正確。技术原因：Aurora Replica可以分担读取操作的负载，适合解决高读取负载问题。将报告查找迁移到 Aurora 副本是最具成本效益的解决方案。",
+          "en": "Correct. Technical reason: Aurora Replica can share the load of read operations and is suitable for solving high read load problems. Migrating reporting queries to Aurora Replica is the most cost-effective solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然迁移到更大的实例类型可以提高性能，但成本更高，并且不能解决根本问题（读写负载分离）。",
+          "en": "Incorrect. Technical reason: While migrating to a larger instance type can improve performance, it is more expensive and does not solve the underlying problem (read-write load separation)."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：增加Provisioned IOPS可以提高保存性能，但成本较高，主要针对写入操作进行优化。问题中的问题主要是读取操作负载过高。",
+          "en": "Incorrect. Technical reason: Increasing Provisioned IOPS can improve storage performance, but the cost is higher, and it is mainly optimized for write operations. The problem in the question is mainly that the read operation load is too high."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将每月报告迁移到 Aurora 副本。",
+        "en": "B. Migrate the monthly reporting to an Aurora Replica."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (98%) 2%。热门讨论与考点摘要：Aurora Replica可以分担读取操作的负载，适合解决高读取负载问题。将报告查找迁移到 Aurora 副本是最具成本效益的解决方案。",
+        "en": "Community vote as displayed: B (98%) 2%. Popular discussion and key point summary: Aurora Replica can share the load of read operations and is suitable for solving high read load problems. Migrating reporting queries to Aurora Replica is the most cost-effective solution."
+      }
+    },
+    {
+      "question_no": 145,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在单一 Amazon EC2 随选实例上托管网站分析应用程序。此分析软件是用 PHP 编写的，并使用 MySQL 数据库。分析软件、提供 PHP 的 Web 服务器以及数据库服务器都托管在 EC2 实例上。该应用程序在繁忙时间显示出性能下降的迹象，并出现 5xx 错误。公司需要使应用程序无缝扩展。哪一种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company hosts a website analytics application on a single Amazon EC2 On-Demand Instance. The analytics software is written in PHP and uses a MySQL database. The analytics software, the web server that provides PHP, and the database server are all hosted on the EC2 instance. The application is showing signs of performance degradation during busy times and is presenting 5xx errors. The company needs to make the application scale seamlessly. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据库迁移到 Amazon RDS for MySQL 数据库实例。创建 Web 应用程序的 AMI。使用 AMI 启动第二个 EC2 按需实例。使用应用程序负载均衡器将负载分配到每个 EC2 实例。",
+          "en": "Migrate the database to an Amazon RDS for MySQL DB instance. Create an AMI of the web application. Use the AMI to launch a second EC2 On-Demand Instance. Use an Application Load Balancer to distribute the load to each EC2 instance."
+        },
+        "B": {
+          "zh": "将数据库迁移到 Amazon RDS for MySQL 数据库实例。创建 Web 应用程序的 AMI。使用 AMI 启动第二个 EC2 按需实例。使用 Amazon Route 53 加权路由在两个 EC2 实例之间分配负载。",
+          "en": "Migrate the database to an Amazon RDS for MySQL DB instance. Create an AMI of the web application. Use the AMI to launch a second EC2 On-Demand Instance. Use Amazon Route 53 weighted routing to distribute the load across the two EC2 instances."
+        },
+        "C": {
+          "zh": "将数据库迁移到 Amazon Aurora MySQL 数据库实例。创建 AWS Lambda 函数来停止 EC2 实例并变更实例类型。创建 Amazon CloudWatch 警报以在 CPU 使用率超过 75% 时调用 Lambda 函数。",
+          "en": "Migrate the database to an Amazon Aurora MySQL DB instance. Create an AWS Lambda function to stop the EC2 instance and change the instance type. Create an Amazon CloudWatch alarm to invoke the Lambda function when CPU utilization surpasses 75%."
+        },
+        "D": {
+          "zh": "将数据库迁移到 Amazon Aurora MySQL 数据库实例。创建 Web 应用程序的 AMI。将 AMI 应用到启动范本。使用启动范本创建 Auto Scaling 群组。配置启动模板以使用 Spot 队列。将应用程序负载均衡器附加到 Auto Scaling 群组。",
+          "en": "Migrate the database to an Amazon Aurora MySQL DB instance. Create an AMI of the web application. Apply the AMI to a launch template. Create an Auto Scaling group with the launch template. Configure the launch template to use a Spot Fleet. Attach an Application Load Balancer to the Auto Scaling group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：将数据库迁移到 Amazon RDS for MySQL 是提高数据库性能和可扩展性的合理选择。问题：虽然使用应用程序负载均衡器可以分配负载，但使用按需实例成本较高，且缺乏成本优化。结论：这个方案比较正确，但不是性价比最高的方案。",
+          "en": "Incorrect. Technical reason: ness: Migrating your database to Amazon RDS for MySQL is a reasonable choice to improve database performance and scalability. Problem: Although using Application Load Balancer can distribute load, using On-Demand Instances is more expensive and lacks cost optimization. Conclusion: This option is more correct, but not the most cost-effective solution."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：将数据库迁移到 Amazon RDS for MySQL 是一个合理的选择。问题：使用 Route 53 加权路由分配负载的效率不如应用程序负载均衡器，并且仍然使用更昂贵的按需实例。结论：这个选项正确性较差，不符合「无缝扩展」的要求。",
+          "en": "Incorrect. Technical reason: ness: Migrating the database to Amazon RDS for MySQL is a reasonable choice. Issue: Distributing load using Route 53 weighted routing is not as efficient as Application Load Balancer and still uses On-Demand Instances, which is more expensive. Conclusion: This option is less correct and does not meet the requirements of \"seamless expansion\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：将数据库迁移到 Amazon Aurora MySQL 是一个合理的选择，并且可以提高性能。问题：使用 Lambda 和 CloudWatch 动态调整实例类型可以优化性能，但无法无缝扩展且复杂。结论：这个选项正确性较差，不符合「无缝扩展」的要求。",
+          "en": "Incorrect. Technical reason: ness: Migrating the database to Amazon Aurora MySQL is a reasonable choice and can improve performance. Problem: Using Lambda and CloudWatch to dynamically adjust instance types optimizes performance, but does not scale seamlessly and is complex. Conclusion: This option is less correct and does not meet the requirements of \"seamless expansion\"."
+        },
+        "D": {
+          "zh": "正確。技术原因：技术分析：将数据库迁移到 Amazon Aurora MySQL 是一个合理的选择，并且可以提高性能。优点：使用 Auto Scaling 组和 Spot 队列进行无缝扩展，同时优化成本。应用程序负载均衡器有效地分配负载。结论：此选项是最具成本效益且「无缝扩展」的解决方案。",
+          "en": "Correct. Technical reason: ness: Migrating the database to Amazon Aurora MySQL is a reasonable choice and can improve performance. Benefits: Use Auto Scaling Groups and Spot Fleet to scale seamlessly while optimizing costs. Application Load Balancer distributes load efficiently. Conclusion: This option is the most cost-effective and \"seamless scaling\" solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将数据库迁移到 Amazon Aurora MySQL 数据库实例。创建 Web 应用程序的 AMI。将 AMI 应用到启动范本。使用启动范本创建 Auto Scaling 群组。配置启动模板以使用 Spot 队列。将应用程序负载均衡器附加到 Auto Scaling 群组。",
+        "en": "D. Migrate the database to an Amazon Aurora MySQL DB instance. Create an AMI of the web application. Apply the AMI to a launch template. Create an Auto Scaling group with the launch template. Configure the launch template to use a Spot Fleet. Attach an Application Load Balancer to the Auto Scaling group."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (78%) A (20%) 2%。热门讨论与考点摘要：技术分析：将数据库迁移到 Amazon Aurora MySQL 是一个合理的选择，并且可以提高性能。优点：使用 Auto Scaling 组和 Spot 队列进行无缝扩展，同时优化成本。应用程序负载均衡器有效地分配负载。结论：此选项是最具成本效益且「无缝扩展」的解决方案。",
+        "en": "Community vote as displayed: D (78%) A (20%) 2%. Popular discussion and key point summary: ness: Migrating the database to Amazon Aurora MySQL is a reasonable choice and can improve performance. Benefits: Use Auto Scaling Groups and Spot Fleet to scale seamlessly while optimizing costs. Application Load Balancer distributes load efficiently. Conclusion: This option is the most cost-effective and \"seamless scaling\" solution."
+      }
+    },
+    {
+      "question_no": 146,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在应用程序负载均衡器后面的一组 Amazon EC2 随选实例上运行生产中的无状态 Web 应用程序。该应用程序在每个工作日的 8 小时内都会经历大量使用。夜间应用程序使用情况适度且稳定。周末应用程序使用率较低。该公司希望在不影响应用程序可用性的情况下最大限度地降低 EC2 成本。哪种解决方案可以满足这些要求？",
+        "en": "A company runs a stateless web application in production on a group of Amazon EC2 On-Demand Instances behind an Application Load Balancer. The application experiences heavy usage during an 8-hour period each business day. Application usage is moderate and steady overnight. Application usage is low during weekends. The company wants to minimize its EC2 costs without affecting the availability of the application. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "对整个工作负载使用 Spot 实例。",
+          "en": "Use Spot Instances for the entire workload."
+        },
+        "B": {
+          "zh": "使用预留实例作为基准使用等级。使用 Spot 实例来获得应用程序所需的任何额外容量。",
+          "en": "Use Reserved Instances for the baseline level of usage. Use Spot instances for any additional capacity that the application needs."
+        },
+        "C": {
+          "zh": "使用按需实例作为基准使用等级。使用 Spot 实例来获得应用程序所需的任何额外容量。",
+          "en": "Use On-Demand Instances for the baseline level of usage. Use Spot Instances for any additional capacity that the application needs."
+        },
+        "D": {
+          "zh": "使用专用实例作为基准使用等级。使用按需实例来获得应用程序所需的任何额外容量。",
+          "en": "Use Dedicated Instances for the baseline level of usage. Use On-Demand Instances for any additional capacity that the application needs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Spot实例价格便宜，但可能随时中断，无法保证应用程序的高可用性，尤其是生产环境中的关键工作负载。",
+          "en": "Incorrect. Technical reason: Reason for the Spot Instances are cheap, but they may be interrupted at any time, and there is no guarantee of high availability of application programs, especially critical workloads in production environments."
+        },
+        "B": {
+          "zh": "正確。技术原因：预留实例适合长期固定基础使用并节省成本。 Spot 实例适合处理额外的临时容量需求，在不影响应用程序可用性的情况下进一步降低成本。",
+          "en": "Correct. Technical reason: reason: Reserved Instances are suitable for long-term fixed base usage and provide cost savings. Spot Instances are suitable for handling additional temporary capacity needs, further reducing costs without affecting application availability."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：按需实例虽然可以满足基本使用，但成本较高，无法充分发挥预留实例的成本优势。",
+          "en": "Incorrect. Technical reason: reason: Although On-Demand Instances can meet the basic usage, their cost is higher and the cost advantage of Reserved Instances cannot be fully utilized."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：应用需求。专用实例的原因非常昂贵，通常用于合规性或硬件要求，这些在问题中没有说明。",
+          "en": "Incorrect. Technical reason: application needs. Reason for the Dedicated Instances are very expensive and are usually used for compliance or hardware requirements, which are not stated in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用预留实例作为基准使用等级。使用 Spot 实例来获得应用程序所需的任何额外容量。",
+        "en": "B. Use Reserved Instances for the baseline level of usage. Use Spot instances for any additional capacity that the application needs."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (64%) C (28%) 8%。热门讨论与考点摘要：原因：预留实例适合长期固定基础使用并节省成本。 Spot 实例适合处理额外的临时容量需求，在不影响应用程序可用性的情况下进一步降低成本。",
+        "en": "Community vote as displayed: B (64%) C (28%) 8%. Popular discussion and key point summary: reason: Reserved Instances are suitable for long-term fixed base usage and provide cost savings. Spot Instances are suitable for handling additional temporary capacity needs, further reducing costs without affecting application availability."
+      }
+    },
+    {
+      "question_no": 147,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "公司需要将关键应用程序的应用程序日志文档保留 10 年。应用程序团队定期访问过去一个月的日志以进行故障排除，但很少访问超过 1 个月的日志。该应用程序每月产生超过 10 TB 的日志。哪种保存选项最经济有效率地满足这些要求？",
+        "en": "A company needs to retain application log files for a critical application for 10 years. The application team regularly accesses logs from the past month for troubleshooting, but logs older than 1 month are rarely accessed. The application generates more than 10 TB of logs per month. Which storage option meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将日志保存在 Amazon S3 中。使用 AWS Backup 将 1 个月以上的日志移至 S3 Glacier Deep Archive。",
+          "en": "Store the logs in Amazon S3. Use AWS Backup to move logs more than 1 month old to S3 Glacier Deep Archive."
+        },
+        "B": {
+          "zh": "将日志保存在 Amazon S3 中。使用 S3 生命周期策略将 1 个月以上的日志移至 S3 Glacier Deep Archive。",
+          "en": "Store the logs in Amazon S3. Use S3 Lifecycle policies to move logs more than 1 month old to S3 Glacier Deep Archive."
+        },
+        "C": {
+          "zh": "将日志保存在 Amazon CloudWatch Logs 中。使用 AWS Backup 将 1 个月以上的日志移至 S3 Glacier Deep Archive。",
+          "en": "Store the logs in Amazon CloudWatch Logs. Use AWS Backup to move logs more than 1 month old to S3 Glacier Deep Archive."
+        },
+        "D": {
+          "zh": "将日志保存在 Amazon CloudWatch Logs 中。使用 Amazon S3 生命周期策略将 1 个月以上的日志移至 S3 Glacier Deep Archive。",
+          "en": "Store the logs in Amazon CloudWatch Logs. Use Amazon S3 Lifecycle policies to move logs more than 1 month old to S3 Glacier Deep Archive."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Backup 主要用于备份和恢复服务，并未直接管理 S3 对象的生命周期。使用 AWS Backup 将 S3 对象移至 S3 Glacier Deep Archive 并不是最佳实践。",
+          "en": "Incorrect. Technical reason: AWS Backup is mainly used for backup and recovery services and does not directly manage the life cycle of S3 objects. Using AWS Backup to move S3 objects to S3 Glacier Deep Archive is not a best practice."
+        },
+        "B": {
+          "zh": "正確。技术原因：S3 生命周期策略是管理对象生命周期的建议方法。超过 1 个月的日志可以自动移至 S3 Glacier Deep Archive 以实现成本优化。",
+          "en": "Correct. Technical reason: The S3 Lifecycle strategy is the recommended method for managing object life cycles. Logs older than 1 month can be automatically moved to S3 Glacier Deep Archive to achieve cost optimization."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：CloudWatch Logs 主要用于即时日志控制和分析，而不是长期保存。 AWS Backup 也不适合用来管理 CloudWatch Logs 的生命周期。",
+          "en": "Incorrect. Technical reason: CloudWatch Logs is mainly used for real-time log control and analysis, not long-term storage. AWS Backup is also not suitable for managing the life cycle of CloudWatch Logs."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：S3 生命周期策略仅适用于 Amazon S3 存储桶中的对象，不适用于 CloudWatch Logs。该选项在技术上不可行。",
+          "en": "Incorrect. Technical reason: The S3 Lifecycle policy only applies to objects in Amazon S3 buckets, not CloudWatch Logs. This option is not technically feasible."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将日志保存在 Amazon S3 中。使用 S3 生命周期策略将 1 个月以上的日志移至 S3 Glacier Deep Archive。",
+        "en": "B. Store the logs in Amazon S3. Use S3 Lifecycle policies to move logs more than 1 month old to S3 Glacier Deep Archive."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：S3 生命周期策略是管理对象生命周期的建议方法。超过 1 个月的日志可以自动移至 S3 Glacier Deep Archive 以实现成本优化。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: The S3 Lifecycle strategy is the recommended method for managing object life cycles. Logs older than 1 month can be automatically moved to S3 Glacier Deep Archive to achieve cost optimization."
+      }
+    },
+    {
+      "question_no": 148,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的数据截取工作流程包括以下组件： 接收有关新数据传输的通知的 Amazon Simple Notification Service (Amazon SNS) 主题 处理和存储数据的 AWS Lambda 函数 由于网络连接问题，截取工作流程有时会失败。当发生故障时，除非公司手动重新运行作业，否则不会截取对应的数据。解决方案架构师应该如何确保所有通知最终得到处理？",
+        "en": "A company has a data ingestion workflow that includes the following components: An Amazon Simple Notification Service (Amazon SNS) topic that receives notifications about new data deliveries An AWS Lambda function that processes and stores the data The ingestion workflow occasionally fails because of network connectivity issues. When failure occurs, the corresponding data is not ingested unless the company manually reruns the job. What should a solutions architect do to ensure that all notifications are eventually processed?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Lambda 函数以跨多个可用区部署。",
+          "en": "Configure the Lambda function for deployment across multiple Availability Zones."
+        },
+        "B": {
+          "zh": "修改 Lambda 函数的配置以增加函数的 CPU 和内存分配。",
+          "en": "Modify the Lambda function's configuration to increase the CPU and memory allocations for the function."
+        },
+        "C": {
+          "zh": "配置 SNS 主题的重试策略，以增加重试次数和重试之间的等待时间。",
+          "en": "Configure the SNS topic’s retry strategy to increase both the number of retries and the wait time between retries."
+        },
+        "D": {
+          "zh": "将 Amazon Simple Queue Service (Amazon SQS) 队列配置为故障目标。修改 Lambda 函数以处理队列中的消息。",
+          "en": "Configure an Amazon Simple Queue Service (Amazon SQS) queue as the on-failure destination. Modify the Lambda function to process messages in the queue."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Lambda 本质上具有高可用性，可在多个可用区中自动运作。此选项与问题中的「连接不可用问题」无关，无法解决消息遗失的问题。",
+          "en": "Incorrect. Technical reason: AWS Lambda is inherently highly available, automatically running across multiple Availability Zones. This option has nothing to do with the \"unusable connection problem\" in the question and cannot solve the problem of message loss."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：增加 CPU 和内存分配可能会提高功能性能，但无法解决连接问题或确保消息不会遗失。",
+          "en": "Incorrect. Technical reason: Increasing CPU and memory allocation may improve function performance, but does not resolve connection issues or ensure that messages are not lost."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然增加重试次数和等待时间可以降低失败的可能性，但如果重试仍然失败，消息仍然可能遗失。此选项无法确保所有通知均已处理。",
+          "en": "Incorrect. Technical reason: Although increasing the number of retries and wait time reduces the likelihood of failure, messages may still be lost if retries still fail. This option does not ensure that all notifications are processed."
+        },
+        "D": {
+          "zh": "正確。技术原因：通过将失败的消息发送到 SQS 队列，可以确保消息不会遗失。 Lambda函数可以从队列读取消息并重新处理它们，解决连接问题引起的失败。",
+          "en": "Correct. Technical reason: By sending failed messages to an SQS queue, you ensure that messages are not lost. The Lambda function can read messages from the queue and reprocess them, solving failures caused by connection problems."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将 Amazon Simple Queue Service (Amazon SQS) 队列配置为故障目标。修改 Lambda 函数以处理队列中的消息。",
+        "en": "D. Configure an Amazon Simple Queue Service (Amazon SQS) queue as the on-failure destination. Modify the Lambda function to process messages in the queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (91%) 9%。热门讨论与考点摘要：通过将失败的消息发送到 SQS 队列，可以确保消息不会遗失。 Lambda函数可以从队列读取消息并重新处理它们，解决连接问题引起的失败。",
+        "en": "Community vote as displayed: D (91%) 9%. Popular discussion and key point summary: By sending failed messages to an SQS queue, you ensure that messages are not lost. The Lambda function can read messages from the queue and reprocess them, solving failures caused by connection problems."
+      }
+    },
+    {
+      "question_no": 149,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司提供产生事件数据的服务。该公司希望使用 AWS 处理收到的事件数据。数据以特定顺序写入，在整个处理过程中必须保持该顺序。该公司希望实施一种能够最大限度地减少运维开销的解决方案。解决方案架构师应该如何实现这个目标？",
+        "en": "A company has a service that produces event data. The company wants to use AWS to process the event data as it is received. The data is written in a specific order that must be maintained throughout processing. The company wants to implement a solution that minimizes operational overhead. How should a solutions architect accomplish this?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) FIFO 队列来保存消息。设置 AWS Lambda 函数来处理来自队列的消息。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) FIFO queue to hold messages. Set up an AWS Lambda function to process messages from the queue."
+        },
+        "B": {
+          "zh": "创建 Amazon Simple Notification Service (Amazon SNS) 主题以发送包含要处理的负载的通知。将 AWS Lambda 函数配置为订阅者。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic to deliver notifications containing payloads to process. Configure an AWS Lambda function as a subscriber."
+        },
+        "C": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 标准队列来保存消息。设置 AWS Lambda 函数以独立处理队列中的消息。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) standard queue to hold messages. Set up an AWS Lambda function to process messages from the queue independently."
+        },
+        "D": {
+          "zh": "创建 Amazon Simple Notification Service (Amazon SNS) 主题以发送包含要处理的负载的通知。将 Amazon Simple Queue Service (Amazon SQS) 队列配置为订阅者。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic to deliver notifications containing payloads to process. Configure an Amazon Simple Queue Service (Amazon SQS) queue as a subscriber."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：SQS FIFO队列可以保证消息的顺序，这是问题要求的关键点。使用AWS Lambda处理队列中的消息可以实现低操作的架构，满足问题的要求。",
+          "en": "Correct. Technical reason: SQS FIFO queue can guarantee the order of messages, which is the key point required by the question. Using AWS Lambda to process messages in the queue can achieve a low-operation architecture, which meets the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：SNS不保证消息的顺序，因此不符合问题要求。 SNS虽然可以与Lambda集成，但无法满足「必须维护数据秩序」的要求。",
+          "en": "Incorrect. Technical reason: SNS does not guarantee the order of messages, so it does not meet the question requirements. Although SNS can be integrated with Lambda, it cannot meet the requirement that \"data order must be maintained\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：SQS标准队列不保证消息的顺序，因此不符合问题要求。虽然可以使用Lambda来处理消息，但是无法满足「必须保持数据顺序」的要求。",
+          "en": "Incorrect. Technical reason: SQS standard queue does not guarantee the order of messages, so it does not meet the question requirements. Although Lambda can be used to process messages, the requirement that \"data order must be maintained\" cannot be met."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：SNS不保证消息的顺序，因此不符合问题要求。即使使用 SQS 作为订阅者，也不能保证消息的顺序。",
+          "en": "Incorrect. Technical reason: SNS does not guarantee the order of messages, so it does not meet the question requirements. Even with SQS as a subscriber, the ordering of messages is not guaranteed."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建 Amazon Simple Queue Service (Amazon SQS) FIFO 队列来保存消息。设置 AWS Lambda 函数来处理来自队列的消息。",
+        "en": "A. Create an Amazon Simple Queue Service (Amazon SQS) FIFO queue to hold messages. Set up an AWS Lambda function to process messages from the queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：SQS FIFO队列可以保证消息的顺序，这是问题要求的关键点。使用AWS Lambda处理队列中的消息可以实现低操作的架构，满足问题的要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: SQS FIFO queue can guarantee the order of messages, which is the key point required by the question. Using AWS Lambda to process messages in the queue can achieve a low-operation architecture, which meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 150,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将应用程序从本机服务器迁移到 Amazon EC2 实例。作为迁移设计要求的一部分，解决方案架构师必须实现基础设施指针警报。如果CPU利用率在短时间内增加到50%以上，公司不需要采取措施。但如果CPU利用率上升到50%以上，同时磁盘读取IOPS很高，公司就需要尽快采取行动。解决方案架构师也必须减少误报。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A company is migrating an application from on-premises servers to Amazon EC2 instances. As part of the migration design requirements, a solutions architect must implement infrastructure metric alarms. The company does not need to take action if CPU utilization increases to more than 50% for a short burst of time. However, if the CPU utilization increases to more than 50% and read IOPS on the disk are high at the same time, the company needs to act as soon as possible. The solutions architect also must reduce false alarms. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "尽可能创建 Amazon CloudWatch 复合警报。",
+          "en": "Create Amazon CloudWatch composite alarms where possible."
+        },
+        "B": {
+          "zh": "创建 Amazon CloudWatch 控制面板以可视化指针并快速回应问题。",
+          "en": "Create Amazon CloudWatch dashboards to visualize the metrics and react to issues quickly."
+        },
+        "C": {
+          "zh": "创建 Amazon CloudWatch Synthetics 金丝雀来监控应用程序并发出警报。",
+          "en": "Create Amazon CloudWatch Synthetics canaries to monitor the application and raise an alarm."
+        },
+        "D": {
+          "zh": "尽可能创建具有多个指针阈值的单一 Amazon CloudWatch 指针警报。",
+          "en": "Create single Amazon CloudWatch metric alarms with multiple metric thresholds where possible."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：复合警报允许组合多个指示器警报的状态来触发警报。此方法可减少误报，满足「CPU利用率超过50%且磁盘读IOPS较高」的条件。这是因为它直接满足了问题要求并减少了误报。",
+          "en": "Correct. Technical reason: Composite Alarms allow combining the status of multiple indicator alarms to trigger an alarm. This method can reduce false positives and meet the conditions in the question of \"both the CPU utilization exceeding 50% and the disk read IOPS being high\". This is the because it directly meets the question requirements and reduces false positives."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：仪表板用于可视化指针，但它们不会自动触发警报。需要人工监控和手动操作。这个选项不符合问题的要求，因为问题明确需要自动警报而不是手动监控。",
+          "en": "Incorrect. Technical reason: Dashboards are used to visualize metrics, but they do not automatically trigger alerts. Human monitoring and manual actions are required. This option does not meet the requirements of the question because the question clearly requires automated alarms rather than manual monitoring."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：合成金丝雀主要用于监控应用程序可用性和性能，而不是监控 CPU 使用率和磁盘 IOPS 等基础设施指针。此选项不满足问题要求，因为问题侧重于基础设施指针而不是应用程序性能。",
+          "en": "Incorrect. Technical reason: Synthetics canaries are primarily used to monitor application availability and performance rather than monitoring infrastructure metrics such as CPU utilization and disk IOPS. This option does not meet the question requirements because the question focuses on infrastructure metrics rather than application performance."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：指针警报无法同时监控多个指针的组合情况（例如CPU利用率和磁盘IOPS同时满足某个条件）。此选项不满足问题的要求，因为它无法实现复合条件警报。",
+          "en": "Incorrect. Technical reason: Metric Alarms cannot monitor the combined conditions of multiple indicators at the same time (such as CPU utilization and disk IOPS meeting a certain condition at the same time). This option does not meet the requirements of the question because it cannot implement compound conditional alarms."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 尽可能创建 Amazon CloudWatch 复合警报。",
+        "en": "A. Create Amazon CloudWatch composite alarms where possible."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (99%) 1。热门讨论与考点摘要：复合警报允许组合多个指示器警报的状态来触发警报。此方法可减少误报，满足「CPU利用率超过50%且磁盘读IOPS较高」的条件。这是因为它直接满足了问题要求并减少了误报。",
+        "en": "Community vote as displayed: A (99%) 1. Popular discussion and key point summary: Composite Alarms allow combining the status of multiple indicator alarms to trigger an alarm. This method can reduce false positives and meet the conditions in the question of \"both the CPU utilization exceeding 50% and the disk read IOPS being high\". This is the because it directly meets the question requirements and reduces false positives."
+      }
+    }
+  ]
+}

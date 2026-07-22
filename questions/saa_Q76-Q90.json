@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 76,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司每天从位于同一工厂的多台机器接收 10 TB 的仪器数据。数据由存储在工厂内本地数据中心的存储区域网络 (SAN) 上的 JSON 文件组成。该公司希望将这些数据发送到 Amazon S3，几个提供关键近实时分析的附加系统可以访问这些数据。安全传输很重要，因为数据被认为是敏感的。哪一种解决方案提供最可靠的数据传输？",
+        "en": "A company receives 10 TB of instrumentation data each day from several machines located at a single factory. The data consists of JSON files stored on a storage area network (SAN) in an on-premises data center located within the factory. The company wants to send this data to Amazon S3 where it can be accessed by several additional systems that provide critical near-real-time analytics. A secure transfer is important because the data is considered sensitive. Which solution offers the MOST reliable data transfer?"
+      },
+      "options": {
+        "A": {
+          "zh": "通过公共互联网的 AWS DataSync",
+          "en": "AWS DataSync over public internet"
+        },
+        "B": {
+          "zh": "通过 AWS Direct Connect 的 AWS DataSync",
+          "en": "AWS DataSync over AWS Direct Connect"
+        },
+        "C": {
+          "zh": "通过公共互联网的 AWS Database Migration Service (AWS DMS)",
+          "en": "AWS Database Migration Service (AWS DMS) over public internet"
+        },
+        "D": {
+          "zh": "通过 AWS Direct Connect 的 AWS Database Migration Service (AWS DMS)",
+          "en": "AWS Database Migration Service (AWS DMS) over AWS Direct Connect"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS DataSync是专门用于迁移文件数据的服务，适合将本地数据传输到AWS存储服务（例如S3）。但通过Dapi公网传输的数据可能会受到网络波动的影响，可靠性较低，且可能不如专线安全。结论：错误。",
+          "en": "Incorrect. ness analysis: AWS DataSync is a service specifically used to migrate file data and is suitable for transferring local data to AWS storage services (such as S3). However, data transmitted over the Dapi public Internet may be affected by network fluctuations, has lower reliability, and may not be as secure as a dedicated line. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "正確。AWS DataSync 和 AWS Direct Connect 可以提供更高的可靠性和安全性。 Direct Connect是一种专线连接，可减少网络波动并提供更稳定的传输性能，非常适合传输敏感数据。结论：。",
+          "en": "Correct. ness analysis: AWS DataSync and AWS Direct Connect can provide greater reliability and security. Direct Connect is a dedicated line connection that can reduce network fluctuations and provide more stable transmission performance, making it ideal for transmitting sensitive data. Conclusion:."
+        },
+        "C": {
+          "zh": "錯誤。AWS DMS主要用于迁移数据库，问题中的数据是JSON文档，不属于数据库范畴。因此，DMS不适合这种场景。此外，通过公共互联网传输的数据的可靠性和安全性较低。结论：错误。",
+          "en": "Incorrect. ness analysis: AWS DMS is mainly used to migrate databases, and the data in the question is a JSON file and does not belong to the database category. Therefore, DMS is not suitable for this scenario. In addition, the reliability and security of data transmitted over the public Internet are low. Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "錯誤。虽然AWS Direct Connect可以提高传输的可靠性和安全性，但AWS DMS不适合迁移JSON文档，因为它主要用于数据库迁移。因此，该选项不符合题目要求。结论：错误。",
+          "en": "Incorrect. ness analysis: Although AWS Direct Connect can improve the reliability and security of transmission, AWS DMS is not suitable for migrating JSON files because it is mainly used for database migration. Therefore, this option does not meet the question requirements. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 通过 AWS Direct Connect 的 AWS DataSync",
+        "en": "B. AWS DataSync over AWS Direct Connect"
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：AWS DataSync 和 AWS Direct Connect 可以提供更高的可靠性和安全性。 Direct Connect是一种专线连接，可减少网络波动并提供更稳定的传输性能，非常适合传输敏感数据。结论：。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: ness analysis: AWS DataSync and AWS Direct Connect can provide greater reliability and security. Direct Connect is a dedicated line connection that can reduce network fluctuations and provide more stable transmission performance, making it ideal for transmitting sensitive data. Conclusion:."
+      }
+    },
+    {
+      "question_no": 77,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司需要为其应用程序配置实时数据摄取架构。该公司需要一个 API、一个在数据串流时转换数据的流程以及数据存储解决方案。哪种解决方案能够以最少的运维开销满足这些要求？",
+        "en": "A company needs to configure a real-time data ingestion architecture for its application. The company needs an API, a process that transforms data as the data is streamed, and a storage solution for the data. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "部署 Amazon EC2 实例来托管将数据发送到 Amazon Kinesis 数据流的 API。创建使用 Kinesis 数据流作为数据源的 Amazon Kinesis Data Firehose 传输流。使用 AWS Lambda 函数转换数据。使用 Kinesis Data Firehose 传输流将数据发送到 Amazon S3。",
+          "en": "Deploy an Amazon EC2 instance to host an API that sends data to an Amazon Kinesis data stream. Create an Amazon Kinesis Data Firehose delivery stream that uses the Kinesis data stream as a data source. Use AWS Lambda functions to transform the data. Use the Kinesis Data Firehose delivery stream to send the data to Amazon S3."
+        },
+        "B": {
+          "zh": "部署 Amazon EC2 实例来托管将数据发送到 AWS Glue 的 API。停止对 EC2 实例进行来源/目标检查。使用 AWS Glue 转换数据并将数据发送到 Amazon S3。",
+          "en": "Deploy an Amazon EC2 instance to host an API that sends data to AWS Glue. Stop source/destination checking on the EC2 instance. Use AWS Glue to transform the data and to send the data to Amazon S3."
+        },
+        "C": {
+          "zh": "设置 Amazon API Gateway API 以将数据发送到 Amazon Kinesis 数据流。创建使用 Kinesis 数据流作为数据源的 Amazon Kinesis Data Firehose 传输流。使用 AWS Lambda 函数转换数据。使用 Kinesis Data Firehose 传输流将数据发送到 Amazon S3。",
+          "en": "Configure an Amazon API Gateway API to send data to an Amazon Kinesis data stream. Create an Amazon Kinesis Data Firehose delivery stream that uses the Kinesis data stream as a data source. Use AWS Lambda functions to transform the data. Use the Kinesis Data Firehose delivery stream to send the data to Amazon S3."
+        },
+        "D": {
+          "zh": "设置 Amazon API Gateway API 以将数据发送到 AWS Glue。使用 AWS Lambda 函数转换数据。使用 AWS Glue 将数据发送到 Amazon S3。",
+          "en": "Configure an Amazon API Gateway API to send data to AWS Glue. Use AWS Lambda functions to transform the data. Use AWS Glue to send the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。性质分析：由于需要管理和维护 EC2 实例，使用 EC2 实例托管 API 会增加运维开销。原因虽然架构和功能可以满足要求，但使用EC2实例并不能满足「最小运维开销」的要求。",
+          "en": "Incorrect. ness analysis: Using the EC2 instance hosting API increases operational overhead because of the need to manage and maintain EC2 instances. Reason for the Although the architecture and functionality can meet the requirements, the use of EC2 instances does not meet the \"minimum operational overhead\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。ness分析：AWS Glue适合批量处理，不适合实时数据流处理。原因是EC2实例增加了运维开销，且AWS Glue不适合实时数据处理场景。",
+          "en": "Incorrect. ness analysis: AWS Glue is suitable for batch processing, not real-time data stream processing. Reason for the EC2 instances increase operational overhead, and AWS Glue is not suitable for real-time data processing scenarios."
+        },
+        "C": {
+          "zh": "正確。API Gateway 是一种无服务器 API 托管解决方案。 Kinesis 数据流和 Kinesis Data Firehose 支持实时数据处理。可以无缝输入Lambda函数进行数据转换。 S3是一种低成本的存储解决方案。为什么这样的架构完全无服务器，具有最小的运维开销，并满足实时数据处理需求。",
+          "en": "Correct. ness analysis: API Gateway is a serverless API hosting solution. Kinesis data flow and Kinesis Data Firehose support real-time data processing. Lambda functions can be seamlessly input for data conversion. S3 is a low-cost storage solution. Why it’s This architecture is completely serverless, has minimal operational overhead, and meets real-time data processing needs."
+        },
+        "D": {
+          "zh": "錯誤。AWS Glue适合批量处理，不适合实时数据流处理。原因是AWS Glue不适合实时数据处理场景，架构复杂度增加。",
+          "en": "Incorrect. ness analysis: AWS Glue is suitable for batch processing, not real-time data stream processing. Reason for the AWS Glue is not suitable for real-time data processing scenarios, and the architecture complexity increases."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 设置 Amazon API Gateway API 以将数据发送到 Amazon Kinesis 数据流。创建使用 Kinesis 数据流作为数据源的 Amazon Kinesis Data Firehose 传输流。使用 AWS Lambda 函数转换数据。使用 Kinesis Data Firehose 传输流将数据发送到 Amazon S3。",
+        "en": "C. Configure an Amazon API Gateway API to send data to an Amazon Kinesis data stream. Create an Amazon Kinesis Data Firehose delivery stream that uses the Kinesis data stream as a data source. Use AWS Lambda functions to transform the data. Use the Kinesis Data Firehose delivery stream to send the data to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (96%) 4%。热门讨论与考点摘要：API Gateway 是一种无服务器 API 托管解决方案。 Kinesis 数据流和 Kinesis Data Firehose 支持实时数据处理。可以无缝输入Lambda函数进行数据转换。 S3是一种低成本的存储解决方案。为什么这样的架构完全无服务器，具有最小的运维开销，并满足实时数据处理需求。",
+        "en": "Community vote as displayed: C (96%) 4%. Popular discussion and key point summary: ness analysis: API Gateway is a serverless API hosting solution. Kinesis data flow and Kinesis Data Firehose support real-time data processing. Lambda functions can be seamlessly input for data conversion. S3 is a low-cost storage solution. Why it’s This architecture is completely serverless, has minimal operational overhead, and meets real-time data processing needs."
+      }
+    },
+    {
+      "question_no": 78,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "公司需要将用户交易数据存储在 Amazon DynamoDB 表中。公司必须将数据保留 7 年。满足这些要求的运维效率最高解决方案是什么？",
+        "en": "A company needs to keep user transaction data in an Amazon DynamoDB table. The company must retain the data for 7 years. What is the MOST operationally efficient solution that meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 DynamoDB 时间点恢复来连续备份表。",
+          "en": "Use DynamoDB point-in-time recovery to back up the table continuously."
+        },
+        "B": {
+          "zh": "使用 AWS Backup 为表创建备份计划和保留原则。",
+          "en": "Use AWS Backup to create backup schedules and retention policies for the table."
+        },
+        "C": {
+          "zh": "使用 DynamoDB 控制台创建表的按需备份。将备份存储在 Amazon S3 存储桶中。为 S3 存储桶设置 S3 生命周期配置。",
+          "en": "Create an on-demand backup of the table by using the DynamoDB console. Store the backup in an Amazon S3 bucket. Set an S3 Lifecycle configuration for the S3 bucket."
+        },
+        "D": {
+          "zh": "创建 Amazon EventBridge (Amazon CloudWatch Events) 规则以调用 AWS Lambda 函数。配置 Lambda 函数以备份表并将备份存储在 Amazon S3 存储桶中。为 S3 存储桶设置 S3 生命周期配置。",
+          "en": "Create an Amazon EventBridge (Amazon CloudWatch Events) rule to invoke an AWS Lambda function. Configure the Lambda function to back up the table and to store the backup in an Amazon S3 bucket. Set an S3 Lifecycle configuration for the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。时间点恢复 (PITR) 是 DynamoDB 的内置功能，可提供连续备份，但其主要目的是临时数据恢复，而不是长期数据保留。无法满足「保留数据7年」的要求，因此该选项是错误的。",
+          "en": "Incorrect. Point-in-time recovery (PITR) is a built-in function of DynamoDB that can provide continuous backup, but its main purpose is for interim data recovery, not long-term data retention. The requirement to \"retain data for 7 years\" cannot be met, so this option is wrong."
+        },
+        "B": {
+          "zh": "正確。AWS Backup 是一项专门设计用于集中管理备份、支持创建备份计划和设置保留策略的服务。在高效运行的同时，轻松满足「数据保留7年」的要求。因此该选项满足要求。",
+          "en": "Correct. AWS Backup is a service specifically designed to centrally manage backups, supporting the creation of backup plans and setting retention policies. It can easily meet the requirement of \"retaining data for 7 years\" while operating with high efficiency. This option is."
+        },
+        "C": {
+          "zh": "錯誤。这种方法需要手动创建备份和管理S3生命周期配置，复杂且容易出错。 「操作效率」不够，所以这个选项是错误的。",
+          "en": "Incorrect. This method requires manual creation of backups and management of S3 life cycle configuration, which is complex and error-prone. Not \"operationally efficient\" enough, so this option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。并将备份存储在 Amazon S3 存储桶中。为 S3 存储桶设置 S3 生命周期配置。此方法需要开发和维护Lambda函数和EventBridge规则，增加了操作复杂度。 「操作效率」不够，所以这个选项是错误的。",
+          "en": "Incorrect. and store the backup in an Amazon S3 bucket. Set up the S3 lifecycle configuration for the S3 bucket. This method requires the development and maintenance of Lambda functions and EventBridge rules, which increases the operational complexity. Not \"operationally efficient\" enough, so this option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Backup 为表创建备份计划和保留原则。",
+        "en": "B. Use AWS Backup to create backup schedules and retention policies for the table."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：AWS Backup 是一项专门设计用于集中管理备份、支持创建备份计划和设置保留策略的服务。在高效运行的同时，轻松满足「数据保留7年」的要求。因此该选项满足要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: AWS Backup is a service specifically designed to centrally manage backups, supporting the creation of backup plans and setting retention policies. It can easily meet the requirement of \"retaining data for 7 years\" while operating with high efficiency. This option is."
+      }
+    },
+    {
+      "question_no": 79,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司计划使用 Amazon DynamoDB 表进行数据存储。该公司专注于成本优化。大多数早晨不会使用该表。在晚上，读写流量往往是不可预测的。当流量高峰发生时，它们会发生得非常快。解决方案架构师该推荐什么？",
+        "en": "A company is planning to use an Amazon DynamoDB table for data storage. The company is concerned about cost optimization. The table will not be used on most mornings. In the evenings, the read and write traffic will often be unpredictable. When traffic spikes occur, they will happen very quickly. What should a solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "在按需容量模式下创建 DynamoDB 表。",
+          "en": "Create a DynamoDB table in on-demand capacity mode."
+        },
+        "B": {
+          "zh": "创建具有全局二级索引的 DynamoDB 表。",
+          "en": "Create a DynamoDB table with a global secondary index."
+        },
+        "C": {
+          "zh": "创建具有预先配置容量和自动扩展的 DynamoDB 表。",
+          "en": "Create a DynamoDB table with provisioned capacity and auto scaling."
+        },
+        "D": {
+          "zh": "在预置容量模式下创建 DynamoDB 表，并将其配置为全局表。",
+          "en": "Create a DynamoDB table in provisioned capacity mode, and configure it as a global table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。按需容量模式允许 DynamoDB 根据流量自动扩展，无需手动设置读写容量单位。点播模式非常适合流量不稳定的场景，尤其是流量高峰很快出现的情况。虽然按需模式的成本可能高于配置模式，但可以避免在流量变动时出现过度配置或容量不足的问题。",
+          "en": "Correct. On-demand capacity mode allows DynamoDB to automatically scale based on traffic, eliminating the need to manually set read and write capacity units. The on-demand mode is very suitable for scenarios with unstable traffic, especially when traffic peaks occur quickly. Although the cost of the on-demand model may be higher than that of the provisioned model, it can avoid the problem of over-provisioning or insufficient capacity when traffic is variable."
+        },
+        "B": {
+          "zh": "錯誤。全局集成（GSI）用于支持不同的查询模式，与流量管理和成本优化无关。",
+          "en": "Incorrect. Global Integration (GSI) is used to support different query modes and has nothing to do with traffic management and cost optimization."
+        },
+        "C": {
+          "zh": "錯誤。缺省容量模式需要手动设置读写容量单位。虽然可以通过自动扩容来应对流量变化，但配置复杂度较高。对于流量快速变化的场景，自动扩容可能无法及时响应，导致性能问题。",
+          "en": "Incorrect. Preset capacity mode requires manual setting of read and write capacity units. Although automatic expansion can be used to cope with traffic changes, the configuration complexity is high. For scenarios where traffic changes rapidly, automatic expansion may not respond in a timely manner, causing performance problems."
+        },
+        "D": {
+          "zh": "錯誤。全局表用于跨区域数据复制，与流量管理和成本优化无关。缺省容量模式仍需要手动设置容量，可灵活应对流量高峰。",
+          "en": "Incorrect. Global tables are used for cross-region data replication and have nothing to do with traffic management and cost optimization. The preset capacity mode still requires manual setting of capacity and is flexible to deal with traffic peaks."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在按需容量模式下创建 DynamoDB 表。",
+        "en": "A. Create a DynamoDB table in on-demand capacity mode."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (78%) C (22%)。热门讨论与考点摘要：按需容量模式允许 DynamoDB 根据流量自动扩展，无需手动设置读写容量单位。点播模式非常适合流量不稳定的场景，尤其是流量高峰很快出现的情况。虽然按需模式的成本可能高于配置模式，但可以避免在流量变动时出现过度配置或容量不足的问题。",
+        "en": "Community vote as displayed: A (78%) C (22%). Popular discussion and key point summary: On-demand capacity mode allows DynamoDB to automatically scale based on traffic, eliminating the need to manually set read and write capacity units. The on-demand mode is very suitable for scenarios with unstable traffic, especially when traffic peaks occur quickly. Although the cost of the on-demand model may be higher than that of the provisioned model, it can avoid the problem of over-provisioning or insufficient capacity when traffic is variable."
+      }
+    },
+    {
+      "question_no": 80,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司最近与 AWS 托管服务提供商 (MSP) 合作伙伴签署了一份合同，寻求应用程序迁移计划的协助。解决方案架构师需要与 MSP 合作伙伴的 AWS 账户共享现有 AWS 账户中的 Amazon 机器映像 (AMI)。 AMI 由 Amazon Elastic Block Store (Amazon EBS) 支持，并使用 AWS Key Management Service (AWS KMS) 客户托管密钥来加密 EBS 卷快照。解决方案架构师与 MSP 合作伙伴的 AWS 账户共享 AMI 的最安全方式是什么？",
+        "en": "A company recently signed a contract with an AWS Managed Service Provider (MSP) Partner for help with an application migration initiative. A solutions architect needs ta share an Amazon Machine Image (AMI) from an existing AWS account with the MSP Partner's AWS account. The AMI is backed by Amazon Elastic Block Store (Amazon EBS) and uses an AWS Key Management Service (AWS KMS) customer managed key to encrypt EBS volume snapshots. What is the MOST secure way for the solutions architect to share the AMI with the MSP Partner's AWS account?"
+      },
+      "options": {
+        "A": {
+          "zh": "公开加密的 AMI 和快照。修改密钥策略以允许 MSP 合作伙伴的 AWS 账户使用该密钥。",
+          "en": "Make the encrypted AMI and snapshots publicly available. Modify the key policy to allow the MSP Partner's AWS account to use the key."
+        },
+        "B": {
+          "zh": "修改 AMI 的 launchPermission 属性。仅与 MSP 合作伙伴的 AWS 账户共享 AMI。修改密钥策略以允许 MSP 合作伙伴的 AWS 账户使用该密钥。",
+          "en": "Modify the launchPermission property of the AMI. Share the AMI with the MSP Partner's AWS account only. Modify the key policy to allow the MSP Partner's AWS account to use the key."
+        },
+        "C": {
+          "zh": "修改 AMI 的 launchPermission 属性。仅与 MSP 合作伙伴的 AWS 账户共享 AMI。修改密钥策略以信任 MSP 合作伙伴拥有的新 KMS 密钥进行加密。",
+          "en": "Modify the launchPermission property of the AMI. Share the AMI with the MSP Partner's AWS account only. Modify the key policy to trust a new KMS key that is owned by the MSP Partner for encryption."
+        },
+        "D": {
+          "zh": "将 AMI 从来源账户导出到 MSP 合作伙伴 AWS 账户中的 Amazon S3 存储桶，使用 MSP 合作伙伴拥有的新 KMS 密钥加密 S3 存储桶。在 MSP 合作伙伴的 AWS 账户中复制并启动 AMI。",
+          "en": "Export the AMI from the source account to an Amazon S3 bucket in the MSP Partner's AWS account, Encrypt the S3 bucket with a new KMS key that is owned by the MSP Partner. Copy and launch the AMI in the MSP Partner's AWS account."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。公开加密的 AMI 和快照会带来安全风险，因为任何人都可以访问这些资源。尽管修改密钥策略可以允许 MSP 合作伙伴使用密钥，但公开分享 AMI 违反了安全最佳实践。",
+          "en": "Incorrect. Making encrypted AMIs and snapshots publicly available creates a security risk because anyone can access these resources. Although modifying the key policy can allow MSP partners to use the key, sharing the AMI publicly goes against security best practices."
+        },
+        "B": {
+          "zh": "正確。通过修改 launchPermission 属性，您可以将 AMI 的共享范围限制为仅指定的 AWS 账户。修改密钥策略以允许 MSP 合作伙伴的 AWS 账户使用加密密钥，确保 EBS 卷的加密仍然有效。此选项符合安全最佳实践，同时满足共享需求。",
+          "en": "Correct. By modifying the launchPermission attribute, you can limit the sharing scope of the AMI to only the specified AWS account. Modify the key policy to allow the MSP partner's AWS account to use the encryption key, ensuring that the encryption of the EBS volume still works. This option complies with security best practices while meeting sharing needs."
+        },
+        "C": {
+          "zh": "錯誤。尽管修改 launchPermission 属性是正确的，但修改密钥策略以信任 MSP 合作伙伴拥有的用于加密的新 KMS 密钥会增加复杂性。此选项需要额外的密钥管理步骤，但这些步骤不是必要的。",
+          "en": "Incorrect. Although modifying the launchPermission attribute is correct, modifying the key policy to trust a new KMS key that is owned by the MSP Partner for encryption adds complexity. This option requires additional key management steps that are not necessary."
+        },
+        "D": {
+          "zh": "錯誤。将 AMI 导出到 S3 并重新加密会增加不必要的复杂性。此方法不直接利用AWS提供的AMI共享功能，效率较低。",
+          "en": "Incorrect. Exporting the AMI to S3 and re-encrypting adds unnecessary complexity. This method does not directly utilize the AMI sharing function provided by AWS and is less efficient."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 修改 AMI 的 launchPermission 属性。仅与 MSP 合作伙伴的 AWS 账户共享 AMI。修改密钥策略以允许 MSP 合作伙伴的 AWS 账户使用该密钥。",
+        "en": "B. Modify the launchPermission property of the AMI. Share the AMI with the MSP Partner's AWS account only. Modify the key policy to allow the MSP Partner's AWS account to use the key."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (91%) 6%。热门讨论与考点摘要：通过修改 launchPermission 属性，您可以将 AMI 的共享范围限制为仅指定的 AWS 账户。修改密钥策略以允许 MSP 合作伙伴的 AWS 账户使用加密密钥，确保 EBS 卷的加密仍然有效。此选项符合安全最佳实践，同时满足共享需求。",
+        "en": "Community vote as displayed: B (91%) 6%. Popular discussion and key point summary: By modifying the launchPermission attribute, you can limit the sharing scope of the AMI to only the specified AWS account. Modify the key policy to allow the MSP partner's AWS account to use the encryption key, ensuring that the encryption of the EBS volume still works. This option complies with security best practices while meeting sharing needs."
+      }
+    },
+    {
+      "question_no": 81,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在为 AWS 上部署的新应用程序设计云架构。该过程应该并行运行，同时根据要处理的作业数量根据需要添加和删除应用程序节点。处理器应用程序是无状态的。解决方案架构师必须确保应用程序是松散耦合的，并且作业项目是持久的存储。解决方案架构师应该使用哪种设计？",
+        "en": "A solutions architect is designing the cloud architecture for a new application being deployed on AWS. The process should run in parallel while adding and removing application nodes as needed based on the number of jobs to be processed. The processor application is stateless. The solutions architect must ensure that the application is loosely coupled and the job items are durably stored. Which design should the solutions architect use?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon SNS 主题以发送需要处理的作业。创建包含处理器应用程序的 Amazon 机器映像 (AMI)。创建使用 AMI 的启动配置。使用启动配置创建 Auto Scaling 组。设置Auto Scaling组的伸缩策略，根据CPU使用情况添加和删除节点。",
+          "en": "Create an Amazon SNS topic to send the jobs that need to be processed. Create an Amazon Machine Image (AMI) that consists of the processor application. Create a launch configuration that uses the AMI. Create an Auto Scaling group using the launch configuration. Set the scaling policy for the Auto Scaling group to add and remove nodes based on CPU usage."
+        },
+        "B": {
+          "zh": "创建 Amazon SQS 队列来存储需要处理的作业。创建包含处理器应用程序的 Amazon 机器映像 (AMI)。创建使用 AMI 的启动配置。使用启动配置创建 Auto Scaling 组。设置 Auto Scaling 组的伸缩策略，根据网络使用情况添加和删除节点。",
+          "en": "Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI) that consists of the processor application. Create a launch configuration that uses the AMI. Create an Auto Scaling group using the launch configuration. Set the scaling policy for the Auto Scaling group to add and remove nodes based on network usage."
+        },
+        "C": {
+          "zh": "创建 Amazon SQS 队列来存储需要处理的作业。创建包含处理器应用程序的 Amazon 机器映像 (AMI)。创建使用 AMI 的启动模板。使用启动模板创建 Auto Scaling 组。设置 Auto Scaling 组的扩展策略，以根据 SQS 队列中的项目数添加和删除节点。",
+          "en": "Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI) that consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the launch template. Set the scaling policy for the Auto Scaling group to add and remove nodes based on the number of items in the SQS queue."
+        },
+        "D": {
+          "zh": "创建 Amazon SNS 主题以发送需要处理的作业。创建包含处理器应用程序的 Amazon 机器映像 (AMI)。创建使用 AMI 的启动模板。使用启动模板创建 Auto Scaling 组。设置 Auto Scaling 组的伸缩策略，根据发布到 SNS 主题的消息数量添加和删除节点。",
+          "en": "Create an Amazon SNS topic to send the jobs that need to be processed. Create an Amazon Machine Image (AMI) that consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the launch template. Set the scaling policy for the Auto Scaling group to add and remove nodes based on the number of messages published to the SNS topic."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。SNS主题用于信息发布和订阅，不适合存储任务。问题的要点是任务需要「持久化存储」，而SNS无法满足这个要求。此外，基于 CPU 使用率的扩展可能无法准确反映队列中的任务数量，并且可能无法确保资源和任务需求匹配。",
+          "en": "Incorrect. SNS topics are used for information publishing and subscription and are not suitable for storage tasks. The main point of the question is that tasks require \"persistent storage\", and SNS cannot meet this requirement. Additionally, Scaling based on CPU usage may not accurately reflect the number of tasks in the queue, and may not ensure that resources and task requirements match."
+        },
+        "B": {
+          "zh": "錯誤。SQS队列可以持久存储任务并实现松散耦合。此外，基于网络使用情况的扩展并不能直接反映队列中的任务数量，可能会导致资源分配不准确。",
+          "en": "Incorrect. SQS queues can store tasks persistently and achieve loose coupling. Additionally, Scaling based on network usage does not directly reflect the number of tasks in the queue and may lead to inaccurate resource allocation."
+        },
+        "C": {
+          "zh": "正確。根据队列中的任务数量进行扩展可确保资源与任务需求相匹配，并且是最佳实践。",
+          "en": "Correct. Scaling based on the number of tasks in the queue ensures that resources match task needs and is a best practice."
+        },
+        "D": {
+          "zh": "錯誤。基于SNS消息数量的扩展并不能准确反映队列中的任务数量，可能导致资源分配不准确。",
+          "en": "Incorrect. Expansion based on the number of SNS messages does not accurately reflect the number of tasks in the queue, which may lead to inaccurate resource allocation."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建 Amazon SQS 队列来存储需要处理的作业。创建包含处理器应用程序的 Amazon 机器映像 (AMI)。创建使用 AMI 的启动模板。使用启动模板创建 Auto Scaling 组。设置 Auto Scaling 组的扩展策略，以根据 SQS 队列中的项目数添加和删除节点。",
+        "en": "C. Create an Amazon SQS queue to hold the jobs that need to be processed. Create an Amazon Machine Image (AMI) that consists of the processor application. Create a launch template that uses the AMI. Create an Auto Scaling group using the launch template. Set the scaling policy for the Auto Scaling group to add and remove nodes based on the number of items in the SQS queue."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：根据队列中的任务数量进行扩展可确保资源与任务需求相匹配，并且是最佳实践。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Scaling based on the number of tasks in the queue ensures that resources match task needs and is a best practice."
+      }
+    },
+    {
+      "question_no": 82,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 云中托管其 Web 应用程序。该公司将 Elastic Load Balancer 配置为使用导入到 AWS Certificate Manager (ACM) 中的证书。必须在每个证书到期前 30 天通知公司的安全团队。解决方案架构师应该建议什么来满足此要求？",
+        "en": "A company hosts its web applications in the AWS Cloud. The company configures Elastic Load Balancers to use certificates that are imported into AWS Certificate Manager (ACM). The company's security team must be notified 30 days before the expiration of each certificate. What should a solutions architect recommend to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 ACM 中添加一条规则，从任何凭证过期前 30 天开始，每天向 Amazon Simple Notification Service (Amazon SNS) 主题发布自定义消息。",
+          "en": "Add a rule in ACM to publish a custom message to an Amazon Simple Notification Service (Amazon SNS) topic every day, beginning 30 days before any certificate will expire."
+        },
+        "B": {
+          "zh": "创建一个 AWS Config 规则来检查将在 30 天内过期的凭证。配置 Amazon EventBridge (Amazon CloudWatch Events)，以便在 AWS Config 报告不合规资源时通过 Amazon Simple Notification Service (Amazon SNS) 调用自定义警报。",
+          "en": "Create an AWS Config rule that checks for certificates that will expire within 30 days. Configure Amazon EventBridge (Amazon CloudWatch Events) to invoke a custom alert by way of Amazon Simple Notification Service (Amazon SNS) when AWS Config reports a noncompliant resource."
+        },
+        "C": {
+          "zh": "使用 AWS Trusted Advisor 检查将在 30 天内过期的凭证。创建基于 Trusted Advisor 指标的 Amazon CloudWatch 警报以检查状态变更。配置警报以通过 Amazon Simple Notification Service (Amazon SNS) 发送自定义警报。",
+          "en": "Use AWS Trusted Advisor to check for certificates that will expire within 30 days. Create an Amazon CloudWatch alarm that is based on Trusted Advisor metrics for check status changes. Configure the alarm to send a custom alert by way of Amazon Simple Notification Service (Amazon SNS)."
+        },
+        "D": {
+          "zh": "创建 Amazon EventBridge (Amazon CloudWatch Events) 规则以检测将在 30 天内过期的任何凭证。配置规则以调用 AWS Lambda 函数。配置 Lambda 函数以通过 Amazon Simple Notification Service (Amazon SNS) 发送自定义警报。",
+          "en": "Create an Amazon EventBridge (Amazon CloudWatch Events) rule to detect any certificates that will expire within 30 days. Configure the rule to invoke an AWS Lambda function. Configure the Lambda function to send a custom alert by way of Amazon Simple Notification Service (Amazon SNS)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。ACM 本身不支持直接创建规则来将消息发布到 SNS。 ACM的功能主要是管理凭证而不是提供通知功能。因此这个方案不可行。",
+          "en": "Incorrect. ACM itself does not support directly creating rules to publish messages to SNS. The function of ACM is mainly to manage certificates rather than provide notification functions. Therefore this option is not feasible."
+        },
+        "B": {
+          "zh": "正確。AWS Config 可以通过规则检查资源合规性，包括凭证过期时间。 EventBridge 可以从 AWS Config 检索不合规事件并触发 SNS 通知。此选项可行，符合题目要求。",
+          "en": "Correct. AWS Config can check resource compliance through rules, including certificate expiration times. EventBridge can capture non-compliant events from AWS Config and trigger SNS notifications. This option is feasible and meets the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。尽管 Trusted Advisor 可以检查凭证的状态，但其功能主要是提供建议，而不是实时监控和通知。此外，Trusted Advisor 的某些功能需要企业支持计划，这可能不适用于所有用户。该选项不符合题目要求。",
+          "en": "Incorrect. Although Trusted Advisor can check the status of certificates, its functionality is primarily to provide recommendations rather than real-time monitoring and notifications. Additionally, some features of Trusted Advisor require an Enterprise Support Plan, which may not be suitable for all users. This option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。EventBridge 可以检测凭证过期事件并触发 Lambda 函数。 Lambda 函数可以进一步处理逻辑并发送 SNS 通知。此选项是可行的，但实施起来比选项 B 更复杂，并且需要额外的 Lambda 函数开发工作。",
+          "en": "Incorrect. EventBridge can detect certificate expiration events and trigger Lambda functions. Lambda functions can further process logic and send SNS notifications. This option is possible, but is more complex to implement than option B and requires additional Lambda function development work."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建一个 AWS Config 规则来检查将在 30 天内过期的凭证。配置 Amazon EventBridge (Amazon CloudWatch Events)，以便在 AWS Config 报告不合规资源时通过 Amazon Simple Notification Service (Amazon SNS) 调用自定义警报。",
+        "en": "B. Create an AWS Config rule that checks for certificates that will expire within 30 days. Configure Amazon EventBridge (Amazon CloudWatch Events) to invoke a custom alert by way of Amazon Simple Notification Service (Amazon SNS) when AWS Config reports a noncompliant resource."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (49%)； B (49%)。热门讨论与考点摘要：AWS Config 可以通过规则检查资源合规性，包括凭证过期时间。 EventBridge 可以从 AWS Config 检索不合规事件并触发 SNS 通知。此选项可行，符合题目要求。",
+        "en": "Community vote as displayed: D (49%); B (49%). Popular discussion and key point summary: AWS Config can check resource compliance through rules, including certificate expiration times. EventBridge can capture non-compliant events from AWS Config and trigger SNS notifications. This option is feasible and meets the question requirements."
+      }
+    },
+    {
+      "question_no": 83,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的动态网站使用美国的本地服务器托管。该公司正在欧洲推出其产品，并希望为新的欧洲用户优化网站加载时间。该网站的后端必须保留在美国。该产品几天后就要推出，需要立即解决。解决方案架构师该推荐什么？",
+        "en": "A company's dynamic website is hosted using on-premises servers in the United States. The company is launching its product in Europe, and it wants to optimize site loading times for new European users. The site's backend must remain in the United States. The product is being launched in a few days, and an immediate solution is needed. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 us-east-1 中启动 Amazon EC2 实例并将网站迁移到其中。",
+          "en": "Launch an Amazon EC2 instance in us-east-1 and migrate the site to it."
+        },
+        "B": {
+          "zh": "将网站移动到 Amazon S3。在区域之间使用跨区域复制。",
+          "en": "Move the website to Amazon S3. Use Cross-Region Replication between Regions."
+        },
+        "C": {
+          "zh": "使用 Amazon CloudFront 以及指向本地服务器的自定义来源。",
+          "en": "Use Amazon CloudFront with a custom origin pointing to the on-premises servers."
+        },
+        "D": {
+          "zh": "使用指向本地服务器的 Amazon Route 53 地理位置邻近路由原则。",
+          "en": "Use an Amazon Route 53 geoproximity routing policy pointing to on-premises servers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。虽然将网站迁移到Amazon EC2实例可以提供更高的可用性，但并不能解决华硕用户的访问速度问题，因为EC2实例仍位于美国。此外，将网站迁移到EC2实例需要时间，这个问题应该「立即解决」。",
+          "en": "Incorrect. Although migrating the website to an Amazon EC2 instance can provide higher availability, it does not solve the access speed problem for Huaxuo users because the EC2 instance is still located in the United States. In addition, migrating a website to an EC2 instance takes time, and the question should be \"solved immediately\"."
+        },
+        "B": {
+          "zh": "錯誤。Amazon S3 的跨区域复制可以将数据复制到多个区域，但这需要时间来设置和同步数据，这不是「立即解决」的要求。另外，问题中明确要求网站后端必须保留在美国，跨区域复制会将数据复制到其他区域，违反了这项要求。",
+          "en": "Incorrect. Amazon S3's cross-region replication can replicate data to multiple regions, but this requires time to set up and synchronize the data, which is not an \"immediate resolution\" requirement. In addition, the question clearly requires that the backend of the website must be kept in the United States, and cross-region replication will copy the data to other regions, violating this requirement."
+        },
+        "C": {
+          "zh": "正確。Amazon CloudFront是一个全球内容传递网络（CDN），可将内容缓存到最接近用户的边缘位置，从而显著提高华索用户的访问速度。使用自定义来源指向本地服务器，并确保后端仍然位于美国并满足问题要求。 CloudFront 可以快速设置和部署，满足您的「实时解决方案」需求。",
+          "en": "Correct. Amazon CloudFront is a global content delivery network (CDN) that can cache content to the edge location closest to the user, thereby significantly improving the access speed of Huasuo users. Use a custom source to point to the local server and ensure that the backend is still located in the United States and meets the problem requirements. CloudFront is fast to set up and deploy, meeting your \"instant solution\" needs."
+        },
+        "D": {
+          "zh": "錯誤。Route 53的地理邻近路由策略可以根据用户的位置选择最近的服务器，但它不会优化跨区域访问速度。",
+          "en": "Incorrect. Route 53's geographical proximity routing policy can select the closest server based on the user's location, but it does not optimize cross-region access speeds."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 Amazon CloudFront 以及指向本地服务器的自定义来源。",
+        "en": "C. Use Amazon CloudFront with a custom origin pointing to the on-premises servers."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：Amazon CloudFront是一个全球内容传递网络（CDN），可将内容缓存到最接近用户的边缘位置，从而显著提高华索用户的访问速度。使用自定义来源指向本地服务器，并确保后端仍然位于美国并满足问题要求。 CloudFront 可以快速设置和部署，满足您的「实时解决方案」需求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon CloudFront is a global content delivery network (CDN) that can cache content to the edge location closest to the user, thereby significantly improving the access speed of Huasuo users. Use a custom source to point to the local server and ensure that the backend is still located in the United States and meets the problem requirements. CloudFront is fast to set up and deploy, meeting your \"instant solution\" needs."
+      }
+    },
+    {
+      "question_no": 84,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望降低现有三层 Web 架构的成本。 Web、应用程序和数据库服务器在用于开发、测试和生产环境的 Amazon EC2 实例上运行。 EC2 实例在高峰时段平均 CPU 使用率为 30%，在非高峰时段平均 CPU 使用率为 10%。生产 EC2 实例每天 24 小时运行。开发和测试EC2实例每天至少运行8小时。该公司计划实施自动化，以在 EC2 实例不使用时停止开发和测试。哪种 EC2 实例购买解决方案能够最经济且有效率地满足公司的要求？",
+        "en": "A company wants to reduce the cost of its existing three-tier web architecture. The web, application, and database servers are running on Amazon EC2 instances for the development, test, and production environments. The EC2 instances average 30% CPU utilization during peak hours and 10% CPU utilization during non-peak hours. The production EC2 instances run 24 hours a day. The development and test EC2 instances run for at least 8 hours each day. The company plans to implement automation to stop the development and test EC2 instances when they are not in use. Which EC2 instance purchasing solution will meet the company's requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Spot 实例用于生产 EC2 实例。使用预留实例来开发和测试 EC2 实例。",
+          "en": "Use Spot Instances for the production EC2 instances. Use Reserved Instances for the development and test EC2 instances."
+        },
+        "B": {
+          "zh": "将预留实例用于生产 EC2 实例。使用按需实例来开发和测试 EC2 实例。",
+          "en": "Use Reserved Instances for the production EC2 instances. Use On-Demand Instances for the development and test EC2 instances."
+        },
+        "C": {
+          "zh": "将 Spot 区块用于生产 EC2 实例。使用预留实例来开发和测试 EC2 实例。",
+          "en": "Use Spot blocks for the production EC2 instances. Use Reserved Instances for the development and test EC2 instances."
+        },
+        "D": {
+          "zh": "将按需实例用于生产 EC2 实例。使用 Spot 区块来开发和测试 EC2 实例。",
+          "en": "Use On-Demand Instances for the production EC2 instances. Use Spot blocks for the development and test EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。实例。 Spot 实例适用于非任务关键型或可中断的工作负载，但生产环境需要高可用性，Spot 实例不适合生产环境。预留实例适合长期固定工作负载，但开发测试环境每天仅运行8小时，使用预留实例可能会导致资源消耗。",
+          "en": "Incorrect. instances. Spot Instances are suitable for non-mission-critical or interruptible workloads, but production environments require high availability, and Spot Instances are not suitable for production environments. Reserved Instances are suitable for long-term fixed workloads, but the development and testing environment only runs for 8 hours a day, and using Reserved Instances may result in resource consumption."
+        },
+        "B": {
+          "zh": "正確。实例。预留实例适用于生产环境。由于生产环境需要24小时运行并长期维护，因此使用预留实例可以显著降低成本。按需实例每天仅运行 8 小时，适合开发和测试环境。使用按需实例，您可以根据需要灵活启动和停止实例，避免资源消耗。",
+          "en": "Correct. instances. Reserved Instances are suitable for production environments. Because production environments need to run 24 hours a day and are maintained for a long time, using Reserved Instances can significantly reduce costs. On-Demand Instances are suitable for development and testing environments because they only run for 8 hours a day. Using On-Demand Instances, you can flexibly start and stop instances as needed to avoid resource consumption."
+        },
+        "C": {
+          "zh": "錯誤。Spot区块适合周期性任务，但生产环境需要长期定期运行。 Spot 块不适合生产环境。预留实例适合长期固定工作负载，但开发测试环境每天仅运行8小时，使用预留实例可能会导致资源消耗。",
+          "en": "Incorrect. Spot blocks are suitable for periodic tasks, but the production environment requires long-term regular operation. Spot blocks are not suitable for production environments. Reserved Instances are suitable for long-term fixed workloads, but the development and testing environment only runs for 8 hours a day, and using Reserved Instances may result in resource consumption."
+        },
+        "D": {
+          "zh": "錯誤。实例。按需实例适用于周期性或不可预测的工作负载，但生产环境需要长期稳定运行，使用按需实例的成本较高。 Spot 区块适合短期任务，但开发和测试环境需要每天运行 8 小时，Spot 区块可能不够。",
+          "en": "Incorrect. instances. On-Demand Instances are suitable for periodic or unpredictable workloads, but the production environment requires long-term stable operation, and the cost of using On-Demand Instances is higher. Spot blocks are suitable for short-term tasks, but developing and testing the environment requires running for 8 hours a day, and Spot blocks may not be sufficient."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将预留实例用于生产 EC2 实例。使用按需实例来开发和测试 EC2 实例。",
+        "en": "B. Use Reserved Instances for the production EC2 instances. Use On-Demand Instances for the development and test EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (97%) 3%。热门讨论与考点摘要：实例。预留实例适用于生产环境。由于生产环境需要24小时运行并长期维护，因此使用预留实例可以显著降低成本。按需实例每天仅运行 8 小时，适合开发和测试环境。使用按需实例，您可以根据需要灵活启动和停止实例，避免资源消耗。",
+        "en": "Community vote as displayed: B (97%) 3%. Popular discussion and key point summary: instances. Reserved Instances are suitable for production environments. Because production environments need to run 24 hours a day and are maintained for a long time, using Reserved Instances can significantly reduce costs. On-Demand Instances are suitable for development and testing environments because they only run for 8 hours a day. Using On-Demand Instances, you can flexibly start and stop instances as needed to avoid resource consumption."
+      }
+    },
+    {
+      "question_no": 85,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个生产 Web 应用程序，用户可以在其中通过 Web 接口或移动应用程序上传文档。根据新的监管要求。新文档存储后无法修改或删除。解决方案架构师应该怎么做才能满足这项要求？",
+        "en": "A company has a production web application in which users upload documents through a web interface or a mobile app. According to a new regulatory requirement. new documents cannot be modified or deleted after they are stored. What should a solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "将上传的文档存储在启用了 S3 版本控制和 S3 对象锁定的 Amazon S3 存储桶中。",
+          "en": "Store the uploaded documents in an Amazon S3 bucket with S3 Versioning and S3 Object Lock enabled."
+        },
+        "B": {
+          "zh": "将上传的文档存储在 Amazon S3 存储桶中。配置 S3 生命周期策略以定期归档文档。",
+          "en": "Store the uploaded documents in an Amazon S3 bucket. Configure an S3 Lifecycle policy to archive the documents periodically."
+        },
+        "C": {
+          "zh": "将上传的文档存储在启用了 S3 版本控制的 Amazon S3 存储桶中。配置 ACL 以将所有访问限制为唯读。",
+          "en": "Store the uploaded documents in an Amazon S3 bucket with S3 Versioning enabled. Configure an ACL to restrict all access to read-only."
+        },
+        "D": {
+          "zh": "将上传的文档存储在 Amazon Elastic File System (Amazon EFS) 卷上。通过以唯读模式安装卷来访问数据。",
+          "en": "Store the uploaded documents on an Amazon Elastic File System (Amazon EFS) volume. Access the data by mounting the volume in read-only mode."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3对象锁是专门为满足不变性要求并防止对象被修改或删除而设计的功能。启用 S3 版本控制后，所有对象的版本都会保留，进一步确保数据完整性。",
+          "en": "Correct. S3 Object Lock is a function specifically designed to meet the requirements of immutability and prevent objects from being modified or deleted. When S3 Versioning is enabled, versions of all objects are retained, further ensuring data integrity."
+        },
+        "B": {
+          "zh": "錯誤。S3 Lifecycle 仅用于管理对象的生命周期（例如传回或删除），并不会阻止对象被修改或删除。无条件选项不符合问题中「不能修改或删除」的内容。",
+          "en": "Incorrect. S3 Lifecycle is only used to manage the life cycle of objects (such as return or deletion) and does not prevent objects from being modified or deleted. The unconditional option does not satisfy the \"cannot be modified or deleted\" content in the question."
+        },
+        "C": {
+          "zh": "錯誤。尽管启用了 S3 版本控制来保留对象的版本，但 ACL 仅限制访问，并不能阻止对象被删除或修改。这。",
+          "en": "Incorrect. Although S3 Versioning is enabled to preserve a version of the object, the ACL only restricts access and does not prevent the object from being deleted or modified. The."
+        },
+        "D": {
+          "zh": "錯誤。EFS 是一种文件存储服务。虽然它可以以唯读模式挂载以限制修改，但这并不是为对象不变性而设计的。",
+          "en": "Incorrect. EFS is a file storage service. Although it can be mounted in read-only mode to limit modifications, this is not designed for object immutability."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将上传的文档存储在启用了 S3 版本控制和 S3 对象锁定的 Amazon S3 存储桶中。",
+        "en": "A. Store the uploaded documents in an Amazon S3 bucket with S3 Versioning and S3 Object Lock enabled."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：S3对象锁是专门为满足不变性要求并防止对象被修改或删除而设计的功能。启用 S3 版本控制后，所有对象的版本都会保留，进一步确保数据完整性。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: S3 Object Lock is a function specifically designed to meet the requirements of immutability and prevent objects from being modified or deleted. When S3 Versioning is enabled, versions of all objects are retained, further ensuring data integrity."
+      }
+    },
+    {
+      "question_no": 86,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "某公司拥有多个 Web 服务器，需要经常访问通用 Amazon RDS MySQL 多可用区数据库实例。该公司希望有一种安全的方法让 Web 服务器连接到数据库，同时满足频繁轮换用户凭证的安全要求。哪种解决方案满足这些要求？",
+        "en": "A company has several web servers that need to frequently access a common Amazon RDS MySQL Multi-AZ DB instance. The company wants a secure method for the web servers to connect to the database while meeting a security requirement to rotate user credentials frequently. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据库用户凭证存储在 AWS Secrets Manager 中。授予必要的 IAM 权限以允许 Web 服务器访问 AWS Secrets Manager。",
+          "en": "Store the database user credentials in AWS Secrets Manager. Grant the necessary IAM permissions to allow the web servers to access AWS Secrets Manager."
+        },
+        "B": {
+          "zh": "将数据库用户凭证存储在 AWS Systems Manager OpsCenter 中。授予必要的 IAM 权限以允许 Web 服务器访问 OpsCenter。",
+          "en": "Store the database user credentials in AWS Systems Manager OpsCenter. Grant the necessary IAM permissions to allow the web servers to access OpsCenter."
+        },
+        "C": {
+          "zh": "将数据库用户凭证存储在安全的 Amazon S3 存储桶中。授予必要的 IAM 权限以允许 Web 服务器检索凭证并访问数据库。",
+          "en": "Store the database user credentials in a secure Amazon S3 bucket. Grant the necessary IAM permissions to allow the web servers to retrieve credentials and access the database."
+        },
+        "D": {
+          "zh": "将数据库用户凭证存储在 Web 服务器文件系统上使用 AWS Key Management Service (AWS KMS) 加密的文件中。 Web 服务器应该能够解密文件并访问数据库。",
+          "en": "Store the database user credentials in files encrypted with AWS Key Management Service (AWS KMS) on the web server file system. The web server should be able to decrypt the files and access the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Secrets Manager 是一项专门设计用于安全存储和管理数据库凭证等敏感信息的服务。支持数据库凭证自动轮换，满足「用户凭证频繁轮换」的题型需求。可以通过 IAM 权限安全地控制 Web 服务器对 Secrets Manager 的访问。",
+          "en": "Correct. AWS Secrets Manager is a service specifically designed to securely store and manage sensitive information, such as database credentials. Supports automatic rotation of database credentials, meeting the question requirements of \"frequent rotation of user credentials\". Web server access to Secrets Manager can be securely controlled through IAM permissions."
+        },
+        "B": {
+          "zh": "錯誤。AWS Systems Manager OpsCenter 主要用于管理和故障排除作业问题，不适合存储和管理数据库凭证。 OpsCenter 不支持数据库凭证的自动轮调。",
+          "en": "Incorrect. AWS Systems Manager OpsCenter is primarily used for management and troubleshooting operational issues and is not suitable for storing and managing database credentials. OpsCenter does not support automatic rotation of database credentials."
+        },
+        "C": {
+          "zh": "錯誤。虽然可以将凭证存储在加密的 S3 存储桶中，但 S3 并不是专门为管理敏感信息而设计的服务。不支持数据库凭证自动轮换，管理复杂度高。",
+          "en": "Incorrect. While it is possible to store credentials in an encrypted S3 bucket, S3 is not a service specifically designed to manage sensitive information. Automatic rotation of database credentials is not supported and management complexity is high."
+        },
+        "D": {
+          "zh": "錯誤。在 Web 服务器文件系统中存储凭证会增加安全性风险。虽然可以使用 AWS KMS 加密文档，但不支持数据库凭证的自动轮调。",
+          "en": "Incorrect. Storing credentials in the web server file system increases security risks. While it is possible to encrypt files using AWS KMS, automatic rotation of database credentials is not supported."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将数据库用户凭证存储在 AWS Secrets Manager 中。授予必要的 IAM 权限以允许 Web 服务器访问 AWS Secrets Manager。",
+        "en": "A. Store the database user credentials in AWS Secrets Manager. Grant the necessary IAM permissions to allow the web servers to access AWS Secrets Manager."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：AWS Secrets Manager 是一项专门设计用于安全存储和管理数据库凭证等敏感信息的服务。支持数据库凭证自动轮换，满足「用户凭证频繁轮换」的题型需求。可以通过 IAM 权限安全地控制 Web 服务器对 Secrets Manager 的访问。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Secrets Manager is a service specifically designed to securely store and manage sensitive information, such as database credentials. Supports automatic rotation of database credentials, meeting the question requirements of \"frequent rotation of user credentials\". Web server access to Secrets Manager can be securely controlled through IAM permissions."
+      }
+    },
+    {
+      "question_no": 87,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在由 Amazon API Gateway API 调用的 AWS Lambda 函数上托管应用程序。 Lambda 函数将客户数据存储到 Amazon Aurora MySQL 数据库。每当公司升级数据库时，Lambda 函数都无法创建数据库连接，直到升级完成。结果是某些事件的客户数据没有被记录。解决方案架构师需要设计一个解决方案来存储数据库升级期间创建的客户数据。哪种解决方案可以满足这些要求？",
+        "en": "A company hosts an application on AWS Lambda functions that are invoked by an Amazon API Gateway API. The Lambda functions save customer data to an Amazon Aurora MySQL database. Whenever the company upgrades the database, the Lambda functions fail to establish database connections until the upgrade is complete. The result is that customer data is not recorded for some of the event. A solutions architect needs to design a solution that stores customer data that is created during database upgrades. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Amazon RDS 代理程序以位于 Lambda 函数和数据库之间。配置 Lambda 函数以连接到 RDS 代理程序。",
+          "en": "Provision an Amazon RDS proxy to sit between the Lambda functions and the database. Configure the Lambda functions to connect to the RDS proxy."
+        },
+        "B": {
+          "zh": "将 Lambda 函数的运行时间增加到最大值。在将客户数据存储在数据库中的代码中创建重试机制。",
+          "en": "Increase the run time of the Lambda functions to the maximum. Create a retry mechanism in the code that stores the customer data in the database."
+        },
+        "C": {
+          "zh": "将客户数据保留到 Lambda 本地存储。配置新的 Lambda 函数以扫描本地存储以将客户数据存储到数据库。",
+          "en": "Persist the customer data to Lambda local storage. Configure new Lambda functions to scan the local storage to save the customer data to the database."
+        },
+        "D": {
+          "zh": "将客户数据存储在 Amazon Simple Queue Service (Amazon SQS) FIFO 队列中。创建一个新的 Lambda 函数来轮询队列并将客户数据存储在数据库中。",
+          "en": "Store the customer data in an Amazon Simple Queue Service (Amazon SQS) FIFO queue. Create a new Lambda function that polls the queue and stores the customer data in the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon RDS Proxy 可以协助管理数据库连接池，减少连接管理的开销，但无法解决数据库升级时不可用的问题。结论：此选项不符合问题要求，因为它没有存储客户数据以防止数据丢失。",
+          "en": "Incorrect. ness analysis: Amazon RDS Proxy can help manage the database connection pool and reduce the overhead of connection management, but it cannot solve the problem of unavailability during database upgrade. Conclusion: This option does not meet the question requirements because it does not store customer data to prevent data loss."
+        },
+        "B": {
+          "zh": "錯誤。增加Lambda运行时间和重试机制可以减少失败的可能性，但如果数据库升级时间较长，Lambda函数仍然可能逾时或失败。结论：该选项并不能完全解决问题，也不符合最佳实践。",
+          "en": "Incorrect. ness analysis: Increasing Lambda running time and retry mechanism can reduce the possibility of failure, but if the database upgrade takes a long time, the Lambda function may still time out or fail. Conclusion: This option does not completely solve the problem and is not consistent with best practices."
+        },
+        "C": {
+          "zh": "錯誤。性质分析：Lambda的本地存储是暂时的，无法保证数据的持久性。另外，扫描本地存储的方式复杂且不可靠。结论：此选项不符合问题要求，也不符合最佳实践。",
+          "en": "Incorrect. ness analysis: Lambda’s local storage is temporary and data durability cannot be guaranteed. Additionally, the way of scanning local storage is complex and unreliable. Conclusion: This option does not meet the question requirements and does not comply with best practices."
+        },
+        "D": {
+          "zh": "正確。Amazon SQS FIFO队列可以保证消息的顺序和持久性。即使升级过程中数据库不可用，消息仍然可以存储在队列中，并且升级完成后可以通过轮询将数据写入数据库。结论：此选项满足问题要求，是最佳方案。",
+          "en": "Correct. ness analysis: Amazon SQS FIFO queue can ensure the order and durability of messages. Even if the database is unavailable during the upgrade, messages can still be stored in the queue and data can be written to the database via polling after the upgrade is complete. Conclusion: This option meets the requirements of the question and is the best solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将客户数据存储在 Amazon Simple Queue Service (Amazon SQS) FIFO 队列中。创建一个新的 Lambda 函数来轮询队列并将客户数据存储在数据库中。",
+        "en": "D. Store the customer data in an Amazon Simple Queue Service (Amazon SQS) FIFO queue. Create a new Lambda function that polls the queue and stores the customer data in the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (61%) A (39%)。热门讨论与考点摘要：Amazon SQS FIFO队列可以保证消息的顺序和持久性。即使升级过程中数据库不可用，消息仍然可以存储在队列中，并且升级完成后可以通过轮询将数据写入数据库。结论：此选项满足问题要求，是最佳方案。",
+        "en": "Community vote as displayed: D (61%) A (39%). Popular discussion and key point summary: ness analysis: Amazon SQS FIFO queue can ensure the order and durability of messages. Even if the database is unavailable during the upgrade, messages can still be stored in the queue and data can be written to the database via polling after the upgrade is complete. Conclusion: This option meets the requirements of the question and is the best solution."
+      }
+    },
+    {
+      "question_no": 88,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家调查公司多年来一直在美国各地区收集数据。该公司将数据托管在一个大小为 3 TB 并且还在不断增长的 Amazon S3 存储桶中。该公司已开始与一家拥有 S3 存储桶的欧洲营销公司共享数据。该公司希望确保其数据传输成本保持尽可能低。哪种解决方案可以满足这些要求？",
+        "en": "A survey company has gathered data for several years from areas in the United States. The company hosts the data in an Amazon S3 bucket that is 3 TB in size and growing. The company has started to share the data with a European marketing firm that has S3 buckets. The company wants to ensure that its data transfer costs remain as low as possible. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公司的 S3 存储桶上设置请求者付款功能。",
+          "en": "Configure the Requester Pays feature on the company's S3 bucket."
+        },
+        "B": {
+          "zh": "配置从公司的 S3 存储桶到营销公司的 S3 存储桶之一的 S3 跨区域复制。",
+          "en": "Configure S3 Cross-Region Replication from the company's S3 bucket to one of the marketing firm's S3 buckets."
+        },
+        "C": {
+          "zh": "为营销公司配置跨账户访问，以便营销公司能够访问公司的 S3 存储桶。",
+          "en": "Configure cross-account access for the marketing firm so that the marketing firm has access to the company's S3 bucket."
+        },
+        "D": {
+          "zh": "配置公司的 S3 存储桶以使用 S3 智能分层。将 S3 存储桶同步到营销公司的 S3 存储桶之一。",
+          "en": "Configure the company's S3 bucket to use S3 Intelligent-Tiering. Sync the S3 bucket to one of the marketing firm's S3 buckets."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。请求者付费功能允许数据访客承担数据请求和传输的费用，而不是数据所有者。这可以有效降低企业共享数据时的成本。满足问题要求：公司希望确保数据传输的成本尽可能低，Requester Pays就是专门针对这种场景设计的功能。",
+          "en": "Correct. The Requester Pays feature allows the data visitor to bear the costs of data request and transmission, not the data owner. This can effectively reduce companies' costs when sharing data. Meets the requirements of the question: The company wants to ensure that the cost of data transmission is as low as possible, and Requester Pays is a function specially designed for this scenario."
+        },
+        "B": {
+          "zh": "錯誤。S3 跨区域复制将数据从一个区域复制到另一个区域，这会产生额外的存储和数据传输费用。不符合题目要求：题目要求降低数据传输的成本，此选项会增加成本。",
+          "en": "Incorrect. S3 Cross-Region Replication copies data from one region to another, which incurs additional storage and data transfer charges. Does not meet the requirements of the question: The question requires reducing the cost of data transmission, and this option will increase the cost."
+        },
+        "C": {
+          "zh": "錯誤。虽然跨账户访问可以实现数据共享，但数据传输成本仍然由数据所有者承担。不符合问题要求：问题明确要求降低数据传输成本，而此选项无法解决成本问题。",
+          "en": "Incorrect. Although cross-account access enables data sharing, data transfer costs are still borne by the data owner. Does not meet the requirements of the question: The question clearly requires reducing data transmission costs, and this option cannot solve the cost problem."
+        },
+        "D": {
+          "zh": "錯誤。S3 智能分层是用于优化存储成本的功能，与数据传输成本无关。不满足问题要求：问题关注的是数据传输成本，而不是存储成本。",
+          "en": "Incorrect. S3 Intelligent-Tiering is a feature used to optimize storage costs and has nothing to do with data transfer costs. Does not meet the requirements of the question: The question focuses on data transmission costs, not storage costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在公司的 S3 存储桶上设置请求者付款功能。",
+        "en": "A. Configure the Requester Pays feature on the company's S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (46%) B (45%) 8%。热门讨论与考点摘要：请求者付费功能允许数据访客承担数据请求和传输的费用，而不是数据所有者。这可以有效降低企业共享数据时的成本。满足问题要求：公司希望确保数据传输的成本尽可能低，Requester Pays就是专门针对这种场景设计的功能。",
+        "en": "Community vote as displayed: A (46%) B (45%) 8%. Popular discussion and key point summary: The Requester Pays feature allows the data visitor to bear the costs of data request and transmission, not the data owner. This can effectively reduce companies' costs when sharing data. Meets the requirements of the question: The company wants to ensure that the cost of data transmission is as low as possible, and Requester Pays is a function specially designed for this scenario."
+      }
+    },
+    {
+      "question_no": 89,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon S3 存储其机密审计文档。 S3 存储桶使用存储桶策略遵循最小权限原则限制对审计团队 IAM 用户凭证的访问。公司经理担心 S3 存储桶中的文档被意外删除，并希望有一个更安全的解决方案。解决方案架构师应该怎么做才能确保审计文档的安全？",
+        "en": "A company uses Amazon S3 to store its confidential audit documents. The S3 bucket uses bucket policies to restrict access to audit team IAM user credentials according to the principle of least privilege. Company managers are worried about accidental deletion of documents in the S3 bucket and want a more secure solution. What should a solutions architect do to secure the audit documents?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 S3 存储桶上启用版本控制和 MFA 删除功能。",
+          "en": "Enable the versioning and MFA Delete features on the S3 bucket."
+        },
+        "B": {
+          "zh": "对每个审计团队 IAM 用户账户的 IAM 用户凭证启用多重验证 (MFA)。",
+          "en": "Enable multi-factor authentication (MFA) on the IAM user credentials for each audit team IAM user account."
+        },
+        "C": {
+          "zh": "将 S3 生命周期策略添加至审计团队的 IAM 用户账户，以在审核日期期间拒绝 s3:DeleteObject 操作。",
+          "en": "Add an S3 Lifecycle policy to the audit team's IAM user accounts to deny the s3:DeleteObject action during audit dates."
+        },
+        "D": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 加密 S3 存储桶并限制审计团队 IAM 用户账户访问 KMS 密钥。",
+          "en": "Use AWS Key Management Service (AWS KMS) to encrypt the S3 bucket and restrict audit team IAM user accounts from accessing the KMS key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 版本控制可以保留对象的多个版本，以防止意外删除或覆写。 MFA删除功能要求用户在删除对象时提供多重身份验证，进一步增强安全性。",
+          "en": "Correct. S3 Versioning can retain multiple versions of an object to prevent accidental deletion or overwriting. The MFA Delete feature requires users to provide multi-factor authentication when deleting objects, further enhancing security."
+        },
+        "B": {
+          "zh": "錯誤。启用 MFA 可以增强 IAM 用户记录的安全性，但无法防止意外删除 S3 对象。",
+          "en": "Incorrect. Enabling MFA can enhance the security of IAM user records, but does not prevent accidental deletion of S3 objects."
+        },
+        "C": {
+          "zh": "錯誤。审计日期期间的删除对象操作。 S3生命周期策略用于管理对象的生命周期（例如过期或转移），并不会直接控制IAM用户的权限。权限控制应通过 IAM 策略或存储桶策略来实现，而不是生命周期策略。",
+          "en": "Incorrect. DeleteObject action during audit dates. S3 lifecycle policies are used to manage the lifecycle of objects (such as expiration or transfer) and do not directly control the permissions of IAM users. Permission control should be implemented through an IAM policy or bucket policy, not a lifecycle policy."
+        },
+        "D": {
+          "zh": "錯誤。访问 KMS 密钥。使用 KMS 加密可以保护数据的机密性，但与防止意外删除无关。限制对KMS密钥的访问会导致审计团队在未经许可的情况下访问存储桶中的数据，这不符合问题的要求。",
+          "en": "Incorrect. from accessing the KMS key. Using KMS encryption protects the confidentiality of data, but is not relevant to protecting against accidental deletion. Restricting access to KMS keys will cause the audit team to access the data in the bucket without permission, which does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 S3 存储桶上启用版本控制和 MFA 删除功能。",
+        "en": "A. Enable the versioning and MFA Delete features on the S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：S3 版本控制可以保留对象的多个版本，以防止意外删除或覆写。 MFA删除功能要求用户在删除对象时提供多重身份验证，进一步增强安全性。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: S3 Versioning can retain multiple versions of an object to prevent accidental deletion or overwriting. The MFA Delete feature requires users to provide multi-factor authentication when deleting objects, further enhancing security."
+      }
+    },
+    {
+      "question_no": 90,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 SQL 数据库来存储可公开访问的电影数据。此数据库在 Amazon RDS 单可用区数据库实例上运行。脚本每天以随机间隔运行查询，以记录已添加至数据库中的新电影的数量。该脚本必须在工作时间内报告最终总数。该公司的开发团队注意到，在脚本运行时，数据库性能不足以满足开发任务。解决方案架构师必须推荐一个解决方案来解决此问题。哪种解决方案能够以最少的运维开销满足这项要求？",
+        "en": "A company is using a SQL database to store movie data that is publicly accessible. The database runs on an Amazon RDS Single- AZ DB instance. A script runs queries at random intervals each day to record the number of new movies that have been added to the database. The script must report a final total during business hours. The company's development team notices that the database performance is inadequate for development tasks when the script is running. A solutions architect must recommend a solution to resolve this issue. Which solution will meet this requirement with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据库实例修改为多可用区部署。",
+          "en": "Modify the DB instance to be a Multi-AZ deployment."
+        },
+        "B": {
+          "zh": "创建数据库的唯读副本。配置脚本以仅查询只读副本。",
+          "en": "Create a read replica of the database. Configure the script to query only the read replica."
+        },
+        "C": {
+          "zh": "指示开发团队在每天结束时手动导出数据库中的条目。",
+          "en": "Instruct the development team to manually export the entries in the database at the end of each day."
+        },
+        "D": {
+          "zh": "使用 Amazon ElastiCache 缓存脚本针对数据库运行的常见查询。",
+          "en": "Use Amazon ElastiCache to cache the common queries that the script runs against the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。多AZ部署主要用于提高数据库的可用性和容错能力，而不是直接提高性能。虽然它提供了冗余，但它并没有解决脚本运行时的性能影响。这个选项是错误的。",
+          "en": "Incorrect. Multi-AZ deployment is mainly used to improve the availability and fault tolerance of the database, rather than directly improving performance. While it provides redundancy, it does not address the performance impact while the script is running. This option is wrong."
+        },
+        "B": {
+          "zh": "正確。只读副本用于分担主库的读取负载，适合解决性能问题。脚本可以查询只读副本，减轻主数据库的压力。因此该选项满足要求。",
+          "en": "Correct. The read replica is used to share the read load of the primary database and is suitable for solving performance problems. Scripts can query read replicas, reducing pressure on the primary database. This option is."
+        },
+        "C": {
+          "zh": "錯誤。手动导出数据会增加操作复杂度，不符合「最小操作开销」的要求。这个选项是错误的。",
+          "en": "Incorrect. Manually exporting data increases operational complexity and does not meet the requirement of \"minimum operational overhead\". This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。ElastiCache适合缓存频繁查询的数据，但问题中脚本运行的查询是随机的，无法有效利用缓存。这个选项是错误的。",
+          "en": "Incorrect. ElastiCache is suitable for caching frequently queried data, but the queries run by the script in the question are random and cannot effectively utilize the cache. This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建数据库的唯读副本。配置脚本以仅查询只读副本。",
+        "en": "B. Create a read replica of the database. Configure the script to query only the read replica."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (95%) 3%。热门讨论与考点摘要：只读副本用于分担主库的读取负载，适合解决性能问题。脚本可以查询只读副本，减轻主数据库的压力。因此该选项满足要求。",
+        "en": "Community vote as displayed: B (95%) 3%. Popular discussion and key point summary: The read replica is used to share the read load of the primary database and is suitable for solving performance problems. Scripts can query read replicas, reducing pressure on the primary database. This option is."
+      }
+    }
+  ]
+}

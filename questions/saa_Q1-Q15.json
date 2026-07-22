@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 1,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在横跨多个洲的城市收集温度、湿度和大气压力数据。该公司每天从每个站点收集的平均数据量为 500 GB。每个站点都有高速互联网连接。该公司希望尽快将所有全球站点的数据汇总至单一 Amazon S3 存储桶。解决方案必须将运维复杂度降至最低。哪个解决方案满足这些要求？",
+        "en": "A company collects data for temperature, humidity, and atmospheric pressure in cities across multiple continents. The average volume of data that the company collects from each site daily is 500 GB. Each site has a high-speed Internet connection. The company wants to aggregate the data from all these global sites as quickly as possible in a single Amazon S3 bucket. The solution must minimize operational complexity. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在目的地 S3 存储桶启用 S3 Transfer Acceleration。使用分段上传，将各站点数据直接上传到目的地 S3 存储桶。",
+          "en": "Turn on S3 Transfer Acceleration on the destination S3 bucket. Use multipart uploads to directly upload site data to the destination S3 bucket."
+        },
+        "B": {
+          "zh": "将各站点的数据上传到距离最近区域中的 S3 存储桶。使用 S3 跨区域复写将对象复制到目的地 S3 存储桶，然后移除来源 S3 存储桶中的数据。",
+          "en": "Upload the data from each site to an S3 bucket in the closest Region. Use S3 Cross-Region Replication to copy objects to the destination S3 bucket. Then remove the data from the origin S3 bucket."
+        },
+        "C": {
+          "zh": "每天计划 AWS Snowball Edge Storage Optimized 设备任务，将各站点的数据传输到距离最近的区域。使用 S3 跨区域复写将对象复制到目的地 S3 存储桶。",
+          "en": "Schedule AWS Snowball Edge Storage Optimized device jobs daily to transfer data from each site to the closest Region. Use S3 Cross-Region Replication to copy objects to the destination S3 bucket."
+        },
+        "D": {
+          "zh": "将各站点的数据上传到距离最近区域中的 Amazon EC2 实例，并存储在 Amazon EBS 卷。定期创建 EBS 快照并复制到目的地 S3 存储桶所在区域，再于该区域恢复 EBS 卷。",
+          "en": "Upload the data from each site to an Amazon EC2 instance in the closest Region. Store the data in an Amazon Elastic Block Store (Amazon EBS) volume. At regular intervals, take an EBS snapshot and copy it to the Region that contains the destination S3 bucket. Restore the EBS volume in that Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 Transfer Acceleration 会通过邻近的 AWS 边缘节点及 AWS 全球网络加速长距离上传，而分段上传可并行传输 500 GB 的大量数据。数据可直接进入单一目的地存储桶，无需管理中继存储桶或硬件，速度快且运维复杂度最低。",
+          "en": "Correct. S3 Transfer Acceleration uses nearby AWS edge locations and the AWS global network to accelerate long-distance uploads, while multipart upload transfers large 500 GB datasets in parallel. Data goes directly to one destination bucket without intermediate buckets or hardware, providing speed with the least operational complexity."
+        },
+        "B": {
+          "zh": "錯誤。跨区域复写可将对象复制到另一个区域，但必须为每个来源区域创建及管理存储桶、版本控制、复写规则和后续删除作业，操作比直接加速上传更复杂。",
+          "en": "Incorrect. Cross-Region Replication can copy objects to another Region, but it requires source buckets, versioning, replication rules, and cleanup in every Region. This adds more operations than uploading directly with acceleration."
+        },
+        "C": {
+          "zh": "錯誤。Snowball Edge 适用于网络带宽不足或离线的大规模数据迁移。本题各站点已有高速网络，且每天订购、寄送和归还设备不但较慢，也会大幅增加运维复杂度。",
+          "en": "Incorrect. Snowball Edge is suited to offline bulk transfers when network bandwidth is constrained. Every site already has high-speed internet, and arranging, shipping, and returning devices every day would be slower and operationally complex."
+        },
+        "D": {
+          "zh": "錯誤。EC2、EBS、快照、跨区域复制和卷恢复无法直接将对象汇总至 S3，还需要额外的数据迁移步骤，并带来最高的基础设施管理负担。",
+          "en": "Incorrect. EC2, EBS snapshots, cross-Region copying, and volume restoration do not directly aggregate objects into S3 and would require additional transfer steps. This option has the greatest infrastructure management overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在目的地 S3 存储桶启用 S3 Transfer Acceleration。使用分段上传，将各站点数据直接上传到目的地 S3 存储桶。",
+        "en": "A. Turn on S3 Transfer Acceleration on the destination S3 bucket. Use multipart uploads to directly upload site data to the destination S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票：A（94%），其他选项合计显示为 5%。高票观点指出关键字是全球站点、单一 S3 存储桶、最快速度与最低运维复杂度；Transfer Acceleration 利用边缘节点，分段上传则可并行传输并方便重试。",
+        "en": "Community vote: A (94%), with the displayed total for other choices at 5%. Highly voted comments focused on global sites, one S3 bucket, maximum speed, and minimum operational complexity. Transfer Acceleration uses edge locations, and multipart upload enables parallel transfer and easier retries."
+      }
+    },
+    {
+      "question_no": 2,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司需要分析其专有应用程序的日志文件。日志以 JSON 格式存储在 Amazon S3 存储桶中。查询很简单，而且会按需运行。解决方案架构师需要在尽量不变更现有架构的情况下进行分析。解决方案架构师应该如何以最少的运维负担满足这些要求？",
+        "en": "A company needs the ability to analyze the log files of its proprietary application. The logs are stored in JSON format in an Amazon S3 bucket. Queries will be simple and will run on-demand. A solutions architect needs to perform the analysis with minimal changes to the existing architecture. What should the solutions architect do to meet these requirements with the LEAST amount of operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Redshift 将所有内容加载同一处，并依需要运行 SQL 查询。",
+          "en": "Use Amazon Redshift to load all the content into one place and run the SQL queries as needed."
+        },
+        "B": {
+          "zh": "使用 Amazon CloudWatch Logs 存储日志，并依需要从 Amazon CloudWatch 控制台运行 SQL 查询。",
+          "en": "Use Amazon CloudWatch Logs to store the logs. Run SQL queries as needed from the Amazon CloudWatch console."
+        },
+        "C": {
+          "zh": "直接搭配 Amazon S3 使用 Amazon Athena，依需要运行查询。",
+          "en": "Use Amazon Athena directly with Amazon S3 to run the queries as needed."
+        },
+        "D": {
+          "zh": "使用 AWS Glue 对日志进行数据目录编制，并在 Amazon EMR 上使用临时的 Apache Spark 集群依需要运行 SQL 查询。",
+          "en": "Use AWS Glue to catalog the logs. Use a transient Apache Spark cluster on Amazon EMR to run the SQL queries as needed."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon Redshift 适合持续性数据仓库与大规模分析，但需要预置及管理数据仓库，并先将 S3 日志加载其中。对简单的按需查询而言，成本与运维负担都较高。",
+          "en": "Incorrect. Amazon Redshift is suitable for persistent data warehousing and large-scale analytics, but it requires provisioning a warehouse and loading the S3 logs first. It adds cost and operational overhead for simple on-demand queries."
+        },
+        "B": {
+          "zh": "錯誤。将既有 S3 日志移动到 CloudWatch Logs 会改变架构并增加数据导入工作，而且 CloudWatch Logs Insights 使用自己的查询语言，并非直接对 S3 中的 JSON 运行标准 SQL。",
+          "en": "Incorrect. Moving existing S3 logs into CloudWatch Logs changes the architecture and adds ingestion work. CloudWatch Logs Insights uses its own query language and does not directly run standard SQL against JSON files in S3."
+        },
+        "C": {
+          "zh": "正確。Amazon Athena 是无服务器交互式查询服务，可使用标准 SQL 直接查询 S3 中的 JSON 数据。它无需搬移数据或管理基础设施，采按查询付费，因此最符合简单、按需与最低运维负担的要求。",
+          "en": "Correct. Amazon Athena is a serverless interactive query service that runs standard SQL directly against JSON data in S3. It requires no data movement or infrastructure management and charges per query, matching the simple, on-demand, low-overhead requirements."
+        },
+        "D": {
+          "zh": "錯誤。AWS Glue 数据目录加上临时 EMR Spark 集群可以运行分析，但需要创建目录、预置及管理集群，对简单的按需查询过度复杂。",
+          "en": "Incorrect. An AWS Glue catalog and a transient EMR Spark cluster can perform the analysis, but cataloging, provisioning, and managing a cluster is excessive for simple on-demand queries."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 直接搭配 Amazon S3 使用 Amazon Athena，依需要运行查询。",
+        "en": "C. Use Amazon Athena directly with Amazon S3 to run the queries as needed."
+      },
+      "discussion": {
+        "zh": "社群投票：C（99%），其他选项合计 1%。讨论共识是数据已在 S3，且查询简单、按需运行；Athena 能直接以 SQL 查询 S3，无需服务器、数据加载或额外集群，因此运维负担最低。",
+        "en": "Community vote: C (99%), other choices 1%. The consensus was that the data is already in S3 and queries are simple and on demand. Athena queries S3 directly with SQL and needs no servers, data loading, or extra cluster, so it has the least operational overhead."
+      }
+    },
+    {
+      "question_no": 3,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Organizations 管理不同部门的多个 AWS 账户。管理账户有一个存放项目报告的 Amazon S3 存储桶。公司希望将此 S3 存储桶的访问权限限制为仅供 AWS Organizations 组织内各账户的用户使用。哪个解决方案能以最少的运维负担满足这些要求？",
+        "en": "A company uses AWS Organizations to manage multiple AWS accounts for different departments. The management account has an Amazon S3 bucket that contains project reports. The company wants to limit access to this S3 bucket to only users of accounts within the organization in AWS Organizations. Which solution meets these requirements with the LEAST amount of operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 S3 存储桶策略中加入 `aws:PrincipalOrgID` 全局条件键，并参照组织 ID。",
+          "en": "Add the aws:PrincipalOrgID global condition key with a reference to the organization ID to the S3 bucket policy."
+        },
+        "B": {
+          "zh": "为每个部门创建组织单位，并在 S3 存储桶策略中加入 `aws:PrincipalOrgPaths` 全局条件键。",
+          "en": "Create an organizational unit (OU) for each department. Add the aws:PrincipalOrgPaths global condition key to the S3 bucket policy."
+        },
+        "C": {
+          "zh": "使用 AWS CloudTrail 监控 CreateAccount、InviteAccountToOrganization、LeaveOrganization 和 RemoveAccountFromOrganization 事件，并据此更新 S3 存储桶策略。",
+          "en": "Use AWS CloudTrail to monitor the CreateAccount, InviteAccountToOrganization, LeaveOrganization, and RemoveAccountFromOrganization events. Update the S3 bucket policy accordingly."
+        },
+        "D": {
+          "zh": "为每个需要访问 S3 存储桶的用户加上标签，并在 S3 存储桶策略中加入 `aws:PrincipalTag` 全局条件键。",
+          "en": "Tag each user that needs access to the S3 bucket. Add the aws:PrincipalTag global condition key to the S3 bucket policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。`aws:PrincipalOrgID` 可在资源型策略中检查主体所属账户是否为指定 AWS Organizations 组织的成员。只需维护一个组织 ID，新账户加入或离开组织时会自动反映，最符合整个组织与最低运维负担的需求。",
+          "en": "Correct. aws:PrincipalOrgID lets a resource-based policy verify that a principal's account belongs to the specified AWS Organizations organization. A single organization ID automatically covers accounts as they join or leave, satisfying organization-wide access with the least overhead."
+        },
+        "B": {
+          "zh": "錯誤。`aws:PrincipalOrgPaths` 适合将访问限制到特定根或组织单位路径，但本题要允许整个组织。另行创建及维护每个部门的组织单位和路径会增加不必要的管理工作。",
+          "en": "Incorrect. aws:PrincipalOrgPaths is useful when access must be limited to specific roots or OU paths, but the requirement covers the entire organization. Creating and maintaining departmental OUs and paths adds unnecessary work."
+        },
+        "C": {
+          "zh": "錯誤。CloudTrail 能记录账户生命周期事件，但自行监控事件并持续修改存储桶策略需要额外的自动化、错误处理及维护，并非最低运维负担。",
+          "en": "Incorrect. CloudTrail can record account lifecycle events, but monitoring them and continually modifying the bucket policy requires extra automation, error handling, and maintenance."
+        },
+        "D": {
+          "zh": "錯誤。`aws:PrincipalTag` 可实施属性型访问控制，但必须跨多个账户一致地标记及维护每位用户或角色。对允许整个组织而言，管理成本高于使用组织 ID。",
+          "en": "Incorrect. aws:PrincipalTag can implement attribute-based access control, but every user or role must be consistently tagged and maintained across accounts. That costs more to operate than checking one organization ID."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 S3 存储桶策略中加入 `aws:PrincipalOrgID` 全局条件键，并参照组织 ID。",
+        "en": "A. Add the aws:PrincipalOrgID global condition key with a reference to the organization ID to the S3 bucket policy."
+      },
+      "discussion": {
+        "zh": "社群投票：A（97%），其他选项合计 3%。讨论指出 `aws:PrincipalOrgID` 可免除逐一列出账户 ID，会自动涵盖组织成员；`aws:PrincipalOrgPaths` 更精细，但需要维护组织单位层级，与题目要求的整个组织不符。",
+        "en": "Community vote: A (97%), other choices 3%. Comments noted that aws:PrincipalOrgID avoids listing every account ID and automatically covers organization members. aws:PrincipalOrgPaths is more granular but requires OU hierarchy maintenance that the organization-wide requirement does not need."
+      }
+    },
+    {
+      "question_no": 4,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "某个应用程序在 VPC 内的 Amazon EC2 实例上运行。该应用程序会处理存储在 Amazon S3 存储桶中的日志。EC2 实例需要在没有互联网连接的情况下访问 S3 存储桶。哪个解决方案能提供连接到 Amazon S3 的私有网络连接？",
+        "en": "An application runs on an Amazon EC2 instance in a VPC. The application processes logs that are stored in an Amazon S3 bucket. The EC2 instance needs to access the S3 bucket without connectivity to the internet. Which solution will provide private network connectivity to Amazon S3?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建连接到 S3 存储桶的网关 VPC 端点。",
+          "en": "Create a gateway VPC endpoint to the S3 bucket."
+        },
+        "B": {
+          "zh": "将日志串流至 Amazon CloudWatch Logs，再将日志导出至 S3 存储桶。",
+          "en": "Stream the logs to Amazon CloudWatch Logs. Export the logs to the S3 bucket."
+        },
+        "C": {
+          "zh": "在 Amazon EC2 上创建允许访问 S3 的实例配置文件。",
+          "en": "Create an instance profile on Amazon EC2 to allow S3 access."
+        },
+        "D": {
+          "zh": "创建具有私有链接的 Amazon API Gateway API，以访问 S3 端点。",
+          "en": "Create an Amazon API Gateway API with a private link to access the S3 endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 网关 VPC 端点会在 VPC 路由表中提供连接到 Amazon S3 的私有路径，流量不需经过互联网网关或 NAT 设备，且网关端点本身没有小时费用。",
+          "en": "Correct. An S3 gateway VPC endpoint adds a private route from the VPC to Amazon S3, so traffic does not traverse an internet gateway or NAT device. Gateway endpoints also have no hourly charge."
+        },
+        "B": {
+          "zh": "錯誤。将日志改送至 CloudWatch Logs 再导出 S3 不会提供 EC2 直接访问既有 S3 日志的私有网络路径，还会改变数据流程并增加延迟。",
+          "en": "Incorrect. Sending logs to CloudWatch Logs and exporting them does not provide the EC2 instance a private path to access the existing S3 logs. It changes the data flow and adds delay."
+        },
+        "C": {
+          "zh": "錯誤。实例配置文件提供 IAM 身份与授权，但不创建任何网络路径。即使具备 S3 权限，EC2 仍需要端点、NAT 或其他可到达 S3 的连接。",
+          "en": "Incorrect. An instance profile provides IAM identity and authorization but creates no network path. Even with S3 permissions, EC2 still needs an endpoint, NAT, or another route to reach S3."
+        },
+        "D": {
+          "zh": "錯誤。API Gateway 私有 API 用于让 VPC 内的客户端私下调用 API Gateway，并不是为 EC2 提供 S3 对象 API 私有连接的方式。直接使用 S3 VPC 端点更正确且简单。",
+          "en": "Incorrect. A private API Gateway API lets clients in a VPC privately invoke API Gateway; it is not the mechanism for private EC2 access to the S3 object API. An S3 VPC endpoint is the direct solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建连接到 S3 存储桶的网关 VPC 端点。",
+        "en": "A. Create a gateway VPC endpoint to the S3 bucket."
+      },
+      "discussion": {
+        "zh": "社群投票：A（99%），其他选项合计 1%。高票讨论区分了网络连接与 IAM 授权：实例配置文件只授权，网关 VPC 端点才会创建不经公有互联网的 S3 私有路径，而且不收取端点小时费用。",
+        "en": "Community vote: A (99%), other choices 1%. Highly voted comments distinguished connectivity from IAM authorization: an instance profile only grants permission, while a gateway VPC endpoint creates the private S3 path without the public internet and has no endpoint hourly fee."
+      }
+    },
+    {
+      "question_no": 5,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上使用单一 Amazon EC2 实例托管 Web 应用程序，并将用户上传的文档存储在 Amazon EBS 卷。为提升可可扩展性与可用性，公司复制此架构，在另一个可用区创建第二个 EC2 实例和 EBS 卷，并将两个实例放在 Application Load Balancer 后面。完成变更后，用户反馈每次刷新网站时只能看到其中一部分文档，无法同时看到全部文档。解决方案架构师应提出什么方案，才能确保用户一次看到所有文档？",
+        "en": "A company is hosting a web application on AWS using a single Amazon EC2 instance that stores user-uploaded documents in an Amazon EBS volume. For better scalability and availability, the company duplicated the architecture and created a second EC2 instance and EBS volume in another Availability Zone, placing both behind an Application Load Balancer. After completing this change, users reported that, each time they refreshed the website, they could see one subset of their documents or the other, but never all of the documents at the same time. What should a solutions architect propose to ensure users see all of their documents at once?"
+      },
+      "options": {
+        "A": {
+          "zh": "复制数据，让两个 EBS 卷都包含所有文档。",
+          "en": "Copy the data so both EBS volumes contain all the documents."
+        },
+        "B": {
+          "zh": "设置 Application Load Balancer，将用户导向具有其文档的服务器。",
+          "en": "Configure the Application Load Balancer to direct a user to the server with the documents."
+        },
+        "C": {
+          "zh": "将两个 EBS 卷的数据复制至 Amazon EFS，并修改应用程序，将新文档存储至 Amazon EFS。",
+          "en": "Copy the data from both EBS volumes to Amazon EFS. Modify the application to save new documents to Amazon EFS."
+        },
+        "D": {
+          "zh": "设置 Application Load Balancer，将请求发送到两部服务器，并由正确的服务器传回各文档。",
+          "en": "Configure the Application Load Balancer to send the request to both servers. Return each document from the correct server."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。一次性复制只能让当下的内容相同；之后的新文档仍可能写入不同可用区的 EBS 卷。EBS 卷属于单一可用区，这个方案没有实时同步机制，也不具可可扩展性。",
+          "en": "Incorrect. A one-time copy only synchronizes the current contents. New uploads can still land on different Availability Zone-specific EBS volumes. The option provides no real-time synchronization and does not scale."
+        },
+        "B": {
+          "zh": "錯誤。Application Load Balancer 不知道每份文档位于哪个 EBS 卷。即使使用黏性会话，也只能把用户导向一个实例，无法让该实例看见另一个卷的文档。",
+          "en": "Incorrect. The Application Load Balancer does not know which EBS volume contains each document. Even sticky sessions only keep a user on one instance and do not expose documents stored on the other volume."
+        },
+        "C": {
+          "zh": "正確。Amazon EFS 是区域的共享文件系统，可同时挂载至不同可用区中的多个 EC2 实例。集成现有数据并让所有新文档写入 EFS 后，无论 ALB 将请求送到哪个实例，都会看到同一个完整数据集。",
+          "en": "Correct. Amazon EFS is a Regional shared file system that can be mounted by multiple EC2 instances across Availability Zones. After consolidating existing data and writing all new documents to EFS, every instance behind the ALB sees the same complete dataset."
+        },
+        "D": {
+          "zh": "錯誤。Application Load Balancer 会为每个请求选择一个目标，不会将同一请求广播给两部服务器后再合并文档结果。实施自定义聚合层也会增加复杂度，且未解决分散存储问题。",
+          "en": "Incorrect. An Application Load Balancer selects a target for a request; it does not broadcast one request to both servers and merge document results. A custom aggregation layer would add complexity without fixing the split storage."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将两个 EBS 卷的数据复制至 Amazon EFS，并修改应用程序，将新文档存储至 Amazon EFS。",
+        "en": "C. Copy the data from both EBS volumes to Amazon EFS. Modify the application to save new documents to Amazon EFS."
+      },
+      "discussion": {
+        "zh": "社群投票：C（98%），其他选项合计 2%。高票观点强调 EBS 受限于单一可用区，而 EFS 可跨可用区由多个 EC2 实例共享并提供一致的文档集合；复制 EBS 数据无法持续同步。",
+        "en": "Community vote: C (98%), other choices 2%. Highly voted comments emphasized that EBS is tied to one Availability Zone, while EFS is shared by multiple EC2 instances across Availability Zones and presents one consistent document set. Copying EBS data would not provide continuous synchronization."
+      }
+    },
+    {
+      "question_no": 6,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 NFS 将大型视频文件存储在本地部署的网络附加存储。每个视频文件的大小介于 1 MB 到 500 GB，总存储量为 70 TB，且不再增长。公司决定将视频文件迁移到 Amazon S3。公司必须尽快迁移视频文件，同时尽可能减少网络带宽用量。哪个解决方案满足这些要求？",
+        "en": "A company uses NFS to store large video files in on-premises network attached storage. Each video file ranges in size from 1 MB to 500 GB. The total storage is 70 TB and is no longer growing. The company decides to migrate the video files to Amazon S3. The company must migrate the video files as soon as possible while using the least possible network bandwidth. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 S3 存储桶以及具有写入权限的 IAM 角色，并使用 AWS CLI 将所有本地文件复制到 S3 存储桶。",
+          "en": "Create an S3 bucket. Create an IAM role that has permissions to write to the S3 bucket. Use the AWS CLI to copy all files locally to the S3 bucket."
+        },
+        "B": {
+          "zh": "创建 AWS Snowball Edge 任务，在本地部署环境接收 Snowball Edge 设备，使用 Snowball Edge 客户端将数据传输到设备，再归还设备，由 AWS 将数据导入 Amazon S3。",
+          "en": "Create an AWS Snowball Edge job. Receive a Snowball Edge device on premises. Use the Snowball Edge client to transfer data to the device. Return the device so that AWS can import the data into Amazon S3."
+        },
+        "C": {
+          "zh": "在本地部署环境部署 S3 File Gateway，创建公有服务端点及 S3 存储桶，再创建指向该存储桶的新 NFS 文件共享，将现有 NFS 文件共享的数据传输到 S3 File Gateway。",
+          "en": "Deploy an S3 File Gateway on premises. Create a public service endpoint to connect to the S3 File Gateway. Create an S3 bucket. Create a new NFS file share on the S3 File Gateway. Point the new file share to the S3 bucket. Transfer the data from the existing NFS file share to the S3 File Gateway."
+        },
+        "D": {
+          "zh": "在本地部署网络与 AWS 之间创建 AWS Direct Connect 连接，部署 S3 File Gateway 并创建公有虚拟接口，再创建指向 S3 存储桶的新 NFS 文件共享，将现有 NFS 数据传输到 S3 File Gateway。",
+          "en": "Set up an AWS Direct Connect connection between the on-premises network and AWS. Deploy an S3 File Gateway on premises. Create a public virtual interface (VIF) to connect to the S3 File Gateway. Create an S3 bucket. Create a new NFS file share on the S3 File Gateway. Point the new file share to the S3 bucket. Transfer the data from the existing NFS file share to the S3 File Gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。使用 AWS CLI 通过现有网络上传全部 70 TB 数据会消耗大量网络带宽，传输时间也取决于可用带宽，不符合尽可能减少网络用量的要求。",
+          "en": "Incorrect. Uploading all 70 TB with the AWS CLI consumes substantial network bandwidth, and completion time depends on the available connection. It does not minimize network usage."
+        },
+        "B": {
+          "zh": "正確。Snowball Edge 可在本地高速接收大量数据，再以实体方式寄回 AWS 导入 S3，数据迁移几乎不占用公司的网络带宽。70 TB 是适合使用此离线设备的一次性固定数据集。",
+          "en": "Correct. Snowball Edge receives bulk data at high speed on premises and is physically returned for AWS to import into S3, using almost none of the company's network bandwidth. A fixed, one-time 70 TB dataset is well suited to this offline device."
+        },
+        "C": {
+          "zh": "錯誤。S3 File Gateway 适合持续以 NFS 或 SMB 访问 S3，但初始 70 TB 数据仍须通过网络上传，会使用大量带宽，并非本次一次性迁移的最佳选择。",
+          "en": "Incorrect. S3 File Gateway is useful for ongoing NFS or SMB access to S3, but the initial 70 TB still travels over the network. It consumes substantial bandwidth and is not optimal for this one-time migration."
+        },
+        "D": {
+          "zh": "錯誤。Direct Connect 可提供专用高带宽连接，但创建新连接通常有较长前置时间，且仍需在在线传输全部 70 TB。对固定且不再增长的数据集，Snowball Edge 更快开始且使用更少网络带宽。",
+          "en": "Incorrect. Direct Connect provides dedicated high bandwidth, but a new connection has significant provisioning lead time and still transfers all 70 TB online. For a fixed dataset that is no longer growing, Snowball Edge starts more appropriately and uses less network bandwidth."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 AWS Snowball Edge 任务，在本地部署环境接收 Snowball Edge 设备，使用 Snowball Edge 客户端将数据传输到设备，再归还设备，由 AWS 将数据导入 Amazon S3。",
+        "en": "B. Create an AWS Snowball Edge job. Receive a Snowball Edge device on premises. Use the Snowball Edge client to transfer data to the device. Return the device so that AWS can import the data into Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票：B（88%），其他选项合计显示为 11%。高票讨论认为 Snowball Edge 的本地复制速度快且网络带宽用量几乎为零；Direct Connect 虽快，但新连接可能需要数周构建，S3 File Gateway 则仍需在线传输 70 TB。",
+        "en": "Community vote: B (88%), with the displayed total for other choices at 11%. Highly voted comments noted that Snowball Edge provides fast local copying with almost zero network bandwidth. A new Direct Connect link can take weeks to provision, while S3 File Gateway still sends all 70 TB online."
+      }
+    },
+    {
+      "question_no": 7,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个接收传入消息的应用程序，接着由数十个其他应用程序和微服务快速消费这些消息。消息数量变化剧烈，有时会突然增加到每秒 100,000 条。公司希望将解决方案解耦并提高可可扩展性。哪个解决方案满足这些要求？",
+        "en": "A company has an application that ingests incoming messages. Dozens of other applications and microservices then quickly consume these messages. The number of messages varies drastically and sometimes increases suddenly to 100,000 each second. The company wants to decouple the solution and increase scalability. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将消息存储至 Amazon Kinesis Data Analytics，并设置消费者应用程序读取及处理消息。",
+          "en": "Persist the messages to Amazon Kinesis Data Analytics. Configure the consumer applications to read and process the messages."
+        },
+        "B": {
+          "zh": "将接收应用程序部署至 Auto Scaling 组中的 Amazon EC2 实例，并依据 CPU 指标扩展 EC2 实例数量。",
+          "en": "Deploy the ingestion application on Amazon EC2 instances in an Auto Scaling group to scale the number of EC2 instances based on CPU metrics."
+        },
+        "C": {
+          "zh": "将消息写入只有一个分片的 Amazon Kinesis Data Streams，使用 AWS Lambda 预先处理消息并存储至 Amazon DynamoDB，再设置消费者应用程序从 DynamoDB 读取消息。",
+          "en": "Write the messages to Amazon Kinesis Data Streams with a single shard. Use an AWS Lambda function to preprocess messages and store them in Amazon DynamoDB. Configure the consumer applications to read from DynamoDB to process the messages."
+        },
+        "D": {
+          "zh": "将消息发布到具有多个 Amazon SQS 订阅的 Amazon SNS 主题，并设置消费者应用程序从各自的队列处理消息。",
+          "en": "Publish the messages to an Amazon Simple Notification Service (Amazon SNS) topic with multiple Amazon Simple Queue Service (Amazon SQS) subscriptions. Configure the consumer applications to process the messages from the queues."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Amazon Kinesis Data Analytics 是用于实时串流分析的服务，会从 Kinesis Data Streams、Firehose 或其他串流来源读取数据；它不是供数十个应用程序持久化及扇出消息的消息代理程序。",
+          "en": "Incorrect. Amazon Kinesis Data Analytics performs real-time stream analytics and reads from streaming sources such as Kinesis Data Streams or Firehose. It is not a message broker for persisting and fanning out messages to dozens of applications."
+        },
+        "B": {
+          "zh": "錯誤。依 CPU 扩展接收层可能提升运算容量，但没有解耦生产者与消费者，也没有为突发消息提供持久缓冲。EC2 启动时间也难以实时应对剧烈高峰。",
+          "en": "Incorrect. CPU-based scaling can add ingestion compute capacity, but it does not decouple producers from consumers or provide a durable buffer for bursts. EC2 startup time also cannot immediately absorb drastic spikes."
+        },
+        "C": {
+          "zh": "錯誤。Kinesis Data Streams 可处理串流工作负载，但单一分片的写入容量远低于每秒 100,000 条消息。将 DynamoDB 当作多消费者的队列也会增加延迟及应用程序复杂度。",
+          "en": "Incorrect. Kinesis Data Streams can handle streaming workloads, but one shard has far less write capacity than 100,000 messages per second. Using DynamoDB as a queue for many consumers also adds latency and application complexity."
+        },
+        "D": {
+          "zh": "正確。SNS 可将每则消息扇出至多个 SQS 队列，每个应用程序或微服务可独立处理自己的队列。SQS 提供持久缓冲并能弹性吸收突发流量，使生产者与众多消费者解耦。",
+          "en": "Correct. SNS fans each message out to multiple SQS queues, allowing every application or microservice to process its own queue independently. SQS provides durable buffering and scales to absorb bursts, decoupling the producer from many consumers."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将消息发布到具有多个 Amazon SQS 订阅的 Amazon SNS 主题，并设置消费者应用程序从各自的队列处理消息。",
+        "en": "D. Publish the messages to an Amazon Simple Notification Service (Amazon SNS) topic with multiple Amazon Simple Queue Service (Amazon SQS) subscriptions. Configure the consumer applications to process the messages from the queues."
+      },
+      "discussion": {
+        "zh": "社群投票：D（86%），其他选项合计显示为 11%。讨论共识是 SNS 加多个 SQS 队列构成扇出模式，可针对数十个消费者提供独立、可靠且高可扩展性的缓冲；单一 Kinesis 分片无法承受题目的消息速率。",
+        "en": "Community vote: D (86%), with the displayed total for other choices at 11%. The consensus was that SNS plus multiple SQS queues implements a fan-out pattern with independent, reliable, highly scalable buffers for dozens of consumers. One Kinesis shard cannot support the stated message rate."
+      }
+    },
+    {
+      "question_no": 8,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将分布式应用程序迁移到 AWS。应用程序处理可变的工作负载。旧有平台由一台主服务器协调多个计算节点上的工作。公司希望使用能将恢复能力与可可扩展性最大化的解决方案来现代化应用程序。解决方案架构师应如何设计架构以满足这些需求？",
+        "en": "A company is migrating a distributed application to AWS. The application serves variable workloads. The legacy platform consists of a primary server that coordinates jobs across multiple compute nodes. The company wants to modernize the application with a solution that maximizes resiliency and scalability. How should a solutions architect design the architecture to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Amazon SQS 队列作为工作的目的地，以 Auto Scaling 组管理的 Amazon EC2 实例实施计算节点，并设置 EC2 Auto Scaling 使用计划扩展。",
+          "en": "Configure an Amazon Simple Queue Service (Amazon SQS) queue as a destination for the jobs. Implement the compute nodes with Amazon EC2 instances that are managed in an Auto Scaling group. Configure EC2 Auto Scaling to use scheduled scaling."
+        },
+        "B": {
+          "zh": "设置 Amazon SQS 队列作为工作的目的地，以 Auto Scaling 组管理的 Amazon EC2 实例实施计算节点，并根据队列大小设置 EC2 Auto Scaling。",
+          "en": "Configure an Amazon Simple Queue Service (Amazon SQS) queue as a destination for the jobs. Implement the compute nodes with Amazon EC2 instances that are managed in an Auto Scaling group. Configure EC2 Auto Scaling based on the size of the queue."
+        },
+        "C": {
+          "zh": "使用同一个 Auto Scaling 组管理的 Amazon EC2 实例实施主服务器与计算节点，将 AWS CloudTrail 设置为工作的目的地，并根据主服务器负载设置 EC2 Auto Scaling。",
+          "en": "Implement the primary server and the compute nodes with Amazon EC2 instances that are managed in an Auto Scaling group. Configure AWS CloudTrail as a destination for the jobs. Configure EC2 Auto Scaling based on the load on the primary server."
+        },
+        "D": {
+          "zh": "使用同一个 Auto Scaling 组管理的 Amazon EC2 实例实施主服务器与计算节点，将 Amazon EventBridge 设置为工作的目的地，并根据计算节点负载设置 EC2 Auto Scaling。",
+          "en": "Implement the primary server and the compute nodes with Amazon EC2 instances that are managed in an Auto Scaling group. Configure Amazon EventBridge (Amazon CloudWatch Events) as a destination for the jobs. Configure EC2 Auto Scaling based on the load on the compute nodes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。SQS 能移除主要协调服务器的单点故障并缓冲工作，但计划扩展只适合可预测的负载时段，无法依不可预测的队列积压动态调整容量。",
+          "en": "Incorrect. SQS removes the primary coordinator as a single point of failure and buffers jobs, but scheduled scaling only fits predictable load periods. It cannot dynamically react to unpredictable queue backlog."
+        },
+        "B": {
+          "zh": "正確。SQS 会持久存储及分配工作，使工作提交端与计算节点解耦并移除主服务器的单点故障。以队列深度作为 Auto Scaling 指标，可让 EC2 计算节点依实际积压量增减，提供高恢复能力与弹性。",
+          "en": "Correct. SQS durably stores and distributes jobs, decoupling job submission from compute nodes and removing the primary server as a single point of failure. Scaling EC2 compute nodes on queue depth adjusts capacity to actual backlog for resiliency and elasticity."
+        },
+        "C": {
+          "zh": "錯誤。CloudTrail 用于记录 AWS API 活动以进行审计，不是工作队列。将不同角色的主服务器与计算节点放入同一 Auto Scaling 组也无法消除协调服务器的单点故障。",
+          "en": "Incorrect. CloudTrail records AWS API activity for auditing; it is not a job queue. Placing the primary server and compute nodes in one Auto Scaling group also does not remove the coordinator's single point of failure."
+        },
+        "D": {
+          "zh": "錯誤。EventBridge 适合路由离散事件，但此处需要可持久缓冲、让计算节点拉取工作的队列。保留主服务器仍维持单点故障，且混合不同节点角色不利于独立扩展。",
+          "en": "Incorrect. EventBridge routes discrete events, but this workload needs a durable queue from which compute nodes can pull jobs. Retaining the primary server preserves a single point of failure, and mixed node roles cannot scale independently."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 设置 Amazon SQS 队列作为工作的目的地，以 Auto Scaling 组管理的 Amazon EC2 实例实施计算节点，并根据队列大小设置 EC2 Auto Scaling。",
+        "en": "B. Configure an Amazon Simple Queue Service (Amazon SQS) queue as a destination for the jobs. Implement the compute nodes with Amazon EC2 instances that are managed in an Auto Scaling group. Configure EC2 Auto Scaling based on the size of the queue."
+      },
+      "discussion": {
+        "zh": "社群投票：B（93%），其他选项合计显示为 4%。高票讨论指出以 SQS 取代主要协调服务器，可解耦组件、移除单点故障并缓冲可变工作负载；队列深度比计划或主服务器负载更能反映待处理工作量。",
+        "en": "Community vote: B (93%), with the displayed total for other choices at 4%. Highly voted comments noted that replacing the primary coordinator with SQS decouples components, removes a single point of failure, and buffers variable workloads. Queue depth reflects outstanding work better than a schedule or primary-server load."
+      }
+    },
+    {
+      "question_no": 9,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在数据中心运行 SMB 文件服务器。服务器存储大型文件，这些文件在创建后的前几天会被频繁访问，7 天后则很少访问。总数据量持续增加，已接近公司的总存储容量。解决方案架构师必须增加可用存储空间，同时维持对最近访问文件的低延迟访问，并提供文件生命周期管理以避免未来的存储问题。哪个解决方案满足这些要求？",
+        "en": "A company is running an SMB file server in its data center. The file server stores large files that are accessed frequently for the first few days after the files are created. After 7 days the files are rarely accessed. The total data size is increasing and is close to the company's total storage capacity. A solutions architect must increase the company's available storage space without losing low-latency access to the most recently accessed files. The solutions architect must also provide file lifecycle management to avoid future storage issues. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS DataSync 将超过 7 天的数据从 SMB 文件服务器复制到 AWS。",
+          "en": "Use AWS DataSync to copy data that is older than 7 days from the SMB file server to AWS."
+        },
+        "B": {
+          "zh": "创建 Amazon S3 File Gateway 以扩展公司的存储空间，并创建 S3 生命周期策略，在 7 天后将数据转换到 S3 Glacier Deep Archive。",
+          "en": "Create an Amazon S3 File Gateway to extend the company's storage space. Create an S3 Lifecycle policy to transition the data to S3 Glacier Deep Archive after 7 days."
+        },
+        "C": {
+          "zh": "创建 Amazon FSx for Windows File Server 文件系统以扩展公司的存储空间。",
+          "en": "Create an Amazon FSx for Windows File Server file system to extend the company's storage space."
+        },
+        "D": {
+          "zh": "在每位用户的电脑上安装访问 Amazon S3 的实用工具，并创建 S3 生命周期策略，在 7 天后将数据转换到 S3 Glacier Flexible Retrieval。",
+          "en": "Install a utility on each user's computer to access Amazon S3. Create an S3 Lifecycle policy to transition the data to S3 Glacier Flexible Retrieval after 7 days."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。DataSync 可传输文件，但选项只说复制旧数据，没有说明删除本地副本、如何让 SMB 用户继续访问云中文件，或如何自动管理未来文件的生命周期。",
+          "en": "Incorrect. DataSync can transfer files, but merely copying files older than seven days does not free local space, preserve SMB access to cloud files, or automatically manage the lifecycle of future files."
+        },
+        "B": {
+          "zh": "正確。S3 File Gateway 以 SMB 接口呈现 S3 对象存储，使用本地缓存为最近及常用文件提供低延迟访问，同时以 S3 的容量扩展本地存储。S3 生命周期策略可自动把 7 天后很少访问的数据移动到低成本的 Deep Archive。",
+          "en": "Correct. S3 File Gateway presents S3 object storage through SMB and uses a local cache for low-latency access to recent and frequently used files while extending on-premises capacity with S3. An S3 Lifecycle policy automatically moves rarely accessed data to low-cost Deep Archive after seven days."
+        },
+        "C": {
+          "zh": "錯誤。FSx for Windows File Server 可提供完整管理的 SMB 文件系统并增加容量，但此选项没有提供将 7 天后的冷数据自动分层至封存存储的生命周期管理。",
+          "en": "Incorrect. FSx for Windows File Server can provide managed SMB storage and more capacity, but this option provides no lifecycle policy to automatically tier cold files to archival storage after seven days."
+        },
+        "D": {
+          "zh": "錯誤。在每台客户端安装工具会增加管理负担，且不会为既有 SMB 文件服务器提供透明的缓存式容量扩展。S3 File Gateway 可保留标准 SMB 访问方式，方案更完整。",
+          "en": "Incorrect. Installing a utility on every client adds management overhead and does not transparently extend the existing SMB server with a local cache. S3 File Gateway preserves standard SMB access and is the complete solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon S3 File Gateway 以扩展公司的存储空间，并创建 S3 生命周期策略，在 7 天后将数据转换到 S3 Glacier Deep Archive。",
+        "en": "B. Create an Amazon S3 File Gateway to extend the company's storage space. Create an S3 Lifecycle policy to transition the data to S3 Glacier Deep Archive after 7 days."
+      },
+      "discussion": {
+        "zh": "社群投票：B（84%），其余票数投给其他选项。讨论重点是 File Gateway 以本地缓存维持最近访问文件的低延迟，同时通过 S3 扩展容量；生命周期策略则自动封存 7 天后的冷数据。部分留言担心 Deep Archive 的取回时间，但题目只要求近期文件低延迟。",
+        "en": "Community vote: B (84%), with the remaining votes assigned to other choices. Discussion focused on File Gateway's local cache for low-latency access to recently used files, S3-backed capacity expansion, and automatic archival after seven days. Some comments questioned Deep Archive retrieval time, but the requirement only demands low latency for recent files."
+      }
+    },
+    {
+      "question_no": 10,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上构建电子商务 Web 应用程序。应用程序会将新订单信息发送到 Amazon API Gateway REST API 进行处理。公司希望确保订单按照接收顺序处理。哪个解决方案满足这些要求？",
+        "en": "A company is building an ecommerce web application on AWS. The application sends information about new orders to an Amazon API Gateway REST API to process. The company wants to ensure that orders are processed in the order that they are received. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "当应用程序收到订单时，使用 API Gateway 集成将消息发布到 Amazon SNS 主题，并让 AWS Lambda 函数订阅该主题以运行处理。",
+          "en": "Use an API Gateway integration to publish a message to an Amazon Simple Notification Service (Amazon SNS) topic when the application receives an order. Subscribe an AWS Lambda function to the topic to perform processing."
+        },
+        "B": {
+          "zh": "当应用程序收到订单时，使用 API Gateway 集成将消息发送到 Amazon SQS FIFO 队列，并设置 SQS FIFO 队列调用 AWS Lambda 函数进行处理。",
+          "en": "Use an API Gateway integration to send a message to an Amazon Simple Queue Service (Amazon SQS) FIFO queue when the application receives an order. Configure the SQS FIFO queue to invoke an AWS Lambda function for processing."
+        },
+        "C": {
+          "zh": "使用 API Gateway 授权者，在应用程序处理订单期间阻止所有请求。",
+          "en": "Use an API Gateway authorizer to block any requests while the application processes an order."
+        },
+        "D": {
+          "zh": "当应用程序收到订单时，使用 API Gateway 集成将消息发送到 Amazon SQS 标准队列，并设置 SQS 标准队列调用 AWS Lambda 函数进行处理。",
+          "en": "Use an API Gateway integration to send a message to an Amazon Simple Queue Service (Amazon SQS) standard queue when the application receives an order. Configure the SQS standard queue to invoke an AWS Lambda function for processing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。标准 Amazon SNS 主题会将消息推送给订阅者，但不提供此情境所需的严格消息顺序保证。直接由 Lambda 异步处理也可能产生并行运行。",
+          "en": "Incorrect. A standard Amazon SNS topic pushes messages to subscribers but does not provide the strict ordering guarantee required here. Direct asynchronous Lambda processing can also run messages concurrently."
+        },
+        "B": {
+          "zh": "正確。Amazon SQS FIFO 队列会在相同消息组内保留消息顺序，并提供去重语义。API Gateway 将订单写入 FIFO 队列后，Lambda 可依序从队列接收及处理订单。",
+          "en": "Correct. Amazon SQS FIFO queues preserve message order within a message group and provide deduplication semantics. After API Gateway places orders in the FIFO queue, Lambda can receive and process them in sequence."
+        },
+        "C": {
+          "zh": "錯誤。API Gateway 授权者用于验证及授权调用者，不是串行化订单的机制。处理期间阻止请求会降低可用性与可扩展性，也没有可靠地存储待处理订单。",
+          "en": "Incorrect. An API Gateway authorizer authenticates and authorizes callers; it is not a mechanism for sequencing orders. Blocking requests during processing reduces availability and scalability and does not durably retain pending orders."
+        },
+        "D": {
+          "zh": "錯誤。SQS 标准队列提供至少一次传递与最佳努力排序，在分布式架构下消息可能重复或顺序错乱，因此无法保证订单依接收顺序处理。",
+          "en": "Incorrect. An SQS standard queue provides at-least-once delivery and best-effort ordering. Messages can be duplicated or arrive out of order, so it cannot guarantee processing in receive order."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 当应用程序收到订单时，使用 API Gateway 集成将消息发送到 Amazon SQS FIFO 队列，并设置 SQS FIFO 队列调用 AWS Lambda 函数进行处理。",
+        "en": "B. Use an API Gateway integration to send a message to an Amazon Simple Queue Service (Amazon SQS) FIFO queue when the application receives an order. Configure the SQS FIFO queue to invoke an AWS Lambda function for processing."
+      },
+      "discussion": {
+        "zh": "社群投票：B（98%），其他选项合计 2%。讨论一致指出 FIFO 正是用来维持消息顺序；SNS 与 SQS 标准队列都不保证严格排序，而 API Gateway 授权者只负责身份验证与授权。",
+        "en": "Community vote: B (98%), other choices 2%. Comments consistently noted that FIFO is designed to preserve message order. SNS and SQS standard queues do not guarantee strict ordering, while an API Gateway authorizer only handles authentication and authorization."
+      }
+    },
+    {
+      "question_no": 11,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个在 Amazon EC2 实例上运行并使用 Amazon Aurora 数据库的应用程序。EC2 实例使用本地文件中存储的用户名和密码连接到数据库。公司希望将凭证管理的运维负担降至最低。解决方案架构师应如何达成此目标？",
+        "en": "A company has an application that runs on Amazon EC2 instances and uses an Amazon Aurora database. The EC2 instances connect to the database by using user names and passwords that are stored locally in a file. The company wants to minimize the operational overhead of credential management. What should a solutions architect do to accomplish this goal?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Secrets Manager，并启用自动轮换。",
+          "en": "Use AWS Secrets Manager. Turn on automatic rotation."
+        },
+        "B": {
+          "zh": "使用 AWS Systems Manager Parameter Store，并启用自动轮换。",
+          "en": "Use AWS Systems Manager Parameter Store. Turn on automatic rotation."
+        },
+        "C": {
+          "zh": "创建 Amazon S3 存储桶，以 AWS KMS 密钥加密对象。将凭证文件迁移到该存储桶，并让应用程序指向该存储桶。",
+          "en": "Create an Amazon S3 bucket to store objects that are encrypted with an AWS Key Management Service (AWS KMS) encryption key. Migrate the credential file to the S3 bucket. Point the application to the S3 bucket."
+        },
+        "D": {
+          "zh": "为每个 EC2 实例创建并连接加密的 Amazon EBS 卷。将凭证文件迁移到新卷，并让应用程序指向该卷。",
+          "en": "Create an encrypted Amazon Elastic Block Store (Amazon EBS) volume for each EC2 instance. Attach the new EBS volume to each EC2 instance. Migrate the credential file to the new EBS volume. Point the application to the new EBS volume."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Secrets Manager 专为集中保护及检索密码等机密数据而设计，并原生支持 Aurora 数据库凭证的计划自动轮换，可免除本地文件与手动更新。",
+          "en": "Correct. AWS Secrets Manager is purpose-built to centrally protect and retrieve secrets and natively supports scheduled automatic rotation of Aurora database credentials, eliminating local files and manual updates."
+        },
+        "B": {
+          "zh": "錯誤。Parameter Store 可安全存储 SecureString 参数，但不原生提供题目所述的数据库凭证自动轮换；若自行创建轮换流程，运维负担较高。",
+          "en": "Incorrect. Parameter Store can securely hold SecureString parameters, but it does not natively provide the stated database credential rotation. Building a custom rotation process adds overhead."
+        },
+        "C": {
+          "zh": "錯誤。S3 与 KMS 能保护静态凭证文件，但不提供数据库凭证生命周期与自动轮换，应用程序及文件更新仍需自行管理。",
+          "en": "Incorrect. S3 and KMS can protect a credential file at rest, but they do not manage the database credential lifecycle or automatic rotation, leaving file and application updates to the company."
+        },
+        "D": {
+          "zh": "錯誤。加密 EBS 仅保护磁盘上的数据，仍须在每个实例维护及更新凭证文件，也无法自动轮换数据库密码。",
+          "en": "Incorrect. Encrypted EBS only protects data on disk. Credentials still must be maintained on every instance, and database passwords are not rotated automatically."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Secrets Manager，并启用自动轮换。",
+        "en": "A. Use AWS Secrets Manager. Turn on automatic rotation."
+      },
+      "discussion": {
+        "zh": "社群投票：A（96%），其他选项合计 4%。讨论共识是 Secrets Manager 原生支持 Aurora 凭证轮换；Parameter Store 若要轮换需自建流程。",
+        "en": "Community vote: A (96%), other choices 4%. The consensus was that Secrets Manager natively rotates Aurora credentials, whereas Parameter Store would require a custom process."
+      }
+    },
+    {
+      "question_no": 12,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家全球公司在 Application Load Balancer 后面的 Amazon EC2 实例上托管 Web 应用程序。应用程序包含静态与动态数据，静态数据存储在 Amazon S3。公司使用在 Amazon Route 53 注册的自有域名，并希望提升静态与动态数据的性能及降低延迟。解决方案架构师应如何满足需求？",
+        "en": "A global company hosts its web application on Amazon EC2 instances behind an Application Load Balancer (ALB). The web application has static data and dynamic data. The company stores its static data in an Amazon S3 bucket. The company wants to improve performance and reduce latency for the static data and dynamic data. The company is using its own domain name registered with Amazon Route 53. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建以 S3 存储桶和 ALB 为来源的 Amazon CloudFront 分布，并设置 Route 53 将流量路由到 CloudFront 分布。",
+          "en": "Create an Amazon CloudFront distribution that has the S3 bucket and the ALB as origins. Configure Route 53 to route traffic to the CloudFront distribution."
+        },
+        "B": {
+          "zh": "创建以 ALB 为来源的 CloudFront 分布，并创建以 S3 存储桶为端点的 AWS Global Accelerator 标准加速器。设置 Route 53 将流量路由到 CloudFront 分布。",
+          "en": "Create an Amazon CloudFront distribution that has the ALB as an origin. Create an AWS Global Accelerator standard accelerator that has the S3 bucket as an endpoint. Configure Route 53 to route traffic to the CloudFront distribution."
+        },
+        "C": {
+          "zh": "创建以 S3 为来源的 CloudFront 分布，再创建以 ALB 和 CloudFront 分布为端点的 Global Accelerator 标准加速器。创建指向加速器 DNS 名称的自定义域名并作为应用程序端点。",
+          "en": "Create an Amazon CloudFront distribution that has the S3 bucket as an origin. Create an AWS Global Accelerator standard accelerator that has the ALB and the CloudFront distribution as endpoints. Create a custom domain name that points to the accelerator DNS name. Use the custom domain name as an endpoint for the web application."
+        },
+        "D": {
+          "zh": "创建以 ALB 为来源的 CloudFront 分布，以及以 S3 为端点的 Global Accelerator 标准加速器。创建两个域名，分别指向 CloudFront 的动态内容与加速器的静态内容。",
+          "en": "Create an Amazon CloudFront distribution that has the ALB as an origin. Create an AWS Global Accelerator standard accelerator that has the S3 bucket as an endpoint. Create two domain names. Point one domain name to the CloudFront DNS name for dynamic content. Point the other domain name to the accelerator DNS name for static content. Use the domain names as endpoints for the web application."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。CloudFront 支持多个来源与缓存行为，可由 S3 提供静态内容、由 ALB 提供动态内容，并通过全球边缘节点降低两者的延迟；Route 53 别名可将自有域名指向分布。",
+          "en": "Correct. CloudFront supports multiple origins and cache behaviors, serving static content from S3 and dynamic content from the ALB through global edge locations. A Route 53 alias can direct the company's domain to the distribution."
+        },
+        "B": {
+          "zh": "錯誤。S3 存储桶不是 Global Accelerator 标准加速器支持的端点类型，而且 Route 53 只指向 CloudFront 时也不会使用所创建的加速器。",
+          "en": "Incorrect. An S3 bucket is not a supported standard Global Accelerator endpoint type, and routing Route 53 only to CloudFront would leave the accelerator unused."
+        },
+        "C": {
+          "zh": "錯誤。Global Accelerator 的标准端点不包含 CloudFront 分布，且将 CDN 再置于加速器后面是不必要且不受此架构支持的组合。",
+          "en": "Incorrect. A CloudFront distribution is not a standard Global Accelerator endpoint, and placing a CDN behind the accelerator is an unnecessary and unsupported combination for this design."
+        },
+        "D": {
+          "zh": "錯誤。S3 不能作为标准加速器端点，且使用两个域名拆分内容会增加客户端与 DNS 设置复杂度，CloudFront 本身即可处理两种来源。",
+          "en": "Incorrect. S3 cannot be a standard accelerator endpoint, and splitting content across two domains adds client and DNS complexity when CloudFront can handle both origins."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建以 S3 存储桶和 ALB 为来源的 Amazon CloudFront 分布，并设置 Route 53 将流量路由到 CloudFront 分布。",
+        "en": "A. Create an Amazon CloudFront distribution that has the S3 bucket and the ALB as origins. Configure Route 53 to route traffic to the CloudFront distribution."
+      },
+      "discussion": {
+        "zh": "社群投票：A（77%）、C（23%）。高票讨论指出 CloudFront 同时加速可缓存的静态内容与动态网站传递，而 Global Accelerator 更适合需要静态 IP、TCP/UDP 或确定性区域故障转移的情境。",
+        "en": "Community vote: A (77%), C (23%). Highly voted comments noted that CloudFront accelerates both cacheable static content and dynamic site delivery, while Global Accelerator better fits static-IP, TCP/UDP, or deterministic regional failover use cases."
+      }
+    },
+    {
+      "question_no": 13,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司每月维护 AWS 基础设施。维护期间，公司需要轮换跨多个 AWS 区域的 Amazon RDS for MySQL 数据库凭证。哪个解决方案能以最少的运维负担满足要求？",
+        "en": "A company performs monthly maintenance on its AWS infrastructure. During these maintenance activities, the company needs to rotate the credentials for its Amazon RDS for MySQL databases across multiple AWS Regions. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将凭证作为机密存放在 AWS Secrets Manager，针对所需区域使用多区域机密复写，并设置 Secrets Manager 依计划轮换机密。",
+          "en": "Store the credentials as secrets in AWS Secrets Manager. Use multi-Region secret replication for the required Regions. Configure Secrets Manager to rotate the secrets on a schedule."
+        },
+        "B": {
+          "zh": "在 AWS Systems Manager 中创建 SecureString 参数来存放凭证，针对所需区域使用多区域机密复写，并设置 Systems Manager 依计划轮换机密。",
+          "en": "Store the credentials as secrets in AWS Systems Manager by creating a secure string parameter. Use multi-Region secret replication for the required Regions. Configure Systems Manager to rotate the secrets on a schedule."
+        },
+        "C": {
+          "zh": "将凭证存放在已启用服务器端加密的 Amazon S3 存储桶，并使用 Amazon EventBridge 调用 AWS Lambda 函数轮换凭证。",
+          "en": "Store the credentials in an Amazon S3 bucket that has server-side encryption (SSE) enabled. Use Amazon EventBridge (Amazon CloudWatch Events) to invoke an AWS Lambda function to rotate the credentials."
+        },
+        "D": {
+          "zh": "使用 AWS KMS 多区域客户自管密钥加密凭证，将机密存放在 Amazon DynamoDB 全局数据表，再使用 Lambda 检索机密并通过 RDS API 轮换。",
+          "en": "Encrypt the credentials as secrets by using AWS Key Management Service (AWS KMS) multi-Region customer managed keys. Store the secrets in an Amazon DynamoDB global table. Use an AWS Lambda function to retrieve the secrets from DynamoDB. Use the RDS API to rotate the secrets."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。Secrets Manager 与 RDS 集成，支持计划自动轮换和多区域机密复写，能以受管功能同时处理各区域的安全存储、同步与轮换。",
+          "en": "Correct. Secrets Manager integrates with RDS and supports scheduled rotation and multi-Region secret replication, providing managed storage, synchronization, and rotation across Regions."
+        },
+        "B": {
+          "zh": "錯誤。Parameter Store 的 SecureString 可加密参数，但不提供题述的 Secrets Manager 多区域复写及原生数据库凭证计划轮换组合。",
+          "en": "Incorrect. Parameter Store SecureString encrypts parameters but does not provide the described combination of Secrets Manager multi-Region replication and native scheduled database credential rotation."
+        },
+        "C": {
+          "zh": "錯誤。S3 加密只保护静态数据；跨区域同步、数据库密码更新、失败复原与轮换 Lambda 都必须自行构建及维护。",
+          "en": "Incorrect. S3 encryption protects data at rest, but cross-Region synchronization, database password updates, failure recovery, and rotation Lambda logic all require custom implementation."
+        },
+        "D": {
+          "zh": "錯誤。KMS、DynamoDB 全局数据表、Lambda 与 RDS API 可组成自定义方案，但组件多且需自行处理机密生命周期，运维负担远高于受管服务。",
+          "en": "Incorrect. KMS, DynamoDB global tables, Lambda, and the RDS API could form a custom solution, but the many components and custom secret lifecycle create far more overhead than the managed service."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将凭证作为机密存放在 AWS Secrets Manager，针对所需区域使用多区域机密复写，并设置 Secrets Manager 依计划轮换机密。",
+        "en": "A. Store the credentials as secrets in AWS Secrets Manager. Use multi-Region secret replication for the required Regions. Configure Secrets Manager to rotate the secrets on a schedule."
+      },
+      "discussion": {
+        "zh": "社群投票：A（100%）。讨论一致认为 Secrets Manager 同时具备 RDS 凭证轮换与多区域复写，设置步骤最少；其他方案都需要自定义 Lambda 或不支持所需功能。",
+        "en": "Community vote: A (100%). Comments agreed that Secrets Manager combines RDS credential rotation with multi-Region replication and requires the least setup; other choices need custom Lambda logic or lack the required features."
+      }
+    },
+    {
+      "question_no": 14,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在跨多个可用区的 EC2 Auto Scaling 组中运行电子商务应用程序，并由 Application Load Balancer 分发流量。交易数据存放在大型 EC2 实例上的 MySQL 8.0 数据库。应用程序负载增加时数据库性能快速下降，且读取请求多于写入交易。公司需要数据库能针对不可预测的读取工作负载自动扩展并维持高可用性。哪个解决方案满足要求？",
+        "en": "A company runs an ecommerce application on Amazon EC2 instances behind an Application Load Balancer. The instances run in an Amazon EC2 Auto Scaling group across multiple Availability Zones. The Auto Scaling group scales based on CPU utilization metrics. The ecommerce application stores the transaction data in a MySQL 8.0 database that is hosted on a large EC2 instance. The database's performance degrades quickly as application load increases. The application handles more read requests than write transactions. The company wants a solution that will automatically scale the database to meet the demand of unpredictable read workloads while maintaining high availability. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用具有单一领导与计算节点的 Amazon Redshift。",
+          "en": "Use Amazon Redshift with a single node for leader and compute functionality."
+        },
+        "B": {
+          "zh": "使用单一可用区部署的 Amazon RDS，并设置 Amazon RDS 在另一个可用区添加读取器实例。",
+          "en": "Use Amazon RDS with a Single-AZ deployment. Configure Amazon RDS to add reader instances in a different Availability Zone."
+        },
+        "C": {
+          "zh": "使用多可用区部署的 Amazon Aurora，并设置搭配 Aurora Replicas 的 Aurora Auto Scaling。",
+          "en": "Use Amazon Aurora with a Multi-AZ deployment. Configure Aurora Auto Scaling with Aurora Replicas."
+        },
+        "D": {
+          "zh": "使用搭配 EC2 Spot Instances 的 Amazon ElastiCache for Memcached。",
+          "en": "Use Amazon ElastiCache for Memcached with EC2 Spot Instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Redshift 是分析型数据仓库，不是 MySQL 兼容的在线交易数据库；单一节点也无法满足高可用性。",
+          "en": "Incorrect. Redshift is an analytical data warehouse rather than a MySQL-compatible transactional database, and a single node does not meet high-availability requirements."
+        },
+        "B": {
+          "zh": "錯誤。Single-AZ 部署本身不具高可用性，而且一般 RDS 读取副本不会依不可预测的读取负载自动增减。",
+          "en": "Incorrect. A Single-AZ deployment is not highly available, and ordinary RDS read replicas do not automatically scale in and out with unpredictable read demand."
+        },
+        "C": {
+          "zh": "正確。Aurora 的分布式存储跨可用区提供高可用性，Aurora Replicas 可承担读取流量，而 Aurora Auto Scaling 能依负载自动调整副本数量。",
+          "en": "Correct. Aurora's distributed storage provides high availability across Availability Zones, Aurora Replicas serve reads, and Aurora Auto Scaling automatically adjusts replica count to load."
+        },
+        "D": {
+          "zh": "錯誤。Memcached 可减少部分重复读取，但不是持久性交易数据库，也不能取代 MySQL；Spot Instances 中断亦不适合作为高可用数据层。",
+          "en": "Incorrect. Memcached can reduce some repeated reads but is not a durable transactional database and cannot replace MySQL. Spot interruptions are also unsuitable for a highly available data layer."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用多可用区部署的 Amazon Aurora，并设置搭配 Aurora Replicas 的 Aurora Auto Scaling。",
+        "en": "C. Use Amazon Aurora with a Multi-AZ deployment. Configure Aurora Auto Scaling with Aurora Replicas."
+      },
+      "discussion": {
+        "zh": "社群投票：C（99%），其他选项合计 1%。讨论重点是 Aurora 提供 MySQL 兼容性、高可用性及读取副本自动扩展，直接符合不可预测且读取密集的工作负载。",
+        "en": "Community vote: C (99%), other choices 1%. Discussion focused on Aurora's MySQL compatibility, high availability, and automatic read-replica scaling for unpredictable read-heavy workloads."
+      }
+    },
+    {
+      "question_no": 15,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司最近迁移到 AWS，希望保护进出生产环境 VPC 的流量。公司原先在本地部署数据中心使用检查服务器运行流量检查与过滤，并希望在 AWS 云获得相同功能。哪个解决方案满足要求？",
+        "en": "A company recently migrated to AWS and wants to implement a solution to protect the traffic that flows in and out of the production VPC. The company had an inspection server in its on-premises data center. The inspection server performed specific operations such as traffic flow inspection and traffic filtering. The company wants to have the same functionalities in the AWS Cloud. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon GuardDuty 对生产环境 VPC 运行流量检查与过滤。",
+          "en": "Use Amazon GuardDuty for traffic inspection and traffic filtering in the production VPC."
+        },
+        "B": {
+          "zh": "使用 Traffic Mirroring 镜像生产环境 VPC 的流量，以进行流量检查与过滤。",
+          "en": "Use Traffic Mirroring to mirror traffic from the production VPC for traffic inspection and filtering."
+        },
+        "C": {
+          "zh": "使用 AWS Network Firewall 创建生产环境 VPC 流量检查与过滤所需的规则。",
+          "en": "Use AWS Network Firewall to create the required rules for traffic inspection and traffic filtering for the production VPC."
+        },
+        "D": {
+          "zh": "使用 AWS Firewall Manager 创建生产环境 VPC 流量检查与过滤所需的规则。",
+          "en": "Use AWS Firewall Manager to create the required rules for traffic inspection and traffic filtering for the production VPC."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。GuardDuty 分析多种数据源以检测威胁并产生发现项目，但不位于数据路径中，也不会直接过滤数据包。",
+          "en": "Incorrect. GuardDuty analyzes data sources to detect threats and produces findings, but it is not inline and does not directly filter packets."
+        },
+        "B": {
+          "zh": "錯誤。Traffic Mirroring 只将弹性网络接口的流量副本送往分析设备；它本身不是内嵌式防火墙，不能直接阻止或过滤原始流量。",
+          "en": "Incorrect. Traffic Mirroring only sends copies of elastic network interface traffic to analysis appliances. It is not an inline firewall and cannot directly block or filter the original traffic."
+        },
+        "C": {
+          "zh": "正確。AWS Network Firewall 是受管的具状态网络防火墙与入侵防护服务，可在 VPC 边界依规则检查及过滤输入与输出流量。",
+          "en": "Correct. AWS Network Firewall is a managed stateful network firewall and intrusion prevention service that inspects and filters inbound and outbound VPC traffic according to rules."
+        },
+        "D": {
+          "zh": "錯誤。Firewall Manager 用于跨账户集中部署与管理防火墙策略，本身不是运行数据包检查与过滤的数据平面。",
+          "en": "Incorrect. Firewall Manager centrally deploys and manages firewall policies across accounts; it is not the data plane that performs packet inspection and filtering."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Network Firewall 创建生产环境 VPC 流量检查与过滤所需的规则。",
+        "en": "C. Use AWS Network Firewall to create the required rules for traffic inspection and traffic filtering for the production VPC."
+      },
+      "discussion": {
+        "zh": "社群投票：C（95%），其他选项合计 5%。高票讨论区分了检测、镜像、集中管理与实际内嵌过滤；只有 Network Firewall 直接提供题目要求的受管检查与过滤功能。",
+        "en": "Community vote: C (95%), other choices 5%. Highly voted comments distinguished detection, mirroring, centralized management, and actual inline filtering. Only Network Firewall directly provides the required managed inspection and filtering."
+      }
+    }
+  ]
+}

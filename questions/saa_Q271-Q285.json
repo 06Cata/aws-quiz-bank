@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 271,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师观察到，在达到所需的 Amazon EC2 容量之前，夜间批量作业会自动扩展 1 小时。每晚的峰值容量都是一样的，批量作业总是在凌晨 1 点开始。解决方案架构师需要找到一种经济高效的解决方案，能够快速达到所需的 EC2 容量，并允许 Auto Scaling 组在批量作业完成后缩小规模。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A solutions architect observes that a nightly batch processing job is automatically scaled up for 1 hour before the desired Amazon EC2 capacity is reached. The peak capacity is the ‘same every night and the batch jobs always start at 1 AM. The solutions architect needs to find a cost-effective solution that will allow for the desired EC2 capacity to be reached quickly and allow the Auto Scaling group to scale down after the batch jobs are complete. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "增加 Auto Scaling 组的最小容量。",
+          "en": "Increase the minimum capacity for the Auto Scaling group."
+        },
+        "B": {
+          "zh": "增加 Auto Scaling 组的最大容量。",
+          "en": "Increase the maximum capacity for the Auto Scaling group."
+        },
+        "C": {
+          "zh": "配置计划的扩展以扩展到所需的计算层级。",
+          "en": "Configure scheduled scaling to scale up to the desired compute level."
+        },
+        "D": {
+          "zh": "变更扩展策略以在每次扩展操作期间添加更多 EC2 实例。",
+          "en": "Change the scaling policy to add more EC2 instances during each scaling operation."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：此选项增加最小容量将导致 EC2 实例数量持续增加，从而增加成本，并且无法满足问题的「经济高效」解决方案。",
+          "en": "Incorrect. Technical reason: Increase the minimum capacity of the Auto Scaling group. Increasing the minimum capacity will result in a consistently higher number of EC2 instances, thereby increasing costs and not meeting the \"cost-effective\" solution to the problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：此选项增加最大容量只是让Auto Scaling组能够扩展到更多的实例，并不能解决问题中提到的「快速达到所需容量」的问题。",
+          "en": "Incorrect. Technical reason: Increase the maximum capacity of the Auto Scaling group. Increasing the maximum capacity only allows the Auto Scaling group to scale to a higher number of instances, but does not solve the need to \"reach the required capacity quickly\" mentioned in the question."
+        },
+        "C": {
+          "zh": "正確。技术原因：此选项计划扩展允许在凌晨 1 点之前预先扩展至所需的计算容量，确保批量作业启动时已达到所需的 EC2 实例数量。另外，定时扩容可以在大量作业完成后自动减少容量，性价比高。",
+          "en": "Correct. Technical reason: Configure the scheduled scaling to scale to the required compute level. Scheduled scaling allows pre-scaling to the required compute capacity before 1 AM, ensuring that the required number of EC2 instances is already reached when batch jobs start. In addition, scheduled expansion can automatically reduce capacity after the batch job is completed, which is cost-effective."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：更改扩展策略可能会加快扩展速度，但 stripeless 可确保在凌晨 1 点之前达到所需容量。不幸的是，这样的平方可能会导致不必要的复杂性，并且没有任何平方可以完全解决问题的需要。",
+          "en": "Incorrect. Technical reason: Changing the scaling policy may speed up scaling, but stripeless ensures the required capacity is reached by 1 AM. Unfortunately, such squares can lead to unnecessary complexity, and no squares completely solve the need for the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置计划的扩展以扩展到所需的计算层级。",
+        "en": "C. Configure scheduled scaling to scale up to the desired compute level."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：此选项计划扩展允许在凌晨 1 点之前预先扩展至所需的计算容量，确保批量作业启动时已达到所需的 EC2 实例数量。另外，定时扩容可以在大量作业完成后自动减少容量，性价比高。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Configure the scheduled scaling to scale to the required compute level. Scheduled scaling allows pre-scaling to the required compute capacity before 1 AM, ensuring that the required number of EC2 instances is already reached when batch jobs start. In addition, scheduled expansion can automatically reduce capacity after the batch job is completed, which is cost-effective."
+      }
+    },
+    {
+      "question_no": 272,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司通过应用程序负载均衡器 (ALB) 后面的一组 Amazon EC2 实例为动态网站提供服务。网站需要支持多种语言才能为世界各地的客户提供服务。该网站的架构在 us-west-1 区域运行，并且对位于世界其他地区的用户表现出较高的请求延迟。无论用户位于何处，网站都需要快速有效地处理请求。然而，该公司不想跨多个区域重新创建现有架构。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A company serves a dynamic website from a fleet of Amazon EC2 instances behind an Application Load Balancer (ALB). The website needs to support multiple languages to serve customers around the world. The website’s architecture is running in the us- west-1 Region and is exhibiting high request latency for users that are located in other parts of the world. The website needs to serve requests quickly and efficiently regardless of a user’s location. However, the company does not want to recreate the existing architecture across multiple Regions. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将现有架构替换为由 Amazon S3 存储桶提供服务的网站。配置以 S3 存储桶作为来源的 Amazon CloudFront 指派。将缓存行为设置设置为基于 Accept-Language 请求标头进行缓存。",
+          "en": "Replace the existing architecture with a website that is served from an Amazon S3 bucket. Configure an Amazon CloudFront distribution with the S3 bucket as the origin. Set the cache behavior settings to cache based on the Accept-Language request header."
+        },
+        "B": {
+          "zh": "配置以 ALB 为来源的 Amazon CloudFront 指派。将缓存行为设置设置为基于 Accept-Language 请求标头进行缓存。",
+          "en": "Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on the Accept-Language request header."
+        },
+        "C": {
+          "zh": "创建与 ALB 集成的 Amazon API Gateway API。配置 API 以使用 HTTP 集成类型。设置 API 网关阶段以根据 Accept-Language 请求标头启用 API 缓存。",
+          "en": "Create an Amazon API Gateway API that is integrated with the ALB. Configure the API to use the HTTP integration type. Set up an API Gateway stage to enable the API cache based on the Accept-Language request header."
+        },
+        "D": {
+          "zh": "在每个附加区域中启动 EC2 实例，并将 NGINX 配置为充当该区域的缓存服务器。将所有 EC2 实例和 ALB 置于具有地理位置路由策略的 Amazon Route 53 记录集后面。",
+          "en": "Launch an EC2 instance in each additional Region and configure NGINX to act as a cache server for that Region. Put all the EC2 instances and the ALB behind an Amazon Route 53 record set with a geolocation routing policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：以 S3 存储桶取代现有架构将导致动态网站的功能受到限制，因为 S3 适合托管静态内容，而不是动态内容。虽然CloudFront可以优化全域访问，但是更换架构并不能满足问题的要求，因为公司不想重建现有架构。",
+          "en": "Incorrect. Technical reason: Replacing the existing architecture with S3 buckets will result in limited functionality for dynamic websites, as S3 is suitable for hosting static content, not dynamic content. Although CloudFront can optimize global access, replacing the architecture did not meet the requirements of the question because the company did not want to rebuild the existing architecture."
+        },
+        "B": {
+          "zh": "正確。技术原因：CloudFront可以作为全球内容传递网络（CDN），有效减少用户请求的延迟。以ALB为来源保留了现有架构，同时通过Accept-Language请求头进行缓存优化，满足多语言支持的需求。",
+          "en": "Correct. Technical reason: CloudFront can serve as a global content distribution network (CDN), effectively reducing the delay of user requests. Using ALB as the source retains the existing architecture, and at the same time performs caching optimization through the Accept-Language request header to meet the needs of multi-language support."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：API网关主要用于API的构建与管理，而非优化动态网站的全域访问性能。虽然API Gateway可以启用缓存，但它并不是解决高请求延迟的最佳选择。",
+          "en": "Incorrect. Technical reason: API Gateway is mainly used to build and manage APIs, rather than optimizing the global access performance of dynamic websites. Although API Gateway can enable caching, it is not the best choice for solving high request latency."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项需要启动 EC2 实例并在多个区域中设置 NGINX，这会增加架构复杂性和管理成本。问题明确要求不重建现有架构，因此此选项不符合要求。",
+          "en": "Incorrect. Technical reason: This option requires launching EC2 instances and configuring NGINX in multiple regions, which increases architectural complexity and management costs. The question explicitly requires not to rebuild the existing architecture, so this option does not meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 配置以 ALB 为来源的 Amazon CloudFront 指派。将缓存行为设置设置为基于 Accept-Language 请求标头进行缓存。",
+        "en": "B. Configure an Amazon CloudFront distribution with the ALB as the origin. Set the cache behavior settings to cache based on the Accept-Language request header."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：CloudFront可以作为全球内容传递网络（CDN），有效减少用户请求的延迟。以ALB为来源保留了现有架构，同时通过Accept-Language请求头进行缓存优化，满足多语言支持的需求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: CloudFront can serve as a global content distribution network (CDN), effectively reducing the delay of user requests. Using ALB as the source retains the existing architecture, and at the same time performs caching optimization through the Accept-Language request header to meet the needs of multi-language support."
+      }
+    },
+    {
+      "question_no": 273,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家快速成长的电子商务公司正在单一 AWS 区域中运行其工作负载。解决方案架构师必须创建包含不同 AWS 区域的灾难恢复 (DR) 策略。该公司希望其数据库在灾难恢复区域保持最新状态，并尽可能减少延迟。灾难恢复地区的剩余基础设施需要以减少的容量运行，并且必须能够在必要时扩大规模。哪一种解决方案能够以最低的恢复时间目标 (RTO) 满足这些要求？",
+        "en": "A rapidly growing ecommerce company is running its workloads in a single AWS Region. A solutions architect must create a disaster recovery (DR) strategy that includes a different AWS Region. The company wants its database to be up to date in the DR Region with the least possible latency. The remaining infrastructure in the DR Region needs to run at reduced capacity and must be able to scale up if necessary. Which solution will meet these requirements with the LOWEST recovery time objective (RTO)?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Aurora 全域数据库进行试点部署。",
+          "en": "Use an Amazon Aurora global database with a pilot light deployment."
+        },
+        "B": {
+          "zh": "将 Amazon Aurora 全域数据库与热备用部署结合使用。",
+          "en": "Use an Amazon Aurora global database with a warm standby deployment."
+        },
+        "C": {
+          "zh": "将 Amazon RDS 多可用区数据库实例与试点轻型部署结合使用。",
+          "en": "Use an Amazon RDS Multi-AZ DB instance with a pilot light deployment."
+        },
+        "D": {
+          "zh": "将 Amazon RDS 多可用区数据库实例与热备用部署结合使用。",
+          "en": "Use an Amazon RDS Multi-AZ DB instance with a warm standby deployment."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Aurora Global Database 提供跨区域复制，可实现低延迟的数据库同步，满足即时数据库需求。但试点轻策略仅维持最小基础设施的运行，需要较长时间才能恢复，无法满足最低RTO要求。",
+          "en": "Incorrect. Technical reason: Amazon Aurora Global Database provides cross-region replication, which can achieve low-latency database synchronization and meet the real-time database requirements. However, the pilot light strategy only maintains the operation of the smallest infrastructure, which takes a long time to recover and does not meet the minimum RTO requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon Aurora Global Database 提供低延迟跨区域复制，以确保即时数据库复制。热备在DR区域预先配置了一些资源，可以快速扩展以满足生产需求并满足最低RTO要求。",
+          "en": "Correct. Technical reason: Amazon Aurora Global Database provides low-latency cross-region replication to ensure real-time database replication. Warm Standby pre-configures some resources in the DR Region and can be quickly expanded to meet production needs and meet minimum RTO requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon RDS 多可用区提供高可用性，但仅适用于单一区域，无法满足跨区域灾难恢复的要求。 Pilot Light 进一步增加了恢复时间，并且不符合最低 RTO 要求。",
+          "en": "Incorrect. Technical reason: Amazon RDS Multi-AZ provides high availability, but it only works within a single region and cannot meet the requirements for cross-region disaster recovery. Pilot Light further increases recovery time and does not meet the minimum RTO requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon RDS 多可用区提供高可用性，但仅适用于单一区域，无法满足跨区域灾难恢复的要求。热备虽然可以减少恢复时间，但仍无法解决跨区域数据库同步的问题。",
+          "en": "Incorrect. Technical reason: Amazon RDS Multi-AZ provides high availability, but it only works within a single region and cannot meet the requirements for cross-region disaster recovery. Although Warm Standby can reduce recovery time, it still cannot solve the problem of cross-region database synchronization."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将 Amazon Aurora 全域数据库与热备用部署结合使用。",
+        "en": "B. Use an Amazon Aurora global database with a warm standby deployment."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (97%) 3%。热门讨论与考点摘要：Amazon Aurora Global Database 提供低延迟跨区域复制，以确保即时数据库复制。热备在DR区域预先配置了一些资源，可以快速扩展以满足生产需求并满足最低RTO要求。",
+        "en": "Community vote as displayed: B (97%) 3%. Popular discussion and key point summary: Amazon Aurora Global Database provides low-latency cross-region replication to ensure real-time database replication. Warm Standby pre-configures some resources in the DR Region and can be quickly expanded to meet production needs and meet minimum RTO requirements."
+      }
+    },
+    {
+      "question_no": 274,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon EC2 实例上运行应用程序。该公司需要为该应用程序实施灾难恢复（DR）解决方案。灾难恢复解决方案的恢复时间目标 (RTO) 需要小于 4 小时。灾难恢复解决方案还需要在正常操作期间使用尽可能少的 AWS 资源。哪一种解决方案能够以最高效的方式满足这些要求？",
+        "en": "A company runs an application on Amazon EC2 instances. The company needs to implement a disaster recovery (DR) solution for the application. The DR solution needs to have a recovery time objective (RTO) of less than 4 hours. The DR solution also needs to use the fewest possible AWS resources during normal operations. Which solution will meet these requirements in the MOST operationally efficient way?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon 系统映像 (AMI) 以备份 EC2 实例。将 AMI 复制到辅助 AWS 区域。使用 AWS Lambda 和自订脚本在辅助区域中自动化基础架构部署。",
+          "en": "Create Amazon Machine Images (AMIs) to back up the EC2 instances. Copy the AMIs to a secondary AWS Region. Automate infrastructure deployment in the secondary Region by using AWS Lambda and custom scripts."
+        },
+        "B": {
+          "zh": "创建 Amazon 系统映像 (AMI) 以备份 EC2 实例。将 AMI 复制到辅助 AWS 区域。使用 AWS CloudFormation 在辅助区域中自动部署基础架构。",
+          "en": "Create Amazon Machine Images (AMIs) to back up the EC2 instances. Copy the AMIs to a secondary AWS Region. Automate infrastructure deployment in the secondary Region by using AWS CloudFormation."
+        },
+        "C": {
+          "zh": "在辅助 AWS 区域中启动 EC2 实例。始终保持辅助区域中的 EC2 实例处于活动状态。",
+          "en": "Launch EC2 instances in a secondary AWS Region. Keep the EC2 instances in the secondary Region active at all times."
+        },
+        "D": {
+          "zh": "在辅助可用区中启动 EC2 实例。使辅助可用区中的 EC2 实例始终保持活动状态。",
+          "en": "Launch EC2 instances in a secondary Availability Zone. Keep the EC2 instances in the secondary Availability Zone active at all times."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AMI备份和跨区域复制是灾难恢复的常见做法，并符合要求。虽然AWS Lambda可以自动化，但使用自订脚本可能会增加复杂性和维护成本，且效率不如AWS CloudFormation。这个选项是正确的，但不是最优解。",
+          "en": "Incorrect. Technical reason: AMIs backup and cross-region replication are common practices for disaster recovery and meet the requirements. Although AWS Lambda can achieve automation, using custom scripts may increase complexity and maintenance costs and is not as efficient as AWS CloudFormation. This option is correct but not the optimal solution."
+        },
+        "B": {
+          "zh": "正確。技术原因：AMI备份和跨区域复制是灾难恢复的常见做法，并符合要求。 AWS CloudFormation提供范本化基础架构部署，简化操作、提高效率，满足「最少资源」和「高效率」的要求。该选项是最优解。",
+          "en": "Correct. Technical reason: AMIs backup and cross-region replication are common practices for disaster recovery and meet the requirements. AWS CloudFormation provides templated infrastructure deployment, simplifying operations and improving efficiency, meeting the requirements of \"minimum resources\" and \"high efficiency\". This option is the optimal solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：在辅助区域中保持 EC2 实例处于活动状态可以实现快速恢复，但会消耗大量资源并违反「使用最低资源」要求。",
+          "en": "Incorrect. Technical reason: Keeping EC2 instances active in a secondary zone enables fast recovery, but consumes a lot of resources and violates the \"use minimum resources\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：辅助可用区实例活动无法满足跨地域容灾需求。此选项与问题所要求的跨地域容灾不一致。",
+          "en": "Incorrect. Technical reason: Instance activity in the secondary Availability Zone cannot meet the requirements of cross-region disaster recovery. This option is inconsistent with the cross-region disaster recovery required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon 系统映像 (AMI) 以备份 EC2 实例。将 AMI 复制到辅助 AWS 区域。使用 AWS CloudFormation 在辅助区域中自动部署基础架构。",
+        "en": "B. Create Amazon Machine Images (AMIs) to back up the EC2 instances. Copy the AMIs to a secondary AWS Region. Automate infrastructure deployment in the secondary Region by using AWS CloudFormation."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：AMI备份和跨区域复制是灾难恢复的常见做法，并符合要求。 AWS CloudFormation提供范本化基础架构部署，简化操作、提高效率，满足「最少资源」和「高效率」的要求。该选项是最优解。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: AMIs backup and cross-region replication are common practices for disaster recovery and meet the requirements. AWS CloudFormation provides templated infrastructure deployment, simplifying operations and improving efficiency, meeting the requirements of \"minimum resources\" and \"high efficiency\". This option is the optimal solution."
+      }
+    },
+    {
+      "question_no": 275,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司运行一个基于浏览器的内部应用程序。该应用程序在应用程序负载均衡器后面的 Amazon EC2 实例上运行。这些实例在跨多个可用区的 Amazon EC2 Auto Scaling 群组中运行。 Auto Scaling 群组在工作时间内扩展到 20 个实例，但在夜间缩小到 2 个实例。工作人员抱怨说，尽管到上午中旬运行良好，但应用程序在一天开始时速度非常慢。应如何改变规模以解决员工投诉并将成本降至最低？",
+        "en": "A company runs an internal browser-based application. The application runs on Amazon EC2 instances behind an Application Load Balancer. The instances run in an Amazon EC2 Auto Scaling group across multiple Availability Zones. The Auto Scaling group scales up to 20 instances during work hours, but scales down to 2 instances overnight. Staff are complaining that the application is very slow when the day begins, although it runs well by mid-morning. How should the scaling be changed to address the staff complaints and keep costs to a minimum?"
+      },
+      "options": {
+        "A": {
+          "zh": "实施一项预定行动，在办公室开业前不久将所需容量设置为 20 人。",
+          "en": "Implement a scheduled action that sets the desired capacity to 20 shortly before the office opens."
+        },
+        "B": {
+          "zh": "实作在较低 CPU 阈值下触发的步进缩放操作，并减少冷却时间。",
+          "en": "Implement a step scaling action triggered at a lower CPU threshold, and decrease the cooldown period."
+        },
+        "C": {
+          "zh": "实施在较低CPU阈值下触发的目标追踪动作，并减少冷却时间。",
+          "en": "Implement a target tracking action triggered at a lower CPU threshold, and decrease the cooldown period."
+        },
+        "D": {
+          "zh": "实施计划行动，在办公室开业前不久将最小和最大容量设置为 20。",
+          "en": "Implement a scheduled action that sets the minimum and maximum capacity to 20 shortly before the office opens."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：计划操作可以确保在特定时间点设置Auto Scaling群组的容量，但它仅设置目标容量，无法动态调整实例数量以应对实际负载。虽然解决了早上的性能问题，但是可能会导致资源浪费，因为目标容量固定为20个，即使负载很低，实例数也不会减少。此选项不符合「将成本降至最低」的要求。",
+          "en": "Incorrect. Technical reason: The planned operation can ensure that the capacity of the Auto Scaling group is set at a specific point in time, but it only sets the target capacity and cannot dynamically adjust the number of instances to cope with the actual load. Although it solves the performance problem in the morning, it may lead to a waste of resources because the target capacity is fixed at 20 and the number of instances will not be reduced even if the load is low. This option does not meet the \"keep costs to a minimum\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：步长扩展根据预先定义的阈值触发扩展操作，并且实例数量可以动态调整。但减少冷却时间可能导致频繁扩容，增加管理复杂度。步长扩展的触发条件可能无法及时回应早上的负载峰值，导致性能问题持续存在。该选项并不能完全解决问题。",
+          "en": "Incorrect. Technical reason: Step expansion triggers expansion operations based on predefined thresholds, and the number of instances can be dynamically adjusted. However, reducing the cooldown period may lead to frequent expansion and increase management complexity. The trigger condition for step expansion may not respond in time to the morning load peak, causing performance problems to persist. This option does not completely solve the problem."
+        },
+        "C": {
+          "zh": "正確。技术原因：目标追踪缩放根据即时指针（如CPU利用率）动态调整实例数量，可以快速回应负载变化。减少冷却时间可以加快扩张速度。这种方法既解决了早上的性能问题，又通过在负载减少时减少实例数量来控制成本。这个选项是最好的选择。",
+          "en": "Correct. Technical reason: The target tracking scaling dynamically adjusts the number of instances based on real-time indicators (such as CPU utilization) and can quickly respond to load changes. Reducing cooldown time can speed up expansion. This approach both solves performance issues in the morning and controls costs by reducing the number of instances when load decreases. This option is the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：计划的扩展操作可确保在特定时间点设置 Auto Scaling 群组的最小和最大容量，但这会强制实例数固定为 20，无论负载如何变更。虽然解决了早上的性能问题，但由于无法动态调整实例数量以适应负载变化，因此会导致资源浪费。此选项不符合「将成本降至最低」的要求。",
+          "en": "Incorrect. Technical reason: The scheduled scaling action ensures that the minimum and maximum capacity of the Auto Scaling group is set at a specific point in time, but this forces the number of instances to be fixed at 20 regardless of how the load changes. Although it solves the morning performance problem, it will lead to a waste of resources because the number of instances cannot be dynamically adjusted to adapt to load changes. This option does not meet the \"keep costs to a minimum\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 实施在较低CPU阈值下触发的目标追踪动作，并减少冷却时间。",
+        "en": "C. Implement a target tracking action triggered at a lower CPU threshold, and decrease the cooldown period."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (66%) A (34%)。热门讨论与考点摘要：目标追踪缩放根据即时指针（如CPU利用率）动态调整实例数量，可以快速回应负载变化。减少冷却时间可以加快扩张速度。这种方法既解决了早上的性能问题，又通过在负载减少时减少实例数量来控制成本。这个选项是最好的选择。",
+        "en": "Community vote as displayed: C (66%) A (34%). Popular discussion and key point summary: The target tracking scaling dynamically adjusts the number of instances based on real-time indicators (such as CPU utilization) and can quickly respond to load changes. Reducing cooldown time can speed up expansion. This approach both solves performance issues in the morning and controls costs by reducing the number of instances when load decreases. This option is the best choice."
+      }
+    },
+    {
+      "question_no": 276,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Auto Scaling 群组中的多个 Amazon EC2 实例上部署了一个多层应用程序。 Amazon RDS for Oracle 实例是使用 Oracle 特定的 PL/SQL 函数的应用程序的数据层。该应用程序的流量一直在稳步增长。这会导致 EC2 实例重载且 RDS 实例存储空间不足。 Auto Scaling 组没有任何扩展指针，仅定义最小健康实例数。该公司预测，流量将继续以稳定但不可预测的速度成长，然后趋于平稳。解决方案架构师应该做什么来确保系统能够自动扩展以适应增加的流量？ （选两个。）",
+        "en": "A company has a multi-tier application deployed on several Amazon EC2 instances in an Auto Scaling group. An Amazon RDS for Oracle instance is the application’ s data layer that uses Oracle-specific PL/SQL functions. Traffic to the application has been steadily increasing. This is causing the EC2 instances to become overloaded and the RDS instance to run out of storage. The Auto Scaling group does not have any scaling metrics and defines the minimum healthy instance count only. The company predicts that traffic will continue to increase at a steady but unpredictable rate before leveling off. What should a solutions architect do to ensure the system can automatically scale for the increased traffic? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在 RDS for Oracle 实例上设置保存 Auto Scaling。",
+          "en": "Configure storage Auto Scaling on the RDS for Oracle instance."
+        },
+        "B": {
+          "zh": "将数据库迁移到 Amazon Aurora 以使用 Auto Scaling 保存。",
+          "en": "Migrate the database to Amazon Aurora to use Auto Scaling storage."
+        },
+        "C": {
+          "zh": "在 RDS for Oracle 实例上配置可用存储空间不足的警报。",
+          "en": "Configure an alarm on the RDS for Oracle instance for low free storage space."
+        },
+        "D": {
+          "zh": "将 Auto Scaling 群组配置为使用平均 CPU 作为扩展指针。",
+          "en": "Configure the Auto Scaling group to use the average CPU as the scaling metric."
+        },
+        "E": {
+          "zh": "设置 Auto Scaling 群组以使用平均可用内存作为扩展指针。",
+          "en": "Configure the Auto Scaling group to use the average free memory as the scaling metric."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：。 RDS支持自动保存扩展，确保存储空间不足时数据库自动扩展。这是解决RDS保存不足问题的最佳实务。",
+          "en": "Correct. Technical reason: . RDS supports automatic storage expansion, which ensures that the database automatically expands when storage space is insufficient. This is the best practice to solve the problem of insufficient RDS storage."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：。尽管Amazon Aurora支持自动保存扩展，但问题明确指出它使用RDS for Oracle并依赖Oracle特定的PL/SQL功能。迁移到 Aurora 可能会导致功能不兼容。",
+          "en": "Incorrect. Technical reason: . Although Amazon Aurora supports automatic storage expansion, the question clearly states that it uses RDS for Oracle and relies on Oracle-specific PL/SQL functionality. Migrating to Aurora may result in feature incompatibilities."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：。配置警报可以帮助监控存储空间，但不能解决存储空间不足的问题。问题需要自动扩展，而不仅仅是监控。",
+          "en": "Incorrect. Technical reason: . Configuring alerts can help monitor storage space, but does not resolve insufficient storage issues. The question requires automatic expansion, not just monitoring."
+        },
+        "D": {
+          "zh": "正確。技术原因：。使用平均 CPU 作为扩展指针是解决 EC2 实例重载的最佳实务。随着流量的增加，CPU使用率会增加，进而触发Auto Scaling扩容。",
+          "en": "Correct. Technical reason: . Using average CPU as a scaling metric is a best practice for solving overloaded EC2 instances. As traffic increases, CPU usage will increase, triggering Auto Scaling expansion."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：。虽然内存是重要指针，但是题中并没有提到内存不足的问题。 CPU 使用率通常是较常用的缩放指针。",
+          "en": "Incorrect. Technical reason: . Although memory is an important indicator, the question does not mention the problem of insufficient memory. CPU usage is generally the more commonly used scaling metric."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 在 RDS for Oracle 实例上设置保存 Auto Scaling。；D. 将 Auto Scaling 群组配置为使用平均 CPU 作为扩展指针。",
+        "en": "A. Configure storage Auto Scaling on the RDS for Oracle instance.; D. Configure the Auto Scaling group to use the average CPU as the scaling metric."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：AD (88%) 6%。热门讨论与考点摘要：。 RDS支持自动保存扩展，确保存储空间不足时数据库自动扩展。这是解决RDS保存不足问题的最佳实务。；。使用平均 CPU 作为扩展指针是解决 EC2 实例重载的最佳实务。随着流量的增加，CPU使用率会增加，进而触发Auto Scaling扩容。",
+        "en": "Community vote as displayed: AD (88%) 6%. Popular discussion and key point summary: . RDS supports automatic storage expansion, which ensures that the database automatically expands when storage space is insufficient. This is the best practice to solve the problem of insufficient RDS storage.; . Using average CPU as a scaling metric is a best practice for solving overloaded EC2 instances. As traffic increases, CPU usage will increase, triggering Auto Scaling expansion."
+      }
+    },
+    {
+      "question_no": 277,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司提供在线服务，用于发布视频内容并将其转码以供任何行动平台使用。该应用程序架构使用 Amazon Elastic File System (Amazon EFS) 标准来收集和保存视频，以便多个 Amazon EC2 Linux 实例可以访问视频内容进行处理。随着该服务越来越受欢迎，存储成本变得过于昂贵。哪种存储解决方案最具成本效益？",
+        "en": "A company provides an online service for posting video content and transcoding it for use by any mobile platform. The application architecture uses Amazon Elastic File System (Amazon EFS) Standard to collect and store the videos so that multiple Amazon EC2 Linux instances can access the video content for processing. As the popularity of the service has grown over time, the storage costs have become too expensive. Which storage solution is MOST cost-effective?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Storage Gateway 文档来保存和处理视频内容。",
+          "en": "Use AWS Storage Gateway for files to store and process the video content."
+        },
+        "B": {
+          "zh": "使用 AWS Storage Gateway 作为卷来保存和处理视频内容。",
+          "en": "Use AWS Storage Gateway for volumes to store and process the video content."
+        },
+        "C": {
+          "zh": "使用 Amazon EFS 保存视频内容。处理完成后，将文档传输到 Amazon Elastic Block Store (Amazon EBS)。",
+          "en": "Use Amazon EFS for storing the video content. Once processing is complete, transfer the files to Amazon Elastic Block Store (Amazon EBS)."
+        },
+        "D": {
+          "zh": "使用 Amazon S3 保存视频内容。将文档暂时移至连接到服务器的 Amazon Elastic Block Store (Amazon EBS) 卷进行处理。",
+          "en": "Use Amazon S3 for storing the video content. Move the files temporarily over to an Amazon Elastic Block Store (Amazon EBS) volume attached to the server for processing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Storage Gateway 主要用于混合云端场景，将本机数据与 AWS 云存储集成。它不适合直接用于视频内容的保存和处理，并且可能成本高昂。",
+          "en": "Incorrect. Technical reason: AWS Storage Gateway is mainly used in hybrid cloud scenarios to integrate local data with AWS cloud storage. It is not suitable for direct use in storage and processing of video content and may be costly."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Storage Gateway 的卷模式主要用于备份和灾难恢复场景，而不是视频内容的保存和处理。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: The volume mode of AWS Storage Gateway is mainly used for backup and disaster recovery scenarios, rather than the storage and processing of video content. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon EFS 虽然支持多实例访问，但成本较高。将文档移至 Amazon EBS 后，存储成本问题仍然没有解决。",
+          "en": "Incorrect. Technical reason: Although Amazon EFS supports multi-instance access, its cost is higher. After moving the files to Amazon EBS, the storage cost issue still remains unresolved."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon S3 是适合保存视频内容的低成本存储解决方案。将文档暂时移至 Amazon EBS 进行处理可以优化成本，同时满足处理需求。",
+          "en": "Correct. Technical reason: Amazon S3 is a low-cost storage solution suitable for storing video content. Temporarily moving files to Amazon EBS for processing can optimize costs while meeting processing needs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 Amazon S3 保存视频内容。将文档暂时移至连接到服务器的 Amazon Elastic Block Store (Amazon EBS) 卷进行处理。",
+        "en": "D. Use Amazon S3 for storing the video content. Move the files temporarily over to an Amazon Elastic Block Store (Amazon EBS) volume attached to the server for processing."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (80%) A (20%)。热门讨论与考点摘要：Amazon S3 是适合保存视频内容的低成本存储解决方案。将文档暂时移至 Amazon EBS 进行处理可以优化成本，同时满足处理需求。",
+        "en": "Community vote as displayed: D (80%) A (20%). Popular discussion and key point summary: Amazon S3 is a low-cost storage solution suitable for storing video content. Temporarily moving files to Amazon EBS for processing can optimize costs while meeting processing needs."
+      }
+    },
+    {
+      "question_no": 278,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司想要创建一个应用程序来以分层结构关系保存员工数据。公司需要对员工数据的高流量查找进行最小延迟回应，并且必须保护所有敏感数据。如果员工数据中存在任何财务消息，公司还需要每月接收电子邮件。解决方案架构师应该采取哪些步骤组合来满足这些要求？ （选两个。）",
+        "en": "A company wants to create an application to store employee data in a hierarchical structured relationship. The company needs a minimum-latency response to high-traffic queries for the employee data and must protect any sensitive data. The company also needs to receive monthly email messages if any financial information is present in the employee data. Which combination of steps should a solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Redshift 将员工数据保存在层级结构中。每月将数据卸载到 Amazon S3。",
+          "en": "Use Amazon Redshift to store the employee data in hierarchies. Unload the data to Amazon S3 every month."
+        },
+        "B": {
+          "zh": "使用 Amazon DynamoDB 将员工数据保存在层级结构中。每月将数据导出到 Amazon S3。",
+          "en": "Use Amazon DynamoDB to store the employee data in hierarchies. Export the data to Amazon S3 every month."
+        },
+        "C": {
+          "zh": "为 AWS 账户配置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成以将每月事件发送到 AWS Lambda。",
+          "en": "Configure Amazon Macie for the AWS account. Integrate Macie with Amazon EventBridge to send monthly events to AWS Lambda."
+        },
+        "D": {
+          "zh": "使用 Amazon Athena 分析 Amazon S3 中的员工数据。将 Athena 与 Amazon QuickSight 集成以发布分析控制面板并与用户共用控制台。",
+          "en": "Use Amazon Athena to analyze the employee data in Amazon S3. Integrate Athena with Amazon QuickSight to publish analysis dashboards and share the dashboards with users."
+        },
+        "E": {
+          "zh": "为 AWS 账户设置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成，以通过 Amazon Simple Notification Service (Amazon SNS) 订阅发送每月通知。",
+          "en": "Configure Amazon Macie for the AWS account. Integrate Macie with Amazon EventBridge to send monthly notifications through an Amazon Simple Notification Service (Amazon SNS) subscription."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 Amazon Redshift 以分层方式保存员工数据。每月将数据卸载到 Amazon S3。 Amazon Redshift主要应用于数据仓库场景，适合分析和查找，但不适合存储层次结构数据。题目要求查找延迟最低，但Redshift的查找延迟较高，不符合要求。",
+          "en": "Incorrect. Technical reason: Use Amazon Redshift to store employee data in a hierarchical manner. Offload data to Amazon S3 monthly. Amazon Redshift is mainly used in data warehouse scenarios and is suitable for analysis and query, but it is not suitable for storing hierarchical structured data. The question requires the lowest query latency, but Redshift’s query query latency is higher, which does not meet the requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：使用 Amazon DynamoDB 以分层方式保存员工数据。每月将数据导出到 Amazon S3。 Amazon DynamoDB 是一种 NoSQL 数据库，支持保存分层结构化数据并具有低延迟查找功能。通过DynamoDB导出功能可以定期将数据导出到Amazon S3，满足数据保存和导出需求。",
+          "en": "Correct. Technical reason: Use Amazon DynamoDB to store employee data in a hierarchical manner. Export data to Amazon S3 monthly. Amazon DynamoDB is a NoSQL database that supports storing hierarchically structured data and has low-latency query capabilities. Data can be exported to Amazon S3 regularly through the DynamoDB export function to meet data storage and export needs."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：为您的 AWS 账户配置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成以将每月事件发送到 AWS Lambda。尽管 Amazon Macie 可以检测敏感的婴儿数据，但该问题需要发送通知而不是触发 Lambda 函数。此选项没有提及如何发送通知，无法满足问题要求。",
+          "en": "Incorrect. Technical reason: Configure Amazon Macie for your AWS account. Integrate Macie with Amazon EventBridge to send monthly events to AWS Lambda. Although Amazon Macie can detect sensitive infant data, the question requires sending a notification instead of triggering a Lambda function. This option does not mention how to send notifications and cannot meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 Amazon Athena 分析 Amazon S3 保存的员工数据。将 Athena 与 Amazon QuickSight 集成以发布分析控制面板并与用户共用。 Amazon Athena 适合分析保存在 S3 中的数据，但问题要求最低，Athena 的查找延迟较高。问题没有提到需要分析仪表板，所以这个选项不符合要求。",
+          "en": "Incorrect. Technical reason: Use Amazon Athena to analyze employee data stored in Amazon S3. Integrate Athena with Amazon QuickSight to publish analytical dashboards and share them with users. Amazon Athena is suitable for analyzing data stored in S3, but the question requirements are the lowest and the query latency of Athena is higher. The question does not mention the need to analyze the dashboard, so this option does not meet the requirements."
+        },
+        "E": {
+          "zh": "正確。技术原因：为您的 AWS 账户配置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成，以通过 Amazon Simple Notification Service (Amazon SNS) 订阅发送每月通知。 Amazon Macie 可以侦测敏感婴儿数据并通过 EventBridge 触发事件。通过SNS订阅发送通知，满足问题所要求的每月通知功能。",
+          "en": "Correct. Technical reason: Configure Amazon Macie for your AWS account. Integrate Macie with Amazon EventBridge to send monthly notifications through Amazon Simple Notification Service (Amazon SNS) subscriptions. Amazon Macie can detect sensitive infant data and trigger events through EventBridge. Send notifications through SNS subscription, which meets the monthly notification function required by the question."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon DynamoDB 将员工数据保存在层级结构中。每月将数据导出到 Amazon S3。；E. 为 AWS 账户设置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成，以通过 Amazon Simple Notification Service (Amazon SNS) 订阅发送每月通知。",
+        "en": "B. Use Amazon DynamoDB to store the employee data in hierarchies. Export the data to Amazon S3 every month.; E. Configure Amazon Macie for the AWS account. Integrate Macie with Amazon EventBridge to send monthly notifications through an Amazon Simple Notification Service (Amazon SNS) subscription."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：BE (100%)。热门讨论与考点摘要：使用 Amazon DynamoDB 以分层方式保存员工数据。每月将数据导出到 Amazon S3。 Amazon DynamoDB 是一种 NoSQL 数据库，支持保存分层结构化数据并具有低延迟查找功能。通过DynamoDB导出功能可以定期将数据导出到Amazon S3，满足数据保存和导出需求。；为您的 AWS 账户配置 Amazon Macie。将 Macie 与 Amazon EventBridge 集成，以通过 Amazon Simple Notification Service (Amazon SNS) 订阅发送每月通知。 Amazon Macie 可以侦测敏感婴儿数据并通过 EventBridge 触发事件。通过SNS订阅发送通知，满足问题所要求的每月通知功能。",
+        "en": "Community vote as displayed: BE (100%). Popular discussion and key point summary: Use Amazon DynamoDB to store employee data in a hierarchical manner. Export data to Amazon S3 monthly. Amazon DynamoDB is a NoSQL database that supports storing hierarchically structured data and has low-latency query capabilities. Data can be exported to Amazon S3 regularly through the DynamoDB export function to meet data storage and export needs.; Configure Amazon Macie for your AWS account. Integrate Macie with Amazon EventBridge to send monthly notifications through Amazon Simple Notification Service (Amazon SNS) subscriptions. Amazon Macie can detect sensitive infant data and trigger events through EventBridge. Send notifications through SNS subscription, which meets the monthly notification function required by the question."
+      }
+    },
+    {
+      "question_no": 279,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有一个由 Amazon DynamoDB 表格支持的应用程序。该公司的合规性要求规定，数据库备份必须每月进行一次，必须可用 6 个月，并且必须保留 7 年。哪种解决方案可以满足这些要求？",
+        "en": "A company has an application that is backed by an Amazon DynamoDB table. The company’s compliance requirements specify that database backups must be taken every month, must be available for 6 months, and must be retained for 7 years. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建一个 AWS Backup 计划以在每月的第一天备份 DynamoDB 数据表。指定在 6 个月后将备份过渡到冷保存的生命周期策略。将每个备份的保留期限设置为 7 年。",
+          "en": "Create an AWS Backup plan to back up the DynamoDB table on the first day of each month. Specify a lifecycle policy that transitions the backup to cold storage after 6 months. Set the retention period for each backup to 7 years."
+        },
+        "B": {
+          "zh": "在每个月的第一天创建 DynamoDB 数据表的 DynamoDB 按需备份。 6 个月后将备份转换为 Amazon S3 Glacier 弹性检索。创建 S3 生命周期策略以删除超过 7 年的备份。",
+          "en": "Create a DynamoDB on-demand backup of the DynamoDB table on the first day of each month. Transition the backup to Amazon S3 Glacier Flexible Retrieval after 6 months. Create an S3 Lifecycle policy to delete backups that are older than 7 years."
+        },
+        "C": {
+          "zh": "使用 AWS 开发工具包开发一个脚本来创建 DynamoDB 表的按需备份。设置在每月第一天运行脚本的 Amazon EventBridge 规则。创建第二个脚本，该脚本将在每月的第二天运行，以将超过 6 个月的 DynamoDB 备份转换为冷存储，并删除超过 7 年的备份。",
+          "en": "Use the AWS SDK to develop a script that creates an on-demand backup of the DynamoDB table. Set up an Amazon EventBridge rule that runs the script on the first day of each month. Create a second script that will run on the second day of each month to transition DynamoDB backups that are older than 6 months to cold storage and to delete backups that are older than 7 years."
+        },
+        "D": {
+          "zh": "使用 AWS CLI 创建 DynamoDB 数据表的按需备份。设置 Amazon EventBridge 规则，使用 cron 表达式在每月的第一天运行指令。在指令中指定6个月后将备份过渡到冷存储，7年后删除备份。",
+          "en": "Use the AWS CLI to create an on-demand backup of the DynamoDB table. Set up an Amazon EventBridge rule that runs the command on the first day of each month with a cron expression. Specify in the command to transition the backups to cold storage after 6 months and to delete the backups after 7 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Backup 支持 DynamoDB 表的备份，并允许设置备份计划和生命周期策略。您可以指定备份的保留期为 7 年，并在 6 个月后将备份传输到冷保存。满足问题要求：每月备份、冷保存6个月、保留7年。",
+          "en": "Correct. Technical reason: AWS Backup supports backup of DynamoDB tables and allows setting backup plans and lifecycle strategies. You can specify a retention period of 7 years for backups and transfer the backups to cold storage after 6 months. Meets the question requirements: monthly backup, 6 months of cold storage, and 7 years of retention."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：DynamoDB 按需备份无法直接发送至 Amazon S3 Glacier 弹性检索。 S3 生命周期策略无法直接管理 DynamoDB 备份。不符合冷藏6个月、保存7年的合规要求。",
+          "en": "Incorrect. Technical reason: DynamoDB on-demand backup cannot be directly transferred to Amazon S3 Glacier Flexible Retrieval. The S3 lifecycle policy cannot directly manage DynamoDB backups. Does not meet the requirements of the The compliance requirements of 6 months cold storage and 7 years of retention cannot be achieved."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然可以通过 AWS SDK 和 EventBridge 进行备份，但手动开发脚本会增加复杂性。 DynamoDB 备份无法通过脚本直接传输到冷保存。不符合问题要求：解决方案复杂且不符合最佳实务。",
+          "en": "Incorrect. Technical reason: While backup is possible through the AWS SDK and EventBridge, manually developing scripts adds complexity. DynamoDB backup cannot be transferred to cold storage directly via script. Does not meet question requirements: The solution is complex and does not meet best practices."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS CLI 无法接受指定 DynamoDB 备份的生命周期策略（冷保存和保留期间）。该解决方案很复杂并且不遵循最佳实践。不符合冷藏6个月、保存7年的合规要求。",
+          "en": "Incorrect. Technical reason: The AWS CLI cannot accept the lifecycle policy (cold storage and retention period) for the specified DynamoDB backup. The solution is complex and does not follow best practices. Does not meet the requirements of the The compliance requirements of 6 months cold storage and 7 years of retention cannot be achieved."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建一个 AWS Backup 计划以在每月的第一天备份 DynamoDB 数据表。指定在 6 个月后将备份过渡到冷保存的生命周期策略。将每个备份的保留期限设置为 7 年。",
+        "en": "A. Create an AWS Backup plan to back up the DynamoDB table on the first day of each month. Specify a lifecycle policy that transitions the backup to cold storage after 6 months. Set the retention period for each backup to 7 years."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (90%) 10%。热门讨论与考点摘要：AWS Backup 支持 DynamoDB 表的备份，并允许设置备份计划和生命周期策略。您可以指定备份的保留期为 7 年，并在 6 个月后将备份传输到冷保存。满足问题要求：每月备份、冷保存6个月、保留7年。",
+        "en": "Community vote as displayed: A (90%) 10%. Popular discussion and key point summary: AWS Backup supports backup of DynamoDB tables and allows setting backup plans and lifecycle strategies. You can specify a retention period of 7 years for backups and transfer the backups to cold storage after 6 months. Meets the question requirements: monthly backup, 6 months of cold storage, and 7 years of retention."
+      }
+    },
+    {
+      "question_no": 280,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在其网站中使用 Amazon CloudFront。该公司已在 CloudFront 发行版上启用日志记录，日志保存在该公司的 Amazon S3 存储桶之一中。该公司需要对日志进行高级分析并创建可视化。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A company is using Amazon CloudFront with its website. The company has enabled logging on the CloudFront distribution, and logs are saved in one of the company’s Amazon S3 buckets. The company needs to perform advanced analyses on the logs and build visualizations. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon Athena 中使用标准 SQL 查找来分析 S3 存储桶中的 CloudFront 日志。使用 AWS Glue 可视化结果。",
+          "en": "Use standard SQL queries in Amazon Athena to analyze the CloudFront logs in the S3 bucket. Visualize the results with AWS Glue."
+        },
+        "B": {
+          "zh": "在 Amazon Athena 中使用标准 SQL 查找来分析 S3 存储桶中的 CloudFront 日志。使用 Amazon QuickSight 来可视化结果。",
+          "en": "Use standard SQL queries in Amazon Athena to analyze the CloudFront logs in the S3 bucket. Visualize the results with Amazon QuickSight."
+        },
+        "C": {
+          "zh": "在 Amazon DynamoDB 中使用标准 SQL 查找来分析 S3 存储桶中的 CloudFront 日志。使用 AWS Glue 可视化结果。",
+          "en": "Use standard SQL queries in Amazon DynamoDB to analyze the CloudFront logs in the S3 bucket. Visualize the results with AWS Glue."
+        },
+        "D": {
+          "zh": "在 Amazon DynamoDB 中使用标准 SQL 查找来分析 S3 存储桶中的 CloudFront 日志。使用 Amazon QuickSight 来可视化结果。",
+          "en": "Use standard SQL queries in Amazon DynamoDB to analyze the CloudFront logs in the S3 bucket. Visualize the results with Amazon QuickSight."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Athena 可以使用标准 SQL 查找分析保存在 S3 中的数据，这是正确的。 AWS Glue主要用于ETL（提取、转换、加载）任务而不是数据可视化工具，因此此选项不符合可视化部分的要求。",
+          "en": "Incorrect. Technical reason: It is correct that Amazon Athena can analyze data stored in S3 using standard SQL queries. AWS Glue is mainly used for ETL (Extract, Transform, Load) tasks rather than a data visualization tool, so this option does not meet the requirements in the visualization part."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon QuickSight 是 AWS 的可视化工具，适合创建图表和仪表板，因此此选项非常适合。",
+          "en": "Correct. Technical reason: Amazon QuickSight is a visualization tool from AWS that is suitable for creating charts and dashboards, so this option fits the bill perfectly."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：DynamoDB 是一个 NoSQL 数据库，不支持直接使用标准 SQL 查找来分析 S3 中保存的数据。原因是AWS Glue不是数据可视化工具，所以这个选项是完全可以的。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database and does not support direct use of standard SQL queries to analyze data stored in S3. Reason for AWS Glue is not a data visualization tool, so this option is completely."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：DynamoDB 无法直接针对 Amazon S3 中的 CloudFront 日志对象运行 SQL。 QuickSight 可以可视化结果，但建议的查找服务不合适。",
+          "en": "Incorrect. Technical reason: DynamoDB cannot run SQL directly against CloudFront log objects in Amazon S3. QuickSight can visualize results, but the proposed query service is unsuitable."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon Athena 中使用标准 SQL 查找来分析 S3 存储桶中的 CloudFront 日志。使用 Amazon QuickSight 来可视化结果。",
+        "en": "B. Use standard SQL queries in Amazon Athena to analyze the CloudFront logs in the S3 bucket. Visualize the results with Amazon QuickSight."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (95%) 5%。热门讨论与考点摘要：Amazon QuickSight 是 AWS 的可视化工具，适合创建图表和仪表板，因此此选项非常适合。",
+        "en": "Community vote as displayed: B (95%) 5%. Popular discussion and key point summary: Amazon QuickSight is a visualization tool from AWS that is suitable for creating charts and dashboards, so this option fits the bill perfectly."
+      }
+    },
+    {
+      "question_no": 281,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon RDS for PostgreSQL 数据库实例来运行一组 Web 服务器。经过例行合规性检查后，该公司制定了一个标准，要求所有生产数据库的恢复点目标 (RPO) 小于 1 秒。哪种解决方案满足这些要求？",
+        "en": "A company runs a fleet of web servers using an Amazon RDS for PostgreSQL DB instance. After a routine compliance check, the company sets a standard that requires a recovery point objective (RPO) of less than 1 second for all its production databases. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为数据库实例启用多可用区部署。",
+          "en": "Enable a Multi-AZ deployment for the DB instance."
+        },
+        "B": {
+          "zh": "为一个可用区中的数据库实例启用自动扩展。",
+          "en": "Enable auto scaling for the DB instance in one Availability Zone."
+        },
+        "C": {
+          "zh": "在一个可用区中设置数据库实例，并在单独的可用区中创建多个只读副本。",
+          "en": "Configure the DB instance in one Availability Zone, and create multiple read replicas in a separate Availability Zone."
+        },
+        "D": {
+          "zh": "在一个可用区中配置数据库实例，并配置 AWS Database Migration Service (AWS DMS) 变更数据截取 (CDC) 任务。",
+          "en": "Configure the DB instance in one Availability Zone, and configure AWS Database Migration Service (AWS DMS) change data capture (CDC) tasks."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：多可用区提供同步复制，确保主备实例之间的数据近乎实时同步，且备实例实作RPO小于1。多可用区还提供高可用性和自动故障转移能力，满足生产环境的要求。",
+          "en": "Correct. Technical reason: Multi-AZ provides synchronous replication to ensure that data between the primary instance and the standby instance are synchronized in almost real time, and the secondary instance achieves an RPO of less than 1. Multi-AZ also provides high availability and automatic failover capabilities, meeting the requirements of production environments."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：自动伸缩（Auto Scaling）主要用于处理规划资源的动态需求，与数据库的高可用或RPO无关。此选项无法满足 RPO 低于 1% 的要求。",
+          "en": "Incorrect. Technical reason: Auto scaling (Auto Scaling) is mainly used to handle the dynamic demand for planning resources and has nothing to do with the high availability or RPO of the database. This option cannot meet the requirement of RPO less than 1%."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：只读副本采用异步复制，无法保证数据的实时同步，因此无法满足RPO小于1%的要求。只读副本主要用于分担读取负载，不用于灾难恢复。",
+          "en": "Incorrect. Technical reason: The read replica uses asynchronous replication, which cannot guarantee real-time synchronization of data, so it cannot meet the requirement of RPO less than 1%. Read replicas are mainly used to share the read load and are not used for disaster recovery."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS DMS的CDC任务用于数据迁移和截取变更，但它不是实时同步解决方案，无法满足RPO小于1的要求。此选项与高可用性或灾难恢复无关。",
+          "en": "Incorrect. Technical reason: The CDC task of AWS DMS is used for data migration and capturing changes, but it is not a real-time synchronization solution and cannot meet the requirement of RPO less than 1. This option has nothing to do with high availability or disaster recovery."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为数据库实例启用多可用区部署。",
+        "en": "A. Enable a Multi-AZ deployment for the DB instance."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (88%) 6%。热门讨论与考点摘要：多可用区提供同步复制，确保主备实例之间的数据近乎实时同步，且备实例实作RPO小于1。多可用区还提供高可用性和自动故障转移能力，满足生产环境的要求。",
+        "en": "Community vote as displayed: A (88%) 6%. Popular discussion and key point summary: Multi-AZ provides synchronous replication to ensure that data between the primary instance and the standby instance are synchronized in almost real time, and the secondary instance achieves an RPO of less than 1. Multi-AZ also provides high availability and automatic failover capabilities, meeting the requirements of production environments."
+      }
+    },
+    {
+      "question_no": 282,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司运行一个 Web 应用程序，该应用程序部署在 VPC 私有子网中的 Amazon EC2 实例上。跨公有子网延伸的应用程序负载均衡器 (ALB) 将 Web 流量引导至 EC2 实例。该公司希望实施新的安全措施来限制从 ALB 到 EC2 实例的入站流量，同时防止来自 EC2 实例私有子网内部或外部的任何其他来源的访问。哪种解决方案可以满足这些要求？",
+        "en": "A company runs a web application that is deployed on Amazon EC2 instances in the private subnet of a VPC. An Application Load Balancer (ALB) that extends across the public subnets directs web traffic to the EC2 instances. The company wants to implement new security measures to restrict inbound traffic from the ALB to the EC2 instances while preventing access from any other source inside or outside the private subnet of the EC2 instances. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在路由表中设置路由，以将流量从 Internet 导向至 EC2 实例的私人 IP 地址。",
+          "en": "Configure a route in a route table to direct traffic from the internet to the private IP addresses of the EC2 instances."
+        },
+        "B": {
+          "zh": "将 EC2 实例的安全组配置为仅允许来自 ALB 安全群组的流量。",
+          "en": "Configure the security group for the EC2 instances to only allow traffic that comes from the security group for the ALB."
+        },
+        "C": {
+          "zh": "将 EC2 实例移至公有子网。为 EC2 实例提供一组弹性 IP 地址。",
+          "en": "Move the EC2 instances into the public subnet. Give the EC2 instances a set of Elastic IP addresses."
+        },
+        "D": {
+          "zh": "设置 ALB 的安全群组以允许任何连接端口上的任何 TCP 流量。",
+          "en": "Configure the security group for the ALB to allow any TCP traffic on any port."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：设置路由以将流量从 Internet 导向至 EC2 实例的私人 IP 地址。路由表用于定义子网之间以及子网与Internet之间的流量路由，但不能限制流量来源。另外，问题需要限制流量来源而不是设置路由表。",
+          "en": "Incorrect. Technical reason: Configure a route to direct traffic from the Internet to the private IP address of the EC2 instance. Routing tables are used to define traffic routes between subnets and between subnets and the Internet, but they cannot restrict traffic sources. In addition, the question requires limiting traffic sources rather than configuring routing tables."
+        },
+        "B": {
+          "zh": "正確。技术原因：此选项安全群组可以通过引用其他安全群组来限制流量来源。您可以通过将 EC2 实例的安全组设置为仅允许来自 ALB 安全组的流量来确保只有 ALB 有权访问 EC2 实例。这完全符合问题的要求，既限制了流量来源，也阻止了其他来源的访问。",
+          "en": "Correct. Technical reason: Configure the security group of the EC2 instance to only allow traffic from the ALB security group. Security groups can limit traffic sources by referencing other security groups. You can ensure that only ALB has access to the EC2 instance by configuring the EC2 instance's security group to only allow traffic from the ALB security group. This fully meets the requirements of the question, which not only limits the source of traffic, but also prevents access from other sources."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：将 EC2 实例移至公有子网。为 EC2 实例指派一组弹性 IP 地址。将 EC2 实例移至公有子网会暴露其 IP 地址，从而增加安全风险。该问题显然要求阻止其他来源的访问，这与问题相反。",
+          "en": "Incorrect. Technical reason: Move the EC2 instance to a public subnet. Assign a set of Elastic IP addresses to the EC2 instance. Moving EC2 instances to a public subnet exposes their IP addresses, increasing security risks. The question clearly requires preventing access from other sources, which is contrary to the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项允许任何TCP流量都会降低安全性，无法满足问题中「限制流量来源」的要求。问题需要限制流量来源，而不是忽略ALB的安全群组规则。",
+          "en": "Incorrect. Technical reason: Configure the ALB's security group to allow any TCP traffic on any port. Allowing any TCP traffic will reduce security and cannot meet the requirement of \"limiting traffic sources\" in the question. The question requires limiting the source of traffic, rather than ignoring the security group rules of ALB."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将 EC2 实例的安全组配置为仅允许来自 ALB 安全群组的流量。",
+        "en": "B. Configure the security group for the EC2 instances to only allow traffic that comes from the security group for the ALB."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：此选项安全群组可以通过引用其他安全群组来限制流量来源。您可以通过将 EC2 实例的安全组设置为仅允许来自 ALB 安全组的流量来确保只有 ALB 有权访问 EC2 实例。这完全符合问题的要求，既限制了流量来源，也阻止了其他来源的访问。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Configure the security group of the EC2 instance to only allow traffic from the ALB security group. Security groups can limit traffic sources by referencing other security groups. You can ensure that only ALB has access to the EC2 instance by configuring the EC2 instance's security group to only allow traffic from the ALB security group. This fully meets the requirements of the question, which not only limits the source of traffic, but also prevents access from other sources."
+      }
+    },
+    {
+      "question_no": 283,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家研究公司运行由仿真应用程序和可视化应用程序支持的实验。仿真应用程序在 Linux 上运行，每 5 分钟将中间数据输出到 NFS 共用。可视化应用程序是一个 Windows 桌面应用程序，用于显示仿真输出并需要 SMB 文档系统。该公司维护两个同步文档系统。这种策略导致数据重复和资源使用效率低下。该公司需要将应用程序迁移到 AWS，而不需要对任一应用程序进行代码变更。哪种解决方案可以满足这些要求？",
+        "en": "A research company runs experiments that are powered by a simulation application and a visualization application. The simulation application runs on Linux and outputs intermediate data to an NFS share every 5 minutes. The visualization application is a Windows desktop application that displays the simulation output and requires an SMB file system. The company maintains two synchronized file systems. This strategy is causing data duplication and inefficient resource usage. The company needs to migrate the applications to AWS without making code changes to either application. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将两个应用程序迁移到 AWS Lambda。创建 Amazon S3 存储桶以在应用程序之间交换数据。",
+          "en": "Migrate both applications to AWS Lambda. Create an Amazon S3 bucket to exchange data between the applications."
+        },
+        "B": {
+          "zh": "将两个应用程序迁移到 Amazon Elastic Container Service (Amazon ECS)。设置 Amazon FSx 文档网关以进行保存。",
+          "en": "Migrate both applications to Amazon Elastic Container Service (Amazon ECS). Configure Amazon FSx File Gateway for storage."
+        },
+        "C": {
+          "zh": "将仿真应用程序迁移到 Linux Amazon EC2 实例。将可视化应用程序迁移到 Windows EC2 实例。配置 Amazon Simple Queue Service (Amazon SQS) 以在应用程序之间交换数据。",
+          "en": "Migrate the simulation application to Linux Amazon EC2 instances. Migrate the visualization application to Windows EC2 instances. Configure Amazon Simple Queue Service (Amazon SQS) to exchange data between the applications."
+        },
+        "D": {
+          "zh": "将仿真应用程序迁移到 Linux Amazon EC2 实例。将可视化应用程序迁移到 Windows EC2 实例。设置 Amazon FSx for NetApp ONTAP 进行保存。",
+          "en": "Migrate the simulation application to Linux Amazon EC2 instances. Migrate the visualization application to Windows EC2 instances. Configure Amazon FSx for NetApp ONTAP for storage."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Lambda 不适合首席执行官期仿真应用程序或测试可视化应用程序。 Amazon S3 是对象存储，不支持 NFS 或 SMB 协议，无法满足文档系统需求。",
+          "en": "Incorrect. Technical reason: AWS Lambda is not suitable for running long-term simulation applications or testing visualization applications. Amazon S3 is object storage and does not support NFS or SMB protocols and cannot meet file system requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon FSx 文档网关主要用于本机文档系统与 AWS 之间的输入，不适合直接支持 NFS 和 SMB 协定的跨平台文档共用。虽然ECS可以运行容器化应用，但问题中并没有提到应用程序已经容器化，迁移到ECS需要修改代码。",
+          "en": "Incorrect. Technical reason: Amazon FSx File Gateway is mainly used for input between local file systems and AWS, and is not suitable for cross-platform file sharing that directly supports NFS and SMB protocols. Although ECS can run containerized applications, the question does not mention that the application has been containerized, and migrating to ECS requires code modifications."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon SQS 是一种消息队列服务，不适合文档系统需求。该问题明确要求使用文档系统（NFS 和 SMB），而不是消息清单。",
+          "en": "Incorrect. Technical reason: Amazon SQS is a message queue service and is not suitable for file system requirements. The question explicitly requires the use of file systems (NFS and SMB), not message lists."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon FSx for NetApp ONTAP 支持 NFS 和 SMB 协议，以满足 Linux 和 Windows 应用程序的文档共用要求。迁移到EC2实例不需要修改代码，满足题目要求。",
+          "en": "Correct. Technical reason: Amazon FSx for NetApp ONTAP supports both NFS and SMB protocols to meet the file sharing requirements of Linux and Windows applications. Migrating to an EC2 instance does not require modifying the code and meets the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将仿真应用程序迁移到 Linux Amazon EC2 实例。将可视化应用程序迁移到 Windows EC2 实例。设置 Amazon FSx for NetApp ONTAP 进行保存。",
+        "en": "D. Migrate the simulation application to Linux Amazon EC2 instances. Migrate the visualization application to Windows EC2 instances. Configure Amazon FSx for NetApp ONTAP for storage."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (98%) 2%。热门讨论与考点摘要：Amazon FSx for NetApp ONTAP 支持 NFS 和 SMB 协议，以满足 Linux 和 Windows 应用程序的文档共用要求。迁移到EC2实例不需要修改代码，满足题目要求。",
+        "en": "Community vote as displayed: D (98%) 2%. Popular discussion and key point summary: Amazon FSx for NetApp ONTAP supports both NFS and SMB protocols to meet the file sharing requirements of Linux and Windows applications. Migrating to an EC2 instance does not require modifying the code and meets the question requirements."
+      }
+    },
+    {
+      "question_no": 284,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "作为预算规划的一部分，管理阶层希望获得用户列出的 AWS 计费项目的报告。这些数据将用于创建部门预算。解决方案架构师需要确定获取此报告信息的最有效方法。哪种解决方案满足这些要求？",
+        "en": "As part of budget planning, management wants a report of AWS billed items listed by user. The data will be used to create department budgets. A solutions architect needs to determine the most efficient way to obtain this report information. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Athena 运行查找以产生报表。",
+          "en": "Run a query with Amazon Athena to generate the report."
+        },
+        "B": {
+          "zh": "在 Cost Explorer 中创建报告并下载报告。",
+          "en": "Create a report in Cost Explorer and download the report."
+        },
+        "C": {
+          "zh": "从计费仪表板访问账单详细信息并下载账单。",
+          "en": "Access the bill details from the billing dashboard and download the bill."
+        },
+        "D": {
+          "zh": "修改 AWS 预算中的成本预算以使用 Amazon Simple Email Service (Amazon SES) 发出警报。",
+          "en": "Modify a cost budget in AWS Budgets to alert with Amazon Simple Email Service (Amazon SES)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Athena 是交互式查找服务，可查找保存在 S3 中的数据。虽然Athena可以用来查找账单数据，但需要先将账单数据导入S3并定义表结构。设置复杂性很高，而且这不是最简单的解决方案。因此，这个选项效率不够高，但确实是。",
+          "en": "Incorrect. Technical reason: Amazon Athena is an interactive query service that can query data stored in S3. Although Athena can be used to query billing data, it needs to import the billing data into S3 first and define the table structure. The setup complexity is high and it is not the most straightforward solution. Therefore this option is not efficient enough and is."
+        },
+        "B": {
+          "zh": "正確。技术原因：Cost Explorer 是 AWS 提供的分析和报告成本和使用情况的工具。支持按用户、服务、时间等产生详细报告，并可直接下载。此选项符合题目要求，为正确答案。",
+          "en": "Correct. Technical reason: Cost Explorer is a tool provided by AWS for analyzing and reporting costs and usage. It supports generating detailed reports by user, service, time, etc., and can be directly downloaded. This option meets the question requirements and is the correct answer."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：计费仪表板提供总体计费信息，但不支持按用户或部门产生详细报告。此选项无法满足题目要求。",
+          "en": "Incorrect. Technical reason: Billing Dashboard provides overall billing information, but does not support generating detailed reports by user or department. This option cannot meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Budgets 用于设置预缓冲区并接收超出预缓冲区的警报，但不支持产生详细的账单报告。此选项不符合题干要求，是。",
+          "en": "Incorrect. Technical reason: AWS Budgets is used to set up pre-buffers and receive alerts for exceeding pre-buffers, but does not support generating detailed billing reports. This option does not meet the requirements of the question and is."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Cost Explorer 中创建报告并下载报告。",
+        "en": "B. Create a report in Cost Explorer and download the report."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。热门讨论与考点摘要：Cost Explorer 是 AWS 提供的分析和报告成本和使用情况的工具。支持按用户、服务、时间等产生详细报告，并可直接下载。此选项符合题目要求，为正确答案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Cost Explorer is a tool provided by AWS for analyzing and reporting costs and usage. It supports generating detailed reports by user, service, time, etc., and can be directly downloaded. This option meets the question requirements and is the correct answer."
+      }
+    },
+    {
+      "question_no": 285,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon S3 托管其静态网站。该公司希望在其网页上添加联系表单。联系表单将具有动态服务器端组件，供用户输入姓名、电子邮件地址、电话号码和用户消息。该公司预计每月的现场访问量将少于 100 次。哪一种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company hosts its static website by using Amazon S3. The company wants to add a contact form to its webpage. The contact form will have dynamic server-side components for users to input their name, email address, phone number, and user message. The company anticipates that there will be fewer than 100 site visits each month. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon Elastic Container Service (Amazon ECS) 中托管动态联系表单页面。设置 Amazon Simple Email Service (Amazon SES) 以连接到任何第三方电子邮件提供者。",
+          "en": "Host a dynamic contact form page in Amazon Elastic Container Service (Amazon ECS). Set up Amazon Simple Email Service (Amazon SES) to connect to any third-party email provider."
+        },
+        "B": {
+          "zh": "使用 AWS Lambda 后端创建一个 Amazon API Gateway 终端节点，该后端调用 Amazon Simple Email Service (Amazon SES)。",
+          "en": "Create an Amazon API Gateway endpoint with an AWS Lambda backend that makes a call to Amazon Simple Email Service (Amazon SES)."
+        },
+        "C": {
+          "zh": "通过部署 Amazon Lightsail 将静态网页转换为动态网页。使用客户端脚本来创建联系表单。将表单与 Amazon WorkMail 集成。",
+          "en": "Convert the static webpage to dynamic by deploying Amazon Lightsail. Use client-side scripting to build the contact form. Integrate the form with Amazon WorkMail."
+        },
+        "D": {
+          "zh": "创建 t2.micro Amazon EC2 实例。部署 LAMP（Linux、Apache、MySQL、PHP/Perl/Python）堆栈来托管网页。使用客户端脚本来创建联系表单。将表单与 Amazon WorkMail 集成。",
+          "en": "Create a t2.micro Amazon EC2 instance. Deploy a LAMP (Linux, Apache, MySQL, PHP/Perl/Python) stack to host the webpage. Use client-side scripting to build the contact form. Integrate the form with Amazon WorkMail."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon ECS 适合服务器管理，但在每月访问量低于 100 次的场景下，ECS 的成本和复杂性令人望而却步。虽然可以使用Amazon SES来开发云端存储，但架设ECS和第三方云存储服务的成本效益不够。",
+          "en": "Incorrect. Technical reason: Amazon ECS is suitable for server management, but in scenarios with less than 100 visits per month, the cost and complexity of ECS are prohibitive. Although it is possible to use Amazon SES to develop cloud storage, setting up ECS and third-party cloud storage services is not cost-effective enough."
+        },
+        "B": {
+          "zh": "正確。技术原因：API Gateway 和 Lambda 的结合非常适合处理动态请求，特别是在低流量场景下。 Lambda按需计费，适合每月访客量小于100次的场景。 Amazon SES可以直接投递最近的商品，简单且成本低。",
+          "en": "Correct. Technical reason: The combination of API Gateway and Lambda is very suitable for processing dynamic requests, especially in low-traffic scenarios. Lambda is billed on demand and is suitable for scenarios with less than 100 visits per month. Amazon SES can directly deliver recent items, which is simple and low-cost."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon Lightsail 适合管理简单的动态网站，但与 API Gateway 和 Lambda 相比，成本较高且成本较低。使用客户端脚本创建表单无法处理服务器端逻辑（例如最近的软件开发）。 Amazon WorkMail 是一项企业邮件服务，不适合动态表单的直接邮件发送。",
+          "en": "Incorrect. Technical reason: Amazon Lightsail is suitable for managing simple dynamic websites, but compared to API Gateway and Lambda, the cost is higher and less expensive. Using client-side scripts to build forms cannot handle server-side logic (such as recent software development). Amazon WorkMail is an enterprise mail service and is not suitable for direct mail delivery of dynamic forms."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：EC2 实例需要持续运行，成本受到 Lambda 按需计费模型的限制。部署LAMP堆栈会增加管理复杂度，不适合低流量场景。 Amazon WorkMail 不适合动态表单的直接邮件发送。",
+          "en": "Incorrect. Technical reason: EC2 instances need to run continuously, and the cost is limited by Lambda's on-demand billing model. Deploying a LAMP stack increases management complexity and is not suitable for low-traffic scenarios. Amazon WorkMail is not suitable for direct mail delivery of dynamic forms."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Lambda 后端创建一个 Amazon API Gateway 终端节点，该后端调用 Amazon Simple Email Service (Amazon SES)。",
+        "en": "B. Create an Amazon API Gateway endpoint with an AWS Lambda backend that makes a call to Amazon Simple Email Service (Amazon SES)."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (93%) 7%。热门讨论与考点摘要：API Gateway 和 Lambda 的结合非常适合处理动态请求，特别是在低流量场景下。 Lambda按需计费，适合每月访客量小于100次的场景。 Amazon SES可以直接投递最近的商品，简单且成本低。",
+        "en": "Community vote as displayed: B (93%) 7%. Popular discussion and key point summary: The combination of API Gateway and Lambda is very suitable for processing dynamic requests, especially in low-traffic scenarios. Lambda is billed on demand and is suitable for scenarios with less than 100 visits per month. Amazon SES can directly deliver recent items, which is simple and low-cost."
+      }
+    }
+  ]
+}

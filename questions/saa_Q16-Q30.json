@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 16,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上托管数据湖，其中包含 Amazon S3 与 Amazon RDS for PostgreSQL 的数据。公司需要涵盖数据湖所有数据源的可视化报告解决方案。只有管理团队应能完整访问所有可视化内容，其余员工只能获得有限的访问权限。哪个解决方案满足要求？",
+        "en": "A company hosts a data lake on AWS. The data lake consists of data in Amazon S3 and Amazon RDS for PostgreSQL. The company needs a reporting solution that provides data visualization and includes all the data sources within the data lake. Only the company's management team should have full access to all the visualizations. The rest of the company should have only limited access. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon QuickSight 中创建分析，连接所有数据源并创建数据集。发布仪表板以可视化数据，并与适当的 IAM 角色共享仪表板。",
+          "en": "Create an analysis in Amazon QuickSight. Connect all the data sources and create new datasets. Publish dashboards to visualize the data. Share the dashboards with the appropriate IAM roles."
+        },
+        "B": {
+          "zh": "在 Amazon QuickSight 中创建分析，连接所有数据源并创建数据集。发布仪表板以可视化数据，并与适当的用户和组共享仪表板。",
+          "en": "Create an analysis in Amazon QuickSight. Connect all the data sources and create new datasets. Publish dashboards to visualize the data. Share the dashboards with the appropriate users and groups."
+        },
+        "C": {
+          "zh": "为 S3 数据创建 AWS Glue 数据表和爬虫程序，再创建 AWS Glue ETL 任务产生报告。将报告发布到 S3，并使用 S3 存储桶策略限制访问。",
+          "en": "Create an AWS Glue table and crawler for the data in Amazon S3. Create an AWS Glue extract, transform, and load (ETL) job to produce reports. Publish the reports to Amazon S3. Use S3 bucket policies to limit access to the reports."
+        },
+        "D": {
+          "zh": "为 S3 数据创建 AWS Glue 数据表和爬虫程序，使用 Amazon Athena Federated Query 访问 RDS for PostgreSQL，并以 Athena 产生报告。将报告发布到 S3，再以存储桶策略限制访问。",
+          "en": "Create an AWS Glue table and crawler for the data in Amazon S3. Use Amazon Athena Federated Query to access data within Amazon RDS for PostgreSQL. Generate reports by using Amazon Athena. Publish the reports to Amazon S3. Use S3 bucket policies to limit access to the reports."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。QuickSight 的内容访问权限是授予 QuickSight 用户与组，而不是直接将仪表板共享给 IAM 角色；此选项无法正确设置不同受众的内容权限。",
+          "en": "Incorrect. QuickSight content permissions are granted to QuickSight users and groups rather than by directly sharing dashboards with IAM roles, so this does not correctly define audience access."
+        },
+        "B": {
+          "zh": "正確。QuickSight 可连接 S3 与 RDS 数据集并创建交互式可视化。以用户和组共享仪表板，可让管理组获得完整权限，其他组仅获得所需的有限权限。",
+          "en": "Correct. QuickSight connects to S3 and RDS datasets and creates interactive visualizations. Sharing dashboards with users and groups lets management receive full permissions while other groups receive limited access."
+        },
+        "C": {
+          "zh": "錯誤。Glue ETL 能转换数据但不是完整的可视化与仪表板服务，而且方案只处理 S3，没有纳入 RDS PostgreSQL 数据。",
+          "en": "Incorrect. Glue ETL transforms data but is not a complete visualization and dashboard service, and this design only processes S3 without including RDS PostgreSQL."
+        },
+        "D": {
+          "zh": "錯誤。Athena 可查询多个来源，但把查询结果发布到 S3 只提供文件而非所需的可视化报告与精细仪表板共享功能。",
+          "en": "Incorrect. Athena can query multiple sources, but publishing query output to S3 provides files rather than the required visual reporting and granular dashboard sharing."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon QuickSight 中创建分析，连接所有数据源并创建数据集。发布仪表板以可视化数据，并与适当的用户和组共享仪表板。",
+        "en": "B. Create an analysis in Amazon QuickSight. Connect all the data sources and create new datasets. Publish dashboards to visualize the data. Share the dashboards with the appropriate users and groups."
+      },
+      "discussion": {
+        "zh": "社群投票：B（86%），其余显示票数合计 8%。讨论重点是 QuickSight 原生提供多来源可视化，且仪表板应依 QuickSight 用户与组管理权限。",
+        "en": "Community vote: B (86%), with the displayed remaining vote total at 8%. Discussion focused on QuickSight's native multi-source visualization and dashboard permissions managed through QuickSight users and groups."
+      }
+    },
+    {
+      "question_no": 17,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在实施新的商业应用程序。应用程序在两个 Amazon EC2 实例上运行，并使用 Amazon S3 存储桶存放文档。解决方案架构师需要确保 EC2 实例可以访问该 S3 存储桶。应如何满足此需求？",
+        "en": "A company is implementing a new business application. The application runs on two Amazon EC2 instances and uses an Amazon S3 bucket for document storage. A solutions architect needs to ensure that the EC2 instances can access the S3 bucket. What should the solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建授予 S3 存储桶访问权限的 IAM 角色，并将该角色连接到 EC2 实例。",
+          "en": "Create an IAM role that grants access to the S3 bucket. Attach the role to the EC2 instances."
+        },
+        "B": {
+          "zh": "创建授予 S3 存储桶访问权限的 IAM 策略，并将该策略连接到 EC2 实例。",
+          "en": "Create an IAM policy that grants access to the S3 bucket. Attach the policy to the EC2 instances."
+        },
+        "C": {
+          "zh": "创建授予 S3 存储桶访问权限的 IAM 组，并将该组连接到 EC2 实例。",
+          "en": "Create an IAM group that grants access to the S3 bucket. Attach the group to the EC2 instances."
+        },
+        "D": {
+          "zh": "创建授予 S3 存储桶访问权限的 IAM 用户，并将该用户账户连接到 EC2 实例。",
+          "en": "Create an IAM user that grants access to the S3 bucket. Attach the user account to the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。EC2 实例配置文件可提供 IAM 角色的临时凭证，让两个实例遵循最小权限访问 S3，无需存储或轮换长期密钥。",
+          "en": "Correct. An EC2 instance profile supplies temporary credentials for an IAM role, allowing both instances least-privilege S3 access without stored or rotated long-term keys."
+        },
+        "B": {
+          "zh": "錯誤。IAM 策略必须连接到 IAM 身份，例如角色、用户或组，不能直接连接到 EC2 实例。",
+          "en": "Incorrect. An IAM policy must be attached to an IAM identity such as a role, user, or group; it cannot be attached directly to an EC2 instance."
+        },
+        "C": {
+          "zh": "錯誤。IAM 组只能包含 IAM 用户，不能包含或连接到 EC2 实例。",
+          "en": "Incorrect. IAM groups can contain IAM users only and cannot contain or be attached to EC2 instances."
+        },
+        "D": {
+          "zh": "錯誤。IAM 用户代表人员或固定工作负载身份，不能直接连接到实例；在实例存放用户长期凭证也违反最佳实践。",
+          "en": "Incorrect. An IAM user represents a person or fixed workload identity and cannot be attached to an instance. Storing user long-term credentials on EC2 also violates best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建授予 S3 存储桶访问权限的 IAM 角色，并将该角色连接到 EC2 实例。",
+        "en": "A. Create an IAM role that grants access to the S3 bucket. Attach the role to the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票：A（100%）。讨论一致认为 EC2 应使用 IAM 角色获得临时凭证；策略本身不能直接附加到实例，用户或组也不是 EC2 的正确身份类型。",
+        "en": "Community vote: A (100%). Comments agreed that EC2 should use an IAM role for temporary credentials; a policy alone cannot attach to an instance, and users or groups are not the correct EC2 identity type."
+      }
+    },
+    {
+      "question_no": 18,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "应用程序开发团队正在设计一个微服务，将大型图像转换为较小的压缩图像。用户通过 Web 接口上传图像时，微服务应将原始图像存储到 Amazon S3 存储桶、以 AWS Lambda 函数处理及压缩图像，并将压缩版本存储到另一个 S3 存储桶。解决方案必须使用耐久且无状态的组件自动处理图像。哪两项操作满足要求？（选择两项。）",
+        "en": "An application development team is designing a microservice that will convert large images to smaller, compressed images. When a user uploads an image through the web interface, the microservice should store the image in an Amazon S3 bucket, process and compress the image with an AWS Lambda function, and store the image in its compressed form in a different S3 bucket. A solutions architect needs to design a solution that uses durable, stateless components to process the images automatically. Which combination of actions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon SQS 队列，并设置 S3 存储桶在图像上传时将通知发送到 SQS 队列。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue. Configure the S3 bucket to send a notification to the SQS queue when an image is uploaded to the S3 bucket."
+        },
+        "B": {
+          "zh": "设置 Lambda 函数使用 Amazon SQS 队列作为调用来源，并在成功处理 SQS 消息后删除队列中的消息。",
+          "en": "Configure the Lambda function to use the Amazon Simple Queue Service (Amazon SQS) queue as the invocation source. When the SQS message is successfully processed, delete the message in the queue."
+        },
+        "C": {
+          "zh": "设置 Lambda 函数监控 S3 存储桶的新上传。检测到图像后，将文件名写入内存中的文本文件，以追踪已处理的图像。",
+          "en": "Configure the Lambda function to monitor the S3 bucket for new uploads. When an uploaded image is detected, write the file name to a text file in memory and use the text file to keep track of the images that were processed."
+        },
+        "D": {
+          "zh": "启动 Amazon EC2 实例监控 Amazon SQS 队列。队列出现项目时，将文件名记录于 EC2 上的文本文件并调用 Lambda 函数。",
+          "en": "Launch an Amazon EC2 instance to monitor an Amazon Simple Queue Service (Amazon SQS) queue. When items are added to the queue, log the file name in a text file on the EC2 instance and invoke the Lambda function."
+        },
+        "E": {
+          "zh": "设置 Amazon EventBridge 事件监控 S3 存储桶。上传图像时，将警报发送到以应用程序所有者电子邮件为订阅者的 Amazon SNS 主题，以供进一步处理。",
+          "en": "Configure an Amazon EventBridge (Amazon CloudWatch Events) event to monitor the S3 bucket. When an image is uploaded, send an alert to an Amazon Simple Notification Service (Amazon SNS) topic with the application owner's email address for further processing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。S3 事件通知可将每次上传可靠地送入耐久的 SQS 队列，解耦上传与图像处理并在 Lambda 暂时失败时保留工作。",
+          "en": "Correct. S3 event notifications can place each upload in a durable SQS queue, decoupling ingestion from processing and retaining work during temporary Lambda failures."
+        },
+        "B": {
+          "zh": "正確。Lambda 的 SQS 事件事件源映射会轮询队列并调用无状态函数；成功后移除消息，失败消息则可重试或移动到死信队列。",
+          "en": "Correct. A Lambda SQS event source mapping polls the queue and invokes the stateless function. Successful messages are removed, while failures can be retried or sent to a dead-letter queue."
+        },
+        "C": {
+          "zh": "錯誤。Lambda 的本地内存与暂存盘案不是跨调用耐久状态，且函数不应自行持续轮询 S3。",
+          "en": "Incorrect. Lambda memory and local temporary files are not durable across invocations, and a function should not continuously poll S3 itself."
+        },
+        "D": {
+          "zh": "錯誤。常驻 EC2 与本地文本档引入有状态组件、单点故障及服务器管理，违反耐久、无状态设计。",
+          "en": "Incorrect. A persistent EC2 instance and local text file introduce state, a single point of failure, and server management, violating the durable stateless design."
+        },
+        "E": {
+          "zh": "錯誤。电子邮件警报需要人工介入，不能自动触发压缩处理，也不是可扩展的工作队列。",
+          "en": "Incorrect. An email alert requires manual intervention, does not automatically invoke compression, and is not a scalable work queue."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 创建 Amazon SQS 队列，并设置 S3 存储桶在图像上传时将通知发送到 SQS 队列。；B. 设置 Lambda 函数使用 Amazon SQS 队列作为调用来源，并在成功处理 SQS 消息后删除队列中的消息。",
+        "en": "A. Create an Amazon Simple Queue Service (Amazon SQS) queue. Configure the S3 bucket to send a notification to the SQS queue when an image is uploaded to the S3 bucket.; B. Configure the Lambda function to use the Amazon Simple Queue Service (Amazon SQS) queue as the invocation source. When the SQS message is successfully processed, delete the message in the queue."
+      },
+      "discussion": {
+        "zh": "社群投票：A、B 组合（99%），其他组合合计 1%。讨论共识是 S3 通知、SQS 耐久缓冲与 Lambda 无状态处理构成可重试且解耦的事件驱动管线。",
+        "en": "Community vote: A and B together (99%), other combinations 1%. The consensus was that S3 notification, durable SQS buffering, and stateless Lambda processing form a decoupled, retryable event-driven pipeline."
+      }
+    },
+    {
+      "question_no": 19,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 部署三层式 Web 应用程序，Web 服务器位于 VPC 公有子网，应用程序与数据库服务器位于同一 VPC 的私有子网。公司在检查 VPC 中部署来自 AWS Marketplace 的第三方虚拟防火墙设备，该设备具有可接收 IP 数据包的接口。解决方案架构师需要让所有进入应用程序的流量在到达 Web 服务器前通过该设备检查，并将运维负担降至最低。哪个方案满足要求？",
+        "en": "A company has a three-tier web application that is deployed on AWS. The web servers are deployed in a public subnet in a VPC. The application servers and database servers are deployed in private subnets in the same VPC. The company has deployed a third-party virtual firewall appliance from AWS Marketplace in an inspection VPC. The appliance is configured with an IP interface that can accept IP packets. A solutions architect needs to integrate the web application with the appliance to inspect all traffic to the application before the traffic reaches the web server. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在应用程序 VPC 的公有子网创建 Network Load Balancer，将流量路由到设备进行数据包检查。",
+          "en": "Create a Network Load Balancer in the public subnet of the application's VPC to route the traffic to the appliance for packet inspection."
+        },
+        "B": {
+          "zh": "在应用程序 VPC 的公有子网创建 Application Load Balancer，将流量路由到设备进行数据包检查。",
+          "en": "Create an Application Load Balancer in the public subnet of the application's VPC to route the traffic to the appliance for packet inspection."
+        },
+        "C": {
+          "zh": "在检查 VPC 部署中转网关，并设置路由表让传入数据包通过中转网关。",
+          "en": "Deploy a transit gateway in the inspection VPC. Configure route tables to route the incoming packets through the transit gateway."
+        },
+        "D": {
+          "zh": "在检查 VPC 部署 Gateway Load Balancer，并创建 Gateway Load Balancer 端点接收传入数据包，再将数据包转送至设备。",
+          "en": "Deploy a Gateway Load Balancer in the inspection VPC. Create a Gateway Load Balancer endpoint to receive the incoming packets and forward the packets to the appliance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。NLB 用于分配 TCP、UDP 或 TLS 连接到应用程序目标，不提供第三方虚拟设备所需的透明数据包插入、服务链与设备健康扩展功能。",
+          "en": "Incorrect. An NLB distributes TCP, UDP, or TLS connections to application targets but does not provide transparent packet insertion, service chaining, and appliance scaling for third-party virtual appliances."
+        },
+        "B": {
+          "zh": "錯誤。ALB 在第 7 层处理 HTTP/HTTPS，无法透明转送所有 IP 流量或保留虚拟防火墙需要的数据包语义。",
+          "en": "Incorrect. An ALB processes HTTP/HTTPS at Layer 7 and cannot transparently forward all IP traffic or preserve packet semantics required by a virtual firewall."
+        },
+        "C": {
+          "zh": "錯誤。中转网关可连接多个 VPC，但单独使用不会将流量分配至一组防火墙设备，也缺少透明设备插入与健康检查。",
+          "en": "Incorrect. A transit gateway connects VPCs, but by itself it does not distribute traffic across firewall appliances and lacks transparent appliance insertion and health checking."
+        },
+        "D": {
+          "zh": "正確。Gateway Load Balancer 专为防火墙等虚拟网络设备设计，端点可在 VPC 间透明导引数据包，而负载均衡器负责设备健康检查、扩展与流量分配。",
+          "en": "Correct. Gateway Load Balancer is purpose-built for virtual network appliances such as firewalls. Its endpoints transparently steer packets across VPCs while the load balancer handles appliance health, scaling, and distribution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在检查 VPC 部署 Gateway Load Balancer，并创建 Gateway Load Balancer 端点接收传入数据包，再将数据包转送至设备。",
+        "en": "D. Deploy a Gateway Load Balancer in the inspection VPC. Create a Gateway Load Balancer endpoint to receive the incoming packets and forward the packets to the appliance."
+      },
+      "discussion": {
+        "zh": "社群投票：D（84%），其余显示为 Other。讨论认为 Gateway Load Balancer 与其端点是将第三方防火墙透明插入流量路径的受管模式，运维负担低于自行以一般负载均衡器或路由组件集成。",
+        "en": "Community vote: D (84%), with the remainder displayed as Other. Discussion identified Gateway Load Balancer and its endpoints as the managed pattern for transparently inserting third-party firewalls, with less overhead than integrating ordinary load balancers or routing components."
+      }
+    },
+    {
+      "question_no": 20,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望提升在同一 AWS 区域内，将大量生产环境数据复制到测试环境的能力。数据位于 Amazon EC2 实例的 Amazon EBS 卷。测试副本的修改不得影响生产环境，而且访问数据的软件需要持续一致的高 I/O 性能。解决方案架构师必须将复制所需时间降至最低。哪个方案满足要求？",
+        "en": "A company wants to improve its ability to clone large amounts of production data into a test environment in the same AWS Region. The data is stored in Amazon EC2 instances on Amazon Elastic Block Store (Amazon EBS) volumes. Modifications to the cloned data must not affect the production environment. The software that accesses this data requires consistently high I/O performance. A solutions architect needs to minimize the time that is required to clone the production data into the test environment. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建生产环境 EBS 卷的快照，并将快照恢复到测试环境的 EC2 实例存储卷。",
+          "en": "Take EBS snapshots of the production EBS volumes. Restore the snapshots onto EC2 instance store volumes in the test environment."
+        },
+        "B": {
+          "zh": "设置生产环境 EBS 卷使用 EBS Multi-Attach。创建生产环境卷快照，并将生产环境 EBS 卷连接到测试环境的 EC2 实例。",
+          "en": "Configure the production EBS volumes to use the EBS Multi-Attach feature. Take EBS snapshots of the production EBS volumes. Attach the production EBS volumes to the EC2 instances in the test environment."
+        },
+        "C": {
+          "zh": "创建生产环境 EBS 卷的快照。创建并初始化新的 EBS 卷，将其连接到测试环境 EC2 实例后，再从生产环境快照恢复卷。",
+          "en": "Take EBS snapshots of the production EBS volumes. Create and initialize new EBS volumes. Attach the new EBS volumes to EC2 instances in the test environment before restoring the volumes from the production EBS snapshots."
+        },
+        "D": {
+          "zh": "创建生产环境 EBS 卷的快照，对快照启用 EBS 快速快照恢复，将快照恢复为新的 EBS 卷，再连接到测试环境 EC2 实例。",
+          "en": "Take EBS snapshots of the production EBS volumes. Turn on the EBS fast snapshot restore feature on the EBS snapshots. Restore the snapshots into new EBS volumes. Attach the new EBS volumes to EC2 instances in the test environment."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。EBS 快照只能创建新的 EBS 卷，不能直接恢复至临时的 EC2 实例存储。",
+          "en": "Incorrect. EBS snapshots create new EBS volumes and cannot be restored directly onto ephemeral EC2 instance store volumes."
+        },
+        "B": {
+          "zh": "錯誤。将生产环境卷直接 Multi-Attach 到测试实例不会创建隔离副本，测试写入可能改变正式数据；Multi-Attach 也只适用特定卷类型与同一可用区。",
+          "en": "Incorrect. Multi-Attaching the production volume to test instances does not create an isolated copy, so test writes could modify production data. Multi-Attach also has volume-type and same-AZ constraints."
+        },
+        "C": {
+          "zh": "錯誤。一般从快照创建的卷采延迟加载，尚未读取的区块第一次访问时可能有较高延迟；选项描述的先构建与初始化流程也不是从快照快速复制的正确顺序。",
+          "en": "Incorrect. Ordinary snapshot-restored volumes use lazy loading, so first access to untouched blocks can have higher latency. The described create-and-initialize-before-restore sequence is also not the proper fast clone workflow."
+        },
+        "D": {
+          "zh": "正確。快速快照恢复会创建在创建时即完整初始化的 EBS 卷，立即提供其预置性能，且新卷与生产环境隔离，可安全修改。",
+          "en": "Correct. Fast snapshot restore creates fully initialized EBS volumes that immediately deliver provisioned performance. The new volumes are isolated from production and can be modified safely."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 创建生产环境 EBS 卷的快照，对快照启用 EBS 快速快照恢复，将快照恢复为新的 EBS 卷，再连接到测试环境 EC2 实例。",
+        "en": "D. Take EBS snapshots of the production EBS volumes. Turn on the EBS fast snapshot restore feature on the EBS snapshots. Restore the snapshots into new EBS volumes. Attach the new EBS volumes to EC2 instances in the test environment."
+      },
+      "discussion": {
+        "zh": "社群投票：D（94%），其余显示票数合计 4%。讨论重点是快速快照恢复可避免从一般快照创建卷后的首次读取性能损失，并保留独立副本。",
+        "en": "Community vote: D (94%), with the displayed remaining vote total at 4%. Discussion emphasized that fast snapshot restore avoids first-read performance penalties of ordinary snapshot-created volumes while preserving an independent copy."
+      }
+    },
+    {
+      "question_no": 21,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司希望在 AWS 推出每日一项特价商品的网站，每项商品销售 24 小时。公司需要在高峰时段以毫秒级延迟处理每小时数百万个请求，并将运维负担降至最低。哪个方案满足要求？",
+        "en": "An ecommerce company wants to launch a one-deal-a-day website on AWS. Each day will feature exactly one product on sale for a period of 24 hours. The company wants to be able to handle millions of requests each hour with millisecond latency during peak hours. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon S3 在不同存储桶托管整个网站，加入以各 S3 存储桶为来源的 CloudFront 分布，并将订单数据存储到 Amazon S3。",
+          "en": "Use Amazon S3 to host the full website in different S3 buckets. Add Amazon CloudFront distributions. Set the S3 buckets as origins for the distributions. Store the order data in Amazon S3."
+        },
+        "B": {
+          "zh": "将整个网站部署在跨多个可用区的 EC2 Auto Scaling 组，使用一个 ALB 分配网站流量、另一个 ALB 处理后端 API，并将数据存储到 Amazon RDS for MySQL。",
+          "en": "Deploy the full website on Amazon EC2 instances that run in Auto Scaling groups across multiple Availability Zones. Add an Application Load Balancer (ALB) to distribute the website traffic. Add another ALB for the backend APIs. Store the data in Amazon RDS for MySQL."
+        },
+        "C": {
+          "zh": "将整个应用程序迁移到容器并托管于 Amazon EKS，使用 Kubernetes Cluster Autoscaler 增减 Pod 以处理流量高峰，并将数据存储到 Amazon RDS for MySQL。",
+          "en": "Migrate the full application to run in containers. Host the containers on Amazon Elastic Kubernetes Service (Amazon EKS). Use the Kubernetes Cluster Autoscaler to increase and decrease the number of pods to process bursts in traffic. Store the data in Amazon RDS for MySQL."
+        },
+        "D": {
+          "zh": "以 Amazon S3 存储桶托管网站静态内容，部署以该存储桶为来源的 CloudFront 分布。后端 API 使用 Amazon API Gateway 与 AWS Lambda，并将数据存储到 Amazon DynamoDB。",
+          "en": "Use an Amazon S3 bucket to host the website's static content. Deploy an Amazon CloudFront distribution. Set the S3 bucket as the origin. Use Amazon API Gateway and AWS Lambda functions for the backend APIs. Store the data in Amazon DynamoDB."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。S3 适合静态网站内容，但不是交易式订单数据库，无法提供订单写入所需的 API 处理、条件更新与一致性控制。",
+          "en": "Incorrect. S3 is suitable for static site content but not as a transactional order database and does not provide the API processing, conditional updates, and consistency controls needed for orders."
+        },
+        "B": {
+          "zh": "錯誤。EC2、两个 ALB 与关系数据库可以扩展，但需要容量规划、修补、Auto Scaling 与数据库连接管理，运维负担较高。",
+          "en": "Incorrect. EC2, two ALBs, and a relational database can scale, but they require capacity planning, patching, Auto Scaling, and database connection management, creating higher overhead."
+        },
+        "C": {
+          "zh": "錯誤。EKS 可处理高峰，但需管理 Kubernetes 集群、节点、Pod 扩展及 RDS 容量，对此事件型网站并非最低运维负担。",
+          "en": "Incorrect. EKS can handle bursts but requires managing Kubernetes clusters, nodes, pod scaling, and RDS capacity, so it is not the lowest-overhead design for this event-driven site."
+        },
+        "D": {
+          "zh": "正確。CloudFront 与 S3 能以低延迟大规模提供静态内容；API Gateway、Lambda 和 DynamoDB 都是受管且可自动扩展的服务，适合突发的数百万请求。",
+          "en": "Correct. CloudFront and S3 serve static content globally at low latency, while API Gateway, Lambda, and DynamoDB are managed, automatically scaling services suitable for millions of bursty requests."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 以 Amazon S3 存储桶托管网站静态内容，部署以该存储桶为来源的 CloudFront 分布。后端 API 使用 Amazon API Gateway 与 AWS Lambda，并将数据存储到 Amazon DynamoDB。",
+        "en": "D. Use an Amazon S3 bucket to host the website's static content. Deploy an Amazon CloudFront distribution. Set the S3 bucket as the origin. Use Amazon API Gateway and AWS Lambda functions for the backend APIs. Store the data in Amazon DynamoDB."
+      },
+      "discussion": {
+        "zh": "社群投票：D（100%）。讨论一致支持以 CloudFront/S3 加上 API Gateway、Lambda、DynamoDB 的无服务器架构，在自动扩展与毫秒延迟下把服务器及集群管理降至最低。",
+        "en": "Community vote: D (100%). Comments unanimously supported the serverless CloudFront/S3 plus API Gateway, Lambda, and DynamoDB architecture for automatic scaling, millisecond latency, and minimal server or cluster management."
+      }
+    },
+    {
+      "question_no": 22,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在使用 Amazon S3 设计数字媒体应用程序的存储架构。媒体文件必须能承受一个可用区丢失。部分文件经常访问，其他文件则以不可预测的模式很少访问。架构师必须将媒体文件的存储与检索成本降至最低。哪个存储选项满足要求？",
+        "en": "A solutions architect is using Amazon S3 to design the storage architecture of a new digital media application. The media files must be resilient to the loss of an Availability Zone. Some files are accessed frequently while other files are rarely accessed in an unpredictable pattern. The solutions architect must minimize the costs of storing and retrieving the media files. Which storage option meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "S3 Standard",
+          "en": "S3 Standard"
+        },
+        "B": {
+          "zh": "S3 Intelligent-Tiering",
+          "en": "S3 Intelligent-Tiering"
+        },
+        "C": {
+          "zh": "S3 Standard-Infrequent Access（S3 Standard-IA）",
+          "en": "S3 Standard-Infrequent Access (S3 Standard-IA)"
+        },
+        "D": {
+          "zh": "S3 One Zone-Infrequent Access（S3 One Zone-IA）",
+          "en": "S3 One Zone-Infrequent Access (S3 One Zone-IA)"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。这个标准存储类别可跨多个可用区提供恢复能力，但所有对象都按常用访问层计费，无法针对不可预测的冷数据自动降低存储成本。",
+          "en": "Incorrect. This standard storage class is resilient across Availability Zones but charges all objects at the frequent-access tier and cannot automatically reduce storage cost for unpredictably cold data."
+        },
+        "B": {
+          "zh": "正確。Intelligent-Tiering 跨至少三个可用区存储数据，并依实际访问模式自动将对象移动到合适层级，对不可预测模式可降低成本且没有访问层取回费。",
+          "en": "Correct. Intelligent-Tiering stores data across at least three Availability Zones and automatically moves objects to appropriate tiers based on actual access, lowering cost for unpredictable patterns without retrieval fees for its access tiers."
+        },
+        "C": {
+          "zh": "錯誤。Standard-IA 能承受可用区故障，但每次检索收费且有最低存储期间；由于哪些文件会变冷不可预测，手动选择此层可能增加频繁访问文件的成本。",
+          "en": "Incorrect. Standard-IA is resilient to an AZ failure but charges for retrieval and has a minimum storage duration. With unpredictable access, placing frequently used files there can increase cost."
+        },
+        "D": {
+          "zh": "錯誤。One Zone-IA 只将数据存于单一可用区，无法符合丢失一个可用区后仍具恢复能力的要求。",
+          "en": "Incorrect. One Zone-IA stores data in one Availability Zone and therefore cannot meet the requirement to survive the loss of an AZ."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. S3 Intelligent-Tiering",
+        "en": "B. S3 Intelligent-Tiering"
+      },
+      "discussion": {
+        "zh": "社群投票：B（99%），其他选项合计 1%。讨论共识是访问模式不可预测时应由 Intelligent-Tiering 自动分层，同时维持多可用区恢复能力。",
+        "en": "Community vote: B (99%), other choices 1%. The consensus was to use Intelligent-Tiering for automatic tiering under unpredictable access while retaining multi-AZ resiliency."
+      }
+    },
+    {
+      "question_no": 23,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon S3 Standard 存储备份文件。文件在第一个月经常访问，但一个月后便不再访问。公司必须无限期保留文件。哪个存储方案最具成本效益？",
+        "en": "A company is storing backup files by using Amazon S3 Standard storage. The files are accessed frequently for 1 month. However, the files are not accessed after 1 month. The company must keep the files indefinitely. Which storage solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 S3 Intelligent-Tiering 自动迁移对象。",
+          "en": "Configure S3 Intelligent-Tiering to automatically migrate objects."
+        },
+        "B": {
+          "zh": "创建 S3 生命周期设置，在一个月后将对象从 S3 Standard 转换到 S3 Glacier Deep Archive。",
+          "en": "Create an S3 Lifecycle configuration to transition objects from S3 Standard to S3 Glacier Deep Archive after 1 month."
+        },
+        "C": {
+          "zh": "创建 S3 生命周期设置，在一个月后将对象从 S3 Standard 转换到 S3 Standard-Infrequent Access。",
+          "en": "Create an S3 Lifecycle configuration to transition objects from S3 Standard to S3 Standard-Infrequent Access (S3 Standard-IA) after 1 month."
+        },
+        "D": {
+          "zh": "创建 S3 生命周期设置，在一个月后将对象从 S3 Standard 转换到 S3 One Zone-Infrequent Access。",
+          "en": "Create an S3 Lifecycle configuration to transition objects from S3 Standard to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 1 month."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。Intelligent-Tiering 适合未知或变动的访问模式，但本题已知一个月后完全不再访问；监控费用与较昂贵的非封存层不如直接转入最便宜的封存层。",
+          "en": "Incorrect. Intelligent-Tiering suits unknown or changing access, but this pattern is known to become inactive after one month. Monitoring and non-archive tiers are less economical than a direct move to the lowest-cost archive."
+        },
+        "B": {
+          "zh": "正確。生命周期规则可在常用期结束后自动转至 Deep Archive；此层针对长期、几乎不检索且必须保留的数据提供最低存储成本。",
+          "en": "Correct. A lifecycle rule automatically moves files after their active month to Deep Archive, which provides the lowest storage cost for long-lived data that is almost never retrieved."
+        },
+        "C": {
+          "zh": "錯誤。Standard-IA 的存储费低于 Standard，但仍高于 Deep Archive，适合偶尔需要快速检索的数据；题目明确表示一个月后不再访问。",
+          "en": "Incorrect. Standard-IA costs less than Standard but more than Deep Archive and suits data needing occasional rapid retrieval. The files are explicitly never accessed after one month."
+        },
+        "D": {
+          "zh": "錯誤。One Zone-IA 仍比 Deep Archive 昂贵，且只存于单一可用区，对必须无限期保留的备份降低了恢复能力。",
+          "en": "Incorrect. One Zone-IA still costs more than Deep Archive and stores data in one AZ, reducing resiliency for backups that must be retained indefinitely."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 S3 生命周期设置，在一个月后将对象从 S3 Standard 转换到 S3 Glacier Deep Archive。",
+        "en": "B. Create an S3 Lifecycle configuration to transition objects from S3 Standard to S3 Glacier Deep Archive after 1 month."
+      },
+      "discussion": {
+        "zh": "社群投票：B（97%），其余显示票数合计 2%。讨论指出访问模式已知且数据要永久保留，因此生命周期转入最低成本的 Deep Archive 比自动分层或 IA 类别更合适。",
+        "en": "Community vote: B (97%), with the displayed remaining vote total at 2%. Discussion noted that the access pattern is known and retention is indefinite, making lifecycle transition to lowest-cost Deep Archive preferable to automatic or IA tiers."
+      }
+    },
+    {
+      "question_no": 24,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在最新帐单中发现 Amazon EC2 成本增加。计费团队注意到数个 EC2 实例出现不需要的垂直扩展。解决方案架构师需要创建图表比较最近两个月的 EC2 成本，并深入分析以找出垂直扩展的根本原因。应如何以最少的运维负担产生这些信息？",
+        "en": "A company observes an increase in Amazon EC2 costs in its most recent bill. The billing team notices unwanted vertical scaling of instance types for a couple of EC2 instances. A solutions architect needs to create a graph comparing the last 2 months of EC2 costs and perform an in-depth analysis to identify the root cause of the vertical scaling. How should the solutions architect generate the information with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Budgets 创建预算报告，并依实例类型比较 EC2 成本。",
+          "en": "Use AWS Budgets to create a budget report and compare EC2 costs based on instance types."
+        },
+        "B": {
+          "zh": "使用 Cost Explorer 的精细筛选功能，依实例类型深入分析 EC2 成本。",
+          "en": "Use Cost Explorer's granular filtering feature to perform an in-depth analysis of EC2 costs based on instance types."
+        },
+        "C": {
+          "zh": "使用 AWS Billing and Cost Management 仪表板的图表，依实例类型比较最近两个月的 EC2 成本。",
+          "en": "Use graphs from the AWS Billing and Cost Management dashboard to compare EC2 costs based on instance types for the last 2 months."
+        },
+        "D": {
+          "zh": "使用 AWS Cost and Usage Reports 产生报告并发送到 Amazon S3，再以 Amazon QuickSight 读取 S3，依实例类型创建交互式图表。",
+          "en": "Use AWS Cost and Usage Reports to create a report and send it to an Amazon S3 bucket. Use Amazon QuickSight with Amazon S3 as a source to generate an interactive graph based on instance types."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。AWS Budgets 主要用于设置成本或用量门槛、预测与警报，不是依实例类型进行历史根本原因分析的工具。",
+          "en": "Incorrect. AWS Budgets primarily sets cost or usage thresholds, forecasts, and alerts; it is not the tool for historical root-cause analysis by instance type."
+        },
+        "B": {
+          "zh": "正確。Cost Explorer 内置历史图表、期间比较、组与精细筛选，可直接依服务、用量类型或实例相关维度分析成本，无需创建数据管线。",
+          "en": "Correct. Cost Explorer provides built-in historical graphs, period comparisons, grouping, and granular filters to analyze costs by service, usage type, and instance-related dimensions without a data pipeline."
+        },
+        "C": {
+          "zh": "錯誤。Billing 仪表板提供高级成本摘要，但其筛选与深入切分能力不足以有效找出特定实例类型垂直扩展的根因。",
+          "en": "Incorrect. The Billing dashboard provides high-level cost summaries but lacks the granular filtering and drill-down needed to identify the root cause of vertical scaling by instance type."
+        },
+        "D": {
+          "zh": "錯誤。CUR 搭配 S3 与 QuickSight 可做高度定制分析，但需要设置报告、存储、数据集及可视化，运维负担高于直接使用 Cost Explorer。",
+          "en": "Incorrect. CUR with S3 and QuickSight enables highly customized analysis but requires report delivery, storage, datasets, and visualization setup, adding more overhead than Cost Explorer."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Cost Explorer 的精细筛选功能，依实例类型深入分析 EC2 成本。",
+        "en": "B. Use Cost Explorer's granular filtering feature to perform an in-depth analysis of EC2 costs based on instance types."
+      },
+      "discussion": {
+        "zh": "社群投票：B（66%）、C（25%），其余显示票数合计 10%。虽有少数支持 Billing 仪表板，最终判断是 Cost Explorer 才具备题目所需的精细筛选与深入分析，又不需自行创建报表管线。",
+        "en": "Community vote: B (66%), C (25%), with the displayed remaining vote total at 10%. Although a minority favored the Billing dashboard, Cost Explorer provides the required granular filters and deep analysis without a custom reporting pipeline."
+      }
+    },
+    {
+      "question_no": 25,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在设计应用程序。应用程序使用 AWS Lambda 函数通过 Amazon API Gateway 接收信息，并将信息存储到 Amazon Aurora PostgreSQL 数据库。在概念验证阶段，公司必须大幅提高 Lambda 配额才能处理要加载数据库的大量数据。解决方案架构师需要提出新设计，以改善可可扩展性并将配置工作降至最低。哪个方案满足要求？",
+        "en": "A company is designing an application. The application uses an AWS Lambda function to receive information through Amazon API Gateway and to store the information in an Amazon Aurora PostgreSQL database. During the proof-of-concept stage, the company has to increase the Lambda quotas significantly to handle the high volumes of data that the company needs to load into the database. A solutions architect must recommend a new design to improve scalability and minimize the configuration effort. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Lambda 函数代码重构为在 Amazon EC2 上运行的 Apache Tomcat 代码，并使用原生 JDBC 驱动程序连接数据库。",
+          "en": "Refactor the Lambda function code to Apache Tomcat code that runs on Amazon EC2 instances. Connect the database by using native Java Database Connectivity (JDBC) drivers."
+        },
+        "B": {
+          "zh": "将平台从 Aurora 改为 Amazon DynamoDB，预置 DynamoDB Accelerator 集群，并使用 DAX 客户端 SDK 将现有 DynamoDB API 调用指向 DAX。",
+          "en": "Change the platform from Aurora to Amazon DynamoDB. Provision a DynamoDB Accelerator (DAX) cluster. Use the DAX client SDK to point the existing DynamoDB API calls at the DAX cluster."
+        },
+        "C": {
+          "zh": "设置两个 Lambda 函数，一个接收信息、另一个将信息加载数据库，并使用 Amazon SNS 集成两个函数。",
+          "en": "Set up two Lambda functions. Configure one function to receive the information. Configure the other function to load the information into the database. Integrate the Lambda functions by using Amazon Simple Notification Service (Amazon SNS)."
+        },
+        "D": {
+          "zh": "设置两个 Lambda 函数，一个接收信息、另一个将信息加载数据库，并使用 Amazon SQS 队列集成两个函数。",
+          "en": "Set up two Lambda functions. Configure one function to receive the information. Configure the other function to load the information into the database. Integrate the Lambda functions by using an Amazon Simple Queue Service (Amazon SQS) queue."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。改写为 EC2 上的 Tomcat 会增加服务器、扩展、修补与高可用性管理，配置工作远高于使用受管的事件服务。",
+          "en": "Incorrect. Rewriting for Tomcat on EC2 adds server, scaling, patching, and high-availability management, creating far more configuration work than managed event services."
+        },
+        "B": {
+          "zh": "錯誤。更换成 DynamoDB 与 DAX 需要重新设计数据模型和应用程序；DAX 主要加速读取，不能解决大量写入 Aurora 所造成的 Lambda 高峰。",
+          "en": "Incorrect. Moving to DynamoDB and DAX requires a new data model and application changes. DAX primarily accelerates reads and does not solve Lambda bursts while loading Aurora."
+        },
+        "C": {
+          "zh": "錯誤。SNS 能扇出推送事件，但不提供与 SQS 相同的耐久积压缓冲与消费者节流控制；数据库处理速度跟不上时仍可能造成大量同时调用。",
+          "en": "Incorrect. SNS can fan out pushed events but does not provide the same durable backlog and consumer throttling controls as SQS. Concurrent invocations can still surge when database processing lags."
+        },
+        "D": {
+          "zh": "正確。SQS 会耐久缓冲大量输入并解耦接收与数据库写入。第二个 Lambda 可依批量与保留并行量控制消费速率，吸收高峰且只需少量设置。",
+          "en": "Correct. SQS durably buffers high-volume input and decouples ingestion from database writes. The second Lambda can consume in batches with controlled concurrency, absorbing bursts with little configuration."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 设置两个 Lambda 函数，一个接收信息、另一个将信息加载数据库，并使用 Amazon SQS 队列集成两个函数。",
+        "en": "D. Set up two Lambda functions. Configure one function to receive the information. Configure the other function to load the information into the database. Integrate the Lambda functions by using an Amazon Simple Queue Service (Amazon SQS) queue."
+      },
+      "discussion": {
+        "zh": "社群投票：D（99%），其他选项合计 1%。讨论共识是 SQS 能在接收层与 Aurora 写入层之间提供耐久缓冲与背压，避免以大量 Lambda 并行直接压垮数据库。",
+        "en": "Community vote: D (99%), other choices 1%. The consensus was that SQS provides durable buffering and backpressure between ingestion and Aurora writes, avoiding massive Lambda concurrency directly overwhelming the database."
+      }
+    },
+    {
+      "question_no": 26,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司需要检查其 AWS 云部署，以确保 Amazon S3 存储桶没有未经授权的配置变更。解决方案架构师应如何达成此目标？",
+        "en": "A company needs to review its AWS Cloud deployment to ensure that its Amazon S3 buckets do not have unauthorized configuration changes. What should a solutions architect do to accomplish this goal?"
+      },
+      "options": {
+        "A": {
+          "zh": "启用 AWS Config 并设置适当的规则。",
+          "en": "Turn on AWS Config with the appropriate rules."
+        },
+        "B": {
+          "zh": "启用 AWS Trusted Advisor 并设置适当的检查。",
+          "en": "Turn on AWS Trusted Advisor with the appropriate checks."
+        },
+        "C": {
+          "zh": "启用 Amazon Inspector 并设置适当的评估范本。",
+          "en": "Turn on Amazon Inspector with the appropriate assessment template."
+        },
+        "D": {
+          "zh": "启用 Amazon S3 服务器访问日志，并设置 Amazon EventBridge。",
+          "en": "Turn on Amazon S3 server access logging. Configure Amazon EventBridge (Amazon CloudWatch Events)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。AWS Config 会持续记录资源配置历史并以受管或自定义规则评估 S3 是否符合策略，可检测及追溯未授权变更。",
+          "en": "Correct. AWS Config continuously records resource configuration history and evaluates S3 against managed or custom rules, enabling detection and tracing of unauthorized changes."
+        },
+        "B": {
+          "zh": "錯誤。Trusted Advisor 提供特定成本、性能、配额、容错与安全最佳实践检查，但不是完整的 S3 配置变更历史与规则合规引擎。",
+          "en": "Incorrect. Trusted Advisor offers selected cost, performance, quota, fault-tolerance, and security checks but is not a complete S3 configuration history and rule-compliance engine."
+        },
+        "C": {
+          "zh": "錯誤。Amazon Inspector 评估运算工作负载的软件漏洞与网络暴露，不负责监控 S3 存储桶配置变更。",
+          "en": "Incorrect. Amazon Inspector assesses software vulnerabilities and network exposure in compute workloads; it does not monitor S3 bucket configuration changes."
+        },
+        "D": {
+          "zh": "錯誤。S3 服务器访问日志记录对象与存储桶请求，不提供资源配置时间轴或自动判定配置是否合规；仅加上 EventBridge 仍需自建完整逻辑。",
+          "en": "Incorrect. S3 server access logs record bucket and object requests, not a configuration timeline or automatic compliance evaluation. EventBridge alone would still require custom logic."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 启用 AWS Config 并设置适当的规则。",
+        "en": "A. Turn on AWS Config with the appropriate rules."
+      },
+      "discussion": {
+        "zh": "社群投票：A（97%），其余显示票数合计 2%。讨论指出 AWS Config 的核心用途就是记录配置变更并通过规则持续评估合规性。",
+        "en": "Community vote: A (97%), with the displayed remaining vote total at 2%. Discussion noted that AWS Config is specifically designed to record configuration changes and continuously evaluate compliance through rules."
+      }
+    },
+    {
+      "question_no": 27,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司即将推出新应用程序，并会在 Amazon CloudWatch 仪表板显示应用程序指标。产品经理需要定期访问此仪表板，但没有 AWS 账户。解决方案架构师必须依最小权限原则提供访问。哪个方案满足要求？",
+        "en": "A company is launching a new application and will display application metrics on an Amazon CloudWatch dashboard. The company's product manager needs to access this dashboard periodically. The product manager does not have an AWS account. A solutions architect must provide access to the product manager by following the principle of least privilege. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "从 CloudWatch 控制台共享仪表板，输入产品经理的电子邮件地址并完成共享步骤，再提供仪表板的可共享链接。",
+          "en": "Share the dashboard from the CloudWatch console. Enter the product manager's email address, and complete the sharing steps. Provide a shareable link for the dashboard to the product manager."
+        },
+        "B": {
+          "zh": "专为产品经理创建 IAM 用户，连接 CloudWatchReadOnlyAccess AWS 受管策略，共享登录凭证及正确仪表板的浏览器网址。",
+          "en": "Create an IAM user specifically for the product manager. Attach the CloudWatchReadOnlyAccess AWS managed policy to the user. Share the new login credentials with the product manager. Share the browser URL of the correct dashboard with the product manager."
+        },
+        "C": {
+          "zh": "为公司员工创建共享 IAM 用户并连接 ViewOnlyAccess AWS 受管策略。将登录凭证交给产品经理，请其进入 CloudWatch 控制台寻找仪表板。",
+          "en": "Create an IAM user for the company's employees. Attach the ViewOnlyAccess AWS managed policy to the IAM user. Share the new login credentials with the product manager. Ask the product manager to navigate to the CloudWatch console and locate the dashboard by name in the Dashboards section."
+        },
+        "D": {
+          "zh": "在公有子网部署堡垒服务器。产品经理需要仪表板时启动服务器并共享 RDP 凭证，使用已缓存适当 AWS 凭证且缺省打开仪表板网址的浏览器。",
+          "en": "Deploy a bastion server in a public subnet. When the product manager requires access to the dashboard, start the server and share the RDP credentials. On the bastion server, ensure that the browser is configured to open the dashboard URL with cached AWS credentials that have appropriate permissions to view the dashboard."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。CloudWatch 仪表板共享可通过电子邮件邀请与专用链接让没有 AWS 账户的对象只查看指定仪表板，比授予控制台权限更符合最低权限。",
+          "en": "Correct. CloudWatch dashboard sharing uses an email invitation and dedicated link so a person without an AWS account can view only the specified dashboard, providing less privilege than console access."
+        },
+        "B": {
+          "zh": "錯誤。CloudWatchReadOnlyAccess 会授予产品经理读取广泛 CloudWatch 资源的控制台权限，范围超过只查看单一仪表板，且还需管理 IAM 凭证。",
+          "en": "Incorrect. CloudWatchReadOnlyAccess grants console visibility across broad CloudWatch resources, exceeding access to one dashboard and requiring IAM credential management."
+        },
+        "C": {
+          "zh": "錯誤。共享 IAM 用户违反不可共享凭证的安全实践，而 ViewOnlyAccess 涵盖大量 AWS 服务，权限远超需求。",
+          "en": "Incorrect. A shared IAM user violates the practice of unique credentials, and ViewOnlyAccess spans many AWS services, far exceeding the requirement."
+        },
+        "D": {
+          "zh": "錯誤。堡垒主机、RDP 与缓存凭证带来服务器管理与凭证泄漏风险，且授权边界不如仪表板共享精确。",
+          "en": "Incorrect. A bastion host, RDP, and cached credentials add server management and credential exposure risk, with a less precise authorization boundary than dashboard sharing."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 从 CloudWatch 控制台共享仪表板，输入产品经理的电子邮件地址并完成共享步骤，再提供仪表板的可共享链接。",
+        "en": "A. Share the dashboard from the CloudWatch console. Enter the product manager's email address, and complete the sharing steps. Provide a shareable link for the dashboard to the product manager."
+      },
+      "discussion": {
+        "zh": "社群投票：A（72%）、B（27%）、其他 1%。虽有少数主张创建 IAM 用户，但直接共享 CloudWatch 仪表板只暴露指定内容，无需 AWS 账户，最符合最低权限。",
+        "en": "Community vote: A (72%), B (27%), other choices 1%. Although a minority favored an IAM user, direct CloudWatch dashboard sharing exposes only the specified content, needs no AWS account, and best follows least privilege."
+      }
+    },
+    {
+      "question_no": 28,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将应用程序迁移到 AWS，应用程序分布在不同账户，并使用 AWS Organizations 集中管理。安全团队需要跨所有公司账户的单一登录解决方案，同时必须继续在本地部署的自行管理的 Microsoft Active Directory 管理用户与组。哪个方案满足要求？",
+        "en": "A company is migrating applications to AWS. The applications are deployed in different accounts. The company manages the accounts centrally by using AWS Organizations. The company's security team needs a single sign-on (SSO) solution across all the company's accounts. The company must continue managing the users and groups in its on-premises self-managed Microsoft Active Directory. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "从 AWS SSO 控制台启用 AWS Single Sign-On，并通过 AWS Directory Service for Microsoft Active Directory 创建单向林信任或单向域名信任，连接自行管理的 Microsoft Active Directory 与 AWS SSO。",
+          "en": "Enable AWS Single Sign-On (AWS SSO) from the AWS SSO console. Create a one-way forest trust or a one-way domain trust to connect the company's self-managed Microsoft Active Directory with AWS SSO by using AWS Directory Service for Microsoft Active Directory."
+        },
+        "B": {
+          "zh": "从 AWS SSO 控制台启用 AWS Single Sign-On，并通过 AWS Directory Service for Microsoft Active Directory 创建双向林信任，连接自行管理的 Microsoft Active Directory 与 AWS SSO。",
+          "en": "Enable AWS Single Sign-On (AWS SSO) from the AWS SSO console. Create a two-way forest trust to connect the company's self-managed Microsoft Active Directory with AWS SSO by using AWS Directory Service for Microsoft Active Directory."
+        },
+        "C": {
+          "zh": "使用 AWS Directory Service，并与公司的自行管理的 Microsoft Active Directory 创建双向信任关系。",
+          "en": "Use AWS Directory Service. Create a two-way trust relationship with the company's self-managed Microsoft Active Directory."
+        },
+        "D": {
+          "zh": "在本地部署环境部署身份提供者，并从 AWS SSO 控制台启用 AWS Single Sign-On。",
+          "en": "Deploy an identity provider (IdP) on premises. Enable AWS Single Sign-On (AWS SSO) from the AWS SSO console."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此集成情境需要 AWS Managed Microsoft AD 与本地部署树系之间受支持的双向林信任；单向信任不足以提供题目所需的用户与组集成。",
+          "en": "Incorrect. This integration requires a supported two-way forest trust between AWS Managed Microsoft AD and the on-premises forest. A one-way trust is insufficient for the required user and group integration."
+        },
+        "B": {
+          "zh": "正確。AWS IAM Identity Center（原 AWS SSO）可与 AWS Organizations 集成，在多账户提供集中登录；通过 AWS Managed Microsoft AD 的双向林信任，可继续在本地部署 AD 管理用户与组。",
+          "en": "Correct. AWS IAM Identity Center, formerly AWS SSO, integrates with AWS Organizations for centralized multi-account access. A two-way forest trust through AWS Managed Microsoft AD allows users and groups to remain managed in the on-premises AD."
+        },
+        "C": {
+          "zh": "錯誤。只有 Directory Service 信任关系没有启用及设置 AWS SSO，无法提供跨 Organizations 账户的单一登录入口与权限指派。",
+          "en": "Incorrect. A Directory Service trust alone does not enable or configure AWS SSO, so it does not provide the multi-account sign-in portal and permission assignments."
+        },
+        "D": {
+          "zh": "錯誤。自建本地部署 IdP 需要额外部署与维护，而且选项没有说明如何将既有 AD 用户与组正确集成为 AWS SSO 身份来源。",
+          "en": "Incorrect. A custom on-premises IdP adds deployment and maintenance, and the option does not establish how the existing AD users and groups become the AWS SSO identity source."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 从 AWS SSO 控制台启用 AWS Single Sign-On，并通过 AWS Directory Service for Microsoft Active Directory 创建双向林信任，连接自行管理的 Microsoft Active Directory 与 AWS SSO。",
+        "en": "B. Enable AWS Single Sign-On (AWS SSO) from the AWS SSO console. Create a two-way forest trust to connect the company's self-managed Microsoft Active Directory with AWS SSO by using AWS Directory Service for Microsoft Active Directory."
+      },
+      "discussion": {
+        "zh": "社群投票：B（69%）、A（27%）、其他 3%。争议集中于信任方向；依题目官方架构，AWS Managed Microsoft AD 搭配双向林信任，才能让 AWS SSO 使用仍由本地部署 AD 管理的身份。",
+        "en": "Community vote: B (69%), A (27%), other choices 3%. Debate focused on trust direction; in the official architecture, AWS Managed Microsoft AD with a two-way forest trust lets AWS SSO use identities that remain managed in the on-premises AD."
+      }
+    },
+    {
+      "question_no": 29,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司提供使用 UDP 连接的 Voice over Internet Protocol 服务。服务由 Auto Scaling 组中的 Amazon EC2 实例组成，并部署在多个 AWS 区域。公司需要将用户路由到延迟最低的区域，并需要区域间自动故障转移。哪个方案满足要求？",
+        "en": "A company provides a Voice over Internet Protocol (VoIP) service that uses UDP connections. The service consists of Amazon EC2 instances that run in an Auto Scaling group. The company has deployments across multiple AWS Regions. The company needs to route users to the Region with the lowest latency. The company also needs automated failover between Regions. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在每个区域部署 Network Load Balancer 及相关目标组，将目标组与 Auto Scaling 组关联，并将每个 NLB 作为 AWS Global Accelerator 端点。",
+          "en": "Deploy a Network Load Balancer (NLB) and an associated target group. Associate the target group with the Auto Scaling group. Use the NLB as an AWS Global Accelerator endpoint in each Region."
+        },
+        "B": {
+          "zh": "在每个区域部署 Application Load Balancer 及相关目标组，将目标组与 Auto Scaling 组关联，并将每个 ALB 作为 AWS Global Accelerator 端点。",
+          "en": "Deploy an Application Load Balancer (ALB) and an associated target group. Associate the target group with the Auto Scaling group. Use the ALB as an AWS Global Accelerator endpoint in each Region."
+        },
+        "C": {
+          "zh": "部署 NLB 及相关目标组并与 Auto Scaling 组关联。创建指向各 NLB 别名的 Route 53 延迟记录，再创建以该延迟记录为来源的 CloudFront 分布。",
+          "en": "Deploy a Network Load Balancer (NLB) and an associated target group. Associate the target group with the Auto Scaling group. Create an Amazon Route 53 latency record that points to aliases for each NLB. Create an Amazon CloudFront distribution that uses the latency record as an origin."
+        },
+        "D": {
+          "zh": "部署 ALB 及相关目标组并与 Auto Scaling 组关联。创建指向各 ALB 别名的 Route 53 加权记录，再创建以该加权记录为来源的 CloudFront 分布。",
+          "en": "Deploy an Application Load Balancer (ALB) and an associated target group. Associate the target group with the Auto Scaling group. Create an Amazon Route 53 weighted record that points to aliases for each ALB. Deploy an Amazon CloudFront distribution that uses the weighted record as an origin."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。NLB 支持 UDP 并可将流量分配到 Auto Scaling 实例；Global Accelerator 会通过 AWS 全球网络将客户端导向健康且延迟最佳的区域端点，并自动故障转移。",
+          "en": "Correct. NLB supports UDP and distributes traffic to Auto Scaling instances. Global Accelerator uses the AWS global network to direct clients to the healthy, lowest-latency regional endpoint and automatically fails over."
+        },
+        "B": {
+          "zh": "錯誤。ALB 只支持 HTTP 与 HTTPS 等第 7 层流量，不支持 VoIP 所使用的 UDP。",
+          "en": "Incorrect. ALB handles Layer 7 protocols such as HTTP and HTTPS and does not support the UDP traffic used by VoIP."
+        },
+        "C": {
+          "zh": "錯誤。NLB 与 Route 53 延迟路由可处理区域选择，但 CloudFront 是 HTTP/HTTPS 内容传递网络，不会代理一般 UDP VoIP 流量。",
+          "en": "Incorrect. NLB and Route 53 latency routing can select Regions, but CloudFront is an HTTP/HTTPS content delivery network and does not proxy general UDP VoIP traffic."
+        },
+        "D": {
+          "zh": "錯誤。ALB 与 CloudFront 都不支持此一般 UDP 工作负载，而且加权记录不会自动选择延迟最低的区域。",
+          "en": "Incorrect. Neither ALB nor CloudFront supports this general UDP workload, and weighted records do not automatically choose the lowest-latency Region."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在每个区域部署 Network Load Balancer 及相关目标组，将目标组与 Auto Scaling 组关联，并将每个 NLB 作为 AWS Global Accelerator 端点。",
+        "en": "A. Deploy a Network Load Balancer (NLB) and an associated target group. Associate the target group with the Auto Scaling group. Use the NLB as an AWS Global Accelerator endpoint in each Region."
+      },
+      "discussion": {
+        "zh": "社群投票：A（82%），其余显示为 Other。讨论重点是 UDP 排除 ALB 与 CloudFront，而 Global Accelerator 搭配各区域 NLB 可同时提供最低延迟路由、健康检查与快速跨区域故障转移。",
+        "en": "Community vote: A (82%), with the remainder displayed as Other. Discussion noted that UDP rules out ALB and CloudFront, while Global Accelerator with regional NLBs provides lowest-latency routing, health checks, and fast inter-Region failover."
+      }
+    },
+    {
+      "question_no": 30,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一个开发团队每月在已启用 Performance Insights 的通用 Amazon RDS for MySQL 数据库实例上运行资源密集型测试。测试每月运行一次、持续 48 小时，也是唯一使用该数据库的进程。团队希望在不降低数据库实例运算与内存规格的情况下降低测试成本。哪个方案最具成本效益？",
+        "en": "A development team runs monthly resource-intensive tests on its general purpose Amazon RDS for MySQL DB instance with Performance Insights enabled. The testing lasts for 48 hours once a month and is the only process that uses the database. The team wants to reduce the cost of running the tests without reducing the compute and memory attributes of the DB instance. Which solution meets these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "测试完成后停止数据库实例，需要时再重新启动。",
+          "en": "Stop the DB instance when tests are completed. Restart the DB instance when required."
+        },
+        "B": {
+          "zh": "对数据库实例使用 Auto Scaling 策略，在测试完成时自动扩展。",
+          "en": "Use an Auto Scaling policy with the DB instance to automatically scale when tests are completed."
+        },
+        "C": {
+          "zh": "测试完成后创建快照、终止数据库实例，并在需要时恢复快照。",
+          "en": "Create a snapshot when tests are completed. Terminate the DB instance and restore the snapshot when required."
+        },
+        "D": {
+          "zh": "测试完成后将数据库实例修改为低容量实例，需要时再改回原规格。",
+          "en": "Modify the DB instance to a low-capacity instance when tests are completed. Modify the DB instance again when required."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。RDS 数据库实例最多只能连续停止 7 天，之后会自动启动；每月只使用 48 小时时，仍会产生其余多周的运算费用。",
+          "en": "Incorrect. An RDS DB instance can remain stopped for only seven consecutive days before it is automatically restarted. A database used for 48 hours monthly would still accrue compute charges for the remaining weeks."
+        },
+        "B": {
+          "zh": "錯誤。一般 RDS 数据库实例没有依计划自动缩放实例类别的 Auto Scaling 策略；RDS 存储体自动扩展也不会停止运算费用。",
+          "en": "Incorrect. A standard RDS DB instance has no Auto Scaling policy that changes its instance class on this schedule. RDS storage autoscaling also does not eliminate compute charges."
+        },
+        "C": {
+          "zh": "正確。快照可耐久存储数据与配置，删除实例后不再支付数据库运算费用；下次测试时可从快照以相同实例规格恢复。",
+          "en": "Correct. A snapshot durably preserves data and configuration, and deleting the instance removes database compute charges. It can be restored with the same instance class for the next test."
+        },
+        "D": {
+          "zh": "錯誤。缩小实例会直接降低运算与内存规格，违反题目限制，而且每月变更类别也会造成停机与管理工作。",
+          "en": "Incorrect. Downsizing directly reduces compute and memory attributes, violating the requirement, and monthly class changes add downtime and management."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 测试完成后创建快照、终止数据库实例，并在需要时恢复快照。",
+        "en": "C. Create a snapshot when tests are completed. Terminate the DB instance and restore the snapshot when required."
+      },
+      "discussion": {
+        "zh": "社群投票：C（81%），其余显示为 Other。讨论指出停止 RDS 只有 7 天上限，因此月度闲置期间最省成本的方式是保留快照并删除运算资源，需要时以原规格恢复。",
+        "en": "Community vote: C (81%), with the remainder displayed as Other. Discussion noted the seven-day RDS stop limit, making snapshot retention plus deletion of compute the cheapest monthly-idle approach while restoring the original size when needed."
+      }
+    }
+  ]
+}

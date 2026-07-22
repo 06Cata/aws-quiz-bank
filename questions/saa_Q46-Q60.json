@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 46,
+      "question_text": {
+        "en": "A company has an application that provides marketing services to stores. The services are based on previous purchases by store customers. The stores upload transaction data to the company through SFTP, and the data is processed and analyzed to generate new marketing offers. Some of the files can exceed 200 GB in size. Recently, the company discovered that some of the stores have uploaded files that contain personally identifiable information (PII) that should not have been included. The company wants administrators to be alerted if PII is shared again. The company also wants to automate remediation. What should a solutions architect do to meet these requirements with the LEAST development effort?",
+        "zh": "一家公司有一个为商店提供营销服务的应用程序。这些服务是基于商店顾客之前的购买情况。商店通过SFTP将交易数据上传到公司，数据经过处理和分析以产生新的营销报价。某些文件的大小可能超过 200 GB。最近，该公司发现一些商店上传的文件包含不应包含的个人识别信息（PII）。该公司希望如果 PII 再次被分享，管理员会收到警报。该公司还希望实现自动化修复。解决方案架构师应该如何做才能以最少的开发工作来满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Use an Amazon S3 bucket as a secure transfer point. Use Amazon Inspector to scan the objects in the bucket. If objects contain PII, trigger an S3 Lifecycle policy to remove the objects that contain PII.",
+          "zh": "使用 Amazon S3 存储桶作为安全传输点。使用 Amazon Inspector 扫描存储桶中的对象。如果对象包含 PII，则触发 S3 生命周期策略以删除包含 PII 的对象。"
+        },
+        "B": {
+          "en": "Use an Amazon S3 bucket as a secure transfer point. Use Amazon Macie to scan the objects in the bucket. If objects contain PII, use Amazon Simple Notification Service (Amazon SNS) to trigger a notification to the administrators to remove the objects that contain PII.",
+          "zh": "使用 Amazon S3 存储桶作为安全传输点。使用 Amazon Macie 扫描存储桶中的对象。如果对象包含 PII，请使用 Amazon Simple Notification Service (Amazon SNS) 触发向管理员发送的通知，以删除包含 PII 的对象。"
+        },
+        "C": {
+          "en": "Implement custom scanning algorithms in an AWS Lambda function. Trigger the function when objects are loaded into the bucket. If objects contain PII, use Amazon Simple Notification Service (Amazon SNS) to trigger a notification to the administrators to remove the objects that contain PII.",
+          "zh": "在 AWS Lambda 函数中实施自定义扫描演算法。当对象加载到桶中时触发该函数。如果对象包含 PII，请使用 Amazon Simple Notification Service (Amazon SNS) 触发向管理员发送的通知，以删除包含 PII 的对象。"
+        },
+        "D": {
+          "en": "Implement custom scanning algorithms in an AWS Lambda function. Trigger the function when objects are loaded into the bucket. If objects contain PII, use Amazon Simple Email Service (Amazon SES) to trigger a notification to the administrators and trigger an S3 Lifecycle policy to remove the objects that contain PII.",
+          "zh": "在 AWS Lambda 函数中实施自定义扫描演算法。当对象加载到桶中时触发该函数。如果对象包含 PII，请使用 Amazon Simple Email Service (Amazon SES) 触发向管理员发送的通知，并触发 S3 生命周期策略来删除包含 PII 的对象。"
+        }
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Inspector 对支持的运算工作负载运行漏洞管理，并且不会发现 S3 对象内的 PII。",
+          "en": "Incorrect. Technical reason: Amazon Inspector performs vulnerability management for supported compute workloads and does not discover PII inside S3 objects."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon Macie 为 Amazon S3 提供托管敏感数据发现，并且当 PII 发现需要通过最少的自定义开发进行修复时，SNS 通知可以向管理员发出警报。",
+          "en": "Correct. Technical reason: Amazon Macie provides managed sensitive-data discovery for Amazon S3, and an SNS notification can alert administrators when PII findings require remediation with minimal custom development."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：自定义 Lambda 扫描仪需要设计、测试和维护 PII 检测逻辑，这比 Amazon Macie 需要更多的开发工作。",
+          "en": "Incorrect. Technical reason: A custom Lambda scanner requires designing, testing, and maintaining PII detection logic, which creates more development effort than Amazon Macie."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：自定义扫描逻辑加上 SES 配置增加了开发和通知管理工作，而 S3 生命周期策略不是立即发现驱动的删除机制。",
+          "en": "Incorrect. Technical reason: Custom scanning logic plus SES configuration adds development and notification-management work, and an S3 Lifecycle policy is not an immediate finding-driven deletion mechanism."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "B. 使用 Amazon S3 存储桶作为安全传输点。使用 Amazon Macie 扫描存储桶中的对象。如果对象包含 PII，请使用 Amazon Simple Notification Service (Amazon SNS) 触发向管理员发送的通知，以删除包含 PII 的对象。",
+        "en": "B. Use an Amazon S3 bucket as a secure transfer point. Use Amazon Macie to scan the objects in the bucket. If objects contain PII, use Amazon Simple Notification Service (Amazon SNS) to trigger a notification to the administrators to remove the objects that contain PII."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (64%) D (36%) 1。考点摘要：Amazon Macie 为 Amazon S3 提供托管敏感数据发现，并且当 PII 发现需要通过最少的自定义开发进行修复时，SNS 通知可以向管理员发出警报。",
+        "en": "Community vote as displayed: B (64%) D (36%) 1. Key point: Amazon Macie provides managed sensitive-data discovery for Amazon S3, and an SNS notification can alert administrators when PII findings require remediation with minimal custom development."
+      }
+    },
+    {
+      "question_no": 47,
+      "question_text": {
+        "en": "A company needs guaranteed Amazon EC2 capacity in three specific Availability Zones in a specific AWS Region for an upcoming event that will last 1 week. What should the company do to guarantee the EC2 capacity?",
+        "zh": "一家公司需要在特定 AWS 区域的三个特定可用区中保证 Amazon EC2 容量，以应对即将举行的持续 1 周的活动。公司该如何保证EC2容量？"
+      },
+      "options": {
+        "A": {
+          "en": "Purchase Reserved Instances that specify the Region needed.",
+          "zh": "购买指定所需区域的预留实例。"
+        },
+        "B": {
+          "en": "Create an On-Demand Capacity Reservation that specifies the Region needed.",
+          "zh": "创建指定所需区域的按需容量预留。"
+        },
+        "C": {
+          "en": "Purchase Reserved Instances that specify the Region and three Availability Zones needed.",
+          "zh": "购买指定所需区域和三个可用区的预留实例。"
+        },
+        "D": {
+          "en": "Create an On-Demand Capacity Reservation that specifies the Region and three Availability Zones needed.",
+          "zh": "创建指定所需区域和三个可用区的按需容量预留。"
+        }
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：预留实例提供长期成本优化选项，但不保证特定时间段的容量。它只适合降低长时间运行实例的成本。",
+          "en": "Incorrect. Technical reason: Reserved Instances provide long-term cost optimization options, but it does not guarantee capacity for a specific time period. It is only suitable for reducing the cost of long-running instances."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：按需容量预留可以确保容量，但仅指定 Region 并不足以满足问题要求，因为问题明确要求在三个特定可用区中保证容量。",
+          "en": "Incorrect. Technical reason: On-Demand Capacity Reservation can guarantee capacity, but just specifying the Region is not enough to meet the question requirements because the question clearly requires guaranteed capacity in three specific Availability Zones."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然可以指定 Region 和可用区，但预留实例仍无法保证特定时间段内的容量。主要用于成本优化而非产能保障。",
+          "en": "Incorrect. Technical reason: Although Region and Availability Zones can be specified, Reserved Instances still cannot guarantee capacity within a specific time period. It is mainly used for cost optimization rather than capacity guarantee."
+        },
+        "D": {
+          "zh": "正確。技术原因：按需容量预留允许用户在特定时间内为特定Region和Available Zone预留EC2容量，完全满足问题的要求。",
+          "en": "Correct. Technical reason: On-Demand Capacity Reservation allows users to reserve EC2 capacity for specific Regions and Availability Zones within a specific period of time, which fully meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "D. 创建指定所需区域和三个可用区的按需容量预留。",
+        "en": "D. Create an On-Demand Capacity Reservation that specifies the Region and three Availability Zones needed."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (100%)。考点摘要：按需容量预留允许用户在特定时间内为特定Region和Available Zone预留EC2容量，完全满足问题的要求。",
+        "en": "Community vote as displayed: D (100%). Key point: On-Demand Capacity Reservation allows users to reserve EC2 capacity for specific Regions and Availability Zones within a specific period of time, which fully meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 48,
+      "question_text": {
+        "en": "A company's website uses an Amazon EC2 instance store for its catalog of items. The company wants to make sure that the catalog is highly available and that the catalog is stored in a durable location. What should a solutions architect do to meet these requirements?",
+        "zh": "一家公司的网站使用 Amazon EC2 实例存储来存储其项目目录。该公司希望确保目录具有高可用性，并且目录存储在持久的位置。解决方案架构师应该怎么做才能满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Move the catalog to Amazon ElastiCache for Redis.",
+          "zh": "将目录移动到 Amazon ElastiCache for Redis。"
+        },
+        "B": {
+          "en": "Deploy a larger EC2 instance with a larger instance store.",
+          "zh": "部署具有更大实例存储的更大 EC2 实例。"
+        },
+        "C": {
+          "en": "Move the catalog from the instance store to Amazon S3 Glacier Deep Archive.",
+          "zh": "将目录从实例存储移动到 Amazon S3 Glacier Deep Archive。"
+        },
+        "D": {
+          "en": "Move the catalog to an Amazon Elastic File System (Amazon EFS) file system.",
+          "zh": "将目录移动到 Amazon Elastic File System (Amazon EFS) 文件系统。"
+        }
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon ElastiCache for Redis 是一项内存缓存服务，主要旨在加快数据访问速度，而不是存储持久性数据。它不适合存储产品目录，因为缓存失效或节点故障可能会导致数据丢失。",
+          "en": "Incorrect. Technical reason: Amazon ElastiCache for Redis is an in-memory caching service designed primarily to speed up data access, not to store persistent data. It is not suitable for storing product catalogs because the data can be lost in cache invalidation or node failure."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：EC2实例存储是暂存，当实例停止或终止时数据会丢失。部署更大的实例存储并不能解决数据持久化问题。",
+          "en": "Incorrect. Technical reason: EC2 instance storage is temporary storage and data is lost when the instance is stopped or terminated. Deploying larger instance storage does not solve the data persistence problem."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon S3 Glacier Deep Archive 是一种用于归档数据的低成本、长期存储解决方案。它不适合存储需要频繁访问的产品目录。",
+          "en": "Incorrect. Technical reason: Amazon S3 Glacier Deep Archive is a low-cost, long-term storage solution for archiving data. It is not suitable for storing product catalogs that require frequent access."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon EFS 是一种可扩展文件存储服务，支持高可用性和数据持久性。适合存储需要频繁访问的产品目录，并且可以与多个EC2实例共享。",
+          "en": "Correct. Technical reason: Amazon EFS is a scalable file storage service that supports high availability and data durability. It is suitable for storing product catalogs that require frequent access, and can be shared with multiple EC2 instances."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "D. 将目录移动到 Amazon Elastic File System (Amazon EFS) 文件系统。",
+        "en": "D. Move the catalog to an Amazon Elastic File System (Amazon EFS) file system."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (93%) 7%。考点摘要：Amazon EFS 是一种可扩展文件存储服务，支持高可用性和数据持久性。适合存储需要频繁访问的产品目录，并且可以与多个EC2实例共享。",
+        "en": "Community vote as displayed: D (93%) 7%. Key point: Amazon EFS is a scalable file storage service that supports high availability and data durability. It is suitable for storing product catalogs that require frequent access, and can be shared with multiple EC2 instances."
+      }
+    },
+    {
+      "question_no": 49,
+      "question_text": {
+        "en": "A company stores call transcript files on a monthly basis. Users access the files randomly within 1 year of the call, but users access the files infrequently after 1 year. The company wants to optimize its solution by giving users the ability to query and retrieve files that are less than 1-year-old as quickly as possible. A delay in retrieving older files is acceptable. Which solution will meet these requirements MOST cost-effectively?",
+        "zh": "一家公司每月存储通话历史文件。用户在调用后 1 年内随机访问这些文件，但 1 年后用户很少访问这些文件。该公司希望通过让用户能够尽快查询和检索不到 1 年的文件来优化其解决方案。检索旧文件的延迟是可以​​接受的。哪一种解决方案能够最具成本效益地满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Store individual files with tags in Amazon S3 Glacier Instant Retrieval. Query the tags to retrieve the files from S3 Glacier Instant Retrieval.",
+          "zh": "在 Amazon S3 Glacier 实时检索中存储带有标签的单一文件。查询标签以从 S3 Glacier 实时检索检索文件。"
+        },
+        "B": {
+          "en": "Store individual files in Amazon S3 Intelligent-Tiering. Use S3 Lifecycle policies to move the files to S3 Glacier Flexible Retrieval after 1 year. Query and retrieve the files that are in Amazon S3 by using Amazon Athena. Query and retrieve the files that are in S3 Glacier by using S3 Glacier Select.",
+          "zh": "将单一文件存储在 Amazon S3 智能分层中。 1 年后，使用 S3 生命周期策略将文件移动到 S3 Glacier 弹性检索。使用 Amazon Athena 查询和检索 Amazon S3 中的文件。使用 S3 Glacier Select 查询并检索 S3 Glacier 中的文件。"
+        },
+        "C": {
+          "en": "Store individual files with tags in Amazon S3 Standard storage. Store search metadata for each archive in Amazon S3 Standard storage. Use S3 Lifecycle policies to move the files to S3 Glacier Instant Retrieval after 1 year. Query and retrieve the files by searching for metadata from Amazon S3.",
+          "zh": "将带有标签的单一文件存储在 Amazon S3 标准存储中。将每个归档文件的搜索元数据存储在 Amazon S3 标准存储中。 1 年后，使用 S3 生命周期策略将文件移动到 S3 Glacier Instant Retrieval。通过从 Amazon S3 搜索元数据来查询和检索文件。"
+        },
+        "D": {
+          "en": "Store individual files in Amazon S3 Standard storage. Use S3 Lifecycle policies to move the files to S3 Glacier Deep Archive after 1 year. Store search metadata in Amazon RDS. Query the files from Amazon RDS. Retrieve the files from S3 Glacier Deep Archive.",
+          "zh": "将单一文件存储在 Amazon S3 标准存储中。 1 年后，使用 S3 生命周期策略将文件移动到 S3 Glacier Deep Archive。将搜索元数据存储在 Amazon RDS 中。从 Amazon RDS 查询文件。从 S3 Glacier Deep Archive 检索文件。"
+        }
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Glacier Instant Retrieval 提供毫秒级访问，但比较冷的归档类收费更高，因此将其用于所有文件并不能优化不频繁的年后访问模式。",
+          "en": "Incorrect. Technical reason: Glacier Instant Retrieval provides millisecond access but charges more than colder archive classes, so using it for all files does not optimize the infrequent post-year access pattern."
+        },
+        "B": {
+          "zh": "正確。技术原因：S3 智能分层适应不可预测的第一年访问，一年后生命周期过渡到 Glacier 灵活检索可降低归档成本，同时允许可接受的延迟检索。",
+          "en": "Correct. Technical reason: S3 Intelligent-Tiering adapts to unpredictable first-year access, and a Lifecycle transition to Glacier Flexible Retrieval after one year reduces archive cost while allowing acceptable delayed retrieval."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：将文件和元数据在 S3 Standard 中保留一年，然后使用 Glacier Instant Retrieval 会保留比规定访问模式所需的更高的存储成本。",
+          "en": "Incorrect. Technical reason: Keeping the files and metadata in S3 Standard for a year and then using Glacier Instant Retrieval retains higher storage cost than necessary for the stated access pattern."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：S3 Glacier Deep Archive 提供成本非常低的归档存储，但与托管分层方法相比，在 Amazon RDS 中维护可搜索元数据会增加持续的数据库成本和运维开销。",
+          "en": "Incorrect. Technical reason: S3 Glacier Deep Archive provides very low-cost archival storage, but maintaining searchable metadata in Amazon RDS adds ongoing database cost and operational overhead compared with the managed tiering approach."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "B. 将单一文件存储在 Amazon S3 智能分层中。 1 年后，使用 S3 生命周期策略将文件移动到 S3 Glacier 弹性检索。使用 Amazon Athena 查询和检索 Amazon S3 中的文件。使用 S3 Glacier Select 查询并检索 S3 Glacier 中的文件。",
+        "en": "B. Store individual files in Amazon S3 Intelligent-Tiering. Use S3 Lifecycle policies to move the files to S3 Glacier Flexible Retrieval after 1 year. Query and retrieve the files that are in Amazon S3 by using Amazon Athena. Query and retrieve the files that are in S3 Glacier by using S3 Glacier Select."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (70%) C (24%) 5%。考点摘要：S3 智能分层适应不可预测的第一年访问，一年后生命周期过渡到 Glacier 灵活检索可降低归档成本，同时允许可接受的延迟检索。",
+        "en": "Community vote as displayed: B (70%) C (24%) 5%. Key point: S3 Intelligent-Tiering adapts to unpredictable first-year access, and a Lifecycle transition to Glacier Flexible Retrieval after one year reduces archive cost while allowing acceptable delayed retrieval."
+      }
+    },
+    {
+      "question_no": 50,
+      "question_text": {
+        "en": "A company has a production workload that runs on 1,000 Amazon EC2 Linux instances. The workload is powered by third-party software. The company needs to patch the third-party software on all EC2 instances as quickly as possible to remediate a critical security vulnerability. What should a solutions architect do to meet these requirements?",
+        "zh": "一家公司的生产工作负载在 1,000 个 Amazon EC2 Linux 实例上运行。此工作负载由第三方软件提供支持。该公司需要尽快修补所有 EC2 实例上的第三方软件，以修复关键安全漏洞。解决方案架构师应该怎么做才能满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Create an AWS Lambda function to apply the patch to all EC2 instances.",
+          "zh": "创建 AWS Lambda 函数以将补丁套用到所有 EC2 实例。"
+        },
+        "B": {
+          "en": "Configure AWS Systems Manager Patch Manager to apply the patch to all EC2 instances.",
+          "zh": "配置 AWS Systems Manager 补丁管理器以将补丁套用到所有 EC2 实例。"
+        },
+        "C": {
+          "en": "Schedule an AWS Systems Manager maintenance window to apply the patch to all EC2 instances.",
+          "zh": "安排 AWS Systems Manager 维护时段以将补丁套用到所有 EC2 实例。"
+        },
+        "D": {
+          "en": "Use AWS Systems Manager Run Command to run a custom command that applies the patch to all EC2 instances.",
+          "zh": "使用 AWS Systems Manager Run Command 运行将补丁套用到所有 EC2 实例的自定义命令。"
+        }
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Lambda 函数不是用于跨 1,000 个 EC2 实例运行紧急自定义修补程序的托管队列管理机制。",
+          "en": "Incorrect. Technical reason: A Lambda function is not the managed fleet-administration mechanism for executing an urgent custom patch across 1,000 EC2 instances."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：补丁管理器通过补丁基线应用受支持的操作系统和应用程序补丁，但这种紧急的自定义第三方套件需要公司提供的特定命令。",
+          "en": "Incorrect. Technical reason: Patch Manager applies supported operating system and application patches through patch baselines, but this urgent custom third-party package requires a specific command supplied by the company."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：维护时段将工作安排在稍后批准的时间段内，这与尽快修复关键漏洞的要求相冲突。",
+          "en": "Incorrect. Technical reason: A maintenance window schedules work for a later approved period, which conflicts with the requirement to remediate the critical vulnerability as quickly as possible."
+        },
+        "D": {
+          "zh": "正確。技术原因：Systems Manager Run Command 可以在托管 EC2 队列中同时运行公司的自定义第三方修补程序命令，而无需交互式登录。",
+          "en": "Correct. Technical reason: Systems Manager Run Command can execute the company's custom third-party patch command concurrently across the managed EC2 fleet without interactive logins."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "D. 使用 AWS Systems Manager Run Command 运行将补丁套用到所有 EC2 实例的自定义命令。",
+        "en": "D. Use AWS Systems Manager Run Command to run a custom command that applies the patch to all EC2 instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (68%) B (32%)。考点摘要：Systems Manager Run Command 可以在托管 EC2 队列中同时运行公司的自定义第三方修补程序命令，而无需交互式登录。",
+        "en": "Community vote as displayed: D (68%) B (32%). Key point: Systems Manager Run Command can execute the company's custom third-party patch command concurrently across the managed EC2 fleet without interactive logins."
+      }
+    },
+    {
+      "question_no": 51,
+      "question_text": {
+        "en": "A company is developing an application that provides order shipping statistics for retrieval by a REST API. The company wants to extract the shipping statistics, organize the data into an easy-to-read HTML format, and send the report to several email addresses at the same time every morning. Which combination of steps should a solutions architect take to meet these requirements? (Choose two.)",
+        "zh": "一家公司正在开发一个应用程序，该应用程序提供订单运输统计信息以供 REST API 检索。该公司希望提取运输统计数据，将数据组织成易于阅读的 HTML 格式，并每天早上同时将报告发送到多个电子邮件地址。解决方案架构师应该采取哪些步骤组合来满足这些要求？ （选择两项。）"
+      },
+      "options": {
+        "A": {
+          "en": "Configure the application to send the data to Amazon Kinesis Data Firehose.",
+          "zh": "设置应用程序以将数据发送到 Amazon Kinesis Data Firehose。"
+        },
+        "B": {
+          "en": "Use Amazon Simple Email Service (Amazon SES) to format the data and to send the report by email.",
+          "zh": "使用 Amazon Simple Email Service (Amazon SES) 格式化数据并通过电子邮件发送报告。"
+        },
+        "C": {
+          "en": "Create an Amazon EventBridge (Amazon CloudWatch Events) scheduled event that invokes an AWS Glue job to query the application's API for the data.",
+          "zh": "创建 Amazon EventBridge (Amazon CloudWatch Events) 计划事件，该事件会调用 AWS Glue 作业来查询应用程序的 API 中的数据。"
+        },
+        "D": {
+          "en": "Create an Amazon EventBridge (Amazon CloudWatch Events) scheduled event that invokes an AWS Lambda function to query the application's API for the data.",
+          "zh": "创建 Amazon EventBridge (Amazon CloudWatch Events) 计划事件，该事件调用 AWS Lambda 函数来查询应用程序的 API 中的数据。"
+        },
+        "E": {
+          "en": "Store the application data in Amazon S3. Create an Amazon Simple Notification Service (Amazon SNS) topic as an S3 event destination to send the report by email.",
+          "zh": "将应用程序数据存储在 Amazon S3 中。创建 Amazon Simple Notification Service (Amazon SNS) 主题作为 S3 事件目标以通过电子邮件发送报告。"
+        }
+      },
+      "correct_answers": [
+        "B",
+        "D"
+      ],
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Kinesis Data Firehose 将串流数据发送到目标，与已规划的 REST API 查询和格式化电子邮件报告无关。",
+          "en": "Incorrect. Technical reason: Kinesis Data Firehose delivers streaming data to destinations and is unrelated to a scheduled REST API query and formatted email report."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon SES 可以将产生的 HTML 报告发送给多个电子邮件收件者。",
+          "en": "Correct. Technical reason: Amazon SES can send the generated HTML report to multiple email recipients."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：AWS Glue 适用于托管数据集成和 ETL 作业；为简单的日常 API 请求调用它会增加不必要的复杂性。",
+          "en": "Incorrect. Technical reason: AWS Glue is intended for managed data integration and ETL jobs; invoking it for a simple daily API request adds unnecessary complexity."
+        },
+        "D": {
+          "zh": "正確。技术原因：EventBridge 计划可以每天早上调用 Lambda，该函数可以调用 REST API 并创建 HTML 报告。",
+          "en": "Correct. Technical reason: An EventBridge schedule can invoke Lambda each morning, and the function can call the REST API and construct the HTML report."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：S3 事件通知是由对象更改而不是所需的每日计划触发的，并且 SNS 电子邮件不提供所要求的报告格式化工作流程。",
+          "en": "Incorrect. Technical reason: An S3 event notification is triggered by object changes rather than the required daily schedule, and SNS email does not provide the requested report-formatting workflow."
+        }
+      },
+      "selection_type": "複選",
+      "answer_text": {
+        "zh": "B. 使用 Amazon Simple Email Service (Amazon SES) 格式化数据并通过电子邮件发送报告。；D. 创建 Amazon EventBridge (Amazon CloudWatch Events) 计划事件，该事件调用 AWS Lambda 函数来查询应用程序的 API 中的数据。",
+        "en": "B. Use Amazon Simple Email Service (Amazon SES) to format the data and to send the report by email.; D. Create an Amazon EventBridge (Amazon CloudWatch Events) scheduled event that invokes an AWS Lambda function to query the application's API for the data."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：BD (70%) 14% Other。考点摘要：Amazon SES 可以将产生的 HTML 报告发送给多个电子邮件收件者。；EventBridge 计划可以每天早上调用 Lambda，该函数可以调用 REST API 并创建 HTML 报告。",
+        "en": "Community vote as displayed: BD (70%) 14% Other. Key point: Amazon SES can send the generated HTML report to multiple email recipients.; An EventBridge schedule can invoke Lambda each morning, and the function can call the REST API and construct the HTML report."
+      }
+    },
+    {
+      "question_no": 52,
+      "question_text": {
+        "en": "A company wants to migrate its on-premises application to AWS. The application produces output files that vary in size from tens of gigabytes to hundreds of terabytes. The application data must be stored in a standard file system structure. The company wants a solution that scales automatically, is highly available, and requires minimum operational overhead. Which solution will meet these requirements?",
+        "zh": "一家公司希望将其本地应用程序迁移到 AWS。该应用程序产生的输出文件大小从数十 GB 到数百 TB 不等。应用程序数据必须存储在标准文件系统结构中。该公司希望有一个能够自动扩展、高度可用并且需要最小运维开销的解决方案。哪种解决方案可以满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Migrate the application to run as containers on Amazon Elastic Container Service (Amazon ECS). Use Amazon S3 for storage.",
+          "zh": "将应用程序迁移到在 Amazon Elastic Container Service (Amazon ECS) 上作为容器运行。使用 Amazon S3 进行存储。"
+        },
+        "B": {
+          "en": "Migrate the application to run as containers on Amazon Elastic Kubernetes Service (Amazon EKS). Use Amazon Elastic Block Store (Amazon EBS) for storage.",
+          "zh": "将应用程序迁移到在 Amazon Elastic Kubernetes Service (Amazon EKS) 上作为容器运行。使用 Amazon Elastic Block Store (Amazon EBS) 进行存储。"
+        },
+        "C": {
+          "en": "Migrate the application to Amazon EC2 instances in a Multi-AZ Auto Scaling group. Use Amazon Elastic File System (Amazon EFS) for storage.",
+          "zh": "将应用程序迁移到多可用区 Auto Scaling 组中的 Amazon EC2 实例。使用 Amazon Elastic File System (Amazon EFS) 进行存储。"
+        },
+        "D": {
+          "en": "Migrate the application to Amazon EC2 instances in a Multi-AZ Auto Scaling group. Use Amazon Elastic Block Store (Amazon EBS) for storage.",
+          "zh": "将应用程序迁移到多可用区 Auto Scaling 组中的 Amazon EC2 实例。使用 Amazon Elastic Block Store (Amazon EBS) 进行存储。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：它是一个容器编排服务，适合运行容器化应用程序，但问题要求数据存储在标准文件结构中。 Amazon S3 是一种对象存储，不支持标准文件结构。因此该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: It is a container orchestration service, suitable for running containerized applications, but the question requires that data be stored in a standard file structure. Amazon S3 is an object storage and does not support standard file structures. Therefore this option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon EBS 是一种通常附加在一个可用区内的区块存储，不提供应用程序所需的共享、自动扩展文件系统。",
+          "en": "Incorrect. Technical reason: Amazon EBS is block storage normally attached within one Availability Zone and does not provide the shared, automatically scaling file system required by the application."
+        },
+        "C": {
+          "zh": "正確。技术原因：多可用区 Auto Scaling 组提供可扩展运算，而 Amazon EFS 提供托管、高度可用的共享文件系统，可自动增长到所需的数据量。",
+          "en": "Correct. Technical reason: A Multi-AZ Auto Scaling group provides scalable compute, while Amazon EFS supplies a managed, highly available shared file system that grows automatically to the required data volume."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：EBS虽然是高性能区块存储，但无法跨多个实例共享，也不支持标准文件结构。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Although EBS is high-performance block storage, it cannot be shared across multiple instances and does not support standard file structures. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 将应用程序迁移到多可用区 Auto Scaling 组中的 Amazon EC2 实例。使用 Amazon Elastic File System (Amazon EFS) 进行存储。",
+        "en": "C. Migrate the application to Amazon EC2 instances in a Multi-AZ Auto Scaling group. Use Amazon Elastic File System (Amazon EFS) for storage."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。考点摘要：多可用区 Auto Scaling 组提供可扩展运算，而 Amazon EFS 提供托管、高度可用的共享文件系统，可自动增长到所需的数据量。",
+        "en": "Community vote as displayed: C (100%). Key point: A Multi-AZ Auto Scaling group provides scalable compute, while Amazon EFS supplies a managed, highly available shared file system that grows automatically to the required data volume."
+      }
+    },
+    {
+      "question_no": 53,
+      "question_text": {
+        "en": "A company needs to store its accounting records in Amazon S3. The records must be immediately accessible for 1 year and then must be archived for an additional 9 years. No one at the company, including administrative users and root users, can be able to delete the records during the entire 10-year period. The records must be stored with maximum resiliency. Which solution will meet these requirements?",
+        "zh": "一家公司需要将其会计记录存储在 Amazon S3 中。记录必须可立即访问 1 年，然后必须另外归档 9 年。公司任何人，包括管理用户和 root 用户，都无法删除整个 10 年内的记录。记录必须以最大弹性存储。哪种解决方案可以满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Store the records in S3 Glacier for the entire 10-year period. Use an access control policy to deny deletion of the records for a period of 10 years.",
+          "zh": "将整个 10 年期间的记录存储在 S3 Glacier 中。使用访问控制策略在 10 年内拒绝删除记录。"
+        },
+        "B": {
+          "en": "Store the records by using S3 Intelligent-Tiering. Use an IAM policy to deny deletion of the records. After 10 years, change the IAM policy to allow deletion.",
+          "zh": "使用 S3 智能分层存储记录。使用 IAM 策略拒绝删除记录。 10 年后，更改 IAM 策略以允许删除。"
+        },
+        "C": {
+          "en": "Use an S3 Lifecycle policy to transition the records from S3 Standard to S3 Glacier Deep Archive after 1 year. Use S3 Object Lock in compliance mode for a period of 10 years.",
+          "zh": "使用 S3 生命周期策略在 1 年后将记录从 S3 Standard 过渡到 S3 Glacier Deep Archive。在合规模式下使用 S3 对象锁定 10 年。"
+        },
+        "D": {
+          "en": "Use an S3 Lifecycle policy to transition the records from S3 Standard to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 1 year. Use S3 Object Lock in governance mode for a period of 10 years.",
+          "zh": "使用 S3 生命周期策略在 1 年后将记录从 S3 Standard 转换为 S3 One Zone-Infrequent Access (S3 One Zone-IA)。在治理模式下使用 S3 对象锁，有效期限为 10 年。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：在 S3 Glacier 中归档记录立即无法满足第一年的立即访问要求，且可编辑的访问策略无法阻止管理员或根用户删除保护。",
+          "en": "Incorrect. Technical reason: Archiving records in S3 Glacier immediately fails the first-year immediate-access requirement, and an editable access policy cannot prevent administrators or the root user from removing protection."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：IAM 拒绝策略可以由足够特权的身份进行更改，因此无法针对每个管理员和根用户提供不可变的保留。",
+          "en": "Incorrect. Technical reason: An IAM deny policy can be changed by sufficiently privileged identities and therefore cannot provide immutable retention against every administrator and the root user."
+        },
+        "C": {
+          "zh": "正確。技术原因：S3 标准提供第一年的实时访问，生命周期转换可降低九年的归档成本，对象锁定合规模式可防止十年期间的删除或保留缩短。",
+          "en": "Correct. Technical reason: S3 Standard provides immediate access for the first year, Lifecycle transitions reduce nine-year archive cost, and Object Lock compliance mode prevents deletion or retention shortening during the 10-year period."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：S3 One Zone-IA 不提供最大弹性，具有所需权限的用户可以绕过对象锁定治理模式。",
+          "en": "Incorrect. Technical reason: S3 One Zone-IA does not provide maximum resilience, and Object Lock governance mode can be bypassed by users with the required permission."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 使用 S3 生命周期策略在 1 年后将记录从 S3 Standard 过渡到 S3 Glacier Deep Archive。在合规模式下使用 S3 对象锁定 10 年。",
+        "en": "C. Use an S3 Lifecycle policy to transition the records from S3 Standard to S3 Glacier Deep Archive after 1 year. Use S3 Object Lock in compliance mode for a period of 10 years."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。考点摘要：S3 标准提供第一年的实时访问，生命周期转换可降低九年的归档成本，对象锁定合规模式可防止十年期间的删除或保留缩短。",
+        "en": "Community vote as displayed: C (100%). Key point: S3 Standard provides immediate access for the first year, Lifecycle transitions reduce nine-year archive cost, and Object Lock compliance mode prevents deletion or retention shortening during the 10-year period."
+      }
+    },
+    {
+      "question_no": 54,
+      "question_text": {
+        "en": "A company runs multiple Windows workloads on AWS. The company's employees use Windows file shares that are hosted on two Amazon EC2 instances. The file shares synchronize data between themselves and maintain duplicate copies. The company wants a highly available and durable storage solution that preserves how users currently access the files. What should a solutions architect do to meet these requirements?",
+        "zh": "一家公司在 AWS 上运行多个 Windows 工作负载。该公司的员工使用托管在两个 Amazon EC2 实例上的 Windows 文件共享。文件共享在它们之间同步数据并维护重复副本。该公司需要一个高度可用且持久的存储解决方案，以保留用户目前访问文件的方式。解决方案架构师应该怎么做才能满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Migrate all the data to Amazon S3. Set up IAM authentication for users to access files.",
+          "zh": "将所有数据迁移到 Amazon S3。为用户访问文件设置 IAM 身份验证。"
+        },
+        "B": {
+          "en": "Set up an Amazon S3 File Gateway. Mount the S3 File Gateway on the existing EC2 instances.",
+          "zh": "设置 Amazon S3 文件网关。在现有 EC2 实例上安装 S3 文件网关。"
+        },
+        "C": {
+          "en": "Extend the file share environment to Amazon FSx for Windows File Server with a Multi-AZ configuration. Migrate all the data to FSx for Windows File Server.",
+          "zh": "使用多可用区设置将文件共享环境扩展到 Amazon FSx for Windows File Server。将所有数据迁移到 FSx for Windows File Server。"
+        },
+        "D": {
+          "en": "Extend the file share environment to Amazon Elastic File System (Amazon EFS) with a Multi-AZ configuration. Migrate all the data to Amazon EFS.",
+          "zh": "使用多可用区设置将文件共享环境扩展到 Amazon Elastic File System (Amazon EFS)。将所有数据迁移到 Amazon EFS。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon S3 是对象存储，不保留现有的本地 Windows SMB 文件共享访问模式。",
+          "en": "Incorrect. Technical reason: Amazon S3 is object storage and does not preserve the existing native Windows SMB file-share access pattern."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：S3 文件网关旨在用于对 S3 的混合访问，将其安装在两个现有实例上不会将它们替换为高度可用的托管 Windows 文件系统。",
+          "en": "Incorrect. Technical reason: S3 File Gateway is intended for hybrid access to S3 and mounting it on the two existing instances would not replace them with a highly available managed Windows file system."
+        },
+        "C": {
+          "zh": "正確。技术原因：适用于 Windows 文件服务器的 Amazon FSx 提供托管 SMB 文件共享，多可用区部署提供所需的高可用性、持久性和熟悉的 Windows 访问方法。",
+          "en": "Correct. Technical reason: Amazon FSx for Windows File Server provides managed SMB file shares and a Multi-AZ deployment supplies the requested high availability, durability, and familiar Windows access method."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon EFS 为面向 Linux 的工作负载公开 NFS 文件系统，并非 Windows SMB 文件共享的本地替代品。",
+          "en": "Incorrect. Technical reason: Amazon EFS exposes an NFS file system for Linux-oriented workloads and is not a native replacement for Windows SMB file shares."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 使用多可用区设置将文件共享环境扩展到 Amazon FSx for Windows File Server。将所有数据迁移到 FSx for Windows File Server。",
+        "en": "C. Extend the file share environment to Amazon FSx for Windows File Server with a Multi-AZ configuration. Migrate all the data to FSx for Windows File Server."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (98%) 2%。考点摘要：适用于 Windows 文件服务器的 Amazon FSx 提供托管 SMB 文件共享，多可用区部署提供所需的高可用性、持久性和熟悉的 Windows 访问方法。",
+        "en": "Community vote as displayed: C (98%) 2%. Key point: Amazon FSx for Windows File Server provides managed SMB file shares and a Multi-AZ deployment supplies the requested high availability, durability, and familiar Windows access method."
+      }
+    },
+    {
+      "question_no": 55,
+      "question_text": {
+        "en": "A solutions architect is developing a VPC architecture that includes multiple subnets. The architecture will host applications that use Amazon EC2 instances and Amazon RDS DB instances. The architecture consists of six subnets in two Availability Zones. Each Availability Zone includes a public subnet, a private subnet, and a dedicated subnet for databases. Only EC2 instances that run in the private subnets can have access to the RDS databases. Which solution will meet these requirements?",
+        "zh": "解决方案架构师正在开发包含多个子网的 VPC 架构。该架构将托管使用 Amazon EC2 实例和 Amazon RDS 数据库实例的应用程序。该架构由两个可用区中的六个子网组成。每个可用区包括一个公有子网、一个私有子网和一个数据库专用子网。只有在私有子网中运行的 EC2 实例才能访问 RDS 数据库。哪种解决方案可以满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Create a new route table that excludes the route to the public subnets' CIDR blocks. Associate the route table with the database subnets.",
+          "zh": "创建一个新的路由表，其中排除到公有子网 CIDR 区块的路由。将路由表与数据库子网关联。"
+        },
+        "B": {
+          "en": "Create a security group that denies inbound traffic from the security group that is assigned to instances in the public subnets. Attach the security group to the DB instances.",
+          "zh": "创建一个安全组，该安全组拒绝来自指派给公有子网中的实例的安全组的入站流量。将安全组附加到数据库实例。"
+        },
+        "C": {
+          "en": "Create a security group that allows inbound traffic from the security group that is assigned to instances in the private subnets. Attach the security group to the DB instances.",
+          "zh": "创建一个安全组，允许来自分配给私有子网中的实例的安全组的入站流量。将安全组附加到数据库实例。"
+        },
+        "D": {
+          "en": "Create a new peering connection between the public subnets and the private subnets. Create a different peering connection between the private subnets and the database subnets.",
+          "zh": "在公有子网和私有子网之间创建新的对等连接。在私有子网和数据库子网之间创建不同的对等连接。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：路由表的目的是控制子网之间的流量方向，但它不能直接限制特定实例之间的访问。此选项不符合仅允许私有子网中的 EC2 实例访问数据库的要求。",
+          "en": "Incorrect. Technical reason: The purpose of a routing table is to control the direction of traffic between subnets, but it cannot directly restrict access between specific instances. This option does not satisfy the requirement to allow only EC2 instances from private subnets to access the database."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：安全组是“允许规则”，而不是“拒绝规则”。 AWS 安全组不支持明确拒绝规则，因此此选项不可行。",
+          "en": "Incorrect. Technical reason: The security group is an \"allow rule\", not a \"deny rule\". AWS security groups do not support explicit deny rules, so this option is not feasible."
+        },
+        "C": {
+          "zh": "正確。技术原因：此选项使用安全组的「允许规则」来限制访问，仅允许私有子网中的EC2实例访问数据库实例，满足问题的要求。",
+          "en": "Correct. Technical reason: This option uses the \"allow rules\" of the security group to restrict access and only allows EC2 instances from the private subnet to access the database instance, which meets the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：VPC并行连接用于连接不同VPC，而不是同一VPC内的子网。此选项不适用于问题场景。",
+          "en": "Incorrect. Technical reason: VPC parallel connections are used to connect different VPCs, not subnets within the same VPC. This option is not available for question scenarios."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 创建一个安全组，允许来自分配给私有子网中的实例的安全组的入站流量。将安全组附加到数据库实例。",
+        "en": "C. Create a security group that allows inbound traffic from the security group that is assigned to instances in the private subnets. Attach the security group to the DB instances."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。考点摘要：此选项使用安全组的「允许规则」来限制访问，仅允许私有子网中的EC2实例访问数据库实例，满足问题的要求。",
+        "en": "Community vote as displayed: C (100%). Key point: This option uses the \"allow rules\" of the security group to restrict access and only allows EC2 instances from the private subnet to access the database instance, which meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 56,
+      "question_text": {
+        "en": "A company has registered its domain name with Amazon Route 53. The company uses Amazon API Gateway in the ca-central-1 Region as a public interface for its backend microservice APIs. Third-party services consume the APIs securely. The company wants to design its API Gateway URL with the company's domain name and corresponding certificate so that the third-party services can use HTTPS. Which solution will meet these requirements?",
+        "zh": "一家公司已在 Amazon Route 53 中注册了其域名。该公司使用 ca-central-1 区域中的 Amazon API Gateway 作为其后端微服务 API 的公共接口。第三方服务安全地使用 API。该公司希望使用该公司的域名和对应的凭证来设计其API网关URL，以便第三方服务可以使用HTTPS。哪种解决方案可以满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Create stage variables in API Gateway with Name=\"Endpoint-URL\" and Value=\"Company Domain Name\" to overwrite the default URL. Import the public certificate associated with the company's domain name into AWS Certificate Manager (ACM).",
+          "zh": "在API网关中创建阶段变量，名称=“端点-URL”，值=“公司域名”以覆盖缺省URL。将与公司域名关联的公共凭证导入 AWS Certificate Manager (ACM)。"
+        },
+        "B": {
+          "en": "Create Route 53 DNS records with the company's domain name. Point the alias record to the Regional API Gateway stage endpoint. Import the public certificate associated with the company's domain name into AWS Certificate Manager (ACM) in the us-east-1 Region.",
+          "zh": "使用公司域名创建 Route 53 DNS 记录。将别名记录指向区域 API 网关阶段端点。将与公司域名关联的公共凭证导入 us-east-1 区域中的 AWS Certificate Manager (ACM) 中。"
+        },
+        "C": {
+          "en": "Create a Regional API Gateway endpoint. Associate the API Gateway endpoint with the company's domain name. Import the public certificate associated with the company's domain name into AWS Certificate Manager (ACM) in the same Region. Attach the certificate to the API Gateway endpoint. Configure Route 53 to route traffic to the API Gateway endpoint.",
+          "zh": "创建区域 API 网关端点。将API网关端点与公司域名关联。将与公司域名关联的公共凭证导入到相同区域的 AWS Certificate Manager (ACM) 中。将凭证附加到 API 网关端点。设置 Route 53 以将流量路由到 API 网关终端节点。"
+        },
+        "D": {
+          "en": "Create a Regional API Gateway endpoint. Associate the API Gateway endpoint with the company's domain name. Import the public certificate associated with the company's domain name into AWS Certificate Manager (ACM) in the us-east-1 Region. Attach the certificate to the API Gateway APIs. Create Route 53 DNS records with the company's domain name. Point an A record to the company's domain name.",
+          "zh": "创建区域 API 网关端点。将API网关端点与公司域名关联。将与公司域名关联的公共凭证导入 us-east-1 区域中的 AWS Certificate Manager (ACM) 中。将凭证附加到 API 网关 API。使用公司的域名创建 Route 53 DNS 记录。将A记录指向公司的域名。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：API Gateway 阶段变量不会以自定义域名取代服务 URL，且单独导入凭证不会绑定它或设置 DNS。",
+          "en": "Incorrect. Technical reason: API Gateway stage variables do not replace the service URL with a custom domain, and importing a certificate alone does not bind it or configure DNS."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：区域 API 网关自定义域名需要其 ACM 凭证位于相同区域，而不是 us-east-1，且该凭证必须与自定义域名关联。",
+          "en": "Incorrect. Technical reason: A Regional API Gateway custom domain requires its ACM certificate in the same Region, not us-east-1, and the certificate must be associated with the custom domain."
+        },
+        "C": {
+          "zh": "正確。技术原因：区域自定义域名使用 ca-central-1 中的 ACM 证书，将该证书与 API Gateway 关联，并使用 Route 53 别名将公司域名路由到终端节点。",
+          "en": "Correct. Technical reason: A Regional custom domain uses an ACM certificate in ca-central-1, associates that certificate with API Gateway, and uses a Route 53 alias to route the company domain to the endpoint."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：在 us-east-1 中使用 ACM 凭证适用于边缘优化的自定义域名，而不是 ca-central-1 中规定的区域 API 网关端点。",
+          "en": "Incorrect. Technical reason: Using an ACM certificate in us-east-1 is appropriate for an edge-optimized custom domain, not the stated Regional API Gateway endpoint in ca-central-1."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 创建区域 API 网关端点。将API网关端点与公司域名关联。将与公司域名关联的公共凭证导入到相同区域的 AWS Certificate Manager (ACM) 中。将凭证附加到 API 网关端点。设置 Route 53 以将流量路由到 API 网关终端节点。",
+        "en": "C. Create a Regional API Gateway endpoint. Associate the API Gateway endpoint with the company's domain name. Import the public certificate associated with the company's domain name into AWS Certificate Manager (ACM) in the same Region. Attach the certificate to the API Gateway endpoint. Configure Route 53 to route traffic to the API Gateway endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (95%) 5%。考点摘要：区域自定义域名使用 ca-central-1 中的 ACM 证书，将该证书与 API Gateway 关联，并使用 Route 53 别名将公司域名路由到终端节点。",
+        "en": "Community vote as displayed: C (95%) 5%. Key point: A Regional custom domain uses an ACM certificate in ca-central-1, associates that certificate with API Gateway, and uses a Route 53 alias to route the company domain to the endpoint."
+      }
+    },
+    {
+      "question_no": 57,
+      "question_text": {
+        "en": "A company is running a popular social media website. The website gives users the ability to upload images to share with other users. The company wants to make sure that the images do not contain inappropriate content. The company needs a solution that minimizes development effort. What should a solutions architect do to meet these requirements?",
+        "zh": "一家公司正在经营一个流行的社交媒体网站。该网站使用户能够上传图像以与其他用户分享。该公司希望确保图像不包含不当内容。该公司需要一种能够最大限度地减少开发工作量的解决方案。解决方案架构师应该怎么做才能满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Use Amazon Comprehend to detect inappropriate content. Use human review for low-confidence predictions.",
+          "zh": "使用 Amazon Comprehend 检测不当内容。使用人工审核进行低置信度预测。"
+        },
+        "B": {
+          "en": "Use Amazon Rekognition to detect inappropriate content. Use human review for low-confidence predictions.",
+          "zh": "使用 Amazon Rekognition 检测不当内容。使用人工审核进行低置信度预测。"
+        },
+        "C": {
+          "en": "Use Amazon SageMaker to detect inappropriate content. Use ground truth to label low-confidence predictions.",
+          "zh": "使用 Amazon SageMaker 检测不当内容。使用基本事实来标记低置信度预测。"
+        },
+        "D": {
+          "en": "Use AWS Fargate to deploy a custom machine learning model to detect inappropriate content. Use ground truth to label low-confidence predictions.",
+          "zh": "使用 AWS Fargate 部署自定义机器学习模型来检测不当内容。使用基本事实来标记低置信度预测。"
+        }
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Comprehend 分析自然语言文本，但不提供托管图像审核。",
+          "en": "Incorrect. Technical reason: Amazon Comprehend analyzes natural-language text and does not provide managed image moderation."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon Rekognition 内容审核通过托管 API 检测不安全或不适当的图像内容，并且可以发送低置信度结果以进行人工审核，几乎不需要自定义开发。",
+          "en": "Correct. Technical reason: Amazon Rekognition Content Moderation detects unsafe or inappropriate image content through a managed API, and low-confidence results can be sent for human review with little custom development."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：创建自定义 SageMaker 模型需要收集标签、培训、部署和维护，这超出了所需的最低开发工作量。",
+          "en": "Incorrect. Technical reason: Building a custom SageMaker model requires collecting labels, training, deployment, and maintenance, which exceeds the requested minimum development effort."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：在 Fargate 上运行自定义模型仍然需要公司构建、训练、打包和维护审核模型。",
+          "en": "Incorrect. Technical reason: Running a custom model on Fargate still requires the company to build, train, package, and maintain the moderation model."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "B. 使用 Amazon Rekognition 检测不当内容。使用人工审核进行低置信度预测。",
+        "en": "B. Use Amazon Rekognition to detect inappropriate content. Use human review for low-confidence predictions."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：B (100%)。考点摘要：Amazon Rekognition 内容审核通过托管 API 检测不安全或不适当的图像内容，并且可以发送低置信度结果以进行人工审核，几乎不需要自定义开发。",
+        "en": "Community vote as displayed: B (100%). Key point: Amazon Rekognition Content Moderation detects unsafe or inappropriate image content through a managed API, and low-confidence results can be sent for human review with little custom development."
+      }
+    },
+    {
+      "question_no": 58,
+      "question_text": {
+        "en": "A company wants to run its critical applications in containers to meet requirements for scalability and availability. The company prefers to focus on maintenance of the critical applications. The company does not want to be responsible for provisioning and managing the underlying infrastructure that runs the containerized workload. What should a solutions architect do to meet these requirements?",
+        "zh": "一家公司希望在容器中运行其关键应用程序，以满足可扩展性和可用性的要求。该公司更愿意专注于关键应用程序的维护。该公司不想负责配置和管理运行容器化工作负载的底层基础架构。解决方案架构师应该怎么做才能满足这些要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Use Amazon EC2 instances, and install Docker on the instances.",
+          "zh": "使用Amazon EC2实例，并在实例上安装Docker。"
+        },
+        "B": {
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) on Amazon EC2 worker nodes.",
+          "zh": "在 Amazon EC2 工作线程节点上使用 Amazon Elastic Container Service (Amazon ECS)。"
+        },
+        "C": {
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate.",
+          "zh": "在 AWS Fargate 上使用 Amazon Elastic Container Service (Amazon ECS)。"
+        },
+        "D": {
+          "en": "Use Amazon EC2 instances from an Amazon Elastic Container Service (Amazon ECS)-optimized Amazon Machine Image (AMI).",
+          "zh": "使用来自 Amazon Elastic Container Service (Amazon ECS) 优化的 Amazon 机器映像 (AMI) 的 Amazon EC2 实例。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然可以在 EC2 实例上安装 Docker 并运行容器，但这需要用户负责管理底层 EC2 实例，包括作业更新、实例扩展和维护。这与「不想负责管理底层基础设施」的问题要求不符。",
+          "en": "Incorrect. Technical reason: Although it is possible to install Docker and run containers on EC2 instances, this requires the user to be responsible for managing the underlying EC2 instance, including operating updates, instance scaling, and maintenance. This is inconsistent with the question requirement of \"not wanting to be responsible for managing the underlying infrastructure\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：使用ECS在EC2工作节点上运行容器仍需要用户管理EC2实例的生命周期和基础架构。这与「不想负责管理底层基础设施」的问题要求不符。",
+          "en": "Incorrect. Technical reason: Using ECS ​​to run containers on EC2 worker nodes still requires the user to manage the lifecycle and infrastructure of the EC2 instance. This is inconsistent with the question requirement of \"not wanting to be responsible for managing the underlying infrastructure\"."
+        },
+        "C": {
+          "zh": "正確。技术原因：AWS Fargate 是一种无服务器运算引擎，用户无需管理底层 EC2 实例或基础架构。它完全符合这个问题，允许公司专注于维护其关键应用程序，而无需管理底层基础设施。",
+          "en": "Correct. Technical reason: AWS Fargate is a serverless computing engine that eliminates the need for users to manage underlying EC2 instances or infrastructure. It is fully compliant with the question and allows companies to focus on maintaining their critical applications without having to manage the underlying infrastructure."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 ECS 优化的 AMI 可以促进容器部署，但用户仍需要管理 EC2 实例的生命周期和基础架构。这与「不想负责管理底层基础设施」的问题要求不符。",
+          "en": "Incorrect. Technical reason: Although ECS-optimized AMIs can facilitate container deployment, users are still required to manage the lifecycle and infrastructure of EC2 instances. This is inconsistent with the question requirement of \"not wanting to be responsible for managing the underlying infrastructure\"."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 在 AWS Fargate 上使用 Amazon Elastic Container Service (Amazon ECS)。",
+        "en": "C. Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。考点摘要：AWS Fargate 是一种无服务器运算引擎，用户无需管理底层 EC2 实例或基础架构。它完全符合这个问题，允许公司专注于维护其关键应用程序，而无需管理底层基础设施。",
+        "en": "Community vote as displayed: C (100%). Key point: AWS Fargate is a serverless computing engine that eliminates the need for users to manage underlying EC2 instances or infrastructure. It is fully compliant with the question and allows companies to focus on maintaining their critical applications without having to manage the underlying infrastructure."
+      }
+    },
+    {
+      "question_no": 59,
+      "question_text": {
+        "en": "A company hosts more than 300 global websites and applications. The company requires a platform to analyze more than 30 TB of clickstream data each day. What should a solutions architect do to transmit and process the clickstream data?",
+        "zh": "一家公司在全球拥有 300 多个网站和应用程序。该公司需要一个平台来分析每天超过 30 TB 的点击流数据。解决方案架构师应该如何传输和处理点击流数据？"
+      },
+      "options": {
+        "A": {
+          "en": "Design an AWS Data Pipeline to archive the data to an Amazon S3 bucket and run an Amazon EMR cluster with the data to generate analytics.",
+          "zh": "设计 AWS Data Pipeline 将数据归档至 Amazon S3 存储桶，并使用数据运行 Amazon EMR 集群以产生分析。"
+        },
+        "B": {
+          "en": "Create an Auto Scaling group of Amazon EC2 instances to process the data and send it to an Amazon S3 data lake for Amazon Redshift to use for analysis.",
+          "zh": "创建 Amazon EC2 实例的 Auto Scaling 组来处理数据并将其发送到 Amazon S3 数据湖以供 Amazon Redshift 用于分析。"
+        },
+        "C": {
+          "en": "Cache the data to Amazon CloudFront. Store the data in an Amazon S3 bucket. When an object is added to the S3 bucket, run an AWS Lambda function to process the data for analysis.",
+          "zh": "将数据缓存至 Amazon CloudFront。将数据存储在 Amazon S3 存储桶中。将对象添加至 S3 存储桶时，请运行 AWS Lambda 函数来处理数据以进行分析。"
+        },
+        "D": {
+          "en": "Collect the data from Amazon Kinesis Data Streams. Use Amazon Kinesis Data Firehose to transmit the data to an Amazon S3 data lake. Load the data in Amazon Redshift for analysis.",
+          "zh": "从 Amazon Kinesis Data Streams 收集数据。使用 Amazon Kinesis Data Firehose 将数据传输到 Amazon S3 数据湖。将数据加载到 Amazon Redshift 中进行分析。"
+        }
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Data Pipeline 和 EMR 批量工作流程不提供 30 TB 每日点击流事件所需的托管实时检索路径。",
+          "en": "Incorrect. Technical reason: AWS Data Pipeline and an EMR batch workflow do not provide the managed real-time ingestion path needed for 30 TB of daily clickstream events."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：自定义 EC2 队列要求公司实施摄取、扩展、容错和维护，而不是使用托管流服务。",
+          "en": "Incorrect. Technical reason: A custom EC2 fleet requires the company to implement ingestion, scaling, fault tolerance, and maintenance instead of using managed streaming services."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：CloudFront 将缓存内容分发给查看者，而不是点击串流检索服务；针对每个 S3 对象调用 Lambda 也不适合这种持续的 30 TB 工作负载。",
+          "en": "Incorrect. Technical reason: CloudFront distributes cached content to viewers and is not a clickstream ingestion service; invoking Lambda per S3 object is also unsuitable for this sustained 30 TB workload."
+        },
+        "D": {
+          "zh": "正確。技术原因：Kinesis Data Streams 摄取可扩展的实时事件，Firehose 将串流传输到 S3 数据湖，Amazon Redshift 提供大规模分析。",
+          "en": "Correct. Technical reason: Kinesis Data Streams ingests scalable real-time events, Firehose delivers the stream into an S3 data lake, and Amazon Redshift provides large-scale analytics."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "D. 从 Amazon Kinesis Data Streams 收集数据。使用 Amazon Kinesis Data Firehose 将数据传输到 Amazon S3 数据湖。将数据加载到 Amazon Redshift 中进行分析。",
+        "en": "D. Collect the data from Amazon Kinesis Data Streams. Use Amazon Kinesis Data Firehose to transmit the data to an Amazon S3 data lake. Load the data in Amazon Redshift for analysis."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (92%) 8%。考点摘要：Kinesis Data Streams 摄取可扩展的实时事件，Firehose 将串流传输到 S3 数据湖，Amazon Redshift 提供大规模分析。",
+        "en": "Community vote as displayed: D (92%) 8%. Key point: Kinesis Data Streams ingests scalable real-time events, Firehose delivers the stream into an S3 data lake, and Amazon Redshift provides large-scale analytics."
+      }
+    },
+    {
+      "question_no": 60,
+      "question_text": {
+        "en": "A company has a website hosted on AWS. The website is behind an Application Load Balancer (ALB) that is configured to handle HTTP and HTTPS separately. The company wants to forward all requests to the website so that the requests will use HTTPS. What should a solutions architect do to meet this requirement?",
+        "zh": "一家公司有一个托管在 AWS 上的网站。该网站位于应用程序负载均衡器 (ALB) 后面，该负载均衡器配置为单独处理 HTTP 和 HTTPS。该公司希望将所有请求转送到网站，以便请求将使用 HTTPS。解决方案架构师应该怎么做才能满足这项要求？"
+      },
+      "options": {
+        "A": {
+          "en": "Update the ALB's network ACL to accept only HTTPS traffic.",
+          "zh": "更新 ALB 的网络 ACL 以仅接受 HTTPS 流量。"
+        },
+        "B": {
+          "en": "Create a rule that replaces the HTTP in the URL with HTTPS.",
+          "zh": "创建一条规则，将 URL 中的 HTTP 替换为 HTTPS。"
+        },
+        "C": {
+          "en": "Create a listener rule on the ALB to redirect HTTP traffic to HTTPS.",
+          "zh": "在ALB上创建监听规则，将HTTP流量重新导向到HTTPS。"
+        },
+        "D": {
+          "en": "Replace the ALB with a Network Load Balancer configured to use Server Name Indication (SNI).",
+          "zh": "将 ALB 替换为配置为使用服务器名称指示 (SNI) 的网络负载均衡器。"
+        }
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：网络 ACL 可以允许或拒绝子网流量，但无法发出 HTTP 重新导向，因此使用 HTTP 的客户端将被阻止，而不是转送至 HTTPS。",
+          "en": "Incorrect. Technical reason: A network ACL can allow or deny subnet traffic but cannot issue an HTTP redirect, so clients using HTTP would be blocked instead of forwarded to HTTPS."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：通用 URL 取代规则不是 ALB 操作，并且不会实现传入 HTTP 请求所需的侦听器等级重新导向。",
+          "en": "Incorrect. Technical reason: A generic URL replacement rule is not an ALB action and does not implement the listener-level redirect required for incoming HTTP requests."
+        },
+        "C": {
+          "zh": "正確。技术原因：具有重定向操作的 HTTP 侦听器规则可以将 HTTPS 协定和端口传回每个客户端，以便所有后续网站请求都使用 TLS。",
+          "en": "Correct. Technical reason: An HTTP listener rule with a redirect action can return the HTTPS protocol and port to each client so all subsequent website requests use TLS."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：网络负载均衡器运行在传输层，SNI选择TLS凭证；这两个功能均不提供 ALB HTTP 到 HTTPS 重定向。",
+          "en": "Incorrect. Technical reason: A Network Load Balancer operates at the transport layer and SNI selects TLS certificates; neither feature provides ALB HTTP-to-HTTPS redirection."
+        }
+      },
+      "selection_type": "單選",
+      "answer_text": {
+        "zh": "C. 在ALB上创建监听规则，将HTTP流量重新导向到HTTPS。",
+        "en": "C. Create a listener rule on the ALB to redirect HTTP traffic to HTTPS."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。考点摘要：具有重定向操作的 HTTP 侦听器规则可以将 HTTPS 协定和端口传回每个客户端，以便所有后续网站请求都使用 TLS。",
+        "en": "Community vote as displayed: C (100%). Key point: An HTTP listener rule with a redirect action can return the HTTPS protocol and port to each client so all subsequent website requests use TLS."
+      }
+    }
+  ]
+}

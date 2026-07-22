@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 256,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在使用 Amazon S3 存储桶进行存储空间来实作文档审阅应用程序。解决方案必须防止文档被意外删除，并确保文档的所有版本都可用。用户必须能够下载、修改和上传文档。应采取哪些行动组合来满足这些要求？ （选两个。）",
+        "en": "A solutions architect is implementing a document review application using an Amazon S3 bucket for storage. The solution must prevent accidental deletion of the documents and ensure that all versions of the documents are available. Users must be able to download, modify, and upload documents. Which combination of actions should be taken to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "启用只读存储桶 ACL。",
+          "en": "Enable a read-only bucket ACL."
+        },
+        "B": {
+          "zh": "在存储桶上启用版本控制。",
+          "en": "Enable versioning on the bucket."
+        },
+        "C": {
+          "zh": "将 IAM 政策附加到存储桶。",
+          "en": "Attach an IAM policy to the bucket."
+        },
+        "D": {
+          "zh": "在存储桶上启用 MFA 删除。",
+          "en": "Enable MFA Delete on the bucket."
+        },
+        "E": {
+          "zh": "使用 AWS KMS 加密存储桶。",
+          "en": "Encrypt the bucket using AWS KMS."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：此选项启用只读ACL会限制用户对存储桶的写入权限，而问题要求用户能够下载、修改和上传文档。",
+          "en": "Incorrect. Technical reason: Enable read-only bucket ACLs. Enabling a read-only ACL restricts the user's write access to the bucket, while the question requires the user to be able to download, modify, and upload documents."
+        },
+        "B": {
+          "zh": "正確。技术原因：启用版本控制可确保保存所有文档的版本，防止意外删除或覆写。",
+          "en": "Correct. Technical reason: Enabling version control ensures that versions of all documents are saved, preventing accidental deletion or overwriting."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：此选项尽管 IAM 策略可以控制访问，但它无法防止意外删除或确保文档的版本可用性。",
+          "en": "Incorrect. Technical reason: Attach the IAM policy to the bucket. Although an IAM policy can control access, it cannot prevent accidental deletion or ensure version availability of a document."
+        },
+        "D": {
+          "zh": "正確。技术原因：启用 MFA 删除可提高删除操作的安全性并防止意外删除。",
+          "en": "Correct. Technical reason: Enabling MFA Delete increases the security of delete operations and prevents accidental deletions."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：加密可以保护数据的安全，但与防止意外删除和版本控制无关。",
+          "en": "Incorrect. Technical reason: Encryption protects the security of data but has nothing to do with protection against accidental deletion and versioning."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "B. 在存储桶上启用版本控制。；D. 在存储桶上启用 MFA 删除。",
+        "en": "B. Enable versioning on the bucket.; D. Enable MFA Delete on the bucket."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：BD (100%)。热门讨论与考点摘要：启用版本控制可确保保存所有文档的版本，防止意外删除或覆写。；启用 MFA 删除可提高删除操作的安全性并防止意外删除。",
+        "en": "Community vote as displayed: BD (100%). Popular discussion and key point summary: Enabling version control ensures that versions of all documents are saved, preventing accidental deletion or overwriting.; Enabling MFA Delete increases the security of delete operations and prevents accidental deletions."
+      }
+    },
+    {
+      "question_no": 257,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在创建一个解决方案，该解决方案将报告 AWS 账户中所有应用程序的 Amazon EC2 Auto Scaling 事件。该公司需要使用无服务器解决方案将 EC2 Auto Scaling 状态数据保存在 Amazon S3 中。然后，该公司将使用 Amazon S3 中的数据在仪表板中提供近乎即时的更新。此解决方案不得影响 EC2 实例启动的速度。公司应该如何将数据迁移到 Amazon S3 来满足这些要求？",
+        "en": "A company is building a solution that will report Amazon EC2 Auto Scaling events across all the applications in an AWS account. The company needs to use a serverless solution to store the EC2 Auto Scaling status data in Amazon S3. The company then will use the data in Amazon S3 to provide near-real-time updates in a dashboard. The solution must not affect the speed of EC2 instance launches. How should the company move the data to Amazon S3 to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon CloudWatch 指针流将 EC2 Auto Scaling 状态数据发送至 Amazon Kinesis Data Firehose。将数据保存在 Amazon S3 中。",
+          "en": "Use an Amazon CloudWatch metric stream to send the EC2 Auto Scaling status data to Amazon Kinesis Data Firehose. Store the data in Amazon S3."
+        },
+        "B": {
+          "zh": "启动 Amazon EMR 集群以收集 EC2 Auto Scaling 状态数据并将数据发送至 Amazon Kinesis Data Firehose。将数据保存在 Amazon S3 中。",
+          "en": "Launch an Amazon EMR cluster to collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data Firehose. Store the data in Amazon S3."
+        },
+        "C": {
+          "zh": "创建 Amazon EventBridge 规则以按计划调用 AWS Lambda 函数。配置 Lambda 函数以将 EC2 Auto Scaling 状态数据直接发送到 Amazon S3。",
+          "en": "Create an Amazon EventBridge rule to invoke an AWS Lambda function on a schedule. Configure the Lambda function to send the EC2 Auto Scaling status data directly to Amazon S3."
+        },
+        "D": {
+          "zh": "在启动 EC2 实例期间使用引导脚本来安装 Amazon Kinesis Agent。配置 Kinesis Agent 以收集 EC2 Auto Scaling 状态数据并将数据发送至 Amazon Kinesis Data Firehose。将数据保存在 Amazon S3 中。",
+          "en": "Use a bootstrap script during the launch of an EC2 instance to install Amazon Kinesis Agent. Configure Kinesis Agent to collect the EC2 Auto Scaling status data and send the data to Amazon Kinesis Data Firehose. Store the data in Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon CloudWatch 指针流可以即时截取 EC2 Auto Scaling 事件数据并将其发送至 Amazon Kinesis Data Firehose。 Amazon Kinesis Data Firehose 可以将数据直接保存到 Amazon S3，以满足无服务器架构的要求。此场景不会影响 EC2 实例启动速度，因为数据流是异步的。",
+          "en": "Correct. Technical reason: The Amazon CloudWatch metric stream can capture EC2 Auto Scaling event data in real time and send it to Amazon Kinesis Data Firehose. Amazon Kinesis Data Firehose can store data directly to Amazon S3 to meet the requirements of serverless architecture. This scenario does not affect EC2 instance startup speed because the data stream is asynchronous."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon EMR 是一项大数据处理服务，通常用于复杂的批量任务，而不是即时数据流处理。使用 EMR 会增加复杂性和成本，且不符合无服务器架构的要求。",
+          "en": "Incorrect. Technical reason: Amazon EMR is a big data processing service that is typically used for complex batch processing tasks rather than real-time data stream processing. Using EMR adds complexity and cost and is not consistent with the requirements of a serverless architecture."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然EventBridge可以捕捉事件并触发Lambda函数，但这种方法需要定期轮询，可能会导致延迟，并且无法实现近乎即时的更新。直接向 S3 发送数据可能缺乏数据流的灵活性和可扩展性。",
+          "en": "Incorrect. Technical reason: Although EventBridge can capture events and trigger Lambda functions, this method requires regular polling, may cause delays, and cannot achieve near real-time updates. Sending data directly to S3 may lack the flexibility and scalability of data streaming."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用开机脚本会增加EC2实例启动时间，直接影响实例启动速度。 Kinesis Agent 通常用于日志数据收集，而不是处理 EC2 Auto Scaling 事件数据。 性能分析：虽然Lambda可以处理S3 PUT事件并运行转换，但由于文档大小为1GB，Lambda的内存和运行时间限制可能会导致故障或性能问题。结论：这个选项是错误的，因为它不能可靠地处理大文档并且操作成本昂贵。",
+          "en": "Incorrect. Technical reason: Using the bootstrap script will increase the EC2 instance startup time, which directly affects the instance startup speed. Kinesis Agent is typically used for log data collection rather than processing EC2 Auto Scaling event data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon CloudWatch 指针流将 EC2 Auto Scaling 状态数据发送至 Amazon Kinesis Data Firehose。将数据保存在 Amazon S3 中。",
+        "en": "A. Use an Amazon CloudWatch metric stream to send the EC2 Auto Scaling status data to Amazon Kinesis Data Firehose. Store the data in Amazon S3."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (89%) 11%。热门讨论与考点摘要：Amazon CloudWatch 指针流可以即时截取 EC2 Auto Scaling 事件数据并将其发送至 Amazon Kinesis Data Firehose。 Amazon Kinesis Data Firehose 可以将数据直接保存到 Amazon S3，以满足无服务器架构的要求。此场景不会影响 EC2 实例启动速度，因为数据流是异步的。",
+        "en": "Community vote as displayed: A (89%) 11%. Popular discussion and key point summary: The Amazon CloudWatch metric stream can capture EC2 Auto Scaling event data in real time and send it to Amazon Kinesis Data Firehose. Amazon Kinesis Data Firehose can store data directly to Amazon S3 to meet the requirements of serverless architecture. This scenario does not affect EC2 instance startup speed because the data stream is asynchronous."
+      }
+    },
+    {
+      "question_no": 258,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的应用程序每小时将数百个 .csv 文档放入 Amazon S3 存储桶中。文档大小为 1 GB。每次上传文档时，该公司都需要将文档转换为 Apache Parquet 格式并将输出文档放入 S3 存储桶中。哪种解决方案能够以最少的运维开销满足这些要求？",
+        "en": "A company has an application that places hundreds of .csv files into an Amazon S3 bucket every hour. The files are 1 GB in size. Each time a file is uploaded, the company needs to convert the file to Apache Parquet format and place the output file into an S3 bucket. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 AWS Lambda 函数来下载 .csv 文档、将文档转换为 Parquet 格式，并将输出文档放入 S3 存储桶中。为每个 S3 PUT 事件调用 Lambda 函数。",
+          "en": "Create an AWS Lambda function to download the .csv files, convert the files to Parquet format, and place the output files in an S3 bucket. Invoke the Lambda function for each S3 PUT event."
+        },
+        "B": {
+          "zh": "创建一个 Apache Spark 作业来读取 .csv 文档，将文档转换为 Parquet 格式，并将输出文档放入 S3 存储桶中。为每个 S3 PUT 事件创建一个 AWS Lambda 函数以调用 Spark 作业。",
+          "en": "Create an Apache Spark job to read the .csv files, convert the files to Parquet format, and place the output files in an S3 bucket. Create an AWS Lambda function for each S3 PUT event to invoke the Spark job."
+        },
+        "C": {
+          "zh": "为应用程序放置 .csv 文档的 S3 存储桶创建一个 AWS Glue 表和一个 AWS Glue 爬网进程。安排 AWS Lambda 函数定期使用 Amazon Athena 查找 AWS Glue 表，将查找结果转换为 Parquet 格式，并将输出文档放入 S3 存储桶中。",
+          "en": "Create an AWS Glue table and an AWS Glue crawler for the S3 bucket where the application places the .csv files. Schedule an AWS Lambda function to periodically use Amazon Athena to query the AWS Glue table, convert the query results into Parquet format, and place the output files into an S3 bucket."
+        },
+        "D": {
+          "zh": "创建 AWS Glue 提取、转换和加载 (ETL) 作业以将 .csv 文档转换为 Parquet 格式并将输出文档放入 S3 存储桶中。为每个 S3 PUT 事件创建 AWS Lambda 函数以调用 ETL 作业。",
+          "en": "Create an AWS Glue extract, transform, and load (ETL) job to convert the .csv files to Parquet format and place the output files into an S3 bucket. Create an AWS Lambda function for each S3 PUT event to invoke the ETL job."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 Lambda 可以处理 S3 PUT 事件并运行转换，但由于文档大小为 1GB，Lambda 的内存和运行时间限制可能会导致故障或性能问题。这个选项是错误的，因为它不能可靠地处理大文档并且操作成本昂贵。",
+          "en": "Incorrect. Technical reason: Although Lambda can handle S3 PUT events and perform transformations, since the file size is 1GB, Lambda's memory and execution time limitations may cause failures or performance issues. This option is wrong because it does not reliably handle large files and is expensive to operate."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Apache Spark适合处理大规模数据，但需要额外的基础设施（例如Amazon EMR），这增加了管理复杂性。这个选项是错误的，因为它增加了运维开销并且不满足「最小运维开销」的要求。",
+          "en": "Incorrect. Technical reason: Apache Spark is suitable for processing large-scale data, but requires additional infrastructure (such as Amazon EMR), which increases management complexity. This option is wrong because it adds operational overhead and does not meet the \"minimum operational overhead\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：此选项涉及多个服务（Glue、Athena、Lambda），流程复杂，需要定期调度，增加了运维开销。这个选项是错误的，因为它不满足「最小运维开销」的要求。",
+          "en": "Incorrect. Technical reason: This option involves multiple services (Glue, Athena, Lambda), the process is complex and requires regular scheduling, which increases operational overhead. This option is wrong because it does not meet the \"minimum operational overhead\" requirement."
+        },
+        "D": {
+          "zh": "正確。技术原因：AWS Glue ETL 作业专为数据转换而设计，支持大文档处理，并且可以很好地与 S3 输出配合使用。 Lambda 触发 Glue 作业，自动化程度高，运维开销低。这个选项是正确的，因为它满足「最小运维开销」的要求。",
+          "en": "Correct. Technical reason: AWS Glue ETL jobs are specially designed for data conversion, support large file processing, and work well with S3 output. Lambda triggers Glue jobs with a high degree of automation and low operating overhead. This option is correct because it meets the requirement of \"minimum operational overhead\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 创建 AWS Glue 提取、转换和加载 (ETL) 作业以将 .csv 文档转换为 Parquet 格式并将输出文档放入 S3 存储桶中。为每个 S3 PUT 事件创建 AWS Lambda 函数以调用 ETL 作业。",
+        "en": "D. Create an AWS Glue extract, transform, and load (ETL) job to convert the .csv files to Parquet format and place the output files into an S3 bucket. Create an AWS Lambda function for each S3 PUT event to invoke the ETL job."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (92%) 8%。热门讨论与考点摘要：AWS Glue ETL 作业专为数据转换而设计，支持大文档处理，并且可以很好地与 S3 输出配合使用。 Lambda 触发 Glue 作业，自动化程度高，运维开销低。这个选项是正确的，因为它满足「最小运维开销」的要求。",
+        "en": "Community vote as displayed: D (92%) 8%. Popular discussion and key point summary: AWS Glue ETL jobs are specially designed for data conversion, support large file processing, and work well with S3 output. Lambda triggers Glue jobs with a high degree of automation and low operating overhead. This option is correct because it meets the requirement of \"minimum operational overhead\"."
+      }
+    },
+    {
+      "question_no": 259,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在为 Amazon RDS 数据库实例上运行的所有数据库实施新的数据保留策略。公司必须将每日备份保留至少 2 年。备份必须一致且可恢复。解决方案架构师应该推荐哪一种解决方案来满足这些要求？",
+        "en": "A company is implementing new data retention policies for all databases that run on Amazon RDS DB instances. The company must retain daily backups for a minimum period of 2 years. The backups must be consistent and restorable. Which solution should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Backup 中创建备份文档库以保留 RDS 备份。创建一个新的备份计划，其中包含每日计划和创建后 2 年的有效期。将 RDS 数据库实例指派给备份计划。",
+          "en": "Create a backup vault in AWS Backup to retain RDS backups. Create a new backup plan with a daily schedule and an expiration period of 2 years after creation. Assign the RDS DB instances to the backup plan."
+        },
+        "B": {
+          "zh": "为 RDS 数据库实例配置每日快照的备份窗口。为每个 RDS 数据库实例指派 2 年的快照保留策略。使用 Amazon Data Lifecycle Manager (Amazon DLM) 安排快照删除。",
+          "en": "Configure a backup window for the RDS DB instances for daily snapshots. Assign a snapshot retention policy of 2 years to each RDS DB instance. Use Amazon Data Lifecycle Manager (Amazon DLM) to schedule snapshot deletions."
+        },
+        "C": {
+          "zh": "将数据库交易日志配置为自动备份到 Amazon CloudWatch Logs，有效期限为 2 年。",
+          "en": "Configure database transaction logs to be automatically backed up to Amazon CloudWatch Logs with an expiration period of 2 years."
+        },
+        "D": {
+          "zh": "设置 AWS Database Migration Service (AWS DMS) 复制任务。部署复制实例，并配置变更数据截取 (CDC) 任务以将数据库变更串流传输到作为目标的 Amazon S3。配置 S3 生命周期策略以在 2 年后删除快照。",
+          "en": "Configure an AWS Database Migration Service (AWS DMS) replication task. Deploy a replication instance, and configure a change data capture (CDC) task to stream database changes to Amazon S3 as the target. Configure S3 Lifecycle policies to delete the snapshots after 2 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Backup 是一项专为数据管理和自动备份而设计的服务。它支持RDS备份并允许设置备份计划和保留策略。您可以创建备份数据库并定义备份计划，包括每日备份和2年保留期，完全满足题目要求。",
+          "en": "Correct. Technical reason: AWS Backup is a service specifically designed for data management and automated backup. It supports RDS backup and allows setting backup plans and retention strategies. You can create a backup database and define a backup plan, including daily backup and a 2-year retention period, which fully meets the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon DLM 主要用于管理 EBS 快照生命周期，而非 RDS 快照。 DLM 管理无法访问 RDS 快照的保留策略。",
+          "en": "Incorrect. Technical reason: Amazon DLM is mainly used to manage the EBS snapshot life cycle, not RDS snapshots. The retention policy for RDS snapshots cannot be accessed by DLM Management."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：CloudWatch Logs 主要用于日志控制和分析，不用于备份数据库快照。交易日志备份无法满足问题中「备份必须一致且可还原」的要求。",
+          "en": "Incorrect. Technical reason: CloudWatch Logs is mainly used for log control and analysis, and is not used for backing up database snapshots. The transaction log backup cannot meet the requirement of \"the backup must be consistent and recoverable\" in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS DMS 主要用于数据库迁移，而非备份管理。 CDC任务截取的是数据变化，而不是完整的数据库快照，无法满足问题的要求。",
+          "en": "Incorrect. Technical reason: AWS DMS is mainly used for database migration, not backup management. The CDC task captures data changes, not a complete database snapshot, which cannot meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 AWS Backup 中创建备份文档库以保留 RDS 备份。创建一个新的备份计划，其中包含每日计划和创建后 2 年的有效期。将 RDS 数据库实例指派给备份计划。",
+        "en": "A. Create a backup vault in AWS Backup to retain RDS backups. Create a new backup plan with a daily schedule and an expiration period of 2 years after creation. Assign the RDS DB instances to the backup plan."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (93%) 7%。热门讨论与考点摘要：AWS Backup 是一项专为数据管理和自动备份而设计的服务。它支持RDS备份并允许设置备份计划和保留策略。您可以创建备份数据库并定义备份计划，包括每日备份和2年保留期，完全满足题目要求。",
+        "en": "Community vote as displayed: A (93%) 7%. Popular discussion and key point summary: AWS Backup is a service specifically designed for data management and automated backup. It supports RDS backup and allows setting backup plans and retention strategies. You can create a backup database and define a backup plan, including daily backup and a 2-year retention period, which fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 260,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司的合规团队需要将其文档共用移至 AWS。这些共享在 Windows Server SMB 文档共用上运行。自我管理的本机 Active Directory 控制对文档和文档夹的访问。该公司希望使用 Amazon FSx for Windows File Server 作为解决方案的一部分。公司必须确保在迁移到 AWS 后，本机 Active Directory 群组限制对 FSx for Windows File Server SMB 合规性共用、文档夹和文档的访问。该公司创建了 FSx for Windows File Server 文档系统。哪种解决方案可以满足这些要求？",
+        "en": "A company’s compliance team needs to move its file shares to AWS. The shares run on a Windows Server SMB file share. A self- managed on-premises Active Directory controls access to the files and folders. The company wants to use Amazon FSx for Windows File Server as part of the solution. The company must ensure that the on- premises Active Directory groups restrict access to the FSx for Windows File Server SMB compliance shares, folders, and files after the move to AWS. The company has created an FSx for Windows File Server file system. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Active Directory 连接器以连接到 Active Directory。将 Active Directory 群组对应到 IAM 群组以限制访问。",
+          "en": "Create an Active Directory Connector to connect to the Active Directory. Map the Active Directory groups to IAM groups to restrict access."
+        },
+        "B": {
+          "zh": "为标签指派「限制」标签键和「合规性」标签值。将 Active Directory 群组对应到 IAM 群组以限制访问。",
+          "en": "Assign a tag with a Restrict tag key and a Compliance tag value. Map the Active Directory groups to IAM groups to restrict access."
+        },
+        "C": {
+          "zh": "创建直接链接到 FSx for Windows File Server 的 IAM 服务相关角色以限制访问。",
+          "en": "Create an IAM service-linked role that is linked directly to FSx for Windows File Server to restrict access."
+        },
+        "D": {
+          "zh": "将文档系统加入 Active Directory 以限制访问。",
+          "en": "Join the file system to the Active Directory to restrict access."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Active Directory Connector 用于将 AWS Managed Microsoft AD 与本机 Active Directory 集成，但它不适用于 Amazon FSx for Windows File Server 的直接访问控制。 IAM 群组无法直接对应到 Active Directory 群组来控制文档系统访问。",
+          "en": "Incorrect. Technical reason: Active Directory Connector is used to integrate AWS Managed Microsoft AD with on-premises Active Directory, but it does not work with direct access control for Amazon FSx for Windows File Server. IAM groups cannot be mapped directly to Active Directory groups to control file system access."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：标签用于资源识别和管理，而不是访问控制。同样，IAM 群组无法直接对应到 Active Directory 群组来控制文档系统访问。",
+          "en": "Incorrect. Technical reason: Tags are used for resource identification and management, not for access control. Likewise, IAM groups cannot be mapped directly to Active Directory groups to control file system access."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：IAM 服务关联角色用于 AWS 服务之间的权限管理，但不能直接用于控制 FSx 文档系统的访问权限。文档系统访问需要通过 Active Directory 群组而不是 IAM 角色进行管理。",
+          "en": "Incorrect. Technical reason: IAM service-associated roles are used for permission management between AWS services, but cannot be used directly to control access permissions of the FSx file system. File system access needs to be managed through Active Directory groups, not IAM roles."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon FSx for Windows File Server 支持与自架 Active Directory 集成。通过将文档系统加入 Active Directory，您可以使用现有的 Active Directory 群组和用户来控制对文档和文档夹的访问。这是实施基于 Active Directory 的访问控制的建议方法。",
+          "en": "Correct. Technical reason: Amazon FSx for Windows File Server supports integration with self-hosted Active Directory. By joining a file system to Active Directory, you can use existing Active Directory groups and users to control access to files and folders. This is the recommended way to implement Active Directory-based access control."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将文档系统加入 Active Directory 以限制访问。",
+        "en": "D. Join the file system to the Active Directory to restrict access."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (90%) 10%。热门讨论与考点摘要：Amazon FSx for Windows File Server 支持与自架 Active Directory 集成。通过将文档系统加入 Active Directory，您可以使用现有的 Active Directory 群组和用户来控制对文档和文档夹的访问。这是实施基于 Active Directory 的访问控制的建议方法。",
+        "en": "Community vote as displayed: D (90%) 10%. Popular discussion and key point summary: Amazon FSx for Windows File Server supports integration with self-hosted Active Directory. By joining a file system to Active Directory, you can use existing Active Directory groups and users to control access to files and folders. This is the recommended way to implement Active Directory-based access control."
+      }
+    },
+    {
+      "question_no": 261,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司最近宣布向全球受众部署其零售网站。网站在弹性负载均衡器后面的多个 Amazon EC2 实例上运行。实例在跨多个可用区的 Auto Scaling 群组中运行。该公司希望根据客户造访网站所使用的设备为其客户提供不同版本的内容。解决方案架构师应该采取哪些操作组合来满足这些要求？ （选两个。）",
+        "en": "A company recently announced the deployment of its retail website to a global audience. The website runs on multiple Amazon EC2 instances behind an Elastic Load Balancer. The instances run in an Auto Scaling group across multiple Availability Zones. The company wants to provide its customers with different versions of content based on the devices that the customers use to access the website. Which combination of actions should a solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Amazon CloudFront 以缓存内容的多个版本。",
+          "en": "Configure Amazon CloudFront to cache multiple versions of the content."
+        },
+        "B": {
+          "zh": "在网络负载均衡器中设置主机头以将流量转送到不同的实例。",
+          "en": "Configure a host header in a Network Load Balancer to forward traffic to different instances."
+        },
+        "C": {
+          "zh": "设置 Lambda@Edge 函数以根据 User-Agent 标头向用户发送特定对象。",
+          "en": "Configure a Lambda@Edge function to send specific objects to users based on the User-Agent header."
+        },
+        "D": {
+          "zh": "配置 AWS Global Accelerator。将请求转送至网络负载均衡器 (NLB)。配置 NLB 以设置到不同 EC2 实例的基于主机的路由。",
+          "en": "Configure AWS Global Accelerator. Forward requests to a Network Load Balancer (NLB). Configure the NLB to set up host- based routing to different EC2 instances."
+        },
+        "E": {
+          "zh": "配置 AWS Global Accelerator。将请求转发到网络负载均衡器 (NLB)。配置 NLB 以设置到不同 EC2 实例的基于路径的路由。",
+          "en": "Configure AWS Global Accelerator. Forward requests to a Network Load Balancer (NLB). Configure the NLB to set up path- based routing to different EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：CloudFront 可以通过在缓存键中包含 User-Agent 标头来缓存单独的内容变体，从而允许高效地提供特定于设备的版本。",
+          "en": "Correct. Technical reason: CloudFront can cache separate content variants by including the User-Agent header in the cache key, allowing device-specific versions to be served efficiently."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：网络负载均衡器主要用于基于IP地址和连接端口的流量转发，不支持基于User-Agent或其他复杂HTTP头的路由。",
+          "en": "Incorrect. Technical reason: Network Load Balancer is mainly used for traffic forwarding based on IP address and port, and does not support routing based on User-Agent or other complex HTTP headers."
+        },
+        "C": {
+          "zh": "正確。技术原因：Lambda@Edge 可以根据 User-Agent header 动态处理请求并传回特定内容，非常适合用户场景。",
+          "en": "Correct. Technical reason: Lambda@Edge can dynamically process requests and return specific content based on the User-Agent header, which is very suitable for user scenarios."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Global Accelerator 与 NLB 的结合主要用于加速和分发流量，但不支持基于 User-Agent header 的动态内容分发。",
+          "en": "Incorrect. Technical reason: The combination of AWS Global Accelerator and NLB is mainly used to accelerate and distribute traffic, but does not support dynamic content distribution based on the User-Agent header."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：与选项D类似，NLB不支持基于User-Agent标头的动态内容分发，且路径路由与问题要求无关。",
+          "en": "Incorrect. Technical reason: Similar to option D, NLB does not support dynamic content distribution based on the User-Agent header, and path routing has nothing to do with the question requirements."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 设置 Amazon CloudFront 以缓存内容的多个版本。；C. 设置 Lambda@Edge 函数以根据 User-Agent 标头向用户发送特定对象。",
+        "en": "A. Configure Amazon CloudFront to cache multiple versions of the content.; C. Configure a Lambda@Edge function to send specific objects to users based on the User-Agent header."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：AC (100%)。热门讨论与考点摘要：CloudFront 可以通过在缓存键中包含 User-Agent 标头来缓存单独的内容变体，从而允许高效地提供特定于设备的版本。；Lambda@Edge 可以根据 User-Agent header 动态处理请求并传回特定内容，非常适合用户场景。",
+        "en": "Community vote as displayed: AC (100%). Popular discussion and key point summary: CloudFront can cache separate content variants by including the User-Agent header in the cache key, allowing device-specific versions to be served efficiently.; Lambda@Edge can dynamically process requests and return specific content based on the User-Agent header, which is very suitable for user scenarios."
+      }
+    },
+    {
+      "question_no": 262,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司计划将 Amazon ElastiCache 用于其多层 Web 应用程序。解决方案架构师为 ElastiCache 集群创建一个缓存 VPC，并为应用程序的 Amazon EC2 实例创建一个应用程序 VPC。两个 VPC 均位于 us-east-1 区域。解决方案架构师必须实作一个解决方案，为应用程序的 EC2 实例提供对 ElastiCache 集群的访问权限。哪一种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company plans to use Amazon ElastiCache for its multi-tier web application. A solutions architect creates a Cache VPC for the ElastiCache cluster and an App VPC for the application’s Amazon EC2 instances. Both VPCs are in the us-east-1 Region. The solutions architect must implement a solution to provide the application’s EC2 instances with access to the ElastiCache cluster. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 VPC 之间创建对等连接。为两个 VPC 中的对等连接添加路由表条目。为 ElastiCache 集群的安全群组配置入站规则，以允许来自应用程序安全群组的入站连接。",
+          "en": "Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for the ElastiCache cluster’s security group to allow inbound connection from the application’s security group."
+        },
+        "B": {
+          "zh": "创建中转 VPC。更新缓存 VPC 和应用程序 VPC 中的 VPC 路由表，以通过传输 VPC 路由流量。为 ElastiCache 集群的安全群组配置入站规则，以允许来自应用程序安全群组的入站连接。",
+          "en": "Create a Transit VPC. Update the VPC route tables in the Cache VPC and the App VPC to route traffic through the Transit VPC. Configure an inbound rule for the ElastiCache cluster's security group to allow inbound connection from the application’s security group."
+        },
+        "C": {
+          "zh": "在 VPC 之间创建对等连接。为两个 VPC 中的对等连接添加路由表条目。为对等连接的安全群组配置入站规则，以允许来自应用程序安全群组的入站连接。",
+          "en": "Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for the peering connection’s security group to allow inbound connection from the application’s security group."
+        },
+        "D": {
+          "zh": "创建中转 VPC。更新缓存 VPC 和应用程序 VPC 中的 VPC 路由表，以通过传输 VPC 路由流量。为 Transit VPC 的安全群组设置入站规则，以允许来自应用程序安全群组的入站连接。",
+          "en": "Create a Transit VPC. Update the VPC route tables in the Cache VPC and the App VPC to route traffic through the Transit VPC. Configure an inbound rule for the Transit VPC’s security group to allow inbound connection from the application’s security group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：VPC 对等互连是一种简单且成本最低的解决方案，可实现两个 VPC 之间的直接通信。通过设置路由表和安全组规则，EC2实例可以访问ElastiCache集群。成本分析：VPC对等连接没有额外的中间资源（如Transit Gateway），因此成本最低。",
+          "en": "Correct. Technical reason: VPC peering is a simple and lowest-cost solution that enables direct communication between two VPCs. By configuring routing tables and security group rules, EC2 instances can access the ElastiCache cluster. Cost analysis: VPC peering connection has no additional intermediate resources (such as Transit Gateway), so the cost is the lowest."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：中转VPC是一种复杂的网络架构，通常用于跨多个VPC或跨区域的通信。这种方法对于两个 VPC 之间的通信来说过于复杂。成本分析：中转VPC需要额外的资源（如VPN网关或第三方设备），成本较高。",
+          "en": "Incorrect. Technical reason: Transit VPC is a complex network architecture that is usually used for communication across multiple VPCs or across regions. This approach is overly complex for communication between just two VPCs. Cost analysis: Transit VPC requires additional resources (such as VPN gateway or third-party equipment), and the cost is higher."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：VPC 对等连接本身没有安全群组。安全组是针对资源（例如 EC2 实例或 ElastiCache 集群）配置的。因此该选项的描述为：成本分析：虽然使用了VPC对等，但安全群组配置错误，无法通信。",
+          "en": "Incorrect. Technical reason: The VPC peering connection itself does not have a security group. Security groups are configured for resources (such as EC2 instances or ElastiCache clusters). Therefore the description of this option is Cost Analysis: Although VPC peering was used, the security group was configured incorrectly and communication was not possible."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Transit VPC 的安全群组规则配置方法不适用于 ElastiCache 集群，因为 ElastiCache 的安全群组规则是直接针对集群资源配置的。成本分析：中转VPC昂贵且不必要。",
+          "en": "Incorrect. Technical reason: The security group rule configuration method of Transit VPC is not applicable to the ElastiCache cluster, because the security group rules of ElastiCache are configured directly for cluster resources. Cost analysis: Transit VPC is expensive and unnecessary."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 VPC 之间创建对等连接。为两个 VPC 中的对等连接添加路由表条目。为 ElastiCache 集群的安全群组配置入站规则，以允许来自应用程序安全群组的入站连接。",
+        "en": "A. Create a peering connection between the VPCs. Add a route table entry for the peering connection in both VPCs. Configure an inbound rule for the ElastiCache cluster’s security group to allow inbound connection from the application’s security group."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：VPC 对等互连是一种简单且成本最低的解决方案，可实现两个 VPC 之间的直接通信。通过设置路由表和安全组规则，EC2实例可以访问ElastiCache集群。成本分析：VPC对等连接没有额外的中间资源（如Transit Gateway），因此成本最低。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: VPC peering is a simple and lowest-cost solution that enables direct communication between two VPCs. By configuring routing tables and security group rules, EC2 instances can access the ElastiCache cluster. Cost analysis: VPC peering connection has no additional intermediate resources (such as Transit Gateway), so the cost is the lowest."
+      }
+    },
+    {
+      "question_no": 263,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在创建一个由多个微服务组成的应用程序。该公司已决定使用容器技术在 AWS 上部署其软件。该公司需要一种解决方案，最大限度地减少维护和扩展的持续工作量。该公司无法管理额外的基础设施。解决方案架构师应该采取哪些操作组合来满足这些要求？ （选两个。）",
+        "en": "A company is building an application that consists of several microservices. The company has decided to use container technologies to deploy its software on AWS. The company needs a solution that minimizes the amount of ongoing effort for maintenance and scaling. The company cannot manage additional infrastructure. Which combination of actions should a solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "部署 Amazon Elastic Container Service (Amazon ECS) 集群。",
+          "en": "Deploy an Amazon Elastic Container Service (Amazon ECS) cluster."
+        },
+        "B": {
+          "zh": "在跨多个可用区的 Amazon EC2 实例上部署 Kubernetes 控制平面。",
+          "en": "Deploy the Kubernetes control plane on Amazon EC2 instances that span multiple Availability Zones."
+        },
+        "C": {
+          "zh": "使用 Amazon EC2 启动类型部署 Amazon Elastic Container Service (Amazon ECS) 服务。指定所需的任务编号等级大于或等于 2。",
+          "en": "Deploy an Amazon Elastic Container Service (Amazon ECS) service with an Amazon EC2 launch type. Specify a desired task number level of greater than or equal to 2."
+        },
+        "D": {
+          "zh": "使用 Fargate 启动类型部署 Amazon Elastic Container Service (Amazon ECS) 服务。指定所需的任务编号等级大于或等于 2。",
+          "en": "Deploy an Amazon Elastic Container Service (Amazon ECS) service with a Fargate launch type. Specify a desired task number level of greater than or equal to 2."
+        },
+        "E": {
+          "zh": "在跨多个可用区的 Amazon EC2 实例上部署 Kubernetes 工作线程节点。创建为每个微服务指定两个或多个副本的部署。",
+          "en": "Deploy Kubernetes worker nodes on Amazon EC2 instances that span multiple Availability Zones. Create a deployment that specifies two or more replicas for each microservice."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon ECS 是 AWS 的托管容器服务，支持自动化管理和扩展。部署ECS集群是实现容器化应用的基础步骤。",
+          "en": "Correct. Technical reason: Amazon ECS is AWS's managed container service that supports automated management and scaling. Deploying an ECS cluster is the basic step to implement containerized applications."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：部署Kubernetes控制平面需要额外的管理基础架构（EC2实例），这与「无法管理额外的基础架构」的问题要求相反。",
+          "en": "Incorrect. Technical reason: Deploying the Kubernetes control plane requires additional management infrastructure (EC2 instances), which is contrary to the question requirement of \"not being able to manage additional infrastructure\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用EC2启动类型需要管理底层EC2实例，增加了操作工作量，与问题所要求的「减少维护工作量」不符。",
+          "en": "Incorrect. Technical reason: Using the EC2 startup type requires managing the underlying EC2 instances, which increases the operational workload and is inconsistent with the \"reduce maintenance workload\" required by the question."
+        },
+        "D": {
+          "zh": "正確。技术原因：Fargate 是一个无服务器容器运作时，底层基础架构完全由 AWS 管理。它满足了「减少维护工作量」和「无法管理额外基础设施」的问题的要求。",
+          "en": "Correct. Technical reason: Fargate is a serverless container runtime, and the underlying infrastructure is completely managed by AWS. It meets the requirements of the question of \"reduce maintenance workload\" and \"cannot manage additional infrastructure.\"."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：部署Kubernetes工作节点需要管理EC2实例，这与「无法管理额外基础架构」的问题要求相反。",
+          "en": "Incorrect. Technical reason: Deploying Kubernetes worker nodes requires managing EC2 instances, which is contrary to the question requirement of \"not being able to manage additional infrastructure.\"."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 部署 Amazon Elastic Container Service (Amazon ECS) 集群。；D. 使用 Fargate 启动类型部署 Amazon Elastic Container Service (Amazon ECS) 服务。指定所需的任务编号等级大于或等于 2。",
+        "en": "A. Deploy an Amazon Elastic Container Service (Amazon ECS) cluster.; D. Deploy an Amazon Elastic Container Service (Amazon ECS) service with a Fargate launch type. Specify a desired task number level of greater than or equal to 2."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：AD (100%)。热门讨论与考点摘要：Amazon ECS 是 AWS 的托管容器服务，支持自动化管理和扩展。部署ECS集群是实现容器化应用的基础步骤。；Fargate 是一个无服务器容器运作时，底层基础架构完全由 AWS 管理。它满足了「减少维护工作量」和「无法管理额外基础设施」的问题的要求。",
+        "en": "Community vote as displayed: AD (100%). Popular discussion and key point summary: Amazon ECS is AWS's managed container service that supports automated management and scaling. Deploying an ECS cluster is the basic step to implement containerized applications.; Fargate is a serverless container runtime, and the underlying infrastructure is completely managed by AWS. It meets the requirements of the question of \"reduce maintenance workload\" and \"cannot manage additional infrastructure.\"."
+      }
+    },
+    {
+      "question_no": 264,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的 Web 应用程序托管了 10 多个 Amazon EC2 实例，其流量由 Amazon Route 53 引导。该公司在尝试浏览该应用程序时偶尔会遇到超时错误。网络团队发现某些 DNS 查找传回不健康实例的 IP 地址，导致逾时错误。解决方案架构师应该采取什么措施来克服这些逾时错误？",
+        "en": "A company has a web application hosted over 10 Amazon EC2 instances with traffic directed by Amazon Route 53. The company occasionally experiences a timeout error when attempting to browse the application. The networking team finds that some DNS queries return IP addresses of unhealthy instances, resulting in the timeout error. What should a solutions architect implement to overcome these timeout errors?"
+      },
+      "options": {
+        "A": {
+          "zh": "为每个 EC2 实例创建 Route 53 简单路由策略记录。将健康检查与每笔记录相关联。",
+          "en": "Create a Route 53 simple routing policy record for each EC2 instance. Associate a health check with each record."
+        },
+        "B": {
+          "zh": "为每个 EC2 实例创建 Route 53 故障转移路由策略记录。将健康检查与每笔记录相关联。",
+          "en": "Create a Route 53 failover routing policy record for each EC2 instance. Associate a health check with each record."
+        },
+        "C": {
+          "zh": "创建以 EC2 实例作为来源的 Amazon CloudFront 分配。将运作状况检查与 EC2 实例关联。",
+          "en": "Create an Amazon CloudFront distribution with EC2 instances as its origin. Associate a health check with the EC2 instances."
+        },
+        "D": {
+          "zh": "创建一个应用程序负载均衡器 (ALB)，并在 EC2 实例之前进行运行状况检查。从 53 号公路到 ALB 的路线。",
+          "en": "Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from Route 53."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Route 53的简单路由策略无法动态侦测实例的健康状况并自动删除不健康的实例。尽管可以手动关联运行状况检查，但这不是最佳实践。",
+          "en": "Incorrect. Technical reason: Route 53’s simple routing policy cannot dynamically detect the health status of instances and automatically remove unhealthy instances. Although it is possible to associate health checks manually, this is not a best practice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：故障转移路由策略主要用于主备架构，而不是用于将流量指派到多个实例。该选项不适合当前场景。",
+          "en": "Incorrect. Technical reason: The failover routing strategy is mainly used for active and standby architectures, rather than for distributing traffic to multiple instances. This option is not suitable for the current scenario."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：CloudFront主要用于内容传递网络（CDN），而不是直接解决实例健康检查和流量分配问题。此选项与题目要求不符。",
+          "en": "Incorrect. Technical reason: CloudFront is mainly used for content delivery networks (CDN), rather than directly solving instance health checking and traffic distribution issues. This option does not match the question requirements."
+        },
+        "D": {
+          "zh": "正確。技术原因：ALB可以动态侦测实例的健康状况，并自动将流量分配给健康的实例。与Route 53结合，可以实现高可用性和容错架构。",
+          "en": "Correct. Technical reason: ALB can dynamically detect the health status of instances and automatically distribute traffic to healthy instances. Combined with Route 53, high availability and fault-tolerant architecture can be achieved."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 创建一个应用程序负载均衡器 (ALB)，并在 EC2 实例之前进行运行状况检查。从 53 号公路到 ALB 的路线。",
+        "en": "D. Create an Application Load Balancer (ALB) with a health check in front of the EC2 instances. Route to the ALB from Route 53."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (72%) B (20%) 4%。热门讨论与考点摘要：ALB可以动态侦测实例的健康状况，并自动将流量分配给健康的实例。与Route 53结合，可以实现高可用性和容错架构。",
+        "en": "Community vote as displayed: D (72%) B (20%) 4%. Popular discussion and key point summary: ALB can dynamically detect the health status of instances and automatically distribute traffic to healthy instances. Combined with Route 53, high availability and fault-tolerant architecture can be achieved."
+      }
+    },
+    {
+      "question_no": 265,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师需要设计一个由 Web、应用程序和数据库层组成的高度可用的应用程序。 HTTPS 内容交付应尽可能靠近边缘，且交付时间最短。哪种解决方案符合这些要求并且最安全？",
+        "en": "A solutions architect needs to design a highly available application consisting of web, application, and database tiers. HTTPS content delivery should be as close to the edge as possible, with the least delivery time. Which solution meets these requirements and is MOST secure?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公用子网中配置具有多个冗余 Amazon EC2 实例的公用应用程序负载均衡器 (ALB)。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。",
+          "en": "Configure a public Application Load Balancer (ALB) with multiple redundant Amazon EC2 instances in public subnets. Configure Amazon CloudFront to deliver HTTPS content using the public ALB as the origin."
+        },
+        "B": {
+          "zh": "在私有子网中配置具有多个冗余 Amazon EC2 实例的公用 Application Load Balancer。设置 Amazon CloudFront 以使用 EC2 实例作为来源来发送 HTTPS 内容。",
+          "en": "Configure a public Application Load Balancer with multiple redundant Amazon EC2 instances in private subnets. Configure Amazon CloudFront to deliver HTTPS content using the EC2 instances as the origin."
+        },
+        "C": {
+          "zh": "在私有子网中配置具有多个冗余 Amazon EC2 实例的公用应用程序负载均衡器 (ALB)。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。",
+          "en": "Configure a public Application Load Balancer (ALB) with multiple redundant Amazon EC2 instances in private subnets. Configure Amazon CloudFront to deliver HTTPS content using the public ALB as the origin."
+        },
+        "D": {
+          "zh": "在公有子网中配置具有多个冗余 Amazon EC2 实例的公有 Application Load Balancer。设置 Amazon CloudFront 以使用 EC2 实例作为来源来发送 HTTPS 内容。",
+          "en": "Configure a public Application Load Balancer with multiple redundant Amazon EC2 instances in public subnets. Configure Amazon CloudFront to deliver HTTPS content using the EC2 instances as the origin."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：设置公有 ALB 并在公有子网中部署多个冗余 Amazon EC2 实例。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。公有子网中的 EC2 实例暴露在 Internet 上并带来安全风险。安全性：不符合最佳实践，建议将 EC2 实例放置在私有子网中以提高安全性。",
+          "en": "Incorrect. Technical reason: Configure a public ALB and deploy multiple redundant Amazon EC2 instances in a public subnet. Configure Amazon CloudFront to use a public ALB as the origin to deliver HTTPS content. EC2 instances in public subnets are exposed to the Internet and pose a security risk. Security: Not in line with best practices, it is recommended to place EC2 instances in private subnets to improve security."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：配置公用 ALB 并在私有子网中部署多个冗余 Amazon EC2 实例。设置 Amazon CloudFront 以使用 EC2 实例作为来源来发送 HTTPS 内容。 CloudFront 通常使用负载均衡器（例如 ALB）作为来源，而不是直接使用 EC2 实例。安全性：EC2 实例在私有子网中是安全的，但直接使用 EC2 实例作为来源并不是最佳实务。",
+          "en": "Incorrect. Technical reason: Configure a public ALB and deploy multiple redundant Amazon EC2 instances in a private subnet. Configure Amazon CloudFront to use an EC2 instance as the origin to deliver HTTPS content. CloudFront typically uses a load balancer (such as an ALB) as the source rather than using EC2 instances directly. Security: EC2 instances are secure in private subnets, but using EC2 instances directly as sources is not a best practice."
+        },
+        "C": {
+          "zh": "正確。技术原因：设置公用 ALB 并在私人子网中部署多个冗余 Amazon EC2 实例。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。 ALB 作为来源符合最佳实践，并且将 EC2 实例放置在私有子网中可以提高安全性。安全性：公用 ALB 可以处理外部流量，而私有子网中的 EC2 实例不会直接暴露于 Internet。",
+          "en": "Correct. Technical reason: Configure a public ALB and deploy multiple redundant Amazon EC2 instances in a private subnet. Configure Amazon CloudFront to use a public ALB as the origin to deliver HTTPS content. ALB as a source complies with best practices, and placing EC2 instances in a private subnet improves security. Security: The public ALB can handle external traffic, while the EC2 instances in the private subnet are not directly exposed to the Internet."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：设置公有 ALB 并在公有子网中部署多个冗余 Amazon EC2 实例。设置 Amazon CloudFront 以使用 EC2 实例作为来源来发送 HTTPS 内容。公有子网中的 EC2 实例暴露在 Internet 上并带来安全风险。安全性：不符合最佳实践，建议将 EC2 实例放置在私有子网中。",
+          "en": "Incorrect. Technical reason: Configure a public ALB and deploy multiple redundant Amazon EC2 instances in a public subnet. Configure Amazon CloudFront to use an EC2 instance as the origin to deliver HTTPS content. EC2 instances in public subnets are exposed to the Internet and pose a security risk. Security: Not in line with best practices, it is recommended to place EC2 instances in private subnets."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在私有子网中配置具有多个冗余 Amazon EC2 实例的公用应用程序负载均衡器 (ALB)。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。",
+        "en": "C. Configure a public Application Load Balancer (ALB) with multiple redundant Amazon EC2 instances in private subnets. Configure Amazon CloudFront to deliver HTTPS content using the public ALB as the origin."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：设置公用 ALB 并在私人子网中部署多个冗余 Amazon EC2 实例。配置 Amazon CloudFront 以使用公共 ALB 作为来源来发送 HTTPS 内容。 ALB 作为来源符合最佳实践，并且将 EC2 实例放置在私有子网中可以提高安全性。安全性：公用 ALB 可以处理外部流量，而私有子网中的 EC2 实例不会直接暴露于 Internet。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Configure a public ALB and deploy multiple redundant Amazon EC2 instances in a private subnet. Configure Amazon CloudFront to use a public ALB as the origin to deliver HTTPS content. ALB as a source complies with best practices, and placing EC2 instances in a private subnet improves security. Security: The public ALB can handle external traffic, while the EC2 instances in the private subnet are not directly exposed to the Internet."
+      }
+    },
+    {
+      "question_no": 266,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个在 AWS 上运作的热门游戏平台。该应用程序对延迟很敏感，因为延迟会影响用户体验并给某些玩家带来不公平的优势。该应用程序部署在每个 AWS 区域中。它在 Amazon EC2 实例上运行，这些实例是在应用程序负载均衡器 (ALB) 后面配置的 Auto Scaling 群组的一部分。解决方案架构师需要实作一种机制来监控应用程序的运作状况并将流量重新导向到健康的端点。哪种解决方案满足这些要求？",
+        "en": "A company has a popular gaming platform running on AWS. The application is sensitive to latency because latency can impact the user experience and introduce unfair advantages to some players. The application is deployed in every AWS Region. It runs on Amazon EC2 instances that are part of Auto Scaling groups configured behind Application Load Balancers (ALBs). A solutions architect needs to implement a mechanism to monitor the health of the application and redirect traffic to healthy endpoints. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Global Accelerator 中设置加速器。为应用程序侦听的连接端口添加监听器，并将其附加到每个区域中的区域终端节点。添加 ALB 作为端点。",
+          "en": "Configure an accelerator in AWS Global Accelerator. Add a listener for the port that the application listens on, and attach it to a Regional endpoint in each Region. Add the ALB as the endpoint."
+        },
+        "B": {
+          "zh": "创建 Amazon CloudFront 分配并将 ALB 指定为来源服务器。配置缓存行为以使用原始缓存标头。使用 AWS Lambda 函数来优化流量。",
+          "en": "Create an Amazon CloudFront distribution and specify the ALB as the origin server. Configure the cache behavior to use origin cache headers. Use AWS Lambda functions to optimize the traffic."
+        },
+        "C": {
+          "zh": "创建 Amazon CloudFront 分配并指定 Amazon S3 为来源服务器。配置缓存行为以使用原始缓存标头。使用 AWS Lambda 函数来优化流量。",
+          "en": "Create an Amazon CloudFront distribution and specify Amazon S3 as the origin server. Configure the cache behavior to use origin cache headers. Use AWS Lambda functions to optimize the traffic."
+        },
+        "D": {
+          "zh": "设置 Amazon DynamoDB 数据库作为应用程序的数据保存。创建 DynamoDB Accelerator (DAX) 集群作为托管应用程序数据的 DynamoDB 的内存缓存。",
+          "en": "Configure an Amazon DynamoDB database to serve as the data store for the application. Create a DynamoDB Accelerator (DAX) cluster to act as the in-memory cache for DynamoDB hosting the application data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Global Accelerator 专门设计用于优化世界各地用户的流量路由，提供低延迟和高可用性。它支持健康检查，并可以将流量重定向到健康的区域端点。将 ALB 作为端点是合理的配置。",
+          "en": "Correct. Technical reason: AWS Global Accelerator is specifically designed to optimize traffic routing for users around the world, providing low latency and high availability. It supports health checks and can redirect traffic to healthy regional endpoints. Having an ALB as an endpoint is a reasonable configuration."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：CloudFront 是一个内容传递网络 (CDN)，主要用于缓存静态内容以提高性能。虽然它可以优化流量，但它不支持健康检查，并且无法动态地将流量重定向到健康的端点。",
+          "en": "Incorrect. Technical reason: CloudFront is a content delivery network (CDN) primarily used for caching static content to improve performance. Although it can optimize traffic, it does not support health checks and cannot dynamically redirect traffic to healthy endpoints."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：此选项与 B 类似，但指定 Amazon S3 为来源服务器。 S3主要用于保存静态内容，与问题中提到的EC2和ALB架构不符。此外，CloudFront 仍然无法满足健康检查和流量重定向的需求。",
+          "en": "Incorrect. Technical reason: This option is similar to B, but specifies Amazon S3 as the origin server. S3 is mainly used to store static content and does not match the EC2 and ALB architecture mentioned in the question. Additionally, CloudFront still falls short of the need for health checks and traffic redirection."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项与问题要求完全无关。 DynamoDB 是一个 NoSQL 数据库，DAX 是其提高数据库查找性能的加速器。它们与交通管理和健康检查无关。",
+          "en": "Incorrect. Technical reason: This option is completely irrelevant to the question requirements. DynamoDB is a NoSQL database and DAX is its accelerator to improve database query performance. They have nothing to do with traffic management and health checks."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 AWS Global Accelerator 中设置加速器。为应用程序侦听的连接端口添加监听器，并将其附加到每个区域中的区域终端节点。添加 ALB 作为端点。",
+        "en": "A. Configure an accelerator in AWS Global Accelerator. Add a listener for the port that the application listens on, and attach it to a Regional endpoint in each Region. Add the ALB as the endpoint."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (100%)。热门讨论与考点摘要：AWS Global Accelerator 专门设计用于优化世界各地用户的流量路由，提供低延迟和高可用性。它支持健康检查，并可以将流量重定向到健康的区域端点。将 ALB 作为端点是合理的配置。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Global Accelerator is specifically designed to optimize traffic routing for users around the world, providing low latency and high availability. It supports health checks and can redirect traffic to healthy regional endpoints. Having an ALB as an endpoint is a reasonable configuration."
+      }
+    },
+    {
+      "question_no": 267,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有 100 万用户使用其行动应用程序。公司必须近乎即时地分析数据使用情况。该公司还必须近乎即时地加密数据，并且必须以 Apache Parquet 格式将数据保存在集中位置以进行进一步处理。哪种解决方案能够以最少的运维开销满足这些要求？",
+        "en": "A company has one million users that use its mobile app. The company must analyze the data usage in near-real time. The company also must encrypt the data in near-real time and must store the data in a centralized location in Apache Parquet format for further processing. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon Kinesis 数据流以将数据保存在 Amazon S3 中。创建 Amazon Kinesis Data Analytics 应用程序来分析数据。调用 AWS Lambda 函数将数据发送到 Kinesis Data Analytics 应用程序。",
+          "en": "Create an Amazon Kinesis data stream to store the data in Amazon S3. Create an Amazon Kinesis Data Analytics application to analyze the data. Invoke an AWS Lambda function to send the data to the Kinesis Data Analytics application."
+        },
+        "B": {
+          "zh": "创建 Amazon Kinesis 数据流以将数据保存在 Amazon S3 中。创建 Amazon EMR 集群来分析数据。调用 AWS Lambda 函数将数据发送到 EMR 集群。",
+          "en": "Create an Amazon Kinesis data stream to store the data in Amazon S3. Create an Amazon EMR cluster to analyze the data. Invoke an AWS Lambda function to send the data to the EMR cluster."
+        },
+        "C": {
+          "zh": "创建 Amazon Kinesis Data Firehose 传输流以将数据保存在 Amazon S3 中。创建 Amazon EMR 集群来分析数据。",
+          "en": "Create an Amazon Kinesis Data Firehose delivery stream to store the data in Amazon S3. Create an Amazon EMR cluster to analyze the data."
+        },
+        "D": {
+          "zh": "创建 Amazon Kinesis Data Firehose 传输流以将数据保存在 Amazon S3 中。创建 Amazon Kinesis Data Analytics 应用程序来分析数据。",
+          "en": "Create an Amazon Kinesis Data Firehose delivery stream to store the data in Amazon S3. Create an Amazon Kinesis Data Analytics application to analyze the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Kinesis Data Streams 本身不支持将数据保存到 Amazon S3，需要额外的处理步骤。使用 AWS Lambda 函数将数据发送至 Kinesis Data Analytics 会增加额外的复杂性和运维开销。题目要求「最小运行开销」，这个方案不符合要求。",
+          "en": "Incorrect. Technical reason: Kinesis Data Streams itself does not directly support storing data to Amazon S3 and requires additional processing steps. Using AWS Lambda functions to send data to Kinesis Data Analytics adds additional complexity and operational overhead. The question requires \"minimum operating overhead\", and this solution does not meet the requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Kinesis Data Streams 无法将数据直接保存到 Amazon S3，需要运行额外的步骤。 Amazon EMR 是功能强大的数据处理工具，但需要手动配置和管理，运维开销较高。使用 AWS Lambda 函数将数据发送至 EMR 传输群组会增加复杂度。",
+          "en": "Incorrect. Technical reason: Kinesis Data Streams cannot store data directly to Amazon S3 and requires additional steps. Amazon EMR is a powerful data processing tool, but it requires manual configuration and management, and the operational overhead is high. Using AWS Lambda functions to send data to the EMR transmission group adds complexity."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Kinesis Data Firehose 可以将数据直接传输到 Amazon S3 并支持 Apache Parquet 格式。 Amazon EMR 需要手动管理和配置，操作开销较高，不符合「最小操作开销」要求。",
+          "en": "Incorrect. Technical reason: Kinesis Data Firehose can transfer data directly to Amazon S3 and supports the Apache Parquet format. Amazon EMR requires manual management and configuration, the operation overhead is high, and it does not meet the \"minimum operation overhead\" requirement."
+        },
+        "D": {
+          "zh": "正確。技术原因：Kinesis Data Firehose 可以将数据直接传输到 Amazon S3 并支持 Apache Parquet 格式。 Kinesis Data Analytics 是一项托管服务，支持近乎即时的数据分析，且运维开销较低。此解决方案完全满足问题要求且操作开销最小。",
+          "en": "Correct. Technical reason: Kinesis Data Firehose can transfer data directly to Amazon S3 and supports the Apache Parquet format. Kinesis Data Analytics is a managed service that supports near real-time data analysis with low operational overhead. This solution fully meets the question requirements and has minimal operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 创建 Amazon Kinesis Data Firehose 传输流以将数据保存在 Amazon S3 中。创建 Amazon Kinesis Data Analytics 应用程序来分析数据。",
+        "en": "D. Create an Amazon Kinesis Data Firehose delivery stream to store the data in Amazon S3. Create an Amazon Kinesis Data Analytics application to analyze the data."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：D (100%)。热门讨论与考点摘要：Kinesis Data Firehose 可以将数据直接传输到 Amazon S3 并支持 Apache Parquet 格式。 Kinesis Data Analytics 是一项托管服务，支持近乎即时的数据分析，且运维开销较低。此解决方案完全满足问题要求且操作开销最小。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Kinesis Data Firehose can transfer data directly to Amazon S3 and supports the Apache Parquet format. Kinesis Data Analytics is a managed service that supports near real-time data analysis with low operational overhead. This solution fully meets the question requirements and has minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 268,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家游戏公司有一个显示分数的 Web 应用程序。该应用程序在应用程序负载均衡器后面的 Amazon EC2 实例上运行。该应用程序将数据保存在 Amazon RDS for MySQL 数据库中。用户开始经历由数据库读取性能引起的长时间延迟和中断。该公司希望改善用户体验，同时尽量减少对应用程序架构的变更。解决方案架构师应该怎么做才能满足这些要求？",
+        "en": "A gaming company has a web application that displays scores. The application runs on Amazon EC2 instances behind an Application Load Balancer. The application stores data in an Amazon RDS for MySQL database. Users are starting to experience long delays and interruptions that are caused by database read performance. The company wants to improve the user experience while minimizing changes to the application’s architecture. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在数据库前面使用 Amazon ElastiCache。",
+          "en": "Use Amazon ElastiCache in front of the database."
+        },
+        "B": {
+          "zh": "在应用程序和数据库之间使用 RDS 代理进程。",
+          "en": "Use RDS Proxy between the application and the database."
+        },
+        "C": {
+          "zh": "将应用程序从 EC2 实例迁移到 AWS Lambda。",
+          "en": "Migrate the application from EC2 instances to AWS Lambda."
+        },
+        "D": {
+          "zh": "将数据库从 Amazon RDS for MySQL 迁移到 Amazon DynamoDB。",
+          "en": "Migrate the database from Amazon RDS for MySQL to Amazon DynamoDB."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon ElastiCache 是一项内存缓存服务，可显著提高数据库读取性能并减少用户延迟。满足通过缓存降低数据库的读取压力的要求，同时对现有架构进行最小的改动。",
+          "en": "Correct. Technical reason: Amazon ElastiCache is an in-memory caching service that can significantly improve database read performance and reduce user latency. Meets the requirements of the Reduce the reading pressure of the database through caching, while making minimal changes to the existing architecture."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：RDS Proxy 主要用于优化数据库连接管理，减少连接开销，但不会直接提升数据库的读取性能。不符合问题要求：用户体验问题是由于读取性能不足，而不是连接管理问题。",
+          "en": "Incorrect. Technical reason: RDS Proxy is mainly used to optimize database connection management and reduce connection overhead, but it will not directly improve the reading performance of the database. Does not meet the question requirements: User experience issues are due to insufficient read performance, not connection management issues."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：迁移到 AWS Lambda 不会直接解决数据库读取性能问题。这不符合要求，因为该问题需要对现有架构进行最小程度的更改，而迁移到 Lambda 会涉及重大的架构更改。",
+          "en": "Incorrect. Technical reason: Migrating to AWS Lambda will not directly solve database read performance issues. This does not meet the requirement because the question requires minimal changes to the existing architecture, and migrating to Lambda involves major architectural changes."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：DynamoDB是NoSQL数据库，与RDS的关系数据库架构不同。迁移将导致架构和应用程序发生重大变化。这不符合要求，因为问题需要对现有架构进行最小程度的更改，而迁移到 DynamoDB 涉及重大架构更改。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database, which is different from the relational database architecture of RDS. Migration will cause major changes to the architecture and applications. This does not meet the requirement because the question requires minimal changes to the existing architecture, and migrating to DynamoDB involves major architectural changes."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在数据库前面使用 Amazon ElastiCache。",
+        "en": "A. Use Amazon ElastiCache in front of the database."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (60%) B (40%)。热门讨论与考点摘要：Amazon ElastiCache 是一项内存缓存服务，可显著提高数据库读取性能并减少用户延迟。满足通过缓存降低数据库的读取压力的要求，同时对现有架构进行最小的改动。",
+        "en": "Community vote as displayed: A (60%) B (40%). Popular discussion and key point summary: Amazon ElastiCache is an in-memory caching service that can significantly improve database read performance and reduce user latency. Meets the requirements of the Reduce the reading pressure of the database through caching, while making minimal changes to the existing architecture."
+      }
+    },
+    {
+      "question_no": 269,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司注意到其基于 Amazon RDS 的 Web 应用程序的性能下降。性能下降的原因是业务分析师触发的只读 SQL 查找数量增加。解决方案架构师需要通过对现有 Web 应用程序进行最少的更改来解决问题。解决方案架构师该推荐什么？",
+        "en": "An ecommerce company has noticed performance degradation of its Amazon RDS based web application. The performance degradation is attributed to an increase in the number of read-only SQL queries triggered by business analysts. A solutions architect needs to solve the problem with minimal changes to the existing web application. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据导出到 Amazon DynamoDB 并让业务分析师运行查找。",
+          "en": "Export the data to Amazon DynamoDB and have the business analysts run their queries."
+        },
+        "B": {
+          "zh": "将数据加载到 Amazon ElastiCache 并让业务分析师运行他们的查找。",
+          "en": "Load the data into Amazon ElastiCache and have the business analysts run their queries."
+        },
+        "C": {
+          "zh": "创建主数据库的只读副本并让业务分析师运行他们的查找。",
+          "en": "Create a read replica of the primary database and have the business analysts run their queries."
+        },
+        "D": {
+          "zh": "将数据复制到 Amazon Redshift 集群中，并让业务分析师运行他们的查找。",
+          "en": "Copy the data into an Amazon Redshift cluster and have the business analysts run their queries."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon DynamoDB 是一种 NoSQL 数据库，与 RDS 的 SQL 查找模型不兼容。将数据导出到DynamoDB需要对现有应用程序进行重大更改，不符合「最小更改」要求。",
+          "en": "Incorrect. Technical reason: Amazon DynamoDB is a NoSQL database that is not compatible with the SQL query model of RDS. Exporting data to DynamoDB requires major changes to the existing application and does not meet the \"minimum change\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon ElastiCache 主要用于缓存数据以提高应用程序性能，而不是处理复杂的 SQL 查找。 BusiAnalysis 查找通常是复杂的 SQL 查找，ElastiCache 无法直接支持这些查找。",
+          "en": "Incorrect. Technical reason: Amazon ElastiCache is primarily used to cache data to speed up application performance, rather than processing complex SQL queries. BusiAnalysis queries are usually complex SQL queries, and ElastiCache cannot directly support these queries."
+        },
+        "C": {
+          "zh": "正確。技术原因：只读副本是Amazon RDS的功能之一，专门用来分担读取操作的压力。创建只读副本可以最大限度地减少对现有应用程序的变更并满足问题要求。",
+          "en": "Correct. Technical reason: Read Replica is one of the features of Amazon RDS, specifically used to share the pressure of read operations. Creating a Read Replica minimizes changes to existing applications and meets the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon Redshift 是适合处理大规模数据分析的数据仓库解决方案，但迁移数据需要较大的变更。将数据复制到 Redshift 需要额外的 ETL 流程，不符合「最小化变更」要求。",
+          "en": "Incorrect. Technical reason: Amazon Redshift is a data warehouse solution suitable for handling large-scale data analysis, but migrating data requires larger changes. Copying data to Redshift requires additional ETL processes and does not meet the \"minimize changes\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建主数据库的只读副本并让业务分析师运行他们的查找。",
+        "en": "C. Create a read replica of the primary database and have the business analysts run their queries."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：C (100%)。热门讨论与考点摘要：只读副本是Amazon RDS的功能之一，专门用来分担读取操作的压力。创建只读副本可以最大限度地减少对现有应用程序的变更并满足问题要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Read Replica is one of the features of Amazon RDS, specifically used to share the pressure of read operations. Creating a Read Replica minimizes changes to existing applications and meets the question requirements."
+      }
+    },
+    {
+      "question_no": 270,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用集中式 AWS 账户将日志数据保存在各个 Amazon S3 存储桶中。解决方案架构师需要确保在将数据上传到 S3 存储桶之前对数据进行静态加密。数据在传输过程中也必须加密。哪种解决方案满足这些要求？",
+        "en": "A company is using a centralized AWS account to store log data in various Amazon S3 buckets. A solutions architect needs to ensure that the data is encrypted at rest before the data is uploaded to the S3 buckets. The data also must be encrypted in transit. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用客户端加密来加密上传到 S3 存储桶的数据。",
+          "en": "Use client-side encryption to encrypt the data that is being uploaded to the S3 buckets."
+        },
+        "B": {
+          "zh": "使用服务器端加密来加密上传到 S3 存储桶的数据。",
+          "en": "Use server-side encryption to encrypt the data that is being uploaded to the S3 buckets."
+        },
+        "C": {
+          "zh": "创建存储桶策略，要求使用具有 S3 托管加密密钥 (SSE-S3) 的服务器端加密来进行 S3 上传。",
+          "en": "Create bucket policies that require the use of server-side encryption with S3 managed encryption keys (SSE-S3) for S3 uploads."
+        },
+        "D": {
+          "zh": "启用安全选项以通过使用缺省 AWS Key Management Service (AWS KMS) 密钥来加密 S3 存储桶。",
+          "en": "Enable the security option to encrypt the S3 buckets through the use of a default AWS Key Management Service (AWS KMS) key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：用户端加密确保数据在上传到S3之前进行加密，从而满足「数据在保存时加密」的要求。另外，数据在传输过程中可以通过HTTPS协定进行加密，满足「数据在传输过程中加密」的要求。",
+          "en": "Correct. Technical reason: Client-side encryption ensures that data is encrypted before uploading to S3, thereby satisfying the requirement that \"data is encrypted on storage\". In addition, data can be encrypted by HTTPS protocol during transmission, meeting the requirement of \"data being encrypted during transmission\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：服务器端加密是数据上传到S3后由S3进行加密。无法确保数据在上传过程中已加密。此选项并未明确提及如何在传输过程中处理数据加密。",
+          "en": "Incorrect. Technical reason: Server-side encryption is encrypted by S3 after the data is uploaded to S3. There is no way to ensure that the data has been encrypted during the upload process. This option does not explicitly mention how to handle encryption of data during transmission."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：存储桶策略可以强制使用服务器端加密，但这仍然会对数据上传到S3后进行加密，并且无法确保数据在上传过程中已加密。此选项并不能解决传输过程中数据加密的问题。",
+          "en": "Incorrect. Technical reason: The bucket policy can force the use of server-side encryption, but this still encrypts the data after it is uploaded to S3, and there is no way to ensure that the data has been encrypted during the upload process. This option does not solve the problem of data encryption during transmission."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：启用AWS KMS加密是服务器端加密的一种方式，它在数据上传到S3后仍会对数据进行加密。此选项并不能解决传输过程中数据加密的问题。",
+          "en": "Incorrect. Technical reason: Enabling AWS KMS encryption is a way of server-side encryption, which still encrypts the data after it is uploaded to S3. This option does not solve the problem of data encryption during transmission."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用客户端加密来加密上传到 S3 存储桶的数据。",
+        "en": "A. Use client-side encryption to encrypt the data that is being uploaded to the S3 buckets."
+      },
+      "discussion": {
+        "zh": "社群投票原始显示：A (93%) 7%。热门讨论与考点摘要：用户端加密确保数据在上传到S3之前进行加密，从而满足「数据在保存时加密」的要求。另外，数据在传输过程中可以通过HTTPS协定进行加密，满足「数据在传输过程中加密」的要求。",
+        "en": "Community vote as displayed: A (93%) 7%. Popular discussion and key point summary: Client-side encryption ensures that data is encrypted before uploading to S3, thereby satisfying the requirement that \"data is encrypted on storage\". In addition, data can be encrypted by HTTPS protocol during transmission, meeting the requirement of \"data being encrypted during transmission\"."
+      }
+    }
+  ]
+}
