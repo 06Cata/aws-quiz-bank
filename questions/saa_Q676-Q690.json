@@ -1,0 +1,890 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 676,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司的应用程序使用部署在 Amazon VPC 中的网络负载均衡器、Auto Scaling 组、Amazon EC2 实例和数据库。该公司希望在其 Amazon VPC 中近乎实时地捕获进出网络接口的流量信息。该公司希望将信息发送到 Amazon OpenSearch Service 进行分析。哪种解决方案可以满足这些要求？",
+        "en": "A company's application uses Network Load Balancers, Auto Scaling groups, Amazon EC2 instances, and databases that are deployed in an Amazon VPC. The company wants to capture information about traffic to and from the network interfaces in near real time in its Amazon VPC. The company wants to send the information to Amazon OpenSearch Service for analysis. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon CloudWatch Logs 中创建日志组。配置VPC流日志，将日志数据发送到日志组。使用 Amazon Kinesis Data Streams 将日志从日志组流式传输到 OpenSearch Service。",
+          "en": "Create a log group in Amazon CloudWatch Logs. Configure VPC Flow Logs to send the log data to the log group. Use Amazon Kinesis Data Streams to stream the logs from the log group to OpenSearch Service."
+        },
+        "B": {
+          "zh": "在 Amazon CloudWatch Logs 中创建日志组。配置VPC流日志，将日志数据发送到日志组。使用 Amazon Kinesis Data Firehose 将日志从日志组流式传输到 OpenSearch Service。",
+          "en": "Create a log group in Amazon CloudWatch Logs. Configure VPC Flow Logs to send the log data to the log group. Use Amazon Kinesis Data Firehose to stream the logs from the log group to OpenSearch Service."
+        },
+        "C": {
+          "zh": "在 AWS CloudTrail 中创建跟踪。配置VPC流日志，将日志数据发送到路径。使用 Amazon Kinesis Data Streams 将日志从跟踪流式传输到 OpenSearch Service。",
+          "en": "Create a trail in AWS CloudTrail. Configure VPC Flow Logs to send the log data to the trail. Use Amazon Kinesis Data Streams to stream the logs from the trail to OpenSearch Service."
+        },
+        "D": {
+          "zh": "在 AWS CloudTrail 中创建跟踪。配置VPC流日志，将日志数据发送到路径。使用 Amazon Kinesis Data Firehose 将日志从跟踪流式传输到 OpenSearch Service。",
+          "en": "Create a trail in AWS CloudTrail. Configure VPC Flow Logs to send the log data to the trail. Use Amazon Kinesis Data Firehose to stream the logs from the trail to OpenSearch Service."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析： VPC Flow Logs 可以将日志发送到 CloudWatch Logs，但使用 Amazon Kinesis Data Streams 进行流式传输并不是最佳选择，因为 Kinesis Data Streams 需要额外的开发工作来处理数据流，而问题需要将其直接发送到 OpenSearch Service。",
+          "en": "Incorrect. Technical reason: Technical analysis: VPC Flow Logs can send logs to CloudWatch Logs, but using Amazon Kinesis Data Streams for streaming is not the best choice because Kinesis Data Streams requires additional development work to process the data stream, and the question requires sending it directly to OpenSearch Service."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析： VPC Flow Logs 可以将场日志发送到 CloudWatch Logs。 Kinesis Data Firehose 是一种托管服务，专门设计用于将数据流式传输到目标服务（例如 OpenSearch 服务），支持无缝集成。",
+          "en": "Correct. Technical reason: Technical analysis: VPC Flow Logs can send farm logs to CloudWatch Logs. Kinesis Data Firehose is a hosting service specially designed to stream data to target services (such as OpenSearch Service), supporting seamless integration."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析： VPC Flow Logs无法直接将日志发送到CloudTrail。 CloudTrail主要用于记录API调用日志，而不是网络流量日志。",
+          "en": "Incorrect. Technical reason: Technical analysis: VPC Flow Logs cannot directly send logs to CloudTrail. CloudTrail is mainly used to record API call logs, not network traffic logs."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：与选项C一样， VPC Flow Logs无法将场日志直接发送到CloudTrail，因此该选项不满足第一步的要求。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Like Option C, VPC Flow Logs cannot send farm logs directly to CloudTrail, so this option does not meet the requirements of the first step."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon CloudWatch Logs 中创建日志组。配置VPC流日志，将日志数据发送到日志组。使用 Amazon Kinesis Data Firehose 将日志从日志组流式传输到 OpenSearch Service。",
+        "en": "B. Create a log group in Amazon CloudWatch Logs. Configure VPC Flow Logs to send the log data to the log group. Use Amazon Kinesis Data Firehose to stream the logs from the log group to OpenSearch Service."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (91%) 9%。热门讨论与考点摘要：技术分析： VPC Flow Logs 可以将场日志发送到 CloudWatch Logs。 Kinesis Data Firehose 是一种托管服务，专门设计用于将数据流式传输到目标服务（例如 OpenSearch 服务），支持无缝集成。",
+        "en": "Community vote as displayed: B (91%) 9%. Popular discussion and key point summary: Technical analysis: VPC Flow Logs can send farm logs to CloudWatch Logs. Kinesis Data Firehose is a hosting service specially designed to stream data to target services (such as OpenSearch Service), supporting seamless integration."
+      }
+    },
+    {
+      "question_no": 677,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在开发一个将在生产 Amazon Elastic Kubernetes Service (Amazon EKS) 集群上运行的应用程序。 EKS 集群具有使用按需型实例调配的托管节点组。该公司需要一个专用的 EKS 集群来进行开发工作。该公司将不经常使用开发集群来测试应用程序的弹性。 EKS 集群必须管理所有节点。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company is developing an application that will run on a production Amazon Elastic Kubernetes Service (Amazon EKS) cluster. The EKS cluster has managed node groups that are provisioned with On-Demand Instances. The company needs a dedicated EKS cluster for development work. The company will use the development cluster infrequently to test the resiliency of the application. The EKS cluster must manage all the nodes. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建仅包含 竞价型实例的托管节点组。",
+          "en": "Create a managed node group that contains only Spot Instances."
+        },
+        "B": {
+          "zh": "创建两个受管节点组。为一个节点组配置按需型实例。使用 竞价型实例配置第二个节点组。",
+          "en": "Create two managed node groups. Provision one node group with On-Demand Instances. Provision the second node group with Spot Instances."
+        },
+        "C": {
+          "zh": "创建具有使用 竞价型实例的启动配置的 Auto Scaling 组。配置用户数据以将节点添加到 EKS 集群。",
+          "en": "Create an Auto Scaling group that has a launch configuration that uses Spot Instances. Configure the user data to add the nodes to the EKS cluster."
+        },
+        "D": {
+          "zh": "创建仅包含按需型实例的托管节点组。",
+          "en": "Create a managed node group that contains only On-Demand Instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "B": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建两个受管节点组。为一个节点组配置按需型实例。使用 竞价型实例配置第二个节点组。",
+        "en": "B. Create two managed node groups. Provision one node group with On-Demand Instances. Provision the second node group with Spot Instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (51%) A (46%) 2%。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+        "en": "Community vote as displayed: B (51%) A (46%) 2%. Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+      }
+    },
+    {
+      "question_no": 678,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司将敏感数据存储在 Amazon S3 中。解决方案架构师需要创建加密解决方案。公司需要完全控制用户以最小的努力创建、轮换和禁用加密密钥的能力，以处理任何必须加密的数据。哪种解决方案可以满足这些要求？",
+        "en": "A company stores sensitive data in Amazon S3. A solutions architect needs to create an encryption solution. The company needs to fully control the ability of users to create, rotate, and disable encryption keys with minimal effort for any data that must be encrypted. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用带有 Amazon S3 托管加密密钥 (SSE-S3) 的默认服务器端加密来存储敏感数据。",
+          "en": "Use default server-side encryption with Amazon S3 managed encryption keys (SSE-S3) to store the sensitive data."
+        },
+        "B": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 创建客户托管密钥。使用新密钥通过使用 AWS KMS 密钥 (SSE-KMS) 进行服务器端加密来加密 S3 对象。",
+          "en": "Create a customer managed key by using AWS Key Management Service (AWS KMS). Use the new key to encrypt the S3 objects by using server-side encryption with AWS KMS keys (SSE-KMS)."
+        },
+        "C": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 创建 AWS 托管密钥。使用新密钥通过使用 AWS KMS 密钥 (SSE-KMS) 进行服务器端加密来加密 S3 对象。",
+          "en": "Create an AWS managed key by using AWS Key Management Service (AWS KMS). Use the new key to encrypt the S3 objects by using server-side encryption with AWS KMS keys (SSE-KMS)."
+        },
+        "D": {
+          "zh": "将 S3 对象下载到 Amazon EC2 实例。使用客户管理的密钥加密对象。将加密的对象上传回 Amazon S3。",
+          "en": "Download S3 objects to an Amazon EC2 instance. Encrypt the objects by using customer managed keys. Upload the encrypted objects back into Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用默认服务器端加密和 Amazon S3 托管加密密钥 (SSE-S3) 进行全面分析：此选项使用 Amazon S3 托管加密密钥 (SSE-S3)，但公司要求控制创建、轮换和撤销密钥的能力。 SSE-S3不允许用户完全控制密钥，因此该选项不满足要求。",
+          "en": "Incorrect. Technical reason: Full analysis using default server-side encryption and Amazon S3-managed encryption keys (SSE-S3): This option uses Amazon S3-managed encryption keys (SSE-S3), but company requirements control the ability to create, rotate, and revoke keys. SSE-S3 does not allow the user full control over the keys, so this option does not meet the requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：使用 AWS Key Management Service (AWS KMS) 创建客户管理的密钥并使用服务器端加密和 AWS KMS 密钥 (SSE-KMS) 使用新密钥来加密 S3 对象 分析：此选项使用 AWS KMS 创建客户管理的密钥 (Customer Managed Key) 并使用 SSE-KMS 加密 S3 对象。客户管理的密钥允许用户完全控制密钥创建、轮换以及禁用密钥的能力，符合公司要求。",
+          "en": "Correct. Technical reason: Use AWS Key Management Service (AWS KMS) to create a customer-managed key and encrypt the S3 object with server-side encryption and an AWS KMS key (SSE-KMS) using the new key Analysis: This option uses AWS KMS to create a customer-managed key (Customer Managed Key) and encrypt the S3 object with SSE-KMS. Customer-managed keys allow users full control over key creation, rotation and the ability to disable keys, consistent with company requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 AWS Key Management Service (AWS KMS) 创建 AWS 托管密钥，并使用新密钥通过服务器端加密和 AWS KMS 加密 (SSE-KMS) 加密 S3 对象分析：此选项使用 AWS 托管密钥而不是客户管理的密钥。 AWS Managed Keys 由 AWS 管理，不为用户提供对创建、轮换和禁用密钥的完全控制，因此不满足公司的要求。",
+          "en": "Incorrect. Technical reason: Create an AWS Managed Key using AWS Key Management Service (AWS KMS) and encrypt S3 object analysis with server-side encryption and AWS KMS encryption (SSE-KMS) using a new key: This option uses an AWS Managed Key instead of a customer-managed key. AWS Managed Keys are managed by AWS and do not provide users with full control over creating, rotating, and disabling keys, and therefore do not meet the company's requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：将 S3 对象下载到 Amazon EC2 实例，使用客户管理的密钥加密该对象，然后将加密的对象重新上传到 Amazon S3 Analytics：此选项涉及手动加密过程，需要下载并重新上传数据，从而增加了复杂性和成本。该公司需要最小努力的解决方案，因此此选项不符合条件。",
+          "en": "Incorrect. Technical reason: Download the S3 object to an Amazon EC2 instance, encrypt the object using a customer-managed key, and then re-upload the encrypted object to Amazon S3 Analytics: This option involves a manual encryption process that requires downloading and re-uploading the data, adding complexity and cost. The company requires a minimal effort solution, so this option is not eligible."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Key Management Service (AWS KMS) 创建客户托管密钥。使用新密钥通过使用 AWS KMS 密钥 (SSE-KMS) 进行服务器端加密来加密 S3 对象。",
+        "en": "B. Create a customer managed key by using AWS Key Management Service (AWS KMS). Use the new key to encrypt the S3 objects by using server-side encryption with AWS KMS keys (SSE-KMS)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (96%) 4%。热门讨论与考点摘要：使用 AWS Key Management Service (AWS KMS) 创建客户管理的密钥并使用服务器端加密和 AWS KMS 密钥 (SSE-KMS) 使用新密钥来加密 S3 对象 分析：此选项使用 AWS KMS 创建客户管理的密钥 (Customer Managed Key) 并使用 SSE-KMS 加密 S3 对象。客户管理的密钥允许用户完全控制密钥创建、轮换以及禁用密钥的能力，符合公司要求。",
+        "en": "Community vote as displayed: B (96%) 4%. Popular discussion and key point summary: Use AWS Key Management Service (AWS KMS) to create a customer-managed key and encrypt the S3 object with server-side encryption and an AWS KMS key (SSE-KMS) using the new key Analysis: This option uses AWS KMS to create a customer-managed key (Customer Managed Key) and encrypt the S3 object with SSE-KMS. Customer-managed keys allow users full control over key creation, rotation and the ability to disable keys, consistent with company requirements."
+      }
+    },
+    {
+      "question_no": 679,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将其本地虚拟机 (VM) 备份到 AWS。该公司的备份解决方案将本地备份作为对象导出到 Amazon S3 存储桶。 S3 备份必须保留 30 天，并且必须在 30 天后自动删除。哪种步骤组合可以满足这些要求？ （选择三项。）",
+        "en": "A company wants to back up its on-premises virtual machines (VMs) to AWS. The company's backup solution exports on-premises backups to an Amazon S3 bucket as objects. The S3 backups must be retained for 30 days and must be automatically deleted after 30 days. Which combination of steps will meet these requirements? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "创建启用了 S3 对象锁定的 S3 存储桶。",
+          "en": "Create an S3 bucket that has S3 Object Lock enabled."
+        },
+        "B": {
+          "zh": "创建启用了对象版本控制的 S3 存储桶。",
+          "en": "Create an S3 bucket that has object versioning enabled."
+        },
+        "C": {
+          "zh": "为对象配置 30 天的默认保留期。",
+          "en": "Configure a default retention period of 30 days for the objects."
+        },
+        "D": {
+          "zh": "配置 S3 生命周期策略以保护对象 30 天。",
+          "en": "Configure an S3 Lifecycle policy to protect the objects for 30 days."
+        },
+        "E": {
+          "zh": "配置 S3 生命周期策略以在 30 天后使对象过期。",
+          "en": "Configure an S3 Lifecycle policy to expire the objects after 30 days."
+        },
+        "F": {
+          "zh": "配置备份解决方案以标记具有 30 天保留期的对象",
+          "en": "Configure the backup solution to tag the objects with a 30-day retention period"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：正确。 S3对象锁可以保证对象在指定的保留期限内不会被删除或覆盖，满足问题所需的备份保护要求。",
+          "en": "Correct. Technical reason: Correct. S3 object lock can ensure that objects will not be deleted or overwritten within the specified retention period, meeting the backup protection requirements required by the problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：错误。对象版本控制主要用于保留对象的多个版本，但问题没有提到版本控制功能的需要。",
+          "en": "Incorrect. Technical reason: Error. Object versioning is mainly used to keep multiple versions of objects, but the question does not mention the need for versioning functionality."
+        },
+        "C": {
+          "zh": "正確。技术原因：正确。配置默认的 30 天保留期可确保对象在 30 天内受到保护并满足问题要求。",
+          "en": "Correct. Technical reason: Correct. Configuring a default 30-day retention period ensures that objects are protected and issue requirements are met for 30 days."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：错误。生命周期策略用于管理对象的存储和删除，而不是保护对象不被删除。",
+          "en": "Incorrect. Technical reason: Error. Lifecycle policies are used to manage the storage and deletion of objects, not to protect objects from being deleted."
+        },
+        "E": {
+          "zh": "正確。技术原因：正确。生命周期策略可以自动删除对象，如果满足问题要求，30天后会自动删除。",
+          "en": "Correct. Technical reason: Correct. The lifecycle policy can automatically delete objects, and if the problem requirements are met, they will be automatically deleted after 30 days."
+        },
+        "F": {
+          "zh": "錯誤。技术原因：错误。题目并没有提到需要标签来实现保留期管理，而且标签本身并不直接保护或删除对象。",
+          "en": "Incorrect. Technical reason: Error. The title does not mention the need for labels to achieve retention period management, and labels themselves do not directly protect or delete objects."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 创建启用了 S3 对象锁定的 S3 存储桶。；C. 为对象配置 30 天的默认保留期。；E. 配置 S3 生命周期策略以在 30 天后使对象过期。",
+        "en": "A. Create an S3 bucket that has S3 Object Lock enabled.; C. Configure a default retention period of 30 days for the objects.; E. Configure an S3 Lifecycle policy to expire the objects after 30 days."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： ACE (60%) ADE (23%) Other。热门讨论与考点摘要：正确。 S3对象锁可以保证对象在指定的保留期限内不会被删除或覆盖，满足问题所需的备份保护要求。；正确。配置默认的 30 天保留期可确保对象在 30 天内受到保护并满足问题要求。；正确。生命周期策略可以自动删除对象，如果满足问题要求，30天后会自动删除。",
+        "en": "Community vote as displayed: ACE (60%) ADE (23%) Other. Popular discussion and key point summary: Correct. S3 object lock can ensure that objects will not be deleted or overwritten within the specified retention period, meeting the backup protection requirements required by the problem.; Correct. Configuring a default 30-day retention period ensures that objects are protected and issue requirements are met for 30 days.; Correct. The lifecycle policy can automatically delete objects, and if the problem requirements are met, they will be automatically deleted after 30 days."
+      }
+    },
+    {
+      "question_no": 680,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师需要将文件从 Amazon S3 存储桶复制到 Amazon Elastic File System (Amazon EFS) 文件系统和另一个 S3 存储桶。必须连续复制文件。新文件会一致添加到原始 S3 存储桶中。仅当源文件发生更改时，才应覆盖复制的文件。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A solutions architect needs to copy files from an Amazon S3 bucket to an Amazon Elastic File System (Amazon EFS) file system and another S3 bucket. The files must be copied continuously. New files are added to the original S3 bucket consistently. The copied files should be overwritten only if the source file changes. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "为目标 S3 存储桶和 EFS 文件系统创建 AWS DataSync 位置。为目标 S3 存储桶和 EFS 文件系统创建任务。将传输模式设置为仅传输已更改的数据。",
+          "en": "Create an AWS DataSync location for both the destination S3 bucket and the EFS file system. Create a task for the destination S3 bucket and the EFS file system. Set the transfer mode to transfer only data that has changed."
+        },
+        "B": {
+          "zh": "创建 AWS Lambda 函数。将文件系统挂载到该函数。设置 S3 事件通知，以便在 Amazon S3 中创建和更改文件时调用该函数。配置将文件复制到文件系统和目标S3存储桶的功能。",
+          "en": "Create an AWS Lambda function. Mount the file system to the function. Set up an S3 event notification to invoke the function when files are created and changed in Amazon S3. Configure the function to copy files to the file system and the destination S3 bucket."
+        },
+        "C": {
+          "zh": "为目标 S3 存储桶和 EFS 文件系统创建 AWS DataSync 位置。为目标 S3 存储桶和 EFS 文件系统创建任务。设置传输模式以传输所有数据。",
+          "en": "Create an AWS DataSync location for both the destination S3 bucket and the EFS file system. Create a task for the destination S3 bucket and the EFS file system. Set the transfer mode to transfer all data."
+        },
+        "D": {
+          "zh": "在与文件系统相同的 VPC 中启动 Amazon EC2 实例。挂载文件系统。创建一个脚本，定期将源 S3 存储桶中更改的所有对象同步到目标 S3 存储桶和已挂载的文件系统。",
+          "en": "Launch an Amazon EC2 instance in the same VPC as the file system. Mount the file system. Create a script to routinely synchronize all objects that changed in the origin S3 bucket to the destination S3 bucket and the mounted file system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：分析： AWS DataSync是专门为高效数据同步而设计的服务，支持S3和EFS之间的数据传输。将传输模式设置为“仅传输更改的数据”可以满足问题的要求，即仅覆盖源文件中的更改。该方案运行成本低，完全满足问题要求。",
+          "en": "Correct. Technical reason: Analysis: AWS DataSync is a service specifically designed for efficient data synchronization, supporting data transfer between S3 and EFS. Setting the transfer mode to \"Transfer changed data only\" satisfies the requirement of the question, i.e. only changes in the source file will be overwritten. This solution has low operating costs and fully meets the problem requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：使用Lambda函数和S3事件的知识可以实现文件复制，但需要编写手动代码来处理逻辑。将文件加载到 Lambda 函数会增加复杂性和操作开销。此选项具有较高的运营开销，并且不是最佳选择。",
+          "en": "Incorrect. Technical reason: Analysis: File copying can be achieved using knowledge of Lambda functions and S3 events, but manual code needs to be written to handle the logic. Loading files into a Lambda function adds complexity and operational overhead. This option has high operational overhead and is not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：将传输模式设置为“传输所有数据”会导致每次都复制所有文件，而不仅仅是更改的文件。该选项不满足问题的要求，因为它增加了不必要的传输开销。",
+          "en": "Incorrect. Technical reason: Analysis: Setting the transfer mode to \"Transfer all data\" causes all files to be copied every time, not just the changed files. This option does not meet the requirements of the question because it adds unnecessary transmission overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：使用EC2实例和脚本可以实现文件同步，但脚本需要手动编写和维护。此选项具有较高的运营开销，并且不是最佳选择。",
+          "en": "Incorrect. Technical reason: Analysis: File synchronization can be achieved using EC2 instances and scripts, but scripts need to be written and maintained manually. This option has high operational overhead and is not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为目标 S3 存储桶和 EFS 文件系统创建 AWS DataSync 位置。为目标 S3 存储桶和 EFS 文件系统创建任务。将传输模式设置为仅传输已更改的数据。",
+        "en": "A. Create an AWS DataSync location for both the destination S3 bucket and the EFS file system. Create a task for the destination S3 bucket and the EFS file system. Set the transfer mode to transfer only data that has changed."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：分析： AWS DataSync是专门为高效数据同步而设计的服务，支持S3和EFS之间的数据传输。将传输模式设置为“仅传输更改的数据”可以满足问题的要求，即仅覆盖源文件中的更改。该方案运行成本低，完全满足问题要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Analysis: AWS DataSync is a service specifically designed for efficient data synchronization, supporting data transfer between S3 and EFS. Setting the transfer mode to \"Transfer changed data only\" satisfies the requirement of the question, i.e. only changes in the source file will be overwritten. This solution has low operating costs and fully meets the problem requirements."
+      }
+    },
+    {
+      "question_no": 681,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon EC2 实例并将数据存储在 Amazon Elastic Block Store (Amazon EBS) 卷上。公司必须确保使用 AWS Key Management Service (AWS KMS) 对所有静态数据进行加密。公司必须能够控制加密密钥的轮换。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company uses Amazon EC2 instances and stores data on Amazon Elastic Block Store (Amazon EBS) volumes. The company must ensure that all data is encrypted at rest by using AWS Key Management Service (AWS KMS). The company must be able to control rotation of the encryption keys. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建客户管理的密钥。使用密钥加密 EBS 卷。",
+          "en": "Create a customer managed key. Use the key to encrypt the EBS volumes."
+        },
+        "B": {
+          "zh": "使用 AWS 托管密钥加密 EBS 卷。使用密钥配置自动密钥轮换。",
+          "en": "Use an AWS managed key to encrypt the EBS volumes. Use the key to configure automatic key rotation."
+        },
+        "C": {
+          "zh": "使用导入的密钥材料创建外部 KMS 密钥。使用密钥加密 EBS 卷。",
+          "en": "Create an external KMS key with imported key material. Use the key to encrypt the EBS volumes."
+        },
+        "D": {
+          "zh": "使用 AWS 拥有的密钥来加密 EBS 卷。",
+          "en": "Use an AWS owned key to encrypt the EBS volumes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：客户管理密钥是由用户创建和管理的 KMS 密钥。用户可以完全控制密钥的生命周期，包括实施加密密钥轮换。合规性：用户可以控制密钥轮换并确保数据加密符合要求。运营开销低： AWS 提供用户只需启用的自动密钥轮换。",
+          "en": "Correct. Technical reason: Customer Managed Key is a KMS key created and managed by the user. The user can fully control the life cycle of the key, including implementing encryption key rotation. Compliance: Users can control key rotation and ensure data encryption complies with requirements. Low operational overhead: AWS provides automatic key rotation that users simply enable."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS 托管密钥是由 AWS 创建和管理的密钥，用户无法控制密钥轮换。未满足要求：该问题明确要求用户控制的密钥轮换，但 AWS 托管密钥不支持用户控制的轮换。",
+          "en": "Incorrect. Technical reason: AWS managed keys are keys that are created and managed by AWS, and the user has no control over key rotation. Requirements not met: The question explicitly requires user-controlled key rotation, but AWS managed keys do not support user-controlled rotation."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然导入的密钥材料可用于加密，但这会增加操作复杂性，因为用户需要管理密钥材料的导入和生命周期。不满足要求：该问题需要最小的运营开销，导入关键材料会增加管理复杂性。",
+          "en": "Incorrect. Technical reason: While imported key material can be used for encryption, this increases operational complexity as the user needs to manage the import and lifecycle of the key material. Not meeting requirements: The problem requires minimal operational overhead and importing critical materials would add administrative complexity."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS 拥有的密钥完全由 AWS 管理，用户无法访问或控制它们。不满足要求：问题需要用户控制密钥轮换，但 AWS 拥有的密钥不支持用户控制。",
+          "en": "Incorrect. Technical reason: AWS-owned keys are fully managed by AWS and users have no access or control over them. Not meeting requirements: The question requires user control of key rotation, but AWS-owned keys do not support user control."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建客户管理的密钥。使用密钥加密 EBS 卷。",
+        "en": "A. Create a customer managed key. Use the key to encrypt the EBS volumes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (88%) 12%。热门讨论与考点摘要：客户管理密钥是由用户创建和管理的 KMS 密钥。用户可以完全控制密钥的生命周期，包括实施加密密钥轮换。合规性：用户可以控制密钥轮换并确保数据加密符合要求。运营开销低： AWS 提供用户只需启用的自动密钥轮换。",
+        "en": "Community vote as displayed: A (88%) 12%. Popular discussion and key point summary: Customer Managed Key is a KMS key created and managed by the user. The user can fully control the life cycle of the key, including implementing encryption key rotation. Compliance: Users can control key rotation and ensure data encryption complies with requirements. Low operational overhead: AWS provides automatic key rotation that users simply enable."
+      }
+    },
+    {
+      "question_no": 682,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要一种解决方案来对 Amazon EC2 实例执行静态数据加密。该解决方案必须自动识别不合规的资源并根据结果强制执行合规策略。哪种解决方案能够以最少的管理开销满足这些要求？",
+        "en": "A company needs a solution to enforce data encryption at rest on Amazon EC2 instances. The solution must automatically identify noncompliant resources and enforce compliance policies on findings. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用允许用户仅创建加密的 Amazon Elastic Block Store (Amazon EBS) 卷的 IAM 策略。使用 AWS Config 和 AWS Systems Manager 自动检测和修复未加密的 EBS 卷。",
+          "en": "Use an IAM policy that allows users to create only encrypted Amazon Elastic Block Store (Amazon EBS) volumes. Use AWS Config and AWS Systems Manager to automate the detection and remediation of unencrypted EBS volumes."
+        },
+        "B": {
+          "zh": "使用 AWS Key Management Service (AWS KMS) 管理对加密的 Amazon Elastic Block Store (Amazon EBS) 卷的访问。使用 AWS Lambda 和 Amazon EventBridge 自动检测和修复未加密的 EBS 卷。",
+          "en": "Use AWS Key Management Service (AWS KMS) to manage access to encrypted Amazon Elastic Block Store (Amazon EBS) volumes. Use AWS Lambda and Amazon EventBridge to automate the detection and remediation of unencrypted EBS volumes."
+        },
+        "C": {
+          "zh": "使用 Amazon Macie 检测未加密的 Amazon Elastic Block Store (Amazon EBS) 卷。使用 AWS Systems Manager 自动化规则自动加密现有和新的 EBS 卷。",
+          "en": "Use Amazon Macie to detect unencrypted Amazon Elastic Block Store (Amazon EBS) volumes. Use AWS Systems Manager Automation rules to automatically encrypt existing and new EBS volumes."
+        },
+        "D": {
+          "zh": "使用 Amazon Inspector 检测未加密的 Amazon Elastic Block Store (Amazon EBS) 卷。使用 AWS Systems Manager 自动化规则自动加密现有和新的 EBS 卷。",
+          "en": "Use Amazon inspector to detect unencrypted Amazon Elastic Block Store (Amazon EBS) volumes. Use AWS Systems Manager Automation rules to automatically encrypt existing and new EBS volumes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： IAM 策略可以限制用户仅创建加密的 EBS 卷，从而防止从源创建未加密的资源。正确： AWS Config 可以自动检测未加密的 EBS 卷并生成合规性报告。正确： AWS Systems Manager 可以自动执行修复操作以加密未加密的 EBS 卷。最小的管理开销：该解决方案通过现有的 AWS 服务实现自动化，减少了人工干预。",
+          "en": "Correct. Technical reason: IAM policies can restrict users to create only encrypted EBS volumes, preventing unencrypted resources from being created from the source. Correct: AWS Config can automatically detect unencrypted EBS volumes and generate compliance reports. Correct: AWS Systems Manager can automate remediation operations to encrypt unencrypted EBS volumes. Minimal management overhead: The solution is automated through existing AWS services, reducing manual intervention."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管 AWS KMS 可以管理加密密钥，但它本身并不检测未加密的 EBS 卷。错误：使用 AWS Lambda 和 EventBridge 需要额外的自定义代码和事件规则，这会增加管理开销。",
+          "en": "Incorrect. Technical reason: Although AWS KMS can manage encryption keys, it does not natively detect unencrypted EBS volumes. Error: Using AWS Lambda and EventBridge requires additional custom code and event rules, which increases management overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon Macie 主要设计用于检测敏感数据，而不是未加密的 EBS 卷。错误：该方案不适合EBS加密场景，增加了不必要的服务使用。",
+          "en": "Incorrect. Technical reason: Amazon Macie is primarily designed to detect sensitive data, not unencrypted EBS volumes. Error: This solution is not suitable for EBS encryption scenarios and increases unnecessary service usage."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon Inspector 主要用于检测安全漏洞和合规性问题，并不是专门为检测未加密的 EBS 卷而设计的。错误：该方案不适合EBS加密场景。",
+          "en": "Incorrect. Technical reason: Amazon Inspector is primarily used to detect security vulnerabilities and compliance issues and is not specifically designed to detect unencrypted EBS volumes. Error: This solution is not suitable for EBS encryption scenarios."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用允许用户仅创建加密的 Amazon Elastic Block Store (Amazon EBS) 卷的 IAM 策略。使用 AWS Config 和 AWS Systems Manager 自动检测和修复未加密的 EBS 卷。",
+        "en": "A. Use an IAM policy that allows users to create only encrypted Amazon Elastic Block Store (Amazon EBS) volumes. Use AWS Config and AWS Systems Manager to automate the detection and remediation of unencrypted EBS volumes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (96%) 4%。热门讨论与考点摘要： IAM 策略可以限制用户仅创建加密的 EBS 卷，从而防止从源创建未加密的资源。正确： AWS Config 可以自动检测未加密的 EBS 卷并生成合规性报告。正确： AWS Systems Manager 可以自动执行修复操作以加密未加密的 EBS 卷。最小的管理开销：该解决方案通过现有的 AWS 服务实现自动化，减少了人工干预。",
+        "en": "Community vote as displayed: A (96%) 4%. Popular discussion and key point summary: IAM policies can restrict users to create only encrypted EBS volumes, preventing unencrypted resources from being created from the source. Correct: AWS Config can automatically detect unencrypted EBS volumes and generate compliance reports. Correct: AWS Systems Manager can automate remediation operations to encrypt unencrypted EBS volumes. Minimal management overhead: The solution is automated through existing AWS services, reducing manual intervention."
+      }
+    },
+    {
+      "question_no": 683,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将其多层本地应用程序迁移到 AWS。该应用程序由单节点 MySQL 数据库和多节点 Web 层组成。公司必须尽量减少迁移期间对应用程序的更改。该公司希望在迁移后提高应用程序的弹性。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company is migrating its multi-tier on-premises application to AWS. The application consists of a single-node MySQL database and a multi-node web tier. The company must minimize changes to the application during the migration. The company wants to improve application resiliency after the migration. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Web 层迁移到应用程序负载均衡器后面的 Auto Scaling 组中的 Amazon EC2 实例。",
+          "en": "Migrate the web tier to Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer."
+        },
+        "B": {
+          "zh": "将数据库迁移到网络负载均衡器后面的 Auto Scaling 组中的 Amazon EC2 实例。",
+          "en": "Migrate the database to Amazon EC2 instances in an Auto Scaling group behind a Network Load Balancer."
+        },
+        "C": {
+          "zh": "将数据库迁移到 Amazon RDS 多可用区部署。",
+          "en": "Migrate the database to an Amazon RDS Multi-AZ deployment."
+        },
+        "D": {
+          "zh": "将 Web 层迁移到 AWS Lambda 函数。",
+          "en": "Migrate the web tier to an AWS Lambda function."
+        },
+        "E": {
+          "zh": "将数据库迁移到 Amazon DynamoDB 表。",
+          "en": "Migrate the database to an Amazon DynamoDB table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：将 Web 层迁移到 Auto Scaling 组中的 EC2 实例并将其放置在 Application Load Balancer 后面可以提高 Web 层的弹性和可用性。 Auto Scaling组可以根据流量动态调整实例数量，而ALB可以分配流量并提供高可用性。",
+          "en": "Correct. Technical reason: Migrating the web tier to EC2 instances in an Auto Scaling group and placing it behind an Application Load Balancer can increase the resiliency and availability of the web tier. Auto Scaling groups can dynamically adjust the number of instances based on traffic, while ALB can distribute traffic and provide high availability."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：数据库通常不适合放置在 Auto Scaling 组中，因为数据库需要网络共享，而 Auto Scaling 组中的实例不受网络限制。网络负载均衡器适合处理高性能网络流量，但不适合直接与高可用性数据库一起使用。",
+          "en": "Incorrect. Technical reason: Databases are generally not suitable for placement in Auto Scaling groups because databases require a network share, whereas instances in Auto Scaling groups are not network-restricted. Network load balancers are suitable for handling high-performance network traffic, but are not suitable for use directly with high-availability databases."
+        },
+        "C": {
+          "zh": "正確。技术原因： Amazon RDS多可用区部署提供数据库的高可用性和灾难恢复能力，满足问题需求。 RDS可以直接支持MySQL，无需对应用程序进行重大修改。",
+          "en": "Correct. Technical reason: Amazon RDS multi-availability zone deployment provides high availability and disaster recovery capabilities of the database to meet problem requirements. RDS can support MySQL directly without major modifications to the application."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Lambda 适用于无服务器架构，但题目要求“对应用程序进行最少的修改”。将 Web 层迁移到 Lambda 需要对应用程序进行大量封装。",
+          "en": "Incorrect. Technical reason: AWS Lambda is suitable for serverless architecture, but the title requires \"minimum modifications to the application.\" Migrating the web layer to Lambda requires significant encapsulation of the application."
+        },
+        "E": {
+          "zh": "錯誤。技术原因： DynamoDB 是一个 NoSQL 数据库，所讨论的数据库是 MySQL（关系数据库）。迁移到 DynamoDB 需要对您的应用程序进行重大修改。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database and the database in question is MySQL (relational database). Migrating to DynamoDB requires significant modifications to your application."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 将 Web 层迁移到应用程序负载均衡器后面的 Auto Scaling 组中的 Amazon EC2 实例。；C. 将数据库迁移到 Amazon RDS 多可用区部署。",
+        "en": "A. Migrate the web tier to Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer.; C. Migrate the database to an Amazon RDS Multi-AZ deployment."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AC (100%)。热门讨论与考点摘要：将 Web 层迁移到 Auto Scaling 组中的 EC2 实例并将其放置在 Application Load Balancer 后面可以提高 Web 层的弹性和可用性。 Auto Scaling组可以根据流量动态调整实例数量，而ALB可以分配流量并提供高可用性。； Amazon RDS多可用区部署提供数据库的高可用性和灾难恢复能力，满足问题需求。 RDS可以直接支持MySQL，无需对应用程序进行重大修改。",
+        "en": "Community vote as displayed: AC (100%). Popular discussion and key point summary: Migrating the web tier to EC2 instances in an Auto Scaling group and placing it behind an Application Load Balancer can increase the resiliency and availability of the web tier. Auto Scaling groups can dynamically adjust the number of instances based on traffic, while ALB can distribute traffic and provide high availability.; Amazon RDS multi-availability zone deployment provides high availability and disaster recovery capabilities of the database to meet problem requirements. RDS can support MySQL directly without major modifications to the application."
+      }
+    },
+    {
+      "question_no": 684,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将其 Web 应用程序从本地迁移到 AWS。该公司位于 eu-central-1 地区附近。由于法规原因，该公司无法在 eu-central-1 中启动其部分应用程序。该公司希望实现个位数毫秒的延迟。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to migrate its web applications from on premises to AWS. The company is located close to the eu-central-1 Region. Because of regulations, the company cannot launch some of its applications in eu-central-1. The company wants to achieve single-digit millisecond latency. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 eu-central-1 中部署应用程序。将公司的 VPC 从 eu-central-1 扩展到 Amazon CloudFront 中的边缘站点。",
+          "en": "Deploy the applications in eu-central-1. Extend the company’s VPC from eu-central-1 to an edge location in Amazon CloudFront."
+        },
+        "B": {
+          "zh": "通过将公司的 VPC 从 eu-central-1 扩展到所选本地区域，在 AWS 本地区域中部署应用程序。",
+          "en": "Deploy the applications in AWS Local Zones by extending the company's VPC from eu-central-1 to the chosen Local Zone."
+        },
+        "C": {
+          "zh": "在 eu-central-1 中部署应用程序。将公司的 VPC 从 eu-central-1 扩展到 Amazon CloudFront 中的区域边缘缓存。",
+          "en": "Deploy the applications in eu-central-1. Extend the company’s VPC from eu-central-1 to the regional edge caches in Amazon CloudFront."
+        },
+        "D": {
+          "zh": "通过将公司的 VPC 从 eu-central-1 扩展到所选的 Wavelength 区域，在 AWS Wavelength 区域中部署应用程序。",
+          "en": "Deploy the applications in AWS Wavelength Zones by extending the company’s VPC from eu-central-1 to the chosen Wavelength Zone."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： CloudFront 的边缘站点主要用于内容交付 (CDN)，而不是用于托管应用程序。它无法满足个位数毫秒延迟要求。",
+          "en": "Incorrect. Technical reason: CloudFront's edge locations are primarily used for content delivery (CDN), not for hosting applications. It cannot meet single-digit millisecond latency requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS 本地扩展区允许用户在靠近最终用户的区域运行应用程序，从而实现低延迟（个位数毫秒）。这符合题目要求。",
+          "en": "Correct. Technical reason: AWS Local Zones allow users to run applications in a region close to end users, achieving low latency (single digits milliseconds). This meets the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： CloudFront 的区域边缘缓存主要旨在优化内容分发的性能，而不是托管应用程序。它无法满足个位数毫秒延迟要求。",
+          "en": "Incorrect. Technical reason: CloudFront's regional edge caching is primarily designed to optimize the performance of content distribution, not hosting applications. It cannot meet single-digit millisecond latency requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Wavelength Zones主要应用于5G网络的边缘计算场景，适合移动设备的低延迟要求。该问题没有提及与5G或移动设备相关的要求，因此不适合这种场景。",
+          "en": "Incorrect. Technical reason: AWS Wavelength Zones is mainly used in edge computing scenarios of 5G networks and is suitable for the low latency requirements of mobile devices. The question does not mention requirements related to 5G or mobile devices, so it is not suitable for this scenario."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 通过将公司的 VPC 从 eu-central-1 扩展到所选本地区域，在 AWS 本地区域中部署应用程序。",
+        "en": "B. Deploy the applications in AWS Local Zones by extending the company's VPC from eu-central-1 to the chosen Local Zone."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (78%) D (22%)。热门讨论与考点摘要： AWS 本地扩展区允许用户在靠近最终用户的区域运行应用程序，从而实现低延迟（个位数毫秒）。这符合题目要求。",
+        "en": "Community vote as displayed: B (78%) D (22%). Popular discussion and key point summary: AWS Local Zones allow users to run applications in a region close to end users, achieving low latency (single digits milliseconds). This meets the question requirements."
+      }
+    },
+    {
+      "question_no": 685,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "某公司的电子商务网站的流量不可预测，并使用 AWS Lambda 函数直接访问私有 Amazon RDS for PostgreSQL 数据库实例。该公司希望维持可预测的数据库性能，并确保 Lambda 调用不会因连接过多而导致数据库过载。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A company’s ecommerce website has unpredictable traffic and uses AWS Lambda functions to directly access a private Amazon RDS for PostgreSQL DB instance. The company wants to maintain predictable database performance and ensure that the Lambda invocations do not overload the database with too many connections. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将客户端驱动程序指向 RDS 自定义端点。在 VPC 内部署 Lambda 函数。",
+          "en": "Point the client driver at an RDS custom endpoint. Deploy the Lambda functions inside a VPC."
+        },
+        "B": {
+          "zh": "将客户端驱动程序指向 RDS 代理端点。在 VPC 内部署 Lambda 函数。",
+          "en": "Point the client driver at an RDS proxy endpoint. Deploy the Lambda functions inside a VPC."
+        },
+        "C": {
+          "zh": "将客户端驱动程序指向 RDS 自定义端点。在 VPC 外部部署 Lambda 函数。",
+          "en": "Point the client driver at an RDS custom endpoint. Deploy the Lambda functions outside a VPC."
+        },
+        "D": {
+          "zh": "将客户端驱动程序指向 RDS 代理端点。在 VPC 外部部署 Lambda 函数。",
+          "en": "Point the client driver at an RDS proxy endpoint. Deploy the Lambda functions outside a VPC."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： RDS自定义端点无法解决数据库连接过载的问题。主要用于配置具体的读写流量，但不管理连接池。正确：在 VPC 内部署 Lambda 函数非常重要，因为 RDS 实例通常位于 VPC 内。",
+          "en": "Incorrect. Technical reason: RDS custom endpoints cannot solve the problem of database connection overload. It is mainly used to configure specific read and write traffic, but does not manage the connection pool. Correct: It is important to deploy your Lambda function within a VPC because RDS instances are typically located within a VPC."
+        },
+        "B": {
+          "zh": "正確。技术原因： RDS Proxy 可以管理数据库连接池，以减少 Lambda 函数对数据库的直接连接压力，避免过载。正确：在 VPC 内部署 Lambda 函数非常重要，因为 RDS 实例通常位于 VPC 内。",
+          "en": "Correct. Technical reason: RDS Proxy can manage database connection pools to reduce the direct connection pressure of Lambda functions on the database to avoid overload. Correct: It is important to deploy your Lambda function within a VPC because RDS instances are typically located within a VPC."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： RDS自定义端点无法解决数据库连接过载的问题。错误：部署在VPC外部的Lambda函数无法直接访问RDS实例，除非通过复杂的网络配置（例如NAT网关），这不符合最佳实践。",
+          "en": "Incorrect. Technical reason: RDS custom endpoints cannot solve the problem of database connection overload. Error: Lambda functions deployed outside the VPC cannot directly access RDS instances unless through complex network configuration (such as NAT gateway), which is not in line with best practices."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将客户端驱动程序指向 RDS 代理端点。在 VPC 内部署 Lambda 函数。",
+        "en": "B. Point the client driver at an RDS proxy endpoint. Deploy the Lambda functions inside a VPC."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： RDS Proxy 可以管理数据库连接池，以减少 Lambda 函数对数据库的直接连接压力，避免过载。正确：在 VPC 内部署 Lambda 函数非常重要，因为 RDS 实例通常位于 VPC 内。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: RDS Proxy can manage database connection pools to reduce the direct connection pressure of Lambda functions on the database to avoid overload. Correct: It is important to deploy your Lambda function within a VPC because RDS instances are typically located within a VPC."
+      }
+    },
+    {
+      "question_no": 686,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在创建一个应用程序。该公司将应用程序测试的数据存储在多个本地位置。该公司需要将本地位置连接到 AWS 云中 AWS 区域中的 VPC。明年账户和 VPC 的数量将会增加。网络架构必须简化新连接的管理，并且必须提供扩展能力。哪种解决方案能够以最少的管理开销满足这些要求？",
+        "en": "A company is creating an application. The company stores data from tests of the application in multiple on-premises locations. The company needs to connect the on-premises locations to VPCs in an AWS Region in the AWS Cloud. The number of accounts and VPCs will increase during the next year. The network architecture must simplify the administration of new connections and must provide the ability to scale. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 VPC 之间创建对等连接。在 VPC 和本地位置之间创建 VPN 连接。",
+          "en": "Create a peering connection between the VPCs. Create a VPN connection between the VPCs and the on-premises locations."
+        },
+        "B": {
+          "zh": "启动 Amazon EC2 实例。在实例上，包括使用 VPN 连接来连接所有 VPC 和本地位置的 VPN 软件。",
+          "en": "Launch an Amazon EC2 instance. On the instance, include VPN software that uses a VPN connection to connect all VPCs and on-premises locations."
+        },
+        "C": {
+          "zh": "创建中转网关。为 VPC 连接创建 VPC 连接。为本地连接创建 VPN 附件。",
+          "en": "Create a transit gateway. Create VPC attachments for the VPC connections. Create VPN attachments for the on-premises connections."
+        },
+        "D": {
+          "zh": "在本地位置和中央 VPC 之间创建 AWS Direct Connect 连接。通过对等连接将中心VPC与其他VPC连接起来。",
+          "en": "Create an AWS Direct Connect connection between the on-premises locations and a central VPC. Connect the central VPC to other VPCs by using peering connections."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：对等连接（VPC Peering）适用于两个VPC之间的直接连接，但随着VPC数量的增加，管理多个对等连接变得复杂。 VPN 连接连接本地位置和 VPC，但不会简化多个 VPC 之间连接的管理。该选项无法满足“简化管理”和“可扩展性”的要求，因此是一个错误。",
+          "en": "Incorrect. Technical reason: Peering connections (VPC Peering) are suitable for direct connections between two VPCs, but as the number of VPCs increases, managing multiple peering connections becomes complex. VPN connections connect on-premises locations and VPCs, but do not simplify management of connections between multiple VPCs. This option fails to meet the requirements of \"simplified management\" and \"scalability\" and is therefore a mistake."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：使用 EC2 实例运行 VPN 软件是一种手动管理的解决方案，会增加操作复杂性。该方式不具备自动伸缩能力，需要额外的实例管理工作。此选项不满足“最小管理开销”要求，因此是一个错误。",
+          "en": "Incorrect. Technical reason: Using EC2 instances to run VPN software is a manually managed solution that adds operational complexity. This method does not have automatic scaling capabilities and requires additional instance management work. This option does not meet the \"minimum administrative overhead\" requirement and is therefore an error."
+        },
+        "C": {
+          "zh": "正確。技术原因： Transit Gateway 是一种集中式网络解决方案，可简化多个 VPC 和本地位置之间的连接管理。通过VPC附着和VPN附着，可以轻松扩展网络架构，以满足未来的扩展需求。该选项满足“简化管理”和“可扩展性”的要求，因此是正确的。",
+          "en": "Correct. Technical reason: Transit Gateway is a centralized networking solution that simplifies management of connections between multiple VPCs and on-premises locations. Through VPC attachment and VPN attachment, the network architecture can be easily expanded to meet future expansion needs. This option meets the requirements of \"simplified management\" and \"scalability\" and is therefore correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：专线连接是一种高性能的连接方式，但仅适用于本地VPC与中心VPC之间。使用对等互连连接其他 VPC 会增加管理复杂性，尤其是随着 VPC 数量的增加。该选项不满足“简化管理”的要求，因此是一个错误。",
+          "en": "Incorrect. Technical reason: Dedicated line connection is a high-performance connection method, but it is only applicable between local and central VPC. Using peering to connect other VPCs increases management complexity, especially as the number of VPCs increases. This option does not meet the requirements of \"simplified administration\" and is therefore an error."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建中转网关。为 VPC 连接创建 VPC 连接。为本地连接创建 VPN 附件。",
+        "en": "C. Create a transit gateway. Create VPC attachments for the VPC connections. Create VPN attachments for the on-premises connections."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： Transit Gateway 是一种集中式网络解决方案，可简化多个 VPC 和本地位置之间的连接管理。通过VPC附着和VPN附着，可以轻松扩展网络架构，以满足未来的扩展需求。该选项满足“简化管理”和“可扩展性”的要求，因此是正确的。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Transit Gateway is a centralized networking solution that simplifies management of connections between multiple VPCs and on-premises locations. Through VPC attachment and VPN attachment, the network architecture can be easily expanded to meet future expansion needs. This option meets the requirements of \"simplified management\" and \"scalability\" and is therefore correct."
+      }
+    },
+    {
+      "question_no": 687,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "使用 AWS 的公司需要一种解决方案来预测每月制造流程所需的资源。该解决方案必须使用当前存储在 Amazon S3 存储桶中的历史值。该公司没有机器学习 (ML) 经验，希望使用托管服务进行培训和预测。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company that uses AWS needs a solution to predict the resources needed for manufacturing processes each month. The solution must use historical values that are currently stored in an Amazon S3 bucket. The company has no machine learning (ML) experience and wants to use a managed service for the training and predictions. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "部署 Amazon SageMaker 模型。创建用于推理的 SageMaker 端点。",
+          "en": "Deploy an Amazon SageMaker model. Create a SageMaker endpoint for inference."
+        },
+        "B": {
+          "zh": "使用 Amazon SageMaker 通过使用 S3 存储桶中的历史数据来训练模型。",
+          "en": "Use Amazon SageMaker to train a model by using the historical data in the S3 bucket."
+        },
+        "C": {
+          "zh": "使用函数 URL 配置 AWS Lambda 函数，该函数使用 Amazon SageMaker 终端节点根据输入创建预测。",
+          "en": "Configure an AWS Lambda function with a function URL that uses Amazon SageMaker endpoints to create predictions based on the inputs."
+        },
+        "D": {
+          "zh": "使用函数 URL 配置 AWS Lambda 函数，该函数使用 Amazon Forecast 预测器根据输入创建预测。",
+          "en": "Configure an AWS Lambda function with a function URL that uses an Amazon Forecast predictor to create a prediction based on the inputs."
+        },
+        "E": {
+          "zh": "使用 S3 存储桶中的历史数据训练 Amazon Forsecast 预测器。",
+          "en": "Train an Amazon Forsecast predictor by using the historical data in the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously satisfy the critical performance, availability, security, cost, or operational constraints in the problem and is therefore not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        },
+        "E": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "D",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "D. 使用函数 URL 配置 AWS Lambda 函数，该函数使用 Amazon Forecast 预测器根据输入创建预测。；E. 使用 S3 存储桶中的历史数据训练 Amazon Forsecast 预测器。",
+        "en": "D. Configure an AWS Lambda function with a function URL that uses an Amazon Forecast predictor to create a prediction based on the inputs.; E. Train an Amazon Forsecast predictor by using the historical data in the S3 bucket."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AB (46%) DE (46%) 4%。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。；该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+        "en": "Community vote as displayed: AB (46%) DE (46%) 4%. Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service.; The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+      }
+    },
+    {
+      "question_no": 688,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司管理 AWS Organizations 中的 AWS 账户。为账户配置 AWS IAM Identity Center (AWS Single Sign-On) 和 AWS Control Tower。该公司希望管理所有账户的多个用户权限。这些权限将由多个 IAM 用户使用，并且必须在开发人员和管理员团队之间分配。每个团队需要不同的权限。该公司想要一个包含两个团队都雇用的新用户的解决方案。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company manages AWS accounts in AWS Organizations. AWS IAM Identity Center (AWS Single Sign-On) and AWS Control Tower are configured for the accounts. The company wants to manage multiple user permissions across all the accounts. The permissions will be used by multiple IAM users and must be split between the developer and administrator teams. Each team requires different permissions. The company wants a solution that includes new users that are hired on both teams. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 IAM Identity Center 中为每个账户创建单独的用户。在 IAM Identity Center 中创建单独的开发人员和管理员组。将用户分配到适当的组。为每个组创建自定义 IAM 策略以设置细粒度的权限。",
+          "en": "Create individual users in IAM Identity Center for each account. Create separate developer and administrator groups in IAM Identity Center. Assign the users to the appropriate groups. Create a custom IAM policy for each group to set fine-grained permissions."
+        },
+        "B": {
+          "zh": "在 IAM Identity Center 中为每个账户创建单独的用户。在 IAM Identity Center 中创建单独的开发人员和管理员组。将用户分配到适当的组。根据需要将 AWS 托管 IAM 策略附加到每个用户以获得细粒度的权限。",
+          "en": "Create individual users in IAM Identity Center for each account. Create separate developer and administrator groups in IAM Identity Center. Assign the users to the appropriate groups. Attach AWS managed IAM policies to each user as needed for fine-grained permissions."
+        },
+        "C": {
+          "zh": "在 IAM Identity Center 中创建个人用户。在 IAM Identity Center 中创建新的开发人员和管理员组。创建新的权限集，其中包括每个组的适当 IAM 策略。将新组分配给适当的账户。将新权限集分配给新组。当雇用新用户时，将他们添加到适当的组中。",
+          "en": "Create individual users in IAM Identity Center. Create new developer and administrator groups in IAM Identity Center. Create new permission sets that include the appropriate IAM policies for each group. Assign the new groups to the appropriate accounts. Assign the new permission sets to the new groups. When new users are hired, add them to the appropriate group."
+        },
+        "D": {
+          "zh": "在 IAM Identity Center 中创建个人用户。创建新的权限集，其中包括适合每个用户的 IAM 策略。将用户分配到适当的账户。向特定账户内的用户授予额外的 IAM 权限。当雇用新用户时，将其添加到 IAM Identity Center 并将其分配给账户。",
+          "en": "Create individual users in IAM Identity Center. Create new permission sets that include the appropriate IAM policies for each user. Assign the users to the appropriate accounts. Grant additional IAM permissions to the users from within specific accounts. When new users are hired, add them to IAM Identity Center and assign them to the accounts."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：未能利用权限集的功能可能会导致管理复杂性增加。",
+          "en": "Incorrect. Technical reason: Failure to leverage the capabilities of permission sets can lead to increased management complexity."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：如果无法利用权限集，直接管理用户权限就无法满足最低运营开销要求。",
+          "en": "Incorrect. Technical reason: Without the ability to leverage permission sets, directly managing user permissions cannot meet minimum operational overhead requirements."
+        },
+        "C": {
+          "zh": "正確。技术原因：权限集提供权限的集中管理，并且使用组允许您将新用户添加到组中，而无需执行其他操作。",
+          "en": "Correct. Technical reason: Permission sets provide centralized management of permissions, and using groups allows you to add new users to groups without additional action."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：没有使用组（Groups）的功能，在添加新用户时需要额外的权限配置，增加了操作开销。",
+          "en": "Incorrect. Technical reason: There is no function to use groups (Groups), which requires additional permission configuration when adding new users, increasing operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 IAM Identity Center 中创建个人用户。在 IAM Identity Center 中创建新的开发人员和管理员组。创建新的权限集，其中包括每个组的适当 IAM 策略。将新组分配给适当的账户。将新权限集分配给新组。当雇用新用户时，将他们添加到适当的组中。",
+        "en": "C. Create individual users in IAM Identity Center. Create new developer and administrator groups in IAM Identity Center. Create new permission sets that include the appropriate IAM policies for each group. Assign the new groups to the appropriate accounts. Assign the new permission sets to the new groups. When new users are hired, add them to the appropriate group."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：权限集提供权限的集中管理，并且使用组允许您将新用户添加到组中，而无需执行其他操作。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Permission sets provide centralized management of permissions, and using groups allows you to add new users to groups without additional action."
+      }
+    },
+    {
+      "question_no": 689,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望标准化其 Amazon Elastic Block Store (Amazon EBS) 卷加密策略。该公司还希望最大限度地减少操作卷加密检查所需的成本和配置工作。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to standardize its Amazon Elastic Block Store (Amazon EBS) volume encryption strategy. The company also wants to minimize the cost and configuration effort required to operate the volume encryption check. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "编写 API 调用来描述 EBS 卷并确认 EBS 卷已加密。使用 Amazon EventBridge 安排 AWS Lambda 函数来运行 API 调用。",
+          "en": "Write API calls to describe the EBS volumes and to confirm the EBS volumes are encrypted. Use Amazon EventBridge to schedule an AWS Lambda function to run the API calls."
+        },
+        "B": {
+          "zh": "编写 API 调用来描述 EBS 卷并确认 EBS 卷已加密。对 AWS Fargate 任务运行 API 调用。",
+          "en": "Write API calls to describe the EBS volumes and to confirm the EBS volumes are encrypted. Run the API calls on an AWS Fargate task."
+        },
+        "C": {
+          "zh": "创建需要在 EBS 卷上使用标签的 AWS Identity and Access Management (IAM) 策略。使用 AWS Cost Explorer 显示未正确标记的资源。手动加密未标记的资源。",
+          "en": "Create an AWS Identity and Access Management (IAM) policy that requires the use of tags on EBS volumes. Use AWS Cost Explorer to display resources that are not properly tagged. Encrypt the untagged resources manually."
+        },
+        "D": {
+          "zh": "为 Amazon EBS 创建 AWS Config 规则，以评估卷是否已加密，并在卷未加密时标记该卷。",
+          "en": "Create an AWS Config rule for Amazon EBS to evaluate if a volume is encrypted and to flag the volume if it is not encrypted."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：编写 API 调用来描述 EBS 卷并确认 EBS 卷已加密。使用 Amazon EventBridge 安排 AWS Lambda 函数来运行 API 调用。技术分析：虽然可以通过API调用检查EBS卷是否加密，并使用EventBridge调度Lambda函数，但这种方法需要额外的开发工作和维护成本，不符合“最小化成本和配置工作量”的要求。",
+          "en": "Incorrect. Technical reason: Write API calls to describe the EBS volume and confirm that the EBS volume is encrypted. Use Amazon EventBridge to schedule an AWS Lambda function to run API calls. Technical analysis: Although it is possible to check whether the EBS volume is encrypted through API calls and use EventBridge to schedule Lambda functions, this method requires additional development work and maintenance costs and does not meet the requirement of \"minimizing cost and configuration effort\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：编写 API 调用来描述 EBS 卷并确认 EBS 卷已加密。对 AWS Fargate 任务运行 API 调用。技术分析：与选项A类似，该方法也需要额外的开发工作和维护成本，并且还引入了Fargate任务的运行成本，不符合问题的要求。",
+          "en": "Incorrect. Technical reason: Write API calls to describe the EBS volume and confirm that the EBS volume is encrypted. Run API calls to AWS Fargate tasks. Technical analysis: Similar to option A, this method also requires additional development work and maintenance costs, and also introduces the running cost of the Fargate task, which does not meet the requirements of the question."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：创建需要 EBS 卷上的标签的 AWS Identity and Access Management (IAM) 策略。使用 AWS Cost Explorer 显示未正确标记的资源。手动加密未标记的资源。技术分析：该选项不符合问题的要求，因为它依赖于对未标记资源的手动加密，无法自动进行加密检查，并且无法直接评估EBS卷是否加密。",
+          "en": "Incorrect. Technical reason: Create an AWS Identity and Access Management (IAM) policy that requires tags on EBS volumes. Use AWS Cost Explorer to display resources that are not tagged correctly. Manually encrypt untagged resources. Technical Analysis: This option does not meet the requirements of the question because it relies on manual encryption of untagged resources, cannot automate encryption checks, and cannot directly assess whether the EBS volume is encrypted."
+        },
+        "D": {
+          "zh": "正確。技术原因：创建一条 AWS Config 规则，用于评估卷是否已加密，如果未加密则标记该卷。技术分析： AWS Config 规则可以自动评估 EBS 卷是否加密并将该卷标记为未加密。该方法不需要额外的开发工作，成本低，完全满足问题的要求。",
+          "en": "Correct. Technical reason: Create an AWS Config rule that evaluates whether a volume is encrypted and flags the volume if it is not. Technical Analysis: AWS Config rules can automatically evaluate whether an EBS volume is encrypted and mark the volume as unencrypted. This method does not require additional development work, is low cost, and fully meets the requirements of the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 为 Amazon EBS 创建 AWS Config 规则，以评估卷是否已加密，并在卷未加密时标记该卷。",
+        "en": "D. Create an AWS Config rule for Amazon EBS to evaluate if a volume is encrypted and to flag the volume if it is not encrypted."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：创建一条 AWS Config 规则，用于评估卷是否已加密，如果未加密则标记该卷。技术分析： AWS Config 规则可以自动评估 EBS 卷是否加密并将该卷标记为未加密。该方法不需要额外的开发工作，成本低，完全满足问题的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Create an AWS Config rule that evaluates whether a volume is encrypted and flags the volume if it is not. Technical Analysis: AWS Config rules can automatically evaluate whether an EBS volume is encrypted and mark the volume as unencrypted. This method does not require additional development work, is low cost, and fully meets the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 690,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司定期将 GB 大小的文件上传到 Amazon S3。该公司上传文件后，使用一组 Amazon EC2 竞价型实例对文件格式进行转码。当公司将数据从本地数据中心上传到 Amazon S3 以及公司将数据从 Amazon S3 下载到 EC2 实例时，公司需要扩展吞吐量。哪些解决方案可以满足这些要求？ （选择两个。）",
+        "en": "A company regularly uploads GB-sized files to Amazon S3. After the company uploads the files, the company uses a fleet of Amazon EC2 Spot Instances to transcode the file format. The company needs to scale throughput when the company uploads data from the on-premises data center to Amazon S3 and when the company downloads data from Amazon S3 to the EC2 instances. Which solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 S3 存储桶访问点，而不是直接访问 S3 存储桶。",
+          "en": "Use the S3 bucket access point instead of accessing the S3 bucket directly."
+        },
+        "B": {
+          "zh": "将文件上传到多个 S3 存储桶中。",
+          "en": "Upload the files into multiple S3 buckets."
+        },
+        "C": {
+          "zh": "使用 S3 分段上传。",
+          "en": "Use S3 multipart uploads."
+        },
+        "D": {
+          "zh": "并行获取对象的多个字节范围。",
+          "en": "Fetch multiple byte-ranges of an object in parallel."
+        },
+        "E": {
+          "zh": "上传文件时为每个对象添加随机前缀。",
+          "en": "Add a random prefix to each object when uploading the files."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： S3 Bucket Access Point主要用于简化对S3的访问管理，特别是在多账户场景下，但它不能直接提高上传或下载吞吐量。",
+          "en": "Incorrect. Technical reason: S3 Bucket Access Point is mainly used to simplify access management to S3, especially in multi-account scenarios, but it cannot directly improve upload or download throughput."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：使用多个S3 Bucket并不会提高单个Bucket的吞吐量，还会增加管理复杂度。优化吞吐量的重点是如何高效地使用单个Bucket。",
+          "en": "Incorrect. Technical reason: Using multiple S3 Buckets will not improve the throughput of a single Bucket, but will also increase management complexity. The focus of optimizing throughput is how to use a single Bucket efficiently."
+        },
+        "C": {
+          "zh": "正確。技术原因： S3 Multipart Upload 允许将大文件分成多个部分并行上传，显著提高上传速度，尤其是 GB 范围内的大文件。",
+          "en": "Correct. Technical reason: S3 Multipart Upload allows large files to be divided into multiple parts and uploaded in parallel, significantly increasing upload speeds, especially for large files in the GB range."
+        },
+        "D": {
+          "zh": "正確。技术原因：并行获取多个字节范围对象，这可以显著提高下载速度。这是 S3 性能优化的推荐实践之一。",
+          "en": "Correct. Technical reason: Dapi fetches multiple byte range objects in parallel, which can significantly increase download speeds. This is one of the recommended practices for S3 performance optimization."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：添加𫐓机器前缀主要是为了优化S3分区性能。然而，在分区性能已经优化的现代 S3 架构中，𫐓 机器前缀的用途有限。",
+          "en": "Incorrect. Technical reason: Adding the 𫐓 machine prefix is mainly to optimize S3 partition performance. However, in modern S3 architectures, where partition performance has been optimized, the 𫐓 machine prefix is ​​of limited use."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "C",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 S3 分段上传。；D. 并行获取对象的多个字节范围。",
+        "en": "C. Use S3 multipart uploads.; D. Fetch multiple byte-ranges of an object in parallel."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： CD (100%)。热门讨论与考点摘要： S3 Multipart Upload 允许将大文件分成多个部分并行上传，显著提高上传速度，尤其是 GB 范围内的大文件。；并行获取多个字节范围对象，这可以显著提高下载速度。这是 S3 性能优化的推荐实践之一。",
+        "en": "Community vote as displayed: CD (100%). Popular discussion and key point summary: S3 Multipart Upload allows large files to be divided into multiple parts and uploaded in parallel, significantly increasing upload speeds, especially for large files in the GB range.; Dapi fetches multiple byte range objects in parallel, which can significantly increase download speeds. This is one of the recommended practices for S3 performance optimization."
+      }
+    }
+  ]
+}

@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 721,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将大型 Web 应用程序重新构建为无服务器微服务架构。该应用程序使用 Amazon EC2 实例并用 Python 编写。该公司选择了 Web 应用程序的一个组件作为微服务进行测试。该组件每秒支持数百个请求。该公司希望在支持 Python 的 AWS 解决方案上创建和测试微服务。该解决方案还必须自动扩展，并且需要最少的基础设施和最少的运营支持。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to rearchitect a large-scale web application to a serverless microservices architecture. The application uses Amazon EC2 instances and is written in Python. The company selected one component of the web application to test as a microservice. The component supports hundreds of requests each second. The company wants to create and test the microservice on an AWS solution that supports Python. The solution must also scale automatically and require minimal infrastructure and minimal operational support. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用可自动扩展运行最新 Amazon Linux 操作系统的 EC2 实例的 竞价型实例集。",
+          "en": "Use a Spot Fleet with auto scaling of EC2 instances that run the most recent Amazon Linux operating system."
+        },
+        "B": {
+          "zh": "使用配置了高可用性的 AWS Elastic Beanstalk Web 服务器环境。",
+          "en": "Use an AWS Elastic Beanstalk web server environment that has high availability configured."
+        },
+        "C": {
+          "zh": "使用 Amazon Elastic Kubernetes Service (Amazon EKS)。启动自我管理的 EC2 实例的 Auto Scaling 组。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS). Launch Auto Scaling groups of self-managed EC2 instances."
+        },
+        "D": {
+          "zh": "使用运行自定义开发代码的 AWS Lambda 函数。",
+          "en": "Use an AWS Lambda function that runs custom developed code."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： 竞价型实例集虽然可以提供成本优化的计算资源并支持自动扩容，但仍然需要管理EC2实例的操作系统、应用部署和扩容策略，无法满足“最小化基础设施和运维支持”的要求。",
+          "en": "Incorrect. Technical reason: Although Spot Fleet can provide cost-optimized computing resources and support automatic expansion, it still needs to manage the operating system, application deployment and expansion strategy of EC2 instances, and cannot meet the requirements of \"minimized infrastructure and operation and maintenance support\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管 Elastic Beanstalk 简化了应用程序部署和管理，但它仍然在 EC2 实例上运行并涉及一些基础设施管理。与AWS Lambda相比，其Serverless特性不够突出，无法完全满足“最小化基础设施和运维支持”的要求。",
+          "en": "Incorrect. Technical reason: Although Elastic Beanstalk simplifies application deployment and management, it still runs on EC2 instances and involves some infrastructure management. Compared with AWS Lambda, its Serverless features are not outstanding enough and cannot fully meet the requirements of \"minimized infrastructure and operation and maintenance support\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon EKS 是一项功能强大的容器编排服务，但它需要管理 Kubernetes 集群和 EC2 实例。运维复杂度高，不满足“最小化基础设施和运维支撑”的要求。",
+          "en": "Incorrect. Technical reason: Amazon EKS is a powerful container orchestration service, but it requires management of Kubernetes clusters and EC2 instances. The operation and maintenance complexity is high, and it does not meet the requirements of \"minimized infrastructure and operation and maintenance support\"."
+        },
+        "D": {
+          "zh": "正確。技术原因： AWS Lambda 是一种完全无服务器计算服务，它运行 Python 代码并自动扩展以处理高并发请求。无需管理底层基础设施，完全满足“最小化基础设施和运维支持”的要求。",
+          "en": "Correct. Technical reason: AWS Lambda is a fully serverless computing service that runs Python code and automatically scales to handle high concurrent requests. There is no need to manage the underlying infrastructure, fully meeting the requirements of \"minimized infrastructure and operation and maintenance support\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用运行自定义开发代码的 AWS Lambda 函数。",
+        "en": "D. Use an AWS Lambda function that runs custom developed code."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (82%) Other。热门讨论与考点摘要： AWS Lambda 是一种完全无服务器计算服务，它运行 Python 代码并自动扩展以处理高并发请求。无需管理底层基础设施，完全满足“最小化基础设施和运维支持”的要求。",
+        "en": "Community vote as displayed: D (82%) Other. Popular discussion and key point summary: AWS Lambda is a fully serverless computing service that runs Python code and automatically scales to handle high concurrent requests. There is no need to manage the underlying infrastructure, fully meeting the requirements of \"minimized infrastructure and operation and maintenance support\"."
+      }
+    },
+    {
+      "question_no": 722,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司拥有从其本地位置到 AWS 账户的 AWS Direct Connect 连接。该 AWS 账户在同一 AWS 区域中有 30 个不同的 VPC。 VPC 使用私有虚拟接口 (VIF)。每个VPC都有一个CIDR块，不与公司控制下的其他网络重叠。该公司希望集中管理网络架构，同时仍允许每个 VPC 与所有其他 VPC 和本地网络进行通信。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company has an AWS Direct Connect connection from its on-premises location to an AWS account. The AWS account has 30 different VPCs in the same AWS Region. The VPCs use private virtual interfaces (VIFs). Each VPC has a CIDR block that does not overlap with other networks under the company's control. The company wants to centrally manage the networking architecture while still allowing each VPC to communicate with all other VPCs and on-premises networks. Which solution will meet these requirements with the LEAST amount of operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建中转网关，并将 Direct Connect 连接与新的中转 VIF 关联。打开中转网关的路由传播功能。",
+          "en": "Create a transit gateway, and associate the Direct Connect connection with a new transit VIF. Turn on the transit gateway's route propagation feature."
+        },
+        "B": {
+          "zh": "创建 Direct Connect 网关。重新创建专用 VIF 以使用新网关。通过创建新的虚拟专用网关来关联每个 VPC。",
+          "en": "Create a Direct Connect gateway. Recreate the private VIFs to use the new gateway. Associate each VPC by creating new virtual private gateways."
+        },
+        "C": {
+          "zh": "创建中转 VP 将 Direct Connect 连接连接到中转 VP 在区域中的所有其他 VPC 之间创建对等连接。更新路由表。",
+          "en": "Create a transit VPConnect the Direct Connect connection to the transit VPCreate a peering connection between all other VPCs in the Region. Update the route tables."
+        },
+        "D": {
+          "zh": "创建从本地到每个 VPC 的 AWS 站点到站点 VPN 连接。确保每个连接的两个 VPN 隧道均已开启。开启路由传播功能。",
+          "en": "Create AWS Site-to-Site VPN connections from on premises to each VPC. Ensure that both VPN tunnels are UP for each connection. Turn on the route propagation feature."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Transit Gateway 支持服务器基础设施的集中管理，并允许多个 VPC 和本地服务器通过 Direct Connect 进行通信。正确：使用 Transit VIF 将 Direct Connect 连接到 Transit Gateway 以改进道路资产管理。更正：启用道路属性传播功能后，道路属性表会自动更新，减少手动配置的操作开销。",
+          "en": "Correct. Technical reason: Transit Gateway enables centralized management of server infrastructure and allows multiple VPCs and on-premises servers to communicate via Direct Connect. Correct: Use Transit VIF to connect Direct Connect to Transit Gateway to improve road asset management. Correct: After the road attribute propagation function is enabled, the road attribute table will be automatically updated, reducing the operational overhead of manual configuration."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然专线网关可以连接多个VPC，但需要为每个VPC创建一个新的虚拟专用网关，这增加了运营开销。错误：重新创建专用 VIF 将导致额外的配置工作，并且不满足“最小化操作开销”要求。",
+          "en": "Incorrect. Technical reason: Although a dedicated line gateway can connect multiple VPCs, a new virtual private gateway needs to be created for each VPC, which increases operational overhead. Error: Recreating a private VIF will result in additional configuration work and does not meet the \"minimize operational overhead\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Transit VPC 是一种过时的设计模式， AWS 建议使用 Transit Gateway 作为替代方案。 Bug：创建多个 VPC 对等连接并手动更新路由表会增加运营开销。",
+          "en": "Incorrect. Technical reason: Transit VPC is an obsolete design pattern, and AWS recommends Transit Gateway as an alternative. Bug: Creating multiple VPC peering connections and manually updating route tables increases operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：为每个 VPC 创建 VPN 连接会导致大量的配置工作和运营开销。错误： VPN连接的性能通常低于Direct Connect，不适合对性能要求较高的场景。",
+          "en": "Incorrect. Technical reason: Creating VPN connections for each VPC results in significant configuration effort and operational overhead. Error: The performance of VPN connections is usually lower than Direct Connect and is not suitable for scenarios with higher performance requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建中转网关，并将 Direct Connect 连接与新的中转 VIF 关联。打开中转网关的路由传播功能。",
+        "en": "A. Create a transit gateway, and associate the Direct Connect connection with a new transit VIF. Turn on the transit gateway's route propagation feature."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： Transit Gateway 支持服务器基础设施的集中管理，并允许多个 VPC 和本地服务器通过 Direct Connect 进行通信。正确：使用 Transit VIF 将 Direct Connect 连接到 Transit Gateway 以改进道路资产管理。更正：启用道路属性传播功能后，道路属性表会自动更新，减少手动配置的操作开销。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Transit Gateway enables centralized management of server infrastructure and allows multiple VPCs and on-premises servers to communicate via Direct Connect. Correct: Use Transit VIF to connect Direct Connect to Transit Gateway to improve road asset management. Correct: After the road attribute propagation function is enabled, the road attribute table will be automatically updated, reducing the operational overhead of manual configuration."
+      }
+    },
+    {
+      "question_no": 723,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有在 Amazon EC2 实例上运行的应用程序。 EC2 实例使用具有关联策略的 IAM 角色连接到 Amazon RDS 数据库。该公司希望使用 AWS Systems Manager 修补 EC2 实例而不中断正在运行的应用程序。哪种解决方案可以满足这些要求？",
+        "en": "A company has applications that run on Amazon EC2 instances. The EC2 instances connect to Amazon RDS databases by using an IAM role that has associated policies. The company wants to use AWS Systems Manager to patch the EC2 instances without disrupting the running applications. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建新的 IAM 角色。将 AmazonSSMManagedInstanceCore 策略附加到新的 IAM 角色。将新的 IAM 角色附加到 EC2 实例和现有 IAM 角色。",
+          "en": "Create a new IAM role. Attach the AmazonSSMManagedInstanceCore policy to the new IAM role. Attach the new IAM role to the EC2 instances and the existing IAM role."
+        },
+        "B": {
+          "zh": "创建 IAM 用户。将 AmazonSSMManagedInstanceCore 策略附加到 IAM 用户。配置 Systems Manager 以使用 IAM 用户来管理 EC2 实例。",
+          "en": "Create an IAM user. Attach the AmazonSSMManagedInstanceCore policy to the IAM user. Configure Systems Manager to use the IAM user to manage the EC2 instances."
+        },
+        "C": {
+          "zh": "在 Systems Manager 中启用默认主机配置管理以管理 EC2 实例。",
+          "en": "Enable Default Host Configuration Management in Systems Manager to manage the EC2 instances."
+        },
+        "D": {
+          "zh": "从现有 IAM 角色中删除现有策略。将 AmazonSSMManagedInstanceCore 策略添加到现有 IAM 角色。",
+          "en": "Remove the existing policies from the existing IAM role. Add the AmazonSSMManagedInstanceCore policy to the existing IAM role."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS IAM 角色不能直接附加到另一个 IAM 角色。 IAM 角色是为特定资源或服务设计的，不能组合。此外，创建一个新角色并将其附加到现有角色不符合问题的要求。",
+          "en": "Incorrect. Technical reason: An AWS IAM role cannot be directly attached to another IAM role. IAM roles are designed for specific resources or services and cannot be combined. Also, creating a new role and attaching it to an existing role does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS Systems Manager 需要 IAM 角色来管理 EC2 实例，而不是 IAM 用户。 IAM 用户通常用于人类用户或程序访问，而不是用于实例管理。",
+          "en": "Incorrect. Technical reason: AWS Systems Manager requires IAM roles to manage EC2 instances, not IAM users. IAM users are typically used for human user or program access, not for instance management."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS Systems Manager 提供默认主机配置管理功能来自动管理 EC2 实例，包括补丁管理。启用该功能即可满足题目要求。",
+          "en": "Correct. Technical reason: AWS Systems Manager provides default host configuration management capabilities to automatically manage EC2 instances, including patch management. Enable this function to meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：删除现有策略可能会阻止 EC2 实例访问 RDS 数据库，从而中断应用程序的运行。这与“不影响正在运行的应用程序”的问题要求相矛盾。",
+          "en": "Incorrect. Technical reason: Removing an existing policy may prevent the EC2 instance from accessing the RDS database, disrupting the operation of the application. This contradicts the question requirement of \"not affecting running applications\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 Systems Manager 中启用默认主机配置管理以管理 EC2 实例。",
+        "en": "C. Enable Default Host Configuration Management in Systems Manager to manage the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (72%) A (22%) 6%。热门讨论与考点摘要： AWS Systems Manager 提供默认主机配置管理功能来自动管理 EC2 实例，包括补丁管理。启用该功能即可满足题目要求。",
+        "en": "Community vote as displayed: C (72%) A (22%) 6%. Popular discussion and key point summary: AWS Systems Manager provides default host configuration management capabilities to automatically manage EC2 instances, including patch management. Enable this function to meet the question requirements."
+      }
+    },
+    {
+      "question_no": 724,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon Elastic Kubernetes Service (Amazon EKS) 和 Kubernetes Horizontal Pod Autoscaler 运行容器应用程序。全天的工作量并不一致。解决方案架构师注意到，当现有节点达到集群中的最大容量时，节点数量不会自动扩展，这会导致性能问题。哪种解决方案能够以最少的管理开销解决此问题？",
+        "en": "A company runs container applications by using Amazon Elastic Kubernetes Service (Amazon EKS) and the Kubernetes Horizontal Pod Autoscaler. The workload is not consistent throughout the day. A solutions architect notices that the number of nodes does not automatically scale out when the existing nodes have reached maximum capacity in the cluster, which causes performance issues. Which solution will resolve this issue with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "通过跟踪内存使用情况来扩展节点。",
+          "en": "Scale out the nodes by tracking the memory usage."
+        },
+        "B": {
+          "zh": "使用 Kubernetes Cluster Autoscaler 来管理集群中的节点数量。",
+          "en": "Use the Kubernetes Cluster Autoscaler to manage the number of nodes in the cluster."
+        },
+        "C": {
+          "zh": "使用 AWS Lambda 函数自动调整 EKS 集群的大小。",
+          "en": "Use an AWS Lambda function to resize the EKS cluster automatically."
+        },
+        "D": {
+          "zh": "使用 Amazon EC2 Auto Scaling 组来分配工作负载。",
+          "en": "Use an Amazon EC2 Auto Scaling group to distribute the workload."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：跟踪内存使用情况和手动扩展节点需要额外的监视和管理工作，从而增加管理开销。该项目不符合该问题的“最低管理费用”要求。",
+          "en": "Incorrect. Technical reason: Tracking memory usage and manually scaling nodes requires additional monitoring and management effort, adding management overhead. This project does not meet the issue's \"minimum administrative overhead\" requirement."
+        },
+        "B": {
+          "zh": "正確。技术原因： Kubernetes Cluster Autoscaler 是一款专门设计用于根据集群的资源需求自动调整节点数量的工具。与Amazon EKS良好集成，可以在节点资源不足时自动扩展节点，减少管理开销。",
+          "en": "Correct. Technical reason: Kubernetes Cluster Autoscaler is a tool specifically designed to automatically adjust the number of nodes based on the resource needs of the cluster. It is well integrated with Amazon EKS and can automatically expand nodes when node resources are insufficient, reducing management overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 AWS Lambda 函数需要额外的开发和维护工作。虽然可以进行自动缩放，但其管理开销高于 Kubernetes Cluster Autoscaler。",
+          "en": "Incorrect. Technical reason: Using AWS Lambda functions requires additional development and maintenance effort. Although autoscaling is possible, its management overhead is higher than Kubernetes Cluster Autoscaler."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon EC2 Auto Scaling 组主要用于管理 EC2 实例的扩展，与 Kubernetes 的节点扩展需求没有直接关系。该方法解决了问题中提到的EKS集群节点扩展问题。",
+          "en": "Incorrect. Technical reason: Amazon EC2 Auto Scaling groups are mainly used to manage the expansion of EC2 instances and are not directly related to the node expansion needs of Kubernetes. This method solves the EKS cluster node scaling issue mentioned in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Kubernetes Cluster Autoscaler 来管理集群中的节点数量。",
+        "en": "B. Use the Kubernetes Cluster Autoscaler to manage the number of nodes in the cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Kubernetes Cluster Autoscaler 是一款专门设计用于根据集群的资源需求自动调整节点数量的工具。与Amazon EKS良好集成，可以在节点资源不足时自动扩展节点，减少管理开销。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Kubernetes Cluster Autoscaler is a tool specifically designed to automatically adjust the number of nodes based on the resource needs of the cluster. It is well integrated with Amazon EKS and can automatically expand nodes when node resources are insufficient, reducing management overhead."
+      }
+    },
+    {
+      "question_no": 725,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司每月在 Amazon S3 标准存储中维护约 300 TB。每个 S3 对象的大小通常约为 50 GB，并且经常被其全局应用程序替换为分段上传。 S3对象的数量和大小保持不变，但该公司的S3存储成本每个月都在增加。在这种情况下，解决方案架构师应该如何降低成本？",
+        "en": "A company maintains about 300 TB in Amazon S3 Standard storage month after month. The S3 objects are each typically around 50 GB in size and are frequently replaced with multipart uploads by their global application. The number and size of S3 objects remain constant, but the company's S3 storage costs are increasing each month. How should a solutions architect reduce costs in this situation?"
+      },
+      "options": {
+        "A": {
+          "zh": "从分段上传切换到 Amazon S3 Transfer Acceleration。",
+          "en": "Switch from multipart uploads to Amazon S3 Transfer Acceleration."
+        },
+        "B": {
+          "zh": "启用删除不完整分段上传的 S3 生命周期策略。",
+          "en": "Enable an S3 Lifecycle policy that deletes incomplete multipart uploads."
+        },
+        "C": {
+          "zh": "配置 S3 清单以防止对象归档过快。",
+          "en": "Configure S3 inventory to prevent objects from being archived too quickly."
+        },
+        "D": {
+          "zh": "配置 Amazon CloudFront 以减少 Amazon S3 中存储的对象数量。",
+          "en": "Configure Amazon CloudFront to reduce the number of objects stored in Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 Transfer Acceleration 用于加速跨区域或全球上传，无需考虑降低存储成本。此选项解决了存储成本增加的问题。",
+          "en": "Incorrect. Technical reason: Amazon S3 Transfer Acceleration is used to accelerate uploads across regions or globally without considering lower storage costs. This option solves the problem of increased storage costs."
+        },
+        "B": {
+          "zh": "正確。技术原因：未完成的桶上传会占用存储空间，增加存储成本。启用生命周期策略可以自动删除这些不完整的存储桶上传，从而减少不必要的存储成本。此选项直接解决问题的根本原因。",
+          "en": "Correct. Technical reason: Unfinished bucket uploads will occupy storage space and increase storage costs. Enabling lifecycle policies can automatically delete these incomplete bucket uploads, thereby reducing unnecessary storage costs. This option directly addresses the root cause of the problem."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： S3清单用于生成存储对象列表，与反安全对象的返回无关。此选项与问题中描述的存储成本增加问题无关。",
+          "en": "Incorrect. Technical reason: The S3 manifest is used to generate a list of storage objects and has nothing to do with the return of anti-security objects. This option has nothing to do with the increased storage cost issue described in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon CloudFront 是一项内容分发服务，可加速内容交付，与降低 S3 存储成本密切相关。此选项解决了存储成本增加的问题。",
+          "en": "Incorrect. Technical reason: Amazon CloudFront is a content distribution service that accelerates content delivery and is closely related to reducing S3 storage costs. This option solves the problem of increased storage costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 启用删除不完整分段上传的 S3 生命周期策略。",
+        "en": "B. Enable an S3 Lifecycle policy that deletes incomplete multipart uploads."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：未完成的桶上传会占用存储空间，增加存储成本。启用生命周期策略可以自动删除这些不完整的存储桶上传，从而减少不必要的存储成本。此选项直接解决问题的根本原因。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Unfinished bucket uploads will occupy storage space and increase storage costs. Enabling lifecycle policies can automatically delete these incomplete bucket uploads, thereby reducing unnecessary storage costs. This option directly addresses the root cause of the problem."
+      }
+    },
+    {
+      "question_no": 726,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司为移动设备部署了一款多人游戏。该游戏需要根据纬度和经度对玩家进行实时位置跟踪。游戏的数据存储必须支持快速更新和位置检索。该游戏使用带有只读副本的 Amazon RDS for PostgreSQL 数据库实例来存储位置数据。在使用高峰期，数据库无法维持读写更新所需的性能。该游戏的用户群正在迅速增长。解决方案架构师应该如何提高数据层的性能？",
+        "en": "A company has deployed a multiplayer game for mobile devices. The game requires live location tracking of players based on latitude and longitude. The data store for the game must support rapid updates and retrieval of locations. The game uses an Amazon RDS for PostgreSQL DB instance with read replicas to store the location data. During peak usage periods, the database is unable to maintain the performance that is needed for reading and writing updates. The game's user base is increasing rapidly. What should a solutions architect do to improve the performance of the data tier?"
+      },
+      "options": {
+        "A": {
+          "zh": "拍摄现有数据库实例的快照。恢复启用多可用区的快照。",
+          "en": "Take a snapshot of the existing DB instance. Restore the snapshot with Multi-AZ enabled."
+        },
+        "B": {
+          "zh": "使用 OpenSearch 仪表板从 Amazon RDS 迁移到 Amazon OpenSearch Service。",
+          "en": "Migrate from Amazon RDS to Amazon OpenSearch Service with OpenSearch Dashboards."
+        },
+        "C": {
+          "zh": "在现有数据库实例前面部署 Amazon DynamoDB Accelerator (DAX)。修改游戏以使用 DAX。",
+          "en": "Deploy Amazon DynamoDB Accelerator (DAX) in front of the existing DB instance. Modify the game to use DAX."
+        },
+        "D": {
+          "zh": "在现有数据库实例前面部署 Amazon ElastiCache for Redis 集群。修改游戏以使用Redis。",
+          "en": "Deploy an Amazon ElastiCache for Redis cluster in front of the existing DB instance. Modify the game to use Redis."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：多AZ部署主要用于提高数据库可用性和容错能力，而不是性能优化。启用Multi-AZ并不能解决读写性能瓶颈，所以这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Multi-AZ deployment is mainly used to improve database availability and fault tolerance, rather than performance optimization. Enabling Multi-AZ does not solve the read and write performance bottleneck, so this option is wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon OpenSearch Service主要用于搜索和分析场景，而不是实时读写频繁更新的数据存储。该选项不适合解决游戏实时位置更新的性能问题，因此会出现错误。",
+          "en": "Incorrect. Technical reason: Amazon OpenSearch Service is mainly used for search and analysis scenarios, rather than real-time reading and writing of frequently updated data storage. This option is not suitable for solving performance issues with the game's real-time location updates, so errors will occur."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： DynamoDB Accelerator (DAX) 是一种用于加速 Amazon DynamoDB 查询的缓存服务。本题使用Amazon RDS而不是DynamoDB，因此DAX无法直接应用于现有架构。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: DynamoDB Accelerator (DAX) is a caching service used to accelerate Amazon DynamoDB queries. This question uses Amazon RDS instead of DynamoDB, so DAX cannot be directly applied to the existing architecture. This option is wrong."
+        },
+        "D": {
+          "zh": "正確。技术原因： Amazon ElastiCache for Redis 是一种高性能缓存解决方案，适合处理高频读写场景。通过在数据库前端部署Redis，可以显著降低数据库的读写压力，提高性能。这个选项是正确的。",
+          "en": "Correct. Technical reason: Amazon ElastiCache for Redis is a high-performance caching solution suitable for handling high-frequency read and write scenarios. By deploying Redis on the front end of the database, the read and write pressure on the database can be significantly reduced and performance improved. This option is correct."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在现有数据库实例前面部署 Amazon ElastiCache for Redis 集群。修改游戏以使用Redis。",
+        "en": "D. Deploy an Amazon ElastiCache for Redis cluster in front of the existing DB instance. Modify the game to use Redis."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (76%) C (24%)。热门讨论与考点摘要： Amazon ElastiCache for Redis 是一种高性能缓存解决方案，适合处理高频读写场景。通过在数据库前端部署Redis，可以显著降低数据库的读写压力，提高性能。这个选项是正确的。",
+        "en": "Community vote as displayed: D (76%) C (24%). Popular discussion and key point summary: Amazon ElastiCache for Redis is a high-performance caching solution suitable for handling high-frequency read and write scenarios. By deploying Redis on the front end of the database, the read and write pressure on the database can be significantly reduced and performance improved. This option is correct."
+      }
+    },
+    {
+      "question_no": 727,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司将关键数据存储在该公司 AWS 账户的 Amazon DynamoDB 表中。 IT 管理员意外删除了 DynamoDB 表。此次删除造成了重大数据丢失并扰乱了公司的运营。该公司希望在未来防止此类破坏。哪种解决方案能够以最少的运营开销满足这一要求？",
+        "en": "A company stores critical data in Amazon DynamoDB tables in the company's AWS account. An IT administrator accidentally deleted a DynamoDB table. The deletion caused a significant loss of data and disrupted the company's operations. The company wants to prevent this type of disruption in the future. Which solution will meet this requirement with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS CloudTrail 中配置跟踪。为删除操作创建 Amazon EventBridge 规则。创建 AWS Lambda 函数以自动恢复已删除的 DynamoDB 表。",
+          "en": "Configure a trail in AWS CloudTrail. Create an Amazon EventBridge rule for delete actions. Create an AWS Lambda function to automatically restore deleted DynamoDB tables."
+        },
+        "B": {
+          "zh": "为 DynamoDB 表创建备份和恢复计划。手动恢复 DynamoDB 表。",
+          "en": "Create a backup and restore plan for the DynamoDB tables. Recover the DynamoDB tables manually."
+        },
+        "C": {
+          "zh": "在 DynamoDB 表上配置删除保护。",
+          "en": "Configure deletion protection on the DynamoDB tables."
+        },
+        "D": {
+          "zh": "在 DynamoDB 表上启用时间点恢复。",
+          "en": "Enable point-in-time recovery on the DynamoDB tables."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：配置 AWS CloudTrail、EventBridge 规则和 Lambda 函数以进行自动恢复： 优点：可以自动检测删除并尝试恢复。缺点：需要额外的配置和开发工作，增加操作复杂性和维护成本。讨论：虽然可以达到目标，但是运行开销较高，不满足“LEAST running Overhead”的要求。",
+          "en": "Incorrect. Technical reason: Configure AWS CloudTrail, EventBridge rules, and Lambda functions for automatic recovery: Benefit: Deletions can be automatically detected and recovery attempted. Disadvantages: Requires additional configuration and development work, increases operational complexity and maintenance costs. Discussion: Although the goal can be achieved, the running overhead is high and does not meet the requirements of \"LEAST running overhead\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：创建手动恢复的备份和恢复计划： 优点：备份可以防止数据丢失。缺点：恢复需要手动操作，这可能会导致延迟和人为错误。讨论：手动恢复会增加操作开销，并且不是最佳解决方案。",
+          "en": "Incorrect. Technical reason: Create a backup and recovery plan for manual recovery: Advantages: Backups prevent data loss. Disadvantages: Recovery requires manual operations, which can lead to delays and human error. Discussion: Manual recovery adds operational overhead and is not an optimal solution."
+        },
+        "C": {
+          "zh": "正確。技术原因：配置删除保护： 优点：删除保护是DynamoDB的内置功能，可以直接防止表被意外删除。对等点：没有连接的对等点的运行开销最低。讨论：它满足“最小运营开销”的要求，是最佳解决方案。",
+          "en": "Correct. Technical reason: Configuring deletion protection: Advantages: Deletion protection is a built-in feature of DynamoDB that can directly prevent tables from being accidentally deleted. Peers: Peers without connections have the lowest operating overhead. Discussion: It meets the requirement of \"minimum operational overhead\" and is the best solution."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：启用时间点恢复： 优点：可以恢复到指定时间点，避免数据丢失。问题：无法防止表被删除，仍然需要手动恢复。误区：虽然它可以保护数据，但不能防止删除，并且不是最佳解决方案。",
+          "en": "Incorrect. Technical reason: Enable point-in-time recovery: Advantages: You can restore to a specified point in time to avoid data loss. Problem: Unable to prevent table from being deleted, manual recovery is still required. Myth: While it protects data, it does not prevent deletion and is not the best solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 DynamoDB 表上配置删除保护。",
+        "en": "C. Configure deletion protection on the DynamoDB tables."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：配置删除保护： 优点：删除保护是DynamoDB的内置功能，可以直接防止表被意外删除。对等点：没有连接的对等点的运行开销最低。讨论：它满足“最小运营开销”的要求，是最佳解决方案。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Configuring deletion protection: Advantages: Deletion protection is a built-in feature of DynamoDB that can directly prevent tables from being accidentally deleted. Peers: Peers without connections have the lowest operating overhead. Discussion: It meets the requirement of \"minimum operational overhead\" and is the best solution."
+      }
+    },
+    {
+      "question_no": 728,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的本地数据中心的存储容量即将耗尽。该公司希望将其存储基础设施迁移到 AWS，同时最大限度地降低带宽成本。该解决方案必须允许立即检索数据而无需额外费用。如何满足这些要求？",
+        "en": "A company has an on-premises data center that is running out of storage capacity. The company wants to migrate its storage infrastructure to AWS while minimizing bandwidth costs. The solution must allow for immediate retrieval of data at no additional cost. How can these requirements be met?"
+      },
+      "options": {
+        "A": {
+          "zh": "部署 Amazon S3 Glacier Vault 并启用快速检索。为工作负载启用预配置的检索能力。",
+          "en": "Deploy Amazon S3 Glacier Vault and enable expedited retrieval. Enable provisioned retrieval capacity for the workload."
+        },
+        "B": {
+          "zh": "使用缓存卷部署 AWS Storage Gateway。使用 Storage Gateway 将数据存储在 Amazon S3 中，同时在本地保留经常访问的数据子集的副本。",
+          "en": "Deploy AWS Storage Gateway using cached volumes. Use Storage Gateway to store data in Amazon S3 while retaining copies of frequently accessed data subsets locally."
+        },
+        "C": {
+          "zh": "使用存储卷部署 AWS Storage Gateway 在本地存储数据。使用 Storage Gateway 将数据的时间点快照异步备份到 Amazon S3。",
+          "en": "Deploy AWS Storage Gateway using stored volumes to store data locally. Use Storage Gateway to asynchronously back up point-in-time snapshots of the data to Amazon S3."
+        },
+        "D": {
+          "zh": "部署 AWS Direct Connect 以连接本地数据中心。配置 AWS Storage Gateway 以在本地存储数据。使用 Storage Gateway 将数据的时间点快照异步备份到 Amazon S3。",
+          "en": "Deploy AWS Direct Connect to connect with the on-premises data center. Configure AWS Storage Gateway to store data locally. Use Storage Gateway to asynchronously back up point-in-time snapshots of the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 Glacier 主要用于数据的长期存储和归档。数据的检索需要额外付费，增量检索不满足“立即检索数据，无需额外付费”的要求。",
+          "en": "Incorrect. Technical reason: Amazon S3 Glacier is primarily used for long-term storage and archiving of data. Retrieval of data requires additional fees, and incremental retrieval does not meet the requirement of \"immediate retrieval of data without additional fees\"."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS Storage Gateway 的缓存卷模型允许将数据存储在 Amazon S3 中，同时在本地保留经常访问的数据子集。该方法可以减少时间消耗，满足“立即检索数据，无需额外费用”的要求。",
+          "en": "Correct. Technical reason: AWS Storage Gateway's cache volume model allows data to be stored in Amazon S3 while retaining frequently accessed subsets of the data locally. This method can reduce time consumption and meet the requirement of \"immediate data retrieval at no additional cost\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：卷存储模型主要将数据存储在本地并异步备份到Amazon S3。这种方式无法有效减轻本地存储的压力，也不能满足“存储基础设施迁移到AWS”问题的要求。",
+          "en": "Incorrect. Technical reason: The volume storage model primarily stores data locally and backs it up asynchronously to Amazon S3. This approach cannot effectively reduce the pressure on local storage and does not meet the requirements of the \"storage infrastructure migration to AWS\" problem."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Direct Connect主要用于建立专线连接以优化网络性能，但题目并未提及是否需要专线连接。此外，这种将数据存储在本地并异步备份到Amazon S3的方式也不能满足“存储基础设施迁移到AWS”的要求。",
+          "en": "Incorrect. Technical reason: AWS Direct Connect is mainly used to establish dedicated line connections to optimize network performance, but the title does not mention whether a dedicated line connection is required. Furthermore, the method of storing data locally and backing it up asynchronously to Amazon S3 does not meet the requirement of \"migrating storage infrastructure to AWS\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用缓存卷部署 AWS Storage Gateway。使用 Storage Gateway 将数据存储在 Amazon S3 中，同时在本地保留经常访问的数据子集的副本。",
+        "en": "B. Deploy AWS Storage Gateway using cached volumes. Use Storage Gateway to store data in Amazon S3 while retaining copies of frequently accessed data subsets locally."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (58%) C (42%)。热门讨论与考点摘要： AWS Storage Gateway 的缓存卷模型允许将数据存储在 Amazon S3 中，同时在本地保留经常访问的数据子集。该方法可以减少时间消耗，满足“立即检索数据，无需额外费用”的要求。",
+        "en": "Community vote as displayed: B (58%) C (42%). Popular discussion and key point summary: AWS Storage Gateway's cache volume model allows data to be stored in Amazon S3 while retaining frequently accessed subsets of the data locally. This method can reduce time consumption and meet the requirement of \"immediate data retrieval at no additional cost\"."
+      }
+    },
+    {
+      "question_no": 729,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在跨多个可用区的 VPC 中运行三层 Web 应用程序。 Amazon EC2 实例在应用程序层的 Auto Scaling 组中运行。公司需要制定一个自动扩展计划来分析每个资源的每日和每周历史工作负载趋势。配置必须根据利用率的预测和实时变化适当地扩展资源。解决方案架构师应该推荐哪种扩展策略来满足这些要求？",
+        "en": "A company runs a three-tier web application in a VPC across multiple Availability Zones. Amazon EC2 instances run in an Auto Scaling group for the application tier. The company needs to make an automated scaling plan that will analyze each resource's daily and weekly historical workload trends. The configuration must scale resources appropriately according to both the forecast and live changes in utilization. Which scaling strategy should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "根据 EC2 实例的平均 CPU 利用率进行逐步扩展，实现动态扩展。",
+          "en": "Implement dynamic scaling with step scaling based on average CPU utilization from the EC2 instances."
+        },
+        "B": {
+          "zh": "启用预测扩展以进行预测和扩展。配置具有目标跟踪的动态缩放",
+          "en": "Enable predictive scaling to forecast and scale. Configure dynamic scaling with target tracking"
+        },
+        "C": {
+          "zh": "根据 Web 应用程序的流量模式创建自动计划的扩展操作。",
+          "en": "Create an automated scheduled scaling action based on the traffic patterns of the web application."
+        },
+        "D": {
+          "zh": "设置简单的扩展策略。根据EC2实例启动时间增加冷却时间。",
+          "en": "Set up a simple scaling policy. Increase the cooldown period based on the EC2 instance startup time."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：动态扩展和步进扩展根据CPU利用率等实时指标调整资源，但它们不会分析历史工作负载趋势或预测未来需求。因此，该选项不符合问题要求。",
+          "en": "Incorrect. Technical reason: Dynamic scaling and step scaling adjust resources based on real-time metrics such as CPU utilization, but they do not analyze historical workload trends or predict future demand. Therefore, this option does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "正確。技术原因：预测性扩展可以分析资源的历史工作负载趋势并预测未来需求，动态扩展中的目标跟踪可以根据实时指标调整资源。该选项完全满足题目的要求，可以同时满足预测和实时扩展的需求。",
+          "en": "Correct. Technical reason: Predictive scaling can analyze historical workload trends for resources and predict future demand, and goal tracking in dynamic scaling can adjust resources based on real-time metrics. This option fully meets the requirements of the topic and can meet the needs of prediction and real-time expansion at the same time."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：计划扩展根据预定义的计划调整资源，而不是基于实时变化或预测的未来需求。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Planned scaling adjusts resources according to a predefined plan, but not based on real-time changes or forecasted future demand. This option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：简单的扩展策略是一个基本的扩展条，通常会根据单个指标触发扩展操作。增加冷却期可以避免频繁扩张，但无法分析历史趋势或预测未来需求。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: A simple scaling strategy is a basic scaling bar that typically triggers scaling actions based on a single metric. Increasing the cooling period can avoid frequent expansion, but it cannot analyze historical trends or predict future demand. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 启用预测扩展以进行预测和扩展。配置具有目标跟踪的动态缩放",
+        "en": "B. Enable predictive scaling to forecast and scale. Configure dynamic scaling with target tracking"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：预测性扩展可以分析资源的历史工作负载趋势并预测未来需求，动态扩展中的目标跟踪可以根据实时指标调整资源。该选项完全满足题目的要求，可以同时满足预测和实时扩展的需求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Predictive scaling can analyze historical workload trends for resources and predict future demand, and goal tracking in dynamic scaling can adjust resources based on real-time metrics. This option fully meets the requirements of the topic and can meet the needs of prediction and real-time expansion at the same time."
+      }
+    },
+    {
+      "question_no": 730,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "包裹递送公司有一个使用 Amazon EC2 实例和 Amazon Aurora MySQL 数据库集群的应用程序。随着应用程序变得越来越流行， EC2 实例的使用量仅略有增加。数据库集群使用率以更快的速度增长。该公司添加了只读副本，从而在短时间内减少了数据库集群的使用率。然而，负荷仍在继续增加。导致DB集群使用率增加的操作都是与投递细节相关的重复读语句。公司需要减轻重复读取对数据库集群的影响。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A package delivery company has an application that uses Amazon EC2 instances and an Amazon Aurora MySQL DB cluster. As the application becomes more popular, EC2 instance usage increases only slightly. DB cluster usage increases at a much faster rate. The company adds a read replica, which reduces the DB cluster usage for a short period of time. However, the load continues to increase. The operations that cause the increase in DB cluster usage are all repeated read statements that are related to delivery details. The company needs to alleviate the effect of repeated reads on the DB cluster. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在应用程序和数据库集群之间实施 Amazon ElastiCache for Redis 集群。",
+          "en": "Implement an Amazon ElastiCache for Redis cluster between the application and the DB cluster."
+        },
+        "B": {
+          "zh": "将额外的只读副本添加到数据库集群。",
+          "en": "Add an additional read replica to the DB cluster."
+        },
+        "C": {
+          "zh": "为 Aurora 只读副本配置 Aurora Auto Scaling。",
+          "en": "Configure Aurora Auto Scaling for the Aurora read replicas."
+        },
+        "D": {
+          "zh": "修改数据库集群以具有多个写入器实例。",
+          "en": "Modify the DB cluster to have multiple writer instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon ElastiCache for Redis 是一种高性能内存缓存服务，可显著减少数据库上的重复读取负载。成本效益：缓存服务往往比添加数据库资源更具成本效益，特别是对于重复的读取操作。适用场景：问题明确指出数据库负载主要来自于重复的读操作，因此使用缓存是最合适的解决方案。",
+          "en": "Correct. Technical reason: Amazon ElastiCache for Redis is a high-performance in-memory caching service that significantly reduces the repetitive read load on your database. Cost-effectiveness: Caching services tend to be more cost-effective than adding database resources, especially for repeated read operations. Applicable scenario: The problem clearly states that the database load mainly comes from repeated read operations, so using cache is the most appropriate solution."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：继续增加只读副本只能暂时分担读取负载，并会持续增加数据库成本；它不能像缓存层那样消除大量重复查询。",
+          "en": "Incorrect. Technical reason: Adding another read replica only temporarily distributes the read load and continues to add database cost. It does not eliminate repeated queries as a cache layer does."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Aurora Auto Scaling可以动态调整只读副本的数量，但这仍然需要增加数据库资源来解决问题，成本较高。适用场景：弹性伸缩适用于负载波动较大的场景。但问题中的负载不断增加，主要涉及重复的读操作，所以使用cache比较合适。",
+          "en": "Incorrect. Technical reason: Aurora Auto Scaling can dynamically adjust the number of read replicas, but this still requires increasing database resources to solve the problem, which is costly. Applicable scenarios: Auto scaling is suitable for scenarios with large load fluctuations. However, the load in the problem continues to increase, mainly involving repeated read operations, so it is more appropriate to use cache."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：增加写入器不能缓解重复读取造成的负载，而且多写入器架构更复杂、成本更高，不符合题目的成本要求。",
+          "en": "Incorrect. Technical reason: Adding writer instances does not reduce load from repeated reads. A multi-writer architecture is also more complex and expensive, so it does not meet the cost requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在应用程序和数据库集群之间实施 Amazon ElastiCache for Redis 集群。",
+        "en": "A. Implement an Amazon ElastiCache for Redis cluster between the application and the DB cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (93%) 7%。热门讨论与考点摘要： Amazon ElastiCache for Redis 是一种高性能内存缓存服务，可显著减少数据库上的重复读取负载。成本效益：缓存服务往往比添加数据库资源更具成本效益，特别是对于重复的读取操作。适用场景：问题明确指出数据库负载主要来自于重复的读操作，因此使用缓存是最合适的解决方案。",
+        "en": "Community vote as displayed: A (93%) 7%. Popular discussion and key point summary: Amazon ElastiCache for Redis is a high-performance in-memory caching service that significantly reduces the repetitive read load on your database. Cost-effectiveness: Caching services tend to be more cost-effective than adding database resources, especially for repeated read operations. Applicable scenario: The problem clearly states that the database load mainly comes from repeated read operations, so using cache is the most appropriate solution."
+      }
+    },
+    {
+      "question_no": 731,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个使用 Amazon DynamoDB 表进行存储的应用程序。解决方案架构师发现对表的许多请求没有返回最新数据。该公司的用户尚未报告任何其他数据库性能问题。延迟在可接受的范围内。解决方案架构师应该建议哪种设计更改？",
+        "en": "A company has an application that uses an Amazon DynamoDB table for storage. A solutions architect discovers that many requests to the table are not returning the latest data. The company's users have not reported any other issues with database performance. Latency is in an acceptable range. Which design change should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "将只读副本添加到表中。",
+          "en": "Add read replicas to the table."
+        },
+        "B": {
+          "zh": "使用全局二级索引 (GSI)。",
+          "en": "Use a global secondary index (GSI)."
+        },
+        "C": {
+          "zh": "请求对表进行强一致性读取。",
+          "en": "Request strongly consistent reads for the table."
+        },
+        "D": {
+          "zh": "请求表的最终一致读取。",
+          "en": "Request eventually consistent reads for the table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： DynamoDB 不支持传统意义上的只读副本。 DynamoDB的读一致性是通过配置读模式（强一致性或最终一致性）来实现的，而不是通过添加只读副本来实现的。另外， DynamoDB的设计中并没有直接的“只读副本”概念，而是通过分片和分区来扩展读写性能。",
+          "en": "Incorrect. Technical reason: DynamoDB does not support read replicas in the traditional sense. DynamoDB's read consistency is achieved by configuring the read mode (strong consistency or eventual consistency), not by adding read-only replicas. In addition, there is no direct concept of \"read replica\" in DynamoDB's design, but sharding and partitioning are used to expand read and write performance."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： GSI用于支持不同的查询模式或访问模式，而不是解决数据一致性问题。这个问题的核心问题是“读取最新数据”而不是改变查询模式，所以GSI并不是解决问题的正确方法。",
+          "en": "Incorrect. Technical reason: GSI is used to support different query modes or access modes, not to solve data consistency issues. The core issue of this question is \"reading the latest data\" rather than changing the query mode, so GSI is not the correct way to solve the problem."
+        },
+        "C": {
+          "zh": "正確。技术原因：强一致性读取可确保读取操作返回最新数据，即使数据最近已更新。根据题目描述，用户需要读取的是最新的数据，而不是最终一致的数据，所以强一致性读取才是正确的解决方案。",
+          "en": "Correct. Technical reason: Strongly consistent reads ensure that read operations return the latest data, even if the data has been recently updated. According to the title description, users need to read the latest data, not the eventually consistent data, so strong consistency reading is the correct solution."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：最终一致性读取可能返回尚未包含最新写入的数据。题目明确要求解决读取不到最新数据的问题，因此应使用强一致性读取。",
+          "en": "Incorrect. Technical reason: Eventually consistent reads can return data that does not yet include the latest write. Because the problem is stale results, strongly consistent reads are required."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 请求对表进行强一致性读取。",
+        "en": "C. Request strongly consistent reads for the table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：强一致性读取可确保读取操作返回最新数据，即使数据最近已更新。根据题目描述，用户需要读取的是最新的数据，而不是最终一致的数据，所以强一致性读取才是正确的解决方案。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Strongly consistent reads ensure that read operations return the latest data, even if the data has been recently updated. According to the title description, users need to read the latest data, not the eventually consistent data, so strong consistency reading is the correct solution."
+      }
+    },
+    {
+      "question_no": 732,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司已将其应用程序部署在具有 Amazon RDS 数据库的 Amazon EC2 实例上。该公司使用最小权限原则来配置数据库访问凭据。该公司的安全团队希望保护应用程序和数据库免受 SQL 注入和其他基于 Web 的攻击。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company has deployed its application on Amazon EC2 instances with an Amazon RDS database. The company used the principle of least privilege to configure the database access credentials. The company's security team wants to protect the application and the database from SQL injection and other web-based attacks. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用安全组和网络 ACL 来保护数据库和应用程序服务器。",
+          "en": "Use security groups and network ACLs to secure the database and application servers."
+        },
+        "B": {
+          "zh": "使用 AWS WAF 保护应用程序。使用 RDS 参数组配置安全设置。",
+          "en": "Use AWS WAF to protect the application. Use RDS parameter groups to configure the security settings."
+        },
+        "C": {
+          "zh": "使用 AWS 网络防火墙来保护应用程序和数据库。",
+          "en": "Use AWS Network Firewall to protect the application and the database."
+        },
+        "D": {
+          "zh": "在应用代码中使用不同的数据库账户来实现不同的功能。避免向数据库用户授予过多的权限。",
+          "en": "Use different database accounts in the application code for different functions. Avoid granting excessive privileges to the database users."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用安全组和网络ACL来保护数据库和应用程序服务器。安全组和网络ACL主要用于控制对网络流量的访问，但它们不能直接防范SQL注入和其他Web攻击。虽然可以限制流量来源，但它不能提供针对应用程序层攻击的保护。该选项不能满足问题的要求并且运行成本昂贵。错误。",
+          "en": "Incorrect. Technical reason: Use security groups and network ACLs to protect databases and application servers. Security groups and network ACLs are primarily used to control access to network traffic, but they cannot directly protect against SQL injection and other web attacks. While it is possible to limit traffic sources, it does not provide protection against application layer attacks. This option does not meet the requirements of the problem and is expensive to run. mistake."
+        },
+        "B": {
+          "zh": "正確。技术原因：使用 AWS WAF 保护应用程序。使用 RDS 参数组配置安全设置。 AWS WAF（Web应用程序防火墙）专门用于防御SQL注入等Web攻击，直接满足问题的要求。 RDS参数组可以配置数据库的安全设置，进一步增强数据库的安全性。此选项可提供针对应用程序层攻击的保护，并且操作开销较低。正确的。",
+          "en": "Correct. Technical reason: Protect applications with AWS WAF. Configure security settings using RDS parameter groups. AWS WAF (Web Application Firewall) is specifically designed to defend against web attacks such as SQL injection and directly meets the requirements of the problem. The RDS parameter group can configure the security settings of the database to further enhance the security of the database. This option provides protection against application layer attacks and has low operational overhead. Correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 AWS 网络防火墙保护应用程序和数据库。 AWS网络防火墙主要用于保护网络层流量，无法直接防御SQL注入等Web攻击。虽然它增强了网络安全性，但它没有提供问题所需的应用层保护。该选项在开始时起作用。",
+          "en": "Incorrect. Technical reason: Protect applications and databases with AWS network firewall. AWS network firewall is mainly used to protect network layer traffic and cannot directly defend against web attacks such as SQL injection. While it enhances network security, it does not provide the application layer protection required by the problem. This option operates at the beginning."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：对应用代码中的不同功能使用不同的数据库账户。避免向数据库用户授予太多权限。该选项强调数据库权限管理，但不能直接防止SQL注入和其他Web攻击。虽然符合“最小权限原则”，但无法满足问题所需要的应用层保护。该选项在开始时起作用。",
+          "en": "Incorrect. Technical reason: Use different database accounts for different functions in your application code. Avoid granting too many permissions to database users. This option emphasizes database permission management, but cannot directly prevent SQL injection and other web attacks. Although it complies with the \"principle of least privilege\", it cannot meet the application layer protection required by the problem. This option operates at the beginning."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS WAF 保护应用程序。使用 RDS 参数组配置安全设置。",
+        "en": "B. Use AWS WAF to protect the application. Use RDS parameter groups to configure the security settings."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：使用 AWS WAF 保护应用程序。使用 RDS 参数组配置安全设置。 AWS WAF（Web应用程序防火墙）专门用于防御SQL注入等Web攻击，直接满足问题的要求。 RDS参数组可以配置数据库的安全设置，进一步增强数据库的安全性。此选项可提供针对应用程序层攻击的保护，并且操作开销较低。正确的。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Protect applications with AWS WAF. Configure security settings using RDS parameter groups. AWS WAF (Web Application Firewall) is specifically designed to defend against web attacks such as SQL injection and directly meets the requirements of the problem. The RDS parameter group can configure the security settings of the database to further enhance the security of the database. This option provides protection against application layer attacks and has low operational overhead. Correct."
+      }
+    },
+    {
+      "question_no": 733,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司在属于 AWS Organizations 中组织的 AWS 账户中运行应用程序。这些应用程序在所有账户的 Amazon Aurora PostgreSQL 数据库上运行。公司需要防止恶意活动，并且必须识别数据库的异常失败和不完整登录尝试。哪种解决方案能够以最高效的方式满足这些要求？",
+        "en": "An ecommerce company runs applications in AWS accounts that are part of an organization in AWS Organizations. The applications run on Amazon Aurora PostgreSQL databases across all the accounts. The company needs to prevent malicious activity and must identify abnormal failed and incomplete login attempts to the databases. Which solution will meet these requirements in the MOST operationally efficient way?"
+      },
+      "options": {
+        "A": {
+          "zh": "将服务控制策略 (SCP) 附加到组织的根以识别失败的登录尝试。",
+          "en": "Attach service control policies (SCPs) to the root of the organization to identity the failed login attempts."
+        },
+        "B": {
+          "zh": "在 Amazon GuardDuty 中为组织的成员账户启用 Amazon RDS 保护功能。",
+          "en": "Enable the Amazon RDS Protection feature in Amazon GuardDuty for the member accounts of the organization."
+        },
+        "C": {
+          "zh": "将 Aurora 常规日志发布到 Amazon CloudWatch Logs 中的日志组。将日志数据导出到中央 Amazon S3 存储桶。",
+          "en": "Publish the Aurora general logs to a log group in Amazon CloudWatch Logs. Export the log data to a central Amazon S3 bucket."
+        },
+        "D": {
+          "zh": "将 AWS CloudTrail 中的所有 Aurora PostgreSQL 数据库事件发布到中央 Amazon S3 存储桶。",
+          "en": "Publish all the Aurora PostgreSQL database events in AWS CloudTrail to a central Amazon S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： SCP用于限制账户权限，不能直接用于监控和识别数据库登录测试。分析： SCP的主要功能是控制组织内部账户的权限，而不是检测安全事件。",
+          "en": "Incorrect. Technical reason: SCP is used to limit account permissions and cannot be directly used to monitor and identify database login tests. Analysis: The main function of SCP is to control the permissions of accounts within the organization, not to detect security incidents."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon GuardDuty 的 RDS 保护功能会自动检测数据库中的异常活动，包括失败的登录尝试。分析：这是运营效率最高的解决方案，因为它是一项托管服务，可以自动检测和报告异常活动，无需额外的日常管理或活动分析。",
+          "en": "Correct. Technical reason: Amazon GuardDuty's RDS protection feature automatically detects unusual activity in your database, including failed login attempts. Analytics: This is the most operationally efficient solution because it is a managed service that automatically detects and reports abnormal activity without the need for additional day-to-day management or activity analysis."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然可以通过极光分析登录宋朝测试，但需要手动设置导出和分析，运行效率较低。分析： Square Bar 需要额外的步骤来处理和分析 Richan 数据， Square Bar 会自动检测异常活动。",
+          "en": "Incorrect. Technical reason: Although you can log in to the Song Dynasty test through Aurora analysis, you need to manually set up export and analysis, and the operating efficiency is low. Analysis: Square Bar requires additional steps to process and analyze Richan data, and Square Bar automatically detects anomalous activity."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： CloudTrail 主要用于记录 API 调用事件而不是数据库登录详细信息。分析：虽然可以记录一些与数据库相关的事件，但如果没有条目，则无法直接识别失败的登录尝试。",
+          "en": "Incorrect. Technical reason: CloudTrail is primarily used to log API call events rather than database login details. Analysis: While some database-related events can be logged, failed login attempts cannot be directly identified without entries."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon GuardDuty 中为组织的成员账户启用 Amazon RDS 保护功能。",
+        "en": "B. Enable the Amazon RDS Protection feature in Amazon GuardDuty for the member accounts of the organization."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Amazon GuardDuty 的 RDS 保护功能会自动检测数据库中的异常活动，包括失败的登录尝试。分析：这是运营效率最高的解决方案，因为它是一项托管服务，可以自动检测和报告异常活动，无需额外的日常管理或活动分析。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon GuardDuty's RDS protection feature automatically detects unusual activity in your database, including failed login attempts. Analytics: This is the most operationally efficient solution because it is a managed service that automatically detects and reports abnormal activity without the need for additional day-to-day management or activity analysis."
+      }
+    },
+    {
+      "question_no": 734,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有从其公司数据中心到 us-east-1 区域中的 VPC 的 AWS Direct Connect 连接。该公司最近收购了一家公司，该公司在其本地数据中心和 eu-west-2 区域之间拥有多个 VPC 和 Direct Connect 连接。公司和企业的VPC的CIDR块不重叠。该公司需要两个区域和数据中心之间的连接。该公司需要一种可扩展的解决方案，同时减少运营开销。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A company has an AWS Direct Connect connection from its corporate data center to its VPC in the us-east-1 Region. The company recently acquired a corporation that has several VPCs and a Direct Connect connection between its on-premises data center and the eu-west-2 Region. The CIDR blocks for the VPCs of the company and the corporation do not overlap. The company requires connectivity between two Regions and the data centers. The company needs a solution that is scalable while reducing operational overhead. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 us-east-1 中的 VPC 和 eu-west-2 中的 VPC 之间设置区域间 VPC 对等互连。",
+          "en": "Set up inter-Region VPC peering between the VPC in us-east-1 and the VPCs in eu-west-2."
+        },
+        "B": {
+          "zh": "创建从 us-east-1 中的 Direct Connect 连接到 eu-west-2 中的 VPC 的私有虚拟接口。",
+          "en": "Create private virtual interfaces from the Direct Connect connection in us-east-1 to the VPCs in eu-west-2."
+        },
+        "C": {
+          "zh": "在 Amazon EC2 托管的全网状 VPN 网络中建立 VPN 设备。使用 AWS VPN CloudHub 在数据中心和每个 VPC 之间发送和接收数据。",
+          "en": "Establish VPN appliances in a fully meshed VPN network hosted by Amazon EC2. Use AWS VPN CloudHub to send and receive data between the data centers and each VPC."
+        },
+        "D": {
+          "zh": "将现有 Direct Connect 连接连接到 Direct Connect 网关。将流量从每个区域中的 VPC 的虚拟私有网关路由到 Direct Connect 网关。",
+          "en": "Connect the existing Direct Connect connection to a Direct Connect gateway. Route traffic from the virtual private gateways of the VPCs in each Region to the Direct Connect gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：跨地域VPC对等可以实现VPC之间的通信，但每个对等连接需要手动建立，且不支持直接连接本地数据中心。这种方法增加了运行开销，不能满足问题的要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Cross-region VPC peering can achieve communication between VPCs, but each peering connection needs to be manually set up and does not support direct connection to the local data center. This method increases operating overhead and cannot meet the requirements of the problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：专线私有虚拟接口只能连接同区域的VPC，不能跨区域直接连接其他区域的VPC。因此，这种做法并不可行。",
+          "en": "Incorrect. Technical reason: Technical analysis: Private virtual interfaces of dedicated lines can only connect to VPCs in the same region and cannot directly connect to VPCs in other regions across regions. Therefore, this approach is not feasible."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：使用VPN CloudHub可以实现跨地域、跨数据中心的连接，但EC2实例需要作为VPN设备进行设置和维护。这种方式增加了营业费用，不符合问题中“减少营业费用”的要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Using VPN CloudHub can achieve cross-region and cross-data center connections, but EC2 instances need to be set up and maintained as VPN devices. This method increases operating expenses and does not meet the requirement of \"reducing operating expenses\" in the question."
+        },
+        "D": {
+          "zh": "正確。技术原因：技术分析：专线网关支持跨区域连接，可以将多个区域的VPC连接到本地数据中心，同时降低运营费用并提供可扩展性。该方法完全满足课题的要求。",
+          "en": "Correct. Technical reason: Technical analysis: Private line gateway supports cross-regional connections, which can connect VPCs in multiple regions to local data centers, while reducing operating expenses and providing scalability. This method fully meets the requirements of the subject."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将现有 Direct Connect 连接连接到 Direct Connect 网关。将流量从每个区域中的 VPC 的虚拟私有网关路由到 Direct Connect 网关。",
+        "en": "D. Connect the existing Direct Connect connection to a Direct Connect gateway. Route traffic from the virtual private gateways of the VPCs in each Region to the Direct Connect gateway."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：技术分析：专线网关支持跨区域连接，可以将多个区域的VPC连接到本地数据中心，同时降低运营费用并提供可扩展性。该方法完全满足课题的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Technical analysis: Private line gateway supports cross-regional connections, which can connect VPCs in multiple regions to local data centers, while reducing operating expenses and providing scalability. This method fully meets the requirements of the subject."
+      }
+    },
+    {
+      "question_no": 735,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在开发一款手机游戏，可将分数更新传输到后端处理器，然后将结果发布在排行榜上。解决方案架构师需要设计一个解决方案，能够处理大流量峰值、按接收顺序处理移动游戏更新，并将处理后的更新存储在高度可用的数据库中。该公司还希望最大限度地减少维护解决方案所需的管理开销。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A company is developing a mobile game that streams score updates to a backend processor and then posts results on a leaderboard. A solutions architect needs to design a solution that can handle large traffic spikes, process the mobile game updates in order of receipt, and store the processed updates in a highly available database. The company also wants to minimize the management overhead required to maintain the solution. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将分数更新推送到 Amazon Kinesis Data Streams。使用 AWS Lambda 处理 Kinesis Data Streams 中的更新。将处理后的更新存储在 Amazon DynamoDB 中。",
+          "en": "Push score updates to Amazon Kinesis Data Streams. Process the updates in Kinesis Data Streams with AWS Lambda. Store the processed updates in Amazon DynamoDB."
+        },
+        "B": {
+          "zh": "将分数更新推送到 Amazon Kinesis Data Streams。使用为 Auto Scaling 设置的一组 Amazon EC2 实例处理更新。将处理后的更新存储在 Amazon Redshift 中。",
+          "en": "Push score updates to Amazon Kinesis Data Streams. Process the updates with a fleet of Amazon EC2 instances set up for Auto Scaling. Store the processed updates in Amazon Redshift."
+        },
+        "C": {
+          "zh": "将分数更新推送到 Amazon Simple Notification Service (Amazon SNS) 主题。将 AWS Lambda 函数订阅到 SNS 主题以处理更新。将处理后的更新存储在 Amazon EC2 上运行的 SQL 数据库中。",
+          "en": "Push score updates to an Amazon Simple Notification Service (Amazon SNS) topic. Subscribe an AWS Lambda function to the SNS topic to process the updates. Store the processed updates in a SQL database running on Amazon EC2."
+        },
+        "D": {
+          "zh": "将分数更新推送到 Amazon Simple Queue Service (Amazon SQS) 队列。使用具有 Auto Scaling 功能的 Amazon EC2 实例队列来处理 SQS 队列中的更新。将处理后的更新存储在 Amazon RDS 多可用区数据库实例中。",
+          "en": "Push score updates to an Amazon Simple Queue Service (Amazon SQS) queue. Use a fleet of Amazon EC2 instances with Auto Scaling to process the updates in the SQS queue. Store the processed updates in an Amazon RDS Multi-AZ DB instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Kinesis Data Streams 可以处理大流量数据并确保顺序处理以满足主题的要求。正确： AWS Lambda 可以无服务器处理数据，从而减少管理开销。正确： Amazon DynamoDB 是一个高度可用、低管理开销的数据库，可以满足问题要求。",
+          "en": "Correct. Technical reason: Kinesis Data Streams can handle large traffic data and ensure sequential processing to meet the requirements of the topic. Correct: AWS Lambda can process data serverlessly, reducing management overhead. Correct: Amazon DynamoDB is a highly available, low-management-overhead database that meets the problem requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： SNS 是一种发布/订阅服务。无法保证消息的顺序处理，不满足主题的要求。正确： AWS Lambda 可以处理数据，但 SNS 的排序问题使其不适合此场景。错误：在 EC2 上运行 SQL 数据库需要额外的管理开销，这不符合问题的“最小化管理开销”要求。",
+          "en": "Incorrect. Technical reason: SNS is a publish/subscribe service. The sequential processing of messages cannot be guaranteed and does not meet the requirements of the topic. Correct: AWS Lambda can process the data, but SNS's ordering issues make it unsuitable for this scenario. Error: Running SQL Database on EC2 requires additional management overhead, which does not meet the \"minimize management overhead\" requirement of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将分数更新推送到 Amazon Kinesis Data Streams。使用 AWS Lambda 处理 Kinesis Data Streams 中的更新。将处理后的更新存储在 Amazon DynamoDB 中。",
+        "en": "A. Push score updates to Amazon Kinesis Data Streams. Process the updates in Kinesis Data Streams with AWS Lambda. Store the processed updates in Amazon DynamoDB."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： Kinesis Data Streams 可以处理大流量数据并确保顺序处理以满足主题的要求。正确： AWS Lambda 可以无服务器处理数据，从而减少管理开销。正确： Amazon DynamoDB 是一个高度可用、低管理开销的数据库，可以满足问题要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Kinesis Data Streams can handle large traffic data and ensure sequential processing to meet the requirements of the topic. Correct: AWS Lambda can process data serverlessly, reducing management overhead. Correct: Amazon DynamoDB is a highly available, low-management-overhead database that meets the problem requirements."
+      }
+    }
+  ]
+}

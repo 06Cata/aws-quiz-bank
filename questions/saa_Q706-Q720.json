@@ -1,0 +1,854 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 706,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司托管在部署到多个可用区的 Amazon RDS 实例上运行的数据库。该公司定期针对数据库运行脚本以报告添加到数据库中的新条目。针对数据库运行的脚本会对关键应用程序的性能产生负面影响。该公司需要以最小的成本提高应用程序性能。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company hosts a database that runs on an Amazon RDS instance that is deployed to multiple Availability Zones. The company periodically runs a script against the database to report new entries that are added to the database. The script that runs against the database negatively affects the performance of a critical application. The company needs to improve application performance with minimal costs. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "向脚本添加功能以识别具有最少活动连接的实例。配置脚本以从该实例读取以报告新条目总数。",
+          "en": "Add functionality to the script to identify the instance that has the fewest active connections. Configure the script to read from that instance to report the total new entries."
+        },
+        "B": {
+          "zh": "创建数据库的只读副本。配置脚本以仅查询只读副本以报告新条目总数。",
+          "en": "Create a read replica of the database. Configure the script to query only the read replica to report the total new entries."
+        },
+        "C": {
+          "zh": "指示开发团队在每天结束时手动导出数据库中当天的新条目。",
+          "en": "Instruct the development team to manually export the new entries for the day in the database at the end of each day."
+        },
+        "D": {
+          "zh": "使用 Amazon ElastiCache 缓存脚本针对数据库运行的常见查询。",
+          "en": "Use Amazon ElastiCache to cache the common queries that the script runs against the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon RDS 的多个可用区旨在提供高可用性，而不是负载平衡。多可用区中的备用实例仅用于故障转移，不能用于读取操作。此选项无法解决性能问题，因为脚本仍然会影响主实例的性能。",
+          "en": "Incorrect. Technical reason: Amazon RDS's multiple Availability Zones are designed to provide high availability, not load balancing. Standby instances in Multi-AZ are only used for failover and cannot be used for read operations. This option does not resolve the performance issue because the script still affects the performance of the master instance."
+        },
+        "B": {
+          "zh": "正確。技术原因：创建只读副本可以有效分担主库的读取负载，减少脚本对主实例的性能影响。只读副本专门设计用于处理读取操作，并且设置和维护所需的操作开销较低。",
+          "en": "Correct. Technical reason: Creating read-only replicas can effectively share the read load of the main database and reduce the performance impact of scripts on the main instance. Read replicas are specifically designed to handle read operations and require low operational overhead to set up and maintain."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：手动操作会增加运营开销，并且不具备自动化能力来满足最低运营开销要求。该选项不适合需要实时或定期查询的场景。",
+          "en": "Incorrect. Technical reason: Manual operations increase operational overhead and do not have the ability to automate to meet the minimum operational overhead requirements. This option is not suitable for scenarios that require real-time or periodic queries."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 ElastiCache 可以提高查询性能，但它需要额外的设置和维护，这会增加运营开销。另外，脚本可能需要查询实时数据， Zambicun 可能无法保证数据的实时性。",
+          "en": "Incorrect. Technical reason: Although ElastiCache can improve query performance, it requires additional setup and maintenance, which increases operational overhead. In addition, the script may need to query real-time data, and Zambicun may not be able to guarantee the real-time nature of the data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建数据库的只读副本。配置脚本以仅查询只读副本以报告新条目总数。",
+        "en": "B. Create a read replica of the database. Configure the script to query only the read replica to report the total new entries."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：创建只读副本可以有效分担主库的读取负载，减少脚本对主实例的性能影响。只读副本专门设计用于处理读取操作，并且设置和维护所需的操作开销较低。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Creating read-only replicas can effectively share the read load of the main database and reduce the performance impact of scripts on the main instance. Read replicas are specifically designed to handle read operations and require low operational overhead to set up and maintain."
+      }
+    },
+    {
+      "question_no": 707,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用应用程序负载均衡器 (ALB) 向互联网展示其应用程序。该公司发现整个应用程序中存在异常流量访问模式。解决方案架构师需要提高基础设施的可见性，以帮助公司更好地了解这些异常情况。满足这些要求的最高效的运营解决方案是什么？",
+        "en": "A company is using an Application Load Balancer (ALB) to present its application to the internet. The company finds abnormal traffic access patterns across the application. A solutions architect needs to improve visibility into the infrastructure to help the company understand these abnormalities better. What is the MOST operationally efficient solution that meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon Athena 中为 AWS CloudTrail 日志创建一个表。创建相关信息的查询。",
+          "en": "Create a table in Amazon Athena for AWS CloudTrail logs. Create a query for the relevant information."
+        },
+        "B": {
+          "zh": "启用对 Amazon S3 的 ALB 访问日志记录。在 Amazon Athena 中创建表并查询日志。",
+          "en": "Enable ALB access logging to Amazon S3. Create a table in Amazon Athena, and query the logs."
+        },
+        "C": {
+          "zh": "启用对 Amazon S3 的 ALB 访问日志记录。在文本编辑器中打开每个文件，并在每一行中搜索相关信息。",
+          "en": "Enable ALB access logging to Amazon S3. Open each file in a text editor, and search each line for the relevant information."
+        },
+        "D": {
+          "zh": "在专用的 Amazon EC2 实例上使用 Amazon EMR 直接查询 ALB 以获取流量访问日志信息。",
+          "en": "Use Amazon EMR on a dedicated Amazon EC2 instance to directly query the ALB to acquire traffic access log information."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS CloudTrail 主要用于记录 API 调用和账户活动，而不是 ALB 访问日志。 CloudTrail日志虽然可以查询，但无法直接提供ALB流量访问信息。",
+          "en": "Incorrect. Technical reason: AWS CloudTrail is primarily used to log API calls and account activity, not ALB access logs. Although CloudTrail logs can be queried, they cannot directly provide ALB traffic access information."
+        },
+        "B": {
+          "zh": "正確。技术原因： ALB 支持将访问日志记录到 Amazon S3，然后可用于创建表并使用 Amazon Athena 查询日志数据。这种方法高效且操作简单，使其成为该问题的“操作效率最高”的解决方案。",
+          "en": "Correct. Technical reason: ALB supports logging access logs to Amazon S3, which can then be used to create tables and query the log data using Amazon Athena. This method is efficient and simple to operate, making it the “most operationally efficient” solution to the problem."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：手动打开日志文件并逐行查找信息效率非常低，尤其是当日志量很大时。这种方式不符合“运行效率”的要求。",
+          "en": "Incorrect. Technical reason: Manually opening a log file and looking for information line by line is very inefficient, especially when the log volume is large. This method does not meet the requirements of \"operational efficiency\"."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon EMR 主要用于大规模数据处理，而不是直接查询 ALB 日志。此外，使用专用的EC2实例来运行EMR会增加成本和复杂性，并且无法满足“最大运营效率”的要求。",
+          "en": "Incorrect. Technical reason: Amazon EMR is primarily used for large-scale data processing rather than querying ALB logs directly. In addition, using dedicated EC2 instances to run EMR adds cost and complexity and fails to meet the \"maximum operational efficiency\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 启用对 Amazon S3 的 ALB 访问日志记录。在 Amazon Athena 中创建表并查询日志。",
+        "en": "B. Enable ALB access logging to Amazon S3. Create a table in Amazon Athena, and query the logs."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： ALB 支持将访问日志记录到 Amazon S3，然后可用于创建表并使用 Amazon Athena 查询日志数据。这种方法高效且操作简单，使其成为该问题的“操作效率最高”的解决方案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: ALB supports logging access logs to Amazon S3, which can then be used to create tables and query the log data using Amazon Athena. This method is efficient and simple to operate, making it the “most operationally efficient” solution to the problem."
+      }
+    },
+    {
+      "question_no": 708,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望在其 AWS 环境中使用 NAT 网关。公司私有子网中的 Amazon EC2 实例必须能够通过 NAT 网关连接到公共互联网。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to use NAT gateways in its AWS environment. The company's Amazon EC2 instances in private subnets must be able to connect to the public internet through the NAT gateways. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在与 EC2 实例相同的私有子网中创建公共 NAT 网关。",
+          "en": "Create public NAT gateways in the same private subnets as the EC2 instances."
+        },
+        "B": {
+          "zh": "在与 EC2 实例相同的私有子网中创建私有 NAT 网关。",
+          "en": "Create private NAT gateways in the same private subnets as the EC2 instances."
+        },
+        "C": {
+          "zh": "在与 EC2 实例相同的 VPC 中的公有子网中创建公有 NAT 网关。",
+          "en": "Create public NAT gateways in public subnets in the same VPCs as the EC2 instances."
+        },
+        "D": {
+          "zh": "在与 EC2 实例相同的 VPC 中的公有子网中创建私有 NAT 网关。",
+          "en": "Create private NAT gateways in public subnets in the same VPCs as the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： NAT网关必须部署在公有子网中，不能部署在私有子网中。公共子网具有 互联网 网关连接以启用外部通信。",
+          "en": "Incorrect. Technical reason: The NAT gateway must be deployed in the public subnet, not the private subnet. The public subnet has an Internet gateway connection to enable external communication."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：私有NAT网关用于VPC之间的通信，不用于连接互联网。并且NAT网关不能部署在私有子网中。",
+          "en": "Incorrect. Technical reason: The private NAT gateway is used for communication between VPCs and is not used to connect to the Internet. And NAT gateway cannot be deployed in private subnets."
+        },
+        "C": {
+          "zh": "正確。技术原因：公有子网中需要部署公有NAT网关，私有子网的流量需要通过路由表引导至NAT网关，以便私有子网中的EC2实例能够访问互联网。",
+          "en": "Correct. Technical reason: A public NAT gateway needs to be deployed in the public subnet, and traffic from the private subnet needs to be directed to the NAT gateway through the routing table so that EC2 instances in the private subnet can access the Internet."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：私有NAT网关不适合连接互联网，主要用于跨VPC通信和内网通信。",
+          "en": "Incorrect. Technical reason: Private NAT gateway is not suitable for connecting to the Internet and is mainly used for cross-VPC communication and intranet communication."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在与 EC2 实例相同的 VPC 中的公有子网中创建公有 NAT 网关。",
+        "en": "C. Create public NAT gateways in public subnets in the same VPCs as the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：公有子网中需要部署公有NAT网关，私有子网的流量需要通过路由表引导至NAT网关，以便私有子网中的EC2实例能够访问互联网。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: A public NAT gateway needs to be deployed in the public subnet, and traffic from the private subnet needs to be directed to the NAT gateway through the routing table so that EC2 instances in the private subnet can access the Internet."
+      }
+    },
+    {
+      "question_no": 709,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS Organizations 中拥有一个组织。该公司在根组织单位 (OU) 的四个 AWS 账户中运行 Amazon EC2 实例。有 3 个非生产账户和 1 个生产账户。该公司希望禁止用户在非生产账户中启动一定规模的 EC2 实例。该公司创建了一项服务控制策略 (SCP)，以拒绝访问使用禁止类型的启动实例。哪些部署 SCP 的解决方案可以满足这些要求？ （选择两个。）",
+        "en": "A company has an organization in AWS Organizations. The company runs Amazon EC2 instances across four AWS accounts in the root organizational unit (OU). There are three nonproduction accounts and one production account. The company wants to prohibit users from launching EC2 instances of a certain size in the nonproduction accounts. The company has created a service control policy (SCP) to deny access to launch instances that use the prohibited types. Which solutions to deploy the SCP will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将 SCP 连接到组织的根 OU。",
+          "en": "Attach the SCP to the root OU for the organization."
+        },
+        "B": {
+          "zh": "将 SCP 附加到三个非生产组织成员账户。",
+          "en": "Attach the SCP to the three nonproduction Organizations member accounts."
+        },
+        "C": {
+          "zh": "将 SCP 附加到组织管理账户。",
+          "en": "Attach the SCP to the Organizations management account."
+        },
+        "D": {
+          "zh": "为生产账户创建 OU。将 SCP 连接到 OU。将生产成员账户移至新 OU。",
+          "en": "Create an OU for the production account. Attach the SCP to the OU. Move the production member account into the new OU."
+        },
+        "E": {
+          "zh": "为所需账户创建 OU。将 SCP 连接到 OU。将非生产成员账户移至新 OU。",
+          "en": "Create an OU for the required accounts. Attach the SCP to the OU. Move the nonproduction member accounts into the new OU."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：将 SCP 附加到根 OU 会影响所有账户，包括生产账户，但该问题仅需要限制非生产账户。",
+          "en": "Incorrect. Technical reason: Attaching the SCP to the root OU affects all accounts, including production accounts, but the issue only requires restricting non-production accounts."
+        },
+        "B": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：管理账户用于管理整个摩尔组，不能通过附加SCP来限制特定账户的权限。",
+          "en": "Incorrect. Technical reason: The management account is used to manage the entire mole group, and the permissions of specific accounts cannot be restricted by attaching SCPs."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该问题需要限制非生产账户，即非生产账户。创建单个 OU 并将 SCP 附加到生产账户的 OU 不满足问题要求。",
+          "en": "Incorrect. Technical reason: The problem requires restricting non-production accounts, i.e. not production accounts. Creating a single OU and attaching the SCP to the production account's OU does not meet the question requirements."
+        },
+        "E": {
+          "zh": "正確。技术原因：创建一个新的 OU，将非生产账户移至该 OU，并附加 SCP。这样可以有效限制非生产账户的权限，而不影响生产账户。",
+          "en": "Correct. Technical reason: Create a new OU, move the non-production account to the OU, and attach the SCP. This can effectively limit the permissions of the non-production account without affecting the production account."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 将 SCP 附加到三个非生产组织成员账户。；E. 为所需账户创建 OU。将 SCP 连接到 OU。将非生产成员账户移至新 OU。",
+        "en": "B. Attach the SCP to the three nonproduction Organizations member accounts.; E. Create an OU for the required accounts. Attach the SCP to the OU. Move the nonproduction member accounts into the new OU."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： BE (90%) 7%。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。；创建一个新的 OU，将非生产账户移至该 OU，并附加 SCP。这样可以有效限制非生产账户的权限，而不影响生产账户。",
+        "en": "Community vote as displayed: BE (90%) 7%. Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service.; Create a new OU, move the non-production account to the OU, and attach the SCP. This can effectively limit the permissions of the non-production account without affecting the production account."
+      }
+    },
+    {
+      "question_no": 710,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "托管在 Amazon EC2 实例上的公司网站处理存储在 Amazon S3 中的分类数据。出于安全考虑，该公司需要在其 EC2 资源和 Amazon S3 之间建立私有且安全的连接。哪种解决方案满足这些要求？",
+        "en": "A company’s website hosted on Amazon EC2 instances processes classified data stored in Amazon S3. Due to security concerns, the company requires a private and secure connection between its EC2 resources and Amazon S3. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 S3 存储桶策略以允许从 VPC 终端节点进行访问。",
+          "en": "Set up S3 bucket policies to allow access from a VPC endpoint."
+        },
+        "B": {
+          "zh": "设置 IAM 策略以授予对 S3 存储桶的读写访问权限。",
+          "en": "Set up an IAM policy to grant read-write access to the S3 bucket."
+        },
+        "C": {
+          "zh": "设置 NAT 网关以访问私有子网之外的资源。",
+          "en": "Set up a NAT gateway to access resources outside the private subnet."
+        },
+        "D": {
+          "zh": "设置访问密钥 ID 和秘密访问密钥以访问 S3 存储桶。",
+          "en": "Set up an access key ID and a secret access key to access the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： VPC Endpoint 允许 EC2 实例通过专用网络访问 S3，而无需通过公共互联网。设置S3 Bucket Policy可以进一步限制访问权限，确保只有经过VPC Endpoint的流量才能访问S3。",
+          "en": "Correct. Technical reason: VPC Endpoint allows EC2 instances to access S3 over a private network without going through the public internet. Setting S3 Bucket Policy can further restrict access permissions to ensure that only traffic passing through the VPC Endpoint can access S3."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： IAM 策略可以控制用户、角色和对 S3 的访问，但无法确保连接是私有的。该问题需要“私有且安全的连接”，仅使用 IAM 策略无法满足该问题。",
+          "en": "Incorrect. Technical reason: IAM policies can control users, roles, and access to S3, but they cannot ensure that connections are private. The problem requires a \"private and secure connection,\" which cannot be met using IAM policies alone."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： NAT网关用于允许私有子网中的资源访问公共互联网，但问题需要“私有且安全的连接”。使用NAT网关会通过公网访问S3，不满足要求。",
+          "en": "Incorrect. Technical reason: NAT gateways are used to allow resources in private subnets to access the public Internet, but the problem requires a \"private and secure connection\". Using a NAT gateway will access S3 through the public network, which does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：访问密钥 ID 和秘密访问密钥用于身份验证，但它们不能确保连接的私密性。该问题需要“私密且安全的连接”，仅使用这些凭据无法满足这一要求。",
+          "en": "Incorrect. Technical reason: Access key IDs and secret access keys are used for authentication, but they do not ensure the privacy of the connection. The issue requires a \"private and secure connection,\" which cannot be met using just these credentials."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 设置 S3 存储桶策略以允许从 VPC 终端节点进行访问。",
+        "en": "A. Set up S3 bucket policies to allow access from a VPC endpoint."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： VPC Endpoint 允许 EC2 实例通过专用网络访问 S3，而无需通过公共互联网。设置S3 Bucket Policy可以进一步限制访问权限，确保只有经过VPC Endpoint的流量才能访问S3。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: VPC Endpoint allows EC2 instances to access S3 over a private network without going through the public internet. Setting S3 Bucket Policy can further restrict access permissions to ensure that only traffic passing through the VPC Endpoint can access S3."
+      }
+    },
+    {
+      "question_no": 711,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司在 AWS 上运行其应用程序。该应用程序使用多可用区模式的 Amazon Aurora PostgreSQL 集群作为底层数据库。在最近的一次促销活动中，该应用程序经历了繁重的读取负载和写入负载。用户在尝试访问应用程序时遇到超时问题。解决方案架构师需要使应用程序架构更具可扩展性和高可用性。哪种解决方案能够以最短的停机时间满足这些要求？",
+        "en": "An ecommerce company runs its application on AWS. The application uses an Amazon Aurora PostgreSQL cluster in Multi-AZ mode for the underlying database. During a recent promotional campaign, the application experienced heavy read load and write load. Users experienced timeout issues when they attempted to access the application. A solutions architect needs to make the application architecture more scalable and highly available. Which solution will meet these requirements with the LEAST downtime?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建以 Aurora 集群作为源的 Amazon EventBridge 规则。创建 AWS Lambda 函数来记录 Aurora 集群的状态更改事件。添加 Lambda 函数作为 EventBridge 规则的目标。添加其他读取器节点以进行故障转移。",
+          "en": "Create an Amazon EventBridge rule that has the Aurora cluster as a source. Create an AWS Lambda function to log the state change events of the Aurora cluster. Add the Lambda function as a target for the EventBridge rule. Add additional reader nodes to fail over to."
+        },
+        "B": {
+          "zh": "修改 Aurora 集群并激活零停机重启 (ZDR) 功能。使用集群上的数据库活动流来跟踪集群状态。",
+          "en": "Modify the Aurora cluster and activate the zero-downtime restart (ZDR) feature. Use Database Activity Streams on the cluster to track the cluster status."
+        },
+        "C": {
+          "zh": "将其他读取器实例添加到 Aurora 集群。为 Aurora 集群创建 Amazon RDS 代理目标组。",
+          "en": "Add additional reader instances to the Aurora cluster. Create an Amazon RDS Proxy target group for the Aurora cluster."
+        },
+        "D": {
+          "zh": "创建 Amazon ElastiCache for Redis 缓存。使用 AWS Database Migration Service (AWS DMS) 和回写方法将数据从 Aurora 集群复制到 Redis。",
+          "en": "Create an Amazon ElastiCache for Redis cache. Replicate data from the Aurora cluster to Redis by using AWS Database Migration Service (AWS DMS) with a write-around approach."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： EventBridge和Lambda主要用于事件驱动的自动化操作，而不是直接解决数据库读写负载高的问题。虽然添加额外的读取节点可以提高读取性能，但该选项的描述过于复杂，并不能直接解决问题。",
+          "en": "Incorrect. Technical reason: EventBridge and Lambda are mainly used for event-driven automated operations, rather than directly solving the problem of high database read and write loads. Although adding additional read nodes can improve read performance, the description of this option is too complex and does not directly solve the problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： ZDR功能主要用于维护时不停机重启，与解决高读写负载无关。数据库活动流用于监视数据库活动，但不会直接提高性能或规模。",
+          "en": "Incorrect. Technical reason: The ZDR function is mainly used to restart without stopping during maintenance, and has nothing to do with solving high read and write loads. Database activity streams are used to monitor database activity but do not directly improve performance or scale."
+        },
+        "C": {
+          "zh": "正確。技术原因：添加额外的读取实例可以分散读取负载并提高读取性能。 Amazon RDS Proxy 可优化数据库连接管理、减少连接开销并提高写入性能。该方案直接解决了读写负载高的问题，实现简单，满足“最小停机时间”的要求。",
+          "en": "Correct. Technical reason: Adding additional read instances can distribute the read load and improve read performance. Amazon RDS Proxy optimizes database connection management, reduces connection overhead, and improves write performance. This solution directly solves the problem of high read and write load, is simple to implement, and meets the requirement of \"minimum downtime\"."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 ElastiCache 可以提高读取性能，但使用 AWS DMS 进行数据复制的写入方法很复杂，并且可能会引入额外的延迟。此选项不满足最短停机时间要求。",
+          "en": "Incorrect. Technical reason: While ElastiCache can improve read performance, the write method of using AWS DMS for data replication is complex and may introduce additional latency. This option does not meet minimum downtime requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将其他读取器实例添加到 Aurora 集群。为 Aurora 集群创建 Amazon RDS 代理目标组。",
+        "en": "C. Add additional reader instances to the Aurora cluster. Create an Amazon RDS Proxy target group for the Aurora cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：添加额外的读取实例可以分散读取负载并提高读取性能。 Amazon RDS Proxy 可优化数据库连接管理、减少连接开销并提高写入性能。该方案直接解决了读写负载高的问题，实现简单，满足“最小停机时间”的要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Adding additional read instances can distribute the read load and improve read performance. Amazon RDS Proxy optimizes database connection management, reduces connection overhead, and improves write performance. This solution directly solves the problem of high read and write load, is simple to implement, and meets the requirement of \"minimum downtime\"."
+      }
+    },
+    {
+      "question_no": 712,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上设计一个 Web 应用程序。该应用程序将在公司现有数据中心和公司 VPC 之间使用 VPN 连接。该公司使用 Amazon Route 53 作为其 DNS 服务。应用程序必须使用私有 DNS 记录与 VPC 中的本地服务进行通信。哪种解决方案能够以最安全的方式满足这些要求？",
+        "en": "A company is designing a web application on AWS. The application will use a VPN connection between the company’s existing data centers and the company's VPCs. The company uses Amazon Route 53 as its DNS service. The application must use private DNS records to communicate with the on-premises services from a VPC. Which solution will meet these requirements in the MOST secure manner?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Route 53 解析器出站终端节点。创建解析器规则。将解析器规则与 VPC 关联。",
+          "en": "Create a Route 53 Resolver outbound endpoint. Create a resolver rule. Associate the resolver rule with the VPC."
+        },
+        "B": {
+          "zh": "创建 Route 53 解析器入站终端节点。创建解析器规则。将解析器规则与 VPC 关联。",
+          "en": "Create a Route 53 Resolver inbound endpoint. Create a resolver rule. Associate the resolver rule with the VPC."
+        },
+        "C": {
+          "zh": "创建 Route 53 私有托管区域。将私有托管区域与 VPC 关联。",
+          "en": "Create a Route 53 private hosted zone. Associate the private hosted zone with the VPC."
+        },
+        "D": {
+          "zh": "创建 Route 53 公共托管区域。为每个服务创建一条记录以允许服务通信",
+          "en": "Create a Route 53 public hosted zone. Create a record for each service to allow service communication"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Route 53 解析器出站终端节点允许 VPC 中的资源查询本地数据中心的 DNS 记录。通过创建解析器规则并将其与您的 VPC 关联，您可以确保私有 DNS 记录的安全解析。",
+          "en": "Correct. Technical reason: The Route 53 resolver outbound endpoint allows resources in the VPC to query DNS records for the on-premises data center. By creating resolver rules and associating them with your VPC, you can ensure secure resolution of private DNS records."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Inbound端点用于从本地数据中心向VPC发送DNS查询，但问题需要从VPC查询本地数据中心的DNS记录，因此不满足要求。",
+          "en": "Incorrect. Technical reason: The Inbound endpoint is used to send DNS queries from the local data center to the VPC, but the question requires querying the local data center's DNS records from the VPC, so it does not meet the requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：私有托管区域仅适用于VPC内的DNS记录管理，无法解决VPC与本地数据中心之间的DNS解析问题。",
+          "en": "Incorrect. Technical reason: The private hosting zone is only suitable for DNS record management within the VPC and cannot solve the DNS resolution problem between the VPC and the local data center."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：公共托管区域将 DNS 记录暴露给互联网，并且无法满足相关的“最安全”要求。",
+          "en": "Incorrect. Technical reason: Publicly hosted zones expose DNS records to the Internet and fail to meet the \"most secure\" requirement in question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建 Route 53 解析器出站终端节点。创建解析器规则。将解析器规则与 VPC 关联。",
+        "en": "A. Create a Route 53 Resolver outbound endpoint. Create a resolver rule. Associate the resolver rule with the VPC."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (88%) 12%。热门讨论与考点摘要： Route 53 解析器出站终端节点允许 VPC 中的资源查询本地数据中心的 DNS 记录。通过创建解析器规则并将其与您的 VPC 关联，您可以确保私有 DNS 记录的安全解析。",
+        "en": "Community vote as displayed: A (88%) 12%. Popular discussion and key point summary: The Route 53 resolver outbound endpoint allows resources in the VPC to query DNS records for the on-premises data center. By creating resolver rules and associating them with your VPC, you can ensure secure resolution of private DNS records."
+      }
+    },
+    {
+      "question_no": 713,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 us-east-1 区域运行照片托管服务。该服务使多个国家/地区的用户能够上传和查看照片。有些照片的浏览量持续数月之久，而另一些照片的浏览时间则不到一周。该应用程序允许每张照片上传最多 20 MB。该服务使用照片元数据来确定向每个用户显示哪些照片。哪种解决方案以最具成本效益的方式提供适当的用户访问？",
+        "en": "A company is running a photo hosting service in the us-east-1 Region. The service enables users across multiple countries to upload and view photos. Some photos are heavily viewed for months, and others are viewed for less than a week. The application allows uploads of up to 20 MB for each photo. The service uses the photo metadata to determine which photos to display to each user. Which solution provides the appropriate user access MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将照片存储在 Amazon DynamoDB 中。打开 DynamoDB Accelerator (DAX) 以缓存经常查看的项目。",
+          "en": "Store the photos in Amazon DynamoDB. Turn on DynamoDB Accelerator (DAX) to cache frequently viewed items."
+        },
+        "B": {
+          "zh": "将照片存储在 Amazon S3 智能分层存储类中。将照片元数据及其 S3 位置存储在 DynamoDB 中。",
+          "en": "Store the photos in the Amazon S3 Intelligent-Tiering storage class. Store the photo metadata and its S3 location in DynamoDB."
+        },
+        "C": {
+          "zh": "将照片存储在 Amazon S3 标准存储类中。设置 S3 生命周期策略，将超过 30 天的照片移至 S3 标准-IA（S3 标准-IA）存储类别。使用对象标签来跟踪元数据。",
+          "en": "Store the photos in the Amazon S3 Standard storage class. Set up an S3 Lifecycle policy to move photos older than 30 days to the S3 Standard-Infrequent Access (S3 Standard-IA) storage class. Use the object tags to keep track of metadata."
+        },
+        "D": {
+          "zh": "将照片存储在 Amazon S3 Glacier 存储类中。设置 S3 生命周期策略，将超过 30 天的照片移至 S3 Glacier Deep Archive 存储类别。将照片元数据及其 S3 位置存储在 Amazon OpenSearch Service 中。",
+          "en": "Store the photos in the Amazon S3 Glacier storage class. Set up an S3 Lifecycle policy to move photos older than 30 days to the S3 Glacier Deep Archive storage class. Store the photo metadata and its S3 location in Amazon OpenSearch Service."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon DynamoDB 是一种 NoSQL 数据库，适合存储结构化数据（如元数据），但不适合存储大文件（如文件）。此外， DynamoDB 价格昂贵，不适合存储大量数据。",
+          "en": "Incorrect. Technical reason: Amazon DynamoDB is a NoSQL database that is suitable for storing structured data (such as metadata), but is not suitable for storing large files (such as files). Additionally, DynamoDB is expensive and not suitable for storing large amounts of data."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon S3 智能分层可以根据访问频率自动优化存储成本，非常适合访问模式不确定的场景。 DynamoDB 适用于存储元数据和数据的 S3 位置，可实现快速查询。",
+          "en": "Correct. Technical reason: Amazon S3 intelligent tiering can automatically optimize storage costs based on access frequency, which is ideal for scenarios where access patterns are uncertain. DynamoDB is suitable for S3 locations where metadata and data are stored, enabling fast queries."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然S3 Standard和S3 Standard-IA可以通过生命周期策略来优化成本，但这种方式需要手动配置生命周期策略，无法动态调整存储成本，并且对象标签中存储的元数据不适合高效查询。",
+          "en": "Incorrect. Technical reason: Although S3 Standard and S3 Standard-IA can optimize costs through lifecycle policies, this approach requires manual configuration of lifecycle policies, cannot dynamically adjust storage costs, and the metadata stored in object tags is not suitable for efficient queries."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon S3 Glacier 和 Glacier Deep Archive 适合长期存储，但不适合频繁访问的文件。 OpenSearch虽然适合复杂的查询，但是价格昂贵，不适合疯狂的单位数据存储。",
+          "en": "Incorrect. Technical reason: Amazon S3 Glacier and Glacier Deep Archive are suitable for long-term storage, but are not suitable for frequently accessed files. Although OpenSearch is suitable for complex queries, it is expensive and not suitable for crazy unit data storage."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将照片存储在 Amazon S3 智能分层存储类中。将照片元数据及其 S3 位置存储在 DynamoDB 中。",
+        "en": "B. Store the photos in the Amazon S3 Intelligent-Tiering storage class. Store the photo metadata and its S3 location in DynamoDB."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Amazon S3 智能分层可以根据访问频率自动优化存储成本，非常适合访问模式不确定的场景。 DynamoDB 适用于存储元数据和数据的 S3 位置，可实现快速查询。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon S3 intelligent tiering can automatically optimize storage costs based on access frequency, which is ideal for scenarios where access patterns are uncertain. DynamoDB is suitable for S3 locations where metadata and data are stored, enabling fast queries."
+      }
+    },
+    {
+      "question_no": 714,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在应用程序负载均衡器后面的 Amazon EC2 实例上运行高度可用的 Web 应用程序。该公司使用 Amazon CloudWatch 指标。随着 Web 应用程序流量的增加，一些 EC2 实例会因许多未完成的请求而变得过载。 CloudWatch 指标显示，与其他 EC2 实例相比，某些 EC2 实例处理的请求数量和接收响应的时间都较高。该公司不希望将新请求转发到已经超载的 EC2 实例。哪种解决方案可以满足这些要求？",
+        "en": "A company runs a highly available web application on Amazon EC2 instances behind an Application Load Balancer. The company uses Amazon CloudWatch metrics. As the traffic to the web application increases, some EC2 instances become overloaded with many outstanding requests. The CloudWatch metrics show that the number of requests processed and the time to receive the responses from some EC2 instances are both higher compared to other EC2 instances. The company does not want new requests to be forwarded to the EC2 instances that are already overloaded. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用基于 RequestCountPerTarget 和 ActiveConnectionCount CloudWatch 指标的循环路由算法。",
+          "en": "Use the round robin routing algorithm based on the RequestCountPerTarget and ActiveConnectionCount CloudWatch metrics."
+        },
+        "B": {
+          "zh": "使用基于 RequestCountPerTarget 和 ActiveConnectionCount CloudWatch 指标的最少未完成请求算法。",
+          "en": "Use the least outstanding requests algorithm based on the RequestCountPerTarget and ActiveConnectionCount CloudWatch metrics."
+        },
+        "C": {
+          "zh": "使用基于 RequestCount 和 TargetResponseTime CloudWatch 指标的循环路由算法。",
+          "en": "Use the round robin routing algorithm based on the RequestCount and TargetResponseTime CloudWatch metrics."
+        },
+        "D": {
+          "zh": "使用基于 RequestCount 和 TargetResponseTime CloudWatch 指标的最少未完成请求算法。",
+          "en": "Use the least outstanding requests algorithm based on the RequestCount and TargetResponseTime CloudWatch metrics."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：轮询将请求均匀地分布在所有目标实例上，但会根据实例的负载动态调整分布。虽然使用了RequestCountPerTarget和ActiveConnectionCount指标，但轮询并不能解决由于选项不正确而导致某些实例过载的问题。",
+          "en": "Incorrect. Technical reason: Analysis: Polling distributes requests evenly across all target instances, but dynamically adjusts the distribution based on the instance's load. Although the RequestCountPerTarget and ActiveConnectionCount metrics are used, polling does not solve the problem of overloading some instances due to incorrect options."
+        },
+        "B": {
+          "zh": "正確。技术原因：分析：未完成请求数最少的请求将首先分配给负载较低的实例。将 RequestCountPerTarget 和 ActiveConnectionCount 指标相结合可以有效避免将新请求分配给已经过载的实例。这是符合题目要求的解法，所以这个选项是正确的。",
+          "en": "Correct. Technical reason: Analysis: The request with the smallest number of outstanding requests will be assigned to the instance with lower load first. Combining the RequestCountPerTarget and ActiveConnectionCount metrics effectively avoids assigning new requests to already overloaded instances. This is a solution that meets the requirements of the question, so this option is correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：轮询算法不会避开未完成请求较多的目标，而且 RequestCount 和 TargetResponseTime 不能直接反映每个目标当前的未完成请求数，因此仍可能把新请求发送到过载实例。",
+          "en": "Incorrect. Technical reason: Round robin does not avoid targets with many outstanding requests, and RequestCount plus TargetResponseTime do not directly represent each target’s current outstanding requests, so overloaded instances can still receive new traffic."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：虽然计算未完成请求的最小数量是正确的选择，但 TargetResponseTime 指标反映的是响应时间，而不是实例上的负载。相比之下， RequestCountPerTarget和ActiveConnectionCount更准确地反映实例的负载，因此该选项不如B合适。",
+          "en": "Incorrect. Technical reason: Analysis: While calculating the minimum number of outstanding requests is the correct choice, the TargetResponseTime metric reflects the response time, not the load on the instance. In comparison, RequestCountPerTarget and ActiveConnectionCount more accurately reflect the load of the instance, so this option is not as suitable as B."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用基于 RequestCountPerTarget 和 ActiveConnectionCount CloudWatch 指标的最少未完成请求算法。",
+        "en": "B. Use the least outstanding requests algorithm based on the RequestCountPerTarget and ActiveConnectionCount CloudWatch metrics."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (80%) D (20%)。热门讨论与考点摘要：分析：未完成请求数最少的请求将首先分配给负载较低的实例。将 RequestCountPerTarget 和 ActiveConnectionCount 指标相结合可以有效避免将新请求分配给已经过载的实例。这是符合题目要求的解法，所以这个选项是正确的。",
+        "en": "Community vote as displayed: B (80%) D (20%). Popular discussion and key point summary: Analysis: The request with the smallest number of outstanding requests will be assigned to the instance with lower load first. Combining the RequestCountPerTarget and ActiveConnectionCount metrics effectively avoids assigning new requests to already overloaded instances. This is a solution that meets the requirements of the question, so this option is correct."
+      }
+    },
+    {
+      "question_no": 715,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon EC2、AWS Fargate 和 AWS Lambda 在公司的 AWS 账户中运行多个工作负载。该公司希望充分利用其计算节省计划。该公司希望在计算节省计划的覆盖范围下降时收到通知。哪种解决方案能够以最高的运营效率满足这些要求？",
+        "en": "A company uses Amazon EC2, AWS Fargate, and AWS Lambda to run multiple workloads in the company's AWS account. The company wants to fully make use of its Compute Savings Plans. The company wants to receive notification when coverage of the Compute Savings Plans drops. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS 预算为 Savings Plans 创建每日预算。使用覆盖阈值配置预算，以向适当的电子邮件收件人发送通知。",
+          "en": "Create a daily budget for the Savings Plans by using AWS Budgets. Configure the budget with a coverage threshold to send notifications to the appropriate email message recipients."
+        },
+        "B": {
+          "zh": "创建一个针对 Savings Plans 运行覆盖率报告的 Lambda 函数。使用 Amazon Simple Email Service (Amazon SES) 将报告通过电子邮件发送给相应的电子邮件收件人。",
+          "en": "Create a Lambda function that runs a coverage report against the Savings Plans. Use Amazon Simple Email Service (Amazon SES) to email the report to the appropriate email message recipients."
+        },
+        "C": {
+          "zh": "为 Savings Plans 预算创建 AWS 预算报告。将频率设置为每天。",
+          "en": "Create an AWS Budgets report for the Savings Plans budget. Set the frequency to daily."
+        },
+        "D": {
+          "zh": "创建储蓄计划提醒订阅。启用所有通知选项。输入电子邮件地址以接收通知。",
+          "en": "Create a Savings Plans alert subscription. Enable all notification options. Enter an email address to receive notifications."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： AWS Budgets 支持设置覆盖范围阈值，并可以配置通知机制以通知海关人员有关农业电子产品的信息。这是AWS推荐的方法。效率高，轻松满足需求。",
+          "en": "Correct. Technical reason: AWS Budgets supports setting coverage thresholds and can configure notification mechanisms to notify customs personnel about agricultural electronics. This is the method recommended by AWS. High efficiency and easily meet the needs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然可以开发自定义Lambda函数和Amazon SES来实现类似的功能，但这种方式需要额外的开发和维护，增加了运行的复杂度，不符合“最优运行效率”的要求。",
+          "en": "Incorrect. Technical reason: Although custom Lambda functions and Amazon SES can be developed to achieve similar functions, this approach requires additional development and maintenance, increases the complexity of the operation, and does not meet the requirements of \"optimal operating efficiency.\""
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS Budgets报告可以生成阈值信息，但不会自动生成通知，也无法直接设置覆盖率阈值，因此不符合问题的要求。",
+          "en": "Incorrect. Technical reason: AWS Budgets reports can generate threshold information, but they do not automatically generate notifications and cannot directly set coverage thresholds, so they do not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Savings Plans 本身不提供覆盖检测功能，无法直接满足问题需求。",
+          "en": "Incorrect. Technical reason: AWS Savings Plans itself does not provide coverage detection capabilities and cannot directly meet the problem requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS 预算为 Savings Plans 创建每日预算。使用覆盖阈值配置预算，以向适当的电子邮件收件人发送通知。",
+        "en": "A. Create a daily budget for the Savings Plans by using AWS Budgets. Configure the budget with a coverage threshold to send notifications to the appropriate email message recipients."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (65%) D (35%)。热门讨论与考点摘要： AWS Budgets 支持设置覆盖范围阈值，并可以配置通知机制以通知海关人员有关农业电子产品的信息。这是AWS推荐的方法。效率高，轻松满足需求。",
+        "en": "Community vote as displayed: A (65%) D (35%). Popular discussion and key point summary: AWS Budgets supports setting coverage thresholds and can configure notification mechanisms to notify customs personnel about agricultural electronics. This is the method recommended by AWS. High efficiency and easily meet the needs."
+      }
+    },
+    {
+      "question_no": 716,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上运行实时数据提取解决方案。该解决方案包含最新版本的 Amazon Managed Streaming for Apache Kafka (Amazon MSK)。该解决方案部署在跨三个可用区的私有子网中的 VPC 中。解决方案架构师需要重新设计数据摄取解决方案，以便通过互联网公开可用。传输中的数据也必须加密。哪种解决方案能够以最高的运营效率满足这些要求？",
+        "en": "A company runs a real-time data ingestion solution on AWS. The solution consists of the most recent version of Amazon Managed Streaming for Apache Kafka (Amazon MSK). The solution is deployed in a VPC in private subnets across three Availability Zones. A solutions architect needs to redesign the data ingestion solution to be publicly available over the internet. The data in transit must also be encrypted. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "在现有 VPC 中配置公有子网。在公有子网中部署 MSK 集群。更新 MSK 群集安全设置以启用相互 TLS 身份验证。",
+          "en": "Configure public subnets in the existing VPC. Deploy an MSK cluster in the public subnets. Update the MSK cluster security settings to enable mutual TLS authentication."
+        },
+        "B": {
+          "zh": "创建具有公有子网的新 VPC。在公有子网中部署 MSK 集群。更新 MSK 群集安全设置以启用相互 TLS 身份验证。",
+          "en": "Create a new VPC that has public subnets. Deploy an MSK cluster in the public subnets. Update the MSK cluster security settings to enable mutual TLS authentication."
+        },
+        "C": {
+          "zh": "部署使用私有子网的应用程序负载均衡器 (ALB)。配置 ALB 安全组入站规则以允许来自 HTTPS 协议的 VPC CIDR 块的入站流量。",
+          "en": "Deploy an Application Load Balancer (ALB) that uses private subnets. Configure an ALB security group inbound rule to allow inbound traffic from the VPC CIDR block for HTTPS protocol."
+        },
+        "D": {
+          "zh": "部署使用私有子网的网络负载均衡器 (NLB)。配置 NLB 侦听器以通过 互联网 进行 HTTPS 通信。",
+          "en": "Deploy a Network Load Balancer (NLB) that uses private subnets. Configure an NLB listener for HTTPS communication over the internet."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：公共子网允许从 互联网 公开访问 MSK 集群，满足“公开可用”的要求。正确：双向TLS认证保证数据在传输过程中是加密的，满足“数据加密”的要求。正确：在现有VPC中运行，避免创建额外的VPC，提高运行效率。",
+          "en": "Correct. Technical reason: The public subnet allows the MSK cluster to be publicly accessible from the Internet, meeting the \"publicly available\" requirement. Correct: Mutual TLS authentication ensures that data is encrypted during transmission, meeting the requirements of \"data encryption\". Correct: Run in an existing VPC to avoid creating additional VPCs and improve operating efficiency."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然满足“公开”和“数据加密”的要求，但创建新的VPC会增加操作复杂性并降低操作效率。",
+          "en": "Incorrect. Technical reason: Although meeting the requirements of \"exposure\" and \"data encryption\", creating a new VPC will increase operational complexity and reduce operational efficiency."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： ALB主要用于HTTP/HTTPS流量的负载均衡，而不是直接暴露MSK集群。错误：使用私有子网不符合“公开可用”的要求。",
+          "en": "Incorrect. Technical reason: ALB is mainly used for load balancing of HTTP/HTTPS traffic, rather than directly exposing the MSK cluster. Error: Using a private subnet does not meet the \"publicly available\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：尽管 NLB 支持 HTTPS 侦听器，但使用私有子网无法满足“公开可用”要求。错误： NLB 的主要目的是处理 TCP/UDP 流量，而不是直接公开 MSK 群集。",
+          "en": "Incorrect. Technical reason: Although NLB supports HTTPS listeners, the \"publicly available\" requirement cannot be met using a private subnet. Error: The primary purpose of NLB is to handle TCP/UDP traffic, not to directly expose the MSK cluster."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在现有 VPC 中配置公有子网。在公有子网中部署 MSK 集群。更新 MSK 群集安全设置以启用相互 TLS 身份验证。",
+        "en": "A. Configure public subnets in the existing VPC. Deploy an MSK cluster in the public subnets. Update the MSK cluster security settings to enable mutual TLS authentication."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (96%) 4%。热门讨论与考点摘要：公共子网允许从 互联网 公开访问 MSK 集群，满足“公开可用”的要求。正确：双向TLS认证保证数据在传输过程中是加密的，满足“数据加密”的要求。正确：在现有VPC中运行，避免创建额外的VPC，提高运行效率。",
+        "en": "Community vote as displayed: A (96%) 4%. Popular discussion and key point summary: The public subnet allows the MSK cluster to be publicly accessible from the Internet, meeting the \"publicly available\" requirement. Correct: Mutual TLS authentication ensures that data is encrypted during transmission, meeting the requirements of \"data encryption\". Correct: Run in an existing VPC to avoid creating additional VPCs and improve operating efficiency."
+      }
+    },
+    {
+      "question_no": 717,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将本地旧应用程序迁移到 AWS。该应用程序从本地企业资源规划 (ERP) 系统获取客户订单文件。然后应用程序将文件上传到 SFTP 服务器。该应用程序使用计划作业每小时检查一次订单文件。该公司已经拥有一个可连接到本地网络的 AWS 账户。 AWS上的新应用程序必须支持与现有ERP系统的集成。新应用程序必须安全、有弹性，并且必须使用 SFTP 协议立即处理来自 ERP 系统的订单。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to migrate an on-premises legacy application to AWS. The application ingests customer order files from an on- premises enterprise resource planning (ERP) system. The application then uploads the files to an SFTP server. The application uses a scheduled job that checks for order files every hour. The company already has an AWS account that has connectivity to the on-premises network. The new application on AWS must support integration with the existing ERP system. The new application must be secure and resilient and must use the SFTP protocol to process orders from the ERP system immediately. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在两个可用区中创建 AWS Transfer Family SFTP 面向互联网的服务器。使用 Amazon S3 存储。创建 AWS Lambda 函数来处理订单文件。使用 S3 事件通知将 s3:ObjectCreated:* 事件发送到 Lambda 函数。",
+          "en": "Create an AWS Transfer Family SFTP internet-facing server in two Availability Zones. Use Amazon S3 storage. Create an AWS Lambda function to process order files. Use S3 Event Notifications to send s3:ObjectCreated:* events to the Lambda function."
+        },
+        "B": {
+          "zh": "在一个可用区中创建一台 AWS Transfer Family SFTP 面向互联网的服务器。使用 Amazon Elastic File System (Amazon EFS) 存储。创建 AWS Lambda 函数来处理订单文件。使用 Transfer Family 管理的工作流程来调用 Lambda 函数。",
+          "en": "Create an AWS Transfer Family SFTP internet-facing server in one Availability Zone. Use Amazon Elastic File System (Amazon EFS) storage. Create an AWS Lambda function to process order files. Use a Transfer Family managed workflow to invoke the Lambda function."
+        },
+        "C": {
+          "zh": "在两个可用区中创建 AWS Transfer Family SFTP 内部服务器。使用 Amazon Elastic File System (Amazon EFS) 存储。创建 AWS Step Functions 状态机来处理订单文件。使用 Amazon EventBridge Scheduler 调用状态机以定期检查 Amazon EFS 中的订单文件。",
+          "en": "Create an AWS Transfer Family SFTP internal server in two Availability Zones. Use Amazon Elastic File System (Amazon EFS) storage. Create an AWS Step Functions state machine to process order files. Use Amazon EventBridge Scheduler to invoke the state machine to periodically check Amazon EFS for order files."
+        },
+        "D": {
+          "zh": "在两个可用区中创建 AWS Transfer Family SFTP 内部服务器。使用 Amazon S3 存储。创建 AWS Lambda 函数来处理订单文件。使用 Transfer Family 管理的工作流程来调用 Lambda 函数。",
+          "en": "Create an AWS Transfer Family SFTP internal server in two Availability Zones. Use Amazon S3 storage. Create an AWS Lambda function to process order files. Use a Transfer Family managed workflow to invoke the Lambda function."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在两个可用区中创建 AWS Transfer Family SFTP 内部服务器。使用 Amazon S3 存储。创建 AWS Lambda 函数来处理订单文件。使用 Transfer Family 管理的工作流程来调用 Lambda 函数。",
+        "en": "D. Create an AWS Transfer Family SFTP internal server in two Availability Zones. Use Amazon S3 storage. Create an AWS Lambda function to process order files. Use a Transfer Family managed workflow to invoke the Lambda function."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (84%) A (16%)。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+        "en": "Community vote as displayed: D (84%) A (16%). Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+      }
+    },
+    {
+      "question_no": 718,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司的应用程序使用 Apache Hadoop 和 Apache Spark 来处理本地数据。现有基础设施不可扩展且管理复杂。解决方案架构师必须设计可降低操作复杂性的可扩展解决方案。该解决方案必须在本地进行数据处理。哪种解决方案可以满足这些要求？",
+        "en": "A company’s applications use Apache Hadoop and Apache Spark to process data on premises. The existing infrastructure is not scalable and is complex to manage. A solutions architect must design a scalable solution that reduces operational complexity. The solution must keep the data processing on premises. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Site-to-Site VPN 访问本地 Hadoop 分布式文件系统 (HDFS) 数据和应用程序。使用 Amazon EMR 集群来处理数据。",
+          "en": "Use AWS Site-to-Site VPN to access the on-premises Hadoop Distributed File System (HDFS) data and application. Use an Amazon EMR cluster to process the data."
+        },
+        "B": {
+          "zh": "使用 AWS DataSync 连接到本地 Hadoop 分布式文件系统 (HDFS) 集群。创建 Amazon EMR 集群来处理数据。",
+          "en": "Use AWS DataSync to connect to the on-premises Hadoop Distributed File System (HDFS) cluster. Create an Amazon EMR cluster to process the data."
+        },
+        "C": {
+          "zh": "将 Apache Hadoop 应用程序和 Apache Spark 应用程序迁移到 AWS Outposts 上的 Amazon EMR 集群。使用EMR集群处理数据。",
+          "en": "Migrate the Apache Hadoop application and the Apache Spark application to Amazon EMR clusters on AWS Outposts. Use the EMR clusters to process the data."
+        },
+        "D": {
+          "zh": "使用 AWS Snowball 设备将数据迁移到 Amazon S3 存储桶。创建 Amazon EMR 集群来处理数据。",
+          "en": "Use an AWS Snowball device to migrate the data to an Amazon S3 bucket. Create an Amazon EMR cluster to process the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Site-to-Site VPN可以连接本地和AWS云，但并没有解决本地数据处理的复杂性。另外， Amazon EMR 是云服务，使用 VPN 访问本地数据会增加延迟，不满足“将数据处理保持在本地”的问题。",
+          "en": "Incorrect. Technical reason: AWS Site-to-Site VPN can connect local and AWS cloud, but it does not solve the complexity of local data processing. In addition, Amazon EMR is a cloud service, and using a VPN to access local data will increase latency and does not meet the problem of \"keeping data processing local.\""
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS DataSync 主要用于数据迁移，而不是直接处理数据。创建Amazon EMR集群来处理数据仍然是在云中处理，这不满足“将数据处理保持在本地”的问题要求。",
+          "en": "Incorrect. Technical reason: AWS DataSync is primarily used for data migration rather than directly processing data. Creating an Amazon EMR cluster to process data is still processing in the cloud, which does not satisfy the \"keep data processing local\" problem requirement."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS Outposts 是一种混合云解决方案，可将 AWS 服务扩展到本地环境。通过将 Hadoop 和 Spark 迁移到 AWS Outposts 上的 Amazon EMR 集群，您可以在本地处理数据，同时简化管理并提高可扩展性。完全满足“保持数据处理本地化”和“降低操作复杂度”的题目要求。",
+          "en": "Correct. Technical reason: AWS Outposts is a hybrid cloud solution that extends AWS services to on-premises environments. By migrating Hadoop and Spark to an Amazon EMR cluster on AWS Outposts, you can process data locally while simplifying management and increasing scalability. Fully meet the title requirements of “keeping data processing localized” and “reducing operational complexity”."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Snowball 主要用于数据迁移，而不是实时数据处理。将数据迁移到Amazon S3后，数据处理将在云进行，不满足“本地化数据处理”的问题要求。",
+          "en": "Incorrect. Technical reason: AWS Snowball is primarily used for data migration, not real-time data processing. After migrating data to Amazon S3, data processing will be performed in the cloud, which does not meet the problem requirement of \"localizing data processing\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将 Apache Hadoop 应用程序和 Apache Spark 应用程序迁移到 AWS Outposts 上的 Amazon EMR 集群。使用EMR集群处理数据。",
+        "en": "C. Migrate the Apache Hadoop application and the Apache Spark application to Amazon EMR clusters on AWS Outposts. Use the EMR clusters to process the data."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (86%) 14%。热门讨论与考点摘要： AWS Outposts 是一种混合云解决方案，可将 AWS 服务扩展到本地环境。通过将 Hadoop 和 Spark 迁移到 AWS Outposts 上的 Amazon EMR 集群，您可以在本地处理数据，同时简化管理并提高可扩展性。完全满足“保持数据处理本地化”和“降低操作复杂度”的题目要求。",
+        "en": "Community vote as displayed: C (86%) 14%. Popular discussion and key point summary: AWS Outposts is a hybrid cloud solution that extends AWS services to on-premises environments. By migrating Hadoop and Spark to an Amazon EMR cluster on AWS Outposts, you can process data locally while simplifying management and increasing scalability. Fully meet the title requirements of “keeping data processing localized” and “reducing operational complexity”."
+      }
+    },
+    {
+      "question_no": 719,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将大量数据从本地存储迁移到 AWS。同一 AWS 区域中基于 Windows、Mac 和 Linux 的 Amazon EC2 实例将使用 SMB 和 NFS 存储协议访问数据。该公司将定期访问部分数据。该公司将很少访问其余数据。该公司需要设计一个解决方案来托管数据。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company is migrating a large amount of data from on-premises storage to AWS. Windows, Mac, and Linux based Amazon EC2 instances in the same AWS Region will access the data by using SMB and NFS storage protocols. The company will access a portion of the data routinely. The company will access the remaining data infrequently. The company needs to design a solution to host the data. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建使用 EFS 智能分层的 Amazon Elastic File System (Amazon EFS) 卷。使用 AWS DataSync 将数据迁移到 EFS 卷。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) volume that uses EFS Intelligent-Tiering. Use AWS DataSync to migrate the data to the EFS volume."
+        },
+        "B": {
+          "zh": "创建 Amazon FSx for ONTAP 实例。创建具有使用自动分层策略的根卷的 FSx for ONTAP 文件系统。将数据迁移到 FSx for ONTAP 卷。",
+          "en": "Create an Amazon FSx for ONTAP instance. Create an FSx for ONTAP file system with a root volume that uses the auto tiering policy. Migrate the data to the FSx for ONTAP volume."
+        },
+        "C": {
+          "zh": "创建使用 S3 智能分层的 Amazon S3 存储桶。使用 AWS Storage Gateway Amazon S3 文件网关将数据迁移到 S3 存储桶。",
+          "en": "Create an Amazon S3 bucket that uses S3 Intelligent-Tiering. Migrate the data to the S3 bucket by using an AWS Storage Gateway Amazon S3 File Gateway."
+        },
+        "D": {
+          "zh": "创建 Amazon FSx for OpenZFS 文件系统。将数据迁移到新卷。",
+          "en": "Create an Amazon FSx for OpenZFS file system. Migrate the data to the new volume."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析： Amazon EFS 支持 NFS 协议，但不支持 SMB 协议，因为这不能满足 Windows 实例访问问题中所需数据的需求。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Amazon EFS supports the NFS protocol, but not the SMB protocol, as this does not meet the needs of a Windows instance to access the data required in the question."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析： Amazon FSx for ONTAP 支持 SMB 和 NFS 协议，以满足 Windows、Mac 和 Linux 实例的访问要求。此外， FSx for ONTAP 的自动分层策略还可优化经常访问和不经常访问的数据的存储成本。",
+          "en": "Correct. Technical reason: Technical analysis: Amazon FSx for ONTAP supports SMB and NFS protocols to meet access requirements for Windows, Mac, and Linux instances. In addition, FSx for ONTAP's automated tiering policy optimizes storage costs for both frequently and infrequently accessed data."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析： Amazon S3不直接支持SMB和NFS协议。虽然可以通过AWS Storage Gateway 访问真实文件，但这会增加额外的管理和运营开销，并且不满足“最低运营开销”要求。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Amazon S3 does not directly support the SMB and NFS protocols. Although real files can be accessed through AWS Storage Gateway, this adds additional management and operational overhead and does not meet the \"minimum operational overhead\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析： Amazon FSx for OpenZFS 支持 NFS 协议，但不支持 SMB 协议，因此这不满足问题中 Windows 实例访问所需数据的要求。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Amazon FSx for OpenZFS supports the NFS protocol but not the SMB protocol, so this does not meet the requirements of the Windows instance to access the data required in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon FSx for ONTAP 实例。创建具有使用自动分层策略的根卷的 FSx for ONTAP 文件系统。将数据迁移到 FSx for ONTAP 卷。",
+        "en": "B. Create an Amazon FSx for ONTAP instance. Create an FSx for ONTAP file system with a root volume that uses the auto tiering policy. Migrate the data to the FSx for ONTAP volume."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (80%) C (20%)。热门讨论与考点摘要：技术分析： Amazon FSx for ONTAP 支持 SMB 和 NFS 协议，以满足 Windows、Mac 和 Linux 实例的访问要求。此外， FSx for ONTAP 的自动分层策略还可优化经常访问和不经常访问的数据的存储成本。",
+        "en": "Community vote as displayed: B (80%) C (20%). Popular discussion and key point summary: Technical analysis: Amazon FSx for ONTAP supports SMB and NFS protocols to meet access requirements for Windows, Mac, and Linux instances. In addition, FSx for ONTAP's automated tiering policy optimizes storage costs for both frequently and infrequently accessed data."
+      }
+    },
+    {
+      "question_no": 720,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家制造公司在 AWS 上运行其报告生成应用程序。该应用程序在大约 20 分钟内生成每个报告。该应用程序构建为在单个 Amazon EC2 实例上运行的整体应用程序。该应用程序需要频繁更新其紧密耦合的模块。随着公司添加新功能，应用程序的维护变得复杂。每次公司修补软件模块时，应用程序都会出现停机。报告生成必须在任何中断后从头开始。该公司希望重新设计应用程序，使应用程序能够灵活、可扩展并逐步改进。该公司希望最大限度地减少应用程序停机时间。哪种解决方案可以满足这些要求？",
+        "en": "A manufacturing company runs its report generation application on AWS. The application generates each report in about 20 minutes. The application is built as a monolith that runs on a single Amazon EC2 instance. The application requires frequent updates to its tightly coupled modules. The application becomes complex to maintain as the company adds new features. Each time the company patches a software module, the application experiences downtime. Report generation must restart from the beginning after any interruptions. The company wants to redesign the application so that the application can be flexible, scalable, and gradually improved. The company wants to minimize application downtime. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Lambda 上将应用程序作为单个函数运行，并具有最大预配置并发性。",
+          "en": "Run the application on AWS Lambda as a single function with maximum provisioned concurrency."
+        },
+        "B": {
+          "zh": "使用 竞价型实例集默认分配策略在 Amazon EC2 竞价型实例上将应用程序作为微服务运行。",
+          "en": "Run the application on Amazon EC2 Spot Instances as microservices with a Spot Fleet default allocation strategy."
+        },
+        "C": {
+          "zh": "在 Amazon Elastic Container Service (Amazon ECS) 上将应用程序作为微服务运行，并具有服务自动扩展功能。",
+          "en": "Run the application on Amazon Elastic Container Service (Amazon ECS) as microservices with service auto scaling."
+        },
+        "D": {
+          "zh": "使用一次性部署策略将应用程序作为单一应用程序环境在 AWS Elastic Beanstalk 上运行。",
+          "en": "Run the application on AWS Elastic Beanstalk as a single application environment with an all-at-once deployment strategy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Lambda 适合运行需要较长时间的无服务器函数。问题提到报告生成需要 20 分钟，这超出了 Lambda 的最大执行时间限制（15 分钟）。此外，将整个应用程序作为单个函数运行违背了微服务架构的设计目标。",
+          "en": "Incorrect. Technical reason: AWS Lambda is suitable for running serverless functions that take a long time. The question mentions that report generation takes 20 minutes, which exceeds Lambda's maximum execution time limit (15 minutes). Additionally, running the entire application as a single function goes against the design goals of a microservices architecture."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然 EC2 竞价型实例可以降低成本，但它们可能会因价格波动或容量不足而中断，这与最大限度减少应用程序停机时间的目标相冲突。此外， 竞价型实例集的默认分配策略并没有直接解决应用程序的灵活性和可扩展性问题。",
+          "en": "Incorrect. Technical reason: While EC2 Spot Instances can reduce costs, they can be disrupted due to price fluctuations or lack of capacity, which conflicts with the goal of minimizing application downtime. In addition, Spot Fleet's default allocation strategy does not directly address the flexibility and scalability issues of applications."
+        },
+        "C": {
+          "zh": "正確。技术原因： Amazon ECS 支持微服务架构，可以将应用程序拆分为独立的模块，以便于维护和扩展。服务自动扩展可以根据负载动态调整资源，保证应用的高可用性和灵活性。这种设计减少了停机时间，并能够逐步改进应用程序调度功能。",
+          "en": "Correct. Technical reason: Amazon ECS supports a microservices architecture, which can split applications into independent modules for easier maintenance and expansion. Service automatic expansion can dynamically adjust resources according to load to ensure high availability and flexibility of applications. This design reduces downtime and enables incremental improvements to application scheduling capabilities."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 Elastic Beanstalk 很疯狂，但“一次性”策略会导致应用程序在更新时停止，这与问题的“最小化应用程序停机时间”要求相冲突。此外，单一应用环境不支持微服务架构，无法满足灵活性和可扩展性的需求。",
+          "en": "Incorrect. Technical reason: While Elastic Beanstalk is crazy, the \"all at once\" strategy causes the application to stop while updating, which conflicts with the \"minimize application downtime\" requirement of the question. In addition, a single application environment does not support microservice architecture and cannot meet the needs of flexibility and scalability."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 Amazon Elastic Container Service (Amazon ECS) 上将应用程序作为微服务运行，并具有服务自动扩展功能。",
+        "en": "C. Run the application on Amazon Elastic Container Service (Amazon ECS) as microservices with service auto scaling."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： Amazon ECS 支持微服务架构，可以将应用程序拆分为独立的模块，以便于维护和扩展。服务自动扩展可以根据负载动态调整资源，保证应用的高可用性和灵活性。这种设计减少了停机时间，并能够逐步改进应用程序调度功能。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon ECS supports a microservices architecture, which can split applications into independent modules for easier maintenance and expansion. Service automatic expansion can dynamically adjust resources according to load to ensure high availability and flexibility of applications. This design reduces downtime and enables incremental improvements to application scheduling capabilities."
+      }
+    }
+  ]
+}

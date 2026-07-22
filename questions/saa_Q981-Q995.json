@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 981,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上构建基于云的应用程序，用于处理敏感的客户数据。该应用程序使用 Amazon RDS 作为数据库，使用 Amazon S3 作为对象存储，并使用调用 AWS Lambda 进行无服务器处理的 S3 事件通知。该公司使用 AWS IAM Identity Center 来管理用户凭证。开发、测试和运营团队需要安全访问 Amazon RDS 和 Amazon S3，同时确保敏感客户数据的机密性。解决方案必须符合最小特权原则。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company is building a cloud-based application on AWS that will handle sensitive customer data. The application uses Amazon RDS for the database, Amazon S3 for object storage, and S3 Event Notifications that invoke AWS Lambda for serverless processing. The company uses AWS IAM Identity Center to manage user credentials. The development, testing, and operations teams need secure access to Amazon RDS and Amazon S3 while ensuring the confidentiality of sensitive customer data. The solution must comply with the principle of least privilege. Which solution meets these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用具有最低权限的 IAM 角色来授予所有团队访问权限。使用自定义 IAM 策略将 IAM 角色分配给每个团队，该策略根据团队职责定义 Amazon RDS 和 S3 对象访问的特定权限。",
+          "en": "Use IAM roles with least privilege to grant all the teams access. Assign IAM roles to each team with customized IAM policies defining specific permission for Amazon RDS and S3 object access based on team responsibilities."
+        },
+        "B": {
+          "zh": "使用 Identity Center 目录启用 IAM Identity Center。创建和配置权限集，并对 Amazon RDS 和 Amazon S3 进行精细访问。将所有团队分配到具有权限集特定访问权限的组。",
+          "en": "Enable IAM Identity Center with an Identity Center directory. Create and configure permission sets with granular access to Amazon RDS and Amazon S3. Assign all the teams to groups that have specific access with the permission sets."
+        },
+        "C": {
+          "zh": "为所有团队中的每个成员创建具有基于角色的权限的单独 IAM 用户。根据用户需求，为每个用户分配具有 RDS 和 S3 访问预定义策略的 IAM 角色。实施 IAM 访问分析器以进行定期凭证评估。",
+          "en": "Create individual IAM users for each member in all the teams with role-based permissions. Assign the IAM roles with predefined policies for RDS and S3 access to each user based on user needs. Implement IAM Access Analyzer for periodic credential evaluation."
+        },
+        "D": {
+          "zh": "使用 AWS Organizations 为每个团队创建单独的账户。以最小权限实施跨账户 IAM 角色。根据团队角色和职责授予 RDS 和 S3 访问的特定权限。",
+          "en": "Use AWS Organizations to create separate accounts for each team. Implement cross-account IAM roles with least privilege. Grant specific permission for RDS and S3 access based on team roles and responsibilities."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 IAM 角色向所有团队授予访问权限： 分析：使用 IAM 角色强制执行最小权限原则，并允许您将自定义策略分配给不同的团队。问题：多个 IAM 角色和策略需要手动创建和管理，这增加了操作复杂性和管理开销。",
+          "en": "Incorrect. Technical reason: Use IAM roles to grant access to all teams: Correctness: Using IAM roles enforces the principle of least privilege and allows you to assign custom policies to different teams. Problem: Multiple IAM roles and policies require manual creation and management, which increases operational complexity and management overhead."
+        },
+        "B": {
+          "zh": "正確。技术原因：启用 IAM Identity Center 并使用权限集： 分析： IAM Identity Center 支持用户身份和权限的集中管理。权限集可以实现细粒度的控制，遵循最小权限原则。优点：通过组和权限集管理简化运营开销，同时确保安全性和合规性。",
+          "en": "Correct. Technical reason: Enable IAM Identity Center and use permission sets: Correctness: IAM Identity Center supports centralized management of user identities and permissions. Permission sets can achieve fine-grained control and adhere to the principle of least privilege. Benefits: Simplifies operational overhead through management of groups and permission sets while ensuring security and compliance."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：创建IAM用户并为每个成员分配角色： 分析：通过IAM用户和角色可以实现权限管理。问题：需要创建 IAM 用户并为每个用户分配权限。管理复杂度高，不符合集中管理的最佳实践。",
+          "en": "Incorrect. Technical reason: Create IAM users and assign roles to each member: Correctness: Permission management can be achieved through IAM users and roles. Problem: IAM users need to be created and permissions assigned to each user. The management complexity is high and does not conform to the best practices of centralized management."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 AWS Organizations 创建单独的账户： 分析：跨账户 IAM 角色可以实现权限管理并遵守最小权限原则。问题：创建多个账户会增加管理复杂性并不必要地增加运营开销。",
+          "en": "Incorrect. Technical reason: Create separate accounts using AWS Organizations: Correctness: Cross-account IAM roles can implement permission management and adhere to the principle of least privilege. Problem: Creating multiple accounts increases administrative complexity and unnecessarily increases operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Identity Center 目录启用 IAM Identity Center。创建和配置权限集，并对 Amazon RDS 和 Amazon S3 进行精细访问。将所有团队分配到具有权限集特定访问权限的组。",
+        "en": "B. Enable IAM Identity Center with an Identity Center directory. Create and configure permission sets with granular access to Amazon RDS and Amazon S3. Assign all the teams to groups that have specific access with the permission sets."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：启用 IAM Identity Center 并使用权限集： 分析： IAM Identity Center 支持用户身份和权限的集中管理。权限集可以实现细粒度的控制，遵循最小权限原则。优点：通过组和权限集管理简化运营开销，同时确保安全性和合规性。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Enable IAM Identity Center and use permission sets: Correctness: IAM Identity Center supports centralized management of user identities and permissions. Permission sets can achieve fine-grained control and adhere to the principle of least privilege. Benefits: Simplifies operational overhead through management of groups and permission sets while ensuring security and compliance."
+      }
+    },
+    {
+      "question_no": 982,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个包含敏感数据文件的 Amazon S3 存储桶。该公司有一个在本地数据中心的虚拟机上运行的应用程序。该公司目前使用 AWS IAM Identity Center。应用程序需要临时访问 S3 存储桶中的文件。该公司希望授予应用程序对 S3 存储桶中的文件的安全访问权限。哪种解决方案可以满足这些要求？",
+        "en": "A company has an Amazon S3 bucket that contains sensitive data files. The company has an application that runs on virtual machines in an on-premises data center. The company currently uses AWS IAM Identity Center. The application requires temporary access to files in the S3 bucket. The company wants to grant the application secure access to the files in the S3 bucket. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 S3 存储桶策略，允许从公司本地数据中心的公共 IP 地址范围访问存储桶。",
+          "en": "Create an S3 bucket policy that permits access to the bucket from the public IP address range of the company’s on-premises data center."
+        },
+        "B": {
+          "zh": "使用 IAM Roles Anywhere 在 IAM Identity Center 中获取授予 S3 存储桶访问权限的安全凭证。使用 AWS CLI 配置虚拟机以代入该角色。",
+          "en": "Use IAM Roles Anywhere to obtain security credentials in IAM Identity Center that grant access to the S3 bucket. Configure the virtual machines to assume the role by using the AWS CLI."
+        },
+        "C": {
+          "zh": "在虚拟机上安装 AWS CLI。使用有权访问存储桶的 IAM 用户的访问密钥配置 AWS CLI。",
+          "en": "Install the AWS CLI on the virtual machine. Configure the AWS CLI with access keys from an IAM user that has access to the bucket."
+        },
+        "D": {
+          "zh": "创建授予存储桶访问权限的 IAM 用户和策略。将 IAM 用户的访问密钥和密钥存储在 AWS Secrets Manager 中。配置应用程序以在启动时检索访问密钥和秘密密钥。",
+          "en": "Create an IAM user and policy that grants access to the bucket. Store the access key and secret key for the IAM user in AWS Secrets Manager. Configure the application to retrieve the access key and secret key at startup."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然可以通过IP地址范围限制访问来实现访问控制，但这种方法不够安全，尤其是对于敏感数据文件。 IP 地址可能会被欺骗，并且无法提供临时凭证。",
+          "en": "Incorrect. Technical reason: Although access control can be achieved by restricting access by IP address range, this method is not secure enough, especially for sensitive data files. IP addresses can be spoofed and temporary credentials cannot be provided."
+        },
+        "B": {
+          "zh": "正確。技术原因： IAM Roles Anywhere 允许本地应用程序安全地获取临时凭证并访问 AWS 资源。通过 AWS CLI 配置虚拟机以承担角色是一种安全且最佳实践的解决方案。",
+          "en": "Correct. Technical reason: IAM Roles Anywhere allows on-premises applications to securely obtain temporary credentials and access AWS resources. Configuring a virtual machine to assume a role through the AWS CLI is a secure and best-practice solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 IAM 用户的访问密钥和秘密密钥会直接带来安全风险，因为这些密钥是长期凭证，很容易被泄露或滥用。",
+          "en": "Incorrect. Technical reason: Using an IAM user's access and secret keys directly poses a security risk because these keys are long-term credentials that can be easily compromised or misused."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然使用 AWS Secrets Manager 存储密钥可以提高安全性，但它仍然依赖于 IAM 用户的长期凭证，并且不遵守临时访问的最佳实践。",
+          "en": "Incorrect. Technical reason: While using AWS Secrets Manager to store secrets improves security, it still relies on the IAM user's long-term credentials and does not adhere to best practices for temporary access."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 IAM Roles Anywhere 在 IAM Identity Center 中获取授予 S3 存储桶访问权限的安全凭证。使用 AWS CLI 配置虚拟机以代入该角色。",
+        "en": "B. Use IAM Roles Anywhere to obtain security credentials in IAM Identity Center that grant access to the S3 bucket. Configure the virtual machines to assume the role by using the AWS CLI."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (89%) 11%。热门讨论与考点摘要： IAM Roles Anywhere 允许本地应用程序安全地获取临时凭证并访问 AWS 资源。通过 AWS CLI 配置虚拟机以承担角色是一种安全且最佳实践的解决方案。",
+        "en": "Community vote as displayed: B (89%) 11%. Popular discussion and key point summary: IAM Roles Anywhere allows on-premises applications to securely obtain temporary credentials and access AWS resources. Configuring a virtual machine to assume a role through the AWS CLI is a secure and best-practice solution."
+      }
+    },
+    {
+      "question_no": 983,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在其本地数据中心托管其核心网络服务，包括目录服务和 DNS。数据中心使用 AWS Direct Connect (DX) 连接到 AWS 云。计划增加更多 AWS 账户，这些账户将需要快速、经济高效且一致地访问这些网络服务。解决方案架构师应该实施什么来以最少的运营开销满足这些要求？",
+        "en": "A company hosts its core network services, including directory services and DNS, in its on-premises data center. The data center is connected to the AWS Cloud using AWS Direct Connect (DX). Additional AWS accounts are planned that will require quick, cost- effective, and consistent access to these network services. What should a solutions architect implement to meet these requirements with the LEAST amount of operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在每个新账户中创建 DX 连接。将网络流量路由到本地服务器。",
+          "en": "Create a DX connection in each new account. Route the network traffic to the on-premises servers."
+        },
+        "B": {
+          "zh": "在 DX VPC 中为所有所需服务配置 VPC 终端节点。将网络流量路由到本地服务器。",
+          "en": "Configure VPC endpoints in the DX VPC for all required services. Route the network traffic to the on-premises servers."
+        },
+        "C": {
+          "zh": "在每个新账户和 DX VP 之间创建 VPN 连接，将网络流量路由到本地服务器。",
+          "en": "Create a VPN connection between each new account and the DX VPRoute the network traffic to the on-premises servers."
+        },
+        "D": {
+          "zh": "在账户之间配置 AWS Transit Gateway。将 DX 分配给中转网关，并将网络流量路由到本地服务器。",
+          "en": "Configure AWS Transit Gateway between the accounts. Assign DX to the transit gateway and route network traffic to the on- premises servers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：创建多个 DX 连接的成本可能很高，因为每个 DX 连接都需要额外费用。错误：操作开销很高，因为需要为每个账户单独配置 DX 连接。 “最小的运营开销”并不能限定这个问题。",
+          "en": "Incorrect. Technical reason: Creating multiple DX connections can be costly because each DX connection requires an additional fee. Error: Operational overhead is high because DX connections need to be configured individually for each account. \"Minimal operational overhead\" does not qualify the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： VPC Endpoints主要用于访问AWS服务（如S3、DynamoDB），而不是连接到本地数据中心。错误：无法直接通过VPC端点实现与本地服务器的跨账户网络连接。",
+          "en": "Incorrect. Technical reason: VPC Endpoints are mainly used to access AWS services (such as S3, DynamoDB), rather than connecting to local data centers. Error: Cross-account network connection to the local server cannot be achieved directly through the VPC endpoint."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：为每个账户创建 VPN 连接会增加运营开销和复杂性。错误： VPN连接的性能通常不如DX连接，不符合问题中“快速、性价比、稳定”的要求。",
+          "en": "Incorrect. Technical reason: Creating VPN connections for each account adds operational overhead and complexity. Error: The performance of VPN connections is usually not as good as DX connections and does not meet the requirements of \"fast, cost-effective, and stable\" in the question."
+        },
+        "D": {
+          "zh": "正確。技术原因： AWS Transit Gateway 高效连接多个 VPC 和账户并简化网络架构。正确：将 DX 连接分配给 Transit Gateway 可以为本地数据中心提供快速、稳定的网络连接。正确：满足问题所需的“最小运营开销”。",
+          "en": "Correct. Technical reason: AWS Transit Gateway efficiently connects multiple VPCs and accounts and simplifies network architecture. Correct: Assigning a DX connection to a Transit Gateway provides a fast, stable network connection to the on-premises data center. Correct: The \"minimum operational overhead\" required to satisfy the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在账户之间配置 AWS Transit Gateway。将 DX 分配给中转网关，并将网络流量路由到本地服务器。",
+        "en": "D. Configure AWS Transit Gateway between the accounts. Assign DX to the transit gateway and route network traffic to the on- premises servers."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要： AWS Transit Gateway 高效连接多个 VPC 和账户并简化网络架构。正确：将 DX 连接分配给 Transit Gateway 可以为本地数据中心提供快速、稳定的网络连接。正确：满足问题所需的“最小运营开销”。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS Transit Gateway efficiently connects multiple VPCs and accounts and simplifies network architecture. Correct: Assigning a DX connection to a Transit Gateway provides a fast, stable network connection to the on-premises data center. Correct: The \"minimum operational overhead\" required to satisfy the question."
+      }
+    },
+    {
+      "question_no": 984,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在跨多个可用区的一个 AWS 区域托管其主要公共 Web 应用程序。该应用程序使用 Amazon EC2 Auto Scaling 组和应用程序负载均衡器 (ALB)。 Web 开发团队需要成本优化的计算解决方案，以提高公司向全球数百万客户提供动态内容的能力。哪种解决方案可以满足这些要求？",
+        "en": "A company hosts its main public web application in one AWS Region across multiple Availability Zones. The application uses an Amazon EC2 Auto Scaling group and an Application Load Balancer (ALB). A web development team needs a cost-optimized compute solution to improve the company’s ability to serve dynamic content globally to millions of customers. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon CloudFront 分配。将现有 ALB 配置为源。",
+          "en": "Create an Amazon CloudFront distribution. Configure the existing ALB as the origin."
+        },
+        "B": {
+          "zh": "使用 Amazon Route 53 根据每个客户的地理位置向 ALB 和 EC2 实例提供流量。",
+          "en": "Use Amazon Route 53 to serve traffic to the ALB and EC2 instances based on the geographic location of each customer."
+        },
+        "C": {
+          "zh": "创建启用公共读取访问的 Amazon S3 存储桶。将 Web 应用程序迁移到 S3 存储桶。配置用于网站托管的 S3 存储桶。",
+          "en": "Create an Amazon S3 bucket with public read access enabled. Migrate the web application to the S3 bucket. Configure the S3 bucket for website hosting."
+        },
+        "D": {
+          "zh": "使用 AWS Direct Connect 将 Web 应用程序中的内容直接传送到每个客户的位置。",
+          "en": "Use AWS Direct Connect to directly serve content from the web application to the location of each customer."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存和交付动态内容，从而减少延迟并优化成本。将 Toyo 的 ALB 配置为 CloudFront 源是一种常见的架构模式，用于向世界各地的用户高效分发动态内容。",
+          "en": "Correct. Technical reason: Amazon CloudFront is a global content delivery network (CDN) that caches and delivers dynamic content, reducing latency and optimizing costs. Configuring Toyo's ALB as a CloudFront origin is a common architectural pattern for efficiently distributing dynamic content to users around the world."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管 Amazon Route 53 支持基于地理位置的流量路由，但它并未针对动态内容的交付进行优化，并且不提供缓存功能。该选项没有提及如何降低成本或提高性能。",
+          "en": "Incorrect. Technical reason: Although Amazon Route 53 supports geolocation-based traffic routing, it is not optimized for the delivery of dynamic content and does not provide caching capabilities. This option says nothing about how to reduce costs or improve performance."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon S3适合静态网站托管，问题中明确提到需要优化动态内容的分发。动态内容直接通过 S3 托管，没有任何字符串，将整个应用程序迁移到 S3 不满足问题的要求。",
+          "en": "Incorrect. Technical reason: Amazon S3 is suitable for static website hosting, and the question clearly mentions the need to optimize the distribution of dynamic content. Dynamic content is hosted directly through S3 without any strings, migrating the entire application to S3 does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Direct Connect 是一种用于建立专线连接的网络连接服务，适用于企业内部网络与 AWS 之间的通信。 Direct Connect 不适合动态内容的全球分发，并且不能优化成本。",
+          "en": "Incorrect. Technical reason: AWS Direct Connect is a network connection service used to establish dedicated line connections, suitable for communication between an enterprise's internal network and AWS. Direct Connect is not suitable for global distribution of dynamic content and does not optimize costs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建 Amazon CloudFront 分配。将现有 ALB 配置为源。",
+        "en": "A. Create an Amazon CloudFront distribution. Configure the existing ALB as the origin."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存和交付动态内容，从而减少延迟并优化成本。将 Toyo 的 ALB 配置为 CloudFront 源是一种常见的架构模式，用于向世界各地的用户高效分发动态内容。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon CloudFront is a global content delivery network (CDN) that caches and delivers dynamic content, reducing latency and optimizing costs. Configuring Toyo's ALB as a CloudFront origin is a common architectural pattern for efficiently distributing dynamic content to users around the world."
+      }
+    },
+    {
+      "question_no": 985,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司将用户数据存储在 AWS 中。数据在工作时间高峰时段持续使用。访问模式各不相同，有些数据一次几个月都不使用。解决方案架构师必须选择一种经济高效的解决方案，在保持高可用性的同时保持最高水平的耐用性。哪种存储解决方案可以满足这些要求？",
+        "en": "A company stores user data in AWS. The data is used continuously with peak usage during business hours. Access patterns vary, with some data not being used for months at a time. A solutions architect must choose a cost-effective solution that maintains the highest level of durability while maintaining high availability. Which storage solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "亚马逊 S3 标准",
+          "en": "Amazon S3 Standard"
+        },
+        "B": {
+          "zh": "Amazon S3 智能分层",
+          "en": "Amazon S3 Intelligent-Tiering"
+        },
+        "C": {
+          "zh": "Amazon S3 Glacier 深度归档",
+          "en": "Amazon S3 Glacier Deep Archive"
+        },
+        "D": {
+          "zh": "Amazon S3 一区-不频繁访问 (S3 一区-IA)",
+          "en": "Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 Standard 为经常访问的数据提供高可用性和持久性。但其成本较高，不适合访问模式变化较大的场景。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Amazon S3 Standard provides high availability and durability for frequently accessed data. However, its cost is high and it is not suitable for scenarios where access patterns change significantly. Therefore, this option is wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon S3 智能分层会根据访问模式自动将数据移动到最合适的存储层。它支持高可用性和高持久性，同时优化成本，非常适合访问模式发生变化的场景。因此，该选项是正确的。",
+          "en": "Correct. Technical reason: Amazon S3 Intelligent Tiering automatically moves data to the most appropriate storage tier based on access patterns. It supports high availability and high durability while optimizing costs, making it ideal for scenarios where access patterns change. Therefore, this option is correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon S3 Glacier Deep Archive 是成本最低的存储选项，但它主要用于数据的长期存储。检索时间较长，不适合要求高可用性、频繁访问的数据。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Amazon S3 Glacier Deep Archive is the lowest-cost storage option, but it is primarily used for long-term storage of data. The retrieval time is long and it is not suitable for data that requires high availability and frequent access. Therefore, this option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： S3 One Zone-IA 仅在一个可用区中存储数据，不能提供题目要求的最高级别可用性，因此不符合要求。",
+          "en": "Incorrect. Technical reason: S3 One Zone-IA stores data in a single Availability Zone and therefore cannot provide the highest level of availability required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. Amazon S3 智能分层",
+        "en": "B. Amazon S3 Intelligent-Tiering"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Amazon S3 智能分层会根据访问模式自动将数据移动到最合适的存储层。它支持高可用性和高持久性，同时优化成本，非常适合访问模式发生变化的场景。因此，该选项是正确的。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon S3 Intelligent Tiering automatically moves data to the most appropriate storage tier based on access patterns. It supports high availability and high durability while optimizing costs, making it ideal for scenarios where access patterns change. Therefore, this option is correct."
+      }
+    },
+    {
+      "question_no": 986,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在测试在 Amazon EC2 Linux 实例上运行的应用程序。单个 500 GB Amazon Elastic Block Store (Amazon EBS) 通用 SSO (gp2) 卷附加到 EC2 实例。该公司将在 Auto Scaling 组中的多个 EC2 实例上部署该应用程序。所有实例都需要访问存储在 EBS 卷中的数据。该公司需要一个高度可用且具有弹性的解决方案，并且不会对应用代码进行重大更改。哪种解决方案可以满足这些要求？",
+        "en": "A company is testing an application that runs on an Amazon EC2 Linux instance. A single 500 GB Amazon Elastic Block Store (Amazon EBS) General Purpose SSO (gp2) volume is attached to the EC2 instance. The company will deploy the application on multiple EC2 instances in an Auto Scaling group. All instances require access to the data that is stored in the EBS volume. The company needs a highly available and resilient solution that does not introduce significant changes to the application's code. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "预置使用 NFS 服务器软件的 EC2 实例。将单个 500 GB gp2 EBS 卷附加到实例。",
+          "en": "Provision an EC2 instance that uses NFS server software. Attach a single 500 GB gp2 EBS volume to the instance."
+        },
+        "B": {
+          "zh": "预置 Amazon FSx for Windows File Server 文件系统。将文件系统配置为单个可用区内的 SMB 文件存储。",
+          "en": "Provision an Amazon FSx for Windows File Server file system. Configure the file system as an SMB file store within a single Availability Zone."
+        },
+        "C": {
+          "zh": "为 EC2 实例预配置两个 250 GB 预配置 IOPS SSD EBS 卷。",
+          "en": "Provision an EC2 instance with two 250 GB Provisioned IOPS SSD EBS volumes."
+        },
+        "D": {
+          "zh": "预置 Amazon Elastic File System (Amazon EFS) 文件系统。配置文件系统以使用通用性能模式。",
+          "en": "Provision an Amazon Elastic File System (Amazon EFS) file system. Configure the file system to use General Purpose performance mode."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：虽然NFS可以提供共享存储，但它依赖于单个EC2实例作为服务器。如果实例发生故障，存储将不可用，从而无法满足高可用性和弹性要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Although NFS can provide shared storage, it relies on a single EC2 instance as the server. If an instance fails, the storage will be unavailable and therefore high availability and resiliency requirements cannot be met."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析： Amazon FSx for Windows File Server 是一款专为 Windows 应用程序设计的文件存储解决方案，使用 SMB 协议。但题目并没有提到该应用程序需要 Windows 文件系统支持。此外，单一可用区配置无法满足高可用性要求。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Amazon FSx for Windows File Server is a file storage solution designed for Windows applications, using the SMB protocol. But the title doesn't mention that the app requires Windows file system support. Additionally, a single Availability Zone configuration cannot meet high availability requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：该选项仅提供高性能存储，但不能解决共享存储的需求。多个 EC2 实例无法直接访问这些 EBS 卷。",
+          "en": "Incorrect. Technical reason: Technical Analysis: This option only provides high-performance storage but does not address the need for shared storage. Multiple EC2 instances cannot directly access these EBS volumes."
+        },
+        "D": {
+          "zh": "正確。技术原因：技术分析： Amazon EFS 是一种完全托管的共享文件存储服务，支持多个 EC2 实例同时访问。通用性能模型提供高可用性和弹性，满足主题的要求。",
+          "en": "Correct. Technical reason: Technical Analysis: Amazon EFS is a fully managed shared file storage service that supports simultaneous access by multiple EC2 instances. The universal performance model provides high availability and resiliency, meeting the requirements of the theme."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 预置 Amazon Elastic File System (Amazon EFS) 文件系统。配置文件系统以使用通用性能模式。",
+        "en": "D. Provision an Amazon Elastic File System (Amazon EFS) file system. Configure the file system to use General Purpose performance mode."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：技术分析： Amazon EFS 是一种完全托管的共享文件存储服务，支持多个 EC2 实例同时访问。通用性能模型提供高可用性和弹性，满足主题的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Technical Analysis: Amazon EFS is a fully managed shared file storage service that supports simultaneous access by multiple EC2 instances. The universal performance model provides high availability and resiliency, meeting the requirements of the theme."
+      }
+    },
+    {
+      "question_no": 987,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司最近为其客户推出了一款新应用程序。该应用程序在跨两个可用区的多个 Amazon EC2 实例上运行。最终用户使用 TCP 与应用程序进行通信。应用程序必须具有高可用性，并且必须随着用户数量的增加而自动扩展。哪种步骤组合能够最经济有效地满足这些要求？ （选择两个。）",
+        "en": "A company recently launched a new application for its customers. The application runs on multiple Amazon EC2 instances across two Availability Zones. End users use TCP to communicate with the application. The application must be highly available and must automatically scale as the number of users increases. Which combination of steps will meet these requirements MOST cost-effectively? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在 EC2 实例前面添加网络负载均衡器。",
+          "en": "Add a Network Load Balancer in front of the EC2 instances."
+        },
+        "B": {
+          "zh": "为 EC2 实例配置 Auto Scaling 组。",
+          "en": "Configure an Auto Scaling group for the EC2 instances."
+        },
+        "C": {
+          "zh": "在 EC2 实例前面添加一个应用程序负载均衡器。",
+          "en": "Add an Application Load Balancer in front of the EC2 instances."
+        },
+        "D": {
+          "zh": "手动为应用程序添加更多 EC2 实例。",
+          "en": "Manually add more EC2 instances for the application."
+        },
+        "E": {
+          "zh": "在 EC2 实例前面添加网关负载均衡器。",
+          "en": "Add a Gateway Load Balancer in front of the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：网络负载均衡器 (NLB) 是一种高性能负载均衡器，旨在处理 TCP 流量。问题明确提到用户使用 TCP 与应用程序通信，因此 NLB 是一个合适的选择。成本效益： NLB 在处理 TCP 流量时性能非常好且经济高效。",
+          "en": "Correct. Technical reason: A Network Load Balancer (NLB) is a high-performance load balancer designed to handle TCP traffic. The question clearly mentions that users use TCP to communicate with the application, so NLB is a suitable choice. Cost-Effectiveness: NLB is very performant and cost-effective when handling TCP traffic."
+        },
+        "B": {
+          "zh": "正確。技术原因： Auto Scaling组根据用户需求动态调整EC2实例数量，实现自动伸缩和高可用。成本效益：通过自动扩容，避免资源过度分配，节省成本。",
+          "en": "Correct. Technical reason: The Auto Scaling group dynamically adjusts the number of EC2 instances based on user needs to achieve automatic scaling and high availability. Cost-effectiveness: Through automatic expansion, over-allocation of resources is avoided and costs are saved."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：应用程序负载均衡器（ALB）主要用于处理HTTP和HTTPS流量，并且问题中明确提到用户使用TCP通信，因此该ALB不适合该场景。",
+          "en": "Incorrect. Technical reason: Application Load Balancer (ALB) is mainly used to handle HTTP and HTTPS traffic, and the question clearly mentions that users use TCP communication, so this ALB is not suitable for this scenario."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：手动添加EC2实例进行自动扩容不需要任何字符串，管理成本较高，且不满足问题的“自动扩容”和“高可用”要求。",
+          "en": "Incorrect. Technical reason: Manually adding EC2 instances for automatic expansion does not require any strings, has high management costs, and does not meet the \"automatic expansion\" and \"high availability\" requirements of the problem."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：网关负载均衡器主要用于第三方虚拟设备（如防火墙、入侵检测系统）对网络流量的影响。它不适合直接处理 TCP 流量的应用程序负载平衡。",
+          "en": "Incorrect. Technical reason: Gateway load balancers are mainly used for the impact of third-party virtual devices (such as firewalls and intrusion detection systems) on network traffic. It is not suitable for application load balancing that directly handles TCP traffic."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 在 EC2 实例前面添加网络负载均衡器。；B. 为 EC2 实例配置 Auto Scaling 组。",
+        "en": "A. Add a Network Load Balancer in front of the EC2 instances.; B. Configure an Auto Scaling group for the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AB (79%) 11% 11%。热门讨论与考点摘要：网络负载均衡器 (NLB) 是一种高性能负载均衡器，旨在处理 TCP 流量。问题明确提到用户使用 TCP 与应用程序通信，因此 NLB 是一个合适的选择。成本效益： NLB 在处理 TCP 流量时性能非常好且经济高效。； Auto Scaling组根据用户需求动态调整EC2实例数量，实现自动伸缩和高可用。成本效益：通过自动扩容，避免资源过度分配，节省成本。",
+        "en": "Community vote as displayed: AB (79%) 11% 11%. Popular discussion and key point summary: A Network Load Balancer (NLB) is a high-performance load balancer designed to handle TCP traffic. The question clearly mentions that users use TCP to communicate with the application, so NLB is a suitable choice. Cost-Effectiveness: NLB is very performant and cost-effective when handling TCP traffic.; The Auto Scaling group dynamically adjusts the number of EC2 instances based on user needs to achieve automatic scaling and high availability. Cost-effectiveness: Through automatic expansion, over-allocation of resources is avoided and costs are saved."
+      }
+    },
+    {
+      "question_no": 988,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在为使用 AWS 云的新移动应用程序设计架构。该公司使用 AWS Organizations 中的组织单位 (OU) 来管理其账户。该公司希望通过使用敏感和不敏感的值来标记 Amazon EC2 实例的数据敏感度。 IAM 身份不得删除标签或创建没有标签的实例。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company is designing the architecture for a new mobile app that uses the AWS Cloud. The company uses organizational units (OUs) in AWS Organizations to manage its accounts. The company wants to tag Amazon EC2 instances with data sensitivity by using values of sensitive and nonsensitive. IAM identities must not be able to delete a tag or create instances without a tag. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在组织中，创建一个新的标签策略，指定数据敏感度标签键和所需的值。强制执行 EC2 实例的标签值。将标签策略附加到适当的 OU。",
+          "en": "In Organizations, create a new tag policy that specifies the data sensitivity tag key and the required values. Enforce the tag values for the EC2 instances. Attach the tag policy to the appropriate OU."
+        },
+        "B": {
+          "zh": "在组织中，创建一个新的服务控制策略 (SCP)，指定数据敏感度标签键和所需的标签值。强制执行 EC2 实例的标签值。将 SCP 连接到适当的 OU。",
+          "en": "In Organizations, create a new service control policy (SCP) that specifies the data sensitivity tag key and the required tag values. Enforce the tag values for the EC2 instances. Attach the SCP to the appropriate OU."
+        },
+        "C": {
+          "zh": "创建标签策略以在未指定标签键时拒绝运行实例。创建另一个标签策略以防止身份删除标签。将标签策略附加到适当的 OU。",
+          "en": "Create a tag policy to deny running instances when a tag key is not specified. Create another tag policy that prevents identities from deleting tags. Attach the tag policies to the appropriate OU."
+        },
+        "D": {
+          "zh": "创建服务控制策略 (SCP)，以在未指定标签键时拒绝创建实例。创建另一个 SCP 以防止身份删除标签。将 SCP 连接到适当的 OU。",
+          "en": "Create a service control policy (SCP) to deny creating instances when a tag key is not specified. Create another SCP that prevents identities from deleting tags. Attach the SCPs to the appropriate OU."
+        },
+        "E": {
+          "zh": "创建 AWS Config 规则以检查 EC2 实例是否使用数据敏感度标签和指定值。配置 AWS Lambda 函数以在发现不合规资源时删除资源。",
+          "en": "Create an AWS Config rule to check if EC2 instances use the data sensitivity tag and the specified values. Configure an AWS Lambda function to delete the resource if a noncompliant resource is found."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：标签策略可以强制资源使用特定的标签键和值，并且可以附加到 OU 以应用于相关账户。但标签策略不能直接阻止创建无标签实例或阻止删除标签，因此需要与其他策略（如 SCP）结合使用。",
+          "en": "Correct. Technical reason: Tag policies can force resources to use specific tag keys and values, and can be attached to an OU to apply to related accounts. However, label policies cannot directly prevent the creation of unlabeled instances or prevent the deletion of labels, so they need to be used in conjunction with other policies (such as SCP)."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： SCP 可以限制创建没有标签的实例，但不能直接强制资源使用特定的标签键和值。 SCP的作用是限制权限，而不是管理标签的具体值。",
+          "en": "Incorrect. Technical reason: SCP can restrict the creation of instances without tags, but cannot directly force resources to use specific tag keys and values. The role of SCP is to restrict permissions, not to manage the specific values ​​of tags."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：标签策略无法直接实现“拒绝未指定标签键运行的实例”或“防止标签被删除”的功能。这些功能都需要通过SCP来实现。",
+          "en": "Incorrect. Technical reason: Tag policies cannot directly implement the functions of \"deny running instances without specified tag keys\" or \"prevent tags from being deleted\". These functions need to be implemented through SCP."
+        },
+        "D": {
+          "zh": "正確。技术原因： SCP 可以限制创建没有标签的实例，并可以防止 IAM 身份删除标签。通过将 SCP 附加到 OU，可以在组织范围内强制实施这些限制。",
+          "en": "Correct. Technical reason: SCP can restrict the creation of instances without tags and can prevent IAM identities from removing tags. These restrictions can be enforced organization-wide by attaching an SCP to an OU."
+        },
+        "E": {
+          "zh": "錯誤。技术原因： AWS Config 规则可以检查资源是否满足标签要求，但无法阻止创建没有标签的实例或阻止删除标签。使用Lambda函数删除资源是一种后处理方法，该问题需要预防措施。",
+          "en": "Incorrect. Technical reason: AWS Config rules can check whether a resource meets tag requirements, but they cannot prevent the creation of instances without tags or prevent tags from being removed. Deleting resources using Lambda functions is a post-processing method and the problem requires preventive measures."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 在组织中，创建一个新的标签策略，指定数据敏感度标签键和所需的值。强制执行 EC2 实例的标签值。将标签策略附加到适当的 OU。；D. 创建服务控制策略 (SCP)，以在未指定标签键时拒绝创建实例。创建另一个 SCP 以防止身份删除标签。将 SCP 连接到适当的 OU。",
+        "en": "A. In Organizations, create a new tag policy that specifies the data sensitivity tag key and the required values. Enforce the tag values for the EC2 instances. Attach the tag policy to the appropriate OU.; D. Create a service control policy (SCP) to deny creating instances when a tag key is not specified. Create another SCP that prevents identities from deleting tags. Attach the SCPs to the appropriate OU."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AD (100%)。热门讨论与考点摘要：标签策略可以强制资源使用特定的标签键和值，并且可以附加到 OU 以应用于相关账户。但标签策略不能直接阻止创建无标签实例或阻止删除标签，因此需要与其他策略（如 SCP）结合使用。； SCP 可以限制创建没有标签的实例，并可以防止 IAM 身份删除标签。通过将 SCP 附加到 OU，可以在组织范围内强制实施这些限制。",
+        "en": "Community vote as displayed: AD (100%). Popular discussion and key point summary: Tag policies can force resources to use specific tag keys and values, and can be attached to an OU to apply to related accounts. However, label policies cannot directly prevent the creation of unlabeled instances or prevent the deletion of labels, so they need to be used in conjunction with other policies (such as SCP).; SCP can restrict the creation of instances without tags and can prevent IAM identities from removing tags. These restrictions can be enforced organization-wide by attaching an SCP to an OU."
+      }
+    },
+    {
+      "question_no": 989,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上运行数据库工作负载， AWS 是该公司客户门户的后端。该公司在 Amazon RDS for PostgreSQL 上运行多可用区数据库集群。公司需要实施 30 天的备份保留政策。该公司目前拥有自动 RDS 备份和手动 RDS 备份。该公司希望维护这两种类型的 30 天以内的现有 RDS 备份。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company runs database workloads on AWS that are the backend for the company's customer portals. The company runs a Multi-AZ database cluster on Amazon RDS for PostgreSQL. The company needs to implement a 30-day backup retention policy. The company currently has both automated RDS backups and manual RDS backups. The company wants to maintain both types of existing RDS backups that are less than 30 days old. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Backup 将 RDS 备份保留策略配置为 30 天以进行自动备份。手动删除超过 30 天的手动备份。",
+          "en": "Configure the RDS backup retention policy to 30 days for automated backups by using AWS Backup. Manually delete manual backups that are older than 30 days."
+        },
+        "B": {
+          "zh": "禁用 RDS 自动备份。删除超过 30 天的自动备份和手动备份。将 RDS 备份保留策略配置为 30 天以进行自动备份。",
+          "en": "Disable RDS automated backups. Delete automated backups and manual backups that are older than 30 days. Configure the RDS backup retention policy to 30 days for automated backups."
+        },
+        "C": {
+          "zh": "将 RDS 备份保留策略配置为 30 天以进行自动备份。手动删除超过 30 天的手动备份。",
+          "en": "Configure the RDS backup retention policy to 30 days for automated backups. Manually delete manual backups that are older than 30 days."
+        },
+        "D": {
+          "zh": "禁用 RDS 自动备份。使用 AWS CloudFormation 自动删除超过 30 天的自动备份和手动备份。将 RDS 备份保留策略配置为 30 天以进行自动备份。",
+          "en": "Disable RDS automated backups. Delete automated backups and manual backups that are older than 30 days automatically by using AWS CloudFormation. Configure the RDS backup retention policy to 30 days for automated backups."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析： AWS Backup可以管理RDS备份，但问题中没有提到需要使用AWS Backup来配置备份策略。手动删除手动备份是可能的，但没有提及如何自动化此过程。成本分析：使用AWS Backup可能会增加额外的成本，该问题需要最具成本效益的解决方案。",
+          "en": "Incorrect. Technical reason: Technical analysis: AWS Backup can manage RDS backup, but the question does not mention the need to use AWS Backup to configure backup strategies. Manual deletion of manual backups is possible, but there is no mention of how to automate this process. Cost analysis: Using AWS Backup may add additional costs, and the problem requires the most cost-effective solution."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：禁用自动备份会带来数据保护风险，不符合问题的要求。没有提及如何自动化删除备份的操作。成本分析：禁用自动备份可能会降低成本，但会增加数据丢失的风险，并且不符合最佳实践。",
+          "en": "Incorrect. Technical reason: Technical analysis: Disabling automatic backup will bring data protection risks and does not meet the requirements of the problem. There is no mention of how to automate the operation of deleting backups. Cost Analysis: Disabling automatic backups may reduce costs but increases the risk of data loss and is not consistent with best practices."
+        },
+        "C": {
+          "zh": "正確。技术原因：技术分析：30天的自动备份保留策略配置正确。手动删除超过30天的手动备份是可行的，并且满足问题要求。成本分析：此选项不需要额外的服务或工具，并且具有成本效益。",
+          "en": "Correct. Technical reason: Technical analysis: The automatic backup retention policy configuration of 30 days is correct. Manual deletion of manual backups older than 30 days is feasible and meets the problem requirements. Cost Analysis: This option requires no additional services or tools and is cost-effective."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：禁用自动备份会带来数据保护风险，不符合问题的要求。使用 AWS CloudFormation 删除备份不是最佳实践，因为 CloudFormation 主要用于资源创建和管理，而不是备份管理。成本分析：禁用自动备份可能会降低成本，但会增加数据丢失的风险，并且不符合最佳实践。",
+          "en": "Incorrect. Technical reason: Technical analysis: Disabling automatic backup will bring data protection risks and does not meet the requirements of the problem. Using AWS CloudFormation to delete backups is not a best practice because CloudFormation is primarily used for resource creation and management, not backup management. Cost Analysis: Disabling automatic backups may reduce costs but increases the risk of data loss and is not consistent with best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将 RDS 备份保留策略配置为 30 天以进行自动备份。手动删除超过 30 天的手动备份。",
+        "en": "C. Configure the RDS backup retention policy to 30 days for automated backups. Manually delete manual backups that are older than 30 days."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (89%) 11%。热门讨论与考点摘要：技术分析：30天的自动备份保留策略配置正确。手动删除超过30天的手动备份是可行的，并且满足问题要求。成本分析：此选项不需要额外的服务或工具，并且具有成本效益。",
+        "en": "Community vote as displayed: C (89%) 11%. Popular discussion and key point summary: Technical analysis: The automatic backup retention policy configuration of 30 days is correct. Manual deletion of manual backups older than 30 days is feasible and meets the problem requirements. Cost Analysis: This option requires no additional services or tools and is cost-effective."
+      }
+    },
+    {
+      "question_no": 990,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正计划将旧应用程序迁移到 AWS。该应用程序当前使用 NFS 与本地存储解决方案通信以存储应用程序数据。为此，不能修改应用程序以使用除 NFS 之外的任何其他通信协议。解决方案架构师应建议在迁移后使用哪种存储解决方案？",
+        "en": "A company is planning to migrate a legacy application to AWS. The application currently uses NFS to communicate to an on- premises storage solution to store application data. The application cannot be modified to use any other communication protocols other than NFS for this purpose. Which storage solution should a solutions architect recommend for use after the migration?"
+      },
+      "options": {
+        "A": {
+          "zh": "AWS DataSync",
+          "en": "AWS DataSync"
+        },
+        "B": {
+          "zh": "亚马逊弹性块存储（亚马逊EBS）",
+          "en": "Amazon Elastic Block Store (Amazon EBS)"
+        },
+        "C": {
+          "zh": "亚马逊弹性文件系统 (Amazon EFS)",
+          "en": "Amazon Elastic File System (Amazon EFS)"
+        },
+        "D": {
+          "zh": "Amazon EMR 文件系统 (Amazon EMRFS)",
+          "en": "Amazon EMR File System (Amazon EMRFS)"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS DataSync 是一项数据迁移服务，用于将数据从本地存储迁移到 EFS 或 S3 等 AWS 存储服务。它不提供直接的 NFS 存储功能。",
+          "en": "Incorrect. Technical reason: AWS DataSync is a data migration service for migrating data from local storage to AWS storage services such as EFS or S3. It does not provide direct NFS storage functionality."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon EBS 是一种块存储服务，主要设计用于 EC2 实例。 NFS 协议不受支持，无法满足相关应用程序的需求。",
+          "en": "Incorrect. Technical reason: Amazon EBS is a block storage service designed primarily for use with EC2 instances. The NFS protocol is not supported and cannot meet the needs of the application in question."
+        },
+        "C": {
+          "zh": "正確。技术原因： Amazon EFS 是一项支持 NFS 协议的完全托管文件存储服务。它可以直接与迁移的应用程序集成，以满足相关应用程序的需求。",
+          "en": "Correct. Technical reason: Amazon EFS is a fully managed file storage service that supports the NFS protocol. It can be integrated directly with the migrated application to meet the needs of the application in question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon EMRFS 是专为 Amazon EMR（Elastic MapReduce）设计的文件系统，主要用于与 S3 集成。 NFS 协议不受支持，无法满足相关应用程序的需求。",
+          "en": "Incorrect. Technical reason: Amazon EMRFS is a file system designed for Amazon EMR (Elastic MapReduce) and is mainly used for integration with S3. The NFS protocol is not supported and cannot meet the needs of the application in question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 亚马逊弹性文件系统 (Amazon EFS)",
+        "en": "C. Amazon Elastic File System (Amazon EFS)"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： Amazon EFS 是一项支持 NFS 协议的完全托管文件存储服务。它可以直接与迁移的应用程序集成，以满足相关应用程序的需求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon EFS is a fully managed file storage service that supports the NFS protocol. It can be integrated directly with the migrated application to meet the needs of the application in question."
+      }
+    },
+    {
+      "question_no": 991,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 GPS 跟踪器记录数千只海龟的迁徙模式。追踪器每 5 分钟检查一次，看看海龟移动的距离是否超过 100 码（91.4 米）。如果乌龟移动了，它的跟踪器会将新坐标发送到在一个 AWS 区域的多个可用区中的三个 Amazon EC2 实例上运行的 Web 应用程序。最近， Web 应用程序在处理大量跟踪器数据时不堪重负。数据丢失，无法重播事件。解决方案架构师必须防止此问题再次发生，并且需要一个运营开销最少的解决方案。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A company uses GPS trackers to document the migration patterns of thousands of sea turtles. The trackers check every 5 minutes to see if a turtle has moved more than 100 yards (91.4 meters). If a turtle has moved, its tracker sends the new coordinates to a web application running on three Amazon EC2 instances that are in multiple Availability Zones in one AWS Region. Recently, the web application was overwhelmed while processing an unexpected volume of tracker data. Data was lost with no way to replay the events. A solutions architect must prevent this problem from happening again and needs a solution with the least operational overhead. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon S3 存储桶来存储数据。配置应用程序以扫描存储桶中的新数据进行处理。",
+          "en": "Create an Amazon S3 bucket to store the data. Configure the application to scan for new data in the bucket for processing."
+        },
+        "B": {
+          "zh": "创建 Amazon API Gateway 终端节点来处理传输的位置坐标。使用 AWS Lambda 函数同时处理每个项目。",
+          "en": "Create an Amazon API Gateway endpoint to handle transmitted location coordinates. Use an AWS Lambda function to process each item concurrently."
+        },
+        "C": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 队列来存储传入数据。配置应用程序以轮询新消息以进行处理。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue to store the incoming data. Configure the application to poll for new messages for processing."
+        },
+        "D": {
+          "zh": "创建 Amazon DynamoDB 表来存储传输的位置坐标。配置应用程序以查询表以获取要处理的新数据。使用TTL来删除已经处理过的数据。",
+          "en": "Create an Amazon DynamoDB table to store transmitted location coordinates. Configure the application to query the table for new data for processing. Use TTL to remove data that has been processed."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 是一种对象存储服务，适合存储状态文件或数据，但不适合处理实时数据流。扫描S3桶的方法效率低下，无法保证数据处理的有序性或可靠性。",
+          "en": "Incorrect. Technical reason: Amazon S3 is an object storage service that is suitable for storing state files or data, but is not suitable for processing real-time data streams. The method of scanning S3 buckets is inefficient and cannot guarantee the orderliness or reliability of data processing."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然 API Gateway 和 Lambda 可以处理并发请求，但它们无法中断数据流。如果流量激增， API网关可能会过载，导致数据丢失。另外，该方案需要额外的配置和管理，运营开销较高。",
+          "en": "Incorrect. Technical reason: Although API Gateway and Lambda can handle concurrent requests, they cannot interrupt the data flow. If there is a surge in traffic, the API gateway may be overloaded, resulting in data loss. In addition, this solution requires additional configuration and management, and the operational overhead is high."
+        },
+        "C": {
+          "zh": "正確。技术原因： Amazon SQS 是专门为缓冲和存储消息而设计的服务，能够处理高度并发的数据流并防止数据丢失。应用程序序列可以轮询队列中的消息，以确保数据按顺序处理。该解决方案的运营开销较低且非常可靠。",
+          "en": "Correct. Technical reason: Amazon SQS is a service designed specifically for buffering and storing messages, capable of handling highly concurrent data streams and preventing data loss. Application sequences can poll the queue for messages to ensure data is processed in order. The solution has low operational overhead and is very reliable."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 DynamoDB 可以存储数据并支持 TTL 清理，但它并不是被设计为处理实时数据流的最佳选择。查询新数据的方法效率低下，无法保证数据处理的顺序。此外，运营开销也更高。",
+          "en": "Incorrect. Technical reason: While DynamoDB can store data and supports TTL scrubbing, it is not designed to be the best choice for handling real-time data streams. The method of querying new data is inefficient and cannot guarantee the order of data processing. Additionally, operational overhead is higher."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建 Amazon Simple Queue Service (Amazon SQS) 队列来存储传入数据。配置应用程序以轮询新消息以进行处理。",
+        "en": "C. Create an Amazon Simple Queue Service (Amazon SQS) queue to store the incoming data. Configure the application to poll for new messages for processing."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： Amazon SQS 是专门为缓冲和存储消息而设计的服务，能够处理高度并发的数据流并防止数据丢失。应用程序序列可以轮询队列中的消息，以确保数据按顺序处理。该解决方案的运营开销较低且非常可靠。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon SQS is a service designed specifically for buffering and storing messages, capable of handling highly concurrent data streams and preventing data loss. Application sequences can poll the queue for messages to ensure data is processed in order. The solution has low operational overhead and is very reliable."
+      }
+    },
+    {
+      "question_no": 992,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司的软件开发团队需要 Amazon RDS 多可用区集群。 RDS 集群将充当本地的检面客户端的后端。检面客户端需要直接连接到 RDS 集群。公司必须让开发团队能够在团队在办公室时使用客户端连接到集群。哪种解决方案最安全地提供所需的连接？",
+        "en": "A company's software development team needs an Amazon RDS Multi-AZ cluster. The RDS cluster will serve as a backend for a desktop client that is deployed on premises. The desktop client requires direct connectivity to the RDS cluster. The company must give the development team the ability to connect to the cluster by using the client when the team is in the office. Which solution provides the required connectivity MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建一个 VPC 和两个公有子网。在公有子网中创建 RDS 集群。将 AWS Site-to-Site VPN 与公司办公室中的客户网关结合使用。",
+          "en": "Create a VPC and two public subnets. Create the RDS cluster in the public subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+        },
+        "B": {
+          "zh": "创建一个 VPC 和两个私有子网。在私有子网中创建 RDS 集群。将 AWS Site-to-Site VPN 与公司办公室中的客户网关结合使用。",
+          "en": "Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+        },
+        "C": {
+          "zh": "创建一个 VPC 和两个私有子网。在私有子网中创建 RDS 集群。使用RDS安全组允许公司办公IP范围访问集群。",
+          "en": "Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use RDS security groups to allow the company's office IP ranges to access the cluster."
+        },
+        "D": {
+          "zh": "创建一个 VPC 和两个公有子网。在公有子网中创建 RDS 集群。为每个开发者创建一个集群用户。使用RDS安全组允许用户访问集群。",
+          "en": "Create a VPC and two public subnets. Create the RDS cluster in the public subnets. Create a cluster user for each developer. Use RDS security groups to allow the users to access the cluster."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：在公有子网中部署RDS会暴露数据库实例的公有IP地址，增加安全风险。虽然使用站点到站点 VPN 可以提供安全连接，但公共子网的选择违背了最佳实践。",
+          "en": "Incorrect. Technical reason: Deploying RDS in a public subnet will expose the public IP address of the database instance, increasing security risks. While using a site-to-site VPN can provide a secure connection, the choice of a public subnet goes against best practices."
+        },
+        "B": {
+          "zh": "正確。技术原因：在私有子网中部署 RDS 可确保数据库实例不会直接暴露于 互联网，符合安全最佳实践。使用 AWS Site-to-Site VPN 安全连接公司办公室和 AWS VPC 以满足问题需求。",
+          "en": "Correct. Technical reason: Deploying RDS in a private subnet ensures that database instances are not directly exposed to the Internet, complying with security best practices. Use AWS Site-to-Site VPN to securely connect corporate offices and AWS VPCs to meet problem needs."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然RDS安全组可以限制访问，但没有提及如何建立安全的网络连接（例如VPN）。直接依赖 IP 范围访问可能不安全，尤其是在动态 IP 环境中。",
+          "en": "Incorrect. Technical reason: While RDS security groups can restrict access, there is no mention of how to establish a secure network connection (e.g. VPN). Relying directly on IP range access can be unsafe, especially in dynamic IP environments."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：在公有子网中部署RDS会暴露数据库实例的公有IP地址，增加安全风险。虽然可以通过为每个开发人员创建用户并使用安全组来限制访问来控制权限，但公共子网的选择违背了安全最佳实践。",
+          "en": "Incorrect. Technical reason: Deploying RDS in a public subnet will expose the public IP address of the database instance, increasing security risks. While permissions can be controlled by creating users for each developer and using security groups to restrict access, the choice of a public subnet goes against security best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建一个 VPC 和两个私有子网。在私有子网中创建 RDS 集群。将 AWS Site-to-Site VPN 与公司办公室中的客户网关结合使用。",
+        "en": "B. Create a VPC and two private subnets. Create the RDS cluster in the private subnets. Use AWS Site-to-Site VPN with a customer gateway in the company's office."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (83%) C (17%)。热门讨论与考点摘要：在私有子网中部署 RDS 可确保数据库实例不会直接暴露于 互联网，符合安全最佳实践。使用 AWS Site-to-Site VPN 安全连接公司办公室和 AWS VPC 以满足问题需求。",
+        "en": "Community vote as displayed: B (83%) C (17%). Popular discussion and key point summary: Deploying RDS in a private subnet ensures that database instances are not directly exposed to the Internet, complying with security best practices. Use AWS Site-to-Site VPN to securely connect corporate offices and AWS VPCs to meet problem needs."
+      }
+    },
+    {
+      "question_no": 993,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在创建一个应用程序来处理大量数据的批处理。输入数据将保存在 Amazon S3 中，输出数据将存储在不同的 S3 存储桶中。为了进行处理，应用程序将通过网络在多个 Amazon EC2 实例之间传输数据。解决方案架构师应该如何降低总体数据传输成本？",
+        "en": "A solutions architect is creating an application that will handle batch processing of large amounts of data. The input data will be held in Amazon S3 and the output data will be stored in a different S3 bucket. For processing, the application will transfer the data over the network between multiple Amazon EC2 instances. What should the solutions architect do to reduce the overall data transfer costs?"
+      },
+      "options": {
+        "A": {
+          "zh": "将所有 EC2 实例放入 Auto Scaling 组中。",
+          "en": "Place all the EC2 instances in an Auto Scaling group."
+        },
+        "B": {
+          "zh": "将所有 EC2 实例放置在同一 AWS 区域中。",
+          "en": "Place all the EC2 instances in the same AWS Region."
+        },
+        "C": {
+          "zh": "将所有 EC2 实例放置在同一可用区中。",
+          "en": "Place all the EC2 instances in the same Availability Zone."
+        },
+        "D": {
+          "zh": "将所有 EC2 实例放置在多个可用区的私有子网中。",
+          "en": "Place all the EC2 instances in private subnets in multiple Availability Zones."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Auto Scaling组的主要功能是根据负载动态调整实例数量，这与数据传输成本优化密切相关。",
+          "en": "Incorrect. Technical reason: The main function of the Auto Scaling group is to dynamically adjust the number of instances according to the load, which is closely related to data transmission cost optimization."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然同Region内和跨Region之间传输数据很容易，但同一Region内不同可用区之间传输数据仍然需要付费。",
+          "en": "Incorrect. Technical reason: Although it is easy to transfer data within the same Region and across Regions, there are still charges for transferring data between different Availability Zones within the same Region."
+        },
+        "C": {
+          "zh": "正確。技术原因：同一可用区的EC2实例之间的数据传输是免费的，因此将所有实例放在同一可用区可以有效降低数据传输成本。",
+          "en": "Correct. Technical reason: Data transfer between EC2 instances in the same Availability Zone is free, so placing all instances in the same Availability Zone can effectively reduce data transfer costs."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然使用云提高了安全性，但在多个可用区之间传输数据仍然需要付费。",
+          "en": "Incorrect. Technical reason: While using the cloud improves security, there are still fees for transferring data between multiple Availability Zones."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将所有 EC2 实例放置在同一可用区中。",
+        "en": "C. Place all the EC2 instances in the same Availability Zone."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (83%) B (17%)。热门讨论与考点摘要：同一可用区的EC2实例之间的数据传输是免费的，因此将所有实例放在同一可用区可以有效降低数据传输成本。",
+        "en": "Community vote as displayed: C (83%) B (17%). Popular discussion and key point summary: Data transfer between EC2 instances in the same Availability Zone is free, so placing all instances in the same Availability Zone can effectively reduce data transfer costs."
+      }
+    },
+    {
+      "question_no": 994,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司托管一个多层 Web 应用程序，该应用程序使用 Amazon Aurora MySQL 数据库集群进行存储。应用程序层托管在 Amazon EC2 实例上。该公司的 IT 安全准则要求对数据库凭证进行加密并每 14 天轮换一次。解决方案架构师应该如何做才能以最少的操作工作满足此要求？",
+        "en": "A company hosts a multi-tier web application that uses an Amazon Aurora MySQL DB cluster for storage. The application tier is hosted on Amazon EC2 instances. The company's IT security guidelines mandate that the database credentials be encrypted and rotated every 14 days. What should a solutions architect do to meet this requirement with the LEAST operational effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建新的 AWS Key Management Service (AWS KMS) 加密密钥。使用 AWS Secrets Manager 创建一个使用 KMS 密钥和适当凭证的新密钥。将密钥与 Aurora 数据库集群关联。配置 14 天的自定义轮换期。",
+          "en": "Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new secret that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a custom rotation period of 14 days."
+        },
+        "B": {
+          "zh": "在 AWS Systems Manager Parameter Store 中创建两个参数：一个用于作为字符串参数的用户名，另一个使用 SecureString 类型作为密码。为密码参数选择 AWS Key Management Service (AWS KMS) 加密，并将这些参数加载到应用程序层中。实施每 14 天轮换一次密码的 AWS Lambda 函数。",
+          "en": "Create two parameters in AWS Systems Manager Parameter Store: one for the user name as a string parameter and one that uses the SecureString type for the password. Select AWS Key Management Service (AWS KMS) encryption for the password parameter, and load these parameters in the application tier. Implement an AWS Lambda function that rotates the password every 14 days."
+        },
+        "C": {
+          "zh": "将包含凭证的文件存储在 AWS Key Management Service (AWS KMS) 加密的 Amazon Elastic File System (Amazon EFS) 文件系统中。在应用层的所有 EC2 实例中挂载 EFS 文件系统。限制对文件系统上的文件的访问，以便应用程序可以读取该文件，并且只有超级用户可以修改该文件。实施一个 AWS Lambda 函数，该函数每 14 天在 Aurora 中轮换一次密钥并将新凭证写入文件。",
+          "en": "Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system in all EC2 instances of the application tier. Restrict the access to the file on the file system so that the application can read the file and that only super users can modify the file. Implement an AWS Lambda function that rotates the key in Aurora every 14 days and writes new credentials into the file."
+        },
+        "D": {
+          "zh": "将包含凭证的文件存储在应用程序用来加载凭证的 AWS Key Management Service (AWS KMS) 加密的 Amazon S3 存储桶中。定期将文件下载到应用程序，以确保使用正确的凭据。实施一个 AWS Lambda 函数，该函数每 14 天轮换一次 Aurora 凭证，并将这些凭证上传到 S3 存储桶中的文件。",
+          "en": "Store a file that contains the credentials in an AWS Key Management Service (AWS KMS) encrypted Amazon S3 bucket that the application uses to load the credentials. Download the file to the application regularly to ensure that the correct credentials are used. Implement an AWS Lambda function that rotates the Aurora credentials every 14 days and uploads these credentials to the file in the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：分析： AWS Secrets Manager 支持数据库凭证的自动轮换，并且可以直接与 Aurora 数据库集成。使用 AWS KMS 加密密钥保护您的凭证。配置自定义轮换周期（14天）完全满足问题需求。该方案操作简单，自动化程度高，满足“最小操作工作量”的要求。",
+          "en": "Correct. Technical reason: Analysis: AWS Secrets Manager supports automatic rotation of database credentials and can integrate directly with Aurora databases. Secure your credentials using AWS KMS encryption keys. Configuring a custom rotation period (14 days) fully meets the problem requirements. This solution is simple to operate, has a high degree of automation, and meets the requirements of \"minimum operating workload\"."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析： AWS Systems Manager Parameter Store 可以存储加密参数，但不支持数据库凭证的自动轮换。需要实现额外的 AWS Lambda 函数来轮换密码，这增加了操作的复杂性。此选项比 Secrets Manager 需要更多的手动配置和维护，并且不满足最低运营工作量要求。",
+          "en": "Incorrect. Technical reason: Analysis: AWS Systems Manager Parameter Store can store encryption parameters but does not support automatic rotation of database credentials. An additional AWS Lambda function needs to be implemented to rotate passwords, which increases the complexity of the operation. This option requires more manual configuration and maintenance than Secrets Manager and does not meet the Minimum Operational Effort requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：使用EFS存储和加密凭证文件是可能的，但需要额外的配置来挂载文件系统。需要实现 AWS Lambda 函数来轮换凭证，这增加了操作复杂性。这种方式不如Secrets Manager直接集成Aurora数据库方便，操作复杂度也较高。",
+          "en": "Incorrect. Technical reason: Analysis: Using EFS to store and encrypt credential files is possible, but requires additional configuration to mount the file system. An AWS Lambda function needs to be implemented to rotate credentials, which increases operational complexity. This method is not as convenient as Secrets Manager's direct integration of the Aurora database, and the operation complexity is higher."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建新的 AWS Key Management Service (AWS KMS) 加密密钥。使用 AWS Secrets Manager 创建一个使用 KMS 密钥和适当凭证的新密钥。将密钥与 Aurora 数据库集群关联。配置 14 天的自定义轮换期。",
+        "en": "A. Create a new AWS Key Management Service (AWS KMS) encryption key. Use AWS Secrets Manager to create a new secret that uses the KMS key with the appropriate credentials. Associate the secret with the Aurora DB cluster. Configure a custom rotation period of 14 days."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：分析： AWS Secrets Manager 支持数据库凭证的自动轮换，并且可以直接与 Aurora 数据库集成。使用 AWS KMS 加密密钥保护您的凭证。配置自定义轮换周期（14天）完全满足问题需求。该方案操作简单，自动化程度高，满足“最小操作工作量”的要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Analysis: AWS Secrets Manager supports automatic rotation of database credentials and can integrate directly with Aurora databases. Secure your credentials using AWS KMS encryption keys. Configuring a custom rotation period (14 days) fully meets the problem requirements. This solution is simple to operate, has a high degree of automation, and meets the requirements of \"minimum operating workload\"."
+      }
+    },
+    {
+      "question_no": 995,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家流媒体公司正在重建其基础设施，以满足用户日常消费的视频内容日益增长的需求。该公司需要处理 TB 大小的视频以阻止视频中的某些内容。视频处理最多可能需要 20 分钟。该公司需要一种能够根据需求扩展并保持成本效益的解决方案。哪种解决方案可以满足这些要求？",
+        "en": "A streaming media company is rebuilding its infrastructure to accommodate increasing demand for video content that users consume daily. The company needs to process terabyte-sized videos to block some content in the videos. Video processing can take up to 20 minutes. The company needs a solution that will scale with demand and remain cost-effective. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Lambda 函数处理视频。将视频元数据存储在 Amazon DynamoDB 中。将视频内容存储在 Amazon S3 智能分层中。",
+          "en": "Use AWS Lambda functions to process videos. Store video metadata in Amazon DynamoDB. Store video content in Amazon S3 Intelligent-Tiering."
+        },
+        "B": {
+          "zh": "使用 Amazon Elastic Container Service (Amazon ECS) 和 AWS Fargate 实施微服务来处理视频。将视频元数据存储在 Amazon Aurora 中。将视频内容存储在 Amazon S3 智能分层中。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) and AWS Fargate to implement microservices to process videos. Store video metadata in Amazon Aurora. Store video content in Amazon S3 Intelligent-Tiering."
+        },
+        "C": {
+          "zh": "使用应用程序负载均衡器 (ALB) 后面的 Auto Scaling 组中的 Amazon EC2 实例来处理视频。将视频内容存储在 Amazon S3 Standard 中。使用 Amazon Simple Queue Service (Amazon SQS) 进行排队并解耦处理任务。",
+          "en": "Use Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer (ALB) to process videos. Store video content in Amazon S3 Standard. Use Amazon Simple Queue Service (Amazon SQS) for queuing and to decouple processing tasks."
+        },
+        "D": {
+          "zh": "在 Amazon EC2 上的 Amazon Elastic Kubernetes Service (Amazon EKS) 上部署容器化视频处理应用程序。将视频元数据存储在 Amazon RDS 的单个可用区中。将视频内容存储在 Amazon S3 Glacier Deep Archive 中。",
+          "en": "Deploy a containerized video processing application on Amazon Elastic Kubernetes Service (Amazon EKS) on Amazon EC2. Store video metadata in Amazon RDS in a single Availability Zone. Store video content in Amazon S3 Glacier Deep Archive."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Lambda适合处理短期任务（最多15分钟），但问题中的视频处理需要20分钟，这超出了Lambda的执行时间限制。正确： Amazon DynamoDB 是一种高性能 NoSQL 数据库，适合存储视频元数据。正确： Amazon S3 智能分层会根据访问模式自动优化存储成本。",
+          "en": "Incorrect. Technical reason: AWS Lambda is suitable for processing short-term tasks (up to 15 minutes), but the video processing in the question takes 20 minutes, which exceeds Lambda's execution time limit. Correct: Amazon DynamoDB is a high-performance NoSQL database suitable for storing video metadata. Correct: Amazon S3 Intelligent Tiering automatically optimizes storage costs based on access patterns."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon ECS 和 AWS Fargate 支持容器化应用程序，这些应用程序可以处理长时间运行的任务并根据需求自动扩展，使其适合视频处理场景。正确： Amazon Aurora 是一种高性能关系数据库，适合存储结构化元数据。正确： Amazon S3 智能分层可优化存储成本，适合存储视频内容。",
+          "en": "Correct. Technical reason: Amazon ECS and AWS Fargate support containerized applications that can handle long-running tasks and automatically scale based on demand, making them suitable for video processing scenarios. Correct: Amazon Aurora is a high-performance relational database suitable for storing structured metadata. Correct: Amazon S3 smart tiering optimizes storage costs and is suitable for storing video content."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon Elastic Container Service (Amazon ECS) 和 AWS Fargate 实施微服务来处理视频。将视频元数据存储在 Amazon Aurora 中。将视频内容存储在 Amazon S3 智能分层中。",
+        "en": "B. Use Amazon Elastic Container Service (Amazon ECS) and AWS Fargate to implement microservices to process videos. Store video metadata in Amazon Aurora. Store video content in Amazon S3 Intelligent-Tiering."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (85%) C (15%)。热门讨论与考点摘要： Amazon ECS 和 AWS Fargate 支持容器化应用程序，这些应用程序可以处理长时间运行的任务并根据需求自动扩展，使其适合视频处理场景。正确： Amazon Aurora 是一种高性能关系数据库，适合存储结构化元数据。正确： Amazon S3 智能分层可优化存储成本，适合存储视频内容。",
+        "en": "Community vote as displayed: B (85%) C (15%). Popular discussion and key point summary: Amazon ECS and AWS Fargate support containerized applications that can handle long-running tasks and automatically scale based on demand, making them suitable for video processing scenarios. Correct: Amazon Aurora is a high-performance relational database suitable for storing structured metadata. Correct: Amazon S3 smart tiering optimizes storage costs and is suitable for storing video content."
+      }
+    }
+  ]
+}

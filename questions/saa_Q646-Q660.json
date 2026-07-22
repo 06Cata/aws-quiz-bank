@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 646,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师需要在 AWS 云中托管高性能计算 (HPC) 工作负载。该工作负载将在数百个 Amazon EC2 实例上运行，并且需要并行访问共享文件系统以实现大型数据集的分布式处理。将同时跨多个实例访问数据集。工作负载要求访问时延在1ms以内。处理完成后，工程师将需要访问数据集进行手动后处理。哪种解决方案可以满足这些要求？",
+        "en": "A solutions architect needs to host a high performance computing (HPC) workload in the AWS Cloud. The workload will run on hundreds of Amazon EC2 instances and will require parallel access to a shared file system to enable distributed processing of large datasets. Datasets will be accessed across multiple instances simultaneously. The workload requires access latency within 1 ms. After processing has completed, engineers will need access to the dataset for manual postprocessing. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Elastic File System (Amazon EFS) 作为共享文件系统。从 Amazon EFS 访问数据集。",
+          "en": "Use Amazon Elastic File System (Amazon EFS) as a shared file system. Access the dataset from Amazon EFS."
+        },
+        "B": {
+          "zh": "挂载 Amazon S3 存储桶作为共享文件系统。直接从 S3 存储桶执行后处理。",
+          "en": "Mount an Amazon S3 bucket to serve as the shared file system. Perform postprocessing directly from the S3 bucket."
+        },
+        "C": {
+          "zh": "使用 Amazon FSx for Lustre 作为共享文件系统。将文件系统链接到 Amazon S3 存储桶以进行后处理。",
+          "en": "Use Amazon FSx for Lustre as a shared file system. Link the file system to an Amazon S3 bucket for postprocessing."
+        },
+        "D": {
+          "zh": "配置 AWS Resource Access Manager 以共享 Amazon S3 存储桶，以便可以将其挂载到所有实例以进行处理和后处理。",
+          "en": "Configure AWS Resource Access Manager to share an Amazon S3 bucket so that it can be mounted to all instances for processing and postprocessing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 Amazon Elastic File System (Amazon EFS) 作为共享文件系统。从 Amazon EFS 访问数据集。分析： Amazon EFS是一个分布式文件系统，适合处理一般文件存储需求，但其访问延迟通常为毫秒级别，无法保证1ms延迟要求。此外，在高性能计算场景中， EFS 的性能可能不如 FSx for Lustre。",
+          "en": "Incorrect. Technical reason: Use Amazon Elastic File System (Amazon EFS) as the shared file system. Access the dataset from Amazon EFS. Analysis: Amazon EFS is a distributed file system suitable for handling general file storage needs, but its access latency is usually at the millisecond level and the 1ms latency requirement cannot be guaranteed. In addition, in high-performance computing scenarios, EFS may not perform as well as FSx for Luster."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：将 Amazon S3 存储桶挂载为共享文件系统。直接从您的 S3 存储桶进行后处理。分析： Amazon S3是一个对象存储服务，不是文件系统，不能直接挂载到EC2实例上作为共享文件系统。另外， S3的访问延迟通常在几十毫秒量级，远高于1ms的要求。",
+          "en": "Incorrect. Technical reason: Mount the Amazon S3 bucket as a shared file system. Post-process directly from your S3 bucket. Analysis: Amazon S3 is an object storage service, not a file system, and cannot be directly mounted to an EC2 instance as a shared file system. In addition, the access delay of S3 is usually on the order of tens of milliseconds, which is much higher than the 1ms requirement."
+        },
+        "C": {
+          "zh": "正確。技术原因：使用 Amazon FSx for Lustre 作为共享文件系统。将文件系统链接到 Amazon S3 存储桶以进行后处理。分析： Amazon FSx for Lustre是一款专为高性能计算而设计的文件系统，支持小于1ms的访问延迟，并且可以与Amazon S3集成，方便后处理数据的存储和访问。该选项完全满足题目要求。",
+          "en": "Correct. Technical reason: Use Amazon FSx for Luster as the shared file system. Link the file system to an Amazon S3 bucket for post-processing. Analysis: Amazon FSx for Luster is a file system designed for high-performance computing, supports access latency of less than 1ms, and can be integrated with Amazon S3 to facilitate the storage and access of post-processing data. This option fully meets the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：配置 AWS Resource Access Manager 以共享可挂载到所有实例以进行处理和后处理的 Amazon S3 存储桶。分析： AWS Resource Access Manager（RAM）用于跨账户共享资源，但S3仍然是对象存储服务，不能直接挂载为文件系统。另外， S3的访问时延无法满足1ms的要求。",
+          "en": "Incorrect. Technical reason: Configure AWS Resource Access Manager to share an Amazon S3 bucket that can be mounted to all instances for processing and post-processing. Analysis: AWS Resource Access Manager (RAM) is used to share resources across accounts, but S3 is still an object storage service and cannot be directly mounted as a file system. In addition, the access delay of S3 cannot meet the 1ms requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 Amazon FSx for Lustre 作为共享文件系统。将文件系统链接到 Amazon S3 存储桶以进行后处理。",
+        "en": "C. Use Amazon FSx for Lustre as a shared file system. Link the file system to an Amazon S3 bucket for postprocessing."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：使用 Amazon FSx for Lustre 作为共享文件系统。将文件系统链接到 Amazon S3 存储桶以进行后处理。分析： Amazon FSx for Lustre是一款专为高性能计算而设计的文件系统，支持小于1ms的访问延迟，并且可以与Amazon S3集成，方便后处理数据的存储和访问。该选项完全满足题目要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Use Amazon FSx for Luster as the shared file system. Link the file system to an Amazon S3 bucket for post-processing. Analysis: Amazon FSx for Luster is a file system designed for high-performance computing, supports access latency of less than 1ms, and can be integrated with Amazon S3 to facilitate the storage and access of post-processing data. This option fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 647,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家游戏公司正在构建具有 IP 语音功能的应用程序。该应用程序将为世界各地的用户提供流量。该应用程序需要具有跨 AWS 区域的自动故障转移的高可用性。该公司希望在不依赖用户设备上的 IP 地址缓存的情况下最大限度地减少用户的延迟。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A gaming company is building an application with Voice over IP capabilities. The application will serve traffic to users across the world. The application needs to be highly available with an automated failover across AWS Regions. The company wants to minimize the latency of users without relying on IP address caching on user devices. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Global Accelerator 进行运行状况检查。",
+          "en": "Use AWS Global Accelerator with health checks."
+        },
+        "B": {
+          "zh": "将 Amazon Route 53 与地理位置路由策略结合使用。",
+          "en": "Use Amazon Route 53 with a geolocation routing policy."
+        },
+        "C": {
+          "zh": "创建包含多个源的 Amazon CloudFront 分配。",
+          "en": "Create an Amazon CloudFront distribution that includes multiple origins."
+        },
+        "D": {
+          "zh": "创建使用基于路径的路由的应用程序负载均衡器。",
+          "en": "Create an Application Load Balancer that uses path-based routing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： AWS Global Accelerator 是一项旨在优化全球用户流量的服务。它通过对任何区域使用静态 IP 地址来减少延迟，并支持跨区域的自动故障转移。运行状况检查功能可确保流量路由到健康的端点。此选项完全满足问题要求，包括高可用性、低延迟和自动故障转移。",
+          "en": "Correct. Technical reason: AWS Global Accelerator is a service designed to optimize global user traffic. It reduces latency by using static IP addresses for any zone and supports automatic failover across zones. Health check functionality ensures traffic is routed to healthy endpoints. This option fully meets the problem requirements, including high availability, low latency, and automatic failover."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然 Route 53 的地理位置路由策略可以根据用户的位置将流量路由到最近的区域，但它依赖于 DNS 解析，并且可能会受到用户设备的 IP 地址缓存的影响。 Stripe-free完全满足“最小化延迟、不依赖IP地址缓存”的要求。",
+          "en": "Incorrect. Technical reason: While Route 53's geolocation routing policy can route traffic to the closest zone based on the user's location, it relies on DNS resolution and can be affected by the user's device's IP address cache. Stripe-free fully meets the requirements of \"minimizing latency and not relying on IP address caching\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： CloudFront 主要用于内容交付网络 (CDN)，以优化静态和动态内容的交付。虽然可以减少延迟，但不支持跨区域自动故障转移，所以不满足题目要求。",
+          "en": "Incorrect. Technical reason: CloudFront is primarily used in content delivery networks (CDNs) to optimize the delivery of static and dynamic content. Although it can reduce latency, it does not support automatic failover across regions, so it does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：应用程序负载均衡器主要用于在单个区域内分配流量。它不支持跨区域流量路由或自动故障转移，因此不满足标头要求。",
+          "en": "Incorrect. Technical reason: Application load balancers are primarily used to distribute traffic within a single region. It does not support cross-region traffic routing or automatic failover and therefore does not meet the header requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Global Accelerator 进行运行状况检查。",
+        "en": "A. Use AWS Global Accelerator with health checks."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (97%) 3%。热门讨论与考点摘要： AWS Global Accelerator 是一项旨在优化全球用户流量的服务。它通过对任何区域使用静态 IP 地址来减少延迟，并支持跨区域的自动故障转移。运行状况检查功能可确保流量路由到健康的端点。此选项完全满足问题要求，包括高可用性、低延迟和自动故障转移。",
+        "en": "Community vote as displayed: A (97%) 3%. Popular discussion and key point summary: AWS Global Accelerator is a service designed to optimize global user traffic. It reduces latency by using static IP addresses for any zone and supports automatic failover across zones. Health check functionality ensures traffic is routed to healthy endpoints. This option fully meets the problem requirements, including high availability, low latency, and automatic failover."
+      }
+    },
+    {
+      "question_no": 648,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "天气预报公司需要以亚毫秒级延迟处理数百 GB 的数据。该公司的数据中心拥有高性能计算 (HPC) 环境，并希望扩展其预测能力。解决方案架构师必须确定一个高度可用的云存储解决方案，可以处理大量的持续吞吐量。存储在解决方案中的文件应该可供数千个同时访问和处理整个数据集的计算实例访问。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A weather forecasting company needs to process hundreds of gigabytes of data with sub-millisecond latency. The company has a high performance computing (HPC) environment in its data center and wants to expand its forecasting capabilities. A solutions architect must identify a highly available cloud storage solution that can handle large amounts of sustained throughput. Files that are stored in the solution should be accessible to thousands of compute instances that will simultaneously access and process the entire dataset. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Amazon FSx 用于 Lustre 临时文件系统。",
+          "en": "Use Amazon FSx for Lustre scratch file systems."
+        },
+        "B": {
+          "zh": "使用 Amazon FSx for Lustre 持久文件系统。",
+          "en": "Use Amazon FSx for Lustre persistent file systems."
+        },
+        "C": {
+          "zh": "将 Amazon Elastic File System (Amazon EFS) 与突发吞吐量模式结合使用。",
+          "en": "Use Amazon Elastic File System (Amazon EFS) with Bursting Throughput mode."
+        },
+        "D": {
+          "zh": "将 Amazon Elastic File System (Amazon EFS) 与预配置吞吐量模式结合使用。",
+          "en": "Use Amazon Elastic File System (Amazon EFS) with Provisioned Throughput mode."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon FSx for Lustre 临时文件系统是适合短期计算任务的临时文件系统。虽然它可以提供高吞吐量和低延迟，但它不适合需要持久存储的场景，因为删除文件系统时数据会丢失。因此，这个选项不符合题目中“高可用性”和“持久存储”的要求。",
+          "en": "Incorrect. Technical reason: The Amazon FSx for Luster temporary file system is a temporary file system suitable for short-term computing tasks. Although it can provide high throughput and low latency, it is not suitable for scenarios that require persistent storage because data will be lost when the file system is deleted. Therefore, this option does not meet the requirements of \"high availability\" and \"persistent storage\" in the title."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon FSx for Lustre 持久文件系统提供高性能存储，支持 HPC 环境的高吞吐量和低延迟。支持持久化存储，数据不会因为删除文件系统而丢失，满足题目中“高可用”和“持久化存储”的要求。另外，它可以支持多个计算实例同时访问和处理数据，非常适合题目描述的场景。",
+          "en": "Correct. Technical reason: Amazon FSx for Luster persistent file system provides high-performance storage that supports high throughput and low latency for HPC environments. Supports persistent storage, data will not be lost due to deletion of the file system, and meets the requirements of \"high availability\" and \"persistent storage\" in the title. In addition, it can support multiple computing instances to access and process data at the same time, which is very suitable for the scenario described in the title."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon EFS 的突发吞吐量模式适用于离散工作负载，吞吐量可根据文件系统大小动态调整。虽然 EFS 提供了高可用性和持久存储，但其性能不如 FSx for Lustre，尤其是在需要大量数据和低延迟的 HPC 场景中。因此，这个选项不符合问题中“高性能计算”和“高吞吐量”的要求。",
+          "en": "Incorrect. Technical reason: Amazon EFS's burst throughput mode is suitable for discrete workloads, with throughput dynamically adjusting based on file system size. While EFS provides high availability and durable storage, its performance is not as good as FSx for Luster, especially in HPC scenarios that require large amounts of data and low latency. Therefore, this option does not meet the requirements of \"high performance computing\" and \"high throughput\" in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon EFS 的预配置吞吐量模式允许用户手动设置吞吐量，但仍然不如 FSx for Lustre 的性能。虽然它提供了高可用性和持久存储，但在 HPC 场景中， FSx for Lustre 更适合处理大规模数据和低延迟要求。因此，这个选项不符合问题中“高性能计算”和“高吞吐量”的要求。",
+          "en": "Incorrect. Technical reason: Amazon EFS's Provisioned Throughput mode allows users to manually set throughput, but it is still not as good as the performance of FSx for Luster. While it provides high availability and durable storage, in HPC scenarios, FSx for Luster is better suited for handling large-scale data and low latency requirements. Therefore, this option does not meet the requirements of \"high performance computing\" and \"high throughput\" in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon FSx for Lustre 持久文件系统。",
+        "en": "B. Use Amazon FSx for Lustre persistent file systems."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Amazon FSx for Lustre 持久文件系统提供高性能存储，支持 HPC 环境的高吞吐量和低延迟。支持持久化存储，数据不会因为删除文件系统而丢失，满足题目中“高可用”和“持久化存储”的要求。另外，它可以支持多个计算实例同时访问和处理数据，非常适合题目描述的场景。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon FSx for Luster persistent file system provides high-performance storage that supports high throughput and low latency for HPC environments. Supports persistent storage, data will not be lost due to deletion of the file system, and meets the requirements of \"high availability\" and \"persistent storage\" in the title. In addition, it can support multiple computing instances to access and process data at the same time, which is very suitable for the scenario described in the title."
+      }
+    },
+    {
+      "question_no": 649,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司在本地运行 PostgreSQL 数据库。数据库使用高 IOPS Amazon Elastic Block Store (Amazon EBS) 块存储来存储数据。每日每秒峰值 I/O 事务不超过 15,000 IOPS。该公司希望将数据库迁移到 Amazon RDS for PostgreSQL，并提供独立于磁盘存储容量的磁盘 IOPS 性能。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "An ecommerce company runs a PostgreSQL database on premises. The database stores data by using high IOPS Amazon Elastic Block Store (Amazon EBS) block storage. The daily peak I/O transactions per second do not exceed 15,000 IOPS. The company wants to migrate the database to Amazon RDS for PostgreSQL and provision disk IOPS performance independent of disk storage capacity. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置通用 SSD (gp2) EBS 卷存储类型并配置 15,000 IOPS。",
+          "en": "Configure the General Purpose SSD (gp2) EBS volume storage type and provision 15,000 IOPS."
+        },
+        "B": {
+          "zh": "配置预配置 IOPS SSD (io1) EBS 卷存储类型并预配置 15,000 IOPS。",
+          "en": "Configure the Provisioned IOPS SSD (io1) EBS volume storage type and provision 15,000 IOPS."
+        },
+        "C": {
+          "zh": "配置通用 SSD (gp3) EBS 卷存储类型并配置 15,000 IOPS。",
+          "en": "Configure the General Purpose SSD (gp3) EBS volume storage type and provision 15,000 IOPS."
+        },
+        "D": {
+          "zh": "配置 EBS 磁卷类型以实现最大 IOPS。",
+          "en": "Configure the EBS magnetic volume type to achieve maximum IOPS."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： gp2存储类型的IOPS限制可以与存储容量关联，不能单独配置IOPS。要达到15000 IOPS，必须配置非常大的存储容量，这会增加成本。",
+          "en": "Incorrect. Technical reason: The IOPS limit of the gp2 storage type can be associated with the storage capacity, and IOPS cannot be configured separately. To reach 15,000 IOPS, very large storage capacity must be configured, which increases costs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：正确但不是最优： io1支持IOPS和存储容量独立配置，可以满足15000 IOPS的要求。但io1成本较高，并不是性价比最高的方案。",
+          "en": "Incorrect. Technical reason: Correct but not optimal: io1 supports independent configuration of IOPS and storage capacity, which can meet the requirement of 15,000 IOPS. However, io1 has a higher cost and is not the most cost-effective solution."
+        },
+        "C": {
+          "zh": "正確。技术原因：正确、最优： gp3支持独立配置IOPS和存储容量，可以满足15000 IOPS的需求，而且成本比io1更低，是性价比最高的解决方案。",
+          "en": "Correct. Technical reason: Correct and optimal: gp3 supports independent configuration of IOPS and storage capacity, can meet the needs of 15,000 IOPS, and has a lower cost than io1, making it the most cost-effective solution."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： EBS盘类型性能较低，无法满足15000IOPS的需求。磁盘卷主要用于性能要求不高的场景。",
+          "en": "Incorrect. Technical reason: The EBS disk type has low performance and cannot meet the demand of 15,000 IOPS. The disk volume is mainly used in scenarios with low performance requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置通用 SSD (gp3) EBS 卷存储类型并配置 15,000 IOPS。",
+        "en": "C. Configure the General Purpose SSD (gp3) EBS volume storage type and provision 15,000 IOPS."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：正确、最优： gp3支持独立配置IOPS和存储容量，可以满足15000 IOPS的需求，而且成本比io1更低，是性价比最高的解决方案。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Correct and optimal: gp3 supports independent configuration of IOPS and storage capacity, can meet the needs of 15,000 IOPS, and has a lower cost than io1, making it the most cost-effective solution."
+      }
+    },
+    {
+      "question_no": 650,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将其本地 Microsoft SQL Server Enterprise 版数据库迁移到 AWS。该公司的在线应用程序使用数据库来处理交易。数据分析团队使用相同的生产数据库来运行报告进行分析处理。该公司希望通过尽可能转向托管服务来减少运营开销。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company wants to migrate its on-premises Microsoft SQL Server Enterprise edition database to AWS. The company's online application uses the database to process transactions. The data analysis team uses the same production database to run reports for analytical processing. The company wants to reduce operational overhead by moving to managed services wherever possible. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "迁移到 Amazon RDS for Microsoft SOL Server。使用只读副本进行报告",
+          "en": "Migrate to Amazon RDS for Microsoft SOL Server. Use read replicas for reporting purposes"
+        },
+        "B": {
+          "zh": "迁移到 Amazon EC2 上的 Microsoft SQL Server。使用 Always On 只读副本进行报告",
+          "en": "Migrate to Microsoft SQL Server on Amazon EC2. Use Always On read replicas for reporting purposes"
+        },
+        "C": {
+          "zh": "迁移到 Amazon DynamoDB。使用 DynamoDB 按需副本进行报告",
+          "en": "Migrate to Amazon DynamoDB. Use DynamoDB on-demand replicas for reporting purposes"
+        },
+        "D": {
+          "zh": "迁移到 Amazon Aurora MySQL。使用 Aurora 只读副本进行报告",
+          "en": "Migrate to Amazon Aurora MySQL. Use Aurora read replicas for reporting purposes"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：技术分析： Amazon RDS 是一项支持 Microsoft SQL Server 企业版的托管服务，可以显著降低运营开销。只读副本可用于分离事务处理和分析处理以满足报告需求。此选项满足问题要求并且具有最低的操作开销。",
+          "en": "Correct. Technical reason: Technical Analysis: Amazon RDS is a hosting service that supports Microsoft SQL Server Enterprise Edition and can significantly reduce operational overhead. Read replicas can be used to separate transactional and analytical processing for reporting needs. This option meets the problem requirements and has the lowest operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：在Amazon EC2上运行SQL Server需要自行管理操作、数据库软件和高可用性配置。虽然Always On只读副本可以满足报表需求，但​​操作开销较高，不符合“减少操作开销”的要求。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Technical analysis: Running SQL Server on Amazon EC2 requires self-administration of operations, database software, and high-availability configuration. Although Always On read-only replicas can meet reporting needs, the operational overhead is high and does not meet the requirement of \"reducing operational overhead\". This option is wrong."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析： DynamoDB是非连接数据库，不适合迁移封闭的SQL Server数据库。虽然DynamoDB支持按需副本，但无法满足事务处理和分析处理的需求。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Technical analysis: DynamoDB is a non-connected database and is not suitable for migrating closed SQL Server databases. Although DynamoDB supports on-demand replicas, it cannot meet the needs of transaction processing and analytical processing. This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析： Aurora MySQL是一个关键数据库，但它与SQL Server不兼容。迁移到 Aurora MySQL 需要重构应用程序和数据库架构，这会增加操作复杂性。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Technical Analysis: Aurora MySQL is a critical database, but it is not compatible with SQL Server. Migrating to Aurora MySQL requires restructuring the application and database architecture, which increases operational complexity. This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 迁移到 Amazon RDS for Microsoft SOL Server。使用只读副本进行报告",
+        "en": "A. Migrate to Amazon RDS for Microsoft SOL Server. Use read replicas for reporting purposes"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：技术分析： Amazon RDS 是一项支持 Microsoft SQL Server 企业版的托管服务，可以显著降低运营开销。只读副本可用于分离事务处理和分析处理以满足报告需求。此选项满足问题要求并且具有最低的操作开销。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Technical Analysis: Amazon RDS is a hosting service that supports Microsoft SQL Server Enterprise Edition and can significantly reduce operational overhead. Read replicas can be used to separate transactional and analytical processing for reporting needs. This option meets the problem requirements and has the lowest operational overhead."
+      }
+    },
+    {
+      "question_no": 651,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon S3 存储桶中存储大量图像文件。图像需要在前 180 天内随时可用。在接下来的 180 天内，这些图像很少被访问。 360 天后，图像需要归档，但必须根据请求立即可用。 5 年后，只有审核员才能访问图像。审核员必须能够在 12 小时内检索图像。在此过程中图像不会丢失。开发人员将在前 180 天使用 S3 标准存储。开发者需要配置S3生命周期规则。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company stores a large volume of image files in an Amazon S3 bucket. The images need to be readily available for the first 180 days. The images are infrequently accessed for the next 180 days. After 360 days, the images need to be archived but must be available instantly upon request. After 5 years, only auditors can access the images. The auditors must be able to retrieve the images within 12 hours. The images cannot be lost during this process. A developer will use S3 Standard storage for the first 180 days. The developer needs to configure an S3 Lifecycle rule. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "180 天后将对象转换为 S3 单区-IA (S3 One Zone-IA)。 360 天后 S3 Glacier 即时检索，5 年后 S3 Glacier 深度归档。",
+          "en": "Transition the objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 180 days. S3 Glacier Instant Retrieval after 360 days, and S3 Glacier Deep Archive after 5 years."
+        },
+        "B": {
+          "zh": "180 天后将对象转换为 S3 单区-IA (S3 One Zone-IA)。 360 天后 S3 Glacier 灵活检索，5 年后 S3 Glacier 深度归档。",
+          "en": "Transition the objects to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 180 days. S3 Glacier Flexible Retrieval after 360 days, and S3 Glacier Deep Archive after 5 years."
+        },
+        "C": {
+          "zh": "180 天后将对象转换为 S3 标准-IA (S3 标准-IA)，360 天后将对象转换为 S3 Glacier 即时检索，5 年后将对象转换为 S3 Glacier Deep Archive。",
+          "en": "Transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 180 days, S3 Glacier Instant Retrieval after 360 days, and S3 Glacier Deep Archive after 5 years."
+        },
+        "D": {
+          "zh": "180 天后将对象转换为 S3 标准-IA (S3 标准-IA)，360 天后将对象转换为 S3 Glacier 灵活检索，5 年后将对象转换为 S3 Glacier Deep Archive。",
+          "en": "Transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 180 days, S3 Glacier Flexible Retrieval after 360 days, and S3 Glacier Deep Archive after 5 years."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： S3 One Zone-IA存储类别不提供高可用性，因为数据仅存储在一个可用区中，存在数据丢失的风险，不满足“不丢失数据”的问题要求。正确： S3 Glacier Instant Retrieval 和 S3 Glacier Deep Archive 的选择符合题目要求，但之前的存储类别选择不合适。",
+          "en": "Incorrect. Technical reason: The S3 One Zone-IA storage class does not provide high availability because data is only stored in one availability zone and there is a risk of data loss, which does not meet the \"no data loss\" issue requirement. Correct: The selection of S3 Glacier Instant Retrieval and S3 Glacier Deep Archive meets the question requirements, but the previous storage class selection is inappropriate."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：高可用性问题同样来自于S3 One Zone-IA，它不满足“无数据丢失”的问题要求。正确： S3 Glacier灵活搜索和S3 Glacier Deep Archive的选择满足问题要求，但之前的存储类别选择不合适。",
+          "en": "Incorrect. Technical reason: The high availability problem also comes from S3 One Zone-IA, which does not meet the \"no data loss\" problem requirement. Correct: The selection of S3 Glacier Flexible Search and S3 Glacier Deep Archive meets the question requirements, but the previous storage category selection is inappropriate."
+        },
+        "C": {
+          "zh": "正確。技术原因： S3 Standard-IA提供高可用性和低成本存储，适用于180天后访问不频繁的场景。正确： S3 Glacier 即时检索提供低延迟访问，非常适合需要 360 天后立即访问的场景。正确： S3 Glacier Deep Archive 提供成本最低的存储，适合 5 年后仅供审计使用。",
+          "en": "Correct. Technical reason: S3 Standard-IA provides high availability and low-cost storage, and is suitable for scenarios where access is infrequent after 180 days. Correct: S3 Glacier instant retrieval provides low-latency access, ideal for scenarios that require immediate access 360 days later. Correct: S3 Glacier Deep Archive provides the lowest cost storage suitable for audit-only use after 5 years."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 180 天后将对象转换为 S3 标准-IA (S3 标准-IA)，360 天后将对象转换为 S3 Glacier 即时检索，5 年后将对象转换为 S3 Glacier Deep Archive。",
+        "en": "C. Transition the objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 180 days, S3 Glacier Instant Retrieval after 360 days, and S3 Glacier Deep Archive after 5 years."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (85%) Other。热门讨论与考点摘要： S3 Standard-IA提供高可用性和低成本存储，适用于180天后访问不频繁的场景。正确： S3 Glacier 即时检索提供低延迟访问，非常适合需要 360 天后立即访问的场景。正确： S3 Glacier Deep Archive 提供成本最低的存储，适合 5 年后仅供审计使用。",
+        "en": "Community vote as displayed: C (85%) Other. Popular discussion and key point summary: S3 Standard-IA provides high availability and low-cost storage, and is suitable for scenarios where access is infrequent after 180 days. Correct: S3 Glacier instant retrieval provides low-latency access, ideal for scenarios that require immediate access 360 days later. Correct: S3 Glacier Deep Archive provides the lowest cost storage suitable for audit-only use after 5 years."
+      }
+    },
+    {
+      "question_no": 652,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "某公司有大量数据工作负载，每天运行 6 小时。流程运行时公司不会丢失任何数据。解决方案架构师正在设计 Amazon EMR 集群配置来支持这一关键数据工作负载。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company has a large data workload that runs for 6 hours each day. The company cannot lose any data while the process is running. A solutions architect is designing an Amazon EMR cluster configuration to support this critical data workload. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置一个长期运行的集群，该集群在按需型实例上运行主节点和核心节点，在竞价型实例上运行任务节点。",
+          "en": "Configure a long-running cluster that runs the primary node and core nodes on On-Demand Instances and the task nodes on Spot Instances."
+        },
+        "B": {
+          "zh": "配置一个临时集群，该集群在按需型实例上运行主节点和核心节点，在竞价型实例上运行任务节点。",
+          "en": "Configure a transient cluster that runs the primary node and core nodes on On-Demand Instances and the task nodes on Spot Instances."
+        },
+        "C": {
+          "zh": "配置一个临时集群，该集群在按需型实例上运行主节点，并在 竞价型实例上运行核心节点和任务节点。",
+          "en": "Configure a transient cluster that runs the primary node on an On-Demand Instance and the core nodes and task nodes on Spot Instances."
+        },
+        "D": {
+          "zh": "配置一个长期运行的集群，该集群在按需型实例上运行主节点、在竞价型实例上运行核心节点以及在竞价型实例上运行任务节点。",
+          "en": "Configure a long-running cluster that runs the primary node on an On-Demand Instance, the core nodes on Spot Instances, and the task nodes on Spot Instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然对任务节点使用 竞价型实例可以降低一些成本，但长时间运行的集群会增加总体成本，并且不是最具成本效益的解决方案。",
+          "en": "Incorrect. Technical reason: While using Spot Instances for task nodes can reduce some costs, long-running clusters increase overall costs and are not the most cost-effective solution."
+        },
+        "B": {
+          "zh": "正確。技术原因：此配置不仅满足数据可靠性要求，还通过使用 竞价型实例来优化成本，使其成为最具成本效益的解决方案。",
+          "en": "Correct. Technical reason: This configuration not only meets data reliability requirements but also optimizes costs through the use of Spot Instances, making it the most cost-effective solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：在核心节点上使用竞价型实例可能会导致数据丢失，因为竞价型实例可能会中断，不符合“数据不能丢失”的要求。",
+          "en": "Incorrect. Technical reason: Using Spot instances on core nodes may result in data loss because Spot instances may be interrupted, which does not meet the requirement of \"data cannot be lost\"."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：在核心节点上使用竞价型实例可能会导致数据丢失，不满足“数据不能丢失”的问题。此外，长期运行的集群成本更高，并不是最具成本效益的解决方案。",
+          "en": "Incorrect. Technical reason: Using Spot instances on core nodes may cause data loss, which does not meet the issue of \"data cannot be lost\". Additionally, long-term running clusters are more expensive and are not the most cost-effective solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 配置一个临时集群，该集群在按需型实例上运行主节点和核心节点，在竞价型实例上运行任务节点。",
+        "en": "B. Configure a transient cluster that runs the primary node and core nodes on On-Demand Instances and the task nodes on Spot Instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：此配置不仅满足数据可靠性要求，还通过使用 竞价型实例来优化成本，使其成为最具成本效益的解决方案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: This configuration not only meets data reliability requirements but also optimizes costs through the use of Spot Instances, making it the most cost-effective solution."
+      }
+    },
+    {
+      "question_no": 653,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司维护一个将用户映射到成本中心的 Amazon RDS 数据库。该公司在 AWS Organizations 的一个组织中拥有账户。该公司需要一种解决方案来标记在组织中的特定 AWS 账户中创建的所有资源。解决方案必须使用创建该资源的用户的成本中心 ID 来标记每个资源。哪种解决方案可以满足这些要求？",
+        "en": "A company maintains an Amazon RDS database that maps users to cost centers. The company has accounts in an organization in AWS Organizations. The company needs a solution that will tag all resources that are created in a specific AWS account in the organization. The solution must tag each resource with the cost center ID of the user who created the resource. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将特定 AWS 账户从管理账户移至组织中的新组织单位 (OU)。创建服务控制策略 (SCP)，要求所有现有资源在创建资源之前具有正确的成本中心标签。将 SCP 应用到新 OU。",
+          "en": "Move the specific AWS account to a new organizational unit (OU) in Organizations from the management account. Create a service control policy (SCP) that requires all existing resources to have the correct cost center tag before the resources are created. Apply the SCP to the new OU."
+        },
+        "B": {
+          "zh": "创建一个 AWS Lambda 函数，以在 Lambda 函数从 RDS 数据库查找适当的成本中心后标记资源。配置响应 AWS CloudTrail 事件的 Amazon EventBridge 规则以调用 Lambda 函数。",
+          "en": "Create an AWS Lambda function to tag the resources after the Lambda function looks up the appropriate cost center from the RDS database. Configure an Amazon EventBridge rule that reacts to AWS CloudTrail events to invoke the Lambda function."
+        },
+        "C": {
+          "zh": "创建 AWS CloudFormation 堆栈以部署 AWS Lambda 函数。配置 Lambda 函数以从 RDS 数据库查找适当的成本中心并标记资源。创建 Amazon EventBridge 计划规则以调用 CloudFormation 堆栈。",
+          "en": "Create an AWS CloudFormation stack to deploy an AWS Lambda function. Configure the Lambda function to look up the appropriate cost center from the RDS database and to tag resources. Create an Amazon EventBridge scheduled rule to invoke the CloudFormation stack."
+        },
+        "D": {
+          "zh": "创建 AWS Lambda 函数以使用默认值标记资源。配置 Amazon EventBridge 规则，该规则响应 AWS CloudTrail 事件，以便在资源缺少成本中心标签时调用 Lambda 函数。",
+          "en": "Create an AWS Lambda function to tag the resources with a default value. Configure an Amazon EventBridge rule that reacts to AWS CloudTrail events to invoke the Lambda function when a resource is missing the cost center tag."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： SCP 主要用于权限管理而不是资源标记自动化。",
+          "en": "Incorrect. Technical reason: SCP is primarily used for permission management rather than resource tagging automation."
+        },
+        "B": {
+          "zh": "正確。技术原因：使用 EventBridge 和 Lambda 实现自动标记功能。",
+          "en": "Correct. Technical reason: Implemented auto-tagging functionality using EventBridge and Lambda."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建一个 AWS Lambda 函数，以在 Lambda 函数从 RDS 数据库查找适当的成本中心后标记资源。配置响应 AWS CloudTrail 事件的 Amazon EventBridge 规则以调用 Lambda 函数。",
+        "en": "B. Create an AWS Lambda function to tag the resources after the Lambda function looks up the appropriate cost center from the RDS database. Configure an Amazon EventBridge rule that reacts to AWS CloudTrail events to invoke the Lambda function."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (62%) A (38%)。热门讨论与考点摘要：使用 EventBridge 和 Lambda 实现自动标记功能。",
+        "en": "Community vote as displayed: B (62%) A (38%). Popular discussion and key point summary: Implemented auto-tagging functionality using EventBridge and Lambda."
+      }
+    },
+    {
+      "question_no": 654,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司最近将其 Web 应用程序迁移到 AWS 云。该公司使用 Amazon EC2 实例运行多个进程来托管应用程序。这些进程包括一个提供静态内容的 Apache Web 服务器。 Apache Web 服务器向使用本地 Redis 服务器进行用户会话的 PHP 应用程序发出请求。该公司希望重新设计架构，使其具有高可用性并使用 AWS 托管解决方案。哪种解决方案可以满足这些要求？",
+        "en": "A company recently migrated its web application to the AWS Cloud. The company uses an Amazon EC2 instance to run multiple processes to host the application. The processes include an Apache web server that serves static content. The Apache web server makes requests to a PHP application that uses a local Redis server for user sessions. The company wants to redesign the architecture to be highly available and to use AWS managed solutions. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Elastic Beanstalk 托管静态内容和 PHP 应用程序。配置 Elastic Beanstalk 以将其 EC2 实例部署到公有子网中。分配公共 IP 地址。",
+          "en": "Use AWS Elastic Beanstalk to host the static content and the PHP application. Configure Elastic Beanstalk to deploy its EC2 instance into a public subnet. Assign a public IP address."
+        },
+        "B": {
+          "zh": "使用 AWS Lambda 托管静态内容和 PHP 应用程序。使用 Amazon API Gateway REST API 将请求代理到 Lambda 函数。设置API网关CORS配置响应域名。配置 Amazon ElastiCache for Redis 以处理会话信息。",
+          "en": "Use AWS Lambda to host the static content and the PHP application. Use an Amazon API Gateway REST API to proxy requests to the Lambda function. Set the API Gateway CORS configuration to respond to the domain name. Configure Amazon ElastiCache for Redis to handle session information."
+        },
+        "C": {
+          "zh": "将后端代码保留在 EC2 实例上。创建启用了多可用区的 Amazon ElastiCache for Redis 集群。在集群模式下配置 ElastiCache for Redis 集群。将前端资源复制到 Amazon S3。配置后端代码以引用 EC2 实例。",
+          "en": "Keep the backend code on the EC2 instance. Create an Amazon ElastiCache for Redis cluster that has Multi-AZ enabled. Configure the ElastiCache for Redis cluster in cluster mode. Copy the frontend resources to Amazon S3. Configure the backend code to reference the EC2 instance."
+        },
+        "D": {
+          "zh": "将具有 Amazon S3 终端节点的 Amazon CloudFront 分配配置到配置为托管静态内容的 S3 存储桶。配置面向 Amazon Elastic Container Service (Amazon ECS) 服务的 Application Load Balancer，该服务为 PHP 应用程序运行 AWS Fargate 任务。配置 PHP 应用程序以使用在多个可用区中运行的 Amazon ElastiCache for Redis 集群。",
+          "en": "Configure an Amazon CloudFront distribution with an Amazon S3 endpoint to an S3 bucket that is configured to host the static content. Configure an Application Load Balancer that targets an Amazon Elastic Container Service (Amazon ECS) service that runs AWS Fargate tasks for the PHP application. Configure the PHP application to use an Amazon ElastiCache for Redis cluster that runs in multiple Availability Zones."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Lambda不适合高速运行，高可用设计也没有提及。",
+          "en": "Incorrect. Technical reason: Lambda is not suitable for high-speed operation, and high-availability design is not mentioned."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： EC2实例不会自动实现高可用性，并且没有提及如何处理动态应用程序的服务器化和负载平衡。",
+          "en": "Incorrect. Technical reason: EC2 instances do not automatically achieve high availability, and there is no mention of how to handle serverization and load balancing of dynamic applications."
+        },
+        "D": {
+          "zh": "正確。技术原因：此选项完全实现了高可用托管和托管服务的最佳实践。",
+          "en": "Correct. Technical reason: This option fully implements best practices for highly available hosting and managed services."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将具有 Amazon S3 终端节点的 Amazon CloudFront 分配配置到配置为托管静态内容的 S3 存储桶。配置面向 Amazon Elastic Container Service (Amazon ECS) 服务的 Application Load Balancer，该服务为 PHP 应用程序运行 AWS Fargate 任务。配置 PHP 应用程序以使用在多个可用区中运行的 Amazon ElastiCache for Redis 集群。",
+        "en": "D. Configure an Amazon CloudFront distribution with an Amazon S3 endpoint to an S3 bucket that is configured to host the static content. Configure an Application Load Balancer that targets an Amazon Elastic Container Service (Amazon ECS) service that runs AWS Fargate tasks for the PHP application. Configure the PHP application to use an Amazon ElastiCache for Redis cluster that runs in multiple Availability Zones."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：此选项完全实现了高可用托管和托管服务的最佳实践。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: This option fully implements best practices for highly available hosting and managed services."
+      }
+    },
+    {
+      "question_no": 655,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在具有目标组的 Auto Scaling 组中的 Amazon EC2 实例上运行 Web 应用程序。该公司将该应用程序设计为与会话亲和性（粘性会话）配合使用，以获得更好的用户体验。该应用程序必须作为端点通过互联网公开可用。必须将 WAF 应用于端点以提高安全性。必须在端点上配置会话亲和性（粘性会话）。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company runs a web application on Amazon EC2 instances in an Auto Scaling group that has a target group. The company designed the application to work with session affinity (sticky sessions) for a better user experience. The application must be available publicly over the internet as an endpoint. A WAF must be applied to the endpoint for additional security. Session affinity (sticky sessions) must be configured on the endpoint. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "创建公共网络负载均衡器。指定应用程序目标组。",
+          "en": "Create a public Network Load Balancer. Specify the application target group."
+        },
+        "B": {
+          "zh": "创建网关负载均衡器。指定应用程序目标组。",
+          "en": "Create a Gateway Load Balancer. Specify the application target group."
+        },
+        "C": {
+          "zh": "创建公共应用程序负载均衡器。指定应用程序目标组。",
+          "en": "Create a public Application Load Balancer. Specify the application target group."
+        },
+        "D": {
+          "zh": "创建第二个目标组。将弹性 IP 地址添加到 EC2 实例。",
+          "en": "Create a second target group. Add Elastic IP addresses to the EC2 instances."
+        },
+        "E": {
+          "zh": "在 AWS WAF 中创建 Web ACL。将 Web ACL 与端点关联",
+          "en": "Create a web ACL in AWS WAF. Associate the web ACL with the endpoint"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：网络负载均衡器不支持会话粘性（Sticky Sessions）。会话粘性是 Application Load Balancer 的一项功能。",
+          "en": "Incorrect. Technical reason: Network Load Balancer does not support session stickiness (Sticky Sessions). Session stickiness is a feature of Application Load Balancer."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：网关负载均衡器主要用于流量转发和网络安全设备集成。不适合Web应用的负载均衡，也不支持会话粘性。",
+          "en": "Incorrect. Technical reason: Gateway load balancers are primarily used for traffic forwarding and network security device integration. It is not suitable for load balancing of web applications and does not support session stickiness."
+        },
+        "C": {
+          "zh": "正確。技术原因： Application Load Balancer支持会话粘性（Sticky Sessions）并且可公开访问，适合Web应用程序的负载均衡。",
+          "en": "Correct. Technical reason: Application Load Balancer supports session stickiness (Sticky Sessions) and is publicly accessible, suitable for load balancing of web applications."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：创建第二个目标组和添加弹性 IP 地址与此问题无关。弹性IP地址通常用于静态IP分配，而不是用于实现会话粘性或WAF。",
+          "en": "Incorrect. Technical reason: Creating a second target group and adding an Elastic IP address are not relevant to this issue. Elastic IP addresses are typically used for static IP allocation and not for implementing session stickiness or WAF."
+        },
+        "E": {
+          "zh": "正確。技术原因： AWS WAF 可以通过 Web ACL 提供额外的安全性，并且可以与应用程序负载均衡器关联以保护公开的 Web 应用程序。",
+          "en": "Correct. Technical reason: AWS WAF can provide additional security through web ACLs and can be associated with an application load balancer to protect exposed web applications."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "C",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "C. 创建公共应用程序负载均衡器。指定应用程序目标组。；E. 在 AWS WAF 中创建 Web ACL。将 Web ACL 与端点关联",
+        "en": "C. Create a public Application Load Balancer. Specify the application target group.; E. Create a web ACL in AWS WAF. Associate the web ACL with the endpoint"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： CE (100%)。热门讨论与考点摘要： Application Load Balancer支持会话粘性（Sticky Sessions）并且可公开访问，适合Web应用程序的负载均衡。； AWS WAF 可以通过 Web ACL 提供额外的安全性，并且可以与应用程序负载均衡器关联以保护公开的 Web 应用程序。",
+        "en": "Community vote as displayed: CE (100%). Popular discussion and key point summary: Application Load Balancer supports session stickiness (Sticky Sessions) and is publicly accessible, suitable for load balancing of web applications.; AWS WAF can provide additional security through web ACLs and can be associated with an application load balancer to protect exposed web applications."
+      }
+    },
+    {
+      "question_no": 656,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司运营着一个存储历史事件图像的网站。网站用户需要能够根据图像中事件发生的年份搜索和查看图像。平均而言，用户每年仅请求每张图像一到两次。该公司希望有一个高度可用的解决方案来存储图像并将其传递给用户。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company runs a website that stores images of historical events. Website users need the ability to search and view images based on the year that the event in the image occurred. On average, users request each image only once or twice a year. The company wants a highly available solution to store and deliver the images to users. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将图像存储在 Amazon Elastic Block Store (Amazon EBS) 中。使用在 Amazon EC2 上运行的 Web 服务器。",
+          "en": "Store images in Amazon Elastic Block Store (Amazon EBS). Use a web server that runs on Amazon EC2."
+        },
+        "B": {
+          "zh": "将图像存储在 Amazon Elastic File System (Amazon EFS) 中。使用在 Amazon EC2 上运行的 Web 服务器。",
+          "en": "Store images in Amazon Elastic File System (Amazon EFS). Use a web server that runs on Amazon EC2."
+        },
+        "C": {
+          "zh": "将图像存储在 Amazon S3 Standard 中。使用S3标准，通过静态网站直接投递图片。",
+          "en": "Store images in Amazon S3 Standard. Use S3 Standard to directly deliver images by using a static website."
+        },
+        "D": {
+          "zh": "将图像存储在 Amazon S3 标准-IA (S3 标准-IA) 中。使用S3 Standard-IA，通过静态网站直接投递图片。",
+          "en": "Store images in Amazon S3 Standard-Infrequent Access (S3 Standard-IA). Use S3 Standard-IA to directly deliver images by using a static website."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon EBS 是块存储，通常用于 EC2 实例的持久存储。它不适合存储和直接传递静态内容（例如图像），并且需要运行EC2实例，成本昂贵。",
+          "en": "Incorrect. Technical reason: Amazon EBS is block storage commonly used for persistent storage of EC2 instances. It is not suitable for storing and directly delivering static content (such as images), and requires running an EC2 instance, which is expensive."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon EFS 是一种文件存储，适用于共享文件不可用的场景。虽然可以存储图像，但它需要运行 EC2 实例来托管 Web 服务器，这是昂贵且复杂的。",
+          "en": "Incorrect. Technical reason: Amazon EFS is a file storage suitable for scenarios where shared files are unavailable. While it is possible to store images, it requires running an EC2 instance to host a web server, which is costly and complex."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因： Amazon S3 Standard-IA 专为不经常访问的对象而设计，可提供较低的存储成本，同时仍提供高可用性和低延迟。支持静态托管和内容交付，是最能满足问题需求的解决方案。",
+          "en": "Correct. Technical reason: Amazon S3 Standard-IA is designed for infrequently accessed objects and provides lower storage costs while still providing high availability and low latency. Supporting static hosting and content delivery, it is the solution that best meets the problem requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将图像存储在 Amazon S3 标准-IA (S3 标准-IA) 中。使用S3 Standard-IA，通过静态网站直接投递图片。",
+        "en": "D. Store images in Amazon S3 Standard-Infrequent Access (S3 Standard-IA). Use S3 Standard-IA to directly deliver images by using a static website."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (93%) 7%。热门讨论与考点摘要： Amazon S3 Standard-IA 专为不经常访问的对象而设计，可提供较低的存储成本，同时仍提供高可用性和低延迟。支持静态托管和内容交付，是最能满足问题需求的解决方案。",
+        "en": "Community vote as displayed: D (93%) 7%. Popular discussion and key point summary: Amazon S3 Standard-IA is designed for infrequently accessed objects and provides lower storage costs while still providing high availability and low latency. Supporting static hosting and content delivery, it is the solution that best meets the problem requirements."
+      }
+    },
+    {
+      "question_no": 657,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS Organizations 的一个组织中拥有多个可供不同业务部门使用的 AWS 账户。该公司在全球设有多个办事处。公司需要更新安全组规则以允许新的办公室 CIDR 范围或删除整个组织中的旧 CIDR 范围。该公司希望集中管理安全组规则，以最大限度地减少更新 CIDR 范围所需的管理开销。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company has multiple AWS accounts in an organization in AWS Organizations that different business units use. The company has multiple offices around the world. The company needs to update security group rules to allow new office CIDR ranges or to remove old CIDR ranges across the organization. The company wants to centralize the management of security group rules to minimize the administrative overhead that updating CIDR ranges requires. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在组织的管理账户中创建 VPC 安全组。当需要更新 CIDR 范围时更新安全组。",
+          "en": "Create VPC security groups in the organization's management account. Update the security groups when a CIDR range update is necessary."
+        },
+        "B": {
+          "zh": "创建包含 CIDR 列表的 VPC 客户管理的前缀列表。使用 AWS Resource Access Manager (AWS RAM) 在整个组织内共享前缀列表。使用整个组织的安全组中的前缀列表。",
+          "en": "Create a VPC customer managed prefix list that contains the list of CIDRs. Use AWS Resource Access Manager (AWS RAM) to share the prefix list across the organization. Use the prefix list in the security groups across the organization."
+        },
+        "C": {
+          "zh": "创建 AWS 托管前缀列表。使用 AWS Security Hub 策略在整个组织内强制执行安全组更新。当 CIDR 范围更改时，使用 AWS Lambda 函数自动更新前缀列表。",
+          "en": "Create an AWS managed prefix list. Use an AWS Security Hub policy to enforce the security group update across the organization. Use an AWS Lambda function to update the prefix list automatically when the CIDR ranges change."
+        },
+        "D": {
+          "zh": "在中央管理 AWS 账户中创建安全组。为整个组织创建 AWS Firewall Manager 通用安全组策略。选择之前创建的安全组作为策略中的主要组。",
+          "en": "Create security groups in a central administrative AWS account. Create an AWS Firewall Manager common security group policy for the whole organization. Select the previously created security groups as primary groups in the policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然可以在管理账户中集中管理安全组，但这些安全组规则无法在账户之间自动共享，并且管理多个账户的安全组规则会增加复杂性。 《跨群体的痣管理》和《最具成本效益的要求》均不符合题目要求。",
+          "en": "Incorrect. Technical reason: While security groups can be managed centrally in an administrative account, these security group rules cannot be automatically shared between accounts, and managing security group rules for multiple accounts adds complexity. Neither \"Mole Management Across Groups\" nor \"The Most Cost-Effective Steroid\" met the title requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因： CIDR 范围可以使用客户管理的列表进行集中管理，并通过 AWS RAM 在集群中共享。前端列表可以直接应用于安全组，降低管理复杂度和成本。满足“跨群体的痣管理”和“最具成本效益的要求”的指定要求。",
+          "en": "Correct. Technical reason: CIDR ranges can be managed centrally using customer-managed lists and shared across the cluster via AWS RAM. Front-end lists can be directly applied to security groups, reducing management complexity and costs. Meets the designation requirements for \"Mole Management Across Groups\" and \"The Most Cost-Effective Steroid\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS托管列表是AWS提供的预定义列表，无法满足自定义CIDR范围的需求。使用 AWS Security Hub 和 Lambda 会增加额外的复杂性和成本，并且不是最具成本效益的解决方案。",
+          "en": "Incorrect. Technical reason: AWS managed lists are predefined lists provided by AWS and cannot meet the needs of custom CIDR ranges. Using AWS Security Hub and Lambda adds additional complexity and cost and is not the most cost-effective solution."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 AWS Firewall Manager 可以集中管理安全组，但它需要额外的配置和成本。为了安全的组操作和效率，最好使用AWS RAM共享前端列表接口。",
+          "en": "Incorrect. Technical reason: While AWS Firewall Manager can centrally manage security groups, it requires additional configuration and cost. For secure group operations and efficiency, it is best to use the AWS RAM shared front-end list interface."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建包含 CIDR 列表的 VPC 客户管理的前缀列表。使用 AWS Resource Access Manager (AWS RAM) 在整个组织内共享前缀列表。使用整个组织的安全组中的前缀列表。",
+        "en": "B. Create a VPC customer managed prefix list that contains the list of CIDRs. Use AWS Resource Access Manager (AWS RAM) to share the prefix list across the organization. Use the prefix list in the security groups across the organization."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： CIDR 范围可以使用客户管理的列表进行集中管理，并通过 AWS RAM 在集群中共享。前端列表可以直接应用于安全组，降低管理复杂度和成本。满足“跨群体的痣管理”和“最具成本效益的要求”的指定要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: CIDR ranges can be managed centrally using customer-managed lists and shared across the cluster via AWS RAM. Front-end lists can be directly applied to security groups, reducing management complexity and costs. Meets the designation requirements for \"Mole Management Across Groups\" and \"The Most Cost-Effective Steroid\"."
+      }
+    },
+    {
+      "question_no": 658,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用本地网络附加存储 (NAS) 系统为其高性能计算 (HPC) 工作负载提供文件共享。该公司希望将其对延迟敏感的 HPC 工作负载及其存储迁移到 AWS 云。公司必须能够从文件系统提供 NFS 和 SMB 多协议访问。哪种解决方案能够以最少的延迟满足这些要求？ （选择两个。）",
+        "en": "A company uses an on-premises network-attached storage (NAS) system to provide file shares to its high performance computing (HPC) workloads. The company wants to migrate its latency-sensitive HPC workloads and its storage to the AWS Cloud. The company must be able to provide NFS and SMB multi-protocol access from the file system. Which solution will meet these requirements with the LEAST latency? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将计算优化的 EC2 实例部署到集群置放组中。",
+          "en": "Deploy compute optimized EC2 instances into a cluster placement group."
+        },
+        "B": {
+          "zh": "将计算优化的 EC2 实例部署到分区置放组中。",
+          "en": "Deploy compute optimized EC2 instances into a partition placement group."
+        },
+        "C": {
+          "zh": "将 EC2 实例附加到 Amazon FSx for Lustre 文件系统。",
+          "en": "Attach the EC2 instances to an Amazon FSx for Lustre file system."
+        },
+        "D": {
+          "zh": "将 EC2 实例附加到 Amazon FSx for OpenZFS 文件系统。",
+          "en": "Attach the EC2 instances to an Amazon FSx for OpenZFS file system."
+        },
+        "E": {
+          "zh": "将 EC2 实例附加到 Amazon FSx for NetApp ONTAP 文件系统。",
+          "en": "Attach the EC2 instances to an Amazon FSx for NetApp ONTAP file system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：分析：集群置放组提供低延迟、高吞吐量的网络连接，使其成为高性能计算 (HPC) 工作负载的理想选择。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analysis: Cluster placement groups provide low-latency, high-throughput network connectivity, making them ideal for high-performance computing (HPC) workloads. This option is correct."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：分区放置组主要用于分布式应用程序的容错，而不是优化低延迟的网络连接。因此，该选项不适合解决错误问题。",
+          "en": "Incorrect. Technical reason: Analysis: Partition placement groups are primarily used for fault tolerance of distributed applications rather than optimizing low-latency network connections. Therefore, this option is not suitable for solving error problems."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析： Amazon FSx for Lustre 是专为高性能计算设计的文件系统，但不支持 NFS 和 SMB 多协议访问。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon FSx for Luster is a file system designed for high-performance computing, but does not support NFS and SMB multi-protocol access. Therefore, this option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析： Amazon FSx for OpenZFS 支持 NFS 协议，但不支持 SMB 协议，因此不满足问题。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon FSx for OpenZFS supports the NFS protocol but not the SMB protocol, so it does not satisfy the question. This option is wrong."
+        },
+        "E": {
+          "zh": "正確。技术原因：分析： Amazon FSx for NetApp ONTAP 支持 NFS 和 SMB 多协议访问，并提供非常适合问题需求的低延迟存储解决方案。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analysis: Amazon FSx for NetApp ONTAP supports NFS and SMB multi-protocol access and provides a low-latency storage solution that is ideal for problem needs. This option is correct."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 将计算优化的 EC2 实例部署到集群置放组中。；E. 将 EC2 实例附加到 Amazon FSx for NetApp ONTAP 文件系统。",
+        "en": "A. Deploy compute optimized EC2 instances into a cluster placement group.; E. Attach the EC2 instances to an Amazon FSx for NetApp ONTAP file system."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AE (88%) 8%。热门讨论与考点摘要：分析：集群置放组提供低延迟、高吞吐量的网络连接，使其成为高性能计算 (HPC) 工作负载的理想选择。这个选项是正确的。；分析： Amazon FSx for NetApp ONTAP 支持 NFS 和 SMB 多协议访问，并提供非常适合问题需求的低延迟存储解决方案。这个选项是正确的。",
+        "en": "Community vote as displayed: AE (88%) 8%. Popular discussion and key point summary: Analysis: Cluster placement groups provide low-latency, high-throughput network connectivity, making them ideal for high-performance computing (HPC) workloads. This option is correct.; Analysis: Amazon FSx for NetApp ONTAP supports NFS and SMB multi-protocol access and provides a low-latency storage solution that is ideal for problem needs. This option is correct."
+      }
+    },
+    {
+      "question_no": 659,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在搬迁其数据中心，并希望在 2 周内将 50 TB 的数据安全地传输到 AWS。现有数据中心具有与 AWS 的站点到站点 VPN 连接，利用率为 90%。解决方案架构师应该使用哪种 AWS 服务来满足这些要求？",
+        "en": "A company is relocating its data center and wants to securely transfer 50 TB of data to AWS within 2 weeks. The existing data center has a Site-to-Site VPN connection to AWS that is 90% utilized. Which AWS service should a solutions architect use to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "具有 VPC 终端节点的 AWS DataSync",
+          "en": "AWS DataSync with a VPC endpoint"
+        },
+        "B": {
+          "zh": "AWS 直连",
+          "en": "AWS Direct Connect"
+        },
+        "C": {
+          "zh": "AWS Snowball 边缘存储优化",
+          "en": "AWS Snowball Edge Storage Optimized"
+        },
+        "D": {
+          "zh": "AWS 存储网关",
+          "en": "AWS Storage Gateway"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： DataSync 是一种自动数据迁移服务，可将数据从本地迁移到 AWS。然而， DataSync 依赖于现有的网络连接（例如 VPN 或 Direct Connect），题目提到现有 VPN 连接已被占用 90%，无法满足 2 周内迁移 50 TB 数据的需求。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: DataSync is an automated data migration service that moves data from on-premises to AWS. However, DataSync relies on an existing network connection (such as VPN or Direct Connect), and the title mentions that the existing VPN connection was 90% occupied and could not meet the needs of migrating 50 TB of data in 2 weeks. Therefore, this option is wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Direct Connect 提供专用网络连接，可提高数据传输速度和稳定性。但是，设置 Direct Connect 需要时间（通常是几周到几个月），并且不符合问题中的 2 周时间限制。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Direct Connect provides a dedicated network connection that increases data transfer speed and stability. However, setting up Direct Connect takes time (usually weeks to months) and does not meet the 2-week time limit in the question. Therefore, this option is wrong."
+        },
+        "C": {
+          "zh": "正確。技术原因： Snowball Edge 是用于大规模数据迁移的物理设备。用户可以将数据写入设备，然后将设备传输到AWS进行数据导入。适合大规模数据迁移（如50 TB），不依赖现有网络连接，因此可以绕过VPN带宽限制。此外， Snowball Edge可以在短时间内完成数据迁移，满足2周的时间要求。因此，该选项是正确的。",
+          "en": "Correct. Technical reason: Snowball Edge is a physical device used for large-scale data migration. Users can write data to the device and then transfer the device to AWS for data import. Suitable for large-scale data migration (such as 50 TB), does not rely on existing network connections, so VPN bandwidth limitations can be bypassed. In addition, Snowball Edge can complete data migration in a short time, meeting the 2-week time requirement. Therefore, this option is correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Storage Gateway是一种混合云存储服务，主要用于将本地数据与AWS存储集成。通常用于持续的数据同步，而不是一次性的大规模数据迁移。此外，它依赖于现有的网络连接（例如VPN），无法满足所讨论的50TB数据迁移要求。因此，这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Storage Gateway is a hybrid cloud storage service mainly used to integrate local data with AWS storage. Typically used for ongoing data synchronization rather than one-time large-scale data migration. Additionally, it relies on an existing network connection (such as a VPN) and cannot meet the 50TB data migration requirement in question. Therefore, this option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. AWS Snowball 边缘存储优化",
+        "en": "C. AWS Snowball Edge Storage Optimized"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (95%) 5%。热门讨论与考点摘要： Snowball Edge 是用于大规模数据迁移的物理设备。用户可以将数据写入设备，然后将设备传输到AWS进行数据导入。适合大规模数据迁移（如50 TB），不依赖现有网络连接，因此可以绕过VPN带宽限制。此外， Snowball Edge可以在短时间内完成数据迁移，满足2周的时间要求。因此，该选项是正确的。",
+        "en": "Community vote as displayed: C (95%) 5%. Popular discussion and key point summary: Snowball Edge is a physical device used for large-scale data migration. Users can write data to the device and then transfer the device to AWS for data import. Suitable for large-scale data migration (such as 50 TB), does not rely on existing network connections, so VPN bandwidth limitations can be bypassed. In addition, Snowball Edge can complete data migration in a short time, meeting the 2-week time requirement. Therefore, this option is correct."
+      }
+    },
+    {
+      "question_no": 660,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Auto Scaling 组中的 Amazon EC2 按需型实例上托管应用程序。申请高峰时间出现在每天的同一时间。应用程序用户报告在高峰时段开始时应用程序性能缓慢。该应用程序在高峰时段开始后 2-3 小时内正常运行。该公司希望确保该应用程序在高峰时段开始时正常运行。哪种解决方案可以满足这些要求？",
+        "en": "A company hosts an application on Amazon EC2 On-Demand Instances in an Auto Scaling group. Application peak hours occur at the same time each day. Application users report slow application performance at the start of peak hours. The application performs normally 2-3 hours after peak hours begin. The company wants to ensure that the application works properly at the start of peak hours. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置应用程序负载均衡器以将流量正确分配到实例。",
+          "en": "Configure an Application Load Balancer to distribute traffic properly to the instances."
+        },
+        "B": {
+          "zh": "为 Auto Scaling 组配置动态扩展策略，以根据内存利用率启动新实例。",
+          "en": "Configure a dynamic scaling policy for the Auto Scaling group to launch new instances based on memory utilization."
+        },
+        "C": {
+          "zh": "为 Auto Scaling 组配置动态扩展策略，以根据 CPU 利用率启动新实例。",
+          "en": "Configure a dynamic scaling policy for the Auto Scaling group to launch new instances based on CPU utilization."
+        },
+        "D": {
+          "zh": "为 Auto Scaling 组配置计划扩展策略，以便在高峰时段之前启动新实例。",
+          "en": "Configure a scheduled scaling policy for the Auto Scaling group to launch new instances before peak hours."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：应用负载均衡虽然可以帮助分配流量，但无法解决高峰期实例桶启动缓慢的问题。此选项与问题中描述的性能问题无关。",
+          "en": "Incorrect. Technical reason: Although application load balancing can help distribute traffic, it cannot solve the problem of slow startup of instance buckets during peak periods. This option is not related to the performance issue described in the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：基于内存使用的动态扩容策略可能会导致在高峰时段启动桶后才启动实例，无法提前应对流量高峰。这个问题需要在峰值桶开始之前解决性能问题，动态扩容策略可以满足这个要求。",
+          "en": "Incorrect. Technical reason: A dynamic expansion strategy based on memory usage may cause instances to be started only after the bucket is started during peak periods, making it impossible to cope with traffic peaks in advance. This problem requires solving the performance problem before the peak bucket starts, and the dynamic expansion strategy can meet this requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：基于 CPU 使用率的动态扩展只能在高峰流量已经到来、CPU 指标升高后启动实例。新实例启动需要时间，因此无法解决每天高峰开始时的性能下降。",
+          "en": "Incorrect. Technical reason: CPU-based dynamic scaling launches instances only after peak traffic arrives and CPU metrics rise. Instance startup takes time, so this does not solve the performance degradation at the start of the daily peak."
+        },
+        "D": {
+          "zh": "正確。技术原因：计划的扩展策略允许在预定时间启动新实例，确保实例在峰值桶开始之前准备好处理流量。此选项完全符合问题的要求，并解决了用户在高峰时段开始存储时遇到的性能问题。",
+          "en": "Correct. Technical reason: Planned scaling policies allow new instances to be launched at scheduled times, ensuring instances are ready to handle traffic before peak buckets begin. This option does exactly what the question asks for and resolves the performance issues users experienced when starting bucketing during peak hours."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 为 Auto Scaling 组配置计划扩展策略，以便在高峰时段之前启动新实例。",
+        "en": "D. Configure a scheduled scaling policy for the Auto Scaling group to launch new instances before peak hours."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：计划的扩展策略允许在预定时间启动新实例，确保实例在峰值桶开始之前准备好处理流量。此选项完全符合问题的要求，并解决了用户在高峰时段开始存储时遇到的性能问题。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Planned scaling policies allow new instances to be launched at scheduled times, ensuring instances are ready to handle traffic before peak buckets begin. This option does exactly what the question asks for and resolves the performance issues users experienced when starting bucketing during peak hours."
+      }
+    }
+  ]
+}

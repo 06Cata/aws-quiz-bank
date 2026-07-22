@@ -15,12 +15,15 @@ ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
 ARG NEXT_PUBLIC_API_BASE_URL
 ARG NEXT_PUBLIC_APP_URL
-ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
-ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
-ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
-ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 
-RUN npm --workspace apps/web run build
+# Compose only interpolates `.env` automatically. Keep empty build arguments from
+# overriding apps/web/.env.local, while still allowing deployment platforms to
+# inject explicit public settings during the image build.
+RUN if [ -n "$NEXT_PUBLIC_SUPABASE_URL" ]; then export NEXT_PUBLIC_SUPABASE_URL; else unset NEXT_PUBLIC_SUPABASE_URL; fi \
+  && if [ -n "$NEXT_PUBLIC_SUPABASE_ANON_KEY" ]; then export NEXT_PUBLIC_SUPABASE_ANON_KEY; else unset NEXT_PUBLIC_SUPABASE_ANON_KEY; fi \
+  && if [ -n "$NEXT_PUBLIC_API_BASE_URL" ]; then export NEXT_PUBLIC_API_BASE_URL; else unset NEXT_PUBLIC_API_BASE_URL; fi \
+  && if [ -n "$NEXT_PUBLIC_APP_URL" ]; then export NEXT_PUBLIC_APP_URL; else unset NEXT_PUBLIC_APP_URL; fi \
+  && npm --workspace apps/web run build
 
 FROM node:22-alpine AS runner
 

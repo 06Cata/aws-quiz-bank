@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 691,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在为跨多个可用区部署的 Web 应用程序设计共享存储解决方案。 Web 应用程序在 Auto Scaling 组中的 Amazon EC2 实例上运行。该公司计划经常更改内容。解决方案必须具有强一致性，一旦发生变化就返回新内容。哪些解决方案满足这些要求？ （选择两个。）",
+        "en": "A solutions architect is designing a shared storage solution for a web application that is deployed across multiple Availability Zones. The web application runs on Amazon EC2 instances that are in an Auto Scaling group. The company plans to make frequent changes to the content. The solution must have strong consistency in returning the new content as soon as the changes occur. Which solutions meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用安装到各个 EC2 实例的 AWS Storage Gateway Volume Gateway 互联网 小型计算机系统接口 (iSCSI) 块存储。",
+          "en": "Use AWS Storage Gateway Volume Gateway Internet Small Computer Systems Interface (iSCSI) block storage that is mounted to the individual EC2 instances."
+        },
+        "B": {
+          "zh": "创建 Amazon Elastic File System (Amazon EFS) 文件系统。在各个 EC2 实例上挂载 EFS 文件系统。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system on the individual EC2 instances."
+        },
+        "C": {
+          "zh": "创建共享 Amazon Elastic Block Store (Amazon EBS) 卷。在各个 EC2 实例上安装 EBS 卷。",
+          "en": "Create a shared Amazon Elastic Block Store (Amazon EBS) volume. Mount the EBS volume on the individual EC2 instances."
+        },
+        "D": {
+          "zh": "使用 AWS DataSync 在 Auto Scaling 组中的 EC2 主机之间执行数据的持续同步。",
+          "en": "Use AWS DataSync to perform continuous synchronization of data between EC2 hosts in the Auto Scaling group."
+        },
+        "E": {
+          "zh": "创建 Amazon S3 存储桶来存储 Web 内容。将 Cache-Control 标头的元数据设置为 no-cache。使用 Amazon CloudFront 交付内容。",
+          "en": "Create an Amazon S3 bucket to store the web content. Set the metadata for the Cache-Control header to no-cache. Use Amazon CloudFront to deliver the content."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Storage Gateway Volume Gateway 主要应用于混合云场景。它将本地存储分区到AWS云中，不适合跨多个可用区的共享存储需求。",
+          "en": "Incorrect. Technical reason: AWS Storage Gateway Volume Gateway is mainly used in hybrid cloud scenarios. It partitions local storage into the AWS cloud and is not suitable for shared storage needs across multiple availability zones."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon EFS 支持跨多个可用区共享文件，提供强一致性，适合内容频繁更新的场景。",
+          "en": "Correct. Technical reason: Amazon EFS supports sharing files across multiple availability zones, providing strong consistency and suitable for scenarios where content is frequently updated."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon EBS卷只能挂载到单个EC2实例上，无法实现跨多个可用区的共享存储。",
+          "en": "Incorrect. Technical reason: Amazon EBS volumes can only be mounted to a single EC2 instance, and shared storage across multiple availability zones cannot be achieved."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS DataSync 主要用于数据迁移或同步。不适合实时共享存储场景，无法保证强一致性。",
+          "en": "Incorrect. Technical reason: AWS DataSync is mainly used for data migration or synchronization. It is not suitable for real-time shared storage scenarios and cannot guarantee strong consistency."
+        },
+        "E": {
+          "zh": "正確。技术原因： Amazon S3 和 CloudFront 可以提供低延迟的内容分发。通过将Cache-Control设置为不缓存，可以保证内容更新立即生效，满足强一致性要求。",
+          "en": "Correct. Technical reason: Amazon S3 and CloudFront can provide low-latency content distribution. By setting Cache-Control to no cache, you can ensure that content updates take effect immediately, meeting strong consistency requirements."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon Elastic File System (Amazon EFS) 文件系统。在各个 EC2 实例上挂载 EFS 文件系统。；E. 创建 Amazon S3 存储桶来存储 Web 内容。将 Cache-Control 标头的元数据设置为 no-cache。使用 Amazon CloudFront 交付内容。",
+        "en": "B. Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system on the individual EC2 instances.; E. Create an Amazon S3 bucket to store the web content. Set the metadata for the Cache-Control header to no-cache. Use Amazon CloudFront to deliver the content."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： BE (91%) 9%。热门讨论与考点摘要： Amazon EFS 支持跨多个可用区共享文件，提供强一致性，适合内容频繁更新的场景。； Amazon S3 和 CloudFront 可以提供低延迟的内容分发。通过将Cache-Control设置为不缓存，可以保证内容更新立即生效，满足强一致性要求。",
+        "en": "Community vote as displayed: BE (91%) 9%. Popular discussion and key point summary: Amazon EFS supports sharing files across multiple availability zones, providing strong consistency and suitable for scenarios where content is frequently updated.; Amazon S3 and CloudFront can provide low-latency content distribution. By setting Cache-Control to no cache, you can ensure that content updates take effect immediately, meeting strong consistency requirements."
+      }
+    },
+    {
+      "question_no": 692,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 Application Load Balancer 在三个 AWS 区域中部署应用程序。 Amazon Route 53 将用于在这些区域之间分配流量。解决方案架构师应使用哪种 Route 53 配置来提供最高性能的体验？",
+        "en": "A company is deploying an application in three AWS Regions using an Application Load Balancer. Amazon Route 53 will be used to distribute traffic between these Regions. Which Route 53 configuration should a solutions architect use to provide the MOST high-performing experience?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建具有延迟策略的 A 记录。",
+          "en": "Create an A record with a latency policy."
+        },
+        "B": {
+          "zh": "使用地理位置策略创建 A 记录。",
+          "en": "Create an A record with a geolocation policy."
+        },
+        "C": {
+          "zh": "创建具有故障转移策略的 CNAME 记录。",
+          "en": "Create a CNAME record with a failover policy."
+        },
+        "D": {
+          "zh": "创建具有地理位置邻近政策的 CNAME 记录。",
+          "en": "Create a CNAME record with a geoproximity policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：延迟路由策略根据用户与每个 AWS 区域之间的网络延迟选择最佳区域，以提供最佳性能。这是最适合高性能体验的策略，因为它直接考虑网络延迟。正确的选项。",
+          "en": "Correct. Technical reason: The latency routing policy selects the best region based on the network latency between the user and each AWS region to provide the best performance. This is the strategy best suited for high-performance experiences because it takes network latency directly into account. Correct option."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：地理位置路由策略根据用户的地理位置将流量路由到指定区域。虽然它可以提供一些性能优化，但它并不直接考虑网络延迟，因此它可能不是最佳选择。错误的选择。",
+          "en": "Incorrect. Technical reason: Geolocation routing policies route traffic to designated areas based on the user's geographic location. While it can provide some performance optimizations, it does not directly account for network latency, so it may not be the best choice. Wrong choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：故障转移路由策略主要应用于高可用场景。当主资源不可用时，流量将路由到备份资源。它的目标是提高可用性而不是优化性能，所以不太适合本题的要求。错误的选择。",
+          "en": "Incorrect. Technical reason: The failover routing strategy is mainly used in high-availability scenarios. When the primary resource is unavailable, traffic is routed to the backup resource. Its goal is to improve usability rather than optimize performance, so it is not suitable for the requirements of this question. Wrong choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：地理位置邻近路由策略根据用户与资源的地理距离来路由流量，并允许调整首选项。虽然可以优化性能，但它需要额外的配置，并且不像延迟路由那样直接针对网络性能。错误的选择。",
+          "en": "Incorrect. Technical reason: Geoproximity routing policies route traffic based on a user's geographic distance from a resource and allow for adjustments to preferences. While performance can be optimized, it requires additional configuration and does not directly target network performance like deferred routing. Wrong choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建具有延迟策略的 A 记录。",
+        "en": "A. Create an A record with a latency policy."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (88%) 9%。热门讨论与考点摘要：延迟路由策略根据用户与每个 AWS 区域之间的网络延迟选择最佳区域，以提供最佳性能。这是最适合高性能体验的策略，因为它直接考虑网络延迟。正确的选项。",
+        "en": "Community vote as displayed: A (88%) 9%. Popular discussion and key point summary: The latency routing policy selects the best region based on the network latency between the user and each AWS region to provide the best performance. This is the strategy best suited for high-performance experiences because it takes network latency directly into account. Correct option."
+      }
+    },
+    {
+      "question_no": 693,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个包含嵌入式 NoSQL 数据库的 Web 应用程序。该应用程序在应用程序负载均衡器 (ALB) 后面的 Amazon EC2 实例上运行。这些实例在单个可用区的 Amazon EC2 Auto Scaling 组中运行。最近流量的增加要求应用程序具有高可用性并且数据库最终保持一致。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company has a web application that includes an embedded NoSQL database. The application runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The instances run in an Amazon EC2 Auto Scaling group in a single Availability Zone. A recent increase in traffic requires the application to be highly available and for the database to be eventually consistent. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 ALB 替换为网络负载均衡器。在 EC2 实例上维护嵌入式 NoSQL 数据库及其复制服务。",
+          "en": "Replace the ALB with a Network Load Balancer. Maintain the embedded NoSQL database with its replication service on the EC2 instances."
+        },
+        "B": {
+          "zh": "将 ALB 替换为网络负载均衡器。使用 AWS Database Migration Service (AWS DMS) 将嵌入式 NoSQL 数据库迁移到 Amazon DynamoDB。",
+          "en": "Replace the ALB with a Network Load Balancer. Migrate the embedded NoSQL database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS)."
+        },
+        "C": {
+          "zh": "修改 Auto Scaling 组以跨三个可用区使用 EC2 实例。在 EC2 实例上维护嵌入式 NoSQL 数据库及其复制服务。",
+          "en": "Modify the Auto Scaling group to use EC2 instances across three Availability Zones. Maintain the embedded NoSQL database with its replication service on the EC2 instances."
+        },
+        "D": {
+          "zh": "修改 Auto Scaling 组以跨三个可用区使用 EC2 实例。使用 AWS Database Migration Service (AWS DMS) 将嵌入式 NoSQL 数据库迁移到 Amazon DynamoDB。",
+          "en": "Modify the Auto Scaling group to use EC2 instances across three Availability Zones. Migrate the embedded NoSQL database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：网络负载均衡器（NLB）适用于低延迟和 TCP/UDP 流量，但问题没有提及此功能的必要性。 ALB 更适合 HTTP/HTTPS 流量。错误：嵌入式NoSQL数据库仍然运行在EC2实例上，无法实现高可用性，因为它依赖于单个可用区。",
+          "en": "Incorrect. Technical reason: Network Load Balancer (NLB) is suitable for low latency and TCP/UDP traffic, but the question does not mention the necessity of this feature. ALB is better suited for HTTP/HTTPS traffic. Error: The embedded NoSQL database still runs on an EC2 instance and cannot achieve high availability because it relies on a single Availability Zone."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然迁移到 DynamoDB 是正确的方向，但用 NLB 替换 ALB 并不能解决问题。 ALB 更适合处理 Web 应用程序流量。正确：迁移到 DynamoDB 可实现高可用性和最终一致性。",
+          "en": "Incorrect. Technical reason: While migrating to DynamoDB is the right direction, replacing ALB with NLB does not answer the question. ALB is better suited for handling web application traffic. Correct: Migrating to DynamoDB enables high availability and eventual consistency."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因：跨三个可用区的 Auto Scaling 组可以提高 EC2 实例的高可用性。正确：迁移到 DynamoDB 可实现高可用性和最终一致性，同时减少运营开销。",
+          "en": "Correct. Technical reason: Auto Scaling groups across three Availability Zones can increase the high availability of EC2 instances. Correct: Moving to DynamoDB enables high availability and eventual consistency while reducing operational overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 修改 Auto Scaling 组以跨三个可用区使用 EC2 实例。使用 AWS Database Migration Service (AWS DMS) 将嵌入式 NoSQL 数据库迁移到 Amazon DynamoDB。",
+        "en": "D. Modify the Auto Scaling group to use EC2 instances across three Availability Zones. Migrate the embedded NoSQL database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：跨三个可用区的 Auto Scaling 组可以提高 EC2 实例的高可用性。正确：迁移到 DynamoDB 可实现高可用性和最终一致性，同时减少运营开销。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Auto Scaling groups across three Availability Zones can increase the high availability of EC2 instances. Correct: Moving to DynamoDB enables high availability and eventual consistency while reducing operational overhead."
+      }
+    },
+    {
+      "question_no": 694,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上构建购物应用程序。该应用程序提供的目录每月更改一次，并且需要根据流量进行扩展。该公司希望应用程序的延迟尽可能低。来自每个用户购物车的数据需要具有高可用性。即使用户断开连接并重新连接，用户会话数据也必须可用。解决方案架构师应该怎样做才能确保始终保留购物车数据？",
+        "en": "A company is building a shopping application on AWS. The application offers a catalog that changes once each month and needs to scale with traffic volume. The company wants the lowest possible latency from the application. Data from each user's shopping cart needs to be highly available. User session data must be available even if the user is disconnected and reconnects. What should a solutions architect do to ensure that the shopping cart data is preserved at all times?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 Application Load Balancer 以启用粘性会话功能（会话亲和性）以访问 Amazon Aurora 中的目录。",
+          "en": "Configure an Application Load Balancer to enable the sticky sessions feature (session affinity) for access to the catalog in Amazon Aurora."
+        },
+        "B": {
+          "zh": "配置 Amazon ElastiCache for Redis 以缓存来自 Amazon DynamoDB 的目录数据和来自用户会话的购物车数据。",
+          "en": "Configure Amazon ElastiCache for Redis to cache catalog data from Amazon DynamoDB and shopping cart data from the user's session."
+        },
+        "C": {
+          "zh": "配置 Amazon OpenSearch Service 以缓存来自 Amazon DynamoDB 的目录数据和来自用户会话的购物车数据。",
+          "en": "Configure Amazon OpenSearch Service to cache catalog data from Amazon DynamoDB and shopping cart data from the user's session."
+        },
+        "D": {
+          "zh": "使用 Amazon Elastic Block Store (Amazon EBS) 存储配置 Amazon EC2 实例来存储目录和购物车。配置自动快照。",
+          "en": "Configure an Amazon EC2 instance with Amazon Elastic Block Store (Amazon EBS) storage for the catalog and shopping cart. Configure automated snapshots."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：粘性会话只把用户持续路由到同一目标，不能在用户断开后持久保存购物车数据，也不能为目录数据提供可扩展的低延迟缓存。",
+          "en": "Incorrect. Technical reason: Sticky sessions only keep routing a user to the same target. They do not durably preserve cart data after disconnection or provide a scalable low-latency cache for catalog data."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon ElastiCache for Redis 提供低延迟缓存服务，适合存储经常访问的目录数据和用户会话数据。 Amazon DynamoDB 提供高可用性和持久性，可用作汽车购买数据的后端存储。这种架构不仅满足低延迟的需求，还保证了数据持久化和高可用性。",
+          "en": "Correct. Technical reason: Amazon ElastiCache for Redis provides a low-latency caching service suitable for storing frequently accessed directory data and user session data. Amazon DynamoDB provides high availability and durability and can be used as backend storage for car purchase data. This architecture not only meets low-latency requirements, but also ensures data persistence and high availability."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon OpenSearch Service 主要用于搜索和分析，不适合用作缓存服务。它具有较高的延迟并且无限制，以满足最低延迟要求。",
+          "en": "Incorrect. Technical reason: Amazon OpenSearch Service is primarily used for search and analysis and is not suitable for use as a caching service. It has higher latency and unlimited to meet the minimum latency requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：单个 EC2 实例和 EBS 卷存在单点故障，快照也不能提供实时的高可用会话数据或随流量自动扩展，因此不符合要求。",
+          "en": "Incorrect. Technical reason: A single EC2 instance and EBS volume are a single point of failure. Snapshots do not provide real-time highly available session data or automatic traffic-based scaling."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 配置 Amazon ElastiCache for Redis 以缓存来自 Amazon DynamoDB 的目录数据和来自用户会话的购物车数据。",
+        "en": "B. Configure Amazon ElastiCache for Redis to cache catalog data from Amazon DynamoDB and shopping cart data from the user's session."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： Amazon ElastiCache for Redis 提供低延迟缓存服务，适合存储经常访问的目录数据和用户会话数据。 Amazon DynamoDB 提供高可用性和持久性，可用作汽车购买数据的后端存储。这种架构不仅满足低延迟的需求，还保证了数据持久化和高可用性。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon ElastiCache for Redis provides a low-latency caching service suitable for storing frequently accessed directory data and user session data. Amazon DynamoDB provides high availability and durability and can be used as backend storage for car purchase data. This architecture not only meets low-latency requirements, but also ensures data persistence and high availability."
+      }
+    },
+    {
+      "question_no": 695,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在构建基于微服务的应用程序，该应用程序将部署在 Amazon Elastic Kubernetes Service (Amazon EKS) 上。微服务将相互交互。该公司希望确保应用程序可观察，以便将来识别性能问题。哪种解决方案可以满足这些要求？",
+        "en": "A company is building a microservices-based application that will be deployed on Amazon Elastic Kubernetes Service (Amazon EKS). The microservices will interact with each other. The company wants to ensure that the application is observable to identify performance issues in the future. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将应用程序配置为使用 Amazon ElastiCache 来减少发送到微服务的请求数量。",
+          "en": "Configure the application to use Amazon ElastiCache to reduce the number of requests that are sent to the microservices."
+        },
+        "B": {
+          "zh": "配置 Amazon CloudWatch Container Insights 以从 EKS 集群收集指标。配置 AWS X-Ray 以跟踪微服务之间的请求。",
+          "en": "Configure Amazon CloudWatch Container Insights to collect metrics from the EKS clusters. Configure AWS X-Ray to trace the requests between the microservices."
+        },
+        "C": {
+          "zh": "配置 AWS CloudTrail 以查看 API 调用。构建 Amazon QuickSight 仪表板来观察微服务交互。",
+          "en": "Configure AWS CloudTrail to review the API calls. Build an Amazon QuickSight dashboard to observe the microservice interactions."
+        },
+        "D": {
+          "zh": "使用 AWS Trusted Advisor 了解应用程序的性能。",
+          "en": "Use AWS Trusted Advisor to understand the performance of the application."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： ElastiCache主要用于缓存数据以提高应用程序性能，但它不提供微服务之间的可观察性或性能监控能力。",
+          "en": "Incorrect. Technical reason: ElastiCache is primarily used to cache data to improve application performance, but it does not provide observability or performance monitoring capabilities between microservices."
+        },
+        "B": {
+          "zh": "正確。技术原因： CloudWatch Container Insights 可以收集 EKS 集群的性能指标， AWS X-Ray 可以跟踪微服务之间的请求流，提供详细的可观察性。这是满足问题要求的最佳方案。",
+          "en": "Correct. Technical reason: CloudWatch Container Insights can collect performance metrics for EKS clusters, and AWS X-Ray can track the flow of requests between microservices, providing detailed observability. This is the best solution to meet the problem requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： CloudTrail主要用于记录API调用日志， QuickSight用于数据可视化，但它们不能直接提供微服务性能监控或请求跟踪功能。",
+          "en": "Incorrect. Technical reason: CloudTrail is mainly used for recording API call logs, and QuickSight is used for data visualization, but they cannot directly provide microservice performance monitoring or request tracking functions."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Trusted Advisor主要用于提供成本优化、安全、容错等建议，但不适合微服务的性能监控或请求跟踪。",
+          "en": "Incorrect. Technical reason: Trusted Advisor is mainly used to provide cost optimization, security, fault tolerance and other recommendations, but it is not suitable for performance monitoring or request tracking of microservices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 配置 Amazon CloudWatch Container Insights 以从 EKS 集群收集指标。配置 AWS X-Ray 以跟踪微服务之间的请求。",
+        "en": "B. Configure Amazon CloudWatch Container Insights to collect metrics from the EKS clusters. Configure AWS X-Ray to trace the requests between the microservices."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： CloudWatch Container Insights 可以收集 EKS 集群的性能指标， AWS X-Ray 可以跟踪微服务之间的请求流，提供详细的可观察性。这是满足问题要求的最佳方案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: CloudWatch Container Insights can collect performance metrics for EKS clusters, and AWS X-Ray can track the flow of requests between microservices, providing detailed observability. This is the best solution to meet the problem requirements."
+      }
+    },
+    {
+      "question_no": 696,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司需要为客户提供对其数据的安全访问。该公司处理客户数据并将结果存储在 Amazon S3 存储桶中。所有数据都受到严格的法规和安全要求的约束。数据必须静态加密。每个客户必须只能从其 AWS 账户访问自己的数据。公司员工不得访问数据。哪种解决方案可以满足这些要求？",
+        "en": "A company needs to provide customers with secure access to its data. The company processes customer data and stores the results in an Amazon S3 bucket. All the data is subject to strong regulations and security requirements. The data must be encrypted at rest. Each customer must be able to access only their data from their AWS account. Company employees must not be able to access the data. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为每个客户预置 AWS Certificate Manager (ACM) 证书。加密客户端数据。在私有证书策略中，拒绝除客户提供的 IAM 角色之外的所有委托人对证书的访问。",
+          "en": "Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the private certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides."
+        },
+        "B": {
+          "zh": "为每个客户配置单独的 AWS Key Management Service (AWS KMS) 密钥。对数据服务器端进行加密。在 S3 存储桶策略中，拒绝对​​除客户提供的 IAM 角色之外的所有委托人的数据进行解密。",
+          "en": "Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In the S3 bucket policy, deny decryption of data for all principals except an IAM role that the customer provides."
+        },
+        "C": {
+          "zh": "为每个客户配置单独的 AWS Key Management Service (AWS KMS) 密钥。对数据服务器端进行加密。在每个 KMS 密钥策略中，拒绝对​​除客户提供的 IAM 角色之外的所有委托人的数据进行解密。",
+          "en": "Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In each KMS key policy, deny decryption of data for all principals except an IAM role that the customer provides."
+        },
+        "D": {
+          "zh": "为每个客户预置 AWS Certificate Manager (ACM) 证书。加密客户端数据。在公共证书策略中，拒绝除客户提供的 IAM 角色之外的所有委托人对证书的访问。",
+          "en": "Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the public certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： ACM 主要用于管理 SSL/TLS 证书，而不是加密 S3 数据。此选项提到的“客户端加密”与 ACM 的功能不匹配。错误： ACM 证书不直接控制对 S3 数据的访问。",
+          "en": "Incorrect. Technical reason: ACM is primarily used to manage SSL/TLS certificates, not to encrypt S3 data. The \"client-side encryption\" mentioned by this option does not match the capabilities of ACM. Error: ACM certificates do not directly control access to S3 data."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "C": {
+          "zh": "正確。技术原因：为每个客户端配置单独的KMS密钥，并使用服务器端加密来满足问题需求。正确：通过 KMS 密钥策略控制解密权限是确保只有客户提供的 IAM 角色才能解密数据的最佳实践。",
+          "en": "Correct. Technical reason: Configure separate KMS keys for each client and use server-side encryption to satisfy the problem requirements. Correct: Controlling decryption permissions through KMS key policies is a best practice to ensure that only customer-provided IAM roles can decrypt data."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： ACM 证书用于管理 SSL/TLS 证书，与 S3 数据加密无关。错误：“公共证书策略”不是AWS中的概念，不符合问题要求。",
+          "en": "Incorrect. Technical reason: ACM certificates are used to manage SSL/TLS certificates and have nothing to do with S3 data encryption. Error: \"Public certificate policy\" is not a concept in AWS and does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 为每个客户配置单独的 AWS Key Management Service (AWS KMS) 密钥。对数据服务器端进行加密。在每个 KMS 密钥策略中，拒绝对​​除客户提供的 IAM 角色之外的所有委托人的数据进行解密。",
+        "en": "C. Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In each KMS key policy, deny decryption of data for all principals except an IAM role that the customer provides."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (71%) B (29%)。热门讨论与考点摘要：为每个客户端配置单独的KMS密钥，并使用服务器端加密来满足问题需求。正确：通过 KMS 密钥策略控制解密权限是确保只有客户提供的 IAM 角色才能解密数据的最佳实践。",
+        "en": "Community vote as displayed: C (71%) B (29%). Popular discussion and key point summary: Configure separate KMS keys for each client and use server-side encryption to satisfy the problem requirements. Correct: Controlling decryption permissions through KMS key policies is a best practice to ensure that only customer-provided IAM roles can decrypt data."
+      }
+    },
+    {
+      "question_no": 697,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师创建一个包含两个公有子网和两个私有子网的 VPC。公司安全要求要求解决方案架构师在私有子网中启动所有 Amazon EC2 实例。但是，当解决方案架构师启动在私有子网中的端口 80 和 443 上运行 Web 服务器的 EC2 实例时，没有外部 互联网 流量可以连接到该服务器。解决方案架构师应该做什么来解决这个问题？",
+        "en": "A solutions architect creates a VPC that includes two public subnets and two private subnets. A corporate security mandate requires the solutions architect to launch all Amazon EC2 instances in a private subnet. However, when the solutions architect launches an EC2 instance that runs a web server on ports 80 and 443 in a private subnet, no external internet traffic can connect to the server. What should the solutions architect do to resolve this issue?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 EC2 实例附加到私有子网中的 Auto Scaling 组。确保网站的 DNS 记录解析为 Auto Scaling 组标识符。",
+          "en": "Attach the EC2 instance to an Auto Scaling group in a private subnet. Ensure that the DNS record for the website resolves to the Auto Scaling group identifier."
+        },
+        "B": {
+          "zh": "在公有子网中配置面向互联网的应用程序负载均衡器 (ALB)。将 EC2 实例添加到与 ALB 关联的目标组确保网站的 DNS 记录解析为 ALB。",
+          "en": "Provision an internet-facing Application Load Balancer (ALB) in a public subnet. Add the EC2 instance to the target group that is associated with the ALEnsure that the DNS record for the website resolves to the ALB."
+        },
+        "C": {
+          "zh": "在私有子网中启动 NAT 网关。更新私有子网的路由表以添加到 NAT 网关的默认路由。将公共弹性 IP 地址附加到 NAT 网关。",
+          "en": "Launch a NAT gateway in a private subnet. Update the route table for the private subnets to add a default route to the NAT gateway. Attach a public Elastic IP address to the NAT gateway."
+        },
+        "D": {
+          "zh": "确保附加到 EC2 实例的安全组允许端口 80 上的 HTTP 流量和端口 443 上的 HTTPS 流量。确保网站的 DNS 记录解析为 EC2 实例的公共 IP 地址。",
+          "en": "Ensure that the security group that is attached to the EC2 instance allows HTTP traffic on port 80 and HTTPS traffic on port 443. Ensure that the DNS record for the website resolves to the public IP address of the EC2 instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Auto Scaling组的主要功能是自动扩容和缩容实例数量，解决高可用和弹性问题，而不是解决私有子网中的实例无法接收外部流量的问题。此外， Auto Scaling 组标识符不能直接用作 DNS 记录解析目标。",
+          "en": "Incorrect. Technical reason: The main function of the Auto Scaling group is to automatically expand and shrink the number of instances to solve high availability and elasticity issues, rather than to solve the problem of instances in private subnets being unable to receive external traffic. Additionally, Auto Scaling group identifiers cannot be used directly as DNS record resolution targets."
+        },
+        "B": {
+          "zh": "正確。技术原因： ALB 可以部署在公有子网中，并且可以将流量转发到私有子网中的 EC2 实例。这满足安全要求，同时允许外部流量访问私有子网中的实例。 DNS 解析为 ALB 地址是正确的配置方法。",
+          "en": "Correct. Technical reason: ALBs can be deployed in public subnets and can forward traffic to EC2 instances in private subnets. This meets security requirements while allowing external traffic to access instances in the private subnet. DNS resolution to the address of the ALB is the correct way to configure it."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： NAT 网关的主要功能是允许私有子网中的实例访问外部 互联网（例如下载更新和访问 API），而不是接收外部流量。此选项无法解决外部流量无法连接到私有子网中的实例的问题。",
+          "en": "Incorrect. Technical reason: The primary function of a NAT gateway is to allow instances in a private subnet to access the external Internet (such as downloading updates and accessing APIs), rather than receiving external traffic. This option does not resolve the issue where external traffic cannot connect to instances in private subnets."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：私有子网中的实例无法直接分配公有 IP 地址，因此无法通过公有 IP 地址接收外部流量。此外，此配置违反了“所有 EC2 实例必须部署在私有子网中”问题中所需的安全要求。",
+          "en": "Incorrect. Technical reason: Instances in a private subnet cannot be directly assigned a public IP address and therefore cannot receive external traffic via the public IP address. Additionally, this configuration violates the security mandate required in the question \"All EC2 instances must be deployed in a private subnet\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在公有子网中配置面向互联网的应用程序负载均衡器 (ALB)。将 EC2 实例添加到与 ALB 关联的目标组确保网站的 DNS 记录解析为 ALB。",
+        "en": "B. Provision an internet-facing Application Load Balancer (ALB) in a public subnet. Add the EC2 instance to the target group that is associated with the ALEnsure that the DNS record for the website resolves to the ALB."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (84%) Other。热门讨论与考点摘要： ALB 可以部署在公有子网中，并且可以将流量转发到私有子网中的 EC2 实例。这满足安全要求，同时允许外部流量访问私有子网中的实例。 DNS 解析为 ALB 地址是正确的配置方法。",
+        "en": "Community vote as displayed: B (84%) Other. Popular discussion and key point summary: ALBs can be deployed in public subnets and can forward traffic to EC2 instances in private subnets. This meets security requirements while allowing external traffic to access instances in the private subnet. DNS resolution to the address of the ALB is the correct way to configure it."
+      }
+    },
+    {
+      "question_no": 698,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 AWS Fargate 集群将新应用程序部署到 Amazon Elastic Kubernetes Service (Amazon EKS)。应用程序需要一个存储解决方案来实现数据持久化。该解决方案必须具有高可用性和容错能力。该解决方案还必须在多个应用程序容器之间共享。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company is deploying a new application to Amazon Elastic Kubernetes Service (Amazon EKS) with an AWS Fargate cluster. The application needs a storage solution for data persistence. The solution must be highly available and fault tolerant. The solution also must be shared between multiple application containers. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在放置 EKS 工作线程节点的同一可用区中创建 Amazon Elastic Block Store (Amazon EBS) 卷。在 EKS 集群上的 StorageClass 对象中注册卷。使用EBS Multi-Attach在容器之间共享数据。",
+          "en": "Create Amazon Elastic Block Store (Amazon EBS) volumes in the same Availability Zones where EKS worker nodes are placed. Register the volumes in a StorageClass object on an EKS cluster. Use EBS Multi-Attach to share the data between containers."
+        },
+        "B": {
+          "zh": "创建 Amazon Elastic File System (Amazon EFS) 文件系统。在 EKS 集群上的 StorageClass 对象中注册文件系统。对所有容器使用相同的文件系统。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) file system. Register the file system in a StorageClass object on an EKS cluster. Use the same file system for all containers."
+        },
+        "C": {
+          "zh": "创建 Amazon Elastic Block Store (Amazon EBS) 卷。在 EKS 集群上的 StorageClass 对象中注册卷。所有容器使用相同的体积。",
+          "en": "Create an Amazon Elastic Block Store (Amazon EBS) volume. Register the volume in a StorageClass object on an EKS cluster. Use the same volume for all containers."
+        },
+        "D": {
+          "zh": "在放置 EKS 工作线程节点的同一可用区中创建 Amazon Elastic File System (Amazon EFS) 文件系统。在 EKS 集群上的 StorageClass 对象中注册文件系统。创建 AWS Lambda 函数以在文件系统之间同步数据。",
+          "en": "Create Amazon Elastic File System (Amazon EFS) file systems in the same Availability Zones where EKS worker nodes are placed. Register the file systems in a StorageClass object on an EKS cluster. Create an AWS Lambda function to synchronize the data between file systems."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：不支持 Fargate，并且无法实现跨可用区的高可用性。",
+          "en": "Incorrect. Technical reason: Fargate is not supported and high availability across Availability Zones is not possible."
+        },
+        "B": {
+          "zh": "正確。技术原因：以最小的运营开销满足容器之间的高可用性、共享存储需求。",
+          "en": "Correct. Technical reason: Meet high-availability, shared storage needs between containers with minimal operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：不支持 Fargate，并且无法跨容器共享存储。",
+          "en": "Incorrect. Technical reason: Fargate is not supported and storage cannot be shared across containers."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon Elastic File System (Amazon EFS) 文件系统。在 EKS 集群上的 StorageClass 对象中注册文件系统。对所有容器使用相同的文件系统。",
+        "en": "B. Create an Amazon Elastic File System (Amazon EFS) file system. Register the file system in a StorageClass object on an EKS cluster. Use the same file system for all containers."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：以最小的运营开销满足容器之间的高可用性、共享存储需求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Meet high-availability, shared storage needs between containers with minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 699,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个在其本地数据中心使用 Docker 容器的应用程序。该应用程序在容器主机上运行，​​该容器主机将持久数据存储在主机上的卷中。容器实例使用存储的持久数据。该公司希望将应用程序转移到完全托管的服务，因为该公司不想管理任何服务器或存储基础设施。哪种解决方案可以满足这些要求？",
+        "en": "A company has an application that uses Docker containers in its local data center. The application runs on a container host that stores persistent data in a volume on the host. The container instances use the stored persistent data. The company wants to move the application to a fully managed service because the company does not want to manage any servers or storage infrastructure. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Amazon Elastic Kubernetes Service (Amazon EKS) 与自我管理节点结合使用。创建附加到 Amazon EC2 实例的 Amazon Elastic Block Store (Amazon EBS) 卷。使用 EBS 卷作为安装在容器中的持久卷。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with self-managed nodes. Create an Amazon Elastic Block Store (Amazon EBS) volume attached to an Amazon EC2 instance. Use the EBS volume as a persistent volume mounted in the containers."
+        },
+        "B": {
+          "zh": "将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 启动类型结合使用。创建 Amazon Elastic File System (Amazon EFS) 卷。添加 EFS 卷作为安装在容器中的持久存储卷。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with an AWS Fargate launch type. Create an Amazon Elastic File System (Amazon EFS) volume. Add the EFS volume as a persistent storage volume mounted in the containers."
+        },
+        "C": {
+          "zh": "将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 启动类型结合使用。创建 Amazon S3 存储桶。将 S3 存储桶映射为安装在容器中的持久存储卷。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with an AWS Fargate launch type. Create an Amazon S3 bucket. Map the S3 bucket as a persistent storage volume mounted in the containers."
+        },
+        "D": {
+          "zh": "将 Amazon Elastic Container Service (Amazon ECS) 与 Amazon EC2 启动类型结合使用。创建 Amazon Elastic File System (Amazon EFS) 卷。添加 EFS 卷作为安装在容器中的持久存储卷。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with an Amazon EC2 launch type. Create an Amazon Elastic File System (Amazon EFS) volume. Add the EFS volume as a persistent storage volume mounted in the containers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 EKS 支持容器编排，但将 EKS 与自管理节点结合使用需要管理 EC2 实例和 EBS 卷，这不符合问题的“完全托管服务”要求。",
+          "en": "Incorrect. Technical reason: While EKS supports container orchestration, using EKS with self-managed nodes requires managing EC2 instances and EBS volumes, which does not meet the question's \"fully managed service\" requirement."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS Fargate 是完全托管的无服务器容器运行时，不需要管理底层服务器。 EFS是完全托管的文件存储服务，支持持久化存储，适合挂载到容器中。",
+          "en": "Correct. Technical reason: AWS Fargate is a fully managed serverless container runtime that requires no underlying servers to be managed. EFS is a fully managed file storage service that supports persistent storage and is suitable for mounting into containers."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然S3是完全托管的存储服务，但它是对象存储，不适合直接挂载为容器的持久存储卷。",
+          "en": "Incorrect. Technical reason: Although S3 is a fully managed storage service, it is object storage and is not suitable for being directly mounted as a persistent storage volume for containers."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用EC2启动类型需要管理底层服务器，这不满足问题的“完全托管服务”要求。",
+          "en": "Incorrect. Technical reason: Using the EC2 launch type requires managing the underlying server, which does not meet the \"fully managed service\" requirement of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 启动类型结合使用。创建 Amazon Elastic File System (Amazon EFS) 卷。添加 EFS 卷作为安装在容器中的持久存储卷。",
+        "en": "B. Use Amazon Elastic Container Service (Amazon ECS) with an AWS Fargate launch type. Create an Amazon Elastic File System (Amazon EFS) volume. Add the EFS volume as a persistent storage volume mounted in the containers."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (92%) 8%。热门讨论与考点摘要： AWS Fargate 是完全托管的无服务器容器运行时，不需要管理底层服务器。 EFS是完全托管的文件存储服务，支持持久化存储，适合挂载到容器中。",
+        "en": "Community vote as displayed: B (92%) 8%. Popular discussion and key point summary: AWS Fargate is a fully managed serverless container runtime that requires no underlying servers to be managed. EFS is a fully managed file storage service that supports persistent storage and is suitable for mounting into containers."
+      }
+    },
+    {
+      "question_no": 700,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家游戏公司希望在多个 AWS 区域推出新的面向互联网的应用程序。应用程序将使用 TCP 和 UDP 协议进行通信。公司需要为全球用户提供高可用性和最小延迟。解决方案架构师应该采取哪些操作组合来满足这些要求？ （选择两个。）",
+        "en": "A gaming company wants to launch a new internet-facing application in multiple AWS Regions. The application will use the TCP and UDP protocols for communication. The company needs to provide high availability and minimum latency for global users. Which combination of actions should a solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在每个区域的应用程序前面创建内部网络负载均衡器。",
+          "en": "Create internal Network Load Balancers in front of the application in each Region."
+        },
+        "B": {
+          "zh": "在每个区域中的应用程序前面创建外部应用程序负载均衡器。",
+          "en": "Create external Application Load Balancers in front of the application in each Region."
+        },
+        "C": {
+          "zh": "创建 AWS Global Accelerator 加速器以将流量路由到每个区域中的负载均衡器。",
+          "en": "Create an AWS Global Accelerator accelerator to route traffic to the load balancers in each Region."
+        },
+        "D": {
+          "zh": "配置 Amazon Route 53 以使用地理位置路由策略来分配流量。",
+          "en": "Configure Amazon Route 53 to use a geolocation routing policy to distribute the traffic."
+        },
+        "E": {
+          "zh": "配置 Amazon CloudFront 以处理流量并将请求路由到每个区域中的应用程序",
+          "en": "Configure Amazon CloudFront to handle the traffic and route requests to the application in each Region"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管Application Load Balancer可以处理互联网流量，但它主要用于HTTP/HTTPS协议，并且问题中明确提到需要支持TCP和UDP协议。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Although Application Load Balancer can handle Internet traffic, it is mainly used for HTTP/HTTPS protocols, and the question clearly mentions that TCP and UDP protocols need to be supported. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS Global Accelerator 提供全局流量优化，支持 TCP 和 UDP 协议，可以将流量路由到各个区域的负载均衡器，以满足高可用性和低延迟的要求。",
+          "en": "Correct. Technical reason: AWS Global Accelerator provides global traffic optimization, supports TCP and UDP protocols, and can route traffic to load balancers in various regions to meet high availability and low latency requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 Route 53 的地理位置路由可以分配流量，但它无法优化 TCP 和 UDP 协议的性能，也无法提供 Global Accelerator 等低延迟和高可用性功能。",
+          "en": "Incorrect. Technical reason: While Route 53's geo-location routing can distribute traffic, it cannot optimize the performance of TCP and UDP protocols or provide low-latency and high-availability features such as Global Accelerator."
+        },
+        "E": {
+          "zh": "錯誤。技术原因： CloudFront 是一个内容交付网络 (CDN)，主要用于缓存和交付静态内容。它不适合直接处理 TCP 和 UDP 流量。",
+          "en": "Incorrect. Technical reason: CloudFront is a content delivery network (CDN) primarily used for caching and delivering static content. It is not suitable for handling TCP and UDP traffic directly."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 在每个区域的应用程序前面创建内部网络负载均衡器。；C. 创建 AWS Global Accelerator 加速器以将流量路由到每个区域中的负载均衡器。",
+        "en": "A. Create internal Network Load Balancers in front of the application in each Region.; C. Create an AWS Global Accelerator accelerator to route traffic to the load balancers in each Region."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AC (84%) CD (16%)。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。； AWS Global Accelerator 提供全局流量优化，支持 TCP 和 UDP 协议，可以将流量路由到各个区域的负载均衡器，以满足高可用性和低延迟的要求。",
+        "en": "Community vote as displayed: AC (84%) CD (16%). Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service.; AWS Global Accelerator provides global traffic optimization, supports TCP and UDP protocols, and can route traffic to load balancers in various regions to meet high availability and low latency requirements."
+      }
+    },
+    {
+      "question_no": 701,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "某个城市部署了一个在应用程序负载均衡器 (ALB) 后面的 Amazon EC2 实例上运行的 Web 应用程序。该应用程序的用户报告了零星的性能问题，这似乎与源自随机 IP 地址的 DDoS 攻击有关。该城市需要一种需要最少配置更改并为 DDoS 源提供审核跟踪的解决方案。哪种解决方案满足这些要求？",
+        "en": "A city has deployed a web application running on Amazon EC2 instances behind an Application Load Balancer (ALB). The application's users have reported sporadic performance, which appears to be related to DDoS attacks originating from random IP addresses. The city needs a solution that requires minimal configuration changes and provides an audit trail for the DDoS sources. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 ALB 上启用 AWS WAF Web ACL，并配置规则以阻止来自未知来源的流量。",
+          "en": "Enable an AWS WAF web ACL on the ALB, and configure rules to block traffic from unknown sources."
+        },
+        "B": {
+          "zh": "订阅亚马逊检查器。与 AWS DDoS 响应团队 (DRT) 合作，将缓解控制措施集成到服务中。",
+          "en": "Subscribe to Amazon Inspector. Engage the AWS DDoS Response Team (DRT) to integrate mitigating controls into the service."
+        },
+        "C": {
+          "zh": "订阅 AWS Shield Advanced。与 AWS DDoS 响应团队 (DRT) 合作，将缓解控制措施集成到服务中。",
+          "en": "Subscribe to AWS Shield Advanced. Engage the AWS DDoS Response Team (DRT) to integrate mitigating controls into the service."
+        },
+        "D": {
+          "zh": "为应用程序创建 Amazon CloudFront 分配，并将 ALB 设置为源。在分配上启用 AWS WAF Web ACL，并配置规则以阻止来自未知来源的流量",
+          "en": "Create an Amazon CloudFront distribution for the application, and set the ALB as the origin. Enable an AWS WAF web ACL on the distribution, and configure rules to block traffic from unknown sources"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析： AWS WAF可以帮助过滤恶意流量，但需要手动配置规则来识别和拦截DDoS攻击源，并且可能无法有效应对来自随机IP地址的攻击。此外， AWS WAF本身并不提供专用的DDoS防护功能。",
+          "en": "Incorrect. Technical reason: Technical analysis: AWS WAF can help filter malicious traffic, but it requires manual configuration of rules to identify and block DDoS attack sources, and may not be able to effectively deal with attacks from random IP addresses. In addition, AWS WAF itself does not provide dedicated DDoS protection capabilities."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析： Amazon Inspector 是一项安全评估服务，可检测漏洞和配置问题，独立于 DDoS 防护。此选项中提到的 AWS DDoS 响应团队 (DRT) 确实可以提供帮助，但 Amazon Inspector 并不是 DDoS 防护的正确工具。",
+          "en": "Incorrect. Technical reason: Technical analysis: Amazon Inspector is a security assessment service that detects vulnerabilities and configuration issues, independent of DDoS protection. The AWS DDoS Response Team (DRT) mentioned in this option can indeed help, but Amazon Inspector is not the right tool for DDoS protection."
+        },
+        "C": {
+          "zh": "正確。技术原因：技术分析： AWS Shield Advanced 是一项专门设计用于保护应用程序免受复杂 DDoS 攻击的服务。它提供自动化保护功能，并允许与 AWS DDoS 响应团队 (DRT) 协作实施缓解措施。另外还提​​供了详细的攻击分析和审计功能，完全满足课题的要求。",
+          "en": "Correct. Technical reason: Technical Analysis: AWS Shield Advanced is a service specifically designed to protect applications from sophisticated DDoS attacks. It provides automated protection capabilities and allows collaboration with the AWS DDoS Response Team (DRT) to implement mitigation measures. In addition, detailed attack analysis and auditing functions are provided to fully meet the requirements of the topic."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析： CloudFront 可以帮助缓解 DDoS 攻击，并与 AWS WAF 配合过滤流量。不过，与AWS Shield Advanced相比， CloudFront的DDoS防护功能更加基础，无法提供与AWS DDoS响应团队（DRT）的直接协作，也没有提及审计功能。",
+          "en": "Incorrect. Technical reason: Technical Analysis: CloudFront can help mitigate DDoS attacks and works with AWS WAF to filter traffic. However, compared with AWS Shield Advanced, CloudFront's DDoS protection function is more basic and cannot provide direct collaboration with the AWS DDoS Response Team (DRT), nor does it mention auditing functions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 订阅 AWS Shield Advanced。与 AWS DDoS 响应团队 (DRT) 合作，将缓解控制措施集成到服务中。",
+        "en": "C. Subscribe to AWS Shield Advanced. Engage the AWS DDoS Response Team (DRT) to integrate mitigating controls into the service."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：技术分析： AWS Shield Advanced 是一项专门设计用于保护应用程序免受复杂 DDoS 攻击的服务。它提供自动化保护功能，并允许与 AWS DDoS 响应团队 (DRT) 协作实施缓解措施。另外还提​​供了详细的攻击分析和审计功能，完全满足课题的要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Technical Analysis: AWS Shield Advanced is a service specifically designed to protect applications from sophisticated DDoS attacks. It provides automated protection capabilities and allows collaboration with the AWS DDoS Response Team (DRT) to implement mitigation measures. In addition, detailed attack analysis and auditing functions are provided to fully meet the requirements of the topic."
+      }
+    },
+    {
+      "question_no": 702,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司将最近一次海洋调查中的 200 TB 数据复制到 AWS Snowball Edge Storage Optimized 设备上。该公司拥有一个托管在 AWS 上的高性能计算 (HPC) 集群，用于寻找石油和天然气矿藏。解决方案架构师必须为集群提供一致的亚毫秒级延迟以及对 Snowball Edge Storage Optimized 设备上数据的高吞吐量访问。该公司正在将设备送回 AWS。哪种解决方案可以满足这些要求？",
+        "en": "A company copies 200 TB of data from a recent ocean survey onto AWS Snowball Edge Storage Optimized devices. The company has a high performance computing (HPC) cluster that is hosted on AWS to look for oil and gas deposits. A solutions architect must provide the cluster with consistent sub-millisecond latency and high-throughput access to the data on the Snowball Edge Storage Optimized devices. The company is sending the devices back to AWS. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon S3 存储桶。将数据导入到 S3 存储桶中。配置 AWS Storage Gateway 文件网关以使用 S3 存储桶。从 HPC 集群实例访问文件网关。",
+          "en": "Create an Amazon S3 bucket. Import the data into the S3 bucket. Configure an AWS Storage Gateway file gateway to use the S3 bucket. Access the file gateway from the HPC cluster instances."
+        },
+        "B": {
+          "zh": "创建 Amazon S3 存储桶。将数据导入到 S3 存储桶中。配置 Amazon FSx for Lustre 文件系统，并将其与 S3 存储桶集成。从 HPC 集群实例访问 FSx for Lustre 文件系统。",
+          "en": "Create an Amazon S3 bucket. Import the data into the S3 bucket. Configure an Amazon FSx for Lustre file system, and integrate it with the S3 bucket. Access the FSx for Lustre file system from the HPC cluster instances."
+        },
+        "C": {
+          "zh": "创建 Amazon S3 存储桶和 Amazon Elastic File System (Amazon EFS) 文件系统。将数据导入到 S3 存储桶中。将数据从 S3 存储桶复制到 EFS 文件系统。从 HPC 集群实例访问 EFS 文件系统。",
+          "en": "Create an Amazon S3 bucket and an Amazon Elastic File System (Amazon EFS) file system. Import the data into the S3 bucket. Copy the data from the S3 bucket to the EFS file system. Access the EFS file system from the HPC cluster instances."
+        },
+        "D": {
+          "zh": "创建 Amazon FSx for Lustre 文件系统。将数据直接导入 FSx for Lustre 文件系统。从 HPC 集群实例访问 FSx for Lustre 文件系统。",
+          "en": "Create an Amazon FSx for Lustre file system. Import the data directly into the FSx for Lustre file system. Access the FSx for Lustre file system from the HPC cluster instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然AWS Storage Gateway可以提供对S3数据的访问，但其性能无法满足HPC环境的低延迟和高吞吐量要求。",
+          "en": "Incorrect. Technical reason: Although AWS Storage Gateway can provide access to S3 data, its performance cannot meet the low latency and high throughput requirements of HPC environments."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon FSx for Lustre 是一款专为高性能计算而设计的文件系统，可提供亚毫秒级延迟和高吞吐量。与S3集成后，可以快速访问和处理数据，非常适合HPC场景。",
+          "en": "Correct. Technical reason: Amazon FSx for Luster is a file system designed for high-performance computing, delivering sub-millisecond latency and high throughput. After integrating with S3, data can be accessed and processed quickly, which is very suitable for HPC scenarios."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然 Amazon EFS 提供文件存储，但其性能不如 FSx for Lustre，无法满足 HPC 环境的低延迟和高吞吐量要求。",
+          "en": "Incorrect. Technical reason: Although Amazon EFS provides file storage, its performance is not as good as FSx for Luster and cannot meet the low latency and high throughput requirements of HPC environments."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 FSx for Lustre 适用于 HPC 场景，但该问题需要将数据从 Snowball Edge 设备导入到 AWS。直接导入到 FSx for Lustre 文件系统不符合题目中提到的“将数据导入到 S3”步骤。",
+          "en": "Incorrect. Technical reason: While FSx for Luster is suitable for HPC scenarios, the issue requires importing data from a Snowball Edge device to AWS. Importing directly into the FSx for Luster file system does not comply with the \"Import data to S3\" step mentioned in the title."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon S3 存储桶。将数据导入到 S3 存储桶中。配置 Amazon FSx for Lustre 文件系统，并将其与 S3 存储桶集成。从 HPC 集群实例访问 FSx for Lustre 文件系统。",
+        "en": "B. Create an Amazon S3 bucket. Import the data into the S3 bucket. Configure an Amazon FSx for Lustre file system, and integrate it with the S3 bucket. Access the FSx for Lustre file system from the HPC cluster instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (65%) D (35%)。热门讨论与考点摘要： Amazon FSx for Lustre 是一款专为高性能计算而设计的文件系统，可提供亚毫秒级延迟和高吞吐量。与S3集成后，可以快速访问和处理数据，非常适合HPC场景。",
+        "en": "Community vote as displayed: B (65%) D (35%). Popular discussion and key point summary: Amazon FSx for Luster is a file system designed for high-performance computing, delivering sub-millisecond latency and high throughput. After integrating with S3, data can be accessed and processed quickly, which is very suitable for HPC scenarios."
+      }
+    },
+    {
+      "question_no": 703,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "某公司在本地数据中心设有 NFS 服务器，需要定期将少量数据备份到 Amazon S3。哪种解决方案满足这些要求并且最具成本效益？",
+        "en": "A company has NFS servers in an on-premises data center that need to periodically back up small amounts of data to Amazon S3. Which solution meets these requirements and is MOST cost-effective?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 AWS Glue 以将数据从本地服务器复制到 Amazon S3。",
+          "en": "Set up AWS Glue to copy the data from the on-premises servers to Amazon S3."
+        },
+        "B": {
+          "zh": "在本地服务器上设置 AWS DataSync 代理，并将数据同步到 Amazon S3。",
+          "en": "Set up an AWS DataSync agent on the on-premises servers, and sync the data to Amazon S3."
+        },
+        "C": {
+          "zh": "使用 AWS Transfer for SFTP 设置 SFTP 同步，将数据从本地同步到 Amazon S3。",
+          "en": "Set up an SFTP sync using AWS Transfer for SFTP to sync data from on premises to Amazon S3."
+        },
+        "D": {
+          "zh": "在本地数据中心和 VPC 之间建立 AWS Direct Connect 连接，并将数据复制到 Amazon S3。",
+          "en": "Set up an AWS Direct Connect connection between the on-premises data center and a VPC, and copy the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Glue主要用于ETL（提取、转换、加载）任务，适合处理大规模数据转换和分析，而不是简单的文件备份任务。成本较高，不适合数据量较小的常规备份场景。",
+          "en": "Incorrect. Technical reason: AWS Glue is mainly used for ETL (extract, transform, load) tasks and is suitable for handling large-scale data conversion and analysis, rather than simple file backup tasks. The cost is high and it is not suitable for regular backup scenarios with small data volumes."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS DataSync 旨在高效、安全地迁移和同步数据。支持NFS协议，适合小量数据的定期备份。成本优化： DataSync按使用量收费，适合该场景。",
+          "en": "Correct. Technical reason: AWS DataSync is designed to migrate and synchronize data efficiently and securely. Supports NFS protocol, suitable for regular backup of small amounts of data. Cost optimization: DataSync charges based on usage, which is suitable for this scenario."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS Transfer for SFTP适合基于SFTP协议的文件传输，题目中明确提到了NFS协议的使用。不符合场景要求。",
+          "en": "Incorrect. Technical reason: AWS Transfer for SFTP is suitable for file transfer based on the SFTP protocol, and the use of the NFS protocol is clearly mentioned in the title. Does not meet scene requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Direct Connect 适用于需要高带宽、低延迟的场景。成本较高，不适合小量数据的定期备份。复杂，不符合成本优化的要求。",
+          "en": "Incorrect. Technical reason: AWS Direct Connect is suitable for scenarios that require high bandwidth and low latency. The cost is high and it is not suitable for regular backup of small amounts of data. It is complex and does not meet the requirements of cost optimization."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在本地服务器上设置 AWS DataSync 代理，并将数据同步到 Amazon S3。",
+        "en": "B. Set up an AWS DataSync agent on the on-premises servers, and sync the data to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： AWS DataSync 旨在高效、安全地迁移和同步数据。支持NFS协议，适合小量数据的定期备份。成本优化： DataSync按使用量收费，适合该场景。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: AWS DataSync is designed to migrate and synchronize data efficiently and securely. Supports NFS protocol, suitable for regular backup of small amounts of data. Cost optimization: DataSync charges based on usage, which is suitable for this scenario."
+      }
+    },
+    {
+      "question_no": 704,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "在线视频游戏公司必须保持其游戏服务器的超低延迟。游戏服务器在 Amazon EC2 实例上运行。该公司需要一个能够每秒处理数百万个 UDP 互联网流量请求的解决方案。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "An online video game company must maintain ultra-low latency for its game servers. The game servers run on Amazon EC2 instances. The company needs a solution that can handle millions of UDP internet traffic requests each second. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 互联网 流量所需的协议和端口配置应用程序负载均衡器。指定 EC2 实例作为目标。",
+          "en": "Configure an Application Load Balancer with the required protocol and ports for the internet traffic. Specify the EC2 instances as the targets."
+        },
+        "B": {
+          "zh": "为互联网流量配置网关负载均衡器。指定 EC2 实例作为目标。",
+          "en": "Configure a Gateway Load Balancer for the internet traffic. Specify the EC2 instances as the targets."
+        },
+        "C": {
+          "zh": "使用互联网流量所需的协议和端口配置网络负载均衡器。指定 EC2 实例作为目标。",
+          "en": "Configure a Network Load Balancer with the required protocol and ports for the internet traffic. Specify the EC2 instances as the targets."
+        },
+        "D": {
+          "zh": "在不同 AWS 区域的 EC2 实例上启动一组相同的游戏服务器。将互联网流量路由到两组 EC2 实例。",
+          "en": "Launch an identical set of game servers on EC2 instances in separate AWS Regions. Route internet traffic to both sets of EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： GLB 并不是专门为高性能、低延迟负载均衡而设计的。",
+          "en": "Incorrect. Technical reason: GLB is not designed specifically for high-performance, low-latency load balancing."
+        },
+        "C": {
+          "zh": "正確。技术原因： NLB 是处理 UDP 流量和低延迟场景的最佳选择。",
+          "en": "Correct. Technical reason: NLB is the best choice for handling UDP traffic and low latency scenarios."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：跨地域部署并不是低时延、高性能的最佳方案。",
+          "en": "Incorrect. Technical reason: Cross-region deployment is not the best solution for low latency and high performance."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用互联网流量所需的协议和端口配置网络负载均衡器。指定 EC2 实例作为目标。",
+        "en": "C. Configure a Network Load Balancer with the required protocol and ports for the internet traffic. Specify the EC2 instances as the targets."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： NLB 是处理 UDP 流量和低延迟场景的最佳选择。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: NLB is the best choice for handling UDP traffic and low latency scenarios."
+      }
+    },
+    {
+      "question_no": 705,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 VPC 中运行三层应用程序。数据库层使用 Amazon RDS for MySQL 数据库实例。该公司计划将 RDS for MySQL 数据库实例迁移到 Amazon Aurora PostgreSQL 数据库集群。该公司需要一个解决方案来复制迁移到新数据库期间发生的数据更改。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company runs a three-tier application in a VPC. The database tier uses an Amazon RDS for MySQL DB instance. The company plans to migrate the RDS for MySQL DB instance to an Amazon Aurora PostgreSQL DB cluster. The company needs a solution that replicates the data changes that happen during the migration to the new database. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 架构转换来转换数据库对象。",
+          "en": "Use AWS Database Migration Service (AWS DMS) Schema Conversion to transform the database objects."
+        },
+        "B": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 架构转换在 RDS for MySQL 数据库实例上创建 Aurora PostgreSQL 只读副本。",
+          "en": "Use AWS Database Migration Service (AWS DMS) Schema Conversion to create an Aurora PostgreSQL read replica on the RDS for MySQL DB instance."
+        },
+        "C": {
+          "zh": "为 RDS for MySQL 数据库实例配置 Aurora MySQL 只读副本。",
+          "en": "Configure an Aurora MySQL read replica for the RDS for MySQL DB instance."
+        },
+        "D": {
+          "zh": "使用更改数据捕获 (CDC) 定义 AWS Database Migration Service (AWS DMS) 任务来迁移数据。",
+          "en": "Define an AWS Database Migration Service (AWS DMS) task with change data capture (CDC) to migrate the data."
+        },
+        "E": {
+          "zh": "当副本滞后为零时，将 Aurora PostgreSQL 只读副本提升为独立的 Aurora PostgreSQL 数据库集群。",
+          "en": "Promote the Aurora PostgreSQL read replica to a standalone Aurora PostgreSQL DB cluster when the replica lag is zero."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： AWS DMS Schema Conversion 工具可以将源数据库的架构转换为目标数据库的架构，特别是在跨数据库引擎（例如 MySQL 到 PostgreSQL）迁移时。",
+          "en": "Correct. Technical reason: The AWS DMS Schema Conversion tool can convert the source database's schema to the target database's schema, especially when migrating across database engines (such as MySQL to PostgreSQL)."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS DMS Schema Conversion Tool 用于架构转换，而不是创建 Aurora PostgreSQL 的只读副本。 Aurora PostgreSQL 和 RDS MySQL 是不同的数据库引擎，无法间接创建跨引擎只读副本。",
+          "en": "Incorrect. Technical reason: The AWS DMS Schema Conversion Tool is used for schema conversion rather than creating read-only replicas of Aurora PostgreSQL. Aurora PostgreSQL and RDS MySQL are different database engines, and cross-engine read replicas cannot be created indirectly."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Aurora MySQL 和 RDS MySQL 属于同一数据库引擎，可以创建只读副本，但该问题需要迁移到 Aurora PostgreSQL，与 Aurora MySQL 无关。",
+          "en": "Incorrect. Technical reason: Aurora MySQL and RDS MySQL belong to the same database engine and can create read replicas, but the problem requires migrating to Aurora PostgreSQL, which has nothing to do with Aurora MySQL."
+        },
+        "D": {
+          "zh": "正確。技术原因： AWS DMS 支持使用更改数据捕获 (CDC) 实时捕获源数据库中的更改并将这些更改同步到目标数据库。这是在迁移过程中保持数据一致性的关键步骤。",
+          "en": "Correct. Technical reason: AWS DMS supports using change data capture (CDC) to capture changes from a source database in real time and synchronize those changes to the target database. This is a critical step in maintaining data consistency during the migration process."
+        },
+        "E": {
+          "zh": "錯誤。技术原因： Aurora PostgreSQL 和 RDS MySQL 是不同的数据库引擎。 Aurora PostgreSQL 的只读副本无法直接创建，因此无法将其提升为独立的 Aurora PostgreSQL 集群。",
+          "en": "Incorrect. Technical reason: Aurora PostgreSQL and RDS MySQL are different database engines. Read replicas of Aurora PostgreSQL cannot be created directly, so they cannot be promoted to a standalone Aurora PostgreSQL cluster."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Database Migration Service (AWS DMS) 架构转换来转换数据库对象。；D. 使用更改数据捕获 (CDC) 定义 AWS Database Migration Service (AWS DMS) 任务来迁移数据。",
+        "en": "A. Use AWS Database Migration Service (AWS DMS) Schema Conversion to transform the database objects.; D. Define an AWS Database Migration Service (AWS DMS) task with change data capture (CDC) to migrate the data."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AD (100%)。热门讨论与考点摘要： AWS DMS Schema Conversion 工具可以将源数据库的架构转换为目标数据库的架构，特别是在跨数据库引擎（例如 MySQL 到 PostgreSQL）迁移时。； AWS DMS 支持使用更改数据捕获 (CDC) 实时捕获源数据库中的更改并将这些更改同步到目标数据库。这是在迁移过程中保持数据一致性的关键步骤。",
+        "en": "Community vote as displayed: AD (100%). Popular discussion and key point summary: The AWS DMS Schema Conversion tool can convert the source database's schema to the target database's schema, especially when migrating across database engines (such as MySQL to PostgreSQL).; AWS DMS supports using change data capture (CDC) to capture changes from a source database in real time and synchronize those changes to the target database. This is a critical step in maintaining data consistency during the migration process."
+      }
+    }
+  ]
+}

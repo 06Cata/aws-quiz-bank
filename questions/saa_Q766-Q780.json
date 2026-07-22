@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 766,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "公司的开发人员希望以安全的方式获得对运行最新版本 Amazon Linux 的公司 Amazon EC2 实例的 SSH 访问权限。开发人员在公司办公室远程工作。该公司希望使用 AWS 服务作为解决方案的一部分。 EC2 实例托管在 VPC 私有子网中，并通过部署在公有子网中的 NAT 网关访问 互联网。解决方案架构师应该如何做才能最经济有效地满足这些要求？",
+        "en": "A company’s developers want a secure way to gain SSH access on the company's Amazon EC2 instances that run the latest version of Amazon Linux. The developers work remotely and in the corporate office. The company wants to use AWS services as a part of the solution. The EC2 instances are hosted in a VPC private subnet and access the internet through a NAT gateway that is deployed in a public subnet. What should a solutions architect do to meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在与 EC2 实例相同的子网中创建堡垒主机。向开发人员授予 ec2:CreateVpnConnection IAM 权限。安装 EC2 Instance Connect 以便开发人员可以连接到 EC2 实例。",
+          "en": "Create a bastion host in the same subnet as the EC2 instances. Grant the ec2:CreateVpnConnection IAM permission to the developers. Install EC2 Instance Connect so that the developers can connect to the EC2 instances."
+        },
+        "B": {
+          "zh": "在公司网络和 VPC 之间创建 AWS Site-to-Site VPN 连接。当开发人员位于公司网络时，指导开发人员使用 Site-to-Site VPN 连接来访问 EC2 实例。指导开发人员建立另一个VPN连接，以便在远程工作时进行访问。",
+          "en": "Create an AWS Site-to-Site VPN connection between the corporate network and the VPC. Instruct the developers to use the Site-to-Site VPN connection to access the EC2 instances when the developers are on the corporate network. Instruct the developers to set up another VPN connection for access when they work remotely."
+        },
+        "C": {
+          "zh": "在 VP 的公有子网中创建堡垒主机，配置堡垒主机的安全组和 SSH 密钥，以仅允许来自开发人员的公司和远程网络的连接和 SSH 身份验证。指导开发人员使用 SSH 通过堡垒主机连接来访问 EC2 实例。",
+          "en": "Create a bastion host in the public subnet of the VPConfigure the security groups and SSH keys of the bastion host to only allow connections and SSH authentication from the developers’ corporate and remote networks. Instruct the developers to connect through the bastion host by using SSH to reach the EC2 instances."
+        },
+        "D": {
+          "zh": "将 AmazonSSMManagedInstanceCore IAM 策略附加到与 EC2 实例关联的 IAM 角色。指导开发人员使用 AWS Systems Manager 会话管理器访问 EC2 实例。",
+          "en": "Attach the AmazonSSMManagedInstanceCore IAM policy to an IAM role that is associated with the EC2 instances. Instruct the developers to use AWS Systems Manager Session Manager to access the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Bastion 主机需要额外的 EC2 实例，这会增加成本，并且不是最具成本效益的解决方案。错误： ec2:CreateVpnConnection IAM 权限与问题要求不相关。错误： EC2 Instance Connect 仅支持 Amazon Linux 2 和 Ubuntu，并且需要公共 IP 地址，而相关 EC2 实例位于私有子网上。",
+          "en": "Incorrect. Technical reason: Bastion hosts require additional EC2 instances, which adds cost and is not the most cost-effective solution. Error: ec2:CreateVpnConnection IAM permissions are not relevant to the problem requirements. Error: EC2 Instance Connect only supports Amazon Linux 2 and Ubuntu and requires a public IP address while the EC2 instance in question is on a private subnet."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：站点到站点 VPN 需要额外的配置和成本（VPN 网关和安装费用）。错误：要求开发人员设置多个VPN连接增加了复杂性，并且不符合“最具成本效益”的要求。",
+          "en": "Incorrect. Technical reason: Site-to-site VPN requires additional configuration and cost (VPN gateway and installation fees). Error: Requiring developers to set up multiple VPN connections adds complexity and does not meet the \"most cost-effective\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：堡垒主机需要额外的 EC2 实例，从而增加了成本。错误：虽然通过堡垒主机可以实现安全访问，但需要额外的管理和维护工作，并不是最优的解决方案。",
+          "en": "Incorrect. Technical reason: Bastion hosts require additional EC2 instances, increasing costs. Error: Although secure access can be achieved through a bastion host, it requires additional management and maintenance work and is not an optimal solution."
+        },
+        "D": {
+          "zh": "正確。技术原因：会话管理器允许开发人员通过浏览器或AWS CLI安全地访问EC2实例，而不需要SSH或堡垒主机。正确： Session Manager 不需要额外的 EC2 实例或VPN 连接，成本最低。正确：确保访问安全并通过 IAM 角色和 AmazonSSMManagedInstanceCore 策略进行控制。",
+          "en": "Correct. Technical reason: The session manager allows developers to securely access EC2 instances via the browser 𪥿 AWS CLI without the need for SSH 𪥿 bastion host. Correct: Session Manager requires no additional EC2 instance 𪥿VPN connection, minimal cost. Correct: Ensure access is secure and controlled through IAM roles and AmazonSSMManagedInstanceCore policies."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将 AmazonSSMManagedInstanceCore IAM 策略附加到与 EC2 实例关联的 IAM 角色。指导开发人员使用 AWS Systems Manager 会话管理器访问 EC2 实例。",
+        "en": "D. Attach the AmazonSSMManagedInstanceCore IAM policy to an IAM role that is associated with the EC2 instances. Instruct the developers to use AWS Systems Manager Session Manager to access the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：会话管理器允许开发人员通过浏览器或AWS CLI安全地访问EC2实例，而不需要SSH或堡垒主机。正确： Session Manager 不需要额外的 EC2 实例或VPN 连接，成本最低。正确：确保访问安全并通过 IAM 角色和 AmazonSSMManagedInstanceCore 策略进行控制。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The session manager allows developers to securely access EC2 instances via the browser 𪥿 AWS CLI without the need for SSH 𪥿 bastion host. Correct: Session Manager requires no additional EC2 instance 𪥿VPN connection, minimal cost. Correct: Ensure access is secure and controlled through IAM roles and AmazonSSMManagedInstanceCore policies."
+      }
+    },
+    {
+      "question_no": 767,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家制药公司正在开发一种新药。过去几个月，该公司生成的数据量呈指数级增长。该公司的研究人员经常要求以最小的延迟立即提供整个数据集的子集。但是，不需要每天访问整个数据集。目前所有数据都驻留在本地存储阵列中，该公司希望减少持续的资本支出。解决方案架构师应该推荐哪种存储解决方案来满足这些要求？",
+        "en": "A pharmaceutical company is developing a new drug. The volume of data that the company generates has grown exponentially over the past few months. The company's researchers regularly require a subset of the entire dataset to be immediately available with minimal lag. However, the entire dataset does not need to be accessed on a daily basis. All the data currently resides in on- premises storage arrays, and the company wants to reduce ongoing capital expenses. Which storage solution should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 AWS DataSync 作为计划的 cron 作业运行，以持续将数据迁移到 Amazon S3 存储桶。",
+          "en": "Run AWS DataSync as a scheduled cron job to migrate the data to an Amazon S3 bucket on an ongoing basis."
+        },
+        "B": {
+          "zh": "部署 AWS Storage Gateway 文件网关，并将 Amazon S3 存储桶作为目标存储。将数据迁移到 Storage Gateway 设备。",
+          "en": "Deploy an AWS Storage Gateway file gateway with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+        },
+        "C": {
+          "zh": "部署具有缓存卷的 AWS Storage Gateway 卷网关，并将 Amazon S3 存储桶作为目标存储。将数据迁移到 Storage Gateway 设备。",
+          "en": "Deploy an AWS Storage Gateway volume gateway with cached volumes with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+        },
+        "D": {
+          "zh": "配置从本地环境到 AWS 的 AWS Site-to-Site VPN 连接。将数据迁移到 Amazon Elastic File System (Amazon EFS) 文件系统。",
+          "en": "Configure an AWS Site-to-Site VPN connection from the on-premises environment to AWS. Migrate data to an Amazon Elastic File System (Amazon EFS) file system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：题目要求“业务人员需要能够以最小延迟立即访问的数据子集”。 S3本身并不支持低延迟访问。",
+          "en": "Incorrect. Technical reason: The title calls for \"Bisu personnel needing a subset of data that can be accessed immediately with minimal delay.\" S3 does not natively support low-latency access."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：文件访问对于文件访问来说很好，但是问题没有明确提到文件访问的需要，这是为了减少以后访问和数据子集化的需要。",
+          "en": "Incorrect. Technical reason: File access is fine for file access, but the question doesn't explicitly mention the need for file access, which is to reduce the need for later access and data subsetting."
+        },
+        "C": {
+          "zh": "正確。技术原因：该架构满足了人员以最小延迟立即访问数据子集的需求，同时将数据迁移到云以减少资本支出。",
+          "en": "Correct. Technical reason: This architecture addresses the need for personnel to immediately access subsets of data with minimal latency, while migrating data to the cloud to reduce capital expenditures."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：题目没有提到需要共享文件的场景。 EFS的成本可能较高，不符合“减少资本支出”的要求。",
+          "en": "Incorrect. Technical reason: The title does not mention the scenario where files need to be shared. The cost of EFS may be higher and does not meet the requirement of \"reducing capital expenditures\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 部署具有缓存卷的 AWS Storage Gateway 卷网关，并将 Amazon S3 存储桶作为目标存储。将数据迁移到 Storage Gateway 设备。",
+        "en": "C. Deploy an AWS Storage Gateway volume gateway with cached volumes with an Amazon S3 bucket as the target storage. Migrate the data to the Storage Gateway appliance."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (83%) B (17%)。热门讨论与考点摘要：该架构满足了人员以最小延迟立即访问数据子集的需求，同时将数据迁移到云以减少资本支出。",
+        "en": "Community vote as displayed: C (83%) B (17%). Popular discussion and key point summary: This architecture addresses the need for personnel to immediately access subsets of data with minimal latency, while migrating data to the cloud to reduce capital expenditures."
+      }
+    },
+    {
+      "question_no": 768,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个在 Amazon EC2 实例上运行的关键业务应用程序。该应用程序将数据存储在 Amazon DynamoDB 表中。公司必须能够将表恢复到过去 24 小时内的任何点。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company has a business-critical application that runs on Amazon EC2 instances. The application stores data in an Amazon DynamoDB table. The company must be able to revert the table to any point within the last 24 hours. Which solution meets these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "为表配置时间点恢复。",
+          "en": "Configure point-in-time recovery for the table."
+        },
+        "B": {
+          "zh": "对表使用 AWS Backup。",
+          "en": "Use AWS Backup for the table."
+        },
+        "C": {
+          "zh": "使用 AWS Lambda 函数每小时对表进行一次按需备份。",
+          "en": "Use an AWS Lambda function to make an on-demand backup of the table every hour."
+        },
+        "D": {
+          "zh": "打开表上的流以捕获过去 24 小时内表的所有更改的日志。将流的副本存储在 Amazon S3 存储桶中。",
+          "en": "Turn on streams on the table to capture a log of all changes to the table in the last 24 hours. Store a copy of the stream in an Amazon S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： DynamoDB的时间点恢复功能允许用户将表恢复到过去的任意时间点（最多35天），而且操作简单，几乎不需要额外的管理工作。这是解决问题需求的最佳解决方案，因为它提供了自动恢复功能，并且操作开销最小。",
+          "en": "Correct. Technical reason: DynamoDB's point-in-time recovery function allows users to restore tables to any point in time in the past (up to 35 days), and the operation is simple and requires almost no additional management work. This is the best solution to the problem requirements as it provides automatic recovery capabilities with minimal operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS Backup虽然可以备份DynamoDB表，但需要手动配置备份计划，无法直接支持“恢复到过去24小时内任意时间点”的需求。与时间点恢复相比， AWS Backup 的运营开销更高。",
+          "en": "Incorrect. Technical reason: Although AWS Backup can back up DynamoDB tables, it requires manual configuration of the backup plan and cannot directly support the requirement of \"recovering to any point in time within the past 24 hours\". AWS Backup has higher operational overhead compared to point-in-time recovery."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用Lambda函数进行按需备份需要额外的开发和维护工作，且备份频率（每小时）无法完全满足“恢复到任意时间点”的要求。操作开销较高，不是最佳选择。",
+          "en": "Incorrect. Technical reason: Using Lambda functions for on-demand backup requires additional development and maintenance work, and the backup frequency (hourly) cannot fully meet the requirement of \"recovering to any point in time\". The operation overhead is high and not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： DynamoDB Streams主要用于捕获表更改记录，适用于实时数据处理或事件驱动架构，但不支持直接恢复到过去任何时间点。需要额外的开发工作来实现数据恢复，并且运营开销很高。",
+          "en": "Incorrect. Technical reason: DynamoDB Streams is mainly used to capture table change records and is suitable for real-time data processing or event-driven architecture, but it does not support direct recovery to any point in time in the past. Additional development effort is required to achieve data recovery and the operational overhead is high."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为表配置时间点恢复。",
+        "en": "A. Configure point-in-time recovery for the table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： DynamoDB的时间点恢复功能允许用户将表恢复到过去的任意时间点（最多35天），而且操作简单，几乎不需要额外的管理工作。这是解决问题需求的最佳解决方案，因为它提供了自动恢复功能，并且操作开销最小。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: DynamoDB's point-in-time recovery function allows users to restore tables to any point in time in the past (up to 35 days), and the operation is simple and requires almost no additional management work. This is the best solution to the problem requirements as it provides automatic recovery capabilities with minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 769,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司托管一个用于将文件上传到 Amazon S3 存储桶的应用程序。上传后，系统会处理文件以提取元数据，整个过程不到 5 秒。上传的数量和频率各不相同，从每小时几个文件到数百个并发上传。该公司已要求解决方案架构师设计一种经济高效的架构来满足这些要求。解决方案架构师应该推荐什么？",
+        "en": "A company hosts an application used to upload files to an Amazon S3 bucket. Once uploaded, the files are processed to extract metadata, which takes less than 5 seconds. The volume and frequency of the uploads varies from a few files each hour to hundreds of concurrent uploads. The company has asked a solutions architect to design a cost-effective architecture that will meet these requirements. What should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 AWS CloudTrail 跟踪以记录 S3 API 调用。使用 AWS AppSync 处理文件。",
+          "en": "Configure AWS CloudTrail trails to log S3 API calls. Use AWS AppSync to process the files."
+        },
+        "B": {
+          "zh": "在 S3 存储桶中配置对象创建的事件通知以调用 AWS Lambda 函数来处理文件。",
+          "en": "Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the files."
+        },
+        "C": {
+          "zh": "配置 Amazon Kinesis Data Streams 以处理数据并将数据发送到 Amazon S3。调用 AWS Lambda 函数来处理文件。",
+          "en": "Configure Amazon Kinesis Data Streams to process and send data to Amazon S3. Invoke an AWS Lambda function to process the files."
+        },
+        "D": {
+          "zh": "配置 Amazon Simple Notification Service (Amazon SNS) 主题以处理上传到 Amazon S3 的文件。调用 AWS Lambda 函数来处理文件。",
+          "en": "Configure an Amazon Simple Notification Service (Amazon SNS) topic to process the files uploaded to Amazon S3. Invoke an AWS Lambda function to process the files."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： CloudTrail 主要用于记录 API 调用以进行审核和监控，而不是实时处理文件。错误： AWS AppSync 是用于构建 GraphQL API 的服务，不适合处理文件上传后的实时处理需求。",
+          "en": "Incorrect. Technical reason: CloudTrail is primarily used for logging API calls for auditing and monitoring purposes, rather than processing files in real time. Error: AWS AppSync is a service used to build GraphQL APIs and is not suitable for handling real-time processing needs after file upload."
+        },
+        "B": {
+          "zh": "正確。技术原因： S3 支持事件通知，可以在创建对象时触发 Lambda 函数。正确： AWS Lambda 是一种无服务器计算服务，可以快速、廉价地处理文件，适合处理不确定的负载。",
+          "en": "Correct. Technical reason: S3 supports event notifications, which can trigger Lambda functions when objects are created. Correct: AWS Lambda is a serverless computing service that processes files quickly and cheaply and is suitable for handling uncertain loads."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Kinesis Data Streams主要用于实时流数据处理，但问题中没有提到对流数据的要求。错误：将数据发送到S3后对文件进行后处理会增加复杂度和成本，不满足问题的成本优化要求。",
+          "en": "Incorrect. Technical reason: Kinesis Data Streams is mainly used for real-time streaming data processing, but the question does not mention the requirements for streaming data. Error: Post-processing files after sending data to S3 will increase complexity and cost, and does not meet the cost optimization requirements of the problem."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： SNS 主要用于消息分发，而不是直接处理 S3 事件通知。错误： S3 事件通知可以直接触发 Lambda 函数，无需通过 SNS 中继。",
+          "en": "Incorrect. Technical reason: SNS is primarily used for message distribution rather than handling S3 event notifications directly. Error: S3 event notifications can trigger Lambda functions directly without relaying through SNS."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 S3 存储桶中配置对象创建的事件通知以调用 AWS Lambda 函数来处理文件。",
+        "en": "B. Configure an object-created event notification within the S3 bucket to invoke an AWS Lambda function to process the files."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： S3 支持事件通知，可以在创建对象时触发 Lambda 函数。正确： AWS Lambda 是一种无服务器计算服务，可以快速、廉价地处理文件，适合处理不确定的负载。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: S3 supports event notifications, which can trigger Lambda functions when objects are created. Correct: AWS Lambda is a serverless computing service that processes files quickly and cheaply and is suitable for handling uncertain loads."
+      }
+    },
+    {
+      "question_no": 770,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司的应用程序部署在 Amazon EC2 实例上，并使用 AWS Lambda 函数来实现事件驱动的架构。该公司在将功能部署到生产环境之前，使用不同 AWS 账户中的非生产开发环境来测试新功能。由于客户位于不同时区，生产实例显示出持续的使用情况。该公司仅在工作日的工作时间使用非生产实例。该公司不会在周末使用非生产实例。该公司希望优化在 AWS 上运行其应用程序的成本。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company’s application is deployed on Amazon EC2 instances and uses AWS Lambda functions for an event-driven architecture. The company uses nonproduction development environments in a different AWS account to test new features before the company deploys the features to production. The production instances show constant usage because of customers in different time zones. The company uses nonproduction instances only during business hours on weekdays. The company does not use the nonproduction instances on the weekends. The company wants to optimize the costs to run its application on AWS. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "对生产实例使用按需型实例。仅在周末将专用主机用于非生产实例。",
+          "en": "Use On-Demand Instances for the production instances. Use Dedicated Hosts for the nonproduction instances on weekends only."
+        },
+        "B": {
+          "zh": "将预留实例用于生产实例和非生产实例。不使用时关闭非生产实例。",
+          "en": "Use Reserved Instances for the production instances and the nonproduction instances. Shut down the nonproduction instances when not in use."
+        },
+        "C": {
+          "zh": "对生产实例使用计算节省计划。对非生产实例使用按需型实例。不使用时关闭非生产实例。",
+          "en": "Use Compute Savings Plans for the production instances. Use On-Demand Instances for the nonproduction instances. Shut down the nonproduction instances when not in use."
+        },
+        "D": {
+          "zh": "对生产实例使用专用主机。对非生产实例使用 EC2 实例节省计划。",
+          "en": "Use Dedicated Hosts for the production instances. Use EC2 Instance Savings Plans for the nonproduction instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：将按需型实例用于生产实例是有意义的，因为它们需要全天候运行，并且按需型实例提供了灵活性。仅在周末为非生产实例使用专用主机是没有意义的，因为问题明确指出周末不使用非生产实例。专用主机更昂贵并且不适合这种存根间使用模型。该选项不满足成本优化的要求。",
+          "en": "Incorrect. Technical reason: It makes sense to use On-Demand instances for production instances because they need to run around the clock, and On-Demand instances provide flexibility. It doesn't make sense to use a dedicated host for non-production instances only on weekends, since the question clearly states that non-production instances are not used on weekends. Dedicated hosts are more expensive and not suitable for this inter-stub usage model. This option does not meet the requirements for cost optimization."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：将预留实例用于生产实例是有意义的，因为它们需要全天候运行，并且预留实例可以提供长期成本节省。非生产实例使用预留实例是不合理的，因为非生产实例仅在工作日的营业时间使用，而预留实例则全年收费。五推充分发挥了成本优势。此选项与非生产实例的存根使用模式不一致。",
+          "en": "Incorrect. Technical reason: It makes sense to use Reserved Instances for production instances because they need to run around the clock, and Reserved Instances can provide long-term cost savings. It is unreasonable to use Reserved Instances for non-production instances because non-production instances are only used during business hours on weekdays, while Reserved Instances are charged year-round. Wutui takes full advantage of its cost advantage. This option is inconsistent with the stub usage pattern of non-production instances."
+        },
+        "C": {
+          "zh": "正確。技术原因：对生产实例使用计算节省计划是有意义的，因为它们需要全天候运行，而节省计划提供了灵活性并节省了成本。将按需型实例用于非生产实例是有意义的，因为它们仅在工作日的工作时间内使用，并且按需提供了按需计费的灵活性。关闭非生产实例以进一步优化成本并满足问题的要求。此选项满足成本优化要求。",
+          "en": "Correct. Technical reason: It makes sense to use the Compute Savings Plan for production instances because they need to run around the clock, and the Savings Plan provides flexibility and cost savings. Using On-Demand instances for non-production instances makes sense because they are only used during business hours on weekdays, and On-Demand provides the flexibility of on-demand billing. Shut down non-production instances to further optimize costs and meet the requirements of the problem. This option meets cost optimization requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：生产实例使用专用主机是不合理的，因为专用主机价格更高，而且生产实例不需要使用专用硬件。对于非生产实例使用 EC2 Instance Savings Plans 是不合理的，因为非生产实例仅在工作日的营业时间内使用，而 Savings Plans 需要全年付费，因此 Unstrip 可以充分利用其成本优势。该选项不满足成本优化的要求。",
+          "en": "Incorrect. Technical reason: It is unreasonable to use dedicated hosts for production instances because dedicated hosts are more expensive and production instances do not require the use of dedicated hardware. It is unreasonable to use EC2 Instance Savings Plans for non-production instances because non-production instances are only used during business hours on weekdays, while Savings Plans require payment throughout the year, so Unstrip can take full advantage of its cost advantage. This option does not meet the requirements for cost optimization."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 对生产实例使用计算节省计划。对非生产实例使用按需型实例。不使用时关闭非生产实例。",
+        "en": "C. Use Compute Savings Plans for the production instances. Use On-Demand Instances for the nonproduction instances. Shut down the nonproduction instances when not in use."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (87%) 13%。热门讨论与考点摘要：对生产实例使用计算节省计划是有意义的，因为它们需要全天候运行，而节省计划提供了灵活性并节省了成本。将按需型实例用于非生产实例是有意义的，因为它们仅在工作日的工作时间内使用，并且按需提供了按需计费的灵活性。关闭非生产实例以进一步优化成本并满足问题的要求。此选项满足成本优化要求。",
+        "en": "Community vote as displayed: C (87%) 13%. Popular discussion and key point summary: It makes sense to use the Compute Savings Plan for production instances because they need to run around the clock, and the Savings Plan provides flexibility and cost savings. Using On-Demand instances for non-production instances makes sense because they are only used during business hours on weekdays, and On-Demand provides the flexibility of on-demand billing. Shut down non-production instances to further optimize costs and meet the requirements of the problem. This option meets cost optimization requirements."
+      }
+    },
+    {
+      "question_no": 771,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司将数据存储在本地 Oracle 关系数据库中。该公司需要在 Amazon Aurora PostgreSQL 中提供数据以供分析。该公司使用 AWS 站点到站点 VPN 连接将其本地网络连接到 AWS。公司必须捕获在迁移到 Aurora PostgreSQL 期间源数据库发生的更改。哪种解决方案可以满足这些要求？",
+        "en": "A company stores data in an on-premises Oracle relational database. The company needs to make the data available in Amazon Aurora PostgreSQL for analysis. The company uses an AWS Site-to-Site VPN connection to connect its on-premises network to AWS. The company must capture the changes that occur to the source database during the migration to Aurora PostgreSQL. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Schema Conversion Tool (AWS SCT) 将 Oracle 架构转换为 Aurora PostgreSQL 架构。使用 AWS Database Migration Service (AWS DMS) 满载迁移任务来迁移数据。",
+          "en": "Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use the AWS Database Migration Service (AWS DMS) full-load migration task to migrate the data."
+        },
+        "B": {
+          "zh": "使用 AWS DataSync 将数据迁移到 Amazon S3 存储桶。使用 Aurora PostgreSQL aws_s3 扩展将 S3 数据导入到 Aurora PostgreSQL。",
+          "en": "Use AWS DataSync to migrate the data to an Amazon S3 bucket. Import the S3 data to Aurora PostgreSQL by using the Aurora PostgreSQL aws_s3 extension."
+        },
+        "C": {
+          "zh": "使用 AWS Schema Conversion Tool (AWS SCT) 将 Oracle 架构转换为 Aurora PostgreSQL 架构。使用 AWS Database Migration Service (AWS DMS) 迁移现有数据并复制正在进行的更改。",
+          "en": "Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use AWS Database Migration Service (AWS DMS) to migrate the existing data and replicate the ongoing changes."
+        },
+        "D": {
+          "zh": "使用 AWS Snowball 设备将数据迁移到 Amazon S3 存储桶。使用 Aurora PostgreSQL aws_s3 扩展将 S3 数据导入到 Aurora PostgreSQL。",
+          "en": "Use an AWS Snowball device to migrate the data to an Amazon S3 bucket. Import the S3 data to Aurora PostgreSQL by using the Aurora PostgreSQL aws_s3 extension."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 AWS SCT 转换架构并使用 AWS DMS 完整迁移任务迁移数据。技术分析：此选项提到使用 AWS SCT 进行架构转换并使用 AWS DMS 进行完整迁移，但没有提及捕获对源数据库的更改（CDC，更改数据捕获）。因此，不符合题目要求。",
+          "en": "Incorrect. Technical reason: Convert the schema using AWS SCT and migrate the data using the AWS DMS full migration task. Technical Analysis: This option mentions using AWS SCT for schema conversion and AWS DMS for a complete migration, but does not mention capturing changes to the source database (CDC, Change Data Capture). Therefore, it does not meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：使用 AWS DataSync 将数据迁移到 S3，然后使用 Aurora PostgreSQL 的 aws_s3 扩展导入数据。技术分析： AWS DataSync主要用于文件等数据迁移，不用于相关数据库的迁移。此外， aws_s3 扩展无法捕获对源数据库的更改。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Use AWS DataSync to migrate the data to S3, and then import the data using the aws_s3 extension for Aurora PostgreSQL. Technical analysis: AWS DataSync is mainly used for data migration such as files, and is not used for the migration of related databases. Additionally, the aws_s3 extension cannot capture changes to the source database. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "正確。技术原因：使用 AWS SCT 转换架构并使用 AWS DMS 迁移现有数据并复制正在进行的更改。技术分析：此选项提到使用 AWS SCT 进行架构转换，使用 AWS DMS 进行数据迁移和变更捕获 (CDC)。完全满足题目要求。",
+          "en": "Correct. Technical reason: Use AWS SCT to transform the schema and use AWS DMS to migrate existing data and replicate ongoing changes. Technical Analysis: This option mentions using AWS SCT for schema transformation and AWS DMS for data migration and change capture (CDC). Fully meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 AWS Snowball 将数据迁移到 S3，然后使用 Aurora PostgreSQL 的 aws_s3 扩展导入数据。技术分析： AWS Snowball主要用于大规模数据迁移，但无法捕获源数据库的变化。此外， aws_s3扩展无法满足变更捕获的需求。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Use AWS Snowball to migrate the data to S3, and then import the data using the aws_s3 extension for Aurora PostgreSQL. Technical analysis: AWS Snowball is mainly used for large-scale data migration, but it cannot capture changes in the source database. Additionally, the aws_s3 extension cannot meet the needs of change capture. This option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Schema Conversion Tool (AWS SCT) 将 Oracle 架构转换为 Aurora PostgreSQL 架构。使用 AWS Database Migration Service (AWS DMS) 迁移现有数据并复制正在进行的更改。",
+        "en": "C. Use the AWS Schema Conversion Tool (AWS SCT) to convert the Oracle schema to Aurora PostgreSQL schema. Use AWS Database Migration Service (AWS DMS) to migrate the existing data and replicate the ongoing changes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要：使用 AWS SCT 转换架构并使用 AWS DMS 迁移现有数据并复制正在进行的更改。技术分析：此选项提到使用 AWS SCT 进行架构转换，使用 AWS DMS 进行数据迁移和变更捕获 (CDC)。完全满足题目要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Use AWS SCT to transform the schema and use AWS DMS to migrate existing data and replicate ongoing changes. Technical Analysis: This option mentions using AWS SCT for schema transformation and AWS DMS for data migration and change capture (CDC). Fully meet the question requirements."
+      }
+    },
+    {
+      "question_no": 772,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Docker 容器构建了一个应用程序，需要在 AWS 云中运行该应用程序。该公司希望使用托管服务来托管该应用程序。该解决方案必须根据各个容器服务的需求适当地扩展和扩展。该解决方案还不得导致额外的运营开销或需要管理的基础设施。哪些解决方案可以满足这些要求？ （选择两个。）",
+        "en": "A company built an application with Docker containers and needs to run the application in the AWS Cloud. The company wants to use a managed service to host the application. The solution must scale in and out appropriately according to demand on the individual container services. The solution also must not result in additional operational overhead or infrastructure to manage. Which solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 结合使用。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate."
+        },
+        "B": {
+          "zh": "将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 AWS Fargate 结合使用。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with AWS Fargate."
+        },
+        "C": {
+          "zh": "配置 Amazon API Gateway API。将 API 连接到 AWS Lambda 以运行容器。",
+          "en": "Provision an Amazon API Gateway API. Connect the API to AWS Lambda to run the containers."
+        },
+        "D": {
+          "zh": "将 Amazon Elastic Container Service (Amazon ECS) 与 Amazon EC2 工作线程节点结合使用。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) with Amazon EC2 worker nodes."
+        },
+        "E": {
+          "zh": "将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 Amazon EC2 工作线程节点结合使用。",
+          "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 worker nodes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon ECS 与 AWS Fargate 相结合是一种完全托管的解决方案，可实现容器的无服务器操作，从而减少运营开销。支持根据需求动态扩展容器服务，满足主题需求。",
+          "en": "Correct. Technical reason: Amazon ECS combined with AWS Fargate is a fully managed solution that enables serverless operation of containers, reducing operational overhead. Supports dynamic expansion of container services based on demand to meet theme requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon EKS 与 AWS Fargate 结合也是一个完全托管的解决方案，支持容器的无服务器运行并减少运维开销。支持根据需求动态扩展容器服务，满足主题需求。",
+          "en": "Correct. Technical reason: Amazon EKS combined with AWS Fargate is also a fully managed solution that supports serverless running of containers and reduces operation and maintenance overhead. Supports dynamic expansion of container services based on demand to meet theme requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS Lambda 不适合直接运行容器。 API Gateway 与 Lambda 的结合主要用于 Serverless 函数计算，而不是容器服务。不符合问题要求的“托管容器服务”场景。",
+          "en": "Incorrect. Technical reason: AWS Lambda is not suitable for running containers directly. The combination of API Gateway and Lambda is mainly used for serverless function computing rather than container services. A \"Managed Container Service\" scenario that does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 Amazon EC2 工作线程节点需要对 EC2 实例进行额外管理，这会增加运营开销。不符合问题所要求的“降低运维成本”的条件。",
+          "en": "Incorrect. Technical reason: Using Amazon EC2 worker nodes requires additional management of EC2 instances, which increases operational overhead. It does not meet the condition of \"reducing operation and maintenance costs\" required by the question."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：使用Amazon EC2工作节点需要额外管理EC2实例，这会增加运维费用。不满足所要求的“减少运维支出”条件。",
+          "en": "Incorrect. Technical reason: Using Amazon EC2 worker nodes requires additional management of EC2 instances, which increases operation and maintenance expenses. The required \"reduce operation and maintenance expenditure\" condition is not met."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 结合使用。；B. 将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 AWS Fargate 结合使用。",
+        "en": "A. Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate.; B. Use Amazon Elastic Kubernetes Service (Amazon EKS) with AWS Fargate."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AB (64%) AC (36%)。热门讨论与考点摘要： Amazon ECS 与 AWS Fargate 相结合是一种完全托管的解决方案，可实现容器的无服务器操作，从而减少运营开销。支持根据需求动态扩展容器服务，满足主题需求。； Amazon EKS 与 AWS Fargate 结合也是一个完全托管的解决方案，支持容器的无服务器运行并减少运维开销。支持根据需求动态扩展容器服务，满足主题需求。",
+        "en": "Community vote as displayed: AB (64%) AC (36%). Popular discussion and key point summary: Amazon ECS combined with AWS Fargate is a fully managed solution that enables serverless operation of containers, reducing operational overhead. Supports dynamic expansion of container services based on demand to meet theme requirements.; Amazon EKS combined with AWS Fargate is also a fully managed solution that supports serverless running of containers and reduces operation and maintenance overhead. Supports dynamic expansion of container services based on demand to meet theme requirements."
+      }
+    },
+    {
+      "question_no": 773,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司正在进行季节性在线销售。该公司将其网站托管在跨越多个可用区的 Amazon EC2 实例上。该公司希望其网站能够管理销售期间突然增加的流量。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "An ecommerce company is running a seasonal online sale. The company hosts its website on Amazon EC2 instances spanning multiple Availability Zones. The company wants its website to manage sudden traffic increases during the sale. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建一个足够大的 Auto Scaling 组来处理峰值流量负载。停止一半的 Amazon EC2 实例。配置 Auto Scaling 组以在流量增加时使用已停止的实例进行扩展。",
+          "en": "Create an Auto Scaling group that is large enough to handle peak traffic load. Stop half of the Amazon EC2 instances. Configure the Auto Scaling group to use the stopped instances to scale out when traffic increases."
+        },
+        "B": {
+          "zh": "为网站创建 Auto Scaling 组。设置 Auto Scaling 组的最小大小，使其能够处理高流量而无需横向扩展。",
+          "en": "Create an Auto Scaling group for the website. Set the minimum size of the Auto Scaling group so that it can handle high traffic volumes without the need to scale out."
+        },
+        "C": {
+          "zh": "使用 Amazon CloudFront 和 Amazon ElastiCache 缓存动态内容，并将 Auto Scaling 组设置为源。使用填充 CloudFront 和 ElastiCache 所需的实例配置 Auto Scaling 组。缓存完全填充后进行缩减。",
+          "en": "Use Amazon CloudFront and Amazon ElastiCache to cache dynamic content with an Auto Scaling group set as the origin. Configure the Auto Scaling group with the instances necessary to populate CloudFront and ElastiCache. Scale in after the cache is fully populated."
+        },
+        "D": {
+          "zh": "配置 Auto Scaling 组以随着流量增加进行扩展。创建启动模板以从预配置的 Amazon 机器映像 (AMI) 启动新实例。",
+          "en": "Configure an Auto Scaling group to scale out as traffic increases. Create a launch template to start new instances from a preconfigured Amazon Machine Image (AMI)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Auto Scaling 不会使用已停止的实例进行扩展；扩展时会根据启动模板或启动配置启动新实例。预先保留过大的容量也会增加成本。",
+          "en": "Incorrect. Technical reason: Auto Scaling does not use stopped instances to scale out; it launches new instances from a launch template or launch configuration. Keeping oversized capacity also increases cost."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：此行为可能会导致资源过度配置，因为最小大小设置为高流量负载的密度，即使在流量较低时也会消耗资源。成本低效率：根据流量趋势不必要地调整资源，导致不必要的支出。",
+          "en": "Incorrect. Technical reason: This behavior can lead to resource over-provisioning because the minimum size is set to the density of high traffic loads, consuming resources even when traffic is low. Cost inefficiency: Unnecessarily adjusting resources based on traffic trends, resulting in unnecessary expenditures."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因： Auto Scaling 组可以根据流量趋势扩展实例，启动模板和预配置的 AMI 可以快速启动新实例以满足需求。经济高效：仅在流量增加时才启动新实例，避免资源消耗。",
+          "en": "Correct. Technical reason: Auto Scaling groups can scale instances based on traffic trends, and launch templates and preconfigured AMIs can quickly spin up new instances to meet demand. Cost-effective: Launch new instances only when traffic increases, avoiding resource consumption."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 配置 Auto Scaling 组以随着流量增加进行扩展。创建启动模板以从预配置的 Amazon 机器映像 (AMI) 启动新实例。",
+        "en": "D. Configure an Auto Scaling group to scale out as traffic increases. Create a launch template to start new instances from a preconfigured Amazon Machine Image (AMI)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (77%) C (23%)。热门讨论与考点摘要： Auto Scaling 组可以根据流量趋势扩展实例，启动模板和预配置的 AMI 可以快速启动新实例以满足需求。经济高效：仅在流量增加时才启动新实例，避免资源消耗。",
+        "en": "Community vote as displayed: D (77%) C (23%). Popular discussion and key point summary: Auto Scaling groups can scale instances based on traffic trends, and launch templates and preconfigured AMIs can quickly spin up new instances to meet demand. Cost-effective: Launch new instances only when traffic increases, avoiding resource consumption."
+      }
+    },
+    {
+      "question_no": 774,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师必须为公司的合规性策略提供自动化解决方案，该策略规定安全组不能包含允许来自 0.0.0.0/0 的 SSH 的规则。如果有任何违反政策的情况，需要通知公司。需要尽快找到解决方案。解决方案架构师应该如何做才能以最少的运营开销满足这些要求？",
+        "en": "A solutions architect must provide an automated solution for a company's compliance policy that states security groups cannot include a rule that allows SSH from 0.0.0.0/0. The company needs to be notified if there is any breach in the policy. A solution is needed as soon as possible. What should the solutions architect do to meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "编写一个 AWS Lambda 脚本，用于监控安全组是否有向 0.0.0.0/0 地址开放的 SSH，并在每次发现安全组时创建通知。",
+          "en": "Write an AWS Lambda script that monitors security groups for SSH being open to 0.0.0.0/0 addresses and creates a notification every time it finds one."
+        },
+        "B": {
+          "zh": "启用受限制的 ssh AWS Config 托管规则，并在创建不合规规则时生成 Amazon Simple Notification Service (Amazon SNS) 通知。",
+          "en": "Enable the restricted-ssh AWS Config managed rule and generate an Amazon Simple Notification Service (Amazon SNS) notification when a noncompliant rule is created."
+        },
+        "C": {
+          "zh": "创建具有全局开放安全组和网络 ACL 权限的 IAM 角色。创建 Amazon Simple Notification Service (Amazon SNS) 主题，以便在用户每次代入该角色时生成通知。",
+          "en": "Create an IAM role with permissions to globally open security groups and network ACLs. Create an Amazon Simple Notification Service (Amazon SNS) topic to generate a notification every time the role is assumed by a user."
+        },
+        "D": {
+          "zh": "配置服务控制策略 (SCP)，防止非管理用户创建或编辑安全组。当用户请求需要管理员权限的规则时，在票证系统中创建通知。",
+          "en": "Configure a service control policy (SCP) that prevents non-administrative users from creating or editing security groups. Create a notification in the ticketing system when a user requests a rule that needs administrator permissions."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该选项不满足“最小运营开销”的要求，因为AWS提供了托管规则（Managed Rules）来解决这个问题。",
+          "en": "Incorrect. Technical reason: This option does not meet the \"minimum operational overhead\" requirement because AWS provides managed rules (Managed Rules) to solve this problem."
+        },
+        "B": {
+          "zh": "正確。技术原因：此选项完全满足“最低运营开销”要求，因为它利用 AWS 的托管服务，无需额外的代码或复杂的配置。",
+          "en": "Correct. Technical reason: This option fully meets the \"minimum operational overhead\" requirement because it leverages AWS's managed services without requiring additional code or complex configuration."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该选项不能直接解决SSH规则的控制问题，操作复杂度较高。",
+          "en": "Incorrect. Technical reason: This option cannot directly solve the control problem of SSH rules, and the operation complexity is high."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项不提供问题所需的自动控制和通知功能。",
+          "en": "Incorrect. Technical reason: This option does not provide the automated control and notification capabilities required by the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 启用受限制的 ssh AWS Config 托管规则，并在创建不合规规则时生成 Amazon Simple Notification Service (Amazon SNS) 通知。",
+        "en": "B. Enable the restricted-ssh AWS Config managed rule and generate an Amazon Simple Notification Service (Amazon SNS) notification when a noncompliant rule is created."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：此选项完全满足“最低运营开销”要求，因为它利用 AWS 的托管服务，无需额外的代码或复杂的配置。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: This option fully meets the \"minimum operational overhead\" requirement because it leverages AWS's managed services without requiring additional code or complex configuration."
+      }
+    },
+    {
+      "question_no": 775,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 Amazon EC2 工作线程节点结合使用。一家公司已在 AWS 账户中部署了一个应用程序。该应用程序由在 AWS Lambda 和 Amazon Elastic Kubernetes Service (Amazon EKS) 上运行的微服务组成。每个微服务都有一个单独的团队支持。该公司拥有多个 AWS 账户，并希望为每个团队提供自己的微服务账户。解决方案架构师需要设计一个通过 HTTPS（端口 443）提供服务到服务通信的解决方案。该解决方案还必须提供用于服务发现的服务注册表。哪种解决方案能够以最少的管理开销满足这些要求？",
+        "en": "Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 worker nodes. A company has deployed an application in an AWS account. The application consists of microservices that run on AWS Lambda and Amazon Elastic Kubernetes Service (Amazon EKS). A separate team supports each microservice. The company has multiple AWS accounts and wants to give each team its own account for its microservices. A solutions architect needs to design a solution that will provide service-to-service communication over HTTPS (port 443). The solution also must provide a service registry for service discovery. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建检查VPC。将 AWS Network Firewall 防火墙部署到检查 VPC。将检查 VPC 连接到新的中转网关。将 VPC 到 VPC 的流量路由到检查 VPC。应用防火墙规则以仅允许 HTTPS 通信。",
+          "en": "Create an inspection VPC. Deploy an AWS Network Firewall firewall to the inspection VPC. Attach the inspection VPC to a new transit gateway. Route VPC-to-VPC traffic to the inspection VPC. Apply firewall rules to allow only HTTPS communication."
+        },
+        "B": {
+          "zh": "创建VPC Lattice服务网络。将微服务与服务网络关联起来。为每个服务定义 HTTPS 侦听器。将微服务计算资源注册为目标。识别需要与服务通信的 VPC。将这些 VPC 与服务网络关联。",
+          "en": "Create a VPC Lattice service network. Associate the microservices with the service network. Define HTTPS listeners for each service. Register microservice compute resources as targets. Identify VPCs that need to communicate with the services. Associate those VPCs with the service network."
+        },
+        "C": {
+          "zh": "使用 HTTPS 侦听器和每个微服务的目标组创建网络负载均衡器 (NLB)。为每个微服务创建一个 AWS PrivateLink 终端节点服务。在需要使用该微服务的每个 VPC 中创建一个接口 VPC 终端节点。",
+          "en": "Create a Network Load Balancer (NLB) with an HTTPS listener and target groups for each microservice. Create an AWS PrivateLink endpoint service for each microservice. Create an interface VPC endpoint in each VPC that needs to consume that microservice."
+        },
+        "D": {
+          "zh": "在包含微服务的 VPC 之间创建对等连接。为每个需要连接到客户端的服务创建一个前缀列表。创建路由表以将流量路由到适当的 VPC。创建安全组以仅允许 HTTPS 通信。",
+          "en": "Create peering connections between VPCs that contain microservices. Create a prefix list for each service that requires a connection to a client. Create route tables to route traffic to the appropriate VPC. Create security groups to allow only HTTPS communication."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：使用AWS网络防火墙和Transit Gateway可以实现跨VPC流量的检查和控制。虽然可以将流量限制为 HTTPS，但没有提及服务注册和服务发现功能。由于防火墙规则和路由需要手动配置，管理开销很高。",
+          "en": "Incorrect. Technical reason: Analysis: Inspection and control of cross-VPC traffic can be achieved using AWS Network Firewall and Transit Gateway. While it is possible to limit traffic to HTTPS, there is no mention of service registration and service discovery capabilities. Management overhead is high as firewall rules and routing require manual configuration."
+        },
+        "B": {
+          "zh": "正確。技术原因：分析： VPC Lattice是专门为跨VPC、跨账户设计的服务通信解决方案。支持服务注册和服务发现功能，简化服务间通信的管理。支持HTTPS监听，满足安全通信需求。由于 VPC Lattice 自动处理服务注册和通信，因此管理成本极低。",
+          "en": "Correct. Technical reason: Analysis: VPC Lattice is a service communication solution specifically designed for cross-VPC and cross-account. Supports service registration and service discovery functions to simplify the management of communication between services. Supports HTTPS listener to meet secure communication needs. Administration costs are minimal because VPC Lattice handles service registration and communication automatically."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：使用PrivateLink实现跨VPC的服务通信。需要为每个微服务创建单独的NLB和PrivateLink端点，这需要很高的管理开销。没有提及服务注册和服务发现功能。",
+          "en": "Incorrect. Technical reason: Analysis: Use PrivateLink to achieve cross-VPC service communication. Separate NLB and PrivateLink endpoints need to be created for each microservice, which requires high management overhead. There is no mention of service registration and service discovery capabilities."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析： VPC Peering可以实现跨VPC通信，但不支持跨账户通信。需要手动配置路由表和安全组来管理上述内容。没有提及服务注册和服务发现功能。",
+          "en": "Incorrect. Technical reason: Analysis: VPC Peering can achieve cross-VPC communication, but does not support cross-account communication. Routing tables and security groups need to be configured manually to manage the above. There is no mention of service registration and service discovery functions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建VPC Lattice服务网络。将微服务与服务网络关联起来。为每个服务定义 HTTPS 侦听器。将微服务计算资源注册为目标。识别需要与服务通信的 VPC。将这些 VPC 与服务网络关联。",
+        "en": "B. Create a VPC Lattice service network. Associate the microservices with the service network. Define HTTPS listeners for each service. Register microservice compute resources as targets. Identify VPCs that need to communicate with the services. Associate those VPCs with the service network."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：分析： VPC Lattice是专门为跨VPC、跨账户设计的服务通信解决方案。支持服务注册和服务发现功能，简化服务间通信的管理。支持HTTPS监听，满足安全通信需求。由于 VPC Lattice 自动处理服务注册和通信，因此管理成本极低。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Analysis: VPC Lattice is a service communication solution specifically designed for cross-VPC and cross-account. Supports service registration and service discovery functions to simplify the management of communication between services. Supports HTTPS listener to meet secure communication needs. Administration costs are minimal because VPC Lattice handles service registration and communication automatically."
+      }
+    },
+    {
+      "question_no": 776,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一款手机游戏，它从 Amazon RDS 数据库实例读取大部分元数据。随着游戏越来越受欢迎，开发人员注意到与游戏元数据加载时间相关的速度减慢。性能指标表明，简单地扩展数据库是没有帮助的。解决方案架构师必须探索所有选项，包括快照、复制和亚毫秒响应时间功能。解决方案架构师应该建议什么来解决这些问题？",
+        "en": "A company has a mobile game that reads most of its metadata from an Amazon RDS DB instance. As the game increased in popularity, developers noticed slowdowns related to the game's metadata load times. Performance metrics indicate that simply scaling the database will not help. A solutions architect must explore all options that include capabilities for snapshots, replication, and sub-millisecond response times. What should the solutions architect recommend to solve these issues?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Aurora 副本将数据库迁移到 Amazon Aurora。",
+          "en": "Migrate the database to Amazon Aurora with Aurora Replicas."
+        },
+        "B": {
+          "zh": "将数据库迁移到具有全局表的 Amazon DynamoDB。",
+          "en": "Migrate the database to Amazon DynamoDB with global tables."
+        },
+        "C": {
+          "zh": "在数据库前面添加 Amazon ElastiCache for Redis 层。",
+          "en": "Add an Amazon ElastiCache for Redis layer in front of the database."
+        },
+        "D": {
+          "zh": "在数据库前面添加 Amazon ElastiCache for Memcached 层。",
+          "en": "Add an Amazon ElastiCache for Memcached layer in front of the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析： Amazon Aurora 提供高性能和自动复制，但题目明确指出“性能指标表明简单地扩展数据库是无效的”，因此迁移到 Aurora 并不能解决问题。",
+          "en": "Incorrect. Technical reason: Technical analysis: Amazon Aurora offers high performance and automatic replication, but the title clearly states that \"performance metrics show that simply scaling the database is ineffective,\" so moving to Aurora won't solve the problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析： DynamoDB是一个NoSQL数据库，适合处理高吞吐量和低延迟的需求，但题目没有提到需要迁移到NoSQL数据库，迁移可能会导致应用程序发生重大变化。",
+          "en": "Incorrect. Technical reason: Technical analysis: DynamoDB is a NoSQL database suitable for handling high throughput and low latency needs, but the title does not mention the need to migrate to a NoSQL database, and migration may result in significant changes to the application."
+        },
+        "C": {
+          "zh": "正確。技术原因：技术分析： ElastiCache for Redis是一种高性能的内部缓存服务，支持亚毫秒级响应时间，适合用作数据库的缓存层，以减轻直接查询数据库的压力。",
+          "en": "Correct. Technical reason: Technical analysis: ElastiCache for Redis is a high-performance internal caching service that supports sub-millisecond response times and is suitable for use as a cache layer for the database to reduce the pressure of directly querying the database."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析： ElastiCache for Memcached 也可以用作缓存层，但与 Redis 相比， Memcached 缺乏高级功能（例如持久化和复制），无法完全满足题目中提到的“复制和复制”要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: ElastiCache for Memcached can also be used as a caching layer, but compared to Redis, Memcached lacks advanced features (such as persistence and replication) and cannot fully meet the \"replication and replication\" requirements mentioned in the title."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在数据库前面添加 Amazon ElastiCache for Redis 层。",
+        "en": "C. Add an Amazon ElastiCache for Redis layer in front of the database."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (80%) B (20%)。热门讨论与考点摘要：技术分析： ElastiCache for Redis是一种高性能的内部缓存服务，支持亚毫秒级响应时间，适合用作数据库的缓存层，以减轻直接查询数据库的压力。",
+        "en": "Community vote as displayed: C (80%) B (20%). Popular discussion and key point summary: Technical analysis: ElastiCache for Redis is a high-performance internal caching service that supports sub-millisecond response times and is suitable for use as a cache layer for the database to reduce the pressure of directly querying the database."
+      }
+    },
+    {
+      "question_no": 777,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Organizations 进行多账户 AWS 设置。公司的安全组织单元 (OU) 需要与开发 OU 共享批准的 Amazon 机器映像 (AMI)。 AMI 是使用 AWS Key Management Service (AWS KMS) 加密快照创建的。哪种解决方案可以满足这些要求？ （选择两个。）",
+        "en": "A company uses AWS Organizations for its multi-account AWS setup. The security organizational unit (OU) of the company needs to share approved Amazon Machine Images (AMIs) with the development OU. The AMIs are created by using AWS Key Management Service (AWS KMS) encrypted snapshots. Which solution will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "将开发团队的 OU Amazon 资源名称 (ARN) 添加到 AMI 的启动权限列表。",
+          "en": "Add the development team's OU Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "B": {
+          "zh": "将组织根 Amazon 资源名称 (ARN) 添加到 AMI 的启动权限列表。",
+          "en": "Add the Organizations root Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "C": {
+          "zh": "更新密钥策略以允许开发团队的 OU 使用用于解密快照的 AWS KMS 密钥。",
+          "en": "Update the key policy to allow the development team's OU to use the AWS KMS keys that are used to decrypt the snapshots."
+        },
+        "D": {
+          "zh": "将开发团队的账户 Amazon 资源名称 (ARN) 添加到 AMI 的启动权限列表。",
+          "en": "Add the development team’s account Amazon Resource Name (ARN) to the launch permission list for the AMIs."
+        },
+        "E": {
+          "zh": "重新创建 AWS KMS 密钥。添加密钥策略以允许组织根 Amazon 资源名称 (ARN) 使用 AWS KMS 密钥。",
+          "en": "Recreate the AWS KMS key. Add a key policy to allow the Organizations root Amazon Resource Name (ARN) to use the AWS KMS key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：此选项允许开发团队的 OU 通过将其 ARN 添加到 AMI 的启动权限列表来访问这些 AMI。这是实现跨账户或 OU 共享 AMI 的必要步骤之一。",
+          "en": "Correct. Technical reason: This option allows the development team's OU to access these AMIs by adding their ARN to the AMI's launch permissions list. This is one of the necessary steps to implement sharing of AMIs across accounts or OUs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：组织根 ARN 代表整个组织，而不是特定的开发 OU。这样做可能会导致权限过于宽泛且不令人满意。",
+          "en": "Incorrect. Technical reason: The Organizations root ARN represents the entire organization, not a specific development OU. Doing so may result in permissions that are overly broad and unsatisfactory."
+        },
+        "C": {
+          "zh": "正確。技术原因： AMI 是基于加密密钥创建的，因为开发团队的 OU 需要使用关联的 AWS KMS 解密密钥的权限。更新关键政策是实现这一目标的正确途径。",
+          "en": "Correct. Technical reason: The AMI was created based on the encryption key because the development team's OU needs permission to use the associated AWS KMS decryption key. Updating the key policy is the right way to achieve this goal."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：题目要求是针对开发OU，而不是单个账户。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: The question requirement is for the development OU, not a single account. This option does not meet the question requirements."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：重新创建密钥并向组织的根 ARN 添加权限过于复杂且不必要。更新现有的关键政策可以满足您的需求。",
+          "en": "Incorrect. Technical reason: Recreating the keys and adding permissions to the organization's root ARN is overly complex and unnecessary. Updating existing key policies can meet your needs."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 将开发团队的 OU Amazon 资源名称 (ARN) 添加到 AMI 的启动权限列表。；C. 更新密钥策略以允许开发团队的 OU 使用用于解密快照的 AWS KMS 密钥。",
+        "en": "A. Add the development team's OU Amazon Resource Name (ARN) to the launch permission list for the AMIs.; C. Update the key policy to allow the development team's OU to use the AWS KMS keys that are used to decrypt the snapshots."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AC (100%)。热门讨论与考点摘要：此选项允许开发团队的 OU 通过将其 ARN 添加到 AMI 的启动权限列表来访问这些 AMI。这是实现跨账户或 OU 共享 AMI 的必要步骤之一。； AMI 是基于加密密钥创建的，因为开发团队的 OU 需要使用关联的 AWS KMS 解密密钥的权限。更新关键政策是实现这一目标的正确途径。",
+        "en": "Community vote as displayed: AC (100%). Popular discussion and key point summary: This option allows the development team's OU to access these AMIs by adding their ARN to the AMI's launch permissions list. This is one of the necessary steps to implement sharing of AMIs across accounts or OUs.; The AMI was created based on the encryption key because the development team's OU needs permission to use the associated AWS KMS decryption key. Updating the key policy is the right way to achieve this goal."
+      }
+    },
+    {
+      "question_no": 778,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家数据分析公司在全球设有 80 个办事处。每个办公室托管 1 PB 的数据，并拥有 1 到 2 Gbps 的互联网带宽。该公司需要将大量数据从其办公室一次性迁移到 Amazon S3。公司必须在 4 周内完成迁移。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A data analytics company has 80 offices that are distributed globally. Each office hosts 1 PB of data and has between 1 and 2 Gbps of internet bandwidth. The company needs to perform a one-time migration of a large amount of data from its offices to Amazon S3. The company must complete the migration within 4 weeks. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "与每个办公室建立新的 10 Gbps AWS Direct Connect 连接。将数据传输到 Amazon S3。",
+          "en": "Establish a new 10 Gbps AWS Direct Connect connection to each office. Transfer the data to Amazon S3."
+        },
+        "B": {
+          "zh": "使用多个 AWS Snowball Edge 存储优化设备来存储数据并将其传输到 Amazon S3。",
+          "en": "Use multiple AWS Snowball Edge storage-optimized devices to store and transfer the data to Amazon S3."
+        },
+        "C": {
+          "zh": "使用 AWS Snowmobile 将数据存储并传输到 Amazon S3。",
+          "en": "Use an AWS Snowmobile to store and transfer the data to Amazon S3."
+        },
+        "D": {
+          "zh": "设置 AWS Storage Gateway 卷网关以将数据传输到 Amazon S3。",
+          "en": "Set up an AWS Storage Gateway Volume Gateway to transfer the data to Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：为每个办事处建立 10 Gbps 直接连接的成本非常高，尤其是全球 80 个办事处。另外，办公室现有带宽只有1-2Gbps，无法充分利用10Gbps连接。",
+          "en": "Incorrect. Technical reason: The cost of setting up 10 Gbps direct connectivity for each office is very high, especially 80 offices around the world. In addition, the existing bandwidth in the office is only 1-2Gbps, which cannot fully utilize the 10Gbps connection."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS Snowball Edge 是一种高效且成本优化的大规模数据迁移解决方案。支持离线数据传输，避免带宽限制，可在4周内完成迁移。",
+          "en": "Correct. Technical reason: AWS Snowball Edge is an efficient and cost-optimized large-scale data migration solution. It supports offline data transfer, avoids bandwidth limitations, and can complete migration within 4 weeks."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS Snowmobile 适用于非常大的数据迁移（例如，数十 PB 或更多），每个办公室的数据少至 1 PB。使用 Snowmobile 破解这种场景的成本和复杂性都很高。",
+          "en": "Incorrect. Technical reason: AWS Snowmobile is suitable for very large data migrations (e.g., tens of petabytes or more) with as little as 1 petabyte of data per office. The cost and complexity of cracking this scenario using Snowmobile is high."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Storage Gateway 依赖现有网络带宽进行在线数据传输。由于办公室带宽只有1-2Gbps，4周内无法完成1PB数据的迁移。",
+          "en": "Incorrect. Technical reason: AWS Storage Gateway relies on existing network bandwidth for online data transfer. Since the office bandwidth is only 1-2Gbps, the migration of 1PB data cannot be completed within 4 weeks."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用多个 AWS Snowball Edge 存储优化设备来存储数据并将其传输到 Amazon S3。",
+        "en": "B. Use multiple AWS Snowball Edge storage-optimized devices to store and transfer the data to Amazon S3."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (91%) 9%。热门讨论与考点摘要： AWS Snowball Edge 是一种高效且成本优化的大规模数据迁移解决方案。支持离线数据传输，避免带宽限制，可在4周内完成迁移。",
+        "en": "Community vote as displayed: B (91%) 9%. Popular discussion and key point summary: AWS Snowball Edge is an efficient and cost-optimized large-scale data migration solution. It supports offline data transfer, avoids bandwidth limitations, and can complete migration within 4 weeks."
+      }
+    },
+    {
+      "question_no": 779,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有一个包含参考数据集的 Amazon Elastic File System (Amazon EFS) 文件系统。该公司在 Amazon EC2 实例上有需要读取数据集的应用程序。但是，应用程序不得更改数据集。该公司希望使用 IAM 访问控制来防止应用程序修改或删除数据集。哪种解决方案可以满足这些要求？",
+        "en": "A company has an Amazon Elastic File System (Amazon EFS) file system that contains a reference dataset. The company has applications on Amazon EC2 instances that need to read the dataset. However, the applications must not be able to change the dataset. The company wants to use IAM access control to prevent the applications from being able to modify or delete the dataset. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "从 EC2 实例中以只读模式挂载 EFS 文件系统。",
+          "en": "Mount the EFS file system in read-only mode from within the EC2 instances."
+        },
+        "B": {
+          "zh": "为 EFS 文件系统创建资源策略，拒绝对附加到 EC2 实例的 IAM 角色执行 elasticfilesystem:ClientWrite 操作。",
+          "en": "Create a resource policy for the EFS file system that denies the elasticfilesystem:ClientWrite action to the IAM roles that are attached to the EC2 instances."
+        },
+        "C": {
+          "zh": "为 EFS 文件系统创建身份策略，拒绝对 EFS 文件系统执行 elasticfilesystem:ClientWrite 操作。",
+          "en": "Create an identity policy for the EFS file system that denies the elasticfilesystem:ClientWrite action on the EFS file system."
+        },
+        "D": {
+          "zh": "为每个应用程序创建一个 EFS 访问点。使用可移植操作系统接口 (POSIX) 文件权限允许对根目录中的文件进行只读访问。",
+          "en": "Create an EFS access point for each application. Use Portable Operating System Interface (POSIX) file permissions to allow read-only access to files in the root directory."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：该选项通过挂载时设置只读模式来限制访问，但不会通过IAM控制权限，也不会阻止用户手动更改挂载模式。因为不符合题目的要求。",
+          "en": "Incorrect. Technical reason: Analysis: This option restricts access by setting read-only mode when mounting, but does not control permissions through IAM, nor does it prevent users from manually changing the mount mode. Because it does not meet the requirements of the topic."
+        },
+        "B": {
+          "zh": "正確。技术原因：分析问题：该选项通过资源策略显式拒绝EC2实例的IAM角色执行写操作，与需求是一致的。资源策略是控制对 EFS 文件系统的访问的推荐方法。",
+          "en": "Correct. Technical reason: Analyze the issue: This option explicitly denies the IAM role of the EC2 instance to perform write operations through the resource policy, which is consistent with the requirements. Resource policies are the recommended method of controlling access to EFS file systems."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：身份策略是对用户或角色的权限设置，但它直接应用于EFS文件系统资源，没有任何规则。本题需要用到资源策略，因此该选项不正确。",
+          "en": "Incorrect. Technical reason: Analysis: An identity policy is a permission setting for a user or role, but it is applied directly to EFS file system resources without any rules. This question requires the use of resource strategies, so this option is incorrect."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：该选项通过POSIX文件权限来限制访问，但POSIX权限是文件系统级别的设置，权限不是通过IAM控制的，管理多个访问点可能会增加复杂性。因为不符合题目的要求。",
+          "en": "Incorrect. Technical reason: Analysis: This option restricts access through POSIX file permissions, but POSIX permissions are file system-level settings, permissions are not controlled through IAM, and managing multiple access points may increase complexity. Because it does not meet the requirements of the topic."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 为 EFS 文件系统创建资源策略，拒绝对附加到 EC2 实例的 IAM 角色执行 elasticfilesystem:ClientWrite 操作。",
+        "en": "B. Create a resource policy for the EFS file system that denies the elasticfilesystem:ClientWrite action to the IAM roles that are attached to the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (73%) C (23%) 5%。热门讨论与考点摘要：分析问题：该选项通过资源策略显式拒绝EC2实例的IAM角色执行写操作，与需求是一致的。资源策略是控制对 EFS 文件系统的访问的推荐方法。",
+        "en": "Community vote as displayed: B (73%) C (23%) 5%. Popular discussion and key point summary: Analyze the issue: This option explicitly denies the IAM role of the EC2 instance to perform write operations through the resource policy, which is consistent with the requirements. Resource policies are the recommended method of controlling access to EFS file systems."
+      }
+    },
+    {
+      "question_no": 780,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司已聘请外部供应商在该公司的 AWS 账户中执行工作。供应商使用托管在供应商拥有的 AWS 账户中的自动化工具。供应商没有对公司 AWS 账户的 IAM 访问权限。公司需要授予供应商访问公司 AWS 账户的权限。哪种解决方案将最安全地满足这些要求？",
+        "en": "A company has hired an external vendor to perform work in the company’s AWS account. The vendor uses an automated tool that is hosted in an AWS account that the vendor owns. The vendor does not have IAM access to the company’s AWS account. The company needs to grant the vendor access to the company’s AWS account. Which solution will meet these requirements MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公司账户中创建 IAM 角色，以委派对供应商 IAM 角色的访问权限。将适当的 IAM 策略附加到角色以获得供应商所需的权限。",
+          "en": "Create an IAM role in the company’s account to delegate access to the vendor’s IAM role. Attach the appropriate IAM policies to the role for the permissions that the vendor requires."
+        },
+        "B": {
+          "zh": "在公司账户中创建一个 IAM 用户，其密码满足密码复杂性要求。将适当的 IAM 策略附加到用户以获得供应商所需的权限。",
+          "en": "Create an IAM user in the company’s account with a password that meets the password complexity requirements. Attach the appropriate IAM policies to the user for the permissions that the vendor requires."
+        },
+        "C": {
+          "zh": "在公司账户中创建 IAM 组。将自动化工具的 IAM 用户从供应商账户添加到组中。将适当的 IAM 策略附加到组以获得供应商所需的权限。",
+          "en": "Create an IAM group in the company’s account. Add the automated tool’s IAM user from the vendor account to the group. Attach the appropriate IAM policies to the group for the permissions that the vendor requires."
+        },
+        "D": {
+          "zh": "在公司账户中创建一个 IAM 用户，该用户具有允许供应商账户的权限边界。将适当的 IAM 策略附加到用户以获得供应商所需的权限。",
+          "en": "Create an IAM user in the company’s account that has a permission boundary that allows the vendor’s account. Attach the appropriate IAM policies to the user for the permissions that the vendor requires."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：这是 AWS 推荐的跨账户访问的最佳实践。通过创建 IAM 角色并使用信任策略，允许访问提供商的 AWS 账户中的 IAM 角色。这样可以避免直接创建用户或共享密码，保证安全。其他 IAM 策略可以限制供应商的权限，遵循最小权限原则。",
+          "en": "Correct. Technical reason: This is the best practice recommended by AWS for cross-account access. Allow access to the IAM role in the provider's AWS account by creating an IAM role and using a trust policy. This avoids directly creating users or sharing passwords, ensuring security. Additional IAM policies can limit a vendor's permissions, adhering to the principle of least privilege."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：创建 IAM 用户和共享密码不符合安全最佳实践。密码可能会被泄露或滥用，并且自动化工具无法跨账户访问它们。",
+          "en": "Incorrect. Technical reason: Creating IAM users and sharing passwords does not comply with security best practices. Passwords can be compromised or misused, and automated tools cannot access them across accounts."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： IAM组仅适用于同一账户内的用户管理，不能跨账户使用。供应商的IAM用户不能直接加入公司账户的IAM组。",
+          "en": "Incorrect. Technical reason: IAM groups are only applicable to user management within the same account and cannot be used across accounts. The supplier's IAM user cannot directly join the company account's IAM group."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：权限边界用于限制IAM用户或角色的权限，但无法实现跨账户访问。创建 IAM 用户仍然涉及密码管理问题，并且不遵守安全最佳实践。",
+          "en": "Incorrect. Technical reason: Permission boundaries are used to limit the permissions of IAM users or roles, but cannot achieve cross-account access. Creating IAM users still involves password management issues and does not adhere to security best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在公司账户中创建 IAM 角色，以委派对供应商 IAM 角色的访问权限。将适当的 IAM 策略附加到角色以获得供应商所需的权限。",
+        "en": "A. Create an IAM role in the company’s account to delegate access to the vendor’s IAM role. Attach the appropriate IAM policies to the role for the permissions that the vendor requires."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：这是 AWS 推荐的跨账户访问的最佳实践。通过创建 IAM 角色并使用信任策略，允许访问提供商的 AWS 账户中的 IAM 角色。这样可以避免直接创建用户或共享密码，保证安全。其他 IAM 策略可以限制供应商的权限，遵循最小权限原则。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This is the best practice recommended by AWS for cross-account access. Allow access to the IAM role in the provider's AWS account by creating an IAM role and using a trust policy. This avoids directly creating users or sharing passwords, ensuring security. Additional IAM policies can limit a vendor's permissions, adhering to the principle of least privilege."
+      }
+    }
+  ]
+}

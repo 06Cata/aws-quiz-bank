@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 801,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "金融公司需要处理高度敏感的数据。该公司将把数据存储在 Amazon S3 存储桶中。公司需要确保数据在传输过程中和静态时都经过加密。公司必须在 AWS 云外部管理加密密钥。哪种解决方案可以满足这些要求？",
+        "en": "A financial company needs to handle highly sensitive data. The company will store the data in an Amazon S3 bucket. The company needs to ensure that the data is encrypted in transit and at rest. The company must manage the encryption keys outside the AWS Cloud. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "通过使用 AWS Key Management Service (AWS KMS) 客户托管密钥的服务器端加密 (SSE) 来加密 S3 存储桶中的数据。",
+          "en": "Encrypt the data in the S3 bucket with server-side encryption (SSE) that uses an AWS Key Management Service (AWS KMS) customer managed key."
+        },
+        "B": {
+          "zh": "通过使用 AWS Key Management Service (AWS KMS) AWS 托管密钥的服务器端加密 (SSE) 来加密 S3 存储桶中的数据。",
+          "en": "Encrypt the data in the S3 bucket with server-side encryption (SSE) that uses an AWS Key Management Service (AWS KMS) AWS managed key."
+        },
+        "C": {
+          "zh": "使用默认服务器端加密 (SSE) 对 S3 存储桶中的数据进行加密。",
+          "en": "Encrypt the data in the S3 bucket with the default server-side encryption (SSE)."
+        },
+        "D": {
+          "zh": "在将数据存储到 S3 存储桶之前，先在公司数据中心对数据进行加密。",
+          "en": "Encrypt the data at the company's data center before storing the data in the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：尽管使用 AWS KMS 客户管理的密钥提供了加密功能，但密钥仍然由 AWS 管理，不满足加密密钥必须在 AWS 云外部管理的要求。",
+          "en": "Incorrect. Technical reason: Although using AWS KMS customer-managed keys provides encryption capabilities, the keys are still managed by AWS and do not meet the requirement that encryption keys must be managed outside the AWS cloud."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS 托管密钥完全由 AWS 管理，不满足加密密钥必须在 AWS 云外部管理的要求。",
+          "en": "Incorrect. Technical reason: AWS managed keys are fully managed by AWS and do not meet the requirement that encryption keys must be managed outside the AWS cloud."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：成熟的服务器端加密使用AWS提供的密钥，不满足加密密钥必须在AWS云外部管理的要求。",
+          "en": "Incorrect. Technical reason: Well-established server-side encryption uses keys provided by AWS and does not meet the requirement that encryption keys must be managed outside the AWS cloud."
+        },
+        "D": {
+          "zh": "正確。技术原因：数据在上传到S3之前在公司数据中心进行加密，确保数据在传输和存储过程中都是加密的。同时，加密完全由公司管理，满足提出的问题。",
+          "en": "Correct. Technical reason: The data is encrypted at the company's data center before being uploaded to S3, ensuring that the data is encrypted during transmission and storage. At the same time, encryption is fully managed by the company, meeting questions asked."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在将数据存储到 S3 存储桶之前，先在公司数据中心对数据进行加密。",
+        "en": "D. Encrypt the data at the company's data center before storing the data in the S3 bucket."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要：数据在上传到S3之前在公司数据中心进行加密，确保数据在传输和存储过程中都是加密的。同时，加密完全由公司管理，满足提出的问题。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The data is encrypted at the company's data center before being uploaded to S3, ensuring that the data is encrypted during transmission and storage. At the same time, encryption is fully managed by the company, meeting questions asked."
+      }
+    },
+    {
+      "question_no": 802,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望在 AWS 上运行其支付应用程序。该应用程序接收来自移动设备的付款通知。付款通知在发送进行进一步处理之前需要进行基本验证。后端处理应用程序长时间运行，需要调整计算和内存。该公司不想管理基础设施。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company wants to run its payment application on AWS. The application receives payment notifications from mobile devices. Payment notifications require a basic validation before they are sent for further processing. The backend processing application is long running and requires compute and memory to be adjusted. The company does not want to manage the infrastructure. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 队列。将队列与 Amazon EventBridge 规则集成以接收来自移动设备的付款通知。配置规则以验证付款通知并将通知发送到后端应用程序。在 Amazon Elastic Kubernetes Service (Amazon EKS) Anywhere 上部署后端应用程序。创建一个独立的集群。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the notifications to the backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS) Anywhere. Create a standalone cluster."
+        },
+        "B": {
+          "zh": "创建 Amazon API Gateway API。将 API 与 AWS Step Functions 状态机集成以接收来自移动设备的付款通知。调用状态机来验证付款通知并将通知发送到后端应用程序。在 Amazon Elastic Kubernetes Service (Amazon EKS) 上部署后端应用程序。配置具有自我管理节点的 EKS 集群。",
+          "en": "Create an Amazon API Gateway API. Integrate the API with an AWS Step Functions state machine to receive payment notifications from mobile devices. Invoke the state machine to validate payment notifications and send the notifications to the backend application. Deploy the backend application on Amazon Elastic Kubernetes Service (Amazon EKS). Configure an EKS cluster with self-managed nodes."
+        },
+        "C": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 队列。将队列与 Amazon EventBridge 规则集成以接收来自移动设备的付款通知。配置规则以验证付款通知并将通知发送到后端应用程序。在 Amazon EC2 竞价型实例上部署后端应用程序。使用默认分配策略配置 竞价型实例集。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue. Integrate the queue with an Amazon EventBridge rule to receive payment notifications from mobile devices. Configure the rule to validate payment notifications and send the notifications to the backend application. Deploy the backend application on Amazon EC2 Spot Instances. Configure a Spot Fleet with a default allocation strategy."
+        },
+        "D": {
+          "zh": "创建 Amazon API Gateway API。将 API 与 AWS Lambda 集成以接收来自移动设备的付款通知。调用 Lambda 函数来验证付款通知并将通知发送到后端应用程序。在 Amazon Elastic Container Service (Amazon ECS) 上部署后端应用程序。使用 AWS Fargate 启动类型配置 Amazon ECS。",
+          "en": "Create an Amazon API Gateway API. Integrate the API with AWS Lambda to receive payment notifications from mobile devices. Invoke a Lambda function to validate payment notifications and send the notifications to the backend application. Deploy the backend application on Amazon Elastic Container Service (Amazon ECS). Configure Amazon ECS with an AWS Fargate launch type."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon EKS Anywhere 不是完全托管的服务，违反了“最大限度地减少运营开销”的要求。",
+          "en": "Incorrect. Technical reason: Amazon EKS Anywhere is not a fully managed service, violating the requirement to \"minimize operational overhead.\""
+        },
+        "B": {
+          "zh": "錯誤。技术原因： EKS自管理节点需要用户负责节点维护，违反了“最小化运维开销”的要求。",
+          "en": "Incorrect. Technical reason: EKS self-managed nodes require users to be responsible for node maintenance, which violates the requirement of \"minimizing operation and maintenance overhead\"."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： EC2 竞价型实例要求用户负责实例管理，这违反了“最小化运营开销”的要求。",
+          "en": "Incorrect. Technical reason: EC2 Spot instances require the user to be responsible for instance management, which violates the requirement to \"minimize operational overhead.\""
+        },
+        "D": {
+          "zh": "正確。技术原因： AWS Fargate 是一个无服务器计算引擎。用户无需管理底层基础设施，完全满足问题的要求。",
+          "en": "Correct. Technical reason: AWS Fargate is a serverless computing engine. Users do not need to manage the underlying infrastructure and fully meet the requirements of the problem."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 创建 Amazon API Gateway API。将 API 与 AWS Lambda 集成以接收来自移动设备的付款通知。调用 Lambda 函数来验证付款通知并将通知发送到后端应用程序。在 Amazon Elastic Container Service (Amazon ECS) 上部署后端应用程序。使用 AWS Fargate 启动类型配置 Amazon ECS。",
+        "en": "D. Create an Amazon API Gateway API. Integrate the API with AWS Lambda to receive payment notifications from mobile devices. Invoke a Lambda function to validate payment notifications and send the notifications to the backend application. Deploy the backend application on Amazon Elastic Container Service (Amazon ECS). Configure Amazon ECS with an AWS Fargate launch type."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要： AWS Fargate 是一个无服务器计算引擎。用户无需管理底层基础设施，完全满足问题的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS Fargate is a serverless computing engine. Users do not need to manage the underlying infrastructure and fully meet the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 803,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在为公司设计用户身份验证解决方案。该解决方案必须为从不一致的地理位置、IP 地址或设备登录的用户调用双因素身份验证。该解决方案还必须能够扩展以容纳数百万用户。哪种解决方案可以满足这些要求？",
+        "en": "A solutions architect is designing a user authentication solution for a company. The solution must invoke two-factor authentication for users that log in from inconsistent geographical locations, IP addresses, or devices. The solution must also be able to scale up to accommodate millions of users. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 Amazon Cognito 用户池以进行用户身份验证。通过多重身份验证 (MFA) 启用基于风险的自适应身份验证功能。",
+          "en": "Configure Amazon Cognito user pools for user authentication. Enable the risk-based adaptive authentication feature with multifactor authentication (MFA)."
+        },
+        "B": {
+          "zh": "配置 Amazon Cognito 身份池以进行用户身份验证。启用多重身份验证 (MFA)。",
+          "en": "Configure Amazon Cognito identity pools for user authentication. Enable multi-factor authentication (MFA)."
+        },
+        "C": {
+          "zh": "配置 AWS Identity and Access Management (IAM) 用户以进行用户身份验证。附加允许AllowManageOwnUserMFA 操作的 IAM 策略。",
+          "en": "Configure AWS Identity and Access Management (IAM) users for user authentication. Attach an IAM policy that allows the AllowManageOwnUserMFA action."
+        },
+        "D": {
+          "zh": "配置 AWS IAM Identity Center (AWS Single Sign-On) 身份验证以进行用户身份验证。配置权限集以需要多重身份验证 (MFA)。",
+          "en": "Configure AWS IAM Identity Center (AWS Single Sign-On) authentication for user authentication. Configure the permission sets to require multi-factor authentication (MFA)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon Cognito 用户池支持用户身份验证，并可以启用基于风险的自适应身份验证功能和 MFA。这正是问题所要求的，包括地理位置、IP 地址或触发两步验证的设备的更改。正确： Cognito 用户池可以扩展以支持数百万用户，从而满足可扩展性需求。",
+          "en": "Correct. Technical reason: Amazon Cognito user pools support user authentication and can enable risk-based adaptive authentication features and MFA. This does exactly what the question asked for, including changes in geolocation, IP address, or device triggering two-step verification. Correct: The Cognito user pool can scale to support millions of users, meeting scalability needs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon Cognito 身份池主要用于临时访问 AWS 资源，不直接用于用户身份验证。身份池不支持基于风险的自适应身份验证功能。错误：虽然可以启用 MFA，但身份池功能不满足触发两步验证的地理位置、IP 地址或设备更改的问题要求。",
+          "en": "Incorrect. Technical reason: Amazon Cognito identity pools are primarily used for temporary access to AWS resources and are not used directly for user authentication. Identity pools do not support the risk-based adaptive authentication feature. Error: Although MFA can be enabled, the identity pool functionality does not meet the issue's requirements for geolocation, IP address, or device changes to trigger 2-Step Verification."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： IAM用户主要用于管理对AWS资源的访问，不适合大规模的用户认证。错误： IAM 用户不支持基于风险的自适应身份验证功能，并且不适合扩展到数百万用户。",
+          "en": "Incorrect. Technical reason: IAM users are primarily used to manage access to AWS resources and are not suitable for large-scale user authentication. Error: The risk-based adaptive authentication feature is not supported for IAM users and is not suitable for scaling to millions of users."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS IAM Identity Center主要针对企业级单点登录解决方案，适合管理少量用户的权限集，但不适合大规模用户身份验证。错误：虽然可以配置MFA，但不支持基于风险的自适应认证功能。",
+          "en": "Incorrect. Technical reason: AWS IAM Identity Center is mainly aimed at enterprise-level single sign-on solutions and is suitable for managing permission sets of a small number of users, but is not suitable for large-scale user authentication. Error: Although MFA can be configured, the risk-based adaptive authentication feature is not supported."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 配置 Amazon Cognito 用户池以进行用户身份验证。通过多重身份验证 (MFA) 启用基于风险的自适应身份验证功能。",
+        "en": "A. Configure Amazon Cognito user pools for user authentication. Enable the risk-based adaptive authentication feature with multifactor authentication (MFA)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： Amazon Cognito 用户池支持用户身份验证，并可以启用基于风险的自适应身份验证功能和 MFA。这正是问题所要求的，包括地理位置、IP 地址或触发两步验证的设备的更改。正确： Cognito 用户池可以扩展以支持数百万用户，从而满足可扩展性需求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon Cognito user pools support user authentication and can enable risk-based adaptive authentication features and MFA. This does exactly what the question asked for, including changes in geolocation, IP address, or device triggering two-step verification. Correct: The Cognito user pool can scale to support millions of users, meeting scalability needs."
+      }
+    },
+    {
+      "question_no": 804,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有一个 Amazon S3 数据湖。该公司需要一个解决方案来每天转换数据湖中的数据并将数据加载到数据仓库中。数据仓库必须具有大规模并行处理（MPP）能力。然后，数据分析师需要通过对数据使用 SQL 命令来创建和训练机器学习 (ML) 模型。该解决方案必须尽可能使用无服务器 AWS 服务。哪种解决方案可以满足这些要求？",
+        "en": "A company has an Amazon S3 data lake. The company needs a solution that transforms the data from the data lake and loads the data into a data warehouse every day. The data warehouse must have massively parallel processing (MPP) capabilities. Data analysts then need to create and train machine learning (ML) models by using SQL commands on the data. The solution must use serverless AWS services wherever possible. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "运行每日 Amazon EMR 作业来转换数据并将数据加载到 Amazon Redshift 中。使用 Amazon Redshift ML 创建和训练 ML 模型。",
+          "en": "Run a daily Amazon EMR job to transform the data and load the data into Amazon Redshift. Use Amazon Redshift ML to create and train the ML models."
+        },
+        "B": {
+          "zh": "运行每日 Amazon EMR 作业来转换数据并将数据加载到 Amazon Aurora Serverless 中。使用 Amazon Aurora ML 创建和训练 ML 模型。",
+          "en": "Run a daily Amazon EMR job to transform the data and load the data into Amazon Aurora Serverless. Use Amazon Aurora ML to create and train the ML models."
+        },
+        "C": {
+          "zh": "运行每日 AWS Glue 作业来转换数据并将数据加载到 Amazon Redshift Serverless 中。使用 Amazon Redshift ML 创建和训练 ML 模型。",
+          "en": "Run a daily AWS Glue job to transform the data and load the data into Amazon Redshift Serverless. Use Amazon Redshift ML to create and train the ML models."
+        },
+        "D": {
+          "zh": "运行每日 AWS Glue 作业来转换数据并将数据加载到 Amazon Athena 表中。使用 Amazon Athena ML 创建和训练 ML 模型。",
+          "en": "Run a daily AWS Glue job to transform the data and load the data into Amazon Athena tables. Use Amazon Athena ML to create and train the ML models."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon EMR 是一个适用于大规模数据处理的托管 Hadoop 桶架，但它不是无服务器服务。 Amazon Redshift 支持 MPP，并可以使用 Redshift ML 进行机器学习模型创建和训练。此选项不能完全满足“使用无服务器服务”的要求，因此不能满足问题。",
+          "en": "Incorrect. Technical reason: Amazon EMR is a managed Hadoop bucket rack suitable for large-scale data processing, but it is not a serverless service. Amazon Redshift supports MPP and can use Redshift ML for machine learning model creation and training. This option does not fully satisfy the requirement of \"Use a serverless service\" and therefore does not satisfy the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon Aurora Serverless 是一种无服务器关系数据库，但它不具备 MPP 功能。 Amazon Aurora ML 能力有限，无法直接满足问题中“使用 SQL 命令创建和训练机器学习模型”的要求。该选项不满足MPP能力的要求，因此是不正确的。",
+          "en": "Incorrect. Technical reason: Amazon Aurora Serverless is a serverless relational database, but it does not have MPP capabilities. Amazon Aurora ML has limited capabilities and cannot directly meet the requirement of \"using SQL commands to create and train machine learning models\" in the question. This option does not meet the requirements for MPP capabilities and is therefore incorrect."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS Glue 是一项用于数据转换和加载任务的无服务器 ETL 服务。 Amazon Redshift Serverless 支持 MPP，并可以使用 Redshift ML 进行机器学习模型创建和训练。该选项完全满足问题要求，包括无服务器服务、MPP 功能以及用于机器学习模型创建和训练的 SQL 命令。",
+          "en": "Correct. Technical reason: AWS Glue is a serverless ETL service for data transformation and loading tasks. Amazon Redshift Serverless supports MPP and can use Redshift ML for machine learning model creation and training. This option fully meets the problem requirements and includes serverless services, MPP capabilities, and SQL commands for machine learning model creation and training."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Glue 是一项用于数据转换和加载任务的无服务器 ETL 服务。 Amazon Athena 是一种无服务器查询服务，但它不具备 MPP 功能。 Amazon Athena 目前不支持直接使用 SQL 命令创建和训练机器学习模型。该选项不满足MPP能力的要求，因此是不正确的。",
+          "en": "Incorrect. Technical reason: AWS Glue is a serverless ETL service for data transformation and loading tasks. Amazon Athena is a serverless query service, but it does not have MPP capabilities. Amazon Athena currently does not support directly using SQL commands to create and train machine learning models. This option does not meet the requirements for MPP capabilities and is therefore incorrect."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 运行每日 AWS Glue 作业来转换数据并将数据加载到 Amazon Redshift Serverless 中。使用 Amazon Redshift ML 创建和训练 ML 模型。",
+        "en": "C. Run a daily AWS Glue job to transform the data and load the data into Amazon Redshift Serverless. Use Amazon Redshift ML to create and train the ML models."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (86%) 10%。热门讨论与考点摘要： AWS Glue 是一项用于数据转换和加载任务的无服务器 ETL 服务。 Amazon Redshift Serverless 支持 MPP，并可以使用 Redshift ML 进行机器学习模型创建和训练。该选项完全满足问题要求，包括无服务器服务、MPP 功能以及用于机器学习模型创建和训练的 SQL 命令。",
+        "en": "Community vote as displayed: C (86%) 10%. Popular discussion and key point summary: AWS Glue is a serverless ETL service for data transformation and loading tasks. Amazon Redshift Serverless supports MPP and can use Redshift ML for machine learning model creation and training. This option fully meets the problem requirements and includes serverless services, MPP capabilities, and SQL commands for machine learning model creation and training."
+      }
+    },
+    {
+      "question_no": 805,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "某公司在其本地数据中心的 Kubernetes 环境中运行容器。该公司希望使用 Amazon Elastic Kubernetes Service (Amazon EKS) 和其他 AWS 托管服务。数据必须保留在公司数据中心本地，并且不能存储在任何远程站点或云中，以保持合规性。哪种解决方案可以满足这些要求？",
+        "en": "A company runs containers in a Kubernetes environment in the company's local data center. The company wants to use Amazon Elastic Kubernetes Service (Amazon EKS) and other AWS managed services. Data must remain locally in the company's data center and cannot be stored in any remote site or cloud to maintain compliance. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在公司数据中心部署 AWS 本地区域。",
+          "en": "Deploy AWS Local Zones in the company's data center."
+        },
+        "B": {
+          "zh": "在公司的数据中心使用 AWS Snowmobile。",
+          "en": "Use an AWS Snowmobile in the company's data center."
+        },
+        "C": {
+          "zh": "在公司的数据中心安装 AWS Outposts 机架。",
+          "en": "Install an AWS Outposts rack in the company's data center."
+        },
+        "D": {
+          "zh": "在数据中心安装 AWS Snowball Edge Storage Optimized 节点。",
+          "en": "Install an AWS Snowball Edge Storage Optimized node in the data center."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS本地区域是AWS在特定地理位置提供的扩展区域，允许用户将计算和存储资源部署在靠近用户的地方，但不直接部署在客户的数据中心。本地区域仍然是AWS管理的区域，数据最终将存储在AWS基础设施中。不符合问题要求的数据必须保留在本地。",
+          "en": "Incorrect. Technical reason: AWS Local Zones are extended zones provided by AWS in specific geographical locations, allowing users to deploy computing and storage resources close to users, but not directly in the customer's data center. The local zone is still a zone managed by AWS, and the data will ultimately be stored in AWS infrastructure. Data that does not meet the requirements of the question must remain local."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS Snowmobile 是一种大规模数据迁移解决方案，通常用于将 PB 级数据从本地数据中心迁移到 AWS 云。它不适合运行正在进行的计算或存储服务。问题要求是运行 Amazon EKS 和其他 AWS 服务，而不是数据迁移，因此 Snowmobile 不满足要求。",
+          "en": "Incorrect. Technical reason: AWS Snowmobile is a large-scale data migration solution commonly used to move petabytes of data from on-premises data centers to the AWS Cloud. It is not suitable for running ongoing computing or storage services. The question requirement is to run Amazon EKS and other AWS services, not data migration, so Snowmobile does not meet the requirement."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS Outposts 是一种混合云解决方案，允许用户在自己的数据中心运行 Amazon EKS 等 AWS 服务，同时数据完全保留在本地，以满足合规性要求。 Outposts 是专门为在本地数据中心提供 AWS 服务而设计的解决方案，完美满足问题的要求。",
+          "en": "Correct. Technical reason: AWS Outposts is a hybrid cloud solution that allows users to run AWS services, such as Amazon EKS, in their own data centers while data remains entirely on-premises to meet compliance requirements. Outposts are a solution specifically designed for delivering AWS services in on-premises data centers and perfectly meet the requirements of the problem."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Snowball Edge Storage Optimized 主要用于边缘计算和数据迁移。虽然它可以在本地运行一些计算任务，但它不支持完整的 AWS 服务（例如 Amazon EKS）。 Snowball Edge 的功能有限，不满足问题中运行 Amazon EKS 的要求。",
+          "en": "Incorrect. Technical reason: AWS Snowball Edge Storage Optimized is mainly used for edge computing and data migration. While it can run some computing tasks locally, it does not support full AWS services (such as Amazon EKS). Snowball Edge has limited functionality and does not meet the requirements for running Amazon EKS in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在公司的数据中心安装 AWS Outposts 机架。",
+        "en": "C. Install an AWS Outposts rack in the company's data center."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： AWS Outposts 是一种混合云解决方案，允许用户在自己的数据中心运行 Amazon EKS 等 AWS 服务，同时数据完全保留在本地，以满足合规性要求。 Outposts 是专门为在本地数据中心提供 AWS 服务而设计的解决方案，完美满足问题的要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS Outposts is a hybrid cloud solution that allows users to run AWS services, such as Amazon EKS, in their own data centers while data remains entirely on-premises to meet compliance requirements. Outposts are a solution specifically designed for delivering AWS services in on-premises data centers and perfectly meet the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 806,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "社交媒体公司具有收集和处理数据的工作负载。工作负载将数据存储在本地 NFS 存储中。数据存储的扩展速度不足以满足公司不断扩大的业务需求。该公司希望将当前的数据存储迁移到AWS。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A social media company has workloads that collect and process data. The workloads store the data in on-premises NFS storage. The data store cannot scale fast enough to meet the company’s expanding business needs. The company wants to migrate the current data store to AWS. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 AWS Storage Gateway 卷网关。使用 Amazon S3 生命周期策略将数据转换到适当的存储类。",
+          "en": "Set up an AWS Storage Gateway Volume Gateway. Use an Amazon S3 Lifecycle policy to transition the data to the appropriate storage class."
+        },
+        "B": {
+          "zh": "设置 AWS Storage Gateway Amazon S3 文件网关。使用 Amazon S3 生命周期策略将数据转换到适当的存储类。",
+          "en": "Set up an AWS Storage Gateway Amazon S3 File Gateway. Use an Amazon S3 Lifecycle policy to transition the data to the appropriate storage class."
+        },
+        "C": {
+          "zh": "使用 Amazon Elastic File System (Amazon EFS) 标准不频繁访问 (Standard-IA) 存储类。激活不频繁访问生命周期策略。",
+          "en": "Use the Amazon Elastic File System (Amazon EFS) Standard-Infrequent Access (Standard-IA) storage class. Activate the infrequent access lifecycle policy."
+        },
+        "D": {
+          "zh": "使用 Amazon Elastic File System (Amazon EFS) 一区不频繁访问 (One Zone-IA) 存储类。激活不频繁访问生命周期策略。",
+          "en": "Use the Amazon Elastic File System (Amazon EFS) One Zone-Infrequent Access (One Zone-IA) storage class. Activate the infrequent access lifecycle policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Volume Gateway 不适合处理文件存储需求。",
+          "en": "Incorrect. Technical reason: Volume Gateway is not suitable for handling file storage needs."
+        },
+        "B": {
+          "zh": "正確。技术原因：文件网关是处理 NFS 文件存储同时支持成本优化的最佳选择。",
+          "en": "Correct. Technical reason: File Gateway is the best choice for handling NFS file storage while supporting cost optimization."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：性价比不如文件网关，不支持NFS数据直接迁移。",
+          "en": "Incorrect. Technical reason: The price/performance ratio is not as good as that of file gateway, and it does not support direct migration of NFS data."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：性价比不如文件网关，不支持NFS数据直接迁移。",
+          "en": "Incorrect. Technical reason: The price/performance ratio is not as good as that of file gateway, and it does not support direct migration of NFS data."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 设置 AWS Storage Gateway Amazon S3 文件网关。使用 Amazon S3 生命周期策略将数据转换到适当的存储类。",
+        "en": "B. Set up an AWS Storage Gateway Amazon S3 File Gateway. Use an Amazon S3 Lifecycle policy to transition the data to the appropriate storage class."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (96%) 4%。热门讨论与考点摘要：文件网关是处理 NFS 文件存储同时支持成本优化的最佳选择。",
+        "en": "Community vote as displayed: B (96%) 4%. Popular discussion and key point summary: File Gateway is the best choice for handling NFS file storage while supporting cost optimization."
+      }
+    },
+    {
+      "question_no": 807,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在营销活动期间使用高并发 AWS Lambda 函数来处理消息队列中不断增加的消息数量。 Lambda 函数使用 CPU 密集型代码来处理消息。该公司希望降低计算成本并维持客户的服务延迟。哪种解决方案可以满足这些要求？",
+        "en": "A company uses high concurrency AWS Lambda functions to process a constantly increasing number of messages in a message queue during marketing events. The Lambda functions use CPU intensive code to process the messages. The company wants to reduce the compute costs and to maintain service latency for its customers. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为 Lambda 函数配置保留并发。减少分配给 Lambda 函数的内存。",
+          "en": "Configure reserved concurrency for the Lambda functions. Decrease the memory allocated to the Lambda functions."
+        },
+        "B": {
+          "zh": "为 Lambda 函数配置保留并发。根据 AWS Compute Optimizer 建议增加内存。",
+          "en": "Configure reserved concurrency for the Lambda functions. Increase the memory according to AWS Compute Optimizer recommendations."
+        },
+        "C": {
+          "zh": "为 Lambda 函数配置预配置并发。减少分配给 Lambda 函数的内存。",
+          "en": "Configure provisioned concurrency for the Lambda functions. Decrease the memory allocated to the Lambda functions."
+        },
+        "D": {
+          "zh": "为 Lambda 函数配置预配置并发。根据 AWS Compute Optimizer 建议增加内存。",
+          "en": "Configure provisioned concurrency for the Lambda functions. Increase the memory according to AWS Compute Optimizer recommendations."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：预留并发仅限制Lambda函数的最大并发数，但不保证函数的启动时间（冷启动问题）。错误：减少内存分配可能会降低 CPU 性能、增加处理时间并影响服务延迟。",
+          "en": "Incorrect. Technical reason: Reserved concurrency only limits the maximum number of concurrencies of the Lambda function, but does not guarantee the startup time of the function (cold start problem). Error: Reducing memory allocation may reduce CPU performance, increase processing time, and affect service latency."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：预留并发只限制并保留函数可使用的并发额度，不能消除冷启动。虽然增加内存可提高 CPU 性能，但不能像预置并发那样稳定营销活动期间的启动延迟。",
+          "en": "Incorrect. Technical reason: Reserved concurrency reserves and limits concurrency but does not eliminate cold starts. More memory can improve CPU performance, but it does not stabilize startup latency as provisioned concurrency does."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因： Provisioned Concurrency可以解决冷启动问题，保证服务时延稳定性。正确：按照 AWS Compute Optimizer 的建议增加内存可以提高 CPU 性能，从而减少处理时间并优化成本和性能。",
+          "en": "Correct. Technical reason: Provisioned Concurrency can solve the cold start problem and ensure service delay stability. Correct: Increasing memory as recommended by AWS Compute Optimizer can improve CPU performance, thereby reducing processing time and optimizing cost and performance."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 为 Lambda 函数配置预配置并发。根据 AWS Compute Optimizer 建议增加内存。",
+        "en": "D. Configure provisioned concurrency for the Lambda functions. Increase the memory according to AWS Compute Optimizer recommendations."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (51%) B (44%) 5%。热门讨论与考点摘要： Provisioned Concurrency可以解决冷启动问题，保证服务时延稳定性。正确：按照 AWS Compute Optimizer 的建议增加内存可以提高 CPU 性能，从而减少处理时间并优化成本和性能。",
+        "en": "Community vote as displayed: D (51%) B (44%) 5%. Popular discussion and key point summary: Provisioned Concurrency can solve the cold start problem and ensure service delay stability. Correct: Increasing memory as recommended by AWS Compute Optimizer can improve CPU performance, thereby reducing processing time and optimizing cost and performance."
+      }
+    },
+    {
+      "question_no": 808,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon Elastic Container Service (Amazon ECS) 上运行其工作负载。 ECS 任务定义使用的容器映像需要扫描常见漏洞和暴露 (CVE)。创建的新容器镜像也需要扫描。哪种解决方案能够以最少的工作负载变化满足这些要求？",
+        "en": "A company runs its workloads on Amazon Elastic Container Service (Amazon ECS). The container images that the ECS task definition uses need to be scanned for Common Vulnerabilities and Exposures (CVEs). New container images that are created also need to be scanned. Which solution will meet these requirements with the FEWEST changes to the workloads?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Elastic Container Registry (Amazon ECR) 作为私有映像存储库来存储容器映像。为 ECR 基本扫描指定推送过滤器上的扫描。",
+          "en": "Use Amazon Elastic Container Registry (Amazon ECR) as a private image repository to store the container images. Specify scan on push filters for the ECR basic scan."
+        },
+        "B": {
+          "zh": "将容器映像存储在 Amazon S3 存储桶中。使用 Amazon Macie 扫描图像。使用 S3 事件通知对具有 s3:ObjectCreated:Put 事件类型的每个事件启动 Macie 扫描。",
+          "en": "Store the container images in an Amazon S3 bucket. Use Amazon Macie to scan the images. Use an S3 Event Notification to initiate a Macie scan for every event with an s3:ObjectCreated:Put event type."
+        },
+        "C": {
+          "zh": "将工作负载部署到 Amazon Elastic Kubernetes Service (Amazon EKS)。使用 Amazon Elastic Container Registry (Amazon ECR) 作为私有映像存储库。为 ECR 增强扫描指定推送过滤器上的扫描。",
+          "en": "Deploy the workloads to Amazon Elastic Kubernetes Service (Amazon EKS). Use Amazon Elastic Container Registry (Amazon ECR) as a private image repository. Specify scan on push filters for the ECR enhanced scan."
+        },
+        "D": {
+          "zh": "将容器映像存储在启用了版本控制的 Amazon S3 存储桶中。为 s3:ObjectCreated:* 事件配置 S3 事件通知以调用 AWS Lambda 函数。配置 Lambda 函数以启动 Amazon Inspector 扫描。",
+          "en": "Store the container images in an Amazon S3 bucket that has versioning enabled. Configure an S3 Event Notification for s3:ObjectCreated:* events to invoke an AWS Lambda function. Configure the Lambda function to initiate an Amazon Inspector scan."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon ECR 是 AWS 提供的专用容器镜像存储服务。支持基本的扫描功能，推送镜像时可以自动扫描检测CVE。最少的工作量：直接使用 ECR 的内置功能，无需额外配置或开发。",
+          "en": "Correct. Technical reason: Amazon ECR is a dedicated container image storage service provided by AWS. It supports basic scanning functions and can automatically scan and detect CVE when pushing images. Minimal effort: Use ECR’s built-in functionality directly, with no additional configuration or development required."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Amazon Macie 是一项用于数据分类和敏感数据保护的服务，不适合扫描容器映像是否存在漏洞。不满足要求：无法检测CVE。",
+          "en": "Incorrect. Technical reason: Amazon Macie is a service used for data classification and protection of sensitive data and is not suitable for scanning container images for vulnerabilities. Not meeting requirements: Unable to detect CVE."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然ECR支持增强扫描，但问题不需要迁移到Amazon EKS，迁移工作量比较大。不满足“最小更改”要求：迁移到 EKS 会增加复杂性。",
+          "en": "Incorrect. Technical reason: Although ECR supports enhanced scanning, the questions do not need to be migrated to Amazon EKS, and the migration workload is relatively large. Not meeting \"minimal change\" requirements: Migrating to EKS adds complexity."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Amazon Inspector 主要设计用于扫描 EC2 实例和容器运行时是否存在漏洞，而不是直接扫描存储在 S3 中的容器映像。复杂度高：需要额外配置S3事件通知和Lambda函数。",
+          "en": "Incorrect. Technical reason: Amazon Inspector is primarily designed to scan EC2 instances and container runtimes for vulnerabilities, rather than directly scanning container images stored in S3. High complexity: Additional configuration of S3 event notification and Lambda functions is required."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon Elastic Container Registry (Amazon ECR) 作为私有映像存储库来存储容器映像。为 ECR 基本扫描指定推送过滤器上的扫描。",
+        "en": "A. Use Amazon Elastic Container Registry (Amazon ECR) as a private image repository to store the container images. Specify scan on push filters for the ECR basic scan."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (96%) 4%。热门讨论与考点摘要： Amazon ECR 是 AWS 提供的专用容器镜像存储服务。支持基本的扫描功能，推送镜像时可以自动扫描检测CVE。最少的工作量：直接使用 ECR 的内置功能，无需额外配置或开发。",
+        "en": "Community vote as displayed: A (96%) 4%. Popular discussion and key point summary: Amazon ECR is a dedicated container image storage service provided by AWS. It supports basic scanning functions and can automatically scan and detect CVE when pushing images. Minimal effort: Use ECR’s built-in functionality directly, with no additional configuration or development required."
+      }
+    },
+    {
+      "question_no": 809,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Batch 作业来运行其日终销售流程。该公司需要一个无服务器解决方案，以便在 AWS Batch 作业成功时调用第三方报告应用程序。报告应用程序具有使用用户名和密码身份验证的 HTTP API 接口。哪种解决方案可以满足这些要求？",
+        "en": "A company uses an AWS Batch job to run its end-of-day sales process. The company needs a serverless solution that will invoke a third-party reporting application when the AWS Batch job is successful. The reporting application has an HTTP API interface that uses username and password authentication. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 Amazon EventBridge 规则以匹配传入的 AWS Batch 作业 SUCCEEDED 事件。使用用户名和密码将第三方 API 配置为 EventBridge API 目标。将 API 目标设置为 EventBridge 规则目标。",
+          "en": "Configure an Amazon EventBridge rule to match incoming AWS Batch job SUCCEEDED events. Configure the third-party API as an EventBridge API destination with a username and password. Set the API destination as the EventBridge rule target."
+        },
+        "B": {
+          "zh": "配置 Amazon EventBridge Scheduler 以匹配传入的 AWS Batch 作业 SUCCEEDED 事件。配置 AWS Lambda 函数以使用用户名和密码调用第三方 API。将 Lambda 函数设置为 EventBridge 规则目标。",
+          "en": "Configure Amazon EventBridge Scheduler to match incoming AWS Batch job SUCCEEDED events. Configure an AWS Lambda function to invoke the third-party API by using a username and password. Set the Lambda function as the EventBridge rule target."
+        },
+        "C": {
+          "zh": "配置 AWS Batch 作业以将作业 SUCCEEDED 事件发布到 Amazon API Gateway REST API。在 API Gateway REST API 上配置 HTTP 代理集成，以使用用户名和密码调用第三方 API。",
+          "en": "Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure an HTTP proxy integration on the API Gateway REST API to invoke the third-party API by using a username and password."
+        },
+        "D": {
+          "zh": "配置 AWS Batch 作业以将作业 SUCCEEDED 事件发布到 Amazon API Gateway REST API。在 API Gateway REST API 上配置与 AWS Lambda 函数的代理集成。配置 Lambda 函数以使用用户名和密码调用第三方 API。",
+          "en": "Configure an AWS Batch job to publish job SUCCEEDED events to an Amazon API Gateway REST API. Configure a proxy integration on the API Gateway REST API to an AWS Lambda function. Configure the Lambda function to invoke the third-party API by using a username and password."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： EventBridge 支持直接配置 API 目标，并支持通过用户名和密码进行身份验证。这种方式是Serverless的，直接满足问题的需求。 EventBridge 规则可以侦听 AWS Batch 的 SUCCEEDED 事件并将该事件发送到配置的 API 目标。",
+          "en": "Correct. Technical reason: EventBridge supports direct configuration of API targets and supports authentication via username and password. This method is serverless and directly meets the needs of the problem. EventBridge rules can listen for AWS Batch's SUCCEEDED event and send the event to a configured API target."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： EventBridge Scheduler 用于调度任务而不是监听事件。该问题需要监控AWS Batch的SUCCEEDED事件，因此使用Scheduler不满足要求。虽然 Lambda 可以调用第三方 API，但这会增加额外的复杂性，并不是最佳解决方案。",
+          "en": "Incorrect. Technical reason: EventBridge Scheduler is used to schedule tasks rather than listen for events. The problem requires monitoring the SUCCEEDED event of AWS Batch, so using Scheduler does not meet the requirements. Although Lambda can call third-party APIs, this adds additional complexity and is not the best solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS Batch 无法将事件直接发布到 API Gateway。需要额外的配置来实现事件传递。虽然 HTTP 代理集成可以调用第三方 API，但这种方法需要更多配置，并且不符合无服务器最佳实践。",
+          "en": "Incorrect. Technical reason: AWS Batch cannot publish events directly to API Gateway. Additional configuration is required to implement event delivery. While HTTP proxy integration can call third-party APIs, this approach requires more configuration and does not adhere to serverless best practices."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：同样， AWS Batch 无法将事件直接发布到 API Gateway。这种方法增加了额外的复杂性，需要配置 API Gateway 和 Lambda，并且不能满足直接无服务器解决方案的问题要求。",
+          "en": "Incorrect. Technical reason: Likewise, AWS Batch cannot publish events directly to API Gateway. This approach adds additional complexity, requires configuring API Gateway and Lambda, and does not meet the problem requirements of a straight serverless solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 配置 Amazon EventBridge 规则以匹配传入的 AWS Batch 作业 SUCCEEDED 事件。使用用户名和密码将第三方 API 配置为 EventBridge API 目标。将 API 目标设置为 EventBridge 规则目标。",
+        "en": "A. Configure an Amazon EventBridge rule to match incoming AWS Batch job SUCCEEDED events. Configure the third-party API as an EventBridge API destination with a username and password. Set the API destination as the EventBridge rule target."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (65%) B (26%) 9%。热门讨论与考点摘要： EventBridge 支持直接配置 API 目标，并支持通过用户名和密码进行身份验证。这种方式是Serverless的，直接满足问题的需求。 EventBridge 规则可以侦听 AWS Batch 的 SUCCEEDED 事件并将该事件发送到配置的 API 目标。",
+        "en": "Community vote as displayed: A (65%) B (26%) 9%. Popular discussion and key point summary: EventBridge supports direct configuration of API targets and supports authentication via username and password. This method is serverless and directly meets the needs of the problem. EventBridge rules can listen for AWS Batch's SUCCEEDED event and send the event to a configured API target."
+      }
+    },
+    {
+      "question_no": 810,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司收集并处理来自供应商的数据。供应商将其数据存储在供应商自己的 AWS 账户中的 Amazon RDS for MySQL 数据库中。该公司的 VPC 没有互联网网关、AWS Direct Connect 连接或 AWS Site-to-Site VPN 连接。该公司需要访问供应商数据库中的数据。哪种解决方案可以满足这个要求？",
+        "en": "A company collects and processes data from a vendor. The vendor stores its data in an Amazon RDS for MySQL database in the vendor's own AWS account. The company’s VPC does not have an internet gateway, an AWS Direct Connect connection, or an AWS Site-to-Site VPN connection. The company needs to access the data that is in the vendor database. Which solution will meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "指示供应商注册 AWS Hosted Connection Direct Connect 计划。使用VPC对等连接公司的VPC和供应商的VPC。",
+          "en": "Instruct the vendor to sign up for the AWS Hosted Connection Direct Connect Program. Use VPC peering to connect the company's VPC and the vendor's VPC."
+        },
+        "B": {
+          "zh": "配置公司 VPC 和供应商 VPC 之间的客户端 VPN 连接。使用VPC对等连接公司的VPC和供应商的VPC。",
+          "en": "Configure a client VPN connection between the company's VPC and the vendor's VPC. Use VPC peering to connect the company's VPC and the vendor's VPC."
+        },
+        "C": {
+          "zh": "指示供应商创建网络负载均衡器 (NLB)。将 NLB 放置在 Amazon RDS for MySQL 数据库前面。使用 AWS PrivateLink 集成公司的 VPC 和供应商的 VPC。",
+          "en": "Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC."
+        },
+        "D": {
+          "zh": "使用 AWS Transit Gateway 集成公司的 VPC 和供应商的 VPC。使用VPC对等连接公司的VPC和供应商的VPC。",
+          "en": "Use AWS Transit Gateway to integrate the company's VPC and the vendor's VPC. Use VPC peering to connect the company’s VPC and the vendor's VPC."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：专线是物理连接的解决方案，与问题中明确表示公司没有专线连接的情况不一致。此外， VPC 对等互连无法直接访问 Amazon RDS，因为它不支持跨 VPC 的服务发现。",
+          "en": "Incorrect. Technical reason: A dedicated line is a physical connection solution, which is inconsistent with the question clearly stating that the company does not have a dedicated line connection. Additionally, VPC peering cannot directly access Amazon RDS because it does not support service discovery across VPCs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：客户端VPN主要用于用户设备连接VPC，不用于VPC之间的连接。这个问题需要VPC之间的连通性解决方案。同样， VPC 对等互连无法直接访问 Amazon RDS。",
+          "en": "Incorrect. Technical reason: Client VPN is mainly used for user equipment to connect to VPCs, not for connections between VPCs. This problem requires a connectivity solution between VPCs. Likewise, VPC peering does not have direct access to Amazon RDS."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS PrivateLink 允许通过接口终端节点跨 VPC 安全访问服务。通过将 NLB 放置在 RDS 前面，供应商可以创建公司可以通过 PrivateLink 访问的服务端点。 PrivateLink是专门针对跨VPC、跨账户的服务访问而设计的，可以满足该问题的要求。",
+          "en": "Correct. Technical reason: AWS PrivateLink allows secure access to services across VPCs through interface endpoints. By placing the NLB in front of the RDS, the vendor can create a service endpoint that the company can access via PrivateLink. PrivateLink is specifically designed for cross-VPC and cross-account service access to meet the requirements of the problem."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Transit Gateway 是一种多 VPC 连接解决方案，但题目没有提及使用 Transit Gateway 的公司或供应商的需求。此外， Transit Gateway 和 VPC 对等互连的组合不适合直接访问 Amazon RDS。",
+          "en": "Incorrect. Technical reason: AWS Transit Gateway is a multi-VPC connectivity solution, but the title makes no mention of the needs of companies or vendors using Transit Gateway. Additionally, the combination of Transit Gateway and VPC Peering is not suitable for direct access to Amazon RDS."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 指示供应商创建网络负载均衡器 (NLB)。将 NLB 放置在 Amazon RDS for MySQL 数据库前面。使用 AWS PrivateLink 集成公司的 VPC 和供应商的 VPC。",
+        "en": "C. Instruct the vendor to create a Network Load Balancer (NLB). Place the NLB in front of the Amazon RDS for MySQL database. Use AWS PrivateLink to integrate the company's VPC and the vendor's VPC."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (95%) 5%。热门讨论与考点摘要： AWS PrivateLink 允许通过接口终端节点跨 VPC 安全访问服务。通过将 NLB 放置在 RDS 前面，供应商可以创建公司可以通过 PrivateLink 访问的服务端点。 PrivateLink是专门针对跨VPC、跨账户的服务访问而设计的，可以满足该问题的要求。",
+        "en": "Community vote as displayed: C (95%) 5%. Popular discussion and key point summary: AWS PrivateLink allows secure access to services across VPCs through interface endpoints. By placing the NLB in front of the RDS, the vendor can create a service endpoint that the company can access via PrivateLink. PrivateLink is specifically designed for cross-VPC and cross-account service access to meet the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 811,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望设置 Amazon Managed Grafana 作为其可视化工具。该公司希望将其 Amazon RDS 数据库中的数据可视化为一个数据源。该公司需要一个不会通过互联网公开数据的安全解决方案。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to set up Amazon Managed Grafana as its visualization tool. The company wants to visualize data from its Amazon RDS database as one data source. The company needs a secure solution that will not expose the data over the internet. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建没有 VPC 的 Amazon Managed Grafana 工作区。为 RDS 数据库创建公共端点。将公共终端节点配置为 Amazon Managed Grafana 中的数据源。",
+          "en": "Create an Amazon Managed Grafana workspace without a VPC. Create a public endpoint for the RDS database. Configure the public endpoint as a data source in Amazon Managed Grafana."
+        },
+        "B": {
+          "zh": "在 VPC 中创建 Amazon Managed Grafana 工作区。为 RDS 数据库创建专用端点。将私有终端节点配置为 Amazon Managed Grafana 中的数据源。",
+          "en": "Create an Amazon Managed Grafana workspace in a VPC. Create a private endpoint for the RDS database. Configure the private endpoint as a data source in Amazon Managed Grafana."
+        },
+        "C": {
+          "zh": "创建不带 VP 的 Amazon Managed Grafana 工作区创建 AWS PrivateLink 终端节点以在 Amazon Managed Grafana 和 Amazon RDS 之间建立连接。将 Amazon RDS 设置为 Amazon Managed Grafana 中的数据源。",
+          "en": "Create an Amazon Managed Grafana workspace without a VPCreate an AWS PrivateLink endpoint to establish a connection between Amazon Managed Grafana and Amazon RDS. Set up Amazon RDS as a data source in Amazon Managed Grafana."
+        },
+        "D": {
+          "zh": "在 VPC 中创建 Amazon Managed Grafana 工作区。为 RDS 数据库创建公共端点。将公共终端节点配置为 Amazon Managed Grafana 中的数据源。",
+          "en": "Create an Amazon Managed Grafana workspace in a VPC. Create a public endpoint for the RDS database. Configure the public endpoint as a data source in Amazon Managed Grafana."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：创建公共端点会将数据公开到 互联网，并且不满足问题的“不会将数据公开到 互联网”的要求。",
+          "en": "Incorrect. Technical reason: Creating a public endpoint would expose the data to the Internet and does not meet the \"no data will be exposed to the Internet\" requirement of the question."
+        },
+        "B": {
+          "zh": "正確。技术原因：在VPC中创建Grafana工作区，并使用私有端点连接到RDS数据库，以确保数据不暴露在互联网上并满足问题的要求。",
+          "en": "Correct. Technical reason: Create a Grafana workspace in the VPC and connect to the RDS database using a private endpoint to ensure the data is not exposed on the internet and meets the requirements of the problem."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Amazon Managed Grafana 工作区需要位于 VPC 中才能使用 PrivateLink 连接到 RDS 数据库。没有 VPC 的工作空间无法直接使用 PrivateLink。",
+          "en": "Incorrect. Technical reason: Amazon Managed Grafana workspaces need to be in a VPC to use PrivateLink to connect to an RDS database. Workspaces without a VPC cannot use PrivateLink directly."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然Grafana工作区位于VPC中，但使用公共端点将数据暴露到互联网上，这不符合问题的要求。",
+          "en": "Incorrect. Technical reason: Although the Grafana workspace is in a VPC, using a public endpoint exposes the data to the internet, which does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 VPC 中创建 Amazon Managed Grafana 工作区。为 RDS 数据库创建专用端点。将私有终端节点配置为 Amazon Managed Grafana 中的数据源。",
+        "en": "B. Create an Amazon Managed Grafana workspace in a VPC. Create a private endpoint for the RDS database. Configure the private endpoint as a data source in Amazon Managed Grafana."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (68%) C (33%)。热门讨论与考点摘要：在VPC中创建Grafana工作区，并使用私有端点连接到RDS数据库，以确保数据不暴露在互联网上并满足问题的要求。",
+        "en": "Community vote as displayed: B (68%) C (33%). Popular discussion and key point summary: Create a Grafana workspace in the VPC and connect to the RDS database using a private endpoint to ensure the data is not exposed on the internet and meets the requirements of the problem."
+      }
+    },
+    {
+      "question_no": 812,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon S3 上托管一个数据湖。数据湖从各种数据源获取 Apache Parquet 格式的数据。该公司使用多个转换步骤来准备摄取的数据。这些步骤包括过滤异常、将数据标准化为标准日期和时间值以及生成用于分析的聚合。公司必须将转换后的数据存储在数据分析师访问的 S3 存储桶中。该公司需要一个不需要代码的预构建数据转换解决方案。该解决方案必须提供数据沿袭和数据分析。公司需要与全公司员工共享数据转换步骤。哪种解决方案可以满足这些要求？",
+        "en": "A company hosts a data lake on Amazon S3. The data lake ingests data in Apache Parquet format from various data sources. The company uses multiple transformation steps to prepare the ingested data. The steps include filtering of anomalies, normalizing of data to standard date and time values, and generation of aggregates for analyses. The company must store the transformed data in S3 buckets that data analysts access. The company needs a prebuilt solution for data transformation that does not require code. The solution must provide data lineage and data profiling. The company needs to share the data transformation steps with employees throughout the company. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 AWS Glue Studio 可视画布来转换数据。使用 AWS Glue 作业与员工共享转换步骤。",
+          "en": "Configure an AWS Glue Studio visual canvas to transform the data. Share the transformation steps with employees by using AWS Glue jobs."
+        },
+        "B": {
+          "zh": "配置 Amazon EMR Serverless 以转换数据。使用 EMR 无服务器作业与员工共享转型步骤。",
+          "en": "Configure Amazon EMR Serverless to transform the data. Share the transformation steps with employees by using EMR Serverless jobs."
+        },
+        "C": {
+          "zh": "配置 AWS Glue DataBrew 以转换数据。使用 DataBrew 配方与员工共享转换步骤。",
+          "en": "Configure AWS Glue DataBrew to transform the data. Share the transformation steps with employees by using DataBrew recipes."
+        },
+        "D": {
+          "zh": "为数据创建 Amazon Athena 表。编写 Athena SQL 查询来转换数据。与员工共享 Athena SQL 查询。",
+          "en": "Create Amazon Athena tables for the data. Write Athena SQL queries to transform the data. Share the Athena SQL queries with employees."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS Glue Studio 并不直接支持数据分析和数据分析功能，也没有提供像 DataBrew 这样的“配方”功能来共享转换步骤。",
+          "en": "Incorrect. Technical reason: AWS Glue Studio does not directly support data analysis and data analysis capabilities, nor does it provide a \"recipe\" feature like DataBrew to share transformation steps."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： EMR Serverless 需要编写代码或脚本来定义数据转换逻辑，这是一种不适合问题的“无代码解决方案”。此外，它不直接支持数据剖析和数据分析功能。",
+          "en": "Incorrect. Technical reason: EMR Serverless requires writing code or scripts to define data transformation logic, which is a \"no-code solution\" that does not fit the problem. Furthermore, it does not directly support data profiling and data analysis functions."
+        },
+        "C": {
+          "zh": "正確。技术原因： DataBrew 满足所有要求，包括无代理解决方案、数据剖析、数据分析以及共享转换步骤的能力。",
+          "en": "Correct. Technical reason: DataBrew ticks all the boxes, including an agentless solution, data profiling, data analysis, and the ability to share transformation steps."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Athena 需要编写 SQL 查询，这是一种“无代理解决方案”，不符合问题的要求。此外，它不直接支持数据剖析和数据分析功能。",
+          "en": "Incorrect. Technical reason: Athena requires writing SQL queries, which is an \"agentless solution\" and does not fit the requirements of the question. Furthermore, it does not directly support data profiling and data analysis functions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置 AWS Glue DataBrew 以转换数据。使用 DataBrew 配方与员工共享转换步骤。",
+        "en": "C. Configure AWS Glue DataBrew to transform the data. Share the transformation steps with employees by using DataBrew recipes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： DataBrew 满足所有要求，包括无代理解决方案、数据剖析、数据分析以及共享转换步骤的能力。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: DataBrew ticks all the boxes, including an agentless solution, data profiling, data analysis, and the ability to share transformation steps."
+      }
+    },
+    {
+      "question_no": 813,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师在位于应用程序负载均衡器 (ALB) 后面的各个目标组中的多个 Amazon EC2 实例上运行 Web 应用程序。用户可以通过公共网站访问该应用程序。解决方案架构师希望允许工程师使用网站的开发版本来访问一个特定的开发 EC2 实例来测试应用程序的新功能。解决方案架构师希望使用 Amazon Route 53 托管区域让工程师能够访问开发实例。即使开发实例被替换，解决方案也必须自动路由到开发实例。哪种解决方案可以满足这些要求？",
+        "en": "A solutions architect runs a web application on multiple Amazon EC2 instances that are in individual target groups behind an Application Load Balancer (ALB). Users can reach the application through a public website. The solutions architect wants to allow engineers to use a development version of the website to access one specific development EC2 instance to test new features for the application. The solutions architect wants to use an Amazon Route 53 hosted zone to give the engineers access to the development instance. The solution must automatically route to the development instance even if the development instance is replaced. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为开发网站创建一条 A 记录，并将其值设置为 ALB。在 ALB 上创建侦听器规则，将开发网站的请求转发到包含开发实例的目标组。",
+          "en": "Create an A Record for the development website that has the value set to the ALB. Create a listener rule on the ALB that forwards requests for the development website to the target group that contains the development instance."
+        },
+        "B": {
+          "zh": "使用公共 IP 地址重新创建开发实例。为开发网站创建一条 A 记录，其值设置为开发实例的公共 IP 地址。",
+          "en": "Recreate the development instance with a public IP address. Create an A Record for the development website that has the value set to the public IP address of the development instance."
+        },
+        "C": {
+          "zh": "为开发网站创建一条 A 记录，并将其值设置为 ALB。在ALB上创建监听规则，将开发网站的请求重定向到开发实例的公网IP地址。",
+          "en": "Create an A Record for the development website that has the value set to the ALB. Create a listener rule on the ALB to redirect requests for the development website to the public IP address of the development instance."
+        },
+        "D": {
+          "zh": "将所有实例置于同一目标组中。为开发网站创建 A 记录。将值设置为 ALB。在 ALB 上创建侦听器规则，将开发网站的请求转发到目标组。",
+          "en": "Place all the instances in the same target group. Create an A Record for the development website. Set the value to the ALB. Create a listener rule on the ALB that forwards requests for the development website to the target group."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：此选项使用 Route 53 的 A 记录指向 ALB，并通过 ALB 的侦听器规则将请求路由到特定目标组。目标组可以动态管理实例。即使更换开发实例，目标组仍然可以自动更新实例信息。满足问题要求：即使替换实例，也自动将属性转移到开发实例。",
+          "en": "Correct. Technical reason: This option uses Route 53's A record to point to the ALB and routes requests to a specific target group through the ALB's listener rules. Target groups can dynamically manage instances. Even if the development instance is replaced, the target group can still automatically update the instance information. Meets the question requirements: Automatically transfer properties to the development instance even if the instance is replaced."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：用于连接实例的公网IP地址不满足高可用性要求。如果更改实例，公网IP地址也会发生变化，导致DNS记录失效。不满足题目要求：无法自动创建新的开发实例。",
+          "en": "Incorrect. Technical reason: The public IP address used to connect to the instance does not meet high availability requirements. If you change the instance, the public IP address will change, causing the DNS record to become invalid. Does not meet the question requirements: Unable to automatically create a new development instance."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然使用了ALB，但是将请求重定向到实例的公共IP地址仍然存在问题。如果更换实例，公网IP地址会发生变化，导致路线图失败。不满足题目要求：无法自动创建新的开发实例。",
+          "en": "Incorrect. Technical reason: Although ALB is used, there is still an issue with redirecting requests to the public IP address of the instance. If the instance is replaced, the public IP address will change, causing the roadmap to fail. Does not meet the question requirements: Unable to automatically create a new development instance."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：将所有实例放在同一目标组中将导致开发实例与生产实例混合，并且无法为开发实例生成单独的实例。不满足问题要求：需要单独的开发实例路线图。",
+          "en": "Incorrect. Technical reason: Placing all instances in the same target group will result in development instances being mixed with production instances, and separate instances cannot be spawned for development instances. Does not meet question requirements: A separate development instance roadmap is required."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为开发网站创建一条 A 记录，并将其值设置为 ALB。在 ALB 上创建侦听器规则，将开发网站的请求转发到包含开发实例的目标组。",
+        "en": "A. Create an A Record for the development website that has the value set to the ALB. Create a listener rule on the ALB that forwards requests for the development website to the target group that contains the development instance."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：此选项使用 Route 53 的 A 记录指向 ALB，并通过 ALB 的侦听器规则将请求路由到特定目标组。目标组可以动态管理实例。即使更换开发实例，目标组仍然可以自动更新实例信息。满足问题要求：即使替换实例，也自动将属性转移到开发实例。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This option uses Route 53's A record to point to the ALB and routes requests to a specific target group through the ALB's listener rules. Target groups can dynamically manage instances. Even if the development instance is replaced, the target group can still automatically update the instance information. Meets the question requirements: Automatically transfer properties to the development instance even if the instance is replaced."
+      }
+    },
+    {
+      "question_no": 814,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在公司数据中心的 Kubernetes 集群上运行容器应用程序。该应用程序使用高级消息队列协议 (AMQP) 与消息队列进行通信。数据中心的扩展速度不够快，无法满足公司不断扩大的业务需求。该公司希望将工作负载迁移到 AWS。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company runs a container application on a Kubernetes cluster in the company's data center. The application uses Advanced Message Queuing Protocol (AMQP) to communicate with a message queue. The data center cannot scale fast enough to meet the company’s expanding business needs. The company wants to migrate the workloads to AWS. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将容器应用程序迁移到 Amazon Elastic Container Service (Amazon ECS)。使用 Amazon Simple Queue Service (Amazon SQS) 检索消息。",
+          "en": "Migrate the container application to Amazon Elastic Container Service (Amazon ECS). Use Amazon Simple Queue Service (Amazon SQS) to retrieve the messages."
+        },
+        "B": {
+          "zh": "将容器应用程序迁移到 Amazon Elastic Kubernetes Service (Amazon EKS)。使用 Amazon MQ 检索消息。",
+          "en": "Migrate the container application to Amazon Elastic Kubernetes Service (Amazon EKS). Use Amazon MQ to retrieve the messages."
+        },
+        "C": {
+          "zh": "使用高度可用的 Amazon EC2 实例来运行应用程序。使用 Amazon MQ 检索消息。",
+          "en": "Use highly available Amazon EC2 instances to run the application. Use Amazon MQ to retrieve the messages."
+        },
+        "D": {
+          "zh": "使用 AWS Lambda 函数运行应用程序。使用 Amazon Simple Queue Service (Amazon SQS) 检索消息。",
+          "en": "Use AWS Lambda functions to run the application. Use Amazon Simple Queue Service (Amazon SQS) to retrieve the messages."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon ECS 是一种托管容器服务，适合运行容器化应用程序，但它不直接支持 Kubernetes 工作负载迁移。 AMQP 是一种高级消息队列协议， Amazon SQS 不支持，因此无法满足您的消息队列需求。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Amazon ECS is a managed container service suitable for running containerized applications, but it does not directly support Kubernetes workload migration. AMQP is an advanced message queuing protocol that Amazon SQS does not support and therefore cannot meet your message queuing needs. This option is wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因： Amazon EKS 是一项托管 Kubernetes 服务，直接支持 Kubernetes 工作负载的迁移。 Amazon MQ 支持 AMQP 协议，可以满足消息队列的需求。这个选项是正确的。",
+          "en": "Correct. Technical reason: Amazon EKS is a managed Kubernetes service that directly supports the migration of Kubernetes workloads. Amazon MQ supports the AMQP protocol, which can meet the needs of message queues. This option is correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 Amazon EC2 实例运行应用程序需要手动管理基础设施，从而增加了运营开销。尽管 Amazon MQ 支持 AMQP，但此选项的操作开销较高，并且不满足“最低操作开销”要求。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Running applications using Amazon EC2 instances requires manual management of the infrastructure, adding operational overhead. Although Amazon MQ supports AMQP, this option has high operational overhead and does not meet the \"minimum operational overhead\" requirement. This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS Lambda 是一种无服务器计算服务，但它不适合运行需要持续运行的容器化应用程序。 Amazon SQS 不支持 AMQP 协议，因此无法满足消息队列的需求。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: AWS Lambda is a serverless computing service, but it's not suitable for running containerized applications that need to run continuously. Amazon SQS does not support the AMQP protocol and therefore cannot meet the needs of message queues. This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将容器应用程序迁移到 Amazon Elastic Kubernetes Service (Amazon EKS)。使用 Amazon MQ 检索消息。",
+        "en": "B. Migrate the container application to Amazon Elastic Kubernetes Service (Amazon EKS). Use Amazon MQ to retrieve the messages."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (95%) 5%。热门讨论与考点摘要： Amazon EKS 是一项托管 Kubernetes 服务，直接支持 Kubernetes 工作负载的迁移。 Amazon MQ 支持 AMQP 协议，可以满足消息队列的需求。这个选项是正确的。",
+        "en": "Community vote as displayed: B (95%) 5%. Popular discussion and key point summary: Amazon EKS is a managed Kubernetes service that directly supports the migration of Kubernetes workloads. Amazon MQ supports the AMQP protocol, which can meet the needs of message queues. This option is correct."
+      }
+    },
+    {
+      "question_no": 815,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家在线游戏公司将其平台托管在跨多个 AWS 区域的网络负载均衡器 (NLB) 后面的 Amazon EC2 实例上。 NLB 可以通过 互联网 将请求路由到目标。该公司希望通过减少全球客户群的端到端加载时间来改善客户的游戏体验。哪种解决方案可以满足这些要求？",
+        "en": "An online gaming company hosts its platform on Amazon EC2 instances behind Network Load Balancers (NLBs) across multiple AWS Regions. The NLBs can route requests to targets over the internet. The company wants to improve the customer playing experience by reducing end-to-end load time for its global customer base. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在每个区域中创建应用程序负载均衡器 (ALB) 以替换现有的 NLB。将现有 EC2 实例注册为每个区域中 ALB 的目标。",
+          "en": "Create Application Load Balancers (ALBs) in each Region to replace the existing NLBs. Register the existing EC2 instances as targets for the ALBs in each Region."
+        },
+        "B": {
+          "zh": "配置 Amazon Route 53 以将同等权重的流量路由到每个区域中的 NLB。",
+          "en": "Configure Amazon Route 53 to route equally weighted traffic to the NLBs in each Region."
+        },
+        "C": {
+          "zh": "在公司拥有大量客户群的其他区域创建额外的 NLB 和 EC2 实例。",
+          "en": "Create additional NLBs and EC2 instances in other Regions where the company has large customer bases."
+        },
+        "D": {
+          "zh": "在 AWS Global Accelerator 中创建标准加速器。将现有 NLB 配置为目标端点。",
+          "en": "Create a standard accelerator in AWS Global Accelerator. Configure the existing NLBs as target endpoints."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：尽管 ALB 可以提供高级 HTTP/HTTPS 功能，但它无法直接降低全球用户的延迟。 ALB主要用于应用层负载均衡，需要解决的问题是优化全局用户访问体验。 ALB无法解决跨区域网络延迟问题。",
+          "en": "Incorrect. Technical reason: Although ALB can provide advanced HTTP/HTTPS functionality, it cannot directly reduce latency for global users. ALB is mainly used for application layer load balancing, and the problem needs to be to optimize the global user access experience. ALB cannot solve the cross-region network delay problem."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Route 53 的流量路由策略可以将流量分发到不同区域的 NLB，但无法优化网络路径或减少延迟。 Route 53仅负责DNS解析，不提供加速功能。",
+          "en": "Incorrect. Technical reason: Route 53's traffic routing policy can distribute traffic to NLBs in different regions, but it cannot optimize network paths or reduce latency. Route 53 is only responsible for DNS resolution and does not provide acceleration functions."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然添加NLB和EC2实例可以扩展容量，但它并不能解决网络延迟问题。跨地域的网络优化需要使用专用的加速服务，而不是简单地添加资源。",
+          "en": "Incorrect. Technical reason: While adding NLB and EC2 instances can expand capacity, it does not solve network latency issues. Cross-region network optimization requires the use of dedicated acceleration services rather than simply adding resources."
+        },
+        "D": {
+          "zh": "正確。技术原因： AWS Global Accelerator 可以通过使用 AWS 全球网络优化流量路径来显著减少网络延迟。它将用户流量路由到最近的 AWS 边缘站点，并通过优化路径将流量发送到目标区域中的 NLB。这是解决全球用户访问延迟的最佳方案。",
+          "en": "Correct. Technical reason: AWS Global Accelerator can significantly reduce network latency by optimizing traffic paths using the AWS global network. It routes user traffic to the nearest AWS edge location and sends the traffic via an optimized path to the NLB in the target region. This is the best solution to solve the access delay for global users."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 AWS Global Accelerator 中创建标准加速器。将现有 NLB 配置为目标端点。",
+        "en": "D. Create a standard accelerator in AWS Global Accelerator. Configure the existing NLBs as target endpoints."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (100%)。热门讨论与考点摘要： AWS Global Accelerator 可以通过使用 AWS 全球网络优化流量路径来显著减少网络延迟。它将用户流量路由到最近的 AWS 边缘站点，并通过优化路径将流量发送到目标区域中的 NLB。这是解决全球用户访问延迟的最佳方案。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: AWS Global Accelerator can significantly reduce network latency by optimizing traffic paths using the AWS global network. It routes user traffic to the nearest AWS edge location and sends the traffic via an optimized path to the NLB in the target region. This is the best solution to solve the access delay for global users."
+      }
+    }
+  ]
+}

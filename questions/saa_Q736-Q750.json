@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 736,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有多个 AWS 账户，其应用程序部署在 us-west-2 区域。应用程序日志存储在每个账户的 Amazon S3 存储桶中。该公司希望构建一个使用单个 S3 存储桶的集中式日志分析解决方案。日志不得离开 us-west-2，并且该公司希望将运营开销降至最低。哪种解决方案满足这些要求并且最具成本效益？",
+        "en": "A company has multiple AWS accounts with applications deployed in the us-west-2 Region. Application logs are stored within Amazon S3 buckets in each account. The company wants to build a centralized log analysis solution that uses a single S3 bucket. Logs must not leave us-west-2, and the company wants to incur minimal operational overhead. Which solution meets these requirements and is MOST cost-effective?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建一项 S3 生命周期策略，将对象从应用程序 S3 存储桶之一复制到集中式 S3 存储桶。",
+          "en": "Create an S3 Lifecycle policy that copies the objects from one of the application S3 buckets to the centralized S3 bucket."
+        },
+        "B": {
+          "zh": "使用 S3 同区域复制将日志从 S3 存储桶复制到 us-west-2 中的另一个 S3 存储桶。使用此 S3 存储桶进行日志分析。",
+          "en": "Use S3 Same-Region Replication to replicate logs from the S3 buckets to another S3 bucket in us-west-2. Use this S3 bucket for log analysis."
+        },
+        "C": {
+          "zh": "编写一个脚本，每天使用 PutObject API 操作将存储桶的全部内容复制到 us-west-2 中的另一个 S3 存储桶。使用此 S3 存储桶进行日志分析。",
+          "en": "Write a script that uses the PutObject API operation every day to copy the entire contents of the buckets to another S3 bucket in us-west-2. Use this S3 bucket for log analysis."
+        },
+        "D": {
+          "zh": "在这些账户中编写 AWS Lambda 函数，每次将日志传送到 S3 存储桶（s3:ObjectCreated:* 事件）时都会触发这些函数。将日志复制到 us-west-2 中的另一个 S3 存储桶。使用此 S3 存储桶进行日志分析。",
+          "en": "Write AWS Lambda functions in these accounts that are triggered every time logs are delivered to the S3 buckets (s3:ObjectCreated:* event). Copy the logs to another S3 bucket in us-west-2. Use this S3 bucket for log analysis."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 生命周期策略用于管理对象的生命周期（例如过期或转移到其他存储层），不用于跨存储桶复制。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Amazon S3 lifecycle policies are used to manage the lifecycle of objects (such as expiration or transfer to other storage tiers) and are not used for cross-bucket replication. This option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因： S3 同区域复制 (SRR) 是专门设计用于复制同一区域内的对象的功能。支持跨账户复制，可以满足日志集中分析的需求，同时将日志保留在us-west-2区域。这种方法非常有效，而且很便宜。",
+          "en": "Correct. Technical reason: S3 Same Region Replication (SRR) is a feature specifically designed to replicate objects within the same region. Supports cross-account replication, which can meet the needs of centralized log analysis while keeping logs in the us-west-2 region. This method works like crazy and is cheap."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用脚本进行复制需要额外的开发和维护工作，从而增加了操作复杂性。此外， PutObject API 调用可能会产生额外成本，并且不如 SRR 高效。",
+          "en": "Incorrect. Technical reason: Replication using scripts requires additional development and maintenance efforts, increasing operational complexity. Additionally, PutObject API calls may incur additional costs and are not as efficient as SRR."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然Lambda函数可以实现实时复制，但需要在每个账户中进行编排和管理，增加了操作复杂度。此外， Lambda 的执行成本可能比 SRR 更高，尤其是在日志量很大的情况下。",
+          "en": "Incorrect. Technical reason: Although Lambda functions can achieve real-time replication, they need to be orchestrated and managed in each account, increasing operational complexity. Additionally, Lambda can be more expensive to execute than SRR, especially if the log volume is large."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 S3 同区域复制将日志从 S3 存储桶复制到 us-west-2 中的另一个 S3 存储桶。使用此 S3 存储桶进行日志分析。",
+        "en": "B. Use S3 Same-Region Replication to replicate logs from the S3 buckets to another S3 bucket in us-west-2. Use this S3 bucket for log analysis."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要： S3 同区域复制 (SRR) 是专门设计用于复制同一区域内的对象的功能。支持跨账户复制，可以满足日志集中分析的需求，同时将日志保留在us-west-2区域。这种方法非常有效，而且很便宜。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: S3 Same Region Replication (SRR) is a feature specifically designed to replicate objects within the same region. Supports cross-account replication, which can meet the needs of centralized log analysis while keeping logs in the us-west-2 region. This method works like crazy and is cheap."
+      }
+    },
+    {
+      "question_no": 737,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个应用程序，可以向世界各地的学生提供点播培训视频。该应用程序还允许授权内容开发者上传视频。数据存储在 us-east-2 区域的 Amazon S3 存储桶中。该公司已在 eu-west-2 区域创建了一个 S3 存储桶，并在 ap-southeast-1 区域创建了一个 S3 存储桶。该公司希望将数据复制到新的 S3 存储桶。该公司需要最大限度地减少上传视频的开发人员和在 eu-west-2 和 ap-southeast-1 附近流式传输视频的学生的延迟。哪种步骤组合可以通过对应用程序进行最少的更改来满足这些要求？ （选择两个。）",
+        "en": "A company has an application that delivers on-demand training videos to students around the world. The application also allows authorized content developers to upload videos. The data is stored in an Amazon S3 bucket in the us-east-2 Region. The company has created an S3 bucket in the eu-west-2 Region and an S3 bucket in the ap-southeast-1 Region. The company wants to replicate the data to the new S3 buckets. The company needs to minimize latency for developers who upload videos and students who stream videos near eu-west-2 and ap-southeast-1. Which combination of steps will meet these requirements with the FEWEST changes to the application? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "配置从 us-east-2 S3 存储桶到 eu-west-2 S3 存储桶的单向复制。配置从 us-east-2 S3 存储桶到 ap-southeast-1 S3 存储桶的单向复制。",
+          "en": "Configure one-way replication from the us-east-2 S3 bucket to the eu-west-2 S3 bucket. Configure one-way replication from the us-east-2 S3 bucket to the ap-southeast-1 S3 bucket."
+        },
+        "B": {
+          "zh": "配置从 us-east-2 S3 存储桶到 eu-west-2 S3 存储桶的单向复制。配置从 eu-west-2 S3 存储桶到 ap-southeast-1 S3 存储桶的单向复制。",
+          "en": "Configure one-way replication from the us-east-2 S3 bucket to the eu-west-2 S3 bucket. Configure one-way replication from the eu-west-2 S3 bucket to the ap-southeast-1 S3 bucket."
+        },
+        "C": {
+          "zh": "在所有三个区域的 S3 存储桶之间配置双向（双向）复制。",
+          "en": "Configure two-way (bidirectional) replication among the S3 buckets that are in all three Regions."
+        },
+        "D": {
+          "zh": "创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流。请勿修改视频上传应用程序。",
+          "en": "Create an S3 Multi-Region Access Point. Modify the application to use the Amazon Resource Name (ARN) of the Multi- Region Access Point for video streaming. Do not modify the application for video uploads."
+        },
+        "E": {
+          "zh": "创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流和上传。",
+          "en": "Create an S3 Multi-Region Access Point. Modify the application to use the Amazon Resource Name (ARN) of the Multi- Region Access Point for video streaming and uploads."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：配置从 us-east-2 S3 存储桶到 eu-west-2 S3 存储桶的单向复制。配置从 us-east-2 S3 存储桶到 ap-southeast-1 S3 存储桶的单向复制。技术分析：该选项通过跨区域复制（CRR）将us-east-2中的数据复制到其他区域的S3存储桶中，以满足数据复制需求。问题：虽然可以进行数据复制，但无法优化视频上传和流式传输的延迟，因为开发人员和学生仍然需要直接访问 us-east-2 上的 S3 存储桶。",
+          "en": "Incorrect. Technical reason: Configure one-way replication from the us-east-2 S3 bucket to the eu-west-2 S3 bucket. Configure one-way replication from the us-east-2 S3 bucket to the ap-southeast-1 S3 bucket. Technical analysis: This option uses cross-region replication (CRR) to copy data in us-east-2 to S3 buckets in other regions to meet data replication needs. Problem: While data replication is possible, latency for video uploads and streaming cannot be optimized because developers and students still need direct access to the S3 bucket on us-east-2."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：配置从 us-east-2 S3 存储桶到 eu-west-2 S3 存储桶的单向复制。配置从 eu-west-2 S3 存储桶到 ap-southeast-1 S3 存储桶的单向复制。技术分析：该选项使用链式跨区域复制（CRR）将数据从 us-east-2 复制到 eu-west-2，然后从 eu-west-2 复制到 ap-southeast-1。问题：链式复制增加了复杂性，并且无法优化视频上传和流媒体延迟。",
+          "en": "Incorrect. Technical reason: Configure one-way replication from the us-east-2 S3 bucket to the eu-west-2 S3 bucket. Configure one-way replication from the eu-west-2 S3 bucket to the ap-southeast-1 S3 bucket. Technical analysis: This option uses chained cross-region replication (CRR) to replicate data from us-east-2 to eu-west-2, and then from eu-west-2 to ap-southeast-1. Problem: Chained replication adds complexity and fails to optimize video upload and streaming latency."
+        },
+        "C": {
+          "zh": "正確。技术原因：在所有三个区域的 S3 存储桶之间配置双向（双向）复制。技术分析：双向复制可以保证各个Region的S3桶保持同步，满足数据复制的需求。优点：开发人员和学生可以访问最近的区域以优化延迟。问题：双向复制可能会增加成本和复杂性，但满足问题的要求。",
+          "en": "Correct. Technical reason: Configure bidirectional (two-way) replication between S3 buckets in all three regions. Technical analysis: Bidirectional replication can ensure that the S3 buckets of each Region remain synchronized to meet the needs of data replication. Pros: Developers and students can access the nearest zone to optimize latency. Question: Bidirectional replication may add cost and complexity, but meets the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流。请勿修改视频上传应用程序。技术分析：多区域接入点可以优化视频流的延迟，但不能解决视频上传延迟的问题。问题：未完全满足出题要求。",
+          "en": "Incorrect. Technical reason: Create an S3 multi-region access point. Modify the application to use the Amazon Resource Name (ARN) of the multi-region access point for video streaming. Do not modify the video upload application. Technical analysis: Multi-region access points can optimize the delay of video streaming, but do not solve the problem of video upload delay. Problem: The question requirements are not fully met."
+        },
+        "E": {
+          "zh": "正確。技术原因：创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流和上传。技术分析：多区域接入点优化了视频上传和流媒体的延迟，并最大限度地减少了应用程序修改。优点：完全满足题目要求，降低复杂度。",
+          "en": "Correct. Technical reason: Create an S3 multi-region access point. Modify the application to use the Amazon Resource Name (ARN) of the multi-region access point for video streaming and uploading. Technical Analysis: Multi-zone access points optimize latency for video uploads and streaming and minimize application modifications. Advantages: Fully meet the question requirements and reduce complexity."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "C",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "C. 在所有三个区域的 S3 存储桶之间配置双向（双向）复制。；E. 创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流和上传。",
+        "en": "C. Configure two-way (bidirectional) replication among the S3 buckets that are in all three Regions.; E. Create an S3 Multi-Region Access Point. Modify the application to use the Amazon Resource Name (ARN) of the Multi- Region Access Point for video streaming and uploads."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： CE (54%) AD (34%) 5%。热门讨论与考点摘要：在所有三个区域的 S3 存储桶之间配置双向（双向）复制。技术分析：双向复制可以保证各个Region的S3桶保持同步，满足数据复制的需求。优点：开发人员和学生可以访问最近的区域以优化延迟。问题：双向复制可能会增加成本和复杂性，但满足问题的要求。；创建 S3 多区域接入点。修改应用程序以使用多区域接入点的 Amazon 资源名称 (ARN) 进行视频流和上传。技术分析：多区域接入点优化了视频上传和流媒体的延迟，并最大限度地减少了应用程序修改。优点：完全满足题目要求，降低复杂度。",
+        "en": "Community vote as displayed: CE (54%) AD (34%) 5%. Popular discussion and key point summary: Configure bidirectional (two-way) replication between S3 buckets in all three regions. Technical analysis: Bidirectional replication can ensure that the S3 buckets of each Region remain synchronized to meet the needs of data replication. Pros: Developers and students can access the nearest zone to optimize latency. Question: Bidirectional replication may add cost and complexity, but meets the requirements of the question.; Create an S3 multi-region access point. Modify the application to use the Amazon Resource Name (ARN) of the multi-region access point for video streaming and uploading. Technical Analysis: Multi-zone access points optimize latency for video uploads and streaming and minimize application modifications. Advantages: Fully meet the question requirements and reduce complexity."
+      }
+    },
+    {
+      "question_no": 738,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个新的移动应用程序。在世界任何地方，用户都可以查看他们选择的主题的本地新闻。用户还可以从应用程序内部发布照片和视频。用户通常在内容发布后的最初几分钟内访问内容。新内容很快取代旧内容，然后旧内容消失。新闻的本地性质意味着用户会在其上传的 AWS 区域内消费 90% 的内容。哪种解决方案将通过提供最低的内容上传延迟来优化用户体验？",
+        "en": "A company has a new mobile app. Anywhere in the world, users can see local news on topics they choose. Users also can post photos and videos from inside the app. Users access content often in the first minutes after the content is posted. New content quickly replaces older content, and then the older content disappears. The local nature of the news means that users consume 90% of the content within the AWS Region where it is uploaded. Which solution will optimize the user experience by providing the LOWEST latency for content uploads?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon S3 中上传和存储内容。使用 Amazon CloudFront 进行上传。",
+          "en": "Upload and store content in Amazon S3. Use Amazon CloudFront for the uploads."
+        },
+        "B": {
+          "zh": "在 Amazon S3 中上传和存储内容。使用 S3 传输加速进行上传。",
+          "en": "Upload and store content in Amazon S3. Use S3 Transfer Acceleration for the uploads."
+        },
+        "C": {
+          "zh": "将内容上传到距离用户最近的区域中的 Amazon EC2 实例。将数据复制到 Amazon S3。",
+          "en": "Upload content to Amazon EC2 instances in the Region that is closest to the user. Copy the data to Amazon S3."
+        },
+        "D": {
+          "zh": "将内容上传并存储在距离用户最近的区域的 Amazon S3 中。使用 Amazon CloudFront 的多个发行版。",
+          "en": "Upload and store content in Amazon S3 in the Region that is closest to the user. Use multiple distributions of Amazon CloudFront."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon CloudFront 主要用于内容分发（下载）而不是优化上传。使用 CloudFront 上传不会显著减少延迟。",
+          "en": "Incorrect. Technical reason: Amazon CloudFront is primarily used for content distribution (downloading) rather than optimizing uploads. Uploading using CloudFront does not significantly reduce latency."
+        },
+        "B": {
+          "zh": "正確。技术原因： S3传输加速通过使用AWS的全球加速网络来优化上传速度，特别适合跨区域上传内容。",
+          "en": "Correct. Technical reason: S3 Transfer Acceleration optimizes upload speeds by using AWS's global acceleration network, which is especially suitable for uploading content across regions."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然 EC2 实例可以提供低延迟，但它们需要额外的管理和维护工作。将数据从 EC2 复制到 S3 会增加复杂性和成本。",
+          "en": "Incorrect. Technical reason: While EC2 instances can provide low latency, they require additional management and maintenance efforts. Copying data from EC2 to S3 adds complexity and cost."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：尽管存储最靠近用户的内容可以减少延迟，但 CloudFront 的主要功能是优化内容分发（下载），而不是上传。",
+          "en": "Incorrect. Technical reason: Although storing content closest to the user can reduce latency, CloudFront's primary function is to optimize content distribution (downloads), not uploads."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon S3 中上传和存储内容。使用 S3 传输加速进行上传。",
+        "en": "B. Upload and store content in Amazon S3. Use S3 Transfer Acceleration for the uploads."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (88%) 12%。热门讨论与考点摘要： S3传输加速通过使用AWS的全球加速网络来优化上传速度，特别适合跨区域上传内容。",
+        "en": "Community vote as displayed: B (88%) 12%. Popular discussion and key point summary: S3 Transfer Acceleration optimizes upload speeds by using AWS's global acceleration network, which is especially suitable for uploading content across regions."
+      }
+    },
+    {
+      "question_no": 739,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在构建一个使用无服务器架构的新应用程序。该架构将包含 Amazon API Gateway REST API 和用于管理传入请求的 AWS Lambda 函数。该公司希望添加一项服务，该服务可以将从 API Gateway REST API 收到的消息发送到多个目标 Lambda 函数进行处理。该服务必须提供消息过滤，使目标 Lambda 函数能够仅接收函数所需的消息。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company is building a new application that uses serverless architecture. The architecture will consist of an Amazon API Gateway REST API and AWS Lambda functions to manage incoming requests. The company wants to add a service that can send messages received from the API Gateway REST API to multiple target Lambda functions for processing. The service must offer message filtering that gives the target Lambda functions the ability to receive only the messages the functions need. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将请求从 API Gateway REST API 发送到 Amazon Simple Notification Service (Amazon SNS) 主题。将 Amazon Simple Queue Service (Amazon SQS) 队列订阅到 SNS 主题。配置目标 Lambda 函数以轮询不同的 SQS 队列。",
+          "en": "Send the requests from the API Gateway REST API to an Amazon Simple Notification Service (Amazon SNS) topic. Subscribe Amazon Simple Queue Service (Amazon SQS) queues to the SNS topic. Configure the target Lambda functions to poll the different SQS queues."
+        },
+        "B": {
+          "zh": "将请求从 API Gateway REST API 发送到 Amazon EventBridge。配置 EventBridge 以调用目标 Lambda 函数。",
+          "en": "Send the requests from the API Gateway REST API to Amazon EventBridge. Configure EventBridge to invoke the target Lambda functions."
+        },
+        "C": {
+          "zh": "将请求从 API Gateway REST API 发送到 Amazon Managed Streaming for Apache Kafka (Amazon MSK)。配置 Amazon MSK 以将消息发布到目标 Lambda 函数。",
+          "en": "Send the requests from the API Gateway REST API to Amazon Managed Streaming for Apache Kafka (Amazon MSK). Configure Amazon MSK to publish the messages to the target Lambda functions."
+        },
+        "D": {
+          "zh": "将来自 API Gateway REST API 的请求发送到多个 Amazon Simple Queue Service (Amazon SQS) 队列。配置目标 Lambda 函数以轮询不同的 SQS 队列。",
+          "en": "Send the requests from the API Gateway REST API to multiple Amazon Simple Queue Service (Amazon SQS) queues. Configure the target Lambda functions to poll the different SQS queues."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将请求从 API Gateway REST API 发送到 Amazon Simple Notification Service (Amazon SNS) 主题。将 Amazon Simple Queue Service (Amazon SQS) 队列订阅到 SNS 主题。配置目标 Lambda 函数以轮询不同的 SQS 队列。",
+        "en": "A. Send the requests from the API Gateway REST API to an Amazon Simple Notification Service (Amazon SNS) topic. Subscribe Amazon Simple Queue Service (Amazon SQS) queues to the SNS topic. Configure the target Lambda functions to poll the different SQS queues."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (50%) B (48%) 2%。热门讨论与考点摘要：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+        "en": "Community vote as displayed: A (50%) B (48%) 2%. Popular discussion and key point summary: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
+      }
+    },
+    {
+      "question_no": 740,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司将数百万个归档文件迁移到 Amazon S3。解决方案架构师需要实施一个解决方案，使用客户提供的密钥对所有归档数据进行加密。该解决方案必须加密现有的未加密对象和未来的对象。哪种解决方案可以满足这些要求？",
+        "en": "A company migrated millions of archival files to Amazon S3. A solutions architect needs to implement a solution that will encrypt all the archival data by using a customer-provided key. The solution must encrypt existing unencrypted objects and future objects. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "通过过滤 Amazon S3 清单报告来创建未加密对象的列表。配置 S3 批量操作作业，以使用客户提供的密钥 (SSE-C) 通过服务器端加密来加密列表中的对象。配置 S3 默认加密功能以使用带有客户提供的密钥的服务器端加密 (SSE-C)。",
+          "en": "Create a list of unencrypted objects by filtering an Amazon S3 Inventory report. Configure an S3 Batch Operations job to encrypt the objects from the list with a server-side encryption with a customer-provided key (SSE-C). Configure the S3 default encryption feature to use a server-side encryption with a customer-provided key (SSE-C)."
+        },
+        "B": {
+          "zh": "使用 S3 Storage Lens 指标来识别未加密的 S3 存储桶。配置 S3 默认加密功能以使用带有 AWS KMS 密钥的服务器端加密 (SSE-KMS)。",
+          "en": "Use S3 Storage Lens metrics to identify unencrypted S3 buckets. Configure the S3 default encryption feature to use a server- side encryption with AWS KMS keys (SSE-KMS)."
+        },
+        "C": {
+          "zh": "通过筛选 Amazon S3 的 AWS 使用情况报告来创建未加密对象的列表。配置 AWS Batch 作业以使用 AWS KMS 密钥 (SSE-KMS) 进行服务器端加密来加密列表中的对象。配置 S3 默认加密功能以使用带有 AWS KMS 密钥的服务器端加密 (SSE-KMS)。",
+          "en": "Create a list of unencrypted objects by filtering the AWS usage report for Amazon S3. Configure an AWS Batch job to encrypt the objects from the list with a server-side encryption with AWS KMS keys (SSE-KMS). Configure the S3 default encryption feature to use a server-side encryption with AWS KMS keys (SSE-KMS)."
+        },
+        "D": {
+          "zh": "通过筛选 Amazon S3 的 AWS 使用情况报告来创建未加密对象的列表。配置 S3 默认加密功能以使用带有客户提供的密钥的服务器端加密 (SSE-C)。",
+          "en": "Create a list of unencrypted objects by filtering the AWS usage report for Amazon S3. Configure the S3 default encryption feature to use a server-side encryption with a customer-provided key (SSE-C)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：此选项使用 Amazon S3 库存报告来识别未加密的对象并通过 S3 批量操作对其进行加密，符合要求。正确：配置S3默认加密功能使用SSE-C，确保以后的对象被加密并满足问题要求。",
+          "en": "Correct. Technical reason: This option uses Amazon S3 inventory reports to identify unencrypted objects and encrypt them with S3 batch operations, compliant. Correct: Configure the S3 default encryption function to use SSE-C to ensure that future objects are encrypted and meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： S3 Storage Lens主要用于监控和分析存储使用情况，而不是直接识别未加密的对象。错误：问题要求使用客户提供的密钥 (SSE-C)，但此选项使用 AWS KMS 密钥 (SSE-KMS)，这不符合要求。",
+          "en": "Incorrect. Technical reason: S3 Storage Lens is primarily used to monitor and analyze storage usage, rather than directly identifying unencrypted objects. Error: The question requires the use of a customer-provided key (SSE-C), but this option uses an AWS KMS key (SSE-KMS), which does not meet the requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS 使用情况报告不适合直接过滤未加密的对象。错误：问题要求使用客户提供的密钥 (SSE-C)，但此选项使用 AWS KMS 密钥 (SSE-KMS)，这不符合要求。",
+          "en": "Incorrect. Technical reason: AWS usage reports are not suitable for filtering unencrypted objects directly. Error: The question requires the use of a customer-provided key (SSE-C), but this option uses an AWS KMS key (SSE-KMS), which does not meet the requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS 使用情况报告不适合直接过滤未加密的对象。正确：配置S3默认加密功能使用SSE-C来确保未来对象的加密，但不处理现有的未加密对象，不完全满足要求。",
+          "en": "Incorrect. Technical reason: AWS usage reports are not suitable for filtering unencrypted objects directly. Correct: Configuring the S3 default encryption feature to use SSE-C to ensure encryption of future objects, but not handle existing unencrypted objects, does not fully meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 通过过滤 Amazon S3 清单报告来创建未加密对象的列表。配置 S3 批量操作作业，以使用客户提供的密钥 (SSE-C) 通过服务器端加密来加密列表中的对象。配置 S3 默认加密功能以使用带有客户提供的密钥的服务器端加密 (SSE-C)。",
+        "en": "A. Create a list of unencrypted objects by filtering an Amazon S3 Inventory report. Configure an S3 Batch Operations job to encrypt the objects from the list with a server-side encryption with a customer-provided key (SSE-C). Configure the S3 default encryption feature to use a server-side encryption with a customer-provided key (SSE-C)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要：此选项使用 Amazon S3 库存报告来识别未加密的对象并通过 S3 批量操作对其进行加密，符合要求。正确：配置S3默认加密功能使用SSE-C，确保以后的对象被加密并满足问题要求。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: This option uses Amazon S3 inventory reports to identify unencrypted objects and encrypt them with S3 batch operations, compliant. Correct: Configure the S3 default encryption function to use SSE-C to ensure that future objects are encrypted and meet the question requirements."
+      }
+    },
+    {
+      "question_no": 741,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "托管公司域名记录的 DNS 提供商遇到中断，导致 AWS 上运行的网站的服务中断。该公司需要迁移到更具弹性的托管 DNS 服务，并希望该服务在 AWS 上运行。解决方案架构师应该如何快速迁移 DNS 托管服务？",
+        "en": "The DNS provider that hosts a company's domain name records is experiencing outages that cause service disruption for a website running on AWS. The company needs to migrate to a more resilient managed DNS service and wants the service to run on AWS. What should a solutions architect do to rapidly migrate the DNS hosting service?"
+      },
+      "options": {
+        "A": {
+          "zh": "为域名创建 Amazon Route 53 公共托管区域。导入包含由先前提供商托管的域记录的区域文件。",
+          "en": "Create an Amazon Route 53 public hosted zone for the domain name. Import the zone file containing the domain records hosted by the previous provider."
+        },
+        "B": {
+          "zh": "为域名创建 Amazon Route 53 私有托管区域。导入包含由先前提供商托管的域记录的区域文件。",
+          "en": "Create an Amazon Route 53 private hosted zone for the domain name. Import the zone file containing the domain records hosted by the previous provider."
+        },
+        "C": {
+          "zh": "在 AWS 中创建简单 AD 目录。为域记录启用 DNS 提供商和 AWS Directory Service for Microsoft Active Directory 之间的区域传输。",
+          "en": "Create a Simple AD directory in AWS. Enable zone transfer between the DNS provider and AWS Directory Service for Microsoft Active Directory for the domain records."
+        },
+        "D": {
+          "zh": "在 VPC 中创建 Amazon Route 53 Resolver 入站终端节点。指定提供商的 DNS 将 DNS 查询转发到的 IP 地址。配置提供商的 DNS 以将域的 DNS 查询转发到入站端点中指定的 IP 地址。",
+          "en": "Create an Amazon Route 53 Resolver inbound endpoint in the VPC. Specify the IP addresses that the provider's DNS will forward DNS queries to. Configure the provider's DNS to forward DNS queries for the domain to the IP addresses that are specified in the inbound endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： Amazon Route 53 公共托管区域是管理可从 互联网 访问的域名记录的最佳选择。正确：导入区域文件可以快速迁移现有的 DNS 记录并减少服务中断。此选项满足问题的要求，并支持快速迁移到 AWS 托管的 DNS 服务。",
+          "en": "Correct. Technical reason: Amazon Route 53 public hosted zones are the best choice for managing domain name records that are accessible from the internet. Correct: Importing a zone file can quickly migrate existing DNS records and reduce service outage. This option meets the question's requirements and enables quick migration to AWS-managed DNS services."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：私有托管区域只能用于VPC内的DNS解析，不能用于公网访问的域名。错误：此问题需要迁移公共 DNS 服务，而不是私有 DNS 服务。",
+          "en": "Incorrect. Technical reason: The private hosting zone can only be used for DNS resolution within the VPC and cannot be used for domain names accessed from the public network. Error: This issue requires migrating the public DNS service, not the private DNS service."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Simple AD和AWS Directory Service主要用于管理企业内部的目录服务，与公共DNS服务无关。错误：该选项不满足问题中快速迁移DNS服务的要求。",
+          "en": "Incorrect. Technical reason: Simple AD and AWS Directory Service are mainly used to manage directory services within an enterprise and have nothing to do with public DNS services. Error: This option does not meet the requirement of quickly migrating DNS services in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： Route 53 Resolver主要用于混合云环境中的DNS解析，与公共DNS服务无关。错误：此选项无法解决问题中提到的 DNS 服务中断问题。",
+          "en": "Incorrect. Technical reason: Route 53 Resolver is mainly used for DNS resolution in hybrid cloud environments and has nothing to do with public DNS services. Error: This option does not resolve the DNS service outage mentioned in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为域名创建 Amazon Route 53 公共托管区域。导入包含由先前提供商托管的域记录的区域文件。",
+        "en": "A. Create an Amazon Route 53 public hosted zone for the domain name. Import the zone file containing the domain records hosted by the previous provider."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： Amazon Route 53 公共托管区域是管理可从 互联网 访问的域名记录的最佳选择。正确：导入区域文件可以快速迁移现有的 DNS 记录并减少服务中断。此选项满足问题的要求，并支持快速迁移到 AWS 托管的 DNS 服务。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon Route 53 public hosted zones are the best choice for managing domain name records that are accessible from the internet. Correct: Importing a zone file can quickly migrate existing DNS records and reduce service outage. This option meets the question's requirements and enables quick migration to AWS-managed DNS services."
+      }
+    },
+    {
+      "question_no": 742,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上构建一个连接到 Amazon RDS 数据库的应用程序。该公司希望管理应用程序配置并安全地存储和检索数据库和其他服务的凭据。哪种解决方案能够以最少的管理开销满足这些要求？",
+        "en": "A company is building an application on AWS that connects to an Amazon RDS database. The company wants to manage the application configuration and to securely store and retrieve credentials for the database and other services. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS AppConfig 存储和管理应用程序配置。使用 AWS Secrets Manager 存储和检索凭证。",
+          "en": "Use AWS AppConfig to store and manage the application configuration. Use AWS Secrets Manager to store and retrieve the credentials."
+        },
+        "B": {
+          "zh": "使用 AWS Lambda 存储和管理应用程序配置。使用 AWS Systems Manager Parameter Store 存储和检索凭证。",
+          "en": "Use AWS Lambda to store and manage the application configuration. Use AWS Systems Manager Parameter Store to store and retrieve the credentials."
+        },
+        "C": {
+          "zh": "使用加密的应用程序配置文件。将文件存储在 Amazon S3 中以进行应用程序配置。创建另一个 S3 文件来存储和检索凭据。",
+          "en": "Use an encrypted application configuration file. Store the file in Amazon S3 for the application configuration. Create another S3 file to store and retrieve the credentials."
+        },
+        "D": {
+          "zh": "使用 AWS AppConfig 存储和管理应用程序配置。使用 Amazon RDS 存储和检索凭证。",
+          "en": "Use AWS AppConfig to store and manage the application configuration. Use Amazon RDS to store and retrieve the credentials."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： AWS AppConfig 是一项专门设计用于管理和分发应用程序配置、动态更新配置和减少停机时间的服务。 AWS Secrets Manager 是一项旨在安全存储和管理敏感信息（例如数据库凭证）的服务。它支持凭据的自动轮换并减少管理开销。此选项结合了两种服务的最佳实践，满足问题要求，并且管理开销最小。",
+          "en": "Correct. Technical reason: AWS AppConfig is a service specifically designed to manage and distribute application configurations, dynamically update configurations, and reduce downtime. AWS Secrets Manager is a service designed to securely store and manage sensitive information, such as database credentials. It supports automatic rotation of credentials and reduces administrative overhead. This option combines the best practices of both services, meets the problem requirements, and has minimal administrative overhead."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS Lambda 不是专门为存储和管理应用程序配置而设计的服务。虽然可以通过代码来实现，但是会增加开发和管理的复杂度。 AWS Systems Manager Parameter Store 可以存储凭证，但它缺乏自动轮换，并且管理开销比 Secrets Manager 更高。",
+          "en": "Incorrect. Technical reason: AWS Lambda is not a service designed specifically for storing and managing application configuration. Although it can be implemented through code, it will increase the complexity of development and management. AWS Systems Manager Parameter Store can store credentials, but it lacks automatic rotation and has higher management overhead than Secrets Manager."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：尽管Amazon S3可以存储文件，但它并不是专门为动态管理应用程序配置而设计的服务，并且缺乏版本控制和动态更新功能。在 S3 中存储敏感信息（例如凭据）需要额外的加密和访问控制，从而导致更高的管理开销。",
+          "en": "Incorrect. Technical reason: Although Amazon S3 can store files, it is not a service specifically designed for dynamically managing application configurations and lacks versioning and dynamic update capabilities. Storing sensitive information (such as credentials) in S3 requires additional encryption and access controls, resulting in higher administrative overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS AppConfig 适用于管理应用程序配置，但 Amazon RDS 并不是专门为存储和管理凭证等敏感信息而设计的服务。在 RDS 中存储凭证会增加开发复杂性，并且不符合最佳实践。",
+          "en": "Incorrect. Technical reason: AWS AppConfig is suitable for managing application configuration, but Amazon RDS is not a service specifically designed to store and manage sensitive information such as credentials. Storing credentials in RDS increases development complexity and is inconsistent with best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS AppConfig 存储和管理应用程序配置。使用 AWS Secrets Manager 存储和检索凭证。",
+        "en": "A. Use AWS AppConfig to store and manage the application configuration. Use AWS Secrets Manager to store and retrieve the credentials."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (100%)。热门讨论与考点摘要： AWS AppConfig 是一项专门设计用于管理和分发应用程序配置、动态更新配置和减少停机时间的服务。 AWS Secrets Manager 是一项旨在安全存储和管理敏感信息（例如数据库凭证）的服务。它支持凭据的自动轮换并减少管理开销。此选项结合了两种服务的最佳实践，满足问题要求，并且管理开销最小。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS AppConfig is a service specifically designed to manage and distribute application configurations, dynamically update configurations, and reduce downtime. AWS Secrets Manager is a service designed to securely store and manage sensitive information, such as database credentials. It supports automatic rotation of credentials and reduces administrative overhead. This option combines the best practices of both services, meets the problem requirements, and has minimal administrative overhead."
+      }
+    },
+    {
+      "question_no": 743,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "为了满足安全要求，公司需要在与 Amazon RDS MySQL 数据库实例通信时加密传输中的所有应用程序数据。最近的安全审核显示，使用 AWS Key Management Service (AWS KMS) 启用了静态加密，但未启用传输中的数据。解决方案架构师应该怎样做才能满足安全要求？",
+        "en": "To meet security requirements, a company needs to encrypt all of its application data in transit while communicating with an Amazon RDS MySQL DB instance. A recent security audit revealed that encryption at rest is enabled using AWS Key Management Service (AWS KMS), but data in transit is not enabled. What should a solutions architect do to satisfy the security requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在数据库上启用 IAM 数据库身份验证。",
+          "en": "Enable IAM database authentication on the database."
+        },
+        "B": {
+          "zh": "提供自签名证书。在与 RDS 实例的所有连接中使用证书。",
+          "en": "Provide self-signed certificates. Use the certificates in all connections to the RDS instance."
+        },
+        "C": {
+          "zh": "拍摄 RDS 实例的快照。将快照恢复到启用加密的新实例。",
+          "en": "Take a snapshot of the RDS instance. Restore the snapshot to a new instance with encryption enabled."
+        },
+        "D": {
+          "zh": "下载 AWS 提供的根证书。在与 RDS 实例的所有连接中提供证书。",
+          "en": "Download AWS-provided root certificates. Provide the certificates in all connections to the RDS instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析： IAM数据库认证用于管理数据库访问，与数据传输加密无关。",
+          "en": "Incorrect. Technical reason: Analysis: IAM database authentication is used to manage database access but has nothing to do with data transfer encryption."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：自签名证书可用于加密，但不遵守AWS最佳实践，也不提供与AWS RDS内置加密功能的兼容性。",
+          "en": "Incorrect. Technical reason: Analysis: Self-signed certificates can be used for encryption, but do not adhere to AWS best practices and do not provide compatibility with AWS RDS built-in encryption capabilities."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：本选项涉及数据状态加密（静态加密），而本题需要解决数据传输加密（传输中加密）。",
+          "en": "Incorrect. Technical reason: Analysis: This option covers data state encryption (encryption at rest), while this question requires solving data transmission encryption (encryption in transit)."
+        },
+        "D": {
+          "zh": "正確。技术原因：分析：可以使用AWS提供的根证书来加密数据传输，满足问题的要求。使用这些证书，应用程序可以确保与 RDS 的连接是加密的。",
+          "en": "Correct. Technical reason: Analysis: The root certificate provided by AWS can be used to encrypt data transmission and meet the requirements of the problem. Using these certificates, applications can ensure that connections to RDS are encrypted."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 下载 AWS 提供的根证书。在与 RDS 实例的所有连接中提供证书。",
+        "en": "D. Download AWS-provided root certificates. Provide the certificates in all connections to the RDS instance."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： D (81%) A (19%)。热门讨论与考点摘要：分析：可以使用AWS提供的根证书来加密数据传输，满足问题的要求。使用这些证书，应用程序可以确保与 RDS 的连接是加密的。",
+        "en": "Community vote as displayed: D (81%) A (19%). Popular discussion and key point summary: Analysis: The root certificate provided by AWS can be used to encrypt data transmission and meet the requirements of the problem. Using these certificates, applications can ensure that connections to RDS are encrypted."
+      }
+    },
+    {
+      "question_no": 744,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在设计一项新的 Web 服务，该服务将在 Elastic Load Balancing (ELB) 负载均衡器后面的 Amazon EC2 实例上运行。然而，许多 Web 服务客户端只能访问其防火墙上授权的 IP 地址。解决方案架构师应该建议什么来满足客户的需求？",
+        "en": "A company is designing a new web service that will run on Amazon EC2 instances behind an Elastic Load Balancing (ELB) load balancer. However, many of the web service clients can only reach IP addresses authorized on their firewalls. What should a solutions architect recommend to meet the clients’ needs?"
+      },
+      "options": {
+        "A": {
+          "zh": "具有关联弹性 IP 地址的网络负载均衡器。",
+          "en": "A Network Load Balancer with an associated Elastic IP address."
+        },
+        "B": {
+          "zh": "具有关联弹性 IP 地址的应用程序负载均衡器。",
+          "en": "An Application Load Balancer with an associated Elastic IP address."
+        },
+        "C": {
+          "zh": "Amazon Route 53 托管区域中指向弹性 IP 地址的 A 记录。",
+          "en": "An A record in an Amazon Route 53 hosted zone pointing to an Elastic IP address."
+        },
+        "D": {
+          "zh": "具有公共 IP 地址的 EC2 实例作为负载均衡器前面的代理运行。",
+          "en": "An EC2 instance with a public IP address running as a proxy in front of the load balancer."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： NLB（网络负载均衡器）支持静态IP地址（包括弹性IP地址），允许客户端通过固定IP地址访问服务。这样的配置就满足了问题中“客户端只能访问授权的IP地址”的要求。正确的选项。",
+          "en": "Correct. Technical reason: NLB (Network Load Balancer) supports static IP addresses (including elastic IP addresses), allowing clients to access services through fixed IP addresses. This configuration meets the requirement in the question that \"clients can only access authorized IP addresses\". Correct option."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： Application Load Balancer (ALB) 不支持直接绑定弹性 IP 地址。 ALB的IP地址是动态分配的，无法满足问题中“客户端只能访问授权IP地址”的要求。错误的选择。",
+          "en": "Incorrect. Technical reason: Application Load Balancer (ALB) does not support binding Elastic IP addresses directly. The IP address of the ALB is dynamically allocated, which cannot meet the requirement of \"the client can only access authorized IP addresses\" in the question. Wrong choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： Route 53 A记录可以指向弹性IP地址，但这并不能解决负载均衡问题。该问题需要使用ELB而不是直接使用弹性IP地址。错误的选择。",
+          "en": "Incorrect. Technical reason: Route 53 A records can point to elastic IP addresses, but this does not solve the load balancing problem. The problem requires using ELB instead of using Elastic IP addresses directly. Wrong choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用EC2实例作为代理提供了固定的IP地址，但这增加了管理复杂性和单点故障的风险。该问题需要使用ELB，而不是直接使用EC2实例作为代理。错误的选择。",
+          "en": "Incorrect. Technical reason: Using an EC2 instance as a proxy provides a fixed IP address, but this increases management complexity and the risk of a single point of failure. The problem requires using an ELB instead of directly using the EC2 instance as a proxy. Wrong choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 具有关联弹性 IP 地址的网络负载均衡器。",
+        "en": "A. A Network Load Balancer with an associated Elastic IP address."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (95%) 5%。热门讨论与考点摘要： NLB（网络负载均衡器）支持静态IP地址（包括弹性IP地址），允许客户端通过固定IP地址访问服务。这样的配置就满足了问题中“客户端只能访问授权的IP地址”的要求。正确的选项。",
+        "en": "Community vote as displayed: A (95%) 5%. Popular discussion and key point summary: NLB (Network Load Balancer) supports static IP addresses (including elastic IP addresses), allowing clients to access services through fixed IP addresses. This configuration meets the requirement in the question that \"clients can only access authorized IP addresses\". Correct option."
+      }
+    },
+    {
+      "question_no": 745,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司建立了一个新的 AWS 账户。该账户是新配置的，默认设置未进行任何更改。该公司担心AWS账户根用户的安全。应该采取什么措施来保护 root 用户的安全？",
+        "en": "A company has established a new AWS account. The account is newly provisioned and no changes have been made to the default settings. The company is concerned about the security of the AWS account root user. What should be done to secure the root user?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 IAM 用户以执行日常管理任务。禁用 root 用户。",
+          "en": "Create IAM users for daily administrative tasks. Disable the root user."
+        },
+        "B": {
+          "zh": "创建 IAM 用户以执行日常管理任务。对 root 用户启用多重身份验证。",
+          "en": "Create IAM users for daily administrative tasks. Enable multi-factor authentication on the root user."
+        },
+        "C": {
+          "zh": "为 root 用户生成访问密钥。使用访问密钥来执行日常管理任务，而不是使用 AWS 管理控制台。",
+          "en": "Generate an access key for the root user. Use the access key for daily administration tasks instead of the AWS Management Console."
+        },
+        "D": {
+          "zh": "向最高级的解决方案架构师提供根用户凭据。让解决方案架构师使用 root 用户执行日常管理任务。",
+          "en": "Provide the root user credentials to the most senior solutions architect. Have the solutions architect use the root user for daily administration tasks."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： AWS 不允许 root 用户。 root 用户是该账户的最高权限用户，未经许可不得使用。正确：最佳实践是创建 IAM 用户来执行日常管理任务。",
+          "en": "Incorrect. Technical reason: AWS does not allow the root user. The root user is the highest authority user of this account and cannot be used without permission. Correct: A best practice is to create IAM users for day-to-day administrative tasks."
+        },
+        "B": {
+          "zh": "正確。技术原因：这是AWS推荐的最佳实践。创建 IAM 用户来执行日常管理任务可以减少对根用户的依赖，并且启用多重身份验证 (MFA) 可以显著提高根用户的安全性。",
+          "en": "Correct. Technical reason: This is a best practice recommended by AWS. Creating an IAM user for day-to-day administrative tasks reduces reliance on the root user, and enabling multi-factor authentication (MFA) can significantly improve root user security."
+        },
+        "C": {
+          "zh": "錯誤。技术原因： AWS 明确建议不要为根用户生成访问密钥，因为这会增加安全风险。错误部分： root 用户不应该通过访问密钥或管理控制台来执行日常管理任务。",
+          "en": "Incorrect. Technical reason: AWS explicitly recommends not generating access keys for the root user because this increases security risks. Wrong section: The root user should not be used for day-to-day administrative tasks, either through access keys or the management console."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： root 用户不应用于日常管理任务，也不应与任何人共享其凭据。问题：此行为违反了 AWS 安全最佳实践。",
+          "en": "Incorrect. Technical reason: The root user should not be used for day-to-day administrative tasks, nor should its credentials be shared with anyone. Problem: This behavior violates AWS security best practices."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 IAM 用户以执行日常管理任务。对 root 用户启用多重身份验证。",
+        "en": "B. Create IAM users for daily administrative tasks. Enable multi-factor authentication on the root user."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (100%)。热门讨论与考点摘要：这是AWS推荐的最佳实践。创建 IAM 用户来执行日常管理任务可以减少对根用户的依赖，并且启用多重身份验证 (MFA) 可以显著提高根用户的安全性。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: This is a best practice recommended by AWS. Creating an IAM user for day-to-day administrative tasks reduces reliance on the root user, and enabling multi-factor authentication (MFA) can significantly improve root user security."
+      }
+    },
+    {
+      "question_no": 746,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在部署一个近实时处理流数据的应用程序。该公司计划使用 Amazon EC2 实例来处理工作负载。网络架构必须可配置，以提供节点之间尽可能低的延迟。哪种网络解决方案组合可以满足这些要求？ （选择两个。）",
+        "en": "A company is deploying an application that processes streaming data in near-real time. The company plans to use Amazon EC2 instances for the workload. The network architecture must be configurable to provide the lowest possible latency between nodes. Which combination of network solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在每个 EC2 实例上启用并配置增强网络。",
+          "en": "Enable and configure enhanced networking on each EC2 instance."
+        },
+        "B": {
+          "zh": "将 EC2 实例分组到单独的账户中。",
+          "en": "Group the EC2 instances in separate accounts."
+        },
+        "C": {
+          "zh": "在集群置放组中运行 EC2 实例。",
+          "en": "Run the EC2 instances in a cluster placement group."
+        },
+        "D": {
+          "zh": "将多个弹性网络接口连接到每个 EC2 实例。",
+          "en": "Attach multiple elastic network interfaces to each EC2 instance."
+        },
+        "E": {
+          "zh": "使用 Amazon Elastic Block Store (Amazon EBS) 优化的实例类型。",
+          "en": "Use Amazon Elastic Block Store (Amazon EBS) optimized instance types."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：增强型网络通过使用弹性网络适配器或 ENA 等高性能网络接口，显著减少网络延迟并提高吞吐量。这是实现最低网络延迟的关键配置之一。",
+          "en": "Correct. Technical reason: Enhanced networking significantly reduces network latency and increases throughput by using high-performance network interfaces such as elastic network adapters or ENAs. This is one of the key configurations for achieving the lowest network latency."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：将实例分组到不同的账户中不会减少网络延迟，并且可能会增加跨账户通信的复杂性。它与问题所需的“尽可能低的延迟”无关。",
+          "en": "Incorrect. Technical reason: Grouping instances into different accounts does not reduce network latency and may increase the complexity of cross-account communication. It has nothing to do with the \"lowest possible latency\" the question requires."
+        },
+        "C": {
+          "zh": "正確。技术原因：集群置放组允许 EC2 实例严格分配在物理硬件上，从而显著减少网络延迟。这是实现最低延迟的另一个关键配置。",
+          "en": "Correct. Technical reason: Cluster Placement Groups allow EC2 instances to be strictly allocated on physical hardware, significantly reducing network latency. This is another key configuration for achieving the lowest latency."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然连接多个网络接口可以增加网络带宽，但它并不能直接减少节点之间的网络延迟。这个问题需要最小的延迟，而不是带宽优化。",
+          "en": "Incorrect. Technical reason: While connecting multiple network interfaces can increase network bandwidth, it does not directly reduce network latency between nodes. This problem requires minimal latency, not bandwidth optimization."
+        },
+        "E": {
+          "zh": "錯誤。技术原因： EBS优化实例规格主要用于提升存储性能，与网络延迟无关。问题需要网络架构优化，而不是存储性能优化。",
+          "en": "Incorrect. Technical reason: EBS optimized instance specifications are mainly used to improve storage performance and have nothing to do with network latency. The problem requires network architecture optimization, not storage performance optimization."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 在每个 EC2 实例上启用并配置增强网络。；C. 在集群置放组中运行 EC2 实例。",
+        "en": "A. Enable and configure enhanced networking on each EC2 instance.; C. Run the EC2 instances in a cluster placement group."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： AC (100%)。热门讨论与考点摘要：增强型网络通过使用弹性网络适配器或 ENA 等高性能网络接口，显著减少网络延迟并提高吞吐量。这是实现最低网络延迟的关键配置之一。；集群置放组允许 EC2 实例严格分配在物理硬件上，从而显著减少网络延迟。这是实现最低延迟的另一个关键配置。",
+        "en": "Community vote as displayed: AC (100%). Popular discussion and key point summary: Enhanced networking significantly reduces network latency and increases throughput by using high-performance network interfaces such as elastic network adapters or ENAs. This is one of the key configurations for achieving the lowest network latency.; Cluster Placement Groups allow EC2 instances to be strictly allocated on physical hardware, significantly reducing network latency. This is another key configuration for achieving the lowest latency."
+      }
+    },
+    {
+      "question_no": 747,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家金融服务公司希望关闭两个数据中心并将超过 100 TB 的数据迁移到 AWS。数据具有复杂的目录结构，数百万个小文件存储在子文件夹的深层层次结构中。大多数数据都是非结构化的，公司的文件存储由来自多个供应商的基于 SMB 的存储类型组成。该公司不想在迁移后更改其应用程序来访问数据。解决方案架构师应该如何做才能以最少的运营开销满足这些要求？",
+        "en": "A financial services company wants to shut down two data centers and migrate more than 100 TB of data to AWS. The data has an intricate directory structure with millions of small files stored in deep hierarchies of subfolders. Most of the data is unstructured, and the company’s file storage consists of SMB-based storage types from multiple vendors. The company does not want to change its applications to access the data after migration. What should a solutions architect do to meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Direct Connect 将数据迁移到 Amazon S3。",
+          "en": "Use AWS Direct Connect to migrate the data to Amazon S3."
+        },
+        "B": {
+          "zh": "使用 AWS DataSync 将数据迁移到 Amazon FSx for Lustre。",
+          "en": "Use AWS DataSync to migrate the data to Amazon FSx for Lustre."
+        },
+        "C": {
+          "zh": "使用 AWS DataSync 将数据迁移到 Amazon FSx for Windows File Server。",
+          "en": "Use AWS DataSync to migrate the data to Amazon FSx for Windows File Server."
+        },
+        "D": {
+          "zh": "使用 AWS Direct Connect 将数据本地文件存储迁移到 AWS Storage Gateway 卷网关。",
+          "en": "Use AWS Direct Connect to migrate the data on-premises file storage to an AWS Storage Gateway volume gateway."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： Amazon S3 是一种图像存储服务，不支持复杂的项目结构和用于直接文件访问的 SMB 协议。问题要求迁移后不需要改变用户模式。 S3 不支持本地文件访问。",
+          "en": "Incorrect. Technical reason: Amazon S3 is an image storage service that does not support complex project structures and the SMB protocol for direct file access. The question requires that the user mode does not need to be changed after migration. S3 does not support local file access."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：主题 Amazon FSx for Lustre 主要用于大容量分区和处理临时数据，适合与 S3 集成，但不支持 SMB 协议。 FSx for Lustre 不满足此要求，这需要迁移后采购更改。",
+          "en": "Incorrect. Technical reason: Topic Amazon FSx for Luster is primarily used for high-volume partitioning and processing temporary data, and is suitable for integration with S3, but does not support the SMB protocol. FSx for Luster does not meet this requirement, which requires post-migration procurement changes."
+        },
+        "C": {
+          "zh": "正確。技术原因： Amazon FSx for Windows File Server 支持 SMB 协议，可实现复杂结构中数据的无缝迁移和访问。使用 AWS DataSync 可以高效迁移数据，同时满足问题的“不更改应用程序模型”和“最小运营开销”的要求。",
+          "en": "Correct. Technical reason: Amazon FSx for Windows File Server supports the SMB protocol, enabling seamless migration and access of data in complex structures. Using AWS DataSync can efficiently migrate data while meeting the problem's requirements of \"no application model changes\" and \"minimal operational overhead.\""
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然AWS Storage Gateway可以提供文件访问，但它主要用于混合云场景。适合将本地数据迁移到云，但不适合将数据直接迁移到AWS。 Direct Connect 也不是专用的数据迁移工具。",
+          "en": "Incorrect. Technical reason: Although AWS Storage Gateway can provide file access, it is mainly used in hybrid cloud scenarios. It is suitable for migrating local data to the cloud, but is not suitable for migrating data directly to AWS. Direct Connect is also not a dedicated data migration tool."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS DataSync 将数据迁移到 Amazon FSx for Windows File Server。",
+        "en": "C. Use AWS DataSync to migrate the data to Amazon FSx for Windows File Server."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： Amazon FSx for Windows File Server 支持 SMB 协议，可实现复杂结构中数据的无缝迁移和访问。使用 AWS DataSync 可以高效迁移数据，同时满足问题的“不更改应用程序模型”和“最小运营开销”的要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon FSx for Windows File Server supports the SMB protocol, enabling seamless migration and access of data in complex structures. Using AWS DataSync can efficiently migrate data while meeting the problem's requirements of \"no application model changes\" and \"minimal operational overhead.\""
+      }
+    },
+    {
+      "question_no": 748,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司使用 AWS Organizations 中的组织来管理包含应用程序的 AWS 账户。公司在组织内​​设立专门的监控会员账户。该公司希望使用 Amazon CloudWatch 查询和可视化跨账户的可观测性数据。哪种解决方案可以满足这些要求？",
+        "en": "A company uses an organization in AWS Organizations to manage AWS accounts that contain applications. The company sets up a dedicated monitoring member account in the organization. The company wants to query and visualize observability data across the accounts by using Amazon CloudWatch. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为监控账户启用 CloudWatch 跨账户可观察性。在每个 AWS 账户中部署监控账户提供的 AWS CloudFormation 模板，以与监控账户共享数据。",
+          "en": "Enable CloudWatch cross-account observability for the monitoring account. Deploy an AWS CloudFormation template provided by the monitoring account in each AWS account to share the data with the monitoring account."
+        },
+        "B": {
+          "zh": "设置服务控制策略 (SCP)，以提供对组织根组织单位 (OU) 下的监控账户中的 CloudWatch 的访问。",
+          "en": "Set up service control policies (SCPs) to provide access to CloudWatch in the monitoring account under the Organizations root organizational unit (OU)."
+        },
+        "C": {
+          "zh": "在监控账户中配置新的 IAM 用户。在每个 AWS 账户中，配置 IAM 策略以有权查询和可视化账户中的 CloudWatch 数据。将新的 IAM 策略附加到新的 IAM 用户。",
+          "en": "Configure a new IAM user in the monitoring account. In each AWS account, configure an IAM policy to have access to query and visualize the CloudWatch data in the account. Attach the new IAM policy to the new IAM user."
+        },
+        "D": {
+          "zh": "在监控账户中创建新的 IAM 用户。在每个 AWS 账户中创建跨账户 IAM 策略。将 IAM 策略附加到新的 IAM 用户。",
+          "en": "Create a new IAM user in the monitoring account. Create cross-account IAM policies in each AWS account. Attach the IAM policies to the new IAM user."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因： CloudWatch 跨账户可观测性是专门为跨账户查询和可视化数据而设计的功能。可以通过CloudFormation模板进行自动配置，保证每个账户的数据共享到监控账户。",
+          "en": "Correct. Technical reason: CloudWatch Cross-Account Observability is a feature specifically designed for querying and visualizing data across accounts. Automatic configuration can be performed through CloudFormation templates to ensure that the data of each account is shared to the monitoring account."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： SCP主要用于限制或允许账户服务访问权限，但不能直接实现跨账户数据共享或可视化功能。",
+          "en": "Incorrect. Technical reason: SCP is mainly used to limit or allow account service access rights, but it cannot directly implement cross-account data sharing or visualization functions."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：这种方条需要手动配置多个IAM策略，比较复杂，不适合大规模账户管理。此外，它没有利用 CloudWatch 跨账户可观察性功能。",
+          "en": "Incorrect. Technical reason: This kind of square bar requires manual configuration of multiple IAM policies, which is complicated and not suitable for large-scale account management. Additionally, it does not take advantage of the CloudWatch cross-account observability feature."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然可以通过跨账户 IAM 策略实施进行访问，但此配置的效率低于 CloudWatch 跨账户可观察性功能，并且需要手动配置。",
+          "en": "Incorrect. Technical reason: While accessible through cross-account IAM policy enforcement, this provision is less efficient than the CloudWatch cross-account observability feature and requires manual configuration."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为监控账户启用 CloudWatch 跨账户可观察性。在每个 AWS 账户中部署监控账户提供的 AWS CloudFormation 模板，以与监控账户共享数据。",
+        "en": "A. Enable CloudWatch cross-account observability for the monitoring account. Deploy an AWS CloudFormation template provided by the monitoring account in each AWS account to share the data with the monitoring account."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： A (91%) 9%。热门讨论与考点摘要： CloudWatch 跨账户可观测性是专门为跨账户查询和可视化数据而设计的功能。可以通过CloudFormation模板进行自动配置，保证每个账户的数据共享到监控账户。",
+        "en": "Community vote as displayed: A (91%) 9%. Popular discussion and key point summary: CloudWatch Cross-Account Observability is a feature specifically designed for querying and visualizing data across accounts. Automatic configuration can be performed through CloudFormation templates to ensure that the data of each account is shared to the monitoring account."
+      }
+    },
+    {
+      "question_no": 749,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "公司的网站用于向公众销售产品。该站点在应用程序负载均衡器 (ALB) 后面的 Auto Scaling 组中的 Amazon EC2 实例上运行。还有一个 Amazon CloudFront 发行版，并且 AWS WAF 用于防止 SQL 注入攻击。 ALB 是 CloudFront 发行版的起源。最近对安全日志的审查发现，需要阻止一个外部恶意 IP 访问该网站。解决方案架构师应该做什么来保护应用程序？",
+        "en": "A company’s website is used to sell products to the public. The site runs on Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer (ALB). There is also an Amazon CloudFront distribution, and AWS WAF is being used to protect against SQL injection attacks. The ALB is the origin for the CloudFront distribution. A recent review of security logs revealed an external malicious IP that needs to be blocked from accessing the website. What should a solutions architect do to protect the application?"
+      },
+      "options": {
+        "A": {
+          "zh": "修改 CloudFront 分配上的网络 ACL 以添加针对恶意 IP 地址的拒绝规则。",
+          "en": "Modify the network ACL on the CloudFront distribution to add a deny rule for the malicious IP address."
+        },
+        "B": {
+          "zh": "修改AWS WAF的配置以添加IP匹配条件以阻止恶意IP地址。",
+          "en": "Modify the configuration of AWS WAF to add an IP match condition to block the malicious IP address."
+        },
+        "C": {
+          "zh": "修改 ALB 后面目标组中 EC2 实例的网络 ACL，以拒绝恶意 IP 地址。",
+          "en": "Modify the network ACL for the EC2 instances in the target groups behind the ALB to deny the malicious IP address."
+        },
+        "D": {
+          "zh": "修改 ALB 后面的目标组中 EC2 实例的安全组以拒绝恶意 IP 地址。",
+          "en": "Modify the security groups for the EC2 instances in the target groups behind the ALB to deny the malicious IP address."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因： CloudFront 本身不支持修改直接网络 ACL。网络ACL针对子网级别，而CloudFront是全球分布式服务，无法通过网络ACL直接控制其访问。",
+          "en": "Incorrect. Technical reason: CloudFront itself does not support modifying direct network ACLs. Network ACL is targeted at the subnet level, and CloudFront is a globally distributed service, and its access cannot be directly controlled through network ACL."
+        },
+        "B": {
+          "zh": "正確。技术原因： AWS WAF 是一项专门为保护 Web 应用程序而设计的服务，可以通过 IP 匹配标准阻止特定 IP 地址。这是最直接有效的解决办法。",
+          "en": "Correct. Technical reason: AWS WAF is a service designed specifically to protect web applications and can block specific IP addresses through IP matching criteria. This is the most direct and effective solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：网络 ACL 位于子网级别， ALB 流量通过 CloudFront 和 WAF 进行过滤。网络ACL无法有效防止IP修改，因为流量在到达EC2实例之前已经经过了ALB和WAF。",
+          "en": "Incorrect. Technical reason: Network ACLs are at the subnet level, and ALB traffic is filtered through CloudFront and WAF. Network ACLs cannot effectively prevent IP modification because the traffic has already passed through the ALB and WAF before reaching the EC2 instance."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：安全组处于实例级别，流量经过ALB和WAF到达EC2实例。修改安全组并不能有效屏蔽艾年的IP。",
+          "en": "Incorrect. Technical reason: The security group is at the instance level, and traffic passes through ALB and WAF before reaching the EC2 instance. Modifying the security group cannot effectively block Ainian's IP."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 修改AWS WAF的配置以添加IP匹配条件以阻止恶意IP地址。",
+        "en": "B. Modify the configuration of AWS WAF to add an IP match condition to block the malicious IP address."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： B (87%) 13%。热门讨论与考点摘要： AWS WAF 是一项专门为保护 Web 应用程序而设计的服务，可以通过 IP 匹配标准阻止特定 IP 地址。这是最直接有效的解决办法。",
+        "en": "Community vote as displayed: B (87%) 13%. Popular discussion and key point summary: AWS WAF is a service designed specifically to protect web applications and can block specific IP addresses through IP matching criteria. This is the most direct and effective solution."
+      }
+    },
+    {
+      "question_no": 750,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS Organizations 中设置了一个组织，其中包含 10 个 AWS 账户。解决方案架构师必须设计一个解决方案，为数千名员工提供账户访问权限。该公司拥有现有的身份提供商 (IdP)。该公司希望使用现有的 IdP 进行 AWS 身份验证。哪种解决方案可以满足这些要求？",
+        "en": "A company sets up an organization in AWS Organizations that contains 10 AWS accounts. A solutions architect must design a solution to provide access to the accounts for several thousand employees. The company has an existing identity provider (IdP). The company wants to use the existing IdP for authentication to AWS. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在所需的 AWS 账户中为员工创建 IAM 用户。将 IAM 用户连接到现有 IdP。为 IAM 用户配置联合身份验证。",
+          "en": "Create IAM users for the employees in the required AWS accounts. Connect IAM users to the existing IdP. Configure federated authentication for the IAM users."
+        },
+        "B": {
+          "zh": "使用从现有 IdP 同步的用户电子邮件地址和密码设置 AWS 账户根用户。",
+          "en": "Set up AWS account root users with user email addresses and passwords that are synchronized from the existing IdP."
+        },
+        "C": {
+          "zh": "配置 AWS IAM Identity Center（AWS 单点登录）。将 IAM Identity Center 连接到现有 IdP。从现有 IdP 中配置用户和组。",
+          "en": "Configure AWS IAM Identity Center (AWS Single Sign-On). Connect IAM Identity Center to the existing IdP. Provision users and groups from the existing IdP."
+        },
+        "D": {
+          "zh": "使用 AWS Resource Access Manager (AWS RAM) 与现有 IdP 中的用户共享对 AWS 账户的访问权限。",
+          "en": "Use AWS Resource Access Manager (AWS RAM) to share access to the AWS accounts with the users in the existing IdP."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：创建IAM用户并连接IdP的方式无法满足大规模用户管理的需求。 IAM用户管理复杂，不适合上千员工的场景。 IAM 用户通常用于单个用户服务账户，而不是大规模用户的联合。",
+          "en": "Incorrect. Technical reason: The method of creating IAM users and connecting to IdP cannot meet the needs of large-scale user management. IAM user management is complex and not suitable for scenarios with thousands of employees. IAM users are typically used for single user service accounts rather than federations of large-scale users."
+        },
+        "B": {
+          "zh": "錯誤。技术原因： AWS账户的root 用户不适合日常操作或认证。 root 用户的使用受到严格限制，不支持与IdP同步。 root 用户旨在管理账户，而不是为数千名员工提供访问权限。",
+          "en": "Incorrect. Technical reason: The root user of the AWS account is not suitable for daily operations 𪥿 authentication. The use of the root user is strictly restricted and synchronization with IdP is not supported. The root user is intended to manage accounts, not provide access to thousands of employees."
+        },
+        "C": {
+          "zh": "正確。技术原因： AWS IAM Identity Center（AWS Single Sign-On）是一项专门设计用于与 Tayu IdP 集成的服务，可轻松管理数千名员工的身份验证和访问。通过 IAM Identity Center，可以将 IdP 中的用户和组直接配置到 AWS 账户中，以满足问题需求。",
+          "en": "Correct. Technical reason: AWS IAM Identity Center (AWS Single Sign-On) is a service specifically designed to integrate with Tayu IdP to easily manage authentication and access for thousands of employees. Through the IAM Identity Center, users and groups in the IdP can be directly provisioned into the AWS account to meet the problem requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因： AWS RAM用于跨账户共享资源，而不是用于身份验证或用户管理。它直接与 IdP 集成，以管理数千名员工的访问。这个问题的重点是身份验证，而不是资源共享，因为AWS RAM不适合这种场景。",
+          "en": "Incorrect. Technical reason: AWS RAM is used for sharing resources across accounts, not for authentication 𪥿 user management. It integrates directly with IdPs to manage access for thousands of employees. The focus of this question is on authentication, not resource sharing, as AWS RAM is not suitable for this scenario."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置 AWS IAM Identity Center（AWS 单点登录）。将 IAM Identity Center 连接到现有 IdP。从现有 IdP 中配置用户和组。",
+        "en": "C. Configure AWS IAM Identity Center (AWS Single Sign-On). Connect IAM Identity Center to the existing IdP. Provision users and groups from the existing IdP."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果： C (100%)。热门讨论与考点摘要： AWS IAM Identity Center（AWS Single Sign-On）是一项专门设计用于与 Tayu IdP 集成的服务，可轻松管理数千名员工的身份验证和访问。通过 IAM Identity Center，可以将 IdP 中的用户和组直接配置到 AWS 账户中，以满足问题需求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS IAM Identity Center (AWS Single Sign-On) is a service specifically designed to integrate with Tayu IdP to easily manage authentication and access for thousands of employees. Through the IAM Identity Center, users and groups in the IdP can be directly provisioned into the AWS account to meet the problem requirements."
+      }
+    }
+  ]
+}
