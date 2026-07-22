@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.attempts import router as attempts_router
+from app.api.flashcards import clf_router as flashcards_router
+from app.api.flashcards import saa_router as saa_flashcards_router
 from app.api.notes import router as notes_router
 from app.api.profiles import router as profiles_router
 from app.api.questions import router as questions_router
@@ -24,6 +26,8 @@ app.include_router(profiles_router, prefix="/api")
 app.include_router(attempts_router, prefix="/api")
 app.include_router(sessions_router, prefix="/api")
 app.include_router(notes_router, prefix="/api")
+app.include_router(flashcards_router, prefix="/api")
+app.include_router(saa_flashcards_router, prefix="/api")
 app.include_router(saa_router, prefix="/api")
 
 

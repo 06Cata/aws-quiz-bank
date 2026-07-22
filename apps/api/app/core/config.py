@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_role_key: str = ""
     questions_dir: str = "../../questions"
+    flashcards_dir: str = "../../flashcards"
     quiz_exam: str = "saa"
     allowed_origins: str = "http://localhost:3000"
 

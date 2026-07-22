@@ -1,0 +1,55 @@
+name: Sync Local JSON Flashcards
+
+concurrency:
+  group: sync-local-flashcards
+  cancel-in-progress: false
+
+on:
+  push:
+    paths:
+      - "flashcards/clf_flashcards.json"
+      - "flashcards/saa_flashcards.json"
+      - "apps/api/app/jobs/sync_local_flashcards.py"
+      - "apps/api/app/services/local_flashcards.py"
+      - ".github/workflows/sync-local-flashcards.yml"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync ${{ matrix.exam }} flashcards
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        exam:
+          - clf
+          - saa
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate local flashcards
+        env:
+          FLASHCARDS_DIR: ../../flashcards
+          QUIZ_EXAM: ${{ matrix.exam }}
+        run: python -m app.jobs.sync_local_flashcards --validate-only
+
+      - name: Sync flashcards to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          FLASHCARDS_DIR: ../../flashcards
+          QUIZ_EXAM: ${{ matrix.exam }}
+        run: python -m app.jobs.sync_local_flashcards

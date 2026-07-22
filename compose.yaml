@@ -71,3 +71,22 @@ services:
       - -m
       - app.jobs.sync_local_questions
     restart: "no"
+
+  sync-flashcards:
+    profiles:
+      - jobs
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    env_file:
+      - .env.local
+    environment:
+      QUIZ_EXAM: ${QUIZ_EXAM:-saa}
+      FLASHCARDS_DIR: /flashcards
+    volumes:
+      - ./flashcards:/flashcards:ro
+    command:
+      - python
+      - -m
+      - app.jobs.sync_local_flashcards
+    restart: "no"

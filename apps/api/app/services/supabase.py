@@ -52,11 +52,140 @@ QUIZ_TABLES = {
 }
 
 
+@dataclass(frozen=True)
+class FlashcardTables:
+    flashcards: str
+    notes: str
+
+
+FLASHCARD_TABLES = {
+    "clf": FlashcardTables("clf_flashcards", "clf_flashcard_notes"),
+    "saa": FlashcardTables("saa_flashcards", "saa_flashcard_notes"),
+}
+
+
 def quiz_tables(exam: str = "clf") -> QuizTables:
     try:
         return QUIZ_TABLES[exam.strip().lower()]
     except KeyError as exc:
         raise ValueError("exam must be either 'clf' or 'saa'") from exc
+
+
+def flashcard_tables(exam: str = "clf") -> FlashcardTables:
+    try:
+        return FLASHCARD_TABLES[exam.strip().lower()]
+    except KeyError as exc:
+        raise ValueError("exam must be either 'clf' or 'saa'") from exc
+
+
+async def select_flashcards(exam: str = "clf") -> list[dict]:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        return []
+
+    tables = flashcard_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.flashcards}"
+    params = {
+        "select": "id,source_key,chapter_key,chapter_order,topic,title,exam_domain,description",
+        "is_active": "eq.true",
+        "order": "chapter_order.asc,topic.asc,title.asc",
+    }
+    async with httpx.AsyncClient(timeout=20) as client:
+        response = await client.get(url, headers=_service_headers(), params=params)
+        response.raise_for_status()
+        return response.json()
+
+
+async def save_flashcard_note(user_id: str, flashcard_id: str, exam: str = "clf") -> dict:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        raise RuntimeError("Supabase service role is not configured")
+
+    tables = flashcard_tables(exam)
+    flashcards_url = f"{settings.supabase_url}/rest/v1/{tables.flashcards}"
+    notes_url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
+    async with httpx.AsyncClient(timeout=20) as client:
+        card_response = await client.get(
+            flashcards_url,
+            headers=_service_headers(),
+            params={"select": "id", "id": f"eq.{flashcard_id}", "is_active": "eq.true", "limit": "1"},
+        )
+        card_response.raise_for_status()
+        if not card_response.json():
+            raise ValueError("Flashcard not found")
+
+        note_response = await client.post(
+            notes_url,
+            headers={
+                **_service_headers(),
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates,return=representation",
+            },
+            params={"on_conflict": "user_id,flashcard_id"},
+            json={"user_id": user_id, "flashcard_id": flashcard_id},
+        )
+        note_response.raise_for_status()
+        rows = note_response.json()
+    return rows[0] if rows else {"user_id": user_id, "flashcard_id": flashcard_id}
+
+
+async def select_flashcard_notes_for_user(user_id: str, exam: str = "clf") -> list[dict]:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        return []
+
+    tables = flashcard_tables(exam)
+    notes_url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
+    flashcards_url = f"{settings.supabase_url}/rest/v1/{tables.flashcards}"
+    async with httpx.AsyncClient(timeout=20) as client:
+        notes_response = await client.get(
+            notes_url,
+            headers=_service_headers(),
+            params={
+                "select": "id,flashcard_id,created_at",
+                "user_id": f"eq.{user_id}",
+                "order": "created_at.desc",
+            },
+        )
+        notes_response.raise_for_status()
+        notes = notes_response.json()
+        flashcard_ids = [str(note.get("flashcard_id")) for note in notes if note.get("flashcard_id")]
+        if not flashcard_ids:
+            return []
+        cards_response = await client.get(
+            flashcards_url,
+            headers=_service_headers(),
+            params={
+                "select": "id,source_key,chapter_key,chapter_order,topic,title,exam_domain,description",
+                "id": f"in.({','.join(flashcard_ids)})",
+                "is_active": "eq.true",
+            },
+        )
+        cards_response.raise_for_status()
+        cards = {str(card["id"]): card for card in cards_response.json() if card.get("id")}
+
+    return [
+        {
+            "note_id": note.get("id"),
+            "created_at": note.get("created_at"),
+            **cards[str(note["flashcard_id"])],
+        }
+        for note in notes
+        if str(note.get("flashcard_id")) in cards
+    ]
+
+
+async def delete_flashcard_note_for_user(user_id: str, note_id: str, exam: str = "clf") -> bool:
+    if not settings.supabase_url or not settings.supabase_service_role_key:
+        raise RuntimeError("Supabase service role is not configured")
+
+    tables = flashcard_tables(exam)
+    url = f"{settings.supabase_url}/rest/v1/{tables.notes}"
+    async with httpx.AsyncClient(timeout=20) as client:
+        response = await client.delete(
+            url,
+            headers={**_service_headers(), "Prefer": "return=representation"},
+            params={"id": f"eq.{note_id}", "user_id": f"eq.{user_id}"},
+        )
+        response.raise_for_status()
+        return bool(response.json())
 
 
 def _empty_localized_text() -> dict[str, str]:
