@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 556,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在使用 AWS CloudFormation 模板来部署三层 Web 应用程序。 Web 应用程序由 Web 层和应用程序层组成，用于在 Amazon DynamoDB 表中存储和检索用户数据。 Web 和应用程序层托管在 Amazon EC2 实例上，数据库层不可公开访问。应用程序 EC2 实例需要访问 DynamoDB 表而不在模板中公开 API 凭证。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A solutions architect is using an AWS CloudFormation template to deploy a three-tier web application. The web application consists of a web tier and an application tier that stores and retrieves user data in Amazon DynamoDB tables. The web and application tiers are hosted on Amazon EC2 instances, and the database tier is not publicly accessible. The application EC2 instances need to access the DynamoDB tables without exposing API credentials in the template. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 IAM 角色来读取 DynamoDB 表。通过引用实例配置文件将角色与应用程序实例关联。",
+          "en": "Create an IAM role to read the DynamoDB tables. Associate the role with the application instances by referencing an instance profile."
+        },
+        "B": {
+          "zh": "创建一个具有从 DynamoDB 表读取和写入所需权限的 IAM 角色。将角色添加到 EC2 实例配置文件，并将实例配置文件与应用程序实例关联。",
+          "en": "Create an IAM role that has the required permissions to read and write from the DynamoDB tables. Add the role to the EC2 instance profile, and associate the instance profile with the application instances."
+        },
+        "C": {
+          "zh": "使用 AWS CloudFormation 模板中的参数部分让已创建的 IAM 用户输入用户输入访问权限和密钥，该用户具有从 DynamoDB 表读取和写入所需的权限。",
+          "en": "Use the parameter section in the AWS CloudFormation template to have the user input access and secret keys from an already-created IAM user that has the required permissions to read and write from the DynamoDB tables."
+        },
+        "D": {
+          "zh": "在 AWS CloudFormation 模板中创建一个 IAM 用户，该用户具有从 DynamoDB 表读取和写入所需的权限。使用 GetAtt 函数检索访问密钥和秘密密钥，并通过用户数据将它们传递给应用程序实例。",
+          "en": "Create an IAM user in the AWS CloudFormation template that has the required permissions to read and write from the DynamoDB tables. Use the GetAtt function to retrieve the access and secret keys, and pass them to the application instances through the user data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：创建 IAM 角色来读取 DynamoDB 表。通过引用实例配置文件将角色与应用实例关联。正确性：此选项部分正确，因为它建议使用 IAM 角色和实例配置文件来关联权限，这是一种安全的方式。缺点：没有提到需要“读写”权限，只提到“读”权限，可能达不到题目要求。",
+          "en": "Incorrect. Technical reason: Create an IAM role to read the DynamoDB table. Associate the role with the app instance by referencing the instance configuration file. Correctness: This option is partially correct as it recommends using IAM roles and instance profiles to associate permissions, which is a secure way. Disadvantages: There is no mention of the need for \"read and write\" permissions, only \"read\" permissions are mentioned, which may not meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：创建一个具有读取和写入 DynamoDB 表所需权限的 IAM 角色。将角色添加到 EC2 实例配置文件并将实例配置文件与应用程序实例关联。正确性：该选项完全正确。推荐使用IAM角色和实例配置文件，并且明确提到需要“读写”权限，符合问题的要求。安全性：避免暴露 API 机密并遵守 AWS 最佳实践。",
+          "en": "Correct. Technical reason: Create an IAM role with the necessary permissions to read and write to the DynamoDB table. Add the role to the EC2 instance profile and associate the instance profile with the application instance. Correctness: This option is completely correct. It is recommended to use IAM roles and instance configuration files, and clearly mentions that \"read and write\" permissions are required, which meets the requirements of the question. Security: Avoid exposing API secrets and comply with AWS best practices."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：在 AWS CloudFormation 模板的参数部分中，让用户输入已创建的 IAM 用户的访问密钥和秘密密钥，该用户具有读取和写入 DynamoDB 表所需的权限。正确性：此选项不正确，因为使用访问密钥和密钥会直接暴露敏感信息并违反 AWS 安全最佳实践。安全性：不建议在 CloudFormation 模板中使用硬编码或用户输入的机密。",
+          "en": "Incorrect. Technical reason: In the Parameters section of the AWS CloudFormation template, have the user enter the access key and secret key of an IAM user that has been created with the required permissions to read and write to the DynamoDB table. Correctness: This option is incorrect because using access and secret keys directly exposes sensitive information and violates AWS security best practices. Security: Using hard-coded or user-entered secrets in CloudFormation templates is not recommended."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：在 AWS CloudFormation 模板中创建一个 IAM 用户，该用户具有读取和写入 DynamoDB 表所需的权限。使用 GetAtt 函数检索访问密钥和秘密密钥，并将它们通过用户数据传递给应用程序实例。正确性：此选项不正确，因为它建议创建 IAM 用户并公开访问权限和密钥，从而违反了 AWS 安全最佳实践。安全性：不建议传输用户数据或敏感信息。",
+          "en": "Incorrect. Technical reason: Create an IAM user in the AWS CloudFormation template with the required permissions to read and write to the DynamoDB table. Use the GetAtt function to retrieve the access key and secret key and pass them to the app instance via user data. Correctness: This option is incorrect because it goes against AWS security best practices by suggesting creating an IAM user and exposing access and secret keys. Security: It is not recommended to transmit user data or sensitive information."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建一个具有从 DynamoDB 表读取和写入所需权限的 IAM 角色。将角色添加到 EC2 实例配置文件，并将实例配置文件与应用程序实例关联。",
+        "en": "B. Create an IAM role that has the required permissions to read and write from the DynamoDB tables. Add the role to the EC2 instance profile, and associate the instance profile with the application instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (87%) 13%。热门讨论与考点摘要：创建一个具有读取和写入 DynamoDB 表所需权限的 IAM 角色。将角色添加到 EC2 实例配置文件并将实例配置文件与应用程序实例关联。正确性：该选项完全正确。推荐使用IAM角色和实例配置文件，并且明确提到需要“读写”权限，符合问题的要求。安全性：避免暴露 API 机密并遵守 AWS 最佳实践。",
+        "en": "Community vote as displayed: B (87%) 13%. Popular discussion and key point summary: Create an IAM role with the necessary permissions to read and write to the DynamoDB table. Add the role to the EC2 instance profile and associate the instance profile with the application instance. Correctness: This option is completely correct. It is recommended to use IAM roles and instance configuration files, and clearly mentions that \"read and write\" permissions are required, which meets the requirements of the question. Security: Avoid exposing API secrets and comply with AWS best practices."
+      }
+    },
+    {
+      "question_no": 557,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师管理分析应用程序。该应用程序将大量半结构化数据存储在 Amazon S3 存储桶中。解决方案架构师希望使用并行数据处理来更快地处理数据。解决方案架构师还希望使用存储在 Amazon Redshift 数据库中的信息来丰富数据。哪种解决方案可以满足这些要求？",
+        "en": "A solutions architect manages an analytics application. The application stores large amounts of semistructured data in an Amazon S3 bucket. The solutions architect wants to use parallel data processing to process the data more quickly. The solutions architect also wants to use information that is stored in an Amazon Redshift database to enrich the data. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Athena 处理 S3 数据。将 AWS Glue 与 Amazon Redshift 数据结合使用以丰富 S3 数据。",
+          "en": "Use Amazon Athena to process the S3 data. Use AWS Glue with the Amazon Redshift data to enrich the S3 data."
+        },
+        "B": {
+          "zh": "使用 Amazon EMR 处理 S3 数据。将 Amazon EMR 与 Amazon Redshift 数据结合使用来丰富 S3 数据。",
+          "en": "Use Amazon EMR to process the S3 data. Use Amazon EMR with the Amazon Redshift data to enrich the S3 data."
+        },
+        "C": {
+          "zh": "使用 Amazon EMR 处理 S3 数据。使用 Amazon Kinesis Data Streams 将 S3 数据移动到 Amazon Redshift 中，以便丰富数据。",
+          "en": "Use Amazon EMR to process the S3 data. Use Amazon Kinesis Data Streams to move the S3 data into Amazon Redshift so that the data can be enriched."
+        },
+        "D": {
+          "zh": "使用 AWS Glue 处理 S3 数据。将 AWS Lake Formation 与 Amazon Redshift 数据结合使用来丰富 S3 数据。",
+          "en": "Use AWS Glue to process the S3 data. Use AWS Lake Formation with the Amazon Redshift data to enrich the S3 data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Athena 是一种交互式查询服务，适合处理结构化和半结构化数据，但不适合大规模并行数据处理。 AWS Glue 可以与 Amazon Redshift 集成，但它主要用于数据转换和 ETL，而不是高效的并行数据处理。该选项不满足“快速并行数据处理”的要求，因此是一个错误。",
+          "en": "Incorrect. Technical reason: Amazon Athena is an interactive query service suitable for processing structured and semi-structured data, but it is not suitable for massively parallel data processing. AWS Glue can be integrated with Amazon Redshift, but it is primarily used for data transformation and ETL rather than efficient parallel data processing. This option does not meet the requirements for \"fast parallel data processing\" and is therefore an error."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon EMR 是一款功能强大的分布式计算存储桶，专为大规模并行数据处理而设计。 Amazon EMR 可以直接与 Amazon Redshift 集成，以丰富和整合数据。该选项完全符合题目要求，因此是正确的。",
+          "en": "Correct. Technical reason: Amazon EMR is a powerful distributed computing bucket specifically designed for massively parallel data processing. Amazon EMR can integrate directly with Amazon Redshift for data enrichment and consolidation. This option fully meets the question requirements and is therefore correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon EMR 可以处理 S3 数据，但使用 Amazon Kinesis Data Streams 将数据移动到 Redshift 不适合此场景。 Kinesis Data Streams主要用于实时数据流处理，但标题并没有提到实时处理的需要。该选项不符合题目要求，因此是错误的。",
+          "en": "Incorrect. Technical reason: Amazon EMR can process S3 data, but using Amazon Kinesis Data Streams to move the data to Redshift is not suitable for this scenario. Kinesis Data Streams is mainly used for real-time data stream processing, but the title does not mention the need for real-time processing. This option does not meet the question requirements and is therefore incorrect."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Glue 是一种 ETL 服务，适用于数据转换，但不适用于大规模并行数据处理。 AWS Lake Formation 是一种数据湖管理服务，与 Redshift 的集成能力有限，无法直接满足数据丰富需求。该选项不能满足题目要求，因此是错误的。",
+          "en": "Incorrect. Technical reason: AWS Glue is an ETL service that is suitable for data transformation but not for massively parallel data processing. AWS Lake Formation is a data lake management service with limited integration capabilities with Redshift and cannot directly meet data enrichment needs. This option cannot meet the question requirements and is therefore an error."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon EMR 处理 S3 数据。将 Amazon EMR 与 Amazon Redshift 数据结合使用来丰富 S3 数据。",
+        "en": "B. Use Amazon EMR to process the S3 data. Use Amazon EMR with the Amazon Redshift data to enrich the S3 data."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (79%) A (21%)。热门讨论与考点摘要：Amazon EMR 是一款功能强大的分布式计算存储桶，专为大规模并行数据处理而设计。 Amazon EMR 可以直接与 Amazon Redshift 集成，以丰富和整合数据。该选项完全符合题目要求，因此是正确的。",
+        "en": "Community vote as displayed: B (79%) A (21%). Popular discussion and key point summary: Amazon EMR is a powerful distributed computing bucket specifically designed for massively parallel data processing. Amazon EMR can integrate directly with Amazon Redshift for data enrichment and consolidation. This option fully meets the question requirements and is therefore correct."
+      }
+    },
+    {
+      "question_no": 558,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司有两个 VPC，位于同一 AWS 账户内的 us-west-2 区域。公司需要允许这些 VPC 之间的网络流量。每个 VPC 之间每月将发生大约 500 GB 的数据传输。连接这些 VPC 的最具成本效益的解决方案是什么？",
+        "en": "A company has two VPCs that are located in the us-west-2 Region within the same AWS account. The company needs to allow network traffic between these VPCs. Approximately 500 GB of data transfer will occur between the VPCs each month. What is the MOST cost-effective solution to connect these VPCs?"
+      },
+      "options": {
+        "A": {
+          "zh": "实施 AWS Transit Gateway 以连接 VPC。更新每个 VPC 的路由表以使用中转网关进行 VPC 间通信。",
+          "en": "Implement AWS Transit Gateway to connect the VPCs. Update the route tables of each VPC to use the transit gateway for inter-VPC communication."
+        },
+        "B": {
+          "zh": "在 VPC 之间实施 AWS 站点到站点 VPN 隧道。更新每个VPC的路由表，以使用VPN隧道进行VPC间通信。",
+          "en": "Implement an AWS Site-to-Site VPN tunnel between the VPCs. Update the route tables of each VPC to use the VPN tunnel for inter-VPC communication."
+        },
+        "C": {
+          "zh": "在VPC之间建立VPC对等连接。更新每个VPC的路由表以使用VPC对等连接进行VPC间通信。",
+          "en": "Set up a VPC peering connection between the VPCs. Update the route tables of each VPC to use the VPC peering connection for inter-VPC communication."
+        },
+        "D": {
+          "zh": "在 VPC 之间设置 1 GB AWS Direct Connect 连接。更新每个 VPC 的路由表以使用 Direct Connect 连接进行 VPC 间通信。",
+          "en": "Set up a 1 GB AWS Direct Connect connection between the VPCs. Update the route tables of each VPC to use the Direct Connect connection for inter-VPC communication."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：成本不符合问题中“最具成本效益的类固醇”要求。",
+          "en": "Incorrect. Technical reason: The cost does not meet the \"most cost-effective steroid\" requirement of the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：性能和管理复杂度不符合“最具性价比”的称号要求。",
+          "en": "Incorrect. Technical reason: Performance and management complexity do not meet the title requirement of \"most cost effective\"."
+        },
+        "C": {
+          "zh": "正確。技术原因：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+          "en": "Correct. Technical reason: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：成本和使用量不符合“最具性价比类固醇”的问题要求。",
+          "en": "Incorrect. Technical reason: The cost and usage do not meet the requirements of the question as “the most cost-effective steroid”."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在VPC之间建立VPC对等连接。更新每个VPC的路由表以使用VPC对等连接进行VPC间通信。",
+        "en": "C. Set up a VPC peering connection between the VPCs. Update the route tables of each VPC to use the VPC peering connection for inter-VPC communication."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+      }
+    },
+    {
+      "question_no": 559,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上针对不同产品线托管多个应用程序。这些应用程序使用不同的计算资源，包括 Amazon EC2 实例和应用程序负载均衡器。应用程序在跨多个 AWS 区域的 AWS Organizations 中同一组织下的不同 AWS 账户中运行。每个产品线的团队都在各个账户中标记了每个计算资源。该公司希望通过组织中的综合计费功能了解有关每个产品线成本的更多详细信息。哪种步骤组合可以满足这些要求？ （选择两个。）",
+        "en": "A company hosts multiple applications on AWS for different product lines. The applications use different compute resources, including Amazon EC2 instances and Application Load Balancers. The applications run in different AWS accounts under the same organization in AWS Organizations across multiple AWS Regions. Teams for each product line have tagged each compute resource in the individual accounts. The company wants more details about the cost for each product line from the consolidated billing feature in Organizations. Which combination of steps will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS 账单控制台中选择特定的 AWS 生成的标签。",
+          "en": "Select a specific AWS generated tag in the AWS Billing console."
+        },
+        "B": {
+          "zh": "在 AWS 账单控制台中选择特定的用户定义标签。",
+          "en": "Select a specific user-defined tag in the AWS Billing console."
+        },
+        "C": {
+          "zh": "在 AWS Resource Groups 控制台中选择特定的用户定义标签。",
+          "en": "Select a specific user-defined tag in the AWS Resource Groups console."
+        },
+        "D": {
+          "zh": "从每个 AWS 账户激活选定的标签。",
+          "en": "Activate the selected tag from each AWS account."
+        },
+        "E": {
+          "zh": "从组织管理账户激活所选标签。",
+          "en": "Activate the selected tag from the Organizations management account."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 AWS 生成的标签（例如“aws:createdBy”）可以在某些场景中使用，但标题明确提到了用户定义的标签，而不是 AWS 生成的标签。",
+          "en": "Incorrect. Technical reason: Although tags generated by AWS (such as \"aws:createdBy\") can be used in certain scenarios, the title clearly mentions user-defined tags, not tags generated by AWS."
+        },
+        "B": {
+          "zh": "正確。技术原因：可以在 AWS 账单控制台中选择用户定义的指标并用于优化成本分配。此步骤对于实现您的目标是必要的。",
+          "en": "Correct. Technical reason: User-defined metrics can be selected in the AWS Billing console and used to refine cost allocations. This step is necessary to achieve your goals."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：AWS Resource Groups控制台主要用于资源分组和管理，与成本分配无关。成本分配标准的选择需要在 AWS 账单控制台中完成。",
+          "en": "Incorrect. Technical reason: The AWS Resource Groups console is mainly used for resource grouping and management and has nothing to do with cost allocation. The selection of cost allocation criteria needs to be done in the AWS Billing console."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：激活需要在组织管理账户中完成，而不是在每个单独账户中激活。标题明确提到使用组织的集中管理功能。",
+          "en": "Incorrect. Technical reason: Activation needs to be done in the Organizations management account and is not activated in each individual account. The title clearly mentions using the centralized management function of Organizations."
+        },
+        "E": {
+          "zh": "正確。技术原因：在 AWS Organizations 管理账户中激活标准是集中管理成本分配的关键步骤。这一步就满足了题目要求。",
+          "en": "Correct. Technical reason: Activating standards in your AWS Organizations management account is a critical step in centrally managing cost allocations. This step meets the question requirements."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 在 AWS 账单控制台中选择特定的用户定义标签。；E. 从组织管理账户激活所选标签。",
+        "en": "B. Select a specific user-defined tag in the AWS Billing console.; E. Activate the selected tag from the Organizations management account."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：BE (100%)。热门讨论与考点摘要：可以在 AWS 账单控制台中选择用户定义的指标并用于优化成本分配。此步骤对于实现您的目标是必要的。；在 AWS Organizations 管理账户中激活标准是集中管理成本分配的关键步骤。这一步就满足了题目要求。",
+        "en": "Community vote as displayed: BE (100%). Popular discussion and key point summary: User-defined metrics can be selected in the AWS Billing console and used to refine cost allocations. This step is necessary to achieve your goals.; Activating standards in your AWS Organizations management account is a critical step in centrally managing cost allocations. This step meets the question requirements."
+      }
+    },
+    {
+      "question_no": 560,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司的解决方案架构师正在设计使用 AWS Organizations 的 AWS 多账户解决方案。解决方案架构师已将公司的账户组织为组织单位 (OU)。解决方案架构师需要一个能够识别 OU 层次结构的任何更改的解决方案。该解决方案还需要将任何变化通知公司的运营团队。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company's solutions architect is designing an AWS multi-account solution that uses AWS Organizations. The solutions architect has organized the company's accounts into organizational units (OUs). The solutions architect needs a solution that will identify any changes to the OU hierarchy. The solution also needs to notify the company's operations team of any changes. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Control Tower 预置 AWS 账户。使用账户漂移通知来识别 OU 层次结构的更改。",
+          "en": "Provision the AWS accounts by using AWS Control Tower. Use account drift notifications to identify the changes to the OU hierarchy."
+        },
+        "B": {
+          "zh": "使用 AWS Control Tower 预置 AWS 账户。使用 AWS Config 聚合规则来识别 OU 层次结构的更改。",
+          "en": "Provision the AWS accounts by using AWS Control Tower. Use AWS Config aggregated rules to identify the changes to the OU hierarchy."
+        },
+        "C": {
+          "zh": "使用 AWS Service Catalog 在组织中创建账户。使用 AWS CloudTrail 组织跟踪来识别 OU 层次结构的更改。",
+          "en": "Use AWS Service Catalog to create accounts in Organizations. Use an AWS CloudTrail organization trail to identify the changes to the OU hierarchy."
+        },
+        "D": {
+          "zh": "使用 AWS CloudFormation 模板在组织中创建账户。在堆栈上使用漂移检测操作来识别 OU 层次结构的更改。",
+          "en": "Use AWS CloudFormation templates to create accounts in Organizations. Use the drift detection operation on a stack to identify the changes to the OU hierarchy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Control Tower 提供账户漂移检测，可以自动识别组织单位 (OU) 层次结构中的更改并发送通知。该方法运行成本低，满足课题要求。",
+          "en": "Correct. Technical reason: AWS Control Tower provides account drift detection, which can automatically identify changes in the organizational unit (OU) hierarchy and send notifications. This method has low operating cost and meets the requirements of the topic."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管 AWS Config 可以监控资源配置中的更改，但它不直接支持监控 AWS Organizations OU 层次结构中的更改。需要额外的配置和规则，从而增加运营开销。",
+          "en": "Incorrect. Technical reason: Although AWS Config can monitor changes in resource configurations, it does not directly support monitoring changes in the AWS Organizations OU hierarchy. Additional configuration and rules are required, increasing operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：AWS Service Catalog 主要用于管理和部署资源模板，而不是监控 OU 层次结构变化。 CloudTrail虽然可以记录事件，但需要额外的分析和处理，操作开销较高。",
+          "en": "Incorrect. Technical reason: AWS Service Catalog is mainly used for managing and deploying resource templates, rather than monitoring OU hierarchy changes. Although CloudTrail can record events, it requires additional analysis and processing, and the operation overhead is high."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：CloudFormation 的偏差检测功能旨在检测堆栈资源中的更改，而不是监控 AWS Organizations OU 层次结构中的更改。这种方法不太适合解决问题的要求。",
+          "en": "Incorrect. Technical reason: CloudFormation's drift detection feature is designed to detect changes in stack resources, rather than monitoring changes in the AWS Organizations OU hierarchy. This method is not suitable for solving the problem requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Control Tower 预置 AWS 账户。使用账户漂移通知来识别 OU 层次结构的更改。",
+        "en": "A. Provision the AWS accounts by using AWS Control Tower. Use account drift notifications to identify the changes to the OU hierarchy."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (61%) B (22%) C (17%)。热门讨论与考点摘要：AWS Control Tower 提供账户漂移检测，可以自动识别组织单位 (OU) 层次结构中的更改并发送通知。该方法运行成本低，满足课题要求。",
+        "en": "Community vote as displayed: A (61%) B (22%) C (17%). Popular discussion and key point summary: AWS Control Tower provides account drift detection, which can automatically identify changes in the organizational unit (OU) hierarchy and send notifications. This method has low operating cost and meets the requirements of the topic."
+      }
+    },
+    {
+      "question_no": 561,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "某公司的网站每天要处理数百万个请求，并且请求数量还在不断增加。解决方案架构师需要改进 Web 应用程序的响应时间。解决方案架构师确定应用程序在从 Amazon DynamoDB 表检索产品详细信息时需要减少延迟。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company's website handles millions of requests each day, and the number of requests continues to increase. A solutions architect needs to improve the response time of the web application. The solutions architect determines that the application needs to decrease latency when retrieving product details from the Amazon DynamoDB table. Which solution will meet these requirements with the LEAST amount of operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 DynamoDB Accelerator (DAX) 集群。通过 DAX 路由所有读取请求。",
+          "en": "Set up a DynamoDB Accelerator (DAX) cluster. Route all read requests through DAX."
+        },
+        "B": {
+          "zh": "在 DynamoDB 表和 Web 应用程序之间设置 Amazon ElastiCache for Redis。通过 Redis 路由所有读取请求。",
+          "en": "Set up Amazon ElastiCache for Redis between the DynamoDB table and the web application. Route all read requests through Redis."
+        },
+        "C": {
+          "zh": "在 DynamoDB 表和 Web 应用程序之间设置 Amazon ElastiCache for Memcached。通过 Memcached 路由所有读取请求。",
+          "en": "Set up Amazon ElastiCache for Memcached between the DynamoDB table and the web application. Route all read requests through Memcached."
+        },
+        "D": {
+          "zh": "在表上设置 Amazon DynamoDB Streams，并让 AWS Lambda 从表中读取数据并填充 Amazon ElastiCache。通过 ElastiCache 路由所有读取请求。",
+          "en": "Set up Amazon DynamoDB Streams on the table, and have AWS Lambda read from the table and populate Amazon ElastiCache. Route all read requests through ElastiCache."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：技术分析：DAX是专门为DynamoDB提供的内存存储解决方案，可以显着降低读取延迟。它与 DynamoDB 深度集成，运营开销较低。优点：DAX是​​专为DynamoDB设计的原生解决方案，支持存储故障的自动管理和数据同步，降低开发和运营复杂度。结论：此选项正确。",
+          "en": "Correct. Technical reason: Technical analysis: DAX is a memory storage solution specially provided for DynamoDB, which can significantly reduce read latency. It is deeply integrated with DynamoDB and has low operational overhead. Advantages: DAX is a native solution designed for DynamoDB, supporting automatic management of storage failures and data synchronization, reducing development and operation complexity. Conclusion: This option is correct."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：ElastiCache for Redis 是一种高性能缓存解决方案，但它并不是专门为 DynamoDB 设计的。使用 Redis 需要额外的开发工作来管理缓存失效和数据同步。缺点：与DAX相比，Redis的集成复杂度较高，增加了操作开销。结论：此选项不正确。",
+          "en": "Incorrect. Technical reason: Technical analysis: ElastiCache for Redis is a high-performance cache solution, but it is not specifically designed for DynamoDB. Using Redis requires additional development work to manage cache invalidations and data synchronization. Disadvantages: Compared with DAX, the integration complexity of Redis is higher, which increases the operation overhead. Conclusion: This option is incorrect."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：ElastiCache for Memcached 是另一种高性能缓存解决方案，但它并不是专门为 DynamoDB 设计的。与 Redis 一样，使用 Memcached 需要额外的开发工作来管理缓存失效和数据同步。缺点：与DAX相比，Memcached的集成复杂度更高，增加了运营开销。结论：此选项不正确。",
+          "en": "Incorrect. Technical reason: Technical analysis: ElastiCache for Memcached is another high-performance caching solution, but it is not specifically designed for DynamoDB. Like Redis, using Memcached requires additional development work to manage cache invalidations and data synchronization. Disadvantages: Compared with DAX, Memcached's integration complexity is higher, which increases operational overhead. Conclusion: This option is incorrect."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：该解决方案使用 DynamoDB Streams 和 Lambda 来填充 ElastiCache，但它增加了复杂性和运营开销。需要额外的开发工作来实现数据同步。缺点：与DAX相比，该解决方案具有更高的运营开销，并且不像DAX那样原生集成。结论：此选项不正确。",
+          "en": "Incorrect. Technical reason: Technical analysis: This solution uses DynamoDB Streams and Lambda to populate ElastiCache, but it adds complexity and operational overhead. Additional development work is required to achieve data synchronization. Disadvantages: Compared to DAX, this solution has higher operational overhead and is not as natively integrated as DAX. Conclusion: This option is incorrect."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 设置 DynamoDB Accelerator (DAX) 集群。通过 DAX 路由所有读取请求。",
+        "en": "A. Set up a DynamoDB Accelerator (DAX) cluster. Route all read requests through DAX."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：技术分析：DAX是专门为DynamoDB提供的内存存储解决方案，可以显着降低读取延迟。它与 DynamoDB 深度集成，运营开销较低。优点：DAX是​​专为DynamoDB设计的原生解决方案，支持存储故障的自动管理和数据同步，降低开发和运营复杂度。结论：此选项正确。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Technical analysis: DAX is a memory storage solution specially provided for DynamoDB, which can significantly reduce read latency. It is deeply integrated with DynamoDB and has low operational overhead. Advantages: DAX is a native solution designed for DynamoDB, supporting automatic management of storage failures and data synchronization, reducing development and operation complexity. Conclusion: This option is correct."
+      }
+    },
+    {
+      "question_no": 562,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师需要确保从 VPC 中的 Amazon EC2 实例对 Amazon DynamoDB 的 API 调用不会通过互联网传输。解决方案架构师应采取哪些步骤组合来满足此要求？ （选择两个。）",
+        "en": "A solutions architect needs to ensure that API calls to Amazon DynamoDB from Amazon EC2 instances in a VPC do not travel across the internet. Which combination of steps should the solutions architect take to meet this requirement? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "为端点创建路由表条目。",
+          "en": "Create a route table entry for the endpoint."
+        },
+        "B": {
+          "zh": "为 DynamoDB 创建网关终端节点。",
+          "en": "Create a gateway endpoint for DynamoDB."
+        },
+        "C": {
+          "zh": "为 Amazon EC2 创建接口终端节点。",
+          "en": "Create an interface endpoint for Amazon EC2."
+        },
+        "D": {
+          "zh": "为 VPC 的每个子网中的终端节点创建弹性网络接口。",
+          "en": "Create an elastic network interface for the endpoint in each of the subnets of the VPC."
+        },
+        "E": {
+          "zh": "在端点的安全组中创建安全组条目以提供访问权限。",
+          "en": "Create a security group entry in the endpoint's security group to provide access."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：网关终端节点需要 VPC 路由表中的条目以确保流量到达网关终端节点而不是 Internet。此步骤是配置网关端点的重要部分。",
+          "en": "Correct. Technical reason: The gateway endpoint requires an entry in the VPC's route table to ensure that traffic reaches the gateway endpoint and not the Internet. This step is an important part of configuring the gateway endpoint."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon DynamoDB 支持网关终端节点，允许流量通过 AWS 网络而不是 Internet 访问 DynamoDB。",
+          "en": "Correct. Technical reason: Amazon DynamoDB supports gateway endpoints, which allow traffic to access DynamoDB over the AWS network instead of the Internet."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：接口终端节点用于服务支持接口终端节点，但 DynamoDB 不支持接口终端节点，但支持网关终端节点的场景。",
+          "en": "Incorrect. Technical reason: Interface endpoints are used in scenarios where the service supports interface endpoints, but DynamoDB does not support interface endpoints, but supports gateway endpoints."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：弹性网络接口独立于网关端点，不需要在每个子网中创建弹性网络接口。",
+          "en": "Incorrect. Technical reason: Resilient network interfaces are independent of gateway endpoints, which do not need to create resilient network interfaces in each subnet."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：网关端点不使用通常与接口端点关联的安全组。",
+          "en": "Incorrect. Technical reason: Gateway endpoints do not use security groups, which are usually associated with interface endpoints."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 为端点创建路由表条目。；B. 为 DynamoDB 创建网关终端节点。",
+        "en": "A. Create a route table entry for the endpoint.; B. Create a gateway endpoint for DynamoDB."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：AB (75%) BE (23%) 3%。热门讨论与考点摘要：网关终端节点需要 VPC 路由表中的条目以确保流量到达网关终端节点而不是 Internet。此步骤是配置网关端点的重要部分。；Amazon DynamoDB 支持网关终端节点，允许流量通过 AWS 网络而不是 Internet 访问 DynamoDB。",
+        "en": "Community vote as displayed: AB (75%) BE (23%) 3%. Popular discussion and key point summary: The gateway endpoint requires an entry in the VPC's route table to ensure that traffic reaches the gateway endpoint and not the Internet. This step is an important part of configuring the gateway endpoint.; Amazon DynamoDB supports gateway endpoints, which allow traffic to access DynamoDB over the AWS network instead of the Internet."
+      }
+    },
+    {
+      "question_no": 563,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon Elastic Kubernetes Service (Amazon EKS) 集群和本地 Kubernetes 集群上运行其应用程序。该公司希望从一个中心位置查看所有集群和工作负载。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company runs its applications on both Amazon Elastic Kubernetes Service (Amazon EKS) clusters and on-premises Kubernetes clusters. The company wants to view all clusters and workloads from a central location. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon CloudWatch Container Insights 收集集群信息并对其进行分组。",
+          "en": "Use Amazon CloudWatch Container Insights to collect and group the cluster information."
+        },
+        "B": {
+          "zh": "使用 Amazon EKS Connector 注册和连接所有 Kubernetes 集群。",
+          "en": "Use Amazon EKS Connector to register and connect all Kubernetes clusters."
+        },
+        "C": {
+          "zh": "使用 AWS Systems Manager 收集和查看集群信息。",
+          "en": "Use AWS Systems Manager to collect and view the cluster information."
+        },
+        "D": {
+          "zh": "使用 Amazon EKS Anywhere 作为主集群，以使用本地 Kubernetes 命令查看其他集群。",
+          "en": "Use Amazon EKS Anywhere as the primary cluster to view the other clusters with native Kubernetes commands."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 Amazon CloudWatch Container Insights 收集集群信息并对其进行分组。 CloudWatch Container Insights主要用于控制容器化应用的性能指标和日志，但不提供跨集群的集中管理能力。因此，该选项不能满足题目要求。",
+          "en": "Incorrect. Technical reason: Use Amazon CloudWatch Container Insights to collect and group cluster information. CloudWatch Container Insights is mainly used to control the performance indicators and logs of containerized applications, but it does not provide centralized management capabilities across clusters. Therefore, this option cannot meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：使用 Amazon EKS Connector 注册并连接所有 Kubernetes 集群。 Amazon EKS Connector 是一款专门设计用于将本地和其他云上的外部 Kubernetes 集群连接到 Amazon EKS 控制台的工具。它允许用户根据问题要求在一个中心位置查看所有集群和工作负载。该选项是正确答案。",
+          "en": "Correct. Technical reason: Register and connect all Kubernetes clusters using the Amazon EKS Connector. The Amazon EKS Connector is a tool specifically designed to connect external Kubernetes clusters, both on-premises and on other clouds, to the Amazon EKS console. It allows users to view all clusters and workloads in one central location, as per the question requirements. This option is the correct answer."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用 AWS Systems Manager 收集和查看集群信息。 AWS Systems Manager 主要用于管理 EC2 实例和其他 AWS 资源的操作任务，并不是专门为 Kubernetes 集群的集中管理而设计的。因此，这个选项不适合解决题中的问题。",
+          "en": "Incorrect. Technical reason: Use AWS Systems Manager to collect and view cluster information. AWS Systems Manager is primarily used for operational tasks managing EC2 instances and other AWS resources, and is not specifically designed for centralized management of Kubernetes clusters. Therefore, this option is not suitable for solving the problem in the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 Amazon EKS Anywhere 作为主集群，并通过本地 Kubernetes 命令查看其他集群。 Amazon EKS Anywhere 是本地运行 Kubernetes 的解决方案，但它不提供对其他集群的集中管理。使用原生 Kubernetes 命令来管理多个集群会增加操作开销，不满足问题所要求的“最小操作开销”。因此，该选项是错误的。",
+          "en": "Incorrect. Technical reason: Use Amazon EKS Anywhere as the primary cluster and view other clusters through native Kubernetes commands. Amazon EKS Anywhere is a solution for running Kubernetes locally, but it does not provide centralized management of other clusters. Using native Kubernetes commands to manage multiple clusters will increase operational overhead and does not meet the \"minimum operational overhead\" required by the question. Therefore, this option is incorrect."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon EKS Connector 注册和连接所有 Kubernetes 集群。",
+        "en": "B. Use Amazon EKS Connector to register and connect all Kubernetes clusters."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (96%) 4%。热门讨论与考点摘要：使用 Amazon EKS Connector 注册并连接所有 Kubernetes 集群。 Amazon EKS Connector 是一款专门设计用于将本地和其他云上的外部 Kubernetes 集群连接到 Amazon EKS 控制台的工具。它允许用户根据问题要求在一个中心位置查看所有集群和工作负载。该选项是正确答案。",
+        "en": "Community vote as displayed: B (96%) 4%. Popular discussion and key point summary: Register and connect all Kubernetes clusters using the Amazon EKS Connector. The Amazon EKS Connector is a tool specifically designed to connect external Kubernetes clusters, both on-premises and on other clouds, to the Amazon EKS console. It allows users to view all clusters and workloads in one central location, as per the question requirements. This option is the correct answer."
+      }
+    },
+    {
+      "question_no": 564,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在构建电子商务应用程序，需要存储敏感的客户信息。公司需要让客户能够在网站上完成购买交易。该公司还需要确保敏感的客户数据受到保护，甚至免受数据库管理员的保护。哪种解决方案满足这些要求？",
+        "en": "A company is building an ecommerce application and needs to store sensitive customer information. The company needs to give customers the ability to complete purchase transactions on the website. The company also needs to ensure that sensitive customer data is protected, even from database administrators. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将敏感数据存储在 Amazon Elastic Block Store (Amazon EBS) 卷中。使用EBS加密对数据进行加密。使用 IAM 实例角色来限制访问。",
+          "en": "Store sensitive data in an Amazon Elastic Block Store (Amazon EBS) volume. Use EBS encryption to encrypt the data. Use an IAM instance role to restrict access."
+        },
+        "B": {
+          "zh": "将敏感数据存储在 Amazon RDS for MySQL 中。使用 AWS Key Management Service (AWS KMS) 客户端加密来加密数据。",
+          "en": "Store sensitive data in Amazon RDS for MySQL. Use AWS Key Management Service (AWS KMS) client-side encryption to encrypt the data."
+        },
+        "C": {
+          "zh": "将敏感数据存储在 Amazon S3 中。使用 AWS Key Management Service (AWS KMS) 服务器端加密来加密数据。使用 S3 存储桶策略来限制访问。",
+          "en": "Store sensitive data in Amazon S3. Use AWS Key Management Service (AWS KMS) server-side encryption to encrypt the data. Use S3 bucket policies to restrict access."
+        },
+        "D": {
+          "zh": "将敏感数据存储在 Amazon FSx for Windows Server 中。在应用程序服务器上挂载文件共享。使用 Windows 文件权限来限制访问。",
+          "en": "Store sensitive data in Amazon FSx for Windows Server. Mount the file share on application servers. Use Windows file permissions to restrict access."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：EBS加密可以保护数据，但主要用于块存储，适用于临时数据和文件系统，不适用于数据库存储。 EBS不添加任何字符串来直接保护Mining数据不被数据库管理员访问。",
+          "en": "Incorrect. Technical reason: EBS encryption can protect data, but it is mainly used for block storage, suitable for temporary data and file systems, not database storage. EBS adds no strings to directly protect Minying data from access by database administrators."
+        },
+        "B": {
+          "zh": "正確。技术原因：RDS是专门用于存储和管理数据库的服务。使用AWS KMS客户端加密可确保数据在传输和存储过程中进行加密，并可以有效限制数据库管理员的访问。",
+          "en": "Correct. Technical reason: RDS is a service specifically designed to store and manage databases. Using AWS KMS client encryption ensures that data is encrypted during transmission and storage, and can effectively limit database administrator access."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然S3可以存储敏感数据并使用KMS进行加密，但它更适合存储对象（例如文件和媒体）而不是关系数据。问题要求楚敏英孙虎心暖，RDS更适合这个场景。",
+          "en": "Incorrect. Technical reason: Although S3 can store sensitive data and use KMS for encryption, it is more suitable for storing objects (such as files and media) rather than relational data. The question requires that Chu Minying Sunhu Xinnuan, RDS is more suitable for this scenario."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：FSx适合文件存储，而不适合关系数据库存储。它没有解决问题中保护敏感婴儿和孙子数据的需要。",
+          "en": "Incorrect. Technical reason: FSx is suitable for file storage, not relational database storage. It does not address the need to protect sensitive infant and grandchild data in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将敏感数据存储在 Amazon RDS for MySQL 中。使用 AWS Key Management Service (AWS KMS) 客户端加密来加密数据。",
+        "en": "B. Store sensitive data in Amazon RDS for MySQL. Use AWS Key Management Service (AWS KMS) client-side encryption to encrypt the data."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：RDS是专门用于存储和管理数据库的服务。使用AWS KMS客户端加密可确保数据在传输和存储过程中进行加密，并可以有效限制数据库管理员的访问。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: RDS is a service specifically designed to store and manage databases. Using AWS KMS client encryption ensures that data is encrypted during transmission and storage, and can effectively limit database administrator access."
+      }
+    },
+    {
+      "question_no": 565,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有一个处理事务数据的本地 MySQL 数据库。该公司正在将数据库迁移到 AWS 云。迁移的数据库必须保持与使用该数据库的公司应用程序的兼容性。迁移的数据库还必须在需求增加期间自动扩展。哪种迁移解决方案可以满足这些要求？",
+        "en": "A company has an on-premises MySQL database that handles transactional data. The company is migrating the database to the AWS Cloud. The migrated database must maintain compatibility with the company's applications that use the database. The migrated database also must scale automatically during periods of increased demand. Which migration solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用本地 MySQL 工具将数据库迁移到 Amazon RDS for MySQL。配置弹性存储扩展。",
+          "en": "Use native MySQL tools to migrate the database to Amazon RDS for MySQL. Configure elastic storage scaling."
+        },
+        "B": {
+          "zh": "使用 mysqldump 实用程序将数据库迁移到 Amazon Redshift。为 Amazon Redshift 集群启用 Auto Scaling。",
+          "en": "Migrate the database to Amazon Redshift by using the mysqldump utility. Turn on Auto Scaling for the Amazon Redshift cluster."
+        },
+        "C": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 将数据库迁移到 Amazon Aurora。打开 Aurora Auto Scaling。",
+          "en": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon Aurora. Turn on Aurora Auto Scaling."
+        },
+        "D": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 将数据库迁移到 Amazon DynamoDB。配置弹性伸缩策略。",
+          "en": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon DynamoDB. Configure an Auto Scaling policy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该选项没有提到规划资源的自动扩展，问题中也没有“自动扩展”的要求。",
+          "en": "Incorrect. Technical reason: This option does not mention the automatic expansion of planning resources, and there is no requirement for \"automatic expansion\" in the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：问题显然需要支持事务性数据，而Redshift不适合这种场景。此外，mysqldump工具无缝迁移到Redshift。",
+          "en": "Incorrect. Technical reason: The question clearly requires supporting transactional data, and Redshift is not suitable for this scenario. In addition, the mysqldump tool seamlessly migrates to Redshift."
+        },
+        "C": {
+          "zh": "正確。技术原因：此选项满足所有要求，包括兼容性和自动扩展性。",
+          "en": "Correct. Technical reason: This option meets all requirements, including compatibility and auto-scalability."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：问题需要迁移数据库，但DynamoDB是NoSQL数据库，不满足要求。",
+          "en": "Incorrect. Technical reason: The question requires migrating a database, but DynamoDB is a NoSQL database and does not meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Database Migration Service (AWS DMS) 将数据库迁移到 Amazon Aurora。打开 Aurora Auto Scaling。",
+        "en": "C. Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon Aurora. Turn on Aurora Auto Scaling."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：此选项满足所有要求，包括兼容性和自动扩展性。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: This option meets all requirements, including compatibility and auto-scalability."
+      }
+    },
+    {
+      "question_no": 566,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在跨两个可用区的 VPC 中运行多个 Amazon EC2 Linux 实例。这些实例托管使用分层目录结构的应用程序。应用程序需要快速并发地读取和写入共享存储。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A company runs multiple Amazon EC2 Linux instances in a VPC across two Availability Zones. The instances host applications that use a hierarchical directory structure. The applications need to read and write rapidly and concurrently to shared storage. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建 Amazon S3 存储桶。允许来自 VPC 中的所有 EC2 实例的访问。",
+          "en": "Create an Amazon S3 bucket. Allow access from all the EC2 instances in the VPC."
+        },
+        "B": {
+          "zh": "创建 Amazon Elastic File System (Amazon EFS) 文件系统。从每个 EC2 实例挂载 EFS 文件系统。",
+          "en": "Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system from each EC2 instance."
+        },
+        "C": {
+          "zh": "在预配置 IOPS SSD (io2) Amazon Elastic Block Store (Amazon EBS) 卷上创建文件系统。将 EBS 卷附加到所有 EC2 实例。",
+          "en": "Create a file system on a Provisioned IOPS SSD (io2) Amazon Elastic Block Store (Amazon EBS) volume. Attach the EBS volume to all the EC2 instances."
+        },
+        "D": {
+          "zh": "在附加到每个 EC2 实例的 Amazon Elastic Block Store (Amazon EBS) 卷上创建文件系统。跨不同 EC2 实例同步 EBS 卷。",
+          "en": "Create file systems on Amazon Elastic Block Store (Amazon EBS) volumes that are attached to each EC2 instance. Synchronize the EBS volumes across the different EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon S3是一种对象存储服务，适合存储非结构化数据（如文件、图片等），但不支持文件系统挂载，不适合需要快速并发读写的场景。",
+          "en": "Incorrect. Technical reason: Amazon S3 is an object storage service, suitable for storing unstructured data (such as files, pictures, etc.), but it does not support file system mounting, and is not suitable for scenarios that require fast concurrent reading and writing."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon EFS 是完全托管的文件存储服务，支持并发挂载多个 EC2 实例，提供共享文件系统，并支持快速读写。非常适合需要共享存储的场景。",
+          "en": "Correct. Technical reason: Amazon EFS is a fully managed file storage service that supports concurrent mounting of multiple EC2 instances, provides a shared file system, and supports fast reading and writing. It is very suitable for scenarios that require shared storage."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon EBS 卷只能附加到一个 EC2 实例，不能在多个实例之间直接共享。即使使用预配置 IOPS SSD，也无法满足共享存储需求。",
+          "en": "Incorrect. Technical reason: Amazon EBS volumes can only be attached to one EC2 instance and cannot be shared directly between multiple instances. Even with Provisioned IOPS SSDs, shared storage needs are not met."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然可以通过同步工具（如rsync）实现数据同步，但这种方式复杂且性能较低，不适合需要快速并发读写的场景。",
+          "en": "Incorrect. Technical reason: Although data synchronization can be achieved through synchronization tools (such as rsync), this method is complex and has low performance, and is not suitable for scenarios that require fast concurrent reading and writing."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建 Amazon Elastic File System (Amazon EFS) 文件系统。从每个 EC2 实例挂载 EFS 文件系统。",
+        "en": "B. Create an Amazon Elastic File System (Amazon EFS) file system. Mount the EFS file system from each EC2 instance."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (96%) 4%。热门讨论与考点摘要：Amazon EFS 是完全托管的文件存储服务，支持并发挂载多个 EC2 实例，提供共享文件系统，并支持快速读写。非常适合需要共享存储的场景。",
+        "en": "Community vote as displayed: B (96%) 4%. Popular discussion and key point summary: Amazon EFS is a fully managed file storage service that supports concurrent mounting of multiple EC2 instances, provides a shared file system, and supports fast reading and writing. It is very suitable for scenarios that require shared storage."
+      }
+    },
+    {
+      "question_no": 567,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在设计一个工作负载，用于存储建筑物中企业租户每小时的能耗。传感器将通过 HTTP 请求向数据库提供数据，该请求将累加每个租户的使用情况。解决方案架构师必须尽可能使用托管服务。随着解决方案架构师添加独立组件，工作负载未来将获得更多功能。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A solutions architect is designing a workload that will store hourly energy consumption by business tenants in a building. The sensors will feed a database through HTTP requests that will add up usage for each tenant. The solutions architect must use managed services when possible. The workload will receive more features in the future as the solutions architect adds independent components. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Amazon API Gateway 与 AWS Lambda 函数结合使用，从传感器接收数据、处理数据并将数据存储在 Amazon DynamoDB 表中。",
+          "en": "Use Amazon API Gateway with AWS Lambda functions to receive the data from the sensors, process the data, and store the data in an Amazon DynamoDB table."
+        },
+        "B": {
+          "zh": "使用 Amazon EC2 实例 Auto Scaling 组支持的弹性负载均衡器来接收和处理来自传感器的数据。使用 Amazon S3 存储桶来存储处理后的数据。",
+          "en": "Use an Elastic Load Balancer that is supported by an Auto Scaling group of Amazon EC2 instances to receive and process the data from the sensors. Use an Amazon S3 bucket to store the processed data."
+        },
+        "C": {
+          "zh": "使用 Amazon API Gateway 与 AWS Lambda 函数接收来自传感器的数据、处理数据并将数据存储在 Amazon EC2 实例上的 Microsoft SQL Server Express 数据库中。",
+          "en": "Use Amazon API Gateway with AWS Lambda functions to receive the data from the sensors, process the data, and store the data in a Microsoft SQL Server Express database on an Amazon EC2 instance."
+        },
+        "D": {
+          "zh": "使用 Amazon EC2 实例 Auto Scaling 组支持的弹性负载均衡器来接收和处理来自传感器的数据。使用 Amazon Elastic File System (Amazon EFS) 共享文件系统来存储处理后的数据。",
+          "en": "Use an Elastic Load Balancer that is supported by an Auto Scaling group of Amazon EC2 instances to receive and process the data from the sensors. Use an Amazon Elastic File System (Amazon EFS) shared file system to store the processed data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：API Gateway 和 Lambda 是 Serverless 架构的核心组件，可以高效处理 HTTP 请求并执行逻辑。正确：DynamoDB 是一种托管 NoSQL 数据库，适合存储传感器数据并支持高可用性和可扩展性。正确：此选项完全基于托管服务，并且运营开销最小。",
+          "en": "Correct. Technical reason: API Gateway and Lambda are the core groupware of serverless architecture and can efficiently handle HTTP requests and execute logic. Correct: DynamoDB is a managed NoSQL database suitable for storing sensor data and supports high availability and scalability. Correct: This option is entirely based on managed services and has minimal operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：使用 EC2 实例和 Auto Scaling 组会增加运营开销，需要管理实例生命周期和配置。错误：虽然S3适合存储数据，但该方案不满足Serverless架构的要求。",
+          "en": "Incorrect. Technical reason: Using EC2 instances and Auto Scaling groups adds operational overhead, requiring management of instance lifecycle and configuration. Error: Although S3 is suitable for storing data, this solution does not meet the requirements of serverless architecture."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：尽管 API Gateway 和 Lambda 是无服务器组件，但使用 EC2 实例托管 SQL Server 会增加运营开销。错误：SQL Server Express 不如 DynamoDB 更适合处理传感器数据，并且需要手动管理数据库实例。",
+          "en": "Incorrect. Technical reason: Although API Gateway and Lambda are serverless groupware, using EC2 instances to host SQL Server increases operational overhead. Error: SQL Server Express is not as suitable as DynamoDB for processing sensor data and requires manual management of the database instance."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 EC2 实例和 Auto Scaling 组会增加运营开销，需要管理实例生命周期和配置。错误：EFS适合共享文件存储，但不适合存储传感器数据，且该方案不满足Serverless架构的要求。",
+          "en": "Incorrect. Technical reason: Using EC2 instances and Auto Scaling groups adds operational overhead, requiring management of instance lifecycle and configuration. Error: EFS is suitable for shared file storage, but not suitable for storing sensor data, and this solution does not meet the requirements of serverless architecture."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将 Amazon API Gateway 与 AWS Lambda 函数结合使用，从传感器接收数据、处理数据并将数据存储在 Amazon DynamoDB 表中。",
+        "en": "A. Use Amazon API Gateway with AWS Lambda functions to receive the data from the sensors, process the data, and store the data in an Amazon DynamoDB table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：API Gateway 和 Lambda 是 Serverless 架构的核心组件，可以高效处理 HTTP 请求并执行逻辑。正确：DynamoDB 是一种托管 NoSQL 数据库，适合存储传感器数据并支持高可用性和可扩展性。正确：此选项完全基于托管服务，并且运营开销最小。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: API Gateway and Lambda are the core groupware of serverless architecture and can efficiently handle HTTP requests and execute logic. Correct: DynamoDB is a managed NoSQL database suitable for storing sensor data and supports high availability and scalability. Correct: This option is entirely based on managed services and has minimal operational overhead."
+      }
+    },
+    {
+      "question_no": 568,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在为用于存储和查看工程图的新 Web 应用程序设计存储架构。所有应用程序组件都将部署在AWS基础设施上。应用程序设计必须支持缓存，以最大限度地减少用户等待工程图加载的时间。应用程序必须能够存储 PB 级的数据。解决方案架构师应该使用哪种存储和缓存组合？",
+        "en": "A solutions architect is designing the storage architecture for a new web application used for storing and viewing engineering drawings. All application components will be deployed on the AWS infrastructure. The application design must support caching to minimize the amount of time that users wait for the engineering drawings to load. The application must be able to store petabytes of data. Which combination of storage and caching should the solutions architect use?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon S3 与 Amazon CloudFront",
+          "en": "Amazon S3 with Amazon CloudFront"
+        },
+        "B": {
+          "zh": "Amazon S3 Glacier 与 Amazon ElastiCache",
+          "en": "Amazon S3 Glacier with Amazon ElastiCache"
+        },
+        "C": {
+          "zh": "使用 Amazon CloudFront 的 Amazon Elastic Block Store (Amazon EBS) 卷",
+          "en": "Amazon Elastic Block Store (Amazon EBS) volumes with Amazon CloudFront"
+        },
+        "D": {
+          "zh": "带有 Amazon ElastiCache 的 AWS Storage Gateway",
+          "en": "AWS Storage Gateway with Amazon ElastiCache"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon S3 是一种高可用且高可扩展的对象存储服务，适合存储大规模数据（例如工程图纸）。 Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存数据并加速用户访问，从而减少加载时间。这种组合完全满足问题的要求：支持大规模数据的存储，并提供缓存功能。正确的选项。",
+          "en": "Correct. Technical reason: Amazon S3 is a highly available and highly scalable object storage service suitable for storing large-scale data (such as engineering drawings). Amazon CloudFront is a global content delivery network (CDN) that caches data and accelerates user access, reducing load times. This combination fully meets the requirements of the question: it supports the storage of large-scale data and provides caching functions. Correct option."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon S3 Glacier 是一种低成本的归档存储服务，适合长期存储数据，但不适合频繁访问或实时加载数据。 Amazon ElastiCache 是一种内存缓存服务，适合加速数据库查询或应用程序性能，但其与 S3 Glacier 的组合并不能满足问题的要求。错误的选择。",
+          "en": "Incorrect. Technical reason: Amazon S3 Glacier is a low-cost archive storage service suitable for long-term storage of data, but not suitable for frequent access or real-time loading of data. Amazon ElastiCache is an in-memory caching service that is suitable for accelerating database query or application performance, but its combination with S3 Glacier does not meet the requirements of the question. Wrong option."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon EBS 是一种块存储服务，通常用于 EC2 实例的持久存储，但不适合存储大规模对象数据（例如工程图纸）。 Amazon CloudFront是CDN服务，但与EBS的结合不满足问题要求。错误的选择。",
+          "en": "Incorrect. Technical reason: Amazon EBS is a block storage service that is commonly used for persistent storage of EC2 instances, but is not suitable for storing large-scale object data (such as engineering drawings). Amazon CloudFront is a CDN service, but its combination with EBS does not meet the question requirements. Wrong option."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Storage Gateway 是一种混合云存储服务，适合在本地和云之间传输数据，但不适合直接存储大规模数据。 Amazon ElastiCache 是一种内存缓存服务，但其与 Storage Gateway 的组合不能满足问题要求。错误的选择。",
+          "en": "Incorrect. Technical reason: AWS Storage Gateway is a hybrid cloud storage service that is suitable for transferring data between on-premises and the cloud, but is not suitable for directly storing large-scale data. Amazon ElastiCache is an in-memory caching service, but its combination with Storage Gateway does not meet the question requirements. Wrong option."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. Amazon S3 与 Amazon CloudFront",
+        "en": "A. Amazon S3 with Amazon CloudFront"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：Amazon S3 是一种高可用且高可扩展的对象存储服务，适合存储大规模数据（例如工程图纸）。 Amazon CloudFront 是一个全球内容交付网络 (CDN)，可缓存数据并加速用户访问，从而减少加载时间。这种组合完全满足问题的要求：支持大规模数据的存储，并提供缓存功能。正确的选项。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon S3 is a highly available and highly scalable object storage service suitable for storing large-scale data (such as engineering drawings). Amazon CloudFront is a global content delivery network (CDN) that caches data and accelerates user access, reducing load times. This combination fully meets the requirements of the question: it supports the storage of large-scale data and provides caching functions. Correct option."
+      }
+    },
+    {
+      "question_no": 569,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "Amazon EventBridge 规则以第三方 API 为目标。第三方API未收到任何传入流量。解决方案架构师需要确定是否满足规则条件以及是否正在调用规则的目标。哪种解决方案可以满足这些要求？",
+        "en": "An Amazon EventBridge rule targets a third-party API. The third-party API has not received any incoming traffic. A solutions architect needs to determine whether the rule conditions are being met and if the rule's target is being invoked. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "检查 AWS/Events 命名空间中 Amazon CloudWatch 中的指标。",
+          "en": "Check for metrics in Amazon CloudWatch in the namespace for AWS/Events."
+        },
+        "B": {
+          "zh": "查看 Amazon Simple Queue Service (Amazon SQS) 死信队列中的事件。",
+          "en": "Review events in the Amazon Simple Queue Service (Amazon SQS) dead-letter queue."
+        },
+        "C": {
+          "zh": "检查 Amazon CloudWatch Logs 中的事件。",
+          "en": "Check for the events in Amazon CloudWatch Logs."
+        },
+        "D": {
+          "zh": "检查 AWS CloudTrail 中的跟踪以获取 EventBridge 事件。",
+          "en": "Check the trails in AWS CloudTrail for the EventBridge events."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon EventBridge 会将相关指标发布到 Amazon CloudWatch 的 AWS/Events 命名空间。这些指标可以帮助确认规则是否被触发以及目标是否被调用。",
+          "en": "Correct. Technical reason: Amazon EventBridge will publish relevant metrics to the AWS/Events namespace of Amazon CloudWatch. These metrics can help confirm whether the rule is triggered and the target is called."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：死信队列用于存储无法成功处理的消息，但问题中没有提到使用SQS作为目标，也没有提到消息处理失败的情况。",
+          "en": "Incorrect. Technical reason: The dead letter queue is used to store messages that cannot be successfully processed, but the question does not mention using SQS as a target, nor does it mention the situation of message processing failure."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然CloudWatch Logs可以记录日志，但该问题没有提到将EventBridge事件发送到CloudWatch Logs进行记录。",
+          "en": "Incorrect. Technical reason: Although CloudWatch Logs can record logs, the question does not mention sending EventBridge events to CloudWatch Logs for recording."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS CloudTrail 记录 API 调用和事件历史记录，但主要用于审核和合规性，而不是实时监控 EventBridge 规则是否被触发。",
+          "en": "Incorrect. Technical reason: AWS CloudTrail records API calls and event history, but it is primarily used for auditing and compliance rather than real-time monitoring of whether EventBridge rules are triggered."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 检查 AWS/Events 命名空间中 Amazon CloudWatch 中的指标。",
+        "en": "A. Check for metrics in Amazon CloudWatch in the namespace for AWS/Events."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (76%) D (15%) 10%。热门讨论与考点摘要：Amazon EventBridge 会将相关指标发布到 Amazon CloudWatch 的 AWS/Events 命名空间。这些指标可以帮助确认规则是否被触发以及目标是否被调用。",
+        "en": "Community vote as displayed: A (76%) D (15%) 10%. Popular discussion and key point summary: Amazon EventBridge will publish relevant metrics to the AWS/Events namespace of Amazon CloudWatch. These metrics can help confirm whether the rule is triggered and the target is called."
+      }
+    },
+    {
+      "question_no": 570,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "某公司每周五晚上的工作量很大。该工作负载在 us-east-1 区域的两个可用区中的 Amazon EC2 实例上运行。通常，公司始终运行的实例不得超过两个。然而，该公司希望每周五扩展到六个实例，以处理定期重复增加的工作负载。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company has a large workload that runs every Friday evening. The workload runs on Amazon EC2 instances that are in two Availability Zones in the us-east-1 Region. Normally, the company must run no more than two instances at all times. However, the company wants to scale up to six instances each Friday to handle a regularly repeating increased workload. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Amazon EventBridge 中创建提醒以扩展实例。",
+          "en": "Create a reminder in Amazon EventBridge to scale the instances."
+        },
+        "B": {
+          "zh": "创建具有计划操作的 Auto Scaling 组。",
+          "en": "Create an Auto Scaling group that has a scheduled action."
+        },
+        "C": {
+          "zh": "创建使用手动扩展的 Auto Scaling 组。",
+          "en": "Create an Auto Scaling group that uses manual scaling."
+        },
+        "D": {
+          "zh": "创建使用自动扩展的 Auto Scaling 组。",
+          "en": "Create an Auto Scaling group that uses automatic scaling."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然Amazon EventBridge可以创建定时事件，但它只是一个事件触发器，直接管理EC2实例的扩展和收缩，无需剥离。需要额外的操作和配置，例如结合Lambda函数或其他服务来实现扩展，这会增加运营开销。",
+          "en": "Incorrect. Technical reason: Although Amazon EventBridge can create timed events, it is just an event trigger and directly manages the expansion and contraction of EC2 instances without stripping. Additional operations and configurations are required, such as combining Lambda functions or other services to implement extensions, which increases operational overhead."
+        },
+        "B": {
+          "zh": "正確。技术原因：Auto Scaling组的计划操作允许用户根据计划自动调整实例数量。这种方条可以直接满足需求，并且由于不需要人工干预，操作开销最低。",
+          "en": "Correct. Technical reason: Scheduled Actions of Auto Scaling groups allow users to automatically adjust the number of instances according to the schedule. This kind of square strip can directly meet the needs and has the lowest operating overhead because no manual intervention is required."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：手动扩容需要管理员手动调整实例数量，增加了运营开销。 “LEAST 操作开销”不符合问题的要求。",
+          "en": "Incorrect. Technical reason: Manual expansion requires administrators to manually adjust the number of instances, which increases operational overhead. \"LEAST operational overhead\" that does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：自动缩放通常根据 CPU 利用率或网络流量等指标触发，而不是根据计划触发。自动扩容虽然可以动态调整实例数量，但并不能满足题中“周五定期扩容至6个实例”的要求。",
+          "en": "Incorrect. Technical reason: Autoscaling is typically triggered based on metrics such as CPU utilization or network traffic, rather than on a schedule. Although automatic expansion can dynamically adjust the number of instances, it does not meet the requirement of \"regular expansion to 6 instances on Friday\" in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建具有计划操作的 Auto Scaling 组。",
+        "en": "B. Create an Auto Scaling group that has a scheduled action."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：Auto Scaling组的计划操作允许用户根据计划自动调整实例数量。这种方条可以直接满足需求，并且由于不需要人工干预，操作开销最低。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Scheduled Actions of Auto Scaling groups allow users to automatically adjust the number of instances according to the schedule. This kind of square strip can directly meet the needs and has the lowest operating overhead because no manual intervention is required."
+      }
+    }
+  ]
+}

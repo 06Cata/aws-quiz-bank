@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 526,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在审查应用程序的弹性。解决方案架构师注意到，作为扩展练习的一部分，数据库管理员最近对应用程序的 Amazon Aurora PostgreSQL 数据库编写器实例进行了故障转移。故障转移导致应用程序停机 3 分钟。哪种解决方案能够以最少的运营开销减少扩展练习的停机时间？",
+        "en": "A solutions architect is reviewing the resilience of an application. The solutions architect notices that a database administrator recently failed over the application's Amazon Aurora PostgreSQL database writer instance as part of a scaling exercise. The failover resulted in 3 minutes of downtime for the application. Which solution will reduce the downtime for scaling exercises with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在集群中创建更多 Aurora PostgreSQL 只读副本以处理故障转移期间的负载。",
+          "en": "Create more Aurora PostgreSQL read replicas in the cluster to handle the load during failover."
+        },
+        "B": {
+          "zh": "在同一 AWS 区域中设置辅助 Aurora PostgreSQL 集群。在故障转移期间，更新应用程序以使用辅助集群的写入器端点。",
+          "en": "Set up a secondary Aurora PostgreSQL cluster in the same AWS Region. During failover, update the application to use the secondary cluster's writer endpoint."
+        },
+        "C": {
+          "zh": "创建 Amazon ElastiCache for Memcached 集群以处理故障转移期间的负载。",
+          "en": "Create an Amazon ElastiCache for Memcached cluster to handle the load during failover."
+        },
+        "D": {
+          "zh": "为数据库设置 Amazon RDS 代理。更新应用程序以使用代理端点。",
+          "en": "Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Aurora 的只读副本无法用作写入实例，因此无法减少故障转移期间的停机时间。只读副本主要用于分担读负载，而不是解决写实例的故障转移问题。",
+          "en": "Incorrect. Technical reason: Aurora's read replicas cannot be used as write instances and therefore cannot reduce downtime during failover. Read replicas are mainly used to share the read load, rather than solving the failover problem of write instances."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：设置辅助集群需要额外的管理和配置工作，从而增加了操作复杂性。虽然它可以减少停机时间，但它需要手动更新应用程序的写入端点，这是一项昂贵的操作。",
+          "en": "Incorrect. Technical reason: Setting up a secondary cluster requires additional management and configuration work, increasing operational complexity. Although it can reduce downtime, it requires manual updating of the application's write endpoints, which is an expensive operation."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：ElastiCache主要用于缓存数据以提高读取性能，无法解决数据库写入实例的故障转移问题。该选项与问题的核心要求无关。",
+          "en": "Incorrect. Technical reason: ElastiCache is mainly used to cache data to improve read performance and cannot solve the failover problem of database write instances. This option is not relevant to the core requirement of the question."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon RDS Proxy 可以管理数据库连接池，以减少故障转移期间的连接中断。通过使用代理端点，应用程序不需要直接连接到数据库实例，从而减少了停机时间和操作复杂性。",
+          "en": "Correct. Technical reason: Amazon RDS Proxy can manage database connection pools to reduce connection interruptions during failover. By using proxy endpoints, applications do not need to connect directly to the database instance, reducing downtime and operational complexity."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 为数据库设置 Amazon RDS 代理。更新应用程序以使用代理端点。",
+        "en": "D. Set up an Amazon RDS proxy for the database. Update the application to use the proxy endpoint."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (78%) B (19%) 4%。热门讨论与考点摘要：Amazon RDS Proxy 可以管理数据库连接池，以减少故障转移期间的连接中断。通过使用代理端点，应用程序不需要直接连接到数据库实例，从而减少了停机时间和操作复杂性。",
+        "en": "Community vote as displayed: D (78%) B (19%) 4%. Popular discussion and key point summary: Amazon RDS Proxy can manage database connection pools to reduce connection interruptions during failover. By using proxy endpoints, applications do not need to connect directly to the database instance, reducing downtime and operational complexity."
+      }
+    },
+    {
+      "question_no": 527,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有在单个 AWS 区域中运行的基于区域订阅的流媒体服务。该架构由 Amazon EC2 实例上的 Web 服务器和应用程序服务器组成。 EC2 实例位于弹性负载均衡器后面的 Auto Scaling 组中。该架构包括一个跨多个可用区的 Amazon Aurora 全局数据库集群。该公司希望在全球范围内扩张并确保其应用程序的停机时间最短。哪种解决方案将提供最大的容错能力？",
+        "en": "A company has a regional subscription-based streaming service that runs in a single AWS Region. The architecture consists of web servers and application servers on Amazon EC2 instances. The EC2 instances are in Auto Scaling groups behind Elastic Load Balancers. The architecture includes an Amazon Aurora global database cluster that extends across multiple Availability Zones. The company wants to expand globally and to ensure that its application has minimal downtime. Which solution will provide the MOST fault tolerance?"
+      },
+      "options": {
+        "A": {
+          "zh": "扩展 Web 层和应用程序层的 Auto Scaling 组，以在第二个区域的可用区中部署实例。使用 Aurora 全局数据库在主区域和第二区域中部署数据库。使用 Amazon Route 53 运行状况检查和到第二个区域的故障转移路由策略。",
+          "en": "Extend the Auto Scaling groups for the web tier and the application tier to deploy instances in Availability Zones in a second Region. Use an Aurora global database to deploy the database in the primary Region and the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region."
+        },
+        "B": {
+          "zh": "将 Web 层和应用程序层部署到第二个区域。在第二个区域中添加 Aurora PostgreSQL 跨区域 Aurora 副本。使用 Amazon Route 53 运行状况检查和到第二个区域的故障转移路由策略。根据需要将中学升级为小学。",
+          "en": "Deploy the web tier and the application tier to a second Region. Add an Aurora PostgreSQL cross-Region Aurora Replica in the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region. Promote the secondary to primary as needed."
+        },
+        "C": {
+          "zh": "将 Web 层和应用程序层部署到第二个区域。在第二个区域中创建 Aurora PostgreSQL 数据库。使用 AWS Database Migration Service (AWS DMS) 将主数据库复制到第二个区域。使用 Amazon Route 53 运行状况检查和到第二个区域的故障转移路由策略。",
+          "en": "Deploy the web tier and the application tier to a second Region. Create an Aurora PostgreSQL database in the second Region. Use AWS Database Migration Service (AWS DMS) to replicate the primary database to the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region."
+        },
+        "D": {
+          "zh": "将 Web 层和应用程序层部署到第二个区域。使用 Amazon Aurora 全局数据库在主要区域和第二区域中部署数据库。使用 Amazon Route 53 运行状况检查和到第二个区域的故障转移路由策略。根据需要将中学升级为小学。",
+          "en": "Deploy the web tier and the application tier to a second Region. Use an Amazon Aurora global database to deploy the database in the primary Region and the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region. Promote the secondary to primary as needed."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：此选项提到将 Auto Scaling 组扩展到第二个区域，并使用 Aurora Global Database 在两个区域中部署数据库。这是正确的高可用架构设计。使用 Route 53 运行状况检查和故障转移路由策略也符合条件。该选项没有提及如何处理Aurora全局数据库的主从切换问题，因此不如选项D详细。结论：正确但不够详细。",
+          "en": "Incorrect. Technical reason: Analysis: This option mentions extending the Auto Scaling group to the second Region and deploying the database in both Regions using Aurora Global Database. This is a correct high-availability architecture design. Using Route 53 health checks and failover routing strategies are also eligible. This option does not mention how to handle the master-slave switching problem of the Aurora global database, so it is not as detailed as option D. Conclusion: Correct but not detailed enough."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：此选项使用 Aurora PostgreSQL 跨区域 Aurora 副本而不是 Aurora 全局数据库。 Aurora Replica 的跨区域复制延迟较高，可能会导致数据一致性问题。虽然提到可以根据需要升级到主级别，但Aurora全局数据库本身已经提供了更高效的主从切换机制。结论：错误，Aurora Replica 不如 Aurora Global Database 适合这种场景。",
+          "en": "Incorrect. Technical reason: Analysis: This option uses Aurora PostgreSQL cross-region Aurora Replica instead of the Aurora global database. Aurora Replica's cross-region replication latency is high, which can cause data consistency issues. Although it is mentioned that the level can be upgraded to the primary level as needed, the Aurora global database itself already provides a more efficient master-slave switching mechanism. Conclusion: Wrong, Aurora Replica is not as suitable for this scenario as Aurora Global Database."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：此选项使用 AWS DMS 进行数据库复制，而不是 Aurora 全局数据库。 DMS 的复制延迟较高，需要额外的配置和管理。该选项没有提及如何处理数据库的主从切换问题。结论：错误，DMS 不如 Aurora Global Database 适合这种场景。",
+          "en": "Incorrect. Technical reason: Analysis: This option uses AWS DMS for database replication instead of the Aurora global database. DMS has higher replication latency and requires additional configuration and management. This option does not mention how to handle the master-slave switching problem of the database. Conclusion: Wrong, DMS is not as suitable for this scenario as Aurora Global Database."
+        },
+        "D": {
+          "zh": "正確。技术原因：分析：该方案采用Aurora全局数据库，将数据库部署在两个Region中，提供低延迟的跨Region复制和快速主从切换能力。提到了 Route 53 运行状况检查和故障转移路由策略的使用，并明确表示可以根据需要升级到主数据库，以确保最短的停机时间。结论：正确且最优。",
+          "en": "Correct. Technical reason: Analysis: This option uses Aurora global database to deploy databases in two Regions, providing low-latency cross-region replication and fast master-slave switching capabilities. Mentioned the use of Route 53 health checks and failover routing strategies, and made it clear that upgrading to primary can be done as needed to ensure minimal downtime. Conclusion: correct and optimal."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将 Web 层和应用程序层部署到第二个区域。使用 Amazon Aurora 全局数据库在主要区域和第二区域中部署数据库。使用 Amazon Route 53 运行状况检查和到第二个区域的故障转移路由策略。根据需要将中学升级为小学。",
+        "en": "D. Deploy the web tier and the application tier to a second Region. Use an Amazon Aurora global database to deploy the database in the primary Region and the second Region. Use Amazon Route 53 health checks with a failover routing policy to the second Region. Promote the secondary to primary as needed."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (95%) 2%。热门讨论与考点摘要：分析：该方案采用Aurora全局数据库，将数据库部署在两个Region中，提供低延迟的跨Region复制和快速主从切换能力。提到了 Route 53 运行状况检查和故障转移路由策略的使用，并明确表示可以根据需要升级到主数据库，以确保最短的停机时间。结论：正确且最优。",
+        "en": "Community vote as displayed: D (95%) 2%. Popular discussion and key point summary: Analysis: This option uses Aurora global database to deploy databases in two Regions, providing low-latency cross-region replication and fast master-slave switching capabilities. Mentioned the use of Route 53 health checks and failover routing strategies, and made it clear that upgrading to primary can be done as needed to ensure minimal downtime. Conclusion: correct and optimal."
+      }
+    },
+    {
+      "question_no": 528,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家数据分析公司希望将其批处理系统迁移到 AWS。该公司每天通过 FTP 定期接收数千个小数据文件。本地批处理作业会在一夜之间处理数据文件。但是，批处理作业需要几个小时才能完成运行。该公司希望 AWS 解决方案能够尽快处理传入的数据文件，并对发送文件的 FTP 客户端进行最小程度的更改。该解决方案必须在成功处理文件后删除传入的数据文件。每个文件的处理需要 3-8 分钟。哪种解决方案能够以最高效的方式满足这些要求？",
+        "en": "A data analytics company wants to migrate its batch processing system to AWS. The company receives thousands of small data files periodically during the day through FTP. An on-premises batch job processes the data files overnight. However, the batch job takes hours to finish running. The company wants the AWS solution to process incoming data files as soon as possible with minimal changes to the FTP clients that send the files. The solution must delete the incoming data files after the files have been processed successfully. Processing for each file needs to take 3-8 minutes. Which solution will meet these requirements in the MOST operationally efficient way?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用运行 FTP 服务器的 Amazon EC2 实例将传入文件存储为 Amazon S3 Glacier 灵活检索中的对象。在 AWS Batch 中配置作业队列。使用 Amazon EventBridge 规则调用作业以每晚处理来自 S3 Glacier 灵活检索的对象。作业处理完对象后删除对象。",
+          "en": "Use an Amazon EC2 instance that runs an FTP server to store incoming files as objects in Amazon S3 Glacier Flexible Retrieval. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the objects nightly from S3 Glacier Flexible Retrieval. Delete the objects after the job has processed the objects."
+        },
+        "B": {
+          "zh": "使用运行 FTP 服务器的 Amazon EC2 实例将传入文件存储在 Amazon Elastic Block Store (Amazon EBS) 卷上。在 AWS Batch 中配置作业队列。使用 Amazon EventBridge 规则调用作业以每晚处理 EBS 卷中的文件。作业处理完文件后删除文件。",
+          "en": "Use an Amazon EC2 instance that runs an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS) volume. Configure a job queue in AWS Batch. Use Amazon EventBridge rules to invoke the job to process the files nightly from the EBS volume. Delete the files after the job has processed the files."
+        },
+        "C": {
+          "zh": "使用 AWS Transfer Family 创建 FTP 服务器以将传入文件存储在 Amazon Elastic Block Store (Amazon EBS) 卷上。在 AWS Batch 中配置作业队列。当每个文件到达时使用 Amazon S3 事件通知来调用 AWS Batch 中的作业。作业处理完文件后删除文件。",
+          "en": "Use AWS Transfer Family to create an FTP server to store incoming files on an Amazon Elastic Block Store (Amazon EBS) volume. Configure a job queue in AWS Batch. Use an Amazon S3 event notification when each file arrives to invoke the job in AWS Batch. Delete the files after the job has processed the files."
+        },
+        "D": {
+          "zh": "使用 AWS Transfer Family 创建 FTP 服务器以将传入文件存储在 Amazon S3 Standard 中。创建一个 AWS Lambda 函数来处理文件并在处理后删除文件。文件到达时使用 S3 事件通知调用 Lambda 函数。",
+          "en": "Use AWS Transfer Family to create an FTP server to store incoming files in Amazon S3 Standard. Create an AWS Lambda function to process the files and to delete the files after they are processed. Use an S3 event notification to invoke the Lambda function when the files arrive."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：S3 Glacier 灵活检索是一种长期存储的冷存储解决方案，检索时间较长，不适合实时处理。错误：使用 Amazon EC2 运行 FTP 服务器会增加管理开销并降低运营效率。",
+          "en": "Incorrect. Technical reason: S3 Glacier Flexible Retrieval is a cold storage solution for long-term storage, which takes a long time to retrieve and is not suitable for real-time processing. Error: Using Amazon EC2 to run the FTP server increases management overhead and reduces operational efficiency."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon EBS是块存储，适合与EC2实例一起使用，但不支持事件通知机制，无法实现实时处理。错误：使用 Amazon EC2 运行 FTP 服务器会增加管理开销并降低运营效率。",
+          "en": "Incorrect. Technical reason: Amazon EBS is block storage and is suitable for use with EC2 instances, but it does not support an event notification mechanism and cannot achieve real-time processing. Error: Using Amazon EC2 to run the FTP server increases management overhead and reduces operational efficiency."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然AWS Transfer Family可以创建FTP服务器，但Amazon EBS不支持事件通知机制，无法实现实时触发处理。错误：需要额外配置来自动化文件处理，导致运行效率降低。",
+          "en": "Incorrect. Technical reason: Although AWS Transfer Family can create an FTP server, Amazon EBS does not support an event notification mechanism and cannot achieve real-time trigger processing. Error: Additional configuration is required to automate file processing, resulting in lower operational efficiency."
+        },
+        "D": {
+          "zh": "正確。技术原因：AWS Transfer Family 可以创建 FTP 服务器并支持接收文件。正确：Amazon S3 Standard 支持事件通知机制，可以触发 AWS Lambda 函数实时处理文件。正确：AWS Lambda 是一种无服务器计算服务，适合处理短期任务（3-8 分钟），并且可以自动删除文件。正确：该解法效率高，符合题意。",
+          "en": "Correct. Technical reason: AWS Transfer Family can create an FTP server and support receiving files. Correct: Amazon S3 Standard supports an event notification mechanism that can trigger AWS Lambda functions to process files in real time. Correct: AWS Lambda is a serverless computing service, suitable for processing short-term tasks (3-8 minutes), and can automatically delete files. Correct: This solution is highly efficient and meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 AWS Transfer Family 创建 FTP 服务器以将传入文件存储在 Amazon S3 Standard 中。创建一个 AWS Lambda 函数来处理文件并在处理后删除文件。文件到达时使用 S3 事件通知调用 Lambda 函数。",
+        "en": "D. Use AWS Transfer Family to create an FTP server to store incoming files in Amazon S3 Standard. Create an AWS Lambda function to process the files and to delete the files after they are processed. Use an S3 event notification to invoke the Lambda function when the files arrive."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (96%) 4%。热门讨论与考点摘要：AWS Transfer Family 可以创建 FTP 服务器并支持接收文件。正确：Amazon S3 Standard 支持事件通知机制，可以触发 AWS Lambda 函数实时处理文件。正确：AWS Lambda 是一种无服务器计算服务，适合处理短期任务（3-8 分钟），并且可以自动删除文件。正确：该解法效率高，符合题意。",
+        "en": "Community vote as displayed: D (96%) 4%. Popular discussion and key point summary: AWS Transfer Family can create an FTP server and support receiving files. Correct: Amazon S3 Standard supports an event notification mechanism that can trigger AWS Lambda functions to process files in real time. Correct: AWS Lambda is a serverless computing service, suitable for processing short-term tasks (3-8 minutes), and can automatically delete files. Correct: This solution is highly efficient and meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 529,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将其工作负载迁移到 AWS。该公司的数据库中有交易数据和敏感数据。该公司希望使用 AWS 云解决方案来提高安全性并减少数据库的运营开销。哪种解决方案可以满足这些要求？",
+        "en": "A company is migrating its workloads to AWS. The company has transactional and sensitive data in its databases. The company wants to use AWS Cloud solutions to increase security and reduce operational overhead for the databases. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据库迁移到 Amazon EC2。使用 AWS Key Management Service (AWS KMS) AWS 托管密钥进行加密。",
+          "en": "Migrate the databases to Amazon EC2. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption."
+        },
+        "B": {
+          "zh": "将数据库迁移到 Amazon RDS 配置静态加密。",
+          "en": "Migrate the databases to Amazon RDS Configure encryption at rest."
+        },
+        "C": {
+          "zh": "将数据迁移到 Amazon S3 使用 Amazon Macie 实现数据安全和保护",
+          "en": "Migrate the data to Amazon S3 Use Amazon Macie for data security and protection"
+        },
+        "D": {
+          "zh": "将数据库迁移到 Amazon RDS。使用 Amazon CloudWatch Logs 实现数据安全和保护。",
+          "en": "Migrate the database to Amazon RDS. Use Amazon CloudWatch Logs for data security and protection."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然可以在Amazon EC2上运行数据库并使用AWS KMS进行加密，但这种方法需要手动管理EC2实例和数据库，这增加了运营开销，不符合问题中“减少运营开销”的要求。",
+          "en": "Incorrect. Technical reason: Although it is possible to run the database on Amazon EC2 and use AWS KMS for encryption, this method requires manual management of EC2 instances and databases, which increases operational overhead and does not meet the \"reduce operational overhead\" requirement of the question."
+        },
+        "B": {
+          "zh": "正確。技术原因：Amazon RDS 是一种托管数据库服务，可减少运营开销。通过配置静态加密，可以使用AWS KMS托管密钥来保护数据安全，完全满足问题要求。",
+          "en": "Correct. Technical reason: Amazon RDS is a managed database service that reduces operational overhead. By configuring encryption at rest, AWS KMS managed keys can be used to protect data security, which fully meets the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon S3 是一种对象存储服务，不适合直接存储和运行数据库。虽然 Amazon Macie 可用于数据安全和保护，但它主要用于识别敏感数据，而不是数据库加密或减少运营开销。",
+          "en": "Incorrect. Technical reason: Amazon S3 is an object storage service and is not suitable for directly storing and running databases. While Amazon Macie can be used for data security and protection, it is primarily used to identify sensitive data rather than database encryption or reducing operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon CloudWatch Logs 主要用于监控和日志记录，而不是直接用于数据加密或保护敏感数据。虽然RDS是正确的选择，但CloudWatch Logs无法满足问题中的数据安全要求。",
+          "en": "Incorrect. Technical reason: Amazon CloudWatch Logs are primarily used for monitoring and logging, rather than directly for data encryption or protecting sensitive data. Although RDS is the right choice, CloudWatch Logs cannot meet the data security requirements in the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将数据库迁移到 Amazon RDS 配置静态加密。",
+        "en": "B. Migrate the databases to Amazon RDS Configure encryption at rest."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：Amazon RDS 是一种托管数据库服务，可减少运营开销。通过配置静态加密，可以使用AWS KMS托管密钥来保护数据安全，完全满足问题要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Amazon RDS is a managed database service that reduces operational overhead. By configuring encryption at rest, AWS KMS managed keys can be used to protect data security, which fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 530,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司有一个在线游戏应用程序，该应用程序具有 TCP 和 UDP 多人游戏功能。该公司使用 Amazon Route 53 将应用程序流量指向不同 AWS 区域中的多个网络负载均衡器 (NLB)。该公司需要提高应用程序性能并减少在线游戏的延迟，为用户增长做好准备。哪种解决方案可以满足这些要求？",
+        "en": "A company has an online gaming application that has TCP and UDP multiplayer gaming capabilities. The company uses Amazon Route 53 to point the application traffic to multiple Network Load Balancers (NLBs) in different AWS Regions. The company needs to improve application performance and decrease latency for the online game in preparation for user growth. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 NLB 前面添加 Amazon CloudFront 分配。增加 Cache-Control max-age 参数。",
+          "en": "Add an Amazon CloudFront distribution in front of the NLBs. Increase the Cache-Control max-age parameter."
+        },
+        "B": {
+          "zh": "将 NLB 替换为应用程序负载均衡器 (ALB)。将 Route 53 配置为使用基于延迟的路由。",
+          "en": "Replace the NLBs with Application Load Balancers (ALBs). Configure Route 53 to use latency-based routing."
+        },
+        "C": {
+          "zh": "在 NLB 前面添加 AWS Global Accelerator。配置 Global Accelerator 端点以使用正确的侦听器端口。",
+          "en": "Add AWS Global Accelerator in front of the NLBs. Configure a Global Accelerator endpoint to use the correct listener ports."
+        },
+        "D": {
+          "zh": "在 NLB 后面添加 Amazon API Gateway 终端节点。启用 API 缓存。覆盖不同阶段的方法缓存。",
+          "en": "Add an Amazon API Gateway endpoint behind the NLBs. Enable API caching. Override method caching for the different stages."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：CloudFront主要用于内容分发和缓存静态资源，提到的问题是TCP和UDP的实时网络游戏。这种场景不适合使用CloudFront，因为游戏流量通常是动态的，无法通过缓存优化性能。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: CloudFront is mainly used for content distribution and caching static resources, and the question mentioned is real-time online games with TCP and UDP. This scenario is not suitable for using CloudFront because game traffic is usually dynamic and performance cannot be optimized through caching. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：ALB主要用于HTTP/HTTPS流量，标题中明确提到需要支持TCP和UDP协议。这些协议是 NLB 的优势。此外，虽然 Route 53 的延迟路由优化了性能，但将其替换为 ALB 会导致协议不匹配。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: ALB is mainly used for HTTP/HTTPS traffic, and the title clearly mentions the need to support TCP and UDP protocols. These protocols are the strengths of NLB. Additionally, while Route 53's deferred routing optimizes performance, replacing it with ALB results in a protocol mismatch. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "正確。技术原因：技术分析：AWS Global Accelerator 可以为全球用户优化网络性能，减少延迟，并支持 TCP 和 UDP 协议。将全球加速器置于NLB之前，可以有效提升网络游戏的性能和用户体验。结论：正确。",
+          "en": "Correct. Technical reason: Technical analysis: AWS Global Accelerator can optimize network performance for global users, reduce latency, and support TCP and UDP protocols. Placing Global Accelerator in front of NLB can effectively improve the performance and user experience of online games. Conclusion: Correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：API Gateway主要用于管理和优化API流量。提到的问题是TCP和UDP的实时网络游戏场景。 API网关不适合处理此类流量。此外，API 缓存对动态游戏流量没有帮助。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: API Gateway is mainly used to manage and optimize API traffic. The question mentioned is the real-time online game scenario of TCP and UDP. API Gateway is not suitable for processing this type of traffic. Additionally, API caching does not help with dynamic game traffic. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在 NLB 前面添加 AWS Global Accelerator。配置 Global Accelerator 端点以使用正确的侦听器端口。",
+        "en": "C. Add AWS Global Accelerator in front of the NLBs. Configure a Global Accelerator endpoint to use the correct listener ports."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：技术分析：AWS Global Accelerator 可以为全球用户优化网络性能，减少延迟，并支持 TCP 和 UDP 协议。将全球加速器置于NLB之前，可以有效提升网络游戏的性能和用户体验。结论：正确。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Technical analysis: AWS Global Accelerator can optimize network performance for global users, reduce latency, and support TCP and UDP protocols. Placing Global Accelerator in front of NLB can effectively improve the performance and user experience of online games. Conclusion: Correct."
+      }
+    },
+    {
+      "question_no": 531,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "公司需要与第三方数据源集成。当新数据可供使用时，数据源会发送一个 Webhook 来通知外部服务。开发人员编写了一个 AWS Lambda 函数，用于在公司收到 Webhook 回调时检索数据。开发者必须将Lambda函数提供给第三方调用。哪种解决方案能够以最高的运营效率满足这些要求？",
+        "en": "A company needs to integrate with a third-party data feed. The data feed sends a webhook to notify an external service when new data is ready for consumption. A developer wrote an AWS Lambda function to retrieve data when the company receives a webhook callback. The developer must make the Lambda function available for the third party to call. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "为 Lambda 函数创建函数 URL。向第三方提供 Webhook 的 Lambda 函数 URL。",
+          "en": "Create a function URL for the Lambda function. Provide the Lambda function URL to the third party for the webhook."
+        },
+        "B": {
+          "zh": "在 Lambda 函数前面部署应用程序负载均衡器 (ALB)。向第三方提供 Webhook 的 ALB URL。",
+          "en": "Deploy an Application Load Balancer (ALB) in front of the Lambda function. Provide the ALB URL to the third party for the webhook."
+        },
+        "C": {
+          "zh": "创建 Amazon Simple Notification Service (Amazon SNS) 主题。将主题附加到 Lambda 函数。向 Webhook 的第三方提供 SNS 主题的公共主机名。",
+          "en": "Create an Amazon Simple Notification Service (Amazon SNS) topic. Attach the topic to the Lambda function. Provide the public hostname of the SNS topic to the third party for the webhook."
+        },
+        "D": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 队列。将队列附加到 Lambda 函数。将 SQS 队列的公共主机名提供给第三方以用于 Webhook。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) queue. Attach the queue to the Lambda function. Provide the public hostname of the SQS queue to the third party for the webhook."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Lambda Function URL 是 AWS 提供的一种无需额外配置或资源即可直接访问 Lambda 函数的方式。支持HTTP调用，适合第三方集成，运行效率高。该选项最能满足问题的要求，并提供最简单、最有效的解决方案。",
+          "en": "Correct. Technical reason: Lambda Function URL is a way provided by AWS to directly access Lambda functions without additional configuration or resources. It supports HTTP calls, is suitable for third-party integration, and has high operating efficiency. This option best meets the requirements of the question and provides the simplest and most efficient solution."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：尽管 ALB 可以与 Lambda 集成，但这种方法需要额外的配置和资源（例如设置目标组、侦听器等），从而增加了复杂性和成本。该问题需要“运营效率最高”的解决方案，而使用 ALB 显然不能满足这一要求。",
+          "en": "Incorrect. Technical reason: Although ALB can be integrated with Lambda, this approach requires additional configuration and resources (e.g., setting up target groups, listeners, etc.), adding complexity and cost. The question requires the \"most operationally efficient\" solution, and using ALB obviously does not meet this requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：SNS 主题通常用于发布/订阅模式，而不是直接处理 HTTP Webhook 回调。此外，SNS 主题的公共主机名不能直接在第三方 HTTP 调用中使用。",
+          "en": "Incorrect. Technical reason: SNS topics are typically used in a publish/subscribe pattern rather than handling HTTP webhook callbacks directly. Additionally, the SNS topic's public hostname cannot be used directly in third-party HTTP calls."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：SQS队列用于消息队列处理，而不是直接处理HTTP webhook回调。与 SNS 一样，SQS 的公共主机名不能直接用于第三方 HTTP 调用。",
+          "en": "Incorrect. Technical reason: The SQS queue is used for message queue processing rather than handling HTTP webhook callbacks directly. Like SNS, SQS's public hostname cannot be used directly for third-party HTTP calls."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 为 Lambda 函数创建函数 URL。向第三方提供 Webhook 的 Lambda 函数 URL。",
+        "en": "A. Create a function URL for the Lambda function. Provide the Lambda function URL to the third party for the webhook."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：Lambda Function URL 是 AWS 提供的一种无需额外配置或资源即可直接访问 Lambda 函数的方式。支持HTTP调用，适合第三方集成，运行效率高。该选项最能满足问题的要求，并提供最简单、最有效的解决方案。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Lambda Function URL is a way provided by AWS to directly access Lambda functions without additional configuration or resources. It supports HTTP calls, is suitable for third-party integration, and has high operating efficiency. This option best meets the requirements of the question and provides the simplest and most efficient solution."
+      }
+    },
+    {
+      "question_no": 532,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 区域中有工作负载。客户使用 Amazon API Gateway REST API 连接并访问工作负载。该公司使用 Amazon Route 53 作为其 DNS 提供商。该公司希望为所有客户提供个性化且安全的 URL。哪种步骤组合能够满足这些要求并具有最高的运营效率？ （选择三项。）",
+        "en": "A company has a workload in an AWS Region. Customers connect to and access the workload by using an Amazon API Gateway REST API. The company uses Amazon Route 53 as its DNS provider. The company wants to provide individual and secure URLs for all customers. Which combination of steps will meet these requirements with the MOST operational efficiency? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在注册商中注册所需的域。在 Route 53 托管区域中创建通配符自定义域名，并在指向 API 网关终端节点的区域中进行记录。",
+          "en": "Register the required domain in a registrar. Create a wildcard custom domain name in a Route 53 hosted zone and record in the zone that points to the API Gateway endpoint."
+        },
+        "B": {
+          "zh": "请求与不同区域中的 AWS Certificate Manager (ACM) 中的域匹配的通配符证书。",
+          "en": "Request a wildcard certificate that matches the domains in AWS Certificate Manager (ACM) in a different Region."
+        },
+        "C": {
+          "zh": "根据 Route 53 中的要求为每个客户创建托管区域。创建指向 API Gateway 终端节点的区域记录。",
+          "en": "Create hosted zones for each customer as required in Route 53. Create zone records that point to the API Gateway endpoint."
+        },
+        "D": {
+          "zh": "请求与同一区域中的 AWS Certificate Manager (ACM) 中的自定义域名匹配的通配符证书。",
+          "en": "Request a wildcard certificate that matches the custom domain name in AWS Certificate Manager (ACM) in the same Region."
+        },
+        "E": {
+          "zh": "在 API Gateway 中为每个客户创建多个 API 端点。",
+          "en": "Create multiple API endpoints for each customer in API Gateway."
+        },
+        "F": {
+          "zh": "在 API Gateway 中为 REST API 创建自定义域名。从 AWS Certificate Manager (ACM) 导入证书。",
+          "en": "Create a custom domain name in API Gateway for the REST API. Import the certificate from AWS Certificate Manager (ACM)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：分析：正确。注册域名是实现自定义域名的第一步。创建通配符域名可以为多个用户提供自定义的URL，指向API网关端点是一个重要的操作。",
+          "en": "Correct. Technical reason: Analysis: Correct. Registering a domain name is the first step in implementing a custom domain name. Creating a wildcard domain name can provide customized URLs for multiple users, and pointing to the API Gateway endpoint is an important operation."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：错误。 ACM证书必须与API网关所在区域一致。 API网关的域名绑定不使用跨区域证书。",
+          "en": "Incorrect. Technical reason: Analysis: Error. The ACM certificate must match the same region where the API Gateway is located. Cross-region certificates are not used for domain name binding of the API Gateway."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：错误。为每户创建单一管理区域会增加管理复杂性，不符合“运营效率最大化”的要求。",
+          "en": "Incorrect. Technical reason: Analysis: Error. Creating a single management area for each household will increase management complexity and does not meet the requirement of \"maximum operational efficiency\"."
+        },
+        "D": {
+          "zh": "正確。技术原因：分析：正确。通配符证书可以支持多个子域名，且必须与API网关所在区域匹配。",
+          "en": "Correct. Technical reason: Analysis: Correct. Wildcard certificates can support multiple subdomain names and must match the region where the API Gateway is located."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：分析：错误。为每个用户创建多个API端点会增加管理复杂度，不符合“运营效率最大化”的要求。",
+          "en": "Incorrect. Technical reason: Analysis: Error. Creating multiple API endpoints for each user will increase management complexity and does not meet the requirement of \"maximum operational efficiency\"."
+        },
+        "F": {
+          "zh": "正確。技术原因：分析：正确。创建自定义域名并在 API Gateway 中导入 ACM 证书是实现安全 URL 的关键步骤。",
+          "en": "Correct. Technical reason: Analysis: Correct. Creating a custom domain name and importing the ACM certificate in API Gateway are key steps to implement secure URLs."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D",
+        "F"
+      ],
+      "answer_text": {
+        "zh": "A. 在注册商中注册所需的域。在 Route 53 托管区域中创建通配符自定义域名，并在指向 API 网关终端节点的区域中进行记录。；D. 请求与同一区域中的 AWS Certificate Manager (ACM) 中的自定义域名匹配的通配符证书。；F. 在 API Gateway 中为 REST API 创建自定义域名。从 AWS Certificate Manager (ACM) 导入证书。",
+        "en": "A. Register the required domain in a registrar. Create a wildcard custom domain name in a Route 53 hosted zone and record in the zone that points to the API Gateway endpoint.; D. Request a wildcard certificate that matches the custom domain name in AWS Certificate Manager (ACM) in the same Region.; F. Create a custom domain name in API Gateway for the REST API. Import the certificate from AWS Certificate Manager (ACM)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：ADF (100%)。热门讨论与考点摘要：分析：正确。注册域名是实现自定义域名的第一步。创建通配符域名可以为多个用户提供自定义的URL，指向API网关端点是一个重要的操作。；分析：正确。通配符证书可以支持多个子域名，且必须与API网关所在区域匹配。；分析：正确。创建自定义域名并在 API Gateway 中导入 ACM 证书是实现安全 URL 的关键步骤。",
+        "en": "Community vote as displayed: ADF (100%). Popular discussion and key point summary: Analysis: Correct. Registering a domain name is the first step in implementing a custom domain name. Creating a wildcard domain name can provide customized URLs for multiple users, and pointing to the API Gateway endpoint is an important operation.; Analysis: Correct. Wildcard certificates can support multiple subdomain names and must match the region where the API Gateway is located.; Analysis: Correct. Creating a custom domain name and importing the ACM certificate in API Gateway are key steps to implement secure URLs."
+      }
+    },
+    {
+      "question_no": 533,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司将数据存储在 Amazon S3 中。根据规定，数据不得包含个人身份信息（PII）。该公司最近发现 S3 存储桶中有一些包含 PII 的对象。公司需要自动检测S3存储桶中的PII并通知公司的安全团队。哪种解决方案可以满足这些要求？",
+        "en": "A company stores data in Amazon S3. According to regulations, the data must not contain personally identifiable information (PII). The company recently discovered that S3 buckets have some objects that contain PII. The company needs to automatically detect PII in S3 buckets and to notify the company’s security team. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用亚马逊 Macie。创建 Amazon EventBridge 规则以从 Macie 结果中筛选 SensitiveData 事件类型并向安全团队发送 Amazon Simple Notification Service (Amazon SNS) 通知。",
+          "en": "Use Amazon Macie. Create an Amazon EventBridge rule to filter the SensitiveData event type from Macie findings and to send an Amazon Simple Notification Service (Amazon SNS) notification to the security team."
+        },
+        "B": {
+          "zh": "使用 Amazon GuardDuty。创建 Amazon EventBridge 规则以从 GuardDuty 结果中筛选关键事件类型并向安全团队发送 Amazon Simple Notification Service (Amazon SNS) 通知。",
+          "en": "Use Amazon GuardDuty. Create an Amazon EventBridge rule to filter the CRITICAL event type from GuardDuty findings and to send an Amazon Simple Notification Service (Amazon SNS) notification to the security team."
+        },
+        "C": {
+          "zh": "使用亚马逊 Macie。创建 Amazon EventBridge 规则以从 Macie 结果中筛选 SensitiveData:S3Object/Personal 事件类型并向安全团队发送 Amazon Simple Queue Service (Amazon SQS) 通知。",
+          "en": "Use Amazon Macie. Create an Amazon EventBridge rule to filter the SensitiveData:S3Object/Personal event type from Macie findings and to send an Amazon Simple Queue Service (Amazon SQS) notification to the security team."
+        },
+        "D": {
+          "zh": "使用 Amazon GuardDuty。创建 Amazon EventBridge 规则以从 GuardDuty 结果中筛选关键事件类型并向安全团队发送 Amazon Simple Queue Service (Amazon SQS) 通知。",
+          "en": "Use Amazon GuardDuty. Create an Amazon EventBridge rule to filter the CRITICAL event type from GuardDuty findings and to send an Amazon Simple Queue Service (Amazon SQS) notification to the security team."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon Macie 专门设计用于检测敏感数据（例如 PII）并生成边界事件类型（例如 SensitiveData）。正确：Amazon EventBridge 可以传递 SensitiveData 事件类型并触发后续操作。正确：Amazon SNS 适合向您的安全团队发送通知。",
+          "en": "Correct. Technical reason: Amazon Macie is specifically designed to detect sensitive data (such as PII) and generate boundary event types (such as SensitiveData). Correct: Amazon EventBridge can pass SensitiveData event types and trigger subsequent operations. Correct: Amazon SNS is suitable for sending notifications to your security team."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon GuardDuty 主要用于检测安全威胁（例如恶意活动），而不是敏感数据（例如 PII）。错误：CRITICAL 事件类型与 PII 检测无关。正确：Amazon SNS 可以发送通知，但前提是事件类型正确。",
+          "en": "Incorrect. Technical reason: Amazon GuardDuty is primarily used to detect security threats (such as malicious activity), not sensitive data (such as PII). Error: CRITICAL event type has nothing to do with PII detection. Correct: Amazon SNS can send notifications, but only if the event type is correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon GuardDuty 不适合检测 PII 数据。错误：CRITICAL 事件类型与 PII 检测无关。错误：Amazon SQS 用于队列处理，不用于通知安全团队。",
+          "en": "Incorrect. Technical reason: Amazon GuardDuty is not suitable for detecting PII data. Error: CRITICAL event type has nothing to do with PII detection. Error: Amazon SQS is used for queue processing and is not used to notify the security team."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用亚马逊 Macie。创建 Amazon EventBridge 规则以从 Macie 结果中筛选 SensitiveData 事件类型并向安全团队发送 Amazon Simple Notification Service (Amazon SNS) 通知。",
+        "en": "A. Use Amazon Macie. Create an Amazon EventBridge rule to filter the SensitiveData event type from Macie findings and to send an Amazon Simple Notification Service (Amazon SNS) notification to the security team."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (87%) 13%。热门讨论与考点摘要：Amazon Macie 专门设计用于检测敏感数据（例如 PII）并生成边界事件类型（例如 SensitiveData）。正确：Amazon EventBridge 可以传递 SensitiveData 事件类型并触发后续操作。正确：Amazon SNS 适合向您的安全团队发送通知。",
+        "en": "Community vote as displayed: A (87%) 13%. Popular discussion and key point summary: Amazon Macie is specifically designed to detect sensitive data (such as PII) and generate boundary event types (such as SensitiveData). Correct: Amazon EventBridge can pass SensitiveData event types and trigger subsequent operations. Correct: Amazon SNS is suitable for sending notifications to your security team."
+      }
+    },
+    {
+      "question_no": 534,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望为其多个 AWS 账户构建日志记录解决方案。该公司目前将所有账户的日志存储在一个集中账户中。该公司在集中账户中创建了一个 Amazon S3 存储桶来存储 VPC 流日志和 AWS CloudTrail 日志。所有日志必须高度可用 30 天，以便频繁分析，另外保留 60 天用于备份目的，并在创建后 90 天删除。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company wants to build a logging solution for its multiple AWS accounts. The company currently stores the logs from all accounts in a centralized account. The company has created an Amazon S3 bucket in the centralized account to store the VPC flow logs and AWS CloudTrail logs. All logs must be highly available for 30 days for frequent analysis, retained for an additional 60 days for backup purposes, and deleted 90 days after creation. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建后 30 天将对象转换为 S3 标准存储类别。编写一个过期操作，指示 Amazon S3 在 90 天后删除对象。",
+          "en": "Transition objects to the S3 Standard storage class 30 days after creation. Write an expiration action that directs Amazon S3 to delete objects after 90 days."
+        },
+        "B": {
+          "zh": "创建后 30 天将对象转换为 S3 标准-不频繁访问 (S3 标准-IA) 存储类。 90 天后将所有对象移至 S3 Glacier 灵活检索存储类。编写一个过期操作，指示 Amazon S3 在 90 天后删除对象。",
+          "en": "Transition objects to the S3 Standard-Infrequent Access (S3 Standard-IA) storage class 30 days after creation. Move all objects to the S3 Glacier Flexible Retrieval storage class after 90 days. Write an expiration action that directs Amazon S3 to delete objects after 90 days."
+        },
+        "C": {
+          "zh": "创建后 30 天将对象转换为 S3 Glacier 灵活检索存储类。编写一个过期操作，指示 Amazon S3 在 90 天后删除对象。",
+          "en": "Transition objects to the S3 Glacier Flexible Retrieval storage class 30 days after creation. Write an expiration action that directs Amazon S3 to delete objects after 90 days."
+        },
+        "D": {
+          "zh": "创建 30 天后，将对象转换为 S3 One Zone-Infrequent Access (S3 One Zone-IA) 存储类别。 90 天后将所有对象移至 S3 Glacier 灵活检索存储类。编写一个过期操作，指示 Amazon S3 在 90 天后删除对象。",
+          "en": "Transition objects to the S3 One Zone-Infrequent Access (S3 One Zone-IA) storage class 30 days after creation. Move all objects to the S3 Glacier Flexible Retrieval storage class after 90 days. Write an expiration action that directs Amazon S3 to delete objects after 90 days."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：S3标准存储适合频繁访问的数据，但成本较高，不适合长期存储和备份需求。未使用较低成本的存储选项（例如 S3 Standard-IA 或 S3 Glacier 灵活检索），因此不满足“最具成本效益”的要求。",
+          "en": "Incorrect. Technical reason: S3 Standard storage is suitable for frequently accessed data, but the cost is high and it is not suitable for long-term storage and backup needs. Lower cost storage options (such as S3 Standard-IA or S3 Glacier Flexible Retrieval) were not used and therefore did not meet the \"most cost effective\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该选项提到90天后将对象移至S3 Glacier灵活检索，但随后删除该对象，这与要求不一致，因为90天后该对象不需要进一步存储。不必要的存储转换会增加复杂性和成本。",
+          "en": "Incorrect. Technical reason: This option mentions moving the object to S3 Glacier Flexible Retrieval after 90 days, but then deleting the object, which is inconsistent with the requirements because the object does not require further storage after 90 days. Unnecessary storage conversion adds complexity and cost."
+        },
+        "C": {
+          "zh": "正確。技术原因：S3 Glacier 灵活检索存储成本低廉，适合长期存储和备份需求。生命周期规则在30天后将对象转移到S3 Glacier灵活检索，并在90天后删除对象，满足要求且成本最低。",
+          "en": "Correct. Technical reason: S3 Glacier Flexible Retrieval storage has low cost and is suitable for long-term storage and backup needs. The life cycle rule transfers the object to S3 Glacier Flexible Retrieval after 30 days and deletes the object after 90 days, which meets the requirements and has the lowest cost."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：S3 One Zone-IA存储不提供高可用性，可能会导致数据丢失，不满足“高可用性”的要求。 90 天后将对象移至 S3 Glacier 灵活检索存储是多余的，因为对象将被删除。",
+          "en": "Incorrect. Technical reason: S3 One Zone-IA storage does not provide high availability, may cause data loss, and does not meet the requirements of \"high availability\". Moving objects to S3 Glacier Flexible Retrieval storage after 90 days is redundant because the objects will be deleted."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建后 30 天将对象转换为 S3 Glacier 灵活检索存储类。编写一个过期操作，指示 Amazon S3 在 90 天后删除对象。",
+        "en": "C. Transition objects to the S3 Glacier Flexible Retrieval storage class 30 days after creation. Write an expiration action that directs Amazon S3 to delete objects after 90 days."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (69%) A (25%) 6%。热门讨论与考点摘要：S3 Glacier 灵活检索存储成本低廉，适合长期存储和备份需求。生命周期规则在30天后将对象转移到S3 Glacier灵活检索，并在90天后删除对象，满足要求且成本最低。",
+        "en": "Community vote as displayed: C (69%) A (25%) 6%. Popular discussion and key point summary: S3 Glacier Flexible Retrieval storage has low cost and is suitable for long-term storage and backup needs. The life cycle rule transfers the object to S3 Glacier Flexible Retrieval after 30 days and deletes the object after 90 days, which meets the requirements and has the lowest cost."
+      }
+    },
+    {
+      "question_no": 535,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在为其工作负载构建 Amazon Elastic Kubernetes Service (Amazon EKS) 集群。存储在 Amazon EKS 中的所有密钥都必须在 Kubernetes etcd 键值存储中加密。哪种解决方案可以满足这些要求？",
+        "en": "A company is building an Amazon Elastic Kubernetes Service (Amazon EKS) cluster for its workloads. All secrets that are stored in Amazon EKS must be encrypted in the Kubernetes etcd key-value store. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建新的 AWS Key Management Service (AWS KMS) 密钥。使用 AWS Secrets Manager 管理、轮换和存储 Amazon EKS 中的所有密钥。",
+          "en": "Create a new AWS Key Management Service (AWS KMS) key. Use AWS Secrets Manager to manage, rotate, and store all secrets in Amazon EKS."
+        },
+        "B": {
+          "zh": "创建新的 AWS Key Management Service (AWS KMS) 密钥。在 Amazon EKS 集群上启用 Amazon EKS KMS 密钥加密。",
+          "en": "Create a new AWS Key Management Service (AWS KMS) key. Enable Amazon EKS KMS secrets encryption on the Amazon EKS cluster."
+        },
+        "C": {
+          "zh": "使用默认选项创建 Amazon EKS 集群。使用 Amazon Elastic Block Store (Amazon EBS) 容器存储接口 (CSI) 驱动程序作为附加组件。",
+          "en": "Create the Amazon EKS cluster with default options. Use the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver as an add-on."
+        },
+        "D": {
+          "zh": "使用 alias/aws/ebs 别名创建新的 AWS Key Management Service (AWS KMS) 密钥。为账户启用默认 Amazon Elastic Block Store (Amazon EBS) 卷加密。",
+          "en": "Create a new AWS Key Management Service (AWS KMS) key with the alias/aws/ebs alias. Enable default Amazon Elastic Block Store (Amazon EBS) volume encryption for the account."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 AWS Secrets Manager 可以管理和存储机密，但它与 Kubernetes etcd 存储的加密无关。该选项没有提及如何加密 Kubernetes etcd 存储。",
+          "en": "Incorrect. Technical reason: While AWS Secrets Manager can manage and store secrets, it has nothing to do with the encryption of Kubernetes etcd storage. This option does not mention how to encrypt Kubernetes etcd storage."
+        },
+        "B": {
+          "zh": "正確。技术原因：该选项直接提到使用 AWS KMS 密钥来启用 Amazon EKS 的 KMS 加密功能，这是加密 Kubernetes etcd 存储的正确方法。",
+          "en": "Correct. Technical reason: This option directly mentions using AWS KMS keys to enable Amazon EKS's KMS encryption capabilities, which is the correct way to encrypt Kubernetes etcd storage."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：EBS CSI 驱动程序用于管理 EBS 卷，而不是加密 Kubernetes etcd 存储。",
+          "en": "Incorrect. Technical reason: The EBS CSI driver is used to manage EBS volumes, not to encrypt Kubernetes etcd storage."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项与 EBS 卷加密相关，而不是 Kubernetes etcd 存储的加密。",
+          "en": "Incorrect. Technical reason: This option relates to EBS volume encryption, not encryption of Kubernetes etcd storage."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建新的 AWS Key Management Service (AWS KMS) 密钥。在 Amazon EKS 集群上启用 Amazon EKS KMS 密钥加密。",
+        "en": "B. Create a new AWS Key Management Service (AWS KMS) key. Enable Amazon EKS KMS secrets encryption on the Amazon EKS cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (96%) 4%。热门讨论与考点摘要：该选项直接提到使用 AWS KMS 密钥来启用 Amazon EKS 的 KMS 加密功能，这是加密 Kubernetes etcd 存储的正确方法。",
+        "en": "Community vote as displayed: B (96%) 4%. Popular discussion and key point summary: This option directly mentions using AWS KMS keys to enable Amazon EKS's KMS encryption capabilities, which is the correct way to encrypt Kubernetes etcd storage."
+      }
+    },
+    {
+      "question_no": 536,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望为数据科学家提供对该公司生产 Amazon RDS for PostgreSQL 数据库的近实时只读访问权限。该数据库当前配置为单可用区数据库。数据科学家使用不会影响生产数据库的复杂查询。该公司需要一个高度可用的解决方案。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company wants to provide data scientists with near real-time read-only access to the company's production Amazon RDS for PostgreSQL database. The database is currently configured as a Single-AZ database. The data scientists use complex queries that will not affect the production database. The company needs a solution that is highly available. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "在维护窗口中扩展现有的生产数据库，为数据科学家提供足够的能力。",
+          "en": "Scale the existing production database in a maintenance window to provide enough power for the data scientists."
+        },
+        "B": {
+          "zh": "将设置从单可用区更改为具有更大辅助备用实例的多可用区实例部署。为数据科学家提供对辅助实例的访问权限。",
+          "en": "Change the setup from a Single-AZ to a Multi-AZ instance deployment with a larger secondary standby instance. Provide the data scientists access to the secondary instance."
+        },
+        "C": {
+          "zh": "将设置从单可用区实例部署更改为多可用区实例部署。为数据科学家提供两个额外的只读副本。",
+          "en": "Change the setup from a Single-AZ to a Multi-AZ instance deployment. Provide two additional read replicas for the data scientists."
+        },
+        "D": {
+          "zh": "将设置从单可用区更改为具有两个可读备用实例的多可用区集群部署。向数据科学家提供读取端点。",
+          "en": "Change the setup from a Single-AZ to a Multi-AZ cluster deployment with two readable standby instances. Provide read endpoints to the data scientists."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：扩展现有的生产数据库可能会增加成本，但不会提供高可用性。错误：数据科学家的复杂查询可能会影响生产数据库的性能并违反问题的要求。",
+          "en": "Incorrect. Technical reason: Extending an existing production database may increase costs but does not provide high availability. Error: Data scientists' complex queries may affect the performance of the production database and violate the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：多可用区的备实例为热备，不能用于读操作。错误：数据科学家无法访问备用实例进行查询。",
+          "en": "Incorrect. Technical reason: The standby instance in Multi-AZ is a hot standby and cannot be used for read operations. Error: The data scientist cannot access the standby instance for querying."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然只读副本可以满足数据科学家的需求，但问题需要“高可用”，而只读副本并不能提供高可用保证。错误：阅读一本的成本可能很高，不符合题中“最划算”的要求。",
+          "en": "Incorrect. Technical reason: Although the read replica can meet the needs of data scientists, the question requires \"high availability\", and the read replica does not provide high availability guarantees. Error: The cost of reading a copy may be high and does not meet the \"most cost-effective\" requirement in the question."
+        },
+        "D": {
+          "zh": "正確。技术原因：多可用区集群提供高可用性并允许使用可读的备用实例。正确：数据科学家可以通过读取点访问数据，而不会影响生产数据库的性能。正确：这种方法是最具成本效益的解决方案，同时满足高可用性和性能要求。",
+          "en": "Correct. Technical reason: Multi-AZ clusters provide high availability and allow the use of readable standby instances. Correct: Data scientists can access the data through read points without affecting the performance of the production database. Correct: This approach is the most cost-effective solution while meeting high availability and performance requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 将设置从单可用区更改为具有两个可读备用实例的多可用区集群部署。向数据科学家提供读取端点。",
+        "en": "D. Change the setup from a Single-AZ to a Multi-AZ cluster deployment with two readable standby instances. Provide read endpoints to the data scientists."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (78%) C (19%) 3%。热门讨论与考点摘要：多可用区集群提供高可用性并允许使用可读的备用实例。正确：数据科学家可以通过读取点访问数据，而不会影响生产数据库的性能。正确：这种方法是最具成本效益的解决方案，同时满足高可用性和性能要求。",
+        "en": "Community vote as displayed: D (78%) C (19%) 3%. Popular discussion and key point summary: Multi-AZ clusters provide high availability and allow the use of readable standby instances. Correct: Data scientists can access the data through read points without affecting the performance of the production database. Correct: This approach is the most cost-effective solution while meeting high availability and performance requirements."
+      }
+    },
+    {
+      "question_no": 537,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 云中运行一个三层 Web 应用程序，该应用程序跨三个可用区运行。该应用程序架构具有应用程序负载均衡器、托管用户会话状态的 Amazon EC2 Web 服务器以及在 EC2 实例上运行的 MySQL 数据库。该公司预计应用程序流量会突然增加。该公司希望能够进行扩展以满足未来的应用程序容量需求并确保所有三个可用区的高可用性。哪种解决方案可以满足这些要求？",
+        "en": "A company runs a three-tier web application in the AWS Cloud that operates across three Availability Zones. The application architecture has an Application Load Balancer, an Amazon EC2 web server that hosts user session states, and a MySQL database that runs on an EC2 instance. The company expects sudden increases in application traffic. The company wants to be able to scale to meet future application capacity demands and to ensure high availability across all three Availability Zones. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "通过多可用区数据库集群部署将 MySQL 数据库迁移到 Amazon RDS for MySQL。使用具有高可用性的 Amazon ElastiCache for Redis 来存储会话数据并缓存读取。将 Web 服务器迁移到位于三个可用区的 Auto Scaling 组。",
+          "en": "Migrate the MySQL database to Amazon RDS for MySQL with a Multi-AZ DB cluster deployment. Use Amazon ElastiCache for Redis with high availability to store session data and to cache reads. Migrate the web server to an Auto Scaling group that is in three Availability Zones."
+        },
+        "B": {
+          "zh": "通过多可用区数据库集群部署将 MySQL 数据库迁移到 Amazon RDS for MySQL。使用具有高可用性的 Amazon ElastiCache for Memcached 来存储会话数据并缓存读取。将 Web 服务器迁移到位于三个可用区的 Auto Scaling 组。",
+          "en": "Migrate the MySQL database to Amazon RDS for MySQL with a Multi-AZ DB cluster deployment. Use Amazon ElastiCache for Memcached with high availability to store session data and to cache reads. Migrate the web server to an Auto Scaling group that is in three Availability Zones."
+        },
+        "C": {
+          "zh": "将 MySQL 数据库迁移到 Amazon DynamoDB 使用 DynamoDB Accelerator (DAX) 缓存读取。将会话数据存储在 DynamoDB 中。将 Web 服务器迁移到位于三个可用区的 Auto Scaling 组。",
+          "en": "Migrate the MySQL database to Amazon DynamoDB Use DynamoDB Accelerator (DAX) to cache reads. Store the session data in DynamoDB. Migrate the web server to an Auto Scaling group that is in three Availability Zones."
+        },
+        "D": {
+          "zh": "将 MySQL 数据库迁移到单个可用区中的 Amazon RDS for MySQL。使用具有高可用性的 Amazon ElastiCache for Redis 来存储会话数据并缓存读取。将 Web 服务器迁移到位于三个可用区的 Auto Scaling 组。",
+          "en": "Migrate the MySQL database to Amazon RDS for MySQL in a single Availability Zone. Use Amazon ElastiCache for Redis with high availability to store session data and to cache reads. Migrate the web server to an Auto Scaling group that is in three Availability Zones."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon RDS for MySQL 的多可用区部署提供高可用性和故障转移支持。正确：Amazon ElastiCache for Redis 支持高可用性，适合存储会话数据和缓存读取。正确：将 Web 服务器迁移到跨三个可用区的 Auto Scaling 组可确保高可用性和动态可扩展性。",
+          "en": "Correct. Technical reason: Multi-AZ deployments of Amazon RDS for MySQL provide high availability and failover support. Correct: Amazon ElastiCache for Redis supports high availability and is suitable for storing session data and caching reads. Correct: Migrating web servers to an Auto Scaling group across three Availability Zones ensures high availability and dynamic scalability."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：DynamoDB 是 NoSQL 数据库，与 MySQL（关系数据库）不兼容。迁移将导致架构和数据模型发生重大变化。正确：DynamoDB Accelerator (DAX) 可以加快读取速度，但不适合存储会话数据。正确：将 Web 服务器迁移到跨三个可用区的 Auto Scaling 组可确保高可用性和动态可扩展性。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database and is incompatible with MySQL (relational database). Migration will cause major changes in the architecture and data model. Correct: DynamoDB Accelerator (DAX) can speed up reads, but is not suitable for storing session data. Correct: Migrating web servers to an Auto Scaling group across three Availability Zones ensures high availability and dynamic scalability."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon RDS 部署在单一可用区无法提供高可用性，违反了问题要求。正确：Amazon ElastiCache for Redis 支持高可用性，适合存储会话数据和缓存读取。正确：将 Web 服务器迁移到跨三个可用区的 Auto Scaling 组可确保高可用性和动态可扩展性。",
+          "en": "Incorrect. Technical reason: Amazon RDS deployment in a single availability zone cannot provide high availability and violates the problem requirements. Correct: Amazon ElastiCache for Redis supports high availability and is suitable for storing session data and caching reads. Correct: Migrating web servers to an Auto Scaling group across three Availability Zones ensures high availability and dynamic scalability."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 通过多可用区数据库集群部署将 MySQL 数据库迁移到 Amazon RDS for MySQL。使用具有高可用性的 Amazon ElastiCache for Redis 来存储会话数据并缓存读取。将 Web 服务器迁移到位于三个可用区的 Auto Scaling 组。",
+        "en": "A. Migrate the MySQL database to Amazon RDS for MySQL with a Multi-AZ DB cluster deployment. Use Amazon ElastiCache for Redis with high availability to store session data and to cache reads. Migrate the web server to an Auto Scaling group that is in three Availability Zones."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (81%) B (19%)。热门讨论与考点摘要：Amazon RDS for MySQL 的多可用区部署提供高可用性和故障转移支持。正确：Amazon ElastiCache for Redis 支持高可用性，适合存储会话数据和缓存读取。正确：将 Web 服务器迁移到跨三个可用区的 Auto Scaling 组可确保高可用性和动态可扩展性。",
+        "en": "Community vote as displayed: A (81%) B (19%). Popular discussion and key point summary: Multi-AZ deployments of Amazon RDS for MySQL provide high availability and failover support. Correct: Amazon ElastiCache for Redis supports high availability and is suitable for storing session data and caching reads. Correct: Migrating web servers to an Auto Scaling group across three Availability Zones ensures high availability and dynamic scalability."
+      }
+    },
+    {
+      "question_no": 538,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家全球视频流公司使用 Amazon CloudFront 作为内容分发网络 (CDN)。该公司希望在多个国家分阶段推出内容。公司需要确保公司发布内容的国家/地区之外的观看者无法观看该内容。哪种解决方案可以满足这些要求？",
+        "en": "A global video streaming company uses Amazon CloudFront as a content distribution network (CDN). The company wants to roll out content in a phased manner across multiple countries. The company needs to ensure that viewers who are outside the countries to which the company rolls out content are not able to view the content. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用允许列表向 CloudFront 中的内容添加地理限制。设置自定义错误消息。",
+          "en": "Add geographic restrictions to the content in CloudFront by using an allow list. Set up a custom error message."
+        },
+        "B": {
+          "zh": "为受限内容设置新的 URL。使用签名 URL 和 cookie 授权访问。设置自定义错误消息。",
+          "en": "Set up a new URL tor restricted content. Authorize access by using a signed URL and cookies. Set up a custom error message."
+        },
+        "C": {
+          "zh": "加密公司分发的内容的数据。设置自定义错误消息。",
+          "en": "Encrypt the data for the content that the company distributes. Set up a custom error message."
+        },
+        "D": {
+          "zh": "为受限内容创建新 URL。为签名 URL 设置有时间限制的访问策略。",
+          "en": "Create a new URL for restricted content. Set up a time-restricted access policy for signed URLs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：CloudFront支持地域限制，可以通过允许列表或拒绝列表限制对特定国家或地区的访问。正确：设置自定义错误消息是一项附加功能，可为受限用户提供更友好的反馈。",
+          "en": "Correct. Technical reason: CloudFront supports geographical restrictions, which can restrict access to specific countries or regions through Allow List or Deny List. Correct: Setting custom error messages is an additional feature that provides friendlier feedback to restricted users."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：签名 URL 和 cookie 主要用于授权特定用户访问内容，而不是基于地理位置的限制。错误：问题需要根据国家或地区进行授权，而不是根据用户身份进行授权。",
+          "en": "Incorrect. Technical reason: Signed URLs and cookies are primarily used to authorize specific users to access content, rather than restrictions based on geographic location. Error: The question requires authorization based on country or region, rather than authorization based on user identity."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：加密内容不受地理位置限制。加密主要用于保证数据安全，而不是控制访问。错误：该问题没有提及加密内容的必要性。",
+          "en": "Incorrect. Technical reason: Encrypted content is independent of geographic location restrictions. Encryption is primarily used to keep data secure, not to control access. Error: The question does not mention the need to encrypt content."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：时间限制的签名 URL 用于控制访问时间，而不是基于地理位置的限制。错误：问题要求基于国家或地区限制，而不是时间限制。",
+          "en": "Incorrect. Technical reason: Time-restricted signed URLs are used to control access time, rather than geographical location-based restrictions. Error: The question requirements are based on country or region restrictions, not time restrictions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用允许列表向 CloudFront 中的内容添加地理限制。设置自定义错误消息。",
+        "en": "A. Add geographic restrictions to the content in CloudFront by using an allow list. Set up a custom error message."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：CloudFront支持地域限制，可以通过允许列表或拒绝列表限制对特定国家或地区的访问。正确：设置自定义错误消息是一项附加功能，可为受限用户提供更友好的反馈。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: CloudFront supports geographical restrictions, which can restrict access to specific countries or regions through Allow List or Deny List. Correct: Setting custom error messages is an additional feature that provides friendlier feedback to restricted users."
+      }
+    },
+    {
+      "question_no": 539,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望使用 AWS 云来改进其本地灾难恢复 (DR) 配置。该公司的核心生产业务应用程序使用 Microsoft SQL Server Standard，该应用程序在虚拟机 (VM) 上运行。该应用程序的恢复点目标 (RPO) 为 30 秒或更短，恢复时间目标 (RTO) 为 60 分钟。灾难恢复解决方案需要尽可能降低成本。哪种解决方案可以满足这些要求？",
+        "en": "A company wants to use the AWS Cloud to improve its on-premises disaster recovery (DR) configuration. The company's core production business application uses Microsoft SQL Server Standard, which runs on a virtual machine (VM). The application has a recovery point objective (RPO) of 30 seconds or fewer and a recovery time objective (RTO) of 60 minutes. The DR solution needs to minimize costs wherever possible. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用具有 Always On 可用性组的 Microsoft SQL Server Enterprise 在本地服务器和 AWS 之间配置多站点主动/主动设置。",
+          "en": "Configure a multi-site active/active setup between the on-premises server and AWS by using Microsoft SQL Server Enterprise with Always On availability groups."
+        },
+        "B": {
+          "zh": "在 AWS 上为 SQL Server 数据库配置热备用 Amazon RDS。配置 AWS Database Migration Service (AWS DMS) 以使用更改数据捕获 (CDC)。",
+          "en": "Configure a warm standby Amazon RDS for SQL Server database on AWS. Configure AWS Database Migration Service (AWS DMS) to use change data capture (CDC)."
+        },
+        "C": {
+          "zh": "使用配置为将磁盘更改复制到 AWS 的 AWS Elastic Disaster Recovery 作为指示灯。",
+          "en": "Use AWS Elastic Disaster Recovery configured to replicate disk changes to AWS as a pilot light."
+        },
+        "D": {
+          "zh": "使用第三方备份软件每晚进行备份。在 Amazon S3 中存储辅助备份集。",
+          "en": "Use third-party backup software to capture backups every night. Store a secondary set of backups in Amazon S3."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：配置多站点双活设置： 技术分析：Microsoft SQL Server Enterprise 和 Always On 可用性组可以实现高可用性和灾难恢复，但该选项使用 Enterprise 版本，成本较高，不符合问题中“尽可能降低成本”的要求。结论：该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Configuring multi-site active/active settings: Technical analysis: Microsoft SQL Server Enterprise and Always On availability groups can achieve high availability and disaster recovery, but this option uses the Enterprise version, which is more expensive and does not meet the \"lower costs as much as possible\" requirement of the question. Conclusion: This option does not meet the requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：为SQL Server数据库配置热备Amazon RDS： 技术分析：Amazon RDS支持SQL Server，通过AWS DMS的变更数据捕获（CDC）可以实现低RPO（30%以内）。温备架构可以快速启动，满足RTO（60分钟内），同时成本较低。结论：该选项符合题目要求。",
+          "en": "Correct. Technical reason: Configuring warm standby Amazon RDS for SQL Server database: Technical analysis: Amazon RDS supports SQL Server, and low RPO (within 30%) can be achieved through AWS DMS's change data capture (CDC). The warm standby architecture can be started quickly, meeting the RTO (within 60 minutes), and at the same time, the cost is low. Conclusion: This option meets the requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用AWS Elastic Disaster Recovery： 技术分析：Elastic Disaster Recovery可以将变更复制到AWS，但主要用于全机恢复，适合RTO较高的场景。该题要求RTO为60分钟，弹性容灾可能无法满足快速恢复的需求。结论：该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Using AWS Elastic Disaster Recovery: Technical analysis: Elastic Disaster Recovery can copy changes to AWS, but it is mainly used for full machine recovery and is suitable for higher RTO scenarios. The question requires an RTO of 60 minutes, and Elastic Disaster Recovery may not be able to meet the demand for fast recovery. Conclusion: This option does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用第三方备份软件： 技术分析：夜间备份无法满足30%的RPO要求，恢复时间可能远超60分钟。该选项不符合题目要求。结论：该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Use third-party backup software: Technical analysis: Nightly backup cannot meet the RPO requirement of 30%, and the recovery time may be far longer than 60 minutes. This option does not meet the question requirements. Conclusion: This option does not meet the requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 AWS 上为 SQL Server 数据库配置热备用 Amazon RDS。配置 AWS Database Migration Service (AWS DMS) 以使用更改数据捕获 (CDC)。",
+        "en": "B. Configure a warm standby Amazon RDS for SQL Server database on AWS. Configure AWS Database Migration Service (AWS DMS) to use change data capture (CDC)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (57%) C (43%)。热门讨论与考点摘要：为SQL Server数据库配置热备Amazon RDS： 技术分析：Amazon RDS支持SQL Server，通过AWS DMS的变更数据捕获（CDC）可以实现低RPO（30%以内）。温备架构可以快速启动，满足RTO（60分钟内），同时成本较低。结论：该选项符合题目要求。",
+        "en": "Community vote as displayed: B (57%) C (43%). Popular discussion and key point summary: Configuring warm standby Amazon RDS for SQL Server database: Technical analysis: Amazon RDS supports SQL Server, and low RPO (within 30%) can be achieved through AWS DMS's change data capture (CDC). The warm standby architecture can be started quickly, meeting the RTO (within 60 minutes), and at the same time, the cost is low. Conclusion: This option meets the requirements."
+      }
+    },
+    {
+      "question_no": 540,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有一台使用 Oracle 数据库来处理和存储客户信息的本地服务器。该公司希望使用 AWS 数据库服务来实现更高的可用性并提高应用程序性能。该公司还希望从其主要数据库系统中卸载报告。哪种解决方案能够以最高效的方式满足这些要求？",
+        "en": "A company has an on-premises server that uses an Oracle database to process and store customer information. The company wants to use an AWS database service to achieve higher availability and to improve application performance. The company also wants to offload reporting from its primary database system. Which solution will meet these requirements in the MOST operationally efficient way?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Database Migration Service (AWS DMS) 在多个 AWS 区域中创建 Amazon RDS 数据库实例。将报告功能指向与主数据库实例不同的数据库实例。",
+          "en": "Use AWS Database Migration Service (AWS DMS) to create an Amazon RDS DB instance in multiple AWS Regions. Point the reporting functions toward a separate DB instance from the primary DB instance."
+        },
+        "B": {
+          "zh": "在单可用区部署中使用 Amazon RDS 创建 Oracle 数据库。在与主数据库实例相同的区域中创建只读副本。将报告功能定向到只读副本。",
+          "en": "Use Amazon RDS in a Single-AZ deployment to create an Oracle database. Create a read replica in the same zone as the primary DB instance. Direct the reporting functions to the read replica."
+        },
+        "C": {
+          "zh": "使用在多可用区集群部署中部署的 Amazon RDS 创建 Oracle 数据库。指示报告功能使用集群部署中的读取器实例。",
+          "en": "Use Amazon RDS deployed in a Multi-AZ cluster deployment to create an Oracle database. Direct the reporting functions to use the reader instance in the cluster deployment."
+        },
+        "D": {
+          "zh": "使用在多可用区实例部署中部署的 Amazon RDS 创建 Amazon Aurora 数据库。将报告功能定向到读取器实例。",
+          "en": "Use Amazon RDS deployed in a Multi-AZ instance deployment to create an Amazon Aurora database. Direct the reporting functions to the reader instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：AWS DMS可以用来迁移数据库，但是题目中没有提到需要跨区域部署，也没有明确要求多区域的数据库实例。该选项增加了复杂性，并且没有提及高可用性和性能优化的具体实现。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: AWS DMS can be used to migrate databases, but the question does not mention the need for cross-regional deployment, nor does it explicitly require database instances in multiple regions. This option adds complexity and does not mention the specific implementation of high availability and performance optimization. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：单可用区部署无法提供高可用性，只读副本通常用于跨区域或跨可用区的读写分离，而不是部署在同一可用区内。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: Single-AZ deployment does not provide high availability, and read replicas are usually used for read-write separation across regions or across Availability Zones, rather than deployed within the same Availability Zone. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：多可用区部署提供了高可用性，但Oracle数据库的多可用区部署主要用于故障转移，而不是读写分离。该选项没有提及性能优化的具体实现。结论：错误。",
+          "en": "Incorrect. Technical reason: Technical analysis: Multi-AZ deployment provides high availability, but Multi-AZ deployment of Oracle database is mainly used for failover rather than read-write separation. This option does not mention the specific implementation of performance optimization. Conclusion: Wrong."
+        },
+        "D": {
+          "zh": "正確。技术原因：技术分析：Amazon Aurora 支持高可用性和读写分离。读取实例可用于处理报告功能，从而减少主实例的负载。该选项满足了问题所要求的高可用性和性能优化。结论：正确。",
+          "en": "Correct. Technical reason: Technical analysis: Amazon Aurora supports high availability and read-write separation. Read instances can be used to process reporting functions, thereby reducing the load on the main instance. This option meets the high availability and performance optimization required by the question. Conclusion: Correct."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用在多可用区实例部署中部署的 Amazon RDS 创建 Amazon Aurora 数据库。将报告功能定向到读取器实例。",
+        "en": "D. Use Amazon RDS deployed in a Multi-AZ instance deployment to create an Amazon Aurora database. Direct the reporting functions to the reader instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (72%) C (28%)。热门讨论与考点摘要：技术分析：Amazon Aurora 支持高可用性和读写分离。读取实例可用于处理报告功能，从而减少主实例的负载。该选项满足了问题所要求的高可用性和性能优化。结论：正确。",
+        "en": "Community vote as displayed: D (72%) C (28%). Popular discussion and key point summary: Technical analysis: Amazon Aurora supports high availability and read-write separation. Read instances can be used to process reporting functions, thereby reducing the load on the main instance. This option meets the high availability and performance optimization required by the question. Conclusion: Correct."
+      }
+    }
+  ]
+}

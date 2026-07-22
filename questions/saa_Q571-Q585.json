@@ -1,0 +1,845 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 571,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在创建 REST API。公司对TLS的使用有严格的要求。该公司要求 API 端点使用 TLSv1.3。该公司还需要特定的公共第三方证书颁发机构 (CA) 来签署 TLS 证书。哪种解决方案可以满足这些要求？",
+        "en": "A company is creating a REST API. The company has strict requirements for the use of TLS. The company requires TLSv1.3 on the API endpoints. The company also requires a specific public third-party certificate authority (CA) to sign the TLS certificate. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用本地计算机创建由第三方签名的证书并将证书导入到 AWS Certificate Manager (ACM)。使用自定义域在 Amazon API Gateway 中创建 HTTP API。配置自定义域以使用证书。",
+          "en": "Use a local machine to create a certificate that is signed by the third-party CImport the certificate into AWS Certificate Manager (ACM). Create an HTTP API in Amazon API Gateway with a custom domain. Configure the custom domain to use the certificate."
+        },
+        "B": {
+          "zh": "在 AWS Certificate Manager (ACM) 中创建由第三方 CA 签名的证书。使用自定义域在 Amazon API Gateway 中创建 HTTP API。配置自定义域以使用证书。",
+          "en": "Create a certificate in AWS Certificate Manager (ACM) that is signed by the third-party CA. Create an HTTP API in Amazon API Gateway with a custom domain. Configure the custom domain to use the certificate."
+        },
+        "C": {
+          "zh": "使用 AWS Certificate Manager (ACM) 创建由第三方 CA 签名的证书。将证书导入 AWS Certificate Manager (ACM)。使用 Lambda 函数 URL 创建 AWS Lambda 函数。配置 Lambda 函数 URL 以使用证书。",
+          "en": "Use AWS Certificate Manager (ACM) to create a certificate that is signed by the third-party CA. Import the certificate into AWS Certificate Manager (ACM). Create an AWS Lambda function with a Lambda function URL. Configure the Lambda function URL to use the certificate."
+        },
+        "D": {
+          "zh": "在 AWS Certificate Manager (ACM) 中创建由第三方 CA 签名的证书。使用 Lambda 函数 URL 创建 AWS Lambda 函数。配置 Lambda 函数 URL 以使用证书。",
+          "en": "Create a certificate in AWS Certificate Manager (ACM) that is signed by the third-party CA. Create an AWS Lambda function with a Lambda function URL. Configure the Lambda function URL to use the certificate."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Certificate Manager (ACM) 支持导入第三方 CA 签名的证书。正确：API Gateway 支持通过自定义域名使用来自 ACM 的证书。正确：可以通过API Gateway的自定义域名配置TLSv1.3。",
+          "en": "Correct. Technical reason: AWS Certificate Manager (ACM) supports importing certificates signed by third-party CAs. Correct: API Gateway supports using certificates from ACM via custom domain names. Correct: TLSv1.3 can be configured through API Gateway's custom domain name."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Certificate Manager (ACM) 无法直接创建由第三方 CA 签名的证书。 ACM 只能创建由 Amazon 签名的证书。",
+          "en": "Incorrect. Technical reason: AWS Certificate Manager (ACM) cannot directly create certificates signed by third-party CAs. ACM can only create certificates signed by Amazon."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Lambda 函数 URL 不支持自定义域名或 ACM 证书配置。错误：Lambda 函数 URL 无法满足 TLSv1.3 的严格要求。",
+          "en": "Incorrect. Technical reason: Lambda function URL does not support custom domain name or ACM certificate configuration. Error: Lambda function URL cannot meet the strict requirements of TLSv1.3."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Certificate Manager (ACM) 无法直接创建由第三方 CA 签名的证书。错误：Lambda 函数 URL 不支持自定义域名或 ACM 证书配置。",
+          "en": "Incorrect. Technical reason: AWS Certificate Manager (ACM) cannot directly create certificates signed by third-party CAs. Error: Lambda function URL does not support custom domain name or ACM certificate configuration."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用本地计算机创建由第三方签名的证书并将证书导入到 AWS Certificate Manager (ACM)。使用自定义域在 Amazon API Gateway 中创建 HTTP API。配置自定义域以使用证书。",
+        "en": "A. Use a local machine to create a certificate that is signed by the third-party CImport the certificate into AWS Certificate Manager (ACM). Create an HTTP API in Amazon API Gateway with a custom domain. Configure the custom domain to use the certificate."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (78%) B (22%)。热门讨论与考点摘要：AWS Certificate Manager (ACM) 支持导入第三方 CA 签名的证书。正确：API Gateway 支持通过自定义域名使用来自 ACM 的证书。正确：可以通过API Gateway的自定义域名配置TLSv1.3。",
+        "en": "Community vote as displayed: A (78%) B (22%). Popular discussion and key point summary: AWS Certificate Manager (ACM) supports importing certificates signed by third-party CAs. Correct: API Gateway supports using certificates from ACM via custom domain names. Correct: TLSv1.3 can be configured through API Gateway's custom domain name."
+      }
+    },
+    {
+      "question_no": 572,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 上运行应用程序。应用程序收到的使用量不一致。该应用程序使用 AWS Direct Connect 连接到本地 MySQL 兼容数据库。本地数据库始终使用至少 2 GiB 内存。该公司希望将本地数据库迁移到托管 AWS 服务。该公司希望使用自动扩展功能来管理意外的工作负载增加。哪种解决方案能够以最少的管理开销满足这些要求？",
+        "en": "A company runs an application on AWS. The application receives inconsistent amounts of usage. The application uses AWS Direct Connect to connect to an on-premises MySQL-compatible database. The on-premises database consistently uses a minimum of 2 GiB of memory. The company wants to migrate the on-premises database to a managed AWS service. The company wants to use auto scaling capabilities to manage unexpected workload increases. Which solution will meet these requirements with the LEAST administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用默认读取和写入容量设置预置 Amazon DynamoDB 数据库。",
+          "en": "Provision an Amazon DynamoDB database with default read and write capacity settings."
+        },
+        "B": {
+          "zh": "配置最小容量为 1 Aurora 容量单位 (ACU) 的 Amazon Aurora 数据库。",
+          "en": "Provision an Amazon Aurora database with a minimum capacity of 1 Aurora capacity unit (ACU)."
+        },
+        "C": {
+          "zh": "配置最小容量为 1 Aurora 容量单位 (ACU) 的 Amazon Aurora Serverless v2 数据库。",
+          "en": "Provision an Amazon Aurora Serverless v2 database with a minimum capacity of 1 Aurora capacity unit (ACU)."
+        },
+        "D": {
+          "zh": "预置具有 2 GiB 内存的 Amazon RDS for MySQL 数据库。",
+          "en": "Provision an Amazon RDS for MySQL database with 2 GiB of memory."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：DynamoDB是NoSQL数据库，标题中明确提到需要迁移的数据库是MySQL兼容的数据库，因为DynamoDB不符合要求。此外，DynamoDB 的默认读写容量设置可能不足以满足应用程序的内存需求（2 GiB），并且不支持直接迁移与 MySQL 兼容的数据库。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database, and the title clearly mentions that the database that needs to be migrated is a MySQL-compatible database, because DynamoDB does not meet the requirements. In addition, DynamoDB's default read and write capacity settings may not be sufficient for the application's memory requirements (2 GiB) and do not support direct migration of MySQL-compatible databases."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然Aurora支持MySQL兼容性，但该选项没有提及Serverless功能，因此它不依赖于自动扩展功能。此外，固定容量的 Aurora 实例可能会导致资源消耗或突发流量的非结构化处理。",
+          "en": "Incorrect. Technical reason: Although Aurora supports MySQL compatibility, this option does not mention the Serverless feature, so it does not rely on automatic scaling capabilities. In addition, fixed-capacity Aurora instances may result in resource consumption or unstructured handling of burst traffic."
+        },
+        "C": {
+          "zh": "正確。技术原因：Aurora Serverless v2 支持 MySQL 兼容性，并具有自动扩展功能，可以根据工作负载动态调整容量。最小容量设置为1 ACU，满足最低内存需求（2 GiB），同时减少管理开销。",
+          "en": "Correct. Technical reason: Aurora Serverless v2 supports MySQL compatibility and has automatic expansion capabilities, which can dynamically adjust capacity according to workload. The minimum capacity is set to 1 ACU, which meets the minimum memory requirement (2 GiB) while reducing management overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：RDS虽然支持MySQL兼容，但它是固定容量的数据库实例，不具备自动扩展能力。实例的大小和性能需要手动管理，增加了管理开销。",
+          "en": "Incorrect. Technical reason: Although RDS supports MySQL compatibility, it is a fixed-capacity database instance with no automatic expansion capabilities. The size and performance of instances need to be manually managed, increasing management overhead."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置最小容量为 1 Aurora 容量单位 (ACU) 的 Amazon Aurora Serverless v2 数据库。",
+        "en": "C. Provision an Amazon Aurora Serverless v2 database with a minimum capacity of 1 Aurora capacity unit (ACU)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：Aurora Serverless v2 支持 MySQL 兼容性，并具有自动扩展功能，可以根据工作负载动态调整容量。最小容量设置为1 ACU，满足最低内存需求（2 GiB），同时减少管理开销。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Aurora Serverless v2 supports MySQL compatibility and has automatic expansion capabilities, which can dynamically adjust capacity according to workload. The minimum capacity is set to 1 ACU, which meets the minimum memory requirement (2 GiB) while reducing management overhead."
+      }
+    },
+    {
+      "question_no": 573,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将事件驱动的编程模型与 AWS Lambda 结合使用。该公司希望减少在 Java 11 上运行的 Lambda 函数的启动延迟。该公司对应用程序没有严格的延迟要求。该公司希望在功能扩展时减少冷启动和异常延迟。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company wants to use an event-driven programming model with AWS Lambda. The company wants to reduce startup latency for Lambda functions that run on Java 11. The company does not have strict latency requirements for the applications. The company wants to reduce cold starts and outlier latencies when a function scales up. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置 Lambda 预置并发。",
+          "en": "Configure Lambda provisioned concurrency."
+        },
+        "B": {
+          "zh": "增加 Lambda 函数的超时。",
+          "en": "Increase the timeout of the Lambda functions."
+        },
+        "C": {
+          "zh": "增加 Lambda 函数的内存。",
+          "en": "Increase the memory of the Lambda functions."
+        },
+        "D": {
+          "zh": "配置 Lambda SnapStart。",
+          "en": "Configure Lambda SnapStart."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：配置Lambda预设并发 分析：预设并发可以减少冷启动延迟，因为它提前启动了一定数量的Lambda实例。但是，这种方法会增加成本，因为您需要为预配置的并发实例付费。题目要求“性价比最高”，所以这个选项不符合要求。",
+          "en": "Incorrect. Technical reason: Configuring Lambda preset concurrency Analysis: Preset concurrency can reduce cold start delay because it starts a certain number of Lambda instances in advance. However, this approach increases costs because you need to pay for provisioned concurrent instances. The question requires \"most cost-effective\", so this option does not meet the requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：增加Lambda函数的超时时间分析：增加超时时间并不会直接减少冷启动延迟。超时仅影响函数运行的最大时间限制，与冷启动无关。因此这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Increase the timeout of the Lambda function Analysis: Increasing the timeout will not directly reduce the cold start delay. The timeout only affects the maximum time limit for the function to run and has nothing to do with cold start. Therefore this option is wrong."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：增加Lambda函数的内存分析：增加内存可以提高函数的执行速度，但对冷启动影响有限。冷启动主要与初始化时间有关，而不是运行时性能。因此该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Increasing the memory of the Lambda function Analysis: Increasing memory can improve the execution speed of the function, but has limited impact on cold start. Cold starts are primarily related to initialization time, not runtime performance. Therefore this option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "正確。技术原因：配置 Lambda SnapStart 分析：Lambda SnapStart 是专门为减少冷启动延迟而设计的功能，特别是对于 Java 11 等语言。它通过在函数初始化后创建快照并重用快照来减少启动时间。该选项满足问题要求，是最具成本效益的解决方案。",
+          "en": "Correct. Technical reason: Configuring Lambda SnapStart Analysis: Lambda SnapStart is a feature specially designed to reduce cold start delays, especially for languages such as Java 11. It reduces startup time by creating snapshots after function initialization and reusing the snapshots. This option meets the question requirements and is the most cost-effective solution."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 配置 Lambda SnapStart。",
+        "en": "D. Configure Lambda SnapStart."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：配置 Lambda SnapStart 分析：Lambda SnapStart 是专门为减少冷启动延迟而设计的功能，特别是对于 Java 11 等语言。它通过在函数初始化后创建快照并重用快照来减少启动时间。该选项满足问题要求，是最具成本效益的解决方案。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Configuring Lambda SnapStart Analysis: Lambda SnapStart is a feature specially designed to reduce cold start delays, especially for languages such as Java 11. It reduces startup time by creating snapshots after function initialization and reusing the snapshots. This option meets the question requirements and is the most cost-effective solution."
+      }
+    },
+    {
+      "question_no": 574,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家金融服务公司推出了一款使用 Amazon RDS for MySQL 数据库的新应用程序。该公司使用该应用程序来跟踪股票市场趋势。该公司每周只需要运行该应用程序 2 个小时。该公司需要优化运行数据库的成本。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A financial services company launched a new application that uses an Amazon RDS for MySQL database. The company uses the application to track stock market trends. The company needs to operate the application for only 2 hours at the end of each week. The company needs to optimize the cost of running the database. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "将现有 RDS for MySQL 数据库迁移到 Aurora Serverless v2 MySQL 数据库集群。",
+          "en": "Migrate the existing RDS for MySQL database to an Aurora Serverless v2 MySQL database cluster."
+        },
+        "B": {
+          "zh": "将现有 RDS for MySQL 数据库迁移到 Aurora MySQL 数据库集群。",
+          "en": "Migrate the existing RDS for MySQL database to an Aurora MySQL database cluster."
+        },
+        "C": {
+          "zh": "将现有 RDS for MySQL 数据库迁移到运行 MySQL 的 Amazon EC2 实例。为 EC2 实例购买实例预留。",
+          "en": "Migrate the existing RDS for MySQL database to an Amazon EC2 instance that runs MySQL. Purchase an instance reservation for the EC2 instance."
+        },
+        "D": {
+          "zh": "将现有 RDS for MySQL 数据库迁移到使用 MySQL 容器映像运行任务的 Amazon Elastic Container Service (Amazon ECS) 集群。",
+          "en": "Migrate the existing RDS for MySQL database to an Amazon Elastic Container Service (Amazon ECS) cluster that uses MySQL container images to run tasks."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Aurora Serverless v2 支持按需计费，可以根据工作负载动态扩展和减少资源，非常适合间歇性工作负载（例如每周仅运行 2 小时）。成本优化：Aurora Serverless v2 仅在使用时计费，避免了闲置资源的成本。",
+          "en": "Correct. Technical reason: Aurora Serverless v2 supports on-demand billing and can dynamically expand and reduce resources based on workload, making it ideal for intermittent workloads (such as running for only 2 hours a week). Cost optimization: Aurora Serverless v2 is only billed when used, avoiding the cost of idle resources."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Aurora MySQL数据库集群虽然性能更高，但连续运行，无条带按需计费，无条带满足非标准工作负载的成本优化需求。",
+          "en": "Incorrect. Technical reason: Although the Aurora MySQL database cluster has higher performance, it runs continuously, has no stripe on-demand billing, and has no stripe to meet the cost optimization needs of non-standard workloads."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：EC2 实例预留适合长期工作负载，而不适合间歇性工作负载。即使您预留了实例，您仍然会产生闲置资源的成本。",
+          "en": "Incorrect. Technical reason: EC2 instance reservations are suitable for long-term workloads, not intermittent workloads. Even if you reserve an instance, you still incur the cost of idle resources."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然ECS可以运行容器化的MySQL，但管理和配置的复杂性会增加，并且在没有条带优化的情况下存根工作负载的成本也会增加。",
+          "en": "Incorrect. Technical reason: Although ECS can run containerized MySQL, the management and configuration complexity increases, and the cost of stubbing workloads without strip optimization."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将现有 RDS for MySQL 数据库迁移到 Aurora Serverless v2 MySQL 数据库集群。",
+        "en": "A. Migrate the existing RDS for MySQL database to an Aurora Serverless v2 MySQL database cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (92%) 8%。热门讨论与考点摘要：Aurora Serverless v2 支持按需计费，可以根据工作负载动态扩展和减少资源，非常适合间歇性工作负载（例如每周仅运行 2 小时）。成本优化：Aurora Serverless v2 仅在使用时计费，避免了闲置资源的成本。",
+        "en": "Community vote as displayed: A (92%) 8%. Popular discussion and key point summary: Aurora Serverless v2 supports on-demand billing and can dynamically expand and reduce resources based on workload, making it ideal for intermittent workloads (such as running for only 2 hours a week). Cost optimization: Aurora Serverless v2 is only billed when used, avoiding the cost of idle resources."
+      }
+    },
+    {
+      "question_no": 575,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司将其应用程序部署在 AWS 区域中应用程序负载均衡器后面的 Amazon Elastic Kubernetes Service (Amazon EKS) 上。应用程序需要将数据存储在 PostgreSQL 数据库引擎中。该公司希望数据库中的数据具有高可用性。该公司还需要增加读取工作负载的能力。哪种解决方案能够以最高的运营效率满足这些要求？",
+        "en": "A company deploys its applications on Amazon Elastic Kubernetes Service (Amazon EKS) behind an Application Load Balancer in an AWS Region. The application needs to store data in a PostgreSQL database engine. The company wants the data in the database to be highly available. The company also needs increased capacity for read workloads. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建配置有全局表的 Amazon DynamoDB 数据库表。",
+          "en": "Create an Amazon DynamoDB database table configured with global tables."
+        },
+        "B": {
+          "zh": "创建具有多可用区部署的 Amazon RDS 数据库。",
+          "en": "Create an Amazon RDS database with Multi-AZ deployments."
+        },
+        "C": {
+          "zh": "创建具有多可用区数据库集群部署的 Amazon RDS 数据库。",
+          "en": "Create an Amazon RDS database with Multi-AZ DB cluster deployment."
+        },
+        "D": {
+          "zh": "创建配置有跨区域只读副本的 Amazon RDS 数据库。",
+          "en": "Create an Amazon RDS database configured with cross-Region read replicas."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：DynamoDB是一个NoSQL数据库，问题显然需要使用PostgreSQL数据库引擎（关系数据库）。虽然DynamoDB的全局表可以提供高可用性和跨区域的可扩展性，但它并不能满足问题所要求的数据库类型。",
+          "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database, and the question clearly requires the use of the PostgreSQL database engine (relational database). Although DynamoDB's global tables can provide high availability and cross-region scalability, it does not meet the type of database required by the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "C": {
+          "zh": "正確。技术原因：多可用区数据库集群部署不仅提供高可用性，还支持多个读取节点，从而提高读取工作负载的容量。这是满足问题要求的最佳方案，运行效率高。",
+          "en": "Correct. Technical reason: Multi-AZ DB cluster deployment not only provides high availability, but also supports multiple read nodes, thereby increasing the capacity of read workloads. This is the best solution to meet the requirements of the question and has high operational efficiency."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：跨区域只读副本主要用于跨区域扩展，但问题中没有提到跨区域的要求。另外，跨区域只读副本的设置和管理较为复杂，运行效率较低。",
+          "en": "Incorrect. Technical reason: Cross-region read replicas are mainly used for cross-region expansion, but the question does not mention cross-region requirements. In addition, the setup and management of cross-region read replicas are more complex and the operation efficiency is lower."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建具有多可用区数据库集群部署的 Amazon RDS 数据库。",
+        "en": "C. Create an Amazon RDS database with Multi-AZ DB cluster deployment."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：多可用区数据库集群部署不仅提供高可用性，还支持多个读取节点，从而提高读取工作负载的容量。这是满足问题要求的最佳方案，运行效率高。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Multi-AZ DB cluster deployment not only provides high availability, but also supports multiple read nodes, thereby increasing the capacity of read workloads. This is the best solution to meet the requirements of the question and has high operational efficiency."
+      }
+    },
+    {
+      "question_no": 576,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用 Amazon API Gateway 和 AWS Lambda 在 AWS 上构建 RESTful 无服务器 Web 应用程序。该 Web 应用程序的用户将分布在不同的地理位置，并且该公司希望减少这些用户的 API 请求的延迟。解决方案架构师应该使用哪种类型的端点来满足这些要求？",
+        "en": "A company is building a RESTful serverless web application on AWS by using Amazon API Gateway and AWS Lambda. The users of this web application will be geographically distributed, and the company wants to reduce the latency of API requests to these users. Which type of endpoint should a solutions architect use to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "专用端点",
+          "en": "Private endpoint"
+        },
+        "B": {
+          "zh": "区域终点",
+          "en": "Regional endpoint"
+        },
+        "C": {
+          "zh": "接口 VPC 终端节点",
+          "en": "Interface VPC endpoint"
+        },
+        "D": {
+          "zh": "边缘优化端点",
+          "en": "Edge-optimized endpoint"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：无法满足全球用户降低访问延迟的需求。",
+          "en": "Incorrect. Technical reason: Unable to meet the need to reduce access delays for global users."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：无法通过全球分布的边缘位置来优化延迟。",
+          "en": "Incorrect. Technical reason: Latency cannot be optimized with globally distributed edge locations."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+          "en": "Correct. Technical reason: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 边缘优化端点",
+        "en": "D. Edge-optimized endpoint"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+      }
+    },
+    {
+      "question_no": 577,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon CloudFront 发行版为其网站提供内容页面。公司需要确保客户在访问公司网站时使用TLS证书。该公司希望自动创建和更新 TLS 证书。哪种解决方案能够以最高的运营效率满足这些要求？",
+        "en": "A company uses an Amazon CloudFront distribution to serve content pages for its website. The company needs to ensure that clients use a TLS certificate when accessing the company's website. The company wants to automate the creation and renewal of the TLS certificates. Which solution will meet these requirements with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 CloudFront 安全策略创建证书。",
+          "en": "Use a CloudFront security policy to create a certificate."
+        },
+        "B": {
+          "zh": "使用 CloudFront 源访问控制 (OAC) 创建证书。",
+          "en": "Use a CloudFront origin access control (OAC) to create a certificate."
+        },
+        "C": {
+          "zh": "使用 AWS Certificate Manager (ACM) 创建证书。对域使用 DNS 验证。",
+          "en": "Use AWS Certificate Manager (ACM) to create a certificate. Use DNS validation for the domain."
+        },
+        "D": {
+          "zh": "使用 AWS Certificate Manager (ACM) 创建证书。对域使用电子邮件验证。",
+          "en": "Use AWS Certificate Manager (ACM) to create a certificate. Use email validation for the domain."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：CloudFront的安全策略用于定义如何保护内容（例如TLS版本、加密算法），但它无法创建或管理TLS证书。",
+          "en": "Incorrect. Technical reason: CloudFront's security policy is used to define how to protect content (such as TLS version, encryption algorithm), but it cannot create or manage TLS certificates."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：CloudFront 的源访问控制 (OAC) 用于限制对源的访问，与 TLS 证书的创建和管理无关。",
+          "en": "Incorrect. Technical reason: CloudFront's origin access control (OAC) is used to restrict access to the origin and has nothing to do with the creation and management of TLS certificates."
+        },
+        "C": {
+          "zh": "正確。技术原因：AWS Certificate Manager (ACM) 可以自动创建和续订 TLS 证书。 DNS 验证是一种适用于自动化流程的高效验证方法。",
+          "en": "Correct. Technical reason: AWS Certificate Manager (ACM) can automatically create and renew TLS certificates. DNS verification is an efficient verification method suitable for automated processes."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然ACM支持电子邮件验证，但电子邮件验证需要人工干预，无法自动化，运行效率较低。",
+          "en": "Incorrect. Technical reason: Although ACM supports email verification, email verification requires manual intervention, cannot be automated, and the operation efficiency is low."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Certificate Manager (ACM) 创建证书。对域使用 DNS 验证。",
+        "en": "C. Use AWS Certificate Manager (ACM) to create a certificate. Use DNS validation for the domain."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：AWS Certificate Manager (ACM) 可以自动创建和续订 TLS 证书。 DNS 验证是一种适用于自动化流程的高效验证方法。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: AWS Certificate Manager (ACM) can automatically create and renew TLS certificates. DNS verification is an efficient verification method suitable for automated processes."
+      }
+    },
+    {
+      "question_no": 578,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司部署了一个使用 Amazon DynamoDB 作为数据库层的无服务器应用程序。该应用程序的用户数量大幅增加。该公司希望将数据库响应时间从毫秒提高到微秒，并缓存对数据库的请求。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company deployed a serverless application that uses Amazon DynamoDB as a database layer. The application has experienced a large increase in users. The company wants to improve database response time from milliseconds to microseconds and to cache requests to the database. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 DynamoDB 加速器 (DAX)。",
+          "en": "Use DynamoDB Accelerator (DAX)."
+        },
+        "B": {
+          "zh": "将数据库迁移到 Amazon Redshift。",
+          "en": "Migrate the database to Amazon Redshift."
+        },
+        "C": {
+          "zh": "将数据库迁移到 Amazon RDS。",
+          "en": "Migrate the database to Amazon RDS."
+        },
+        "D": {
+          "zh": "使用 Amazon ElastiCache for Redis。",
+          "en": "Use Amazon ElastiCache for Redis."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：DAX 是专门为 DynamoDB 设计的内存缓存服务，可以将响应时间从毫秒缩短到微秒。它与 DynamoDB 无缝集成，并且由于它是托管服务，因此运营开销非常低。",
+          "en": "Correct. Technical reason: DAX is a memory caching service specially designed for DynamoDB, which can reduce response time from milliseconds to microseconds. It integrates seamlessly with DynamoDB and has very low operational overhead because it is a hosted service."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon Redshift 是一种数据仓库服务，适合分析工作负载而不是高频事务工作负载。迁移到Redshift不仅不适合场景需求，而且还会增加运营开销。",
+          "en": "Incorrect. Technical reason: Amazon Redshift is a data warehouse service suitable for analytical workloads rather than high-frequency transactional workloads. Migrating to Redshift is not only unsuitable for scenario requirements, but also increases operational overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon RDS 是一种关系数据库服务。虽然它可以提供低延迟，但它不具备 DynamoDB 的 Serverless 功能。迁移到 RDS 会增加管理开销，并且不一定能实现微秒级响应时间。",
+          "en": "Incorrect. Technical reason: Amazon RDS is a relational database service. Although it can provide low latency, it does not have the serverless features of DynamoDB. Migrating to RDS increases management overhead and may not necessarily achieve microsecond response times."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然 ElastiCache for Redis 可以提供低延迟缓存，但它需要额外的开发工作才能集成到现有的 DynamoDB 架构中。与DAX相比，操作开销更高，并且不像DAX和DynamoDB那样紧密集成。",
+          "en": "Incorrect. Technical reason: While ElastiCache for Redis can provide low-latency caching, it requires additional development work to integrate into the existing DynamoDB architecture. Compared with DAX, the operation overhead is higher, and it is not as tightly integrated as DAX and DynamoDB."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 DynamoDB 加速器 (DAX)。",
+        "en": "A. Use DynamoDB Accelerator (DAX)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (91%) 9%。热门讨论与考点摘要：DAX 是专门为 DynamoDB 设计的内存缓存服务，可以将响应时间从毫秒缩短到微秒。它与 DynamoDB 无缝集成，并且由于它是托管服务，因此运营开销非常低。",
+        "en": "Community vote as displayed: A (91%) 9%. Popular discussion and key point summary: DAX is a memory caching service specially designed for DynamoDB, which can reduce response time from milliseconds to microseconds. It integrates seamlessly with DynamoDB and has very low operational overhead because it is a hosted service."
+      }
+    },
+    {
+      "question_no": 579,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司运行一个使用 Amazon RDS for PostgreSQL 的应用程序。该应用程序仅在工作日的工作时间内接收流量。该公司希望根据这种使用情况来优化成本并减少运营开销。哪种解决方案可以满足这些要求？",
+        "en": "A company runs an application that uses Amazon RDS for PostgreSQL. The application receives traffic only on weekdays during business hours. The company wants to optimize costs and reduce operational overhead based on this usage. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS 上的实例计划程序来配置启动和停止计划。",
+          "en": "Use the Instance Scheduler on AWS to configure start and stop schedules."
+        },
+        "B": {
+          "zh": "关闭自动备份。创建数据库的每周手动快照。",
+          "en": "Turn off automatic backups. Create weekly manual snapshots of the database."
+        },
+        "C": {
+          "zh": "创建自定义 AWS Lambda 函数以根据最低 CPU 利用率启动和停止数据库。",
+          "en": "Create a custom AWS Lambda function to start and stop the database based on minimum CPU utilization."
+        },
+        "D": {
+          "zh": "预先购买所有预留数据库实例。",
+          "en": "Purchase All Upfront reserved DB instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Instance Scheduler 是一种 AWS 解决方案，可以根据预定义的计划启动和停止资源（例如 RDS 实例）。非常适合只需要在工作日和工作时间运行的场景，可以显着降低成本。",
+          "en": "Correct. Technical reason: Instance Scheduler is an AWS solution that can start and stop resources (such as RDS instances) according to a predefined schedule. It is ideally suited for scenarios that only need to run during working days and working hours, which can significantly reduce costs."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：关闭自动备份可能会增加数据丢失的风险。手动创建备份会增加运营开销，不符合降低运营开销的要求。此外，这个方条并不能直接优化运营成本。",
+          "en": "Incorrect. Technical reason: Turning off automatic backup may increase the risk of data loss. Manually creating backups increases operational overhead and does not meet the requirements for reducing operational overhead. In addition, this square bar does not directly optimize operating costs."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然Lambda函数可以自动化，但是根据CPU利用率启动和停止数据库并不能满足问题中“工作日和工作时间”的明确要求。此外，开发和维护自定义Lambda函数会增加操作复杂性，无法满足降低操作开销的要求。",
+          "en": "Incorrect. Technical reason: Although Lambda functions can be automated, starting and stopping the database based on CPU utilization does not meet the explicit requirements of \"working days and working hours\" in the question. In addition, developing and maintaining custom Lambda functions increases operational complexity and does not meet the requirement of reducing operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然购买 All Upfront 预留实例可以降低长期成本，但并不适合这种间歇性的使用场景。预留实例需要全年运行以最大限度地提高成本效益，并且问题明确指出数据库仅在工作日和工作时间运行。",
+          "en": "Incorrect. Technical reason: Although purchasing All Upfront reserved instances can reduce long-term costs, it is not suitable for this intermittent usage scenario. Reserved instances need to run year-round to maximize cost effectiveness, and the question clearly states that the database only runs on weekdays and during business hours."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS 上的实例计划程序来配置启动和停止计划。",
+        "en": "A. Use the Instance Scheduler on AWS to configure start and stop schedules."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (96%) 4%。热门讨论与考点摘要：Instance Scheduler 是一种 AWS 解决方案，可以根据预定义的计划启动和停止资源（例如 RDS 实例）。非常适合只需要在工作日和工作时间运行的场景，可以显着降低成本。",
+        "en": "Community vote as displayed: A (96%) 4%. Popular discussion and key point summary: Instance Scheduler is an AWS solution that can start and stop resources (such as RDS instances) according to a predefined schedule. It is ideally suited for scenarios that only need to run during working days and working hours, which can significantly reduce costs."
+      }
+    },
+    {
+      "question_no": 580,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司使用本地连接存储在本地运行延迟敏感的应用程序。该公司正在使用直接迁移方法将应用程序迁移到 AWS 云。该公司不想改变应用程序架构。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company uses locally attached storage to run a latency-sensitive application on premises. The company is using a lift and shift method to move the application to the AWS Cloud. The company does not want to change the application architecture. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon EC2 实例配置 Auto Scaling 组。使用 Amazon FSx for Lustre 文件系统运行该应用程序。",
+          "en": "Configure an Auto Scaling group with an Amazon EC2 instance. Use an Amazon FSx for Lustre file system to run the application."
+        },
+        "B": {
+          "zh": "在 Amazon EC2 实例上托管应用程序。使用 Amazon Elastic Block Store (Amazon EBS) GP2 卷来运行应用程序。",
+          "en": "Host the application on an Amazon EC2 instance. Use an Amazon Elastic Block Store (Amazon EBS) GP2 volume to run the application."
+        },
+        "C": {
+          "zh": "使用 Amazon EC2 实例配置 Auto Scaling 组。使用 Amazon FSx for OpenZFS 文件系统运行该应用程序。",
+          "en": "Configure an Auto Scaling group with an Amazon EC2 instance. Use an Amazon FSx for OpenZFS file system to run the application."
+        },
+        "D": {
+          "zh": "在 Amazon EC2 实例上托管应用程序。使用 Amazon Elastic Block Store (Amazon EBS) GP3 卷来运行应用程序。",
+          "en": "Host the application on an Amazon EC2 instance. Use an Amazon Elastic Block Store (Amazon EBS) GP3 volume to run the application."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然 GP2 可以满足低延迟需求，但 GP3 更具成本效益。",
+          "en": "Incorrect. Technical reason: While GP2 meets low latency needs, GP3 is more cost-effective."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "D": {
+          "zh": "正確。技术原因：是满足低时延、高性价比要求的最佳选择。",
+          "en": "Correct. Technical reason: It is the best choice to meet the requirements of low latency and cost-effectiveness."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在 Amazon EC2 实例上托管应用程序。使用 Amazon Elastic Block Store (Amazon EBS) GP3 卷来运行应用程序。",
+        "en": "D. Host the application on an Amazon EC2 instance. Use an Amazon Elastic Block Store (Amazon EBS) GP3 volume to run the application."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：是满足低时延、高性价比要求的最佳选择。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: It is the best choice to meet the requirements of low latency and cost-effectiveness."
+      }
+    },
+    {
+      "question_no": 581,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 Amazon EC2 实例上运行有状态生产应用程序。该应用程序需要至少两个 EC2 实例才能始终运行。解决方案架构师需要为应用程序设计一个高度可用且容错的架构。解决方案架构师创建 EC2 实例的 Auto Scaling 组。解决方案架构师应该采取哪一组附加步骤来满足这些要求？",
+        "en": "A company runs a stateful production application on Amazon EC2 instances. The application requires at least two EC2 instances to always be running. A solutions architect needs to design a highly available and fault-tolerant architecture for the application. The solutions architect creates an Auto Scaling group of EC2 instances. Which set of additional steps should the solutions architect take to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Auto Scaling 组的最小容量设置为 2。在一个可用区中部署一个按需实例，在第二个可用区中部署一个按需实例。",
+          "en": "Set the Auto Scaling group's minimum capacity to two. Deploy one On-Demand Instance in one Availability Zone and one On-Demand Instance in a second Availability Zone."
+        },
+        "B": {
+          "zh": "将 Auto Scaling 组的最小容量设置为 4。在一个可用区中部署两个按需实例，在第二个可用区中部署两个按需实例。",
+          "en": "Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two On-Demand Instances in a second Availability Zone."
+        },
+        "C": {
+          "zh": "将 Auto Scaling 组的最小容量设置为 2。在一个可用区中部署四个 竞价型实例。",
+          "en": "Set the Auto Scaling group's minimum capacity to two. Deploy four Spot Instances in one Availability Zone."
+        },
+        "D": {
+          "zh": "将 Auto Scaling 组的最小容量设置为 4。在一个可用区中部署两个按需实例，在第二个可用区中部署两个 竞价型实例。",
+          "en": "Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two Spot Instances in a second Availability Zone."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：由于该题至少需要运行两个实例，所以将Auto Scaling组的最小容量设置为2是正确的。问题：虽然将实例拆分到两个可用区是实现高可用性的最佳实践，但此选项没有明确说明如何处理故障转移情况。如果某个可用区出现故障，则只会运行一个实例，无法满足“至少两个实例运行”的要求。免责声明：此选项不能完全满足高可用性和容错要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: It is correct to set the minimum capacity of the Auto Scaling group to 2 because the question requires at least two instances to run. Problem: While splitting instances across two Availability Zones is a best practice for high availability, this option does not clearly state how to handle failover situations. If an availability zone fails, only one instance will run, failing to meet the requirement of \"at least two instances running\". Disclaimer: This option does not fully meet high availability and fault tolerance requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析：将Auto Scaling组的最小容量设置为4，并跨两个可用区部署实例，保证即使一个可用区出现故障，至少有两个实例仍在运行。优点：该选项完全满足高可用性和容错要求。结论：此选项为正确答案。",
+          "en": "Correct. Technical reason: Technical analysis: Set the minimum capacity of the Auto Scaling group to 4, and deploy instances across two availability zones to ensure that even if one availability zone fails, at least two instances are still running. Advantages: This option fully meets high availability and fault tolerance requirements. Conclusion: This option is the correct answer."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：所有四个竞价型实例都部署在同一个可用区，无法承受可用区故障；竞价型实例还可能被中断，因此不能保证始终至少运行两个实例。",
+          "en": "Incorrect. Technical reason: Placing all four Spot Instances in one Availability Zone cannot tolerate an Availability Zone failure. Spot interruptions also prevent this design from guaranteeing that at least two instances are always running."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：将实例分布在两个可用区是实现高可用性的最佳实践。问题：使用竞价型实例可能会导致实例随时中断，无法保证生产环境的稳定性。免责声明：此选项不能完全满足高可用性和容错要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Spreading instances across two availability zones is a best practice for high availability. Problem: Using Spot instances may cause the instance to be interrupted at any time, and the stability of the production environment cannot be guaranteed. Disclaimer: This option does not fully meet high availability and fault tolerance requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 将 Auto Scaling 组的最小容量设置为 4。在一个可用区中部署两个按需实例，在第二个可用区中部署两个按需实例。",
+        "en": "B. Set the Auto Scaling group's minimum capacity to four. Deploy two On-Demand Instances in one Availability Zone and two On-Demand Instances in a second Availability Zone."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (75%) A (25%)。热门讨论与考点摘要：技术分析：将Auto Scaling组的最小容量设置为4，并跨两个可用区部署实例，保证即使一个可用区出现故障，至少有两个实例仍在运行。优点：该选项完全满足高可用性和容错要求。结论：此选项为正确答案。",
+        "en": "Community vote as displayed: B (75%) A (25%). Popular discussion and key point summary: Technical analysis: Set the minimum capacity of the Auto Scaling group to 4, and deploy instances across two availability zones to ensure that even if one availability zone fails, at least two instances are still running. Advantages: This option fully meets high availability and fault tolerance requirements. Conclusion: This option is the correct answer."
+      }
+    },
+    {
+      "question_no": 582,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司使用 Amazon Route 53 作为其 DNS 提供商。该公司在本地和 AWS 云中托管其网站。该公司的本地数据中心位于 us-west-1 区域附近。该公司使用 eu-central-1 区域来托管该网站。该公司希望尽可能减少网站的加载时间。哪种解决方案可以满足这些要求？",
+        "en": "An ecommerce company uses Amazon Route 53 as its DNS provider. The company hosts its website on premises and in the AWS Cloud. The company's on-premises data center is near the us-west-1 Region. The company uses the eu-central-1 Region to host the website. The company wants to minimize load time for the website as much as possible. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置地理位置路由策略。将us-west-1附近的流量发送到本地数据中心。将eu-central-1附近的流量发送到eu-central-1。",
+          "en": "Set up a geolocation routing policy. Send the traffic that is near us-west-1 to the on-premises data center. Send the traffic that is near eu-central-1 to eu-central-1."
+        },
+        "B": {
+          "zh": "设置一个简单的路由策略，将 eu-central-1 附近的所有流量路由到 eu-central-1，并将本地数据中心附近的所有流量路由到本地数据中心。",
+          "en": "Set up a simple routing policy that routes all traffic that is near eu-central-1 to eu-central-1 and routes all traffic that is near the on-premises datacenter to the on-premises data center."
+        },
+        "C": {
+          "zh": "设置延迟路由策略。将该策略与 us-west-1 关联。",
+          "en": "Set up a latency routing policy. Associate the policy with us-west-1."
+        },
+        "D": {
+          "zh": "设置加权路由策略。在 eu-central-1 和本地数据中心之间均匀分配流量。",
+          "en": "Set up a weighted routing policy. Split the traffic evenly between eu-central-1 and the on-premises data center."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：地理位置路由策略允许根据用户的地理位置将流量路由到最近的资源，从而减少加载时间。此选项满足问题的要求，因为它根据用户位置将流量分配到最近的资源（us-west-1 附近的流量到本地数据，eu-central-1 附近的流量到 AWS 云）。",
+          "en": "Correct. Technical reason: Geolocation routing policies allow traffic to be routed to the closest resource based on the user's geographical location, thereby reducing load times. This option meets the requirements of the question because it allocates traffic to the nearest resource based on the user's location (traffic near us-west-1 to local data, traffic near eu-central-1 to the AWS cloud)."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：简单的路由策略不支持根据用户位置进行流量分配。它只能将流量随机分配到多个资源和单个资源。该选项描述的功能实际上是地理位置路由策略的功能，而不是简单的路由策略。",
+          "en": "Incorrect. Technical reason: Simple routing policies do not support traffic distribution based on user location. It can only randomly distribute traffic to multiple resources and a single resource. The functionality described by this option is actually that of a geolocation routing policy rather than a simple routing policy."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：路由策略根据资源的网络位置而不是用户的地理位置来分配流量。问题需要根据用户位置来优化流量，而不是根据延迟来优化流量，所以这个选项不符合要求。",
+          "en": "Incorrect. Technical reason: Routing policies allocate traffic based on the resource's network location rather than the user's geographic location. The question requires optimizing traffic based on user location, rather than based on latency, so this option does not meet the requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：加权路由策略根据预定义的权重而不是用户的地理位置来分配流量。均匀分布流量可能会导致用户访问远离其地理位置的资源，从而增加加载时间。",
+          "en": "Incorrect. Technical reason: Weighted routing policies distribute traffic based on predefined weights rather than the user's geographic location. Spreading traffic evenly can cause users to access resources far away from their geographical location, increasing load times."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 设置地理位置路由策略。将us-west-1附近的流量发送到本地数据中心。将eu-central-1附近的流量发送到eu-central-1。",
+        "en": "A. Set up a geolocation routing policy. Send the traffic that is near us-west-1 to the on-premises data center. Send the traffic that is near eu-central-1 to eu-central-1."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (89%) 11%。热门讨论与考点摘要：地理位置路由策略允许根据用户的地理位置将流量路由到最近的资源，从而减少加载时间。此选项满足问题的要求，因为它根据用户位置将流量分配到最近的资源（us-west-1 附近的流量到本地数据，eu-central-1 附近的流量到 AWS 云）。",
+        "en": "Community vote as displayed: A (89%) 11%. Popular discussion and key point summary: Geolocation routing policies allow traffic to be routed to the closest resource based on the user's geographical location, thereby reducing load times. This option meets the requirements of the question because it allocates traffic to the nearest resource based on the user's location (traffic near us-west-1 to local data, traffic near eu-central-1 to the AWS cloud)."
+      }
+    },
+    {
+      "question_no": 583,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司在物理磁带上拥有 5 PB 的存档数据。出于合规目的，该公司需要将磁带上的数据再保存 10 年。该公司希望在未来 6 个月内迁移到 AWS。存储磁带的数据中心具有 1 Gbps 上行链路互联网连接。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company has 5 PB of archived data on physical tapes. The company needs to preserve the data on the tapes for another 10 years for compliance purposes. The company wants to migrate to AWS in the next 6 months. The data center that stores the tapes has a 1 Gbps uplink internet connectivity. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "从本地磁带读取数据。将数据暂存在本地 NFS 存储中。使用 AWS DataSync 将数据迁移到 Amazon S3 Glacier 灵活检索。",
+          "en": "Read the data from the tapes on premises. Stage the data in a local NFS storage. Use AWS DataSync to migrate the data to Amazon S3 Glacier Flexible Retrieval."
+        },
+        "B": {
+          "zh": "使用本地备份应用程序从磁带读取数据并直接写入 Amazon S3 Glacier Deep Archive。",
+          "en": "Use an on-premises backup application to read the data from the tapes and to write directly to Amazon S3 Glacier Deep Archive."
+        },
+        "C": {
+          "zh": "订购多个具有磁带网关的 AWS Snowball 设备。将物理磁带复制到 Snowball 中的虚拟磁带。将 Snowball 设备运送到 AWS。创建生命周期策略以将磁带移至 Amazon S3 Glacier Deep Archive。",
+          "en": "Order multiple AWS Snowball devices that have Tape Gateway. Copy the physical tapes to virtual tapes in Snowball. Ship the Snowball devices to AWS. Create a lifecycle policy to move the tapes to Amazon S3 Glacier Deep Archive."
+        },
+        "D": {
+          "zh": "配置本地磁带网关。在 AWS 云中创建虚拟磁带。使用备份软件将物理磁带复制到虚拟磁带。",
+          "en": "Configure an on-premises Tape Gateway. Create virtual tapes in the AWS Cloud. Use backup software to copy the physical tape to the virtual tape."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：AWS DataSync适合迁移文件数据，但不直接支持磁带数据的迁移。磁带数据需要先转换为文件格式，这增加了复杂性。成本分析：使用1Gbps网络迁移5PB数据需要大量时间，成本较高。缺点：此选项效率较低且成本较高。",
+          "en": "Incorrect. Technical reason: Technical analysis: AWS DataSync is suitable for migrating file data, but does not directly support the migration of tape data. The tape data needs to be converted to a file format first, which adds complexity. Cost analysis: Migrating 5 PB of data using a 1 Gbps network requires a lot of time and the cost is high. Con: This option is less efficient and more expensive."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：技术分析：该选项依赖于本地备份应用程序，但没有提及如何处理磁带数据的转换。成本分析：还需要1Gbps的数据迁移，需要大量的时间和成本。缺点：此选项效率较低且成本较高。",
+          "en": "Incorrect. Technical reason: Technical analysis: This option relies on local backup application procedures, but does not mention how to handle the conversion of tape data. Cost analysis: It also requires 1 Gbps to migrate data, which takes a lot of time and costs. Con: This option is less efficient and more expensive."
+        },
+        "C": {
+          "zh": "正確。技术原因：技术分析：AWS Snowball 设备支持磁带网关，可以高效地将物理磁带转换为虚拟磁带并迁移到 AWS。成本分析：使用Snowball设备避免了传输的限制，迁移速度快，成本低。结论：此选项是最具成本效益的类固醇解决方案。",
+          "en": "Correct. Technical reason: Technical analysis: AWS Snowball devices support Tape Gateway, which can efficiently convert physical tapes into virtual tapes and migrate them to AWS. Cost analysis: Using Snowball equipment avoids the limitations of transmission, making migration fast and low-cost. Conclusion: This option is the most cost-effective steroid solution."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：此选项需要 1 Gbps 连接才能将数据迁移到 AWS，这既耗时又昂贵。成本分析：由于传输成本较高，所以最好使用Snowball设备直接迁移。缺点：此选项效率较低且成本较高。",
+          "en": "Incorrect. Technical reason: Technical analysis: This option requires a 1 Gbps connection to migrate the data to AWS, which is time-consuming and costly. Cost analysis: Since the transmission cost is high, it is better to use Snowball equipment for direct migration. Con: This option is less efficient and more expensive."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 订购多个具有磁带网关的 AWS Snowball 设备。将物理磁带复制到 Snowball 中的虚拟磁带。将 Snowball 设备运送到 AWS。创建生命周期策略以将磁带移至 Amazon S3 Glacier Deep Archive。",
+        "en": "C. Order multiple AWS Snowball devices that have Tape Gateway. Copy the physical tapes to virtual tapes in Snowball. Ship the Snowball devices to AWS. Create a lifecycle policy to move the tapes to Amazon S3 Glacier Deep Archive."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (98%) 2%。热门讨论与考点摘要：技术分析：AWS Snowball 设备支持磁带网关，可以高效地将物理磁带转换为虚拟磁带并迁移到 AWS。成本分析：使用Snowball设备避免了传输的限制，迁移速度快，成本低。结论：此选项是最具成本效益的类固醇解决方案。",
+        "en": "Community vote as displayed: C (98%) 2%. Popular discussion and key point summary: Technical analysis: AWS Snowball devices support Tape Gateway, which can efficiently convert physical tapes into virtual tapes and migrate them to AWS. Cost analysis: Using Snowball equipment avoids the limitations of transmission, making migration fast and low-cost. Conclusion: This option is the most cost-effective steroid solution."
+      }
+    },
+    {
+      "question_no": 584,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在部署一个并行处理大量数据的应用程序。该公司计划使用 Amazon EC2 实例来处理工作负载。网络架构必须可配置，以防止节点组共享相同的底层硬件。哪种网络解决方案可以满足这些要求？",
+        "en": "A company is deploying an application that processes large quantities of data in parallel. The company plans to use Amazon EC2 instances for the workload. The network architecture must be configurable to prevent groups of nodes from sharing the same underlying hardware. Which networking solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在分散放置组中运行 EC2 实例。",
+          "en": "Run the EC2 instances in a spread placement group."
+        },
+        "B": {
+          "zh": "将 EC2 实例分组到单独的账户中。",
+          "en": "Group the EC2 instances in separate accounts."
+        },
+        "C": {
+          "zh": "使用专用租赁配置 EC2 实例。",
+          "en": "Configure the EC2 instances with dedicated tenancy."
+        },
+        "D": {
+          "zh": "使用共享租赁配置 EC2 实例。",
+          "en": "Configure the EC2 instances with shared tenancy."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：在分散放置组中运行 EC2 实例。正确的。分散置放组旨在将实例分布在不同的底层硬件上，以最大程度地减少单点故障的影响。这完全满足了问题的要求，即防止节点共享相同的底层硬件。",
+          "en": "Correct. Technical reason: Run the EC2 instances in a spread placement group. Correct. Spread Placement Groups are designed to distribute instances across different underlying hardware to minimize the impact of single points of failure. This fully meets the requirements of the question, which is to prevent nodes from sharing the same underlying hardware."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：将 EC2 实例分组到单独的账户中。错误。将实例分组到不同的账户中并不能保证它们不会共享相同的底层硬件。 AWS账户隔离主要用于管理权限和计费，而不是分离底层硬件。",
+          "en": "Incorrect. Technical reason: Group the EC2 instances in separate accounts. Error. Grouping instances into different accounts does not guarantee that they won't share the same underlying hardware. AWS account isolation is primarily used to manage permissions and billing, not to separate the underlying hardware."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：使用专用租赁配置 EC2 实例。错误。专用租赁可确保实例在专用硬件上运行，但并不能阻止多个实例共享相同的底层硬件。它的主要用途是满足合规性或安全性要求，而不是实现节点分离。",
+          "en": "Incorrect. Technical reason: Configure the EC2 instances with dedicated tenancy. Error. Dedicated Tenancy ensures that instances run on dedicated hardware, but it does not prevent multiple instances from sharing the same underlying hardware. Its primary use is to meet compliance or security requirements, not to achieve node separation."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用共享租赁配置 EC2 实例。错误。共享租赁是 EC2 实例的默认选项，它可以共享底层硬件。这违背了问题中防止共享底层硬件的要求。",
+          "en": "Incorrect. Technical reason: Configure the EC2 instances with shared tenancy. Error. Shared Tenancy is the default option for EC2 instances, which may share underlying hardware. This goes against the requirement of the question to prevent sharing of underlying hardware."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在分散放置组中运行 EC2 实例。",
+        "en": "A. Run the EC2 instances in a spread placement group."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (87%) 13%。热门讨论与考点摘要：在分散放置组中运行 EC2 实例。正确的。分散置放组旨在将实例分布在不同的底层硬件上，以最大程度地减少单点故障的影响。这完全满足了问题的要求，即防止节点共享相同的底层硬件。",
+        "en": "Community vote as displayed: A (87%) 13%. Popular discussion and key point summary: Run the EC2 instances in a spread placement group. Correct. Spread Placement Groups are designed to distribute instances across different underlying hardware to minimize the impact of single points of failure. This fully meets the requirements of the question, which is to prevent nodes from sharing the same underlying hardware."
+      }
+    },
+    {
+      "question_no": 585,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在设计灾难恢复 (DR) 策略，以在故障转移 AWS 区域中提供 Amazon EC2 容量。业务需求表明灾难恢复策略必须满足故障转移区域的容量。哪种解决方案可以满足这些要求？",
+        "en": "A solutions architect is designing a disaster recovery (DR) strategy to provide Amazon EC2 capacity in a failover AWS Region. Business requirements state that the DR strategy must meet capacity in the failover Region. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在故障转移区域购买按需实例。",
+          "en": "Purchase On-Demand Instances in the failover Region."
+        },
+        "B": {
+          "zh": "在故障转移区域购买 EC2 Savings Plan。",
+          "en": "Purchase an EC2 Savings Plan in the failover Region."
+        },
+        "C": {
+          "zh": "在故障转移区域购买区域预留实例。",
+          "en": "Purchase regional Reserved Instances in the failover Region."
+        },
+        "D": {
+          "zh": "在故障转移区域购买容量预留。",
+          "en": "Purchase a Capacity Reservation in the failover Region."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：按需实例是按需购买的实例。虽然它们可以快速启动，但不能保证在故障转移期间有足够的可用容量，因为容量可能会受到其他用户竞争的影响。",
+          "en": "Incorrect. Technical reason: On-Demand Instances are instances purchased on demand. Although they can be started quickly, there is no guarantee that sufficient capacity will be available during failover because the capacity may be affected by competition from other users."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：EC2 Savings Plan 主要用于优化成本而非保证容量。它不能确保故障转移区域中有足够的计算资源可用。",
+          "en": "Incorrect. Technical reason: EC2 Savings Plan is mainly used to optimize costs rather than guarantee capacity. It does not ensure that sufficient computing resources are available in the failover area."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：预留实例虽然可以提供成本优化和容量预留，但其容量预留是基于实例类型和地域的长期承诺，无法灵活满足容灾需求。",
+          "en": "Incorrect. Technical reason: Although Reserved Instances can provide cost optimization and capacity reservation, its capacity reservation is based on long-term commitment of instance type and region and cannot flexibly meet the needs of disaster recovery."
+        },
+        "D": {
+          "zh": "正確。技术原因：容量预留允许您在指定区域和可用区预留 EC2 容量，确保在发生故障转移时有足够的计算资源可用。这是灾难恢复场景中最合适的选项。",
+          "en": "Correct. Technical reason: Capacity Reservation allows you to reserve EC2 capacity in designated regions and availability zones, ensuring sufficient computing resources are available in the event of a failover. This is the most appropriate option in disaster recovery scenarios."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在故障转移区域购买容量预留。",
+        "en": "D. Purchase a Capacity Reservation in the failover Region."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (93%) 7%。热门讨论与考点摘要：容量预留允许您在指定区域和可用区预留 EC2 容量，确保在发生故障转移时有足够的计算资源可用。这是灾难恢复场景中最合适的选项。",
+        "en": "Community vote as displayed: D (93%) 7%. Popular discussion and key point summary: Capacity Reservation allows you to reserve EC2 capacity in designated regions and availability zones, ensuring sufficient computing resources are available in the event of a failover. This is the most appropriate option in disaster recovery scenarios."
+      }
+    }
+  ]
+}

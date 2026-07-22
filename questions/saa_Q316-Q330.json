@@ -1,0 +1,863 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 316,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon EC2 实例运行脚本来轮询并处理 Amazon Simple Queue Service (Amazon SQS) 队列中的消息。该公司希望降低运营成本，同时保持处理越来越多添加到队列中的消息的能力。解决方案架构师应该建议什么来满足这些要求？",
+        "en": "A company uses an Amazon EC2 instance to run a script to poll for and process messages in an Amazon Simple Queue Service (Amazon SQS) queue. The company wants to reduce operational costs while maintaining its ability to process a growing number of messages that are added to the queue. What should a solutions architect recommend to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "增加 EC2 实例的大小以更快地处理消息。",
+          "en": "Increase the size of the EC2 instance to process messages faster."
+        },
+        "B": {
+          "zh": "当实例未充分利用时，使用 Amazon EventBridge 关闭 EC2 实例。",
+          "en": "Use Amazon EventBridge to turn off the EC2 instance when the instance is underutilized."
+        },
+        "C": {
+          "zh": "将 EC2 实例上的脚本迁移到具有适当运行时的 AWS Lambda 函数。",
+          "en": "Migrate the script on the EC2 instance to an AWS Lambda function with the appropriate runtime."
+        },
+        "D": {
+          "zh": "使用 AWS Systems Manager Run Command 按需运行脚本。",
+          "en": "Use AWS Systems Manager Run Command to run the script on demand."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：增加 EC2 实例的大小可以提高处理速度，但不能解决成本问题，也不能动态扩展以处理消息量的增加。",
+          "en": "Incorrect. Technical reason: Increasing the size of the EC2 instance improves processing speed, but does not solve the cost issue and does not scale dynamically to handle increases in message volume."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然它可以在不使用时降低成本，但它无法动态扩展以处理队列中不断增长的消息量。",
+          "en": "Incorrect. Technical reason: While it can reduce costs when not in use, it cannot scale dynamically to handle growing message volumes in the queue."
+        },
+        "C": {
+          "zh": "正確。技术原因：AWS Lambda 是一种按需运行并支持动态扩展的无服务器架构，可以有效降低成本并处理不断增长的消息量。",
+          "en": "Correct. Technical reason: AWS Lambda is a serverless architecture that runs on demand and supports dynamic expansion, which can effectively reduce costs and handle growing message volumes."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然该脚本可以按需运行，但它无法动态扩展以处理队列中不断增长的消息量。",
+          "en": "Incorrect. Technical reason: While the script can be run on demand, it cannot scale dynamically to handle the growing volume of messages in the queue."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 将 EC2 实例上的脚本迁移到具有适当运行时的 AWS Lambda 函数。",
+        "en": "C. Migrate the script on the EC2 instance to an AWS Lambda function with the appropriate runtime."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (91%) 9%。热门讨论与考点摘要：AWS Lambda 是一种按需运行并支持动态扩展的无服务器架构，可以有效降低成本并处理不断增长的消息量。",
+        "en": "Community vote as displayed: C (91%) 9%. Popular discussion and key point summary: AWS Lambda is a serverless architecture that runs on demand and supports dynamic expansion, which can effectively reduce costs and handle growing message volumes."
+      }
+    },
+    {
+      "question_no": 317,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用旧应用程序生成 CSV 格式的数据。旧应用程序将输出数据存储在 Amazon S3 中。该公司正在部署一个新的商业现成 (COTS) 应用程序，该应用程序可以执行复杂的 SQL 查询来分析仅存储在 Amazon Redshift 和 Amazon S3 中的数据。但是，COTS 应用程序无法处理旧应用程序生成的 .csv 文件。该公司无法更新旧应用程序以生成其他格式的数据。该公司需要实施一个解决方案，以便 COTS 应用程序可以使用旧应用程序生成的数据。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company uses a legacy application to produce data in CSV format. The legacy application stores the output data in Amazon S3. The company is deploying a new commercial off-the-shelf (COTS) application that can perform complex SQL queries to analyze data that is stored in Amazon Redshift and Amazon S3 only. However, the COTS application cannot process the .csv files that the legacy application produces. The company cannot update the legacy application to produce data in another format. The company needs to implement a solution so that the COTS application can use the data that the legacy application produces. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建按计划运行的 AWS Glue 提取、转换和加载 (ETL) 作业。配置 ETL 作业以处理 .csv 文件并将处理后的数据存储在 Amazon Redshift 中。",
+          "en": "Create an AWS Glue extract, transform, and load (ETL) job that runs on a schedule. Configure the ETL job to process the .csv files and store the processed data in Amazon Redshift."
+        },
+        "B": {
+          "zh": "开发在 Amazon EC2 实例上运行的 Python 脚本，以将 .csv 文件转换为 .sql 文件。按 cron 计划调用 Python 脚本以将输出文件存储在 Amazon S3 中。",
+          "en": "Develop a Python script that runs on Amazon EC2 instances to convert the .csv files to .sql files. Invoke the Python script on a cron schedule to store the output files in Amazon S3."
+        },
+        "C": {
+          "zh": "创建 AWS Lambda 函数和 Amazon DynamoDB 表。使用 S3 事件调用 Lambda 函数。配置 Lambda 函数以执行提取、转换和加载 (ETL) 作业，以处理 .csv 文件并将处理后的数据存储在 DynamoDB 表中。",
+          "en": "Create an AWS Lambda function and an Amazon DynamoDB table. Use an S3 event to invoke the Lambda function. Configure the Lambda function to perform an extract, transform, and load (ETL) job to process the .csv files and store the processed data in the DynamoDB table."
+        },
+        "D": {
+          "zh": "使用 Amazon EventBridge 按周计划启动 Amazon EMR 集群。配置 EMR 集群以执行提取、转换和加载 (ETL) 作业，以处理 .csv 文件并将处理后的数据存储在 Amazon Redshift 表中。",
+          "en": "Use Amazon EventBridge to launch an Amazon EMR cluster on a weekly schedule. Configure the EMR cluster to perform an extract, transform, and load (ETL) job to process the .csv files and store the processed data in an Amazon Redshift table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：分析：AWS Glue是专门为ETL任务设计的服务，支持直接处理CSV文件。可自动调度、自动运行，减少人工，运行开销低。 Amazon Redshift 是目标存储并且满足问题要求。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analysis: AWS Glue is a service specifically designed for ETL tasks and supports direct processing of CSV files. It can be scheduled and run automatically, reducing manual work and low operating overhead. Amazon Redshift is the target storage and meets the question requirements. This option is correct."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：Python脚本需要手动开发和维护，增加了开发和运维开销。 EC2 实例需要持续运行并且价格昂贵。输出文件存储在 Amazon S3 中，但问题要求数据存储在 Amazon Redshift 中。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Python scripts need to be developed and maintained manually, which increases development and operation overhead. EC2 instances require continuous operation and are expensive. The output files are stored in Amazon S3, but the question requires the data to be stored in Amazon Redshift. This option is wrong."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：AWS Lambda 可以处理 ETL 任务，但 DynamoDB 不是问题所需的目标存储。该问题明确要求数据存储在 Amazon Redshift 或 Amazon S3 中，而不是 DynamoDB 中。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: AWS Lambda can handle ETL tasks, but DynamoDB is not the target storage required by the question. The question clearly requires that the data be stored in Amazon Redshift or Amazon S3, not DynamoDB. This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：Amazon EMR适合处理大规模数据，但对于疯狂的CSV文件处理任务，使用EMR会增加不必要的复杂性和成本。 EventBridge可以调度任务，但整体运行开销较高。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon EMR is suitable for processing large-scale data, but for crazy CSV file processing tasks, using EMR will add unnecessary complexity and cost. EventBridge can schedule tasks, but the overall operation overhead is high. This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建按计划运行的 AWS Glue 提取、转换和加载 (ETL) 作业。配置 ETL 作业以处理 .csv 文件并将处理后的数据存储在 Amazon Redshift 中。",
+        "en": "A. Create an AWS Glue extract, transform, and load (ETL) job that runs on a schedule. Configure the ETL job to process the .csv files and store the processed data in Amazon Redshift."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (98%) 2%。热门讨论与考点摘要：分析：AWS Glue是专门为ETL任务设计的服务，支持直接处理CSV文件。可自动调度、自动运行，减少人工，运行开销低。 Amazon Redshift 是目标存储并且满足问题要求。这个选项是正确的。",
+        "en": "Community vote as displayed: A (98%) 2%. Popular discussion and key point summary: Analysis: AWS Glue is a service specifically designed for ETL tasks and supports direct processing of CSV files. It can be scheduled and run automatically, reducing manual work and low operating overhead. Amazon Redshift is the target storage and meets the question requirements. This option is correct."
+      }
+    },
+    {
+      "question_no": 318,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司最近将其整个 IT 环境迁移到 AWS 云。该公司发现用户在未使用适当的变更控制流程的情况下配置超大的 Amazon EC2 实例并修改安全组规则。解决方案架构师必须制定策略来跟踪和审核这些库存和配置更改。解决方案架构师应该采取哪些行动来满足这些要求？ （选择两个。）",
+        "en": "A company recently migrated its entire IT environment to the AWS Cloud. The company discovers that users are provisioning oversized Amazon EC2 instances and modifying security group rules without using the appropriate change control process. A solutions architect must devise a strategy to track and audit these inventory and configuration changes. Which actions should the solutions architect take to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "启用 AWS CloudTrail 并将其用于审核。",
+          "en": "Enable AWS CloudTrail and use it for auditing."
+        },
+        "B": {
+          "zh": "对 Amazon EC2 实例使用数据生命周期策略。",
+          "en": "Use data lifecycle policies for the Amazon EC2 instances."
+        },
+        "C": {
+          "zh": "启用 AWS Trusted Advisor 并引用安全仪表板。",
+          "en": "Enable AWS Trusted Advisor and reference the security dashboard."
+        },
+        "D": {
+          "zh": "启用 AWS Config 并创建用于审核和合规性目的的规则。",
+          "en": "Enable AWS Config and create rules for auditing and compliance purposes."
+        },
+        "E": {
+          "zh": "使用 AWS CloudFormation 模板恢复以前的资源配置。",
+          "en": "Restore previous resource configurations with an AWS CloudFormation template."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：正确。 AWS CloudTrail 是一种日志记录服务，可跟踪用户活动和 API 调用，适用于审核和更改跟踪。它可以记录用户对AWS资源的操作，帮助企业了解谁在做什么。",
+          "en": "Correct. Technical reason: Correct. AWS CloudTrail is a logging service that tracks user activity and API calls, suitable for auditing and change tracking. It can record user operations on AWS resources and help companies understand who is doing what."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：错误。数据生命周期策略主要用于管理存储（例如S3对象生命周期），与审计和配置跟踪无关。它并不能解决用户过度配置EC2实例或修改安全组规则的问题。",
+          "en": "Incorrect. Technical reason: Error. Data lifecycle strategies are mainly used to manage storage (such as S3 object lifecycle) and have nothing to do with auditing and configuration tracking. It does not solve the problem of users overprovisioning EC2 instances or modifying security group rules."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：错误。 AWS Trusted Advisor 提供优化建议，包括安全性、成本和性能，但它不是专门为审计和配置跟踪而设计的工具。虽然安全仪表板可以提供一些安全建议，但它无法直接跟踪资源配置更改。",
+          "en": "Incorrect. Technical reason: Error. AWS Trusted Advisor provides optimization recommendations, including security, cost, and performance, but it is not a tool specifically designed for auditing and configuration tracking. While the security dashboard can provide some security recommendations, it cannot directly track resource configuration changes."
+        },
+        "D": {
+          "zh": "正確。技术原因：正确。 AWS Config 是一项配置管理服务，可跟踪资源配置的历史记录并创建规则以确保合规性。它可以帮助公司控制资源分配的变化，并确保遵守既定的变更控制流程。",
+          "en": "Correct. Technical reason: Correct. AWS Config is a configuration management service that tracks the history of resource configurations and creates rules to ensure compliance. It can help companies control changes in resource allocation and ensure compliance with established change control flows."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：错误。虽然AWS CloudFormation可以用于资源配置管理，但它主要用于部署和恢复资源，而不是实时跟踪和审核配置更改。该选项无法解决用户随意修改安全组规则的问题。",
+          "en": "Incorrect. Technical reason: Error. Although AWS CloudFormation can be used for resource configuration management, it is mainly used for deploying and restoring resources, not tracking and auditing configuration changes in real time. This option cannot solve the problem of users modifying security group rules at will."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 启用 AWS CloudTrail 并将其用于审核。；D. 启用 AWS Config 并创建用于审核和合规性目的的规则。",
+        "en": "A. Enable AWS CloudTrail and use it for auditing.; D. Enable AWS Config and create rules for auditing and compliance purposes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：AD (92%) 8%。热门讨论与考点摘要：正确。 AWS CloudTrail 是一种日志记录服务，可跟踪用户活动和 API 调用，适用于审核和更改跟踪。它可以记录用户对AWS资源的操作，帮助企业了解谁在做什么。；正确。 AWS Config 是一项配置管理服务，可跟踪资源配置的历史记录并创建规则以确保合规性。它可以帮助公司控制资源分配的变化，并确保遵守既定的变更控制流程。",
+        "en": "Community vote as displayed: AD (92%) 8%. Popular discussion and key point summary: Correct. AWS CloudTrail is a logging service that tracks user activity and API calls, suitable for auditing and change tracking. It can record user operations on AWS resources and help companies understand who is doing what.; Correct. AWS Config is a configuration management service that tracks the history of resource configurations and creates rules to ensure compliance. It can help companies control changes in resource allocation and ensure compliance with established change control flows."
+      }
+    },
+    {
+      "question_no": 319,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 云中拥有数百个基于 Linux 的 Amazon EC2 实例。系统管理员使用共享 SSH 密钥来管理实例。经过最近的审计后，该公司的安全团队要求删除所有共享密钥。解决方案架构师必须设计一个能够提供对 EC2 实例的安全访问的解决方案。哪种解决方案能够以最少的管理开销满足此要求？",
+        "en": "A company has hundreds of Amazon EC2 Linux-based instances in the AWS Cloud. Systems administrators have used shared SSH keys to manage the instances. After a recent audit, the company’s security team is mandating the removal of all shared keys. A solutions architect must design a solution that provides secure access to the EC2 instances. Which solution will meet this requirement with the LEAST amount of administrative overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Systems Manager 会话管理器连接到 EC2 实例。",
+          "en": "Use AWS Systems Manager Session Manager to connect to the EC2 instances."
+        },
+        "B": {
+          "zh": "使用 AWS Security Token Service (AWS STS) 按需生成一次性 SSH 密钥。",
+          "en": "Use AWS Security Token Service (AWS STS) to generate one-time SSH keys on demand."
+        },
+        "C": {
+          "zh": "允许对一组堡垒实例进行共享 SSH 访问。将所有其他实例配置为仅允许来自堡垒实例的 SSH 访问。",
+          "en": "Allow shared SSH access to a set of bastion instances. Configure all other instances to allow only SSH access from the bastion instances."
+        },
+        "D": {
+          "zh": "使用 Amazon Cognito 自定义授权方对用户进行身份验证。调用 AWS Lambda 函数来生成临时 SSH 密钥。",
+          "en": "Use an Amazon Cognito custom authorizer to authenticate users. Invoke an AWS Lambda function to generate a temporary SSH key."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Systems Manager 会话管理器是一种无需使用 SSH 密钥或打开端口即可安全连接到 EC2 实例的无代理方式。它提供最小的管理开销，因为无需保护密钥或配置额外的安全设置。",
+          "en": "Correct. Technical reason: AWS Systems Manager Session Manager is an agentless way to securely connect to EC2 instances without using SSH keys or opening ports. It provides minimal management overhead because there is no need to protect keys or configure additional security settings."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS STS 主要用于生成访问 AWS 资源的临时凭证，并不是专门为生成一次性 SSH 密钥而设计的。此选项需要额外的开发工作来生成和分发 SSH 密钥，从而增加了管理开销。",
+          "en": "Incorrect. Technical reason: AWS STS is primarily used to generate temporary credentials to access AWS resources and is not specifically designed to generate one-time SSH keys. This option requires additional development work to generate and distribute SSH keys, adding administrative overhead."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：虽然使用堡垒主机是安全访问的常见方法，但它仍然依赖于共享 SSH 密钥，违反了问题要求。此外，保护堡垒主机和管理访问会增加管理开销。",
+          "en": "Incorrect. Technical reason: While using a bastion host is a common method of secure access, it still relies on shared SSH keys, violating the question requirements. Additionally, guarding bastion hosts and administrative access increases administrative overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：此选项涉及复杂的自定义开发工作，包括设置 Cognito、Lambda 函数和 SSH 密钥生成逻辑。这种方式管理开销较高，不满足“管理开销最小”的要求。",
+          "en": "Incorrect. Technical reason: This option involves complex custom development work, including setting up Cognito, Lambda functions, and SSH key generation logic. This method has high management overhead and does not meet the requirement of \"minimum management overhead\"."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Systems Manager 会话管理器连接到 EC2 实例。",
+        "en": "A. Use AWS Systems Manager Session Manager to connect to the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (85%) Other。热门讨论与考点摘要：AWS Systems Manager 会话管理器是一种无需使用 SSH 密钥或打开端口即可安全连接到 EC2 实例的无代理方式。它提供最小的管理开销，因为无需保护密钥或配置额外的安全设置。",
+        "en": "Community vote as displayed: A (85%) Other. Popular discussion and key point summary: AWS Systems Manager Session Manager is an agentless way to securely connect to EC2 instances without using SSH keys or opening ports. It provides minimal management overhead because there is no need to protect keys or configure additional security settings."
+      }
+    },
+    {
+      "question_no": 320,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在使用一组 Amazon EC2 实例从本地数据源提取数据。数据采用 JSON 格式，摄取速率可高达 1 MB/s。当 EC2 实例重新启动时，传输中的数据将丢失。该公司的数据科学团队希望近乎实时地查询获取的数据。哪种解决方案提供可扩展且数据丢失最少的近实时数据查询？",
+        "en": "A company is using a fleet of Amazon EC2 instances to ingest data from on-premises data sources. The data is in JSON format and ingestion rates can be as high as 1 MB/s. When an EC2 instance is rebooted, the data in-flight is lost. The company’s data science team wants to query ingested data in near-real time. Which solution provides near-real-time data querying that is scalable with minimal data loss?"
+      },
+      "options": {
+        "A": {
+          "zh": "将数据发布到 Amazon Kinesis Data Streams，使用 Kinesis Data Analytics 查询数据。",
+          "en": "Publish data to Amazon Kinesis Data Streams, Use Kinesis Data Analytics to query the data."
+        },
+        "B": {
+          "zh": "将数据发布到 Amazon Kinesis Data Firehose，并以 Amazon Redshift 作为目标。使用 Amazon Redshift 查询数据。",
+          "en": "Publish data to Amazon Kinesis Data Firehose with Amazon Redshift as the destination. Use Amazon Redshift to query the data."
+        },
+        "C": {
+          "zh": "将摄取的数据存储在 EC2 实例存储中。将数据发布到 Amazon Kinesis Data Firehose，并以 Amazon S3 作为目标。使用 Amazon Athena 查询数据。",
+          "en": "Store ingested data in an EC2 instance store. Publish data to Amazon Kinesis Data Firehose with Amazon S3 as the destination. Use Amazon Athena to query the data."
+        },
+        "D": {
+          "zh": "将摄取的数据存储在 Amazon Elastic Block Store (Amazon EBS) 卷中。将数据发布到 Amazon ElastiCache for Redis。订阅Redis频道来查询数据。",
+          "en": "Store ingested data in an Amazon Elastic Block Store (Amazon EBS) volume. Publish data to Amazon ElastiCache for Redis. Subscribe to the Redis channel to query the data."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon Kinesis Data Streams 是一项专为实时数据流处理而设计的服务，能够处理高吞吐量的数据流。正确：Kinesis Data Analytics 可以直接查询流数据，支持近实时的数据分析。正确：Kinesis Data Streams 提供数据持久化以避免数据丢失，即使 EC2 实例重新启动，数据流也不会受到影响。",
+          "en": "Correct. Technical reason: Amazon Kinesis Data Streams is a service specifically designed for real-time data stream processing, capable of handling high-throughput data streams. Correct: Kinesis Data Analytics can query streaming data directly, supporting near-real-time data analysis. Correct: Kinesis Data Streams provides data persistence to avoid data loss, even if the EC2 instance is restarted, the data flow will not be affected."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Kinesis Data Firehose 是数据流的批量传输服务，无法提供近实时的查询功能。错误：Amazon Redshift 是一种数据仓库服务，适合批量查询而不是实时查询。",
+          "en": "Incorrect. Technical reason: Kinesis Data Firehose is a batch transmission service for data streams and cannot provide near-real-time query capabilities. Error: Amazon Redshift is a data warehouse service and is suitable for batch queries rather than real-time queries."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：EC2实例存储是临时存储，实例重启时数据会丢失，因此不适合持久化数据。错误：Kinesis Data Firehose 和 Amazon S3 的组合适合批量数据存储，但不支持近实时查询。错误：Amazon Athena 是基于 S3 的查询服务，适合批量查询而不是实时查询。",
+          "en": "Incorrect. Technical reason: EC2 instance storage is temporary storage, and data will be lost when the instance is restarted, so it is not suitable for persistent data. Error: The combination of Kinesis Data Firehose and Amazon S3 is suitable for batch data storage, but does not support near real-time querying. Error: Amazon Athena is an S3-based query service, suitable for batch queries rather than real-time queries."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：EBS卷是块存储服务，适合持久化数据，但不适合实时数据流处理。错误：ElastiCache for Redis 适合缓存数据，但不支持复杂的实时查询功能。",
+          "en": "Incorrect. Technical reason: EBS volumes are block storage services, suitable for persistent data, but not suitable for real-time data stream processing. Error: ElastiCache for Redis is suitable for caching data, but does not support complex real-time query functions."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将数据发布到 Amazon Kinesis Data Streams，使用 Kinesis Data Analytics 查询数据。",
+        "en": "A. Publish data to Amazon Kinesis Data Streams, Use Kinesis Data Analytics to query the data."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (71%) B (29%)。热门讨论与考点摘要：Amazon Kinesis Data Streams 是一项专为实时数据流处理而设计的服务，能够处理高吞吐量的数据流。正确：Kinesis Data Analytics 可以直接查询流数据，支持近实时的数据分析。正确：Kinesis Data Streams 提供数据持久化以避免数据丢失，即使 EC2 实例重新启动，数据流也不会受到影响。",
+        "en": "Community vote as displayed: A (71%) B (29%). Popular discussion and key point summary: Amazon Kinesis Data Streams is a service specifically designed for real-time data stream processing, capable of handling high-throughput data streams. Correct: Kinesis Data Analytics can query streaming data directly, supporting near-real-time data analysis. Correct: Kinesis Data Streams provides data persistence to avoid data loss, even if the EC2 instance is restarted, the data flow will not be affected."
+      }
+    },
+    {
+      "question_no": 321,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师应该如何确保上传到 Amazon S3 存储桶的所有对象都经过加密？",
+        "en": "What should a solutions architect do to ensure that all objects uploaded to an Amazon S3 bucket are encrypted?"
+      },
+      "options": {
+        "A": {
+          "zh": "如果 PutObject 没有 s3:x-amz-acl 标头集，则更新存储桶策略以拒绝。",
+          "en": "Update the bucket policy to deny if the PutObject does not have an s3:x-amz-acl header set."
+        },
+        "B": {
+          "zh": "如果 PutObject 没有将 s3:x-amz-acl 标头设置为私有，则更新存储桶策略以拒绝。",
+          "en": "Update the bucket policy to deny if the PutObject does not have an s3:x-amz-acl header set to private."
+        },
+        "C": {
+          "zh": "如果 PutObject 没有将 aws:SecureTransport 标头设置为 true，则更新存储桶策略以拒绝。",
+          "en": "Update the bucket policy to deny if the PutObject does not have an aws:SecureTransport header set to true."
+        },
+        "D": {
+          "zh": "如果 PutObject 没有设置 x-amz-server-side-encryption 标头，则更新存储桶策略以拒绝。",
+          "en": "Update the bucket policy to deny if the PutObject does not have an x-amz-server-side-encryption header set."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：s3:x-amz-acl 标头用于设置对象的访问控制列表 (ACL)，与加密无关。",
+          "en": "Incorrect. Technical reason: The s3:x-amz-acl header is used to set the access control list (ACL) of the object and has nothing to do with encryption."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然将 ACL 设置为私有可以限制访问，但它与确保对象加密无关。",
+          "en": "Incorrect. Technical reason: Although setting an ACL to private can restrict access, it has nothing to do with ensuring object encryption."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：aws:SecureTransport 标头用于确保数据通过 HTTPS 传输，与对象加密无关。",
+          "en": "Incorrect. Technical reason: The aws:SecureTransport header is used to ensure data is transmitted over HTTPS and has nothing to do with object encryption."
+        },
+        "D": {
+          "zh": "正確。技术原因：x-amz-server-side-加密头用于指定上传对象时服务器端的加密方式，满足问题的要求。",
+          "en": "Correct. Technical reason: The x-amz-server-side-encryption header is used to specify the server-side encryption method when uploading objects, which meets the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 如果 PutObject 没有设置 x-amz-server-side-encryption 标头，则更新存储桶策略以拒绝。",
+        "en": "D. Update the bucket policy to deny if the PutObject does not have an x-amz-server-side-encryption header set."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：x-amz-server-side-加密头用于指定上传对象时服务器端的加密方式，满足问题的要求。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The x-amz-server-side-encryption header is used to specify the server-side encryption method when uploading objects, which meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 322,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在为公司设计多层应用程序。该应用程序的用户从移动设备上传图像。该应用程序生成每个图像的缩略图并向用户返回一条消息以确认图像已成功上传。缩略图生成可能需要长达 60 秒的时间，但该公司希望向用户提供更快的响应时间，以通知他们已收到原始图像。解决方案架构师必须设计应用程序以将请求异步分派到不同的应用程序层。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A solutions architect is designing a multi-tier application for a company. The application's users upload images from a mobile device. The application generates a thumbnail of each image and returns a message to the user to confirm that the image was uploaded successfully. The thumbnail generation can take up to 60 seconds, but the company wants to provide a faster response time to its users to notify them that the original image was received. The solutions architect must design the application to asynchronously dispatch requests to the different application tiers. What should the solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "编写自定义 AWS Lambda 函数来生成缩略图并提醒用户。使用图像上传过程作为事件源来调用 Lambda 函数。",
+          "en": "Write a custom AWS Lambda function to generate the thumbnail and alert the user. Use the image upload process as an event source to invoke the Lambda function."
+        },
+        "B": {
+          "zh": "创建 AWS Step Functions 工作流程。配置 Step Functions 以处理应用程序层之间的编排，并在缩略图生成完成时提醒用户。",
+          "en": "Create an AWS Step Functions workflow. Configure Step Functions to handle the orchestration between the application tiers and alert the user when thumbnail generation is complete."
+        },
+        "C": {
+          "zh": "创建 Amazon Simple Queue Service (Amazon SQS) 消息队列。上传图像时，将一条消息放置在 SQS 队列上以生成缩略图。通过应用程序消息提醒用户已收到图像。",
+          "en": "Create an Amazon Simple Queue Service (Amazon SQS) message queue. As images are uploaded, place a message on the SQS queue for thumbnail generation. Alert the user through an application message that the image was received."
+        },
+        "D": {
+          "zh": "创建 Amazon Simple Notification Service (Amazon SNS) 通知主题和订阅。使用应用程序的一项订阅可在图像上传完成后生成缩略图。缩略图生成完成后，使用第二个订阅通过推送通知的方式向用户的移动应用程序发送消息。",
+          "en": "Create Amazon Simple Notification Service (Amazon SNS) notification topics and subscriptions. Use one subscription with the application to generate the thumbnail after the image upload is complete. Use a second subscription to message the user's mobile app by way of a push notification after thumbnail generation is complete."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：Lambda函数可以处理缩略图生成，但是是同步触发的，无法实现异步处理。用户需要快速确认上传是否成功。 Lambda函数的执行时间可能较长（长达60秒），无法满足快速响应的需求。该选项没有提到如何异步处理请求，因此不符合问题的要求。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: The Lambda function can handle thumbnail map generation, but it is triggered synchronously and cannot implement asynchronous processing. Users need to quickly confirm that the upload is successful. The execution time of the Lambda function may be long (up to 60 seconds), which cannot meet the demand for quick response. This option does not mention how to handle requests asynchronously, so it does not meet the requirements of the question. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：AWS Step Functions适合复杂的工作流程编排，但问题需要异步处理，而不是复杂的工作流程管理。 Step Functions 的设计更适合需要多个步骤的任务。由于本题要求比较简单，使用Step Functions可能会过于复杂。该选项没有提到如何快速响应用户上传成功的消息，因此不符合问题要求。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: AWS Step Functions is suitable for complex workflow orchestration, but the question requires asynchronous processing, not complex workflow management. The design of Step Functions is more suitable for tasks that require multiple steps. Since the requirements of this question are relatively simple, using Step Functions may be too complicated. This option does not mention how to quickly respond to the user's successful upload message, so it does not meet the question requirements. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "正確。技术原因：分析：Amazon SQS 是一种完全托管的消息队列服务，适合异步处理任务。将上传的图片信息放入SQS队列后，可以立即向用户发送确认消息，满足快速响应的需求。异步处理缩略图生成任务，满足题目要求。结论：正确。",
+          "en": "Correct. Technical reason: Analysis: Amazon SQS is a fully managed message queue service suitable for asynchronous processing tasks. After putting the uploaded image information into the SQS queue, a confirmation message can be sent to the user immediately to meet the need for quick response. Asynchronous processing of thumbnail diagram generation tasks meets the requirements of the question. Conclusion: Correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：Amazon SNS适合发布/订阅模型，但问题需要异步处理，而不是通知机制。该选项没有提到如何快速响应用户上传成功的消息，因此不符合问题要求。使用SNS生成缩略图的逻辑不够清晰，不满足问题所要求的异步处理架构设计。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon SNS is suitable for the publish/subscribe model, but the question requires asynchronous processing, not a notification mechanism. This option does not mention how to quickly respond to the user's successful upload message, so it does not meet the question requirements. The logic of using SNS to generate thumbnails is not clear enough and does not meet the asynchronous processing architecture design required by the question. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建 Amazon Simple Queue Service (Amazon SQS) 消息队列。上传图像时，将一条消息放置在 SQS 队列上以生成缩略图。通过应用程序消息提醒用户已收到图像。",
+        "en": "C. Create an Amazon Simple Queue Service (Amazon SQS) message queue. As images are uploaded, place a message on the SQS queue for thumbnail generation. Alert the user through an application message that the image was received."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (94%) 6%。热门讨论与考点摘要：分析：Amazon SQS 是一种完全托管的消息队列服务，适合异步处理任务。将上传的图片信息放入SQS队列后，可以立即向用户发送确认消息，满足快速响应的需求。异步处理缩略图生成任务，满足题目要求。结论：正确。",
+        "en": "Community vote as displayed: C (94%) 6%. Popular discussion and key point summary: Analysis: Amazon SQS is a fully managed message queue service suitable for asynchronous processing tasks. After putting the uploaded image information into the SQS queue, a confirmation message can be sent to the user immediately to meet the need for quick response. Asynchronous processing of thumbnail diagram generation tasks meets the requirements of the question. Conclusion: Correct."
+      }
+    },
+    {
+      "question_no": 323,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司的设施在整个建筑的每个入口处都有徽章阅读器。扫描徽章后，阅读器会通过 HTTPS 发送一条消息，指示谁试图访问该特定入口。解决方案架构师必须设计一个系统来处理来自传感器的这些消息。该解决方案必须具有高可用性，并且结果必须可供公司的安全团队进行分析。解决方案架构师应该推荐哪种系统架构？",
+        "en": "A company’s facility has badge readers at every entrance throughout the building. When badges are scanned, the readers send a message over HTTPS to indicate who attempted to access that particular entrance. A solutions architect must design a system to process these messages from the sensors. The solution must be highly available, and the results must be made available for the company’s security team to analyze. Which system architecture should the solutions architect recommend?"
+      },
+      "options": {
+        "A": {
+          "zh": "启动 Amazon EC2 实例作为 HTTPS 终端节点并处理消息。配置 EC2 实例以将结果保存到 Amazon S3 存储桶。",
+          "en": "Launch an Amazon EC2 instance to serve as the HTTPS endpoint and to process the messages. Configure the EC2 instance to save the results to an Amazon S3 bucket."
+        },
+        "B": {
+          "zh": "在 Amazon API Gateway 中创建 HTTPS 终端节点。配置 API Gateway 终端节点以调用 AWS Lambda 函数来处理消息并将结果保存到 Amazon DynamoDB 表。",
+          "en": "Create an HTTPS endpoint in Amazon API Gateway. Configure the API Gateway endpoint to invoke an AWS Lambda function to process the messages and save the results to an Amazon DynamoDB table."
+        },
+        "C": {
+          "zh": "使用 Amazon Route 53 将传入传感器消息定向到 AWS Lambda 函数。配置 Lambda 函数来处理消息并将结果保存到 Amazon DynamoDB 表。",
+          "en": "Use Amazon Route 53 to direct incoming sensor messages to an AWS Lambda function. Configure the Lambda function to process the messages and save the results to an Amazon DynamoDB table."
+        },
+        "D": {
+          "zh": "为 Amazon S3 创建网关 VPC 终端节点。配置从设施网络到 VPC 的 Site-to-Site VPN 连接，以便传感器数据可以通过 VPC 终端节点直接写入 S3 存储桶。",
+          "en": "Create a gateway VPC endpoint for Amazon S3. Configure a Site-to-Site VPN connection from the facility network to the VPC so that sensor data can be written directly to an S3 bucket by way of the VPC endpoint."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：EC2实例需要人工管理，可能成为单点故障，无法满足高可用性要求。错误：虽然 S3 可以存储数据，但 EC2 实例的处理能力有限，并且不遵循无服务器架构的最佳实践。",
+          "en": "Incorrect. Technical reason: EC2 instances require manual management and may become single points of failure and cannot meet high availability requirements. Error: While S3 can store data, EC2 instances have limited processing capabilities and do not adhere to best practices for serverless architecture."
+        },
+        "B": {
+          "zh": "正確。技术原因：API Gateway 提供高可用的 HTTPS 端点，Lambda 函数是无服务器的、自动扩展的，适合处理消息。正确：DynamoDB 是一种高度可用的数据库服务，适合存储结构化数据以供后续分析。正确：这个架构完全满足高可用、无服务器架构的要求。",
+          "en": "Correct. Technical reason: API Gateway provides highly available HTTPS endpoints, and Lambda functions are serverless, auto-scaling, and suitable for processing messages. Correct: DynamoDB is a highly available database service suitable for storing structured data for subsequent analysis. Correct: This architecture fully meets the requirements for high availability and serverless architecture."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Route 53 是 DNS 服务，不适合直接处理 HTTPS 请求。错误：Route 53 无法充当 HTTPS 终端节点，无法满足问题要求。",
+          "en": "Incorrect. Technical reason: Route 53 is a DNS service and is not suitable for handling HTTPS requests directly. Error: Route 53 cannot serve as an HTTPS endpoint and cannot meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该选项没有提及如何处理消息。它只是将数据写入S3，不符合问题的要求。错误：VPN 连接增加了复杂性，并且与无服务器架构的最佳实践不一致。",
+          "en": "Incorrect. Technical reason: This option does not mention how to process the message. It just writes the data to S3, which does not meet the requirements of the question. Error: VPN connections add complexity and are inconsistent with best practices for serverless architecture."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 在 Amazon API Gateway 中创建 HTTPS 终端节点。配置 API Gateway 终端节点以调用 AWS Lambda 函数来处理消息并将结果保存到 Amazon DynamoDB 表。",
+        "en": "B. Create an HTTPS endpoint in Amazon API Gateway. Configure the API Gateway endpoint to invoke an AWS Lambda function to process the messages and save the results to an Amazon DynamoDB table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：API Gateway 提供高可用的 HTTPS 端点，Lambda 函数是无服务器的、自动扩展的，适合处理消息。正确：DynamoDB 是一种高度可用的数据库服务，适合存储结构化数据以供后续分析。正确：这个架构完全满足高可用、无服务器架构的要求。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: API Gateway provides highly available HTTPS endpoints, and Lambda functions are serverless, auto-scaling, and suitable for processing messages. Correct: DynamoDB is a highly available database service suitable for storing structured data for subsequent analysis. Correct: This architecture fully meets the requirements for high availability and serverless architecture."
+      }
+    },
+    {
+      "question_no": 324,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司希望为其主要本地文件存储卷实施灾难恢复计划。文件存储卷是从本地存储服务器上的 Internet 小型计算机系统接口 (iSCSI) 设备安装的。文件存储卷可容纳数百太字节 (TB) 的数据。该公司希望确保最终用户能够从本地系统立即访问所有文件类型，而不会遇到延迟。哪种解决方案能够满足这些要求，并且对公司现有基础设施的改动最少？",
+        "en": "A company wants to implement a disaster recovery plan for its primary on-premises file storage volume. The file storage volume is mounted from an Internet Small Computer Systems Interface (iSCSI) device on a local storage server. The file storage volume holds hundreds of terabytes (TB) of data. The company wants to ensure that end users retain immediate access to all file types from the on-premises systems without experiencing latency. Which solution will meet these requirements with the LEAST amount of change to the company's existing infrastructure?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 Amazon S3 文件网关配置为本地托管的虚拟机 (VM)。将本地缓存设置为 10 TB。修改现有应用程序以通过 NFS 协议访问文件。要从灾难中恢复，请预置 Amazon EC2 实例并挂载包含文件的 S3 存储桶。",
+          "en": "Provision an Amazon S3 File Gateway as a virtual machine (VM) that is hosted on premises. Set the local cache to 10 TB. Modify existing applications to access the files through the NFS protocol. To recover from a disaster, provision an Amazon EC2 instance and mount the S3 bucket that contains the files."
+        },
+        "B": {
+          "zh": "预置 AWS Storage Gateway 磁带网关。使用数据备份解决方案将所有现有数据备份到虚拟磁带库。将数据备份解决方案配置为在初始备份完成后每晚运行。要从灾难中恢复，请预置 Amazon EC2 实例并将数据从虚拟磁带库中的卷恢复到 Amazon Elastic Block Store (Amazon EBS) 卷。",
+          "en": "Provision an AWS Storage Gateway tape gateway. Use a data backup solution to back up all existing data to a virtual tape library. Configure the data backup solution to run nightly after the initial backup is complete. To recover from a disaster, provision an Amazon EC2 instance and restore the data to an Amazon Elastic Block Store (Amazon EBS) volume from the volumes in the virtual tape library."
+        },
+        "C": {
+          "zh": "预置 AWS Storage Gateway 卷网关缓存卷。将本地缓存设置为 10 TB。使用iSCSI将卷网关缓存卷挂载到现有文件服务器，并将所有文件复制到存储卷。配置存储卷的计划快照。要从灾难中恢复，请将快照恢复到 Amazon Elastic Block Store (Amazon EBS) 卷，并将 EBS 卷附加到 Amazon EC2 实例。",
+          "en": "Provision an AWS Storage Gateway Volume Gateway cached volume. Set the local cache to 10 TB. Mount the Volume Gateway cached volume to the existing file server by using iSCSI, and copy all files to the storage volume. Configure scheduled snapshots of the storage volume. To recover from a disaster, restore a snapshot to an Amazon Elastic Block Store (Amazon EBS) volume and attach the EBS volume to an Amazon EC2 instance."
+        },
+        "D": {
+          "zh": "配置一个 AWS Storage Gateway Volume Gateway 存储卷，其磁盘空间量与现有文件存储卷相同。使用iSCSI将卷网关存储卷挂载到现有文件服务器，并将所有文件复制到存储卷。配置存储卷的计划快照。要从灾难中恢复，请将快照恢复到 Amazon Elastic Block Store (Amazon EBS) 卷，并将 EBS 卷附加到 Amazon EC2 实例。",
+          "en": "Provision an AWS Storage Gateway Volume Gateway stored volume with the same amount of disk space as the existing file storage volume. Mount the Volume Gateway stored volume to the existing file server by using iSCSI, and copy all files to the storage volume. Configure scheduled snapshots of the storage volume. To recover from a disaster, restore a snapshot to an Amazon Elastic Block Store (Amazon EBS) volume and attach the EBS volume to an Amazon EC2 instance."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：现有的应用程序需要修改为通过NFS协议访问文件，这将导致现有基础设施发生重大变化，并且不满足问题所要求的“最小变化”。",
+          "en": "Incorrect. Technical reason: Existing applications need to be modified to access files through the NFS protocol, which will cause major changes to the existing infrastructure and does not meet the \"minimum changes\" required by the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：磁带网关不适合实时文件访问场景。用户无法直接访问文件，恢复过程可能会导致较高的延迟。它不符合问题的“立即访问”要求。",
+          "en": "Incorrect. Technical reason: Tape Gateway is not suitable for real-time file access scenarios. Users cannot directly access files, and the recovery process may cause high delays. It does not meet the \"immediate access\" requirement of the question."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：由于数据主要存储在云，用户访问文件时可能会受到网络延迟的影响，不符合问题中“无延迟访问”的要求。",
+          "en": "Incorrect. Technical reason: Since data is mainly stored in the cloud, users may be affected by network delays when accessing files, which does not meet the \"delay-free access\" requirement of the question."
+        },
+        "D": {
+          "zh": "正確。技术原因：用户无需修改现有应用即可立即访问所有文件，容灾过程简单高效，满足题主“最少改动”和“无延迟访问”的要求。",
+          "en": "Correct. Technical reason: Users can access all files immediately without modifying existing applications, and the disaster recovery process is simple and efficient, meeting the \"minimum changes\" and \"no delay access\" requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 配置一个 AWS Storage Gateway Volume Gateway 存储卷，其磁盘空间量与现有文件存储卷相同。使用iSCSI将卷网关存储卷挂载到现有文件服务器，并将所有文件复制到存储卷。配置存储卷的计划快照。要从灾难中恢复，请将快照恢复到 Amazon Elastic Block Store (Amazon EBS) 卷，并将 EBS 卷附加到 Amazon EC2 实例。",
+        "en": "D. Provision an AWS Storage Gateway Volume Gateway stored volume with the same amount of disk space as the existing file storage volume. Mount the Volume Gateway stored volume to the existing file server by using iSCSI, and copy all files to the storage volume. Configure scheduled snapshots of the storage volume. To recover from a disaster, restore a snapshot to an Amazon Elastic Block Store (Amazon EBS) volume and attach the EBS volume to an Amazon EC2 instance."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (83%) C (17%)。热门讨论与考点摘要：用户无需修改现有应用即可立即访问所有文件，容灾过程简单高效，满足题主“最少改动”和“无延迟访问”的要求。",
+        "en": "Community vote as displayed: D (83%) C (17%). Popular discussion and key point summary: Users can access all files immediately without modifying existing applications, and the disaster recovery process is simple and efficient, meeting the \"minimum changes\" and \"no delay access\" requirements of the question."
+      }
+    },
+    {
+      "question_no": 325,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在托管 Amazon S3 存储桶中的 Web 应用程序。该应用程序使用 Amazon Cognito 作为身份提供商来对用户进行身份验证并返回 JSON Web 令牌 (JWT)，该令牌提供对存储在另一个 S3 存储桶中的受保护资源的访问权限。部署应用程序后，用户报告错误并且无法访问受保护的内容。解决方案架构师必须通过提供适当的权限来解决此问题，以便用户可以访问受保护的内容。哪种解决方案满足这些要求？",
+        "en": "A company is hosting a web application from an Amazon S3 bucket. The application uses Amazon Cognito as an identity provider to authenticate users and return a JSON Web Token (JWT) that provides access to protected resources that are stored in another S3 bucket. Upon deployment of the application, users report errors and are unable to access the protected content. A solutions architect must resolve this issue by providing proper permissions so that users can access the protected content. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "更新 Amazon Cognito 身份池以承担适当的 IAM 角色来访问受保护的内容。",
+          "en": "Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content."
+        },
+        "B": {
+          "zh": "更新 S3 ACL 以允许应用程序访问受保护的内容。",
+          "en": "Update the S3 ACL to allow the application to access the protected content."
+        },
+        "C": {
+          "zh": "将应用程序重新部署到 Amazon S3，以防止 S3 存储桶中的最终一致性读取影响用户访问受保护内容的能力。",
+          "en": "Redeploy the application to Amazon S3 to prevent eventually consistent reads in the S3 bucket from affecting the ability of users to access the protected content."
+        },
+        "D": {
+          "zh": "更新 Amazon Cognito 池以使用身份池中的自定义属性映射，并授予用户访问受保护内容的适当权限。",
+          "en": "Update the Amazon Cognito pool to use custom attribute mappings within the identity pool and grant users the proper permissions to access the protected content."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon Cognito 身份池可以配置 IAM 角色，以允许用户通过身份池访问受保护的资源。修复：通过更新身份池配置，确保用户拥有正确的 IAM 角色权限来访问受保护的 S3 内容。",
+          "en": "Correct. Technical reason: Amazon Cognito identity pools can be configured with IAM roles to allow users to gain access to protected resources through the identity pool. Fix: Ensure users have the correct IAM role permissions to access protected S3 content by updating the identity pool configuration."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：S3 ACL主要用于设置对象级别的权限，但问题提到用户通过Amazon Cognito进行身份验证和访问资源，而不是直接通过应用程序访问资源。没有解决问题：ACL没有解决用户无法通过身份池获取权限的问题。",
+          "en": "Incorrect. Technical reason: S3 ACL is mainly used to set object-level permissions, but the question mentions that users authenticate and access resources through Amazon Cognito, rather than accessing resources directly through the application. Does not solve the problem: ACL does not solve the problem of users not being able to obtain permissions through the identity pool."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：S3的最终一致性读取与用户权限问题无关。问题中提到的问题是用户无法访问受保护的资源，而不是数据读取的一致性问题。无法解决问题：重新部署应用程序无法解决权限配置问题。",
+          "en": "Incorrect. Technical reason: S3's eventually consistent reads have nothing to do with user permissions issues. The problem mentioned in the question is that users cannot access protected resources, rather than data read consistency issues. Does not resolve the issue: Redeploying the application does not resolve the permission configuration issue."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该问题没有提到需要使用自定义属性映射。解决问题的关键是更新身份池的IAM角色配置，而不是自定义属性映射。不能解决问题：自定义属性映射与用户权限问题无关。",
+          "en": "Incorrect. Technical reason: The question does not mention the need to use custom attribute mapping. The key to solving the problem is to update the IAM role configuration of the identity pool, not the custom attribute mapping. Doesn't solve the problem: Custom attribute mapping has nothing to do with user permissions issues."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 更新 Amazon Cognito 身份池以承担适当的 IAM 角色来访问受保护的内容。",
+        "en": "A. Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (95%) 5%。热门讨论与考点摘要：Amazon Cognito 身份池可以配置 IAM 角色，以允许用户通过身份池访问受保护的资源。修复：通过更新身份池配置，确保用户拥有正确的 IAM 角色权限来访问受保护的 S3 内容。",
+        "en": "Community vote as displayed: A (95%) 5%. Popular discussion and key point summary: Amazon Cognito identity pools can be configured with IAM roles to allow users to gain access to protected resources through the identity pool. Fix: Ensure users have the correct IAM role permissions to access protected S3 content by updating the identity pool configuration."
+      }
+    },
+    {
+      "question_no": 326,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家图像托管公司将其大量资产上传到 Amazon S3 标准存储桶。该公司通过使用 S3 API 并行进行分段上传，如果再次上传相同的对象，则会进行覆盖。上传后的前 30 天内，对象将被频繁访问。 30 天后，对象的使用频率将降低，但每个对象的访问模式将不一致。该公司必须优化其 S3 存储成本，同时保持存储资产的高可用性和弹性。解决方案架构师应该推荐哪种操作组合来满足这些要求？ （选择两个。）",
+        "en": "An image hosting company uploads its large assets to Amazon S3 Standard buckets. The company uses multipart upload in parallel by using S3 APIs and overwrites if the same object is uploaded again. For the first 30 days after upload, the objects will be accessed frequently. The objects will be used less frequently after 30 days, but the access patterns for each object will be inconsistent. The company must optimize its S3 storage costs while maintaining high availability and resiliency of stored assets. Which combination of actions should a solutions architect recommend to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "30 天后将资产移至 S3 智能分层。",
+          "en": "Move assets to S3 Intelligent-Tiering after 30 days."
+        },
+        "B": {
+          "zh": "配置 S3 生命周期策略以清理不完整的分段上传。",
+          "en": "Configure an S3 Lifecycle policy to clean up incomplete multipart uploads."
+        },
+        "C": {
+          "zh": "配置 S3 生命周期策略以清除过期的对象删除标记。",
+          "en": "Configure an S3 Lifecycle policy to clean up expired object delete markers."
+        },
+        "D": {
+          "zh": "30 天后将资产移至 S3 标准-不频繁访问 (S3 标准-IA)。",
+          "en": "Move assets to S3 Standard-Infrequent Access (S3 Standard-IA) after 30 days."
+        },
+        "E": {
+          "zh": "30 天后将资产移至 S3 One Zone-Infrequent Access (S3 One Zone-IA)。",
+          "en": "Move assets to S3 One Zone-Infrequent Access (S3 One Zone-IA) after 30 days."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：S3智能分层是一种自动优化存储成本的存储类，适用于访问模式不一致的场景。它根据访问频率自动将对象移动到适当的存储层，无需人工干预。建议使用S3智能分层，因为问题提到30天后对象的访问模式会变得不一致。",
+          "en": "Correct. Technical reason: S3 Intelligent-Tiering is a storage class that automatically optimizes storage costs and is suitable for scenarios with inconsistent access patterns. It automatically moves objects to the appropriate storage tier based on access frequency without manual intervention. It is recommended to use S3 Intelligent-Tiering because the question mentions that the access pattern of objects becomes inconsistent after 30 days."
+        },
+        "B": {
+          "zh": "正確。技术原因：不完整的桶上传会占用存储空间。配置生命周期策略来管理这些上传可以优化存储成本。这是最佳实践，特别是对于使用并行分桶上传的场景。",
+          "en": "Correct. Technical reason: Incomplete bucket uploads will occupy storage space. Configuring lifecycle strategies to manage these uploads can optimize storage costs. This is a best practice, especially for scenarios where parallel bucketed uploads are used."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该问题没有提及标本控制或标记边界场景的删除，因此该选项与问题要求无关。",
+          "en": "Incorrect. Technical reason: The question does not mention specimen control or deletion of marked boundary scenes, so this option is irrelevant to the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然S3 Standard-IA适用于访问频率较低的对象，但它并不适合访问模式不一致的场景。问题中明确提到了接入方式不一致，所以S3智能分层更适合。",
+          "en": "Incorrect. Technical reason: Although S3 Standard-IA is suitable for objects that are accessed less frequently, it is not suitable for scenarios with inconsistent access patterns. The question clearly mentions that the access mode is inconsistent, so S3 Intelligent-Tiering is more suitable."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：S3 One Zone-IA 可用性和数据持久性较低，不适合需要高可用性和高持久性的场景。问题显然需要高可用性和高持久性。",
+          "en": "Incorrect. Technical reason: S3 One Zone-IA has low availability and data durability and is not suitable for scenarios that require high availability and high durability. The question clearly requires high availability and high durability."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 30 天后将资产移至 S3 智能分层。；B. 配置 S3 生命周期策略以清理不完整的分段上传。",
+        "en": "A. Move assets to S3 Intelligent-Tiering after 30 days.; B. Configure an S3 Lifecycle policy to clean up incomplete multipart uploads."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：AB (67%) BD (23%) 9%。热门讨论与考点摘要：S3智能分层是一种自动优化存储成本的存储类，适用于访问模式不一致的场景。它根据访问频率自动将对象移动到适当的存储层，无需人工干预。建议使用S3智能分层，因为问题提到30天后对象的访问模式会变得不一致。；不完整的桶上传会占用存储空间。配置生命周期策略来管理这些上传可以优化存储成本。这是最佳实践，特别是对于使用并行分桶上传的场景。",
+        "en": "Community vote as displayed: AB (67%) BD (23%) 9%. Popular discussion and key point summary: S3 Intelligent-Tiering is a storage class that automatically optimizes storage costs and is suitable for scenarios with inconsistent access patterns. It automatically moves objects to the appropriate storage tier based on access frequency without manual intervention. It is recommended to use S3 Intelligent-Tiering because the question mentions that the access pattern of objects becomes inconsistent after 30 days.; Incomplete bucket uploads will occupy storage space. Configuring lifecycle strategies to manage these uploads can optimize storage costs. This is a best practice, especially for scenarios where parallel bucketed uploads are used."
+      }
+    },
+    {
+      "question_no": 327,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师必须保护托管 Amazon EC2 实例的 VPC 网络。 EC2 实例包含高度敏感的数据并在私有子网中运行。根据公司政策，在 VPC 中运行的 EC2 实例只能访问互联网上经批准的第三方软件存储库，以使用第三方 URL 进行软件产品更新。必须阻止其他互联网流量。哪种解决方案满足这些要求？",
+        "en": "A solutions architect must secure a VPC network that hosts Amazon EC2 instances. The EC2 instances contain highly sensitive data and run in a private subnet. According to company policy, the EC2 instances that run in the VPC can access only approved third- party software repositories on the internet for software product updates that use the third party’s URL. Other internet traffic must be blocked. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "更新私有子网的路由表以将出站流量路由到 AWS Network Firewall 防火墙。配置域列表规则组。",
+          "en": "Update the route table for the private subnet to route the outbound traffic to an AWS Network Firewall firewall. Configure domain list rule groups."
+        },
+        "B": {
+          "zh": "设置 AWS WAF Web ACL。创建一组自定义规则，根据源和目标 IP 地址范围集过滤流量请求。",
+          "en": "Set up an AWS WAF web ACL. Create a custom set of rules that filter traffic requests based on source and destination IP address range sets."
+        },
+        "C": {
+          "zh": "执行严格的入站安全组规则。配置出站规则，通过指定 URL 仅允许流量流向 Internet 上的授权软件存储库。",
+          "en": "Implement strict inbound security group rules. Configure an outbound rule that allows traffic only to the authorized software repositories on the internet by specifying the URLs."
+        },
+        "D": {
+          "zh": "在 EC2 实例前面配置应用程序负载均衡器 (ALB)。将所有出站流量定向到 ALB。在 ALB 的目标组中使用基于 URL 的规则侦听器来对 Internet 进行出站访问。",
+          "en": "Configure an Application Load Balancer (ALB) in front of the EC2 instances. Direct all outbound traffic to the ALB. Use a URL- based rule listener in the ALB’s target group for outbound access to the internet."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Network Firewall 支持基于域名的规则组，可以有效限制流向指定第三方软件库的出站流量。正确：可以通过更新路由表将流量引导至 AWS 网络防火墙来实现集中管理和路由。满足问题要求：只允许访问指定的第三方软件库，阻止其他流量。",
+          "en": "Correct. Technical reason: AWS Network Firewall supports domain name-based rule groups, which can effectively restrict outbound traffic to specified third-party software libraries. Correct: Centralized management and routing can be achieved by updating routing tables to direct traffic to AWS Network Firewall. Meets the requirements of the question: only access to designated third-party software libraries is allowed, and other traffic is blocked."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS WAF 主要用于保护 Web 应用程序免受私有流量攻击，而不是管理来自 VPC 的出站流量。错误：AWS WAF 直接根据域名和 URL 传递出站流量。",
+          "en": "Incorrect. Technical reason: AWS WAF is primarily used to protect web applications from private traffic attacks, rather than managing outbound traffic from a VPC. Error: AWS WAF passes outbound traffic directly based on the domain name and URL."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：安全组不支持基于URL的规则，只能基于IP地址和端口号进行流量控制。错误：均不满足问题所要求的基于域名的流量流程。",
+          "en": "Incorrect. Technical reason: Security groups do not support URL-based rules and can only control traffic based on IP addresses and port numbers. Error: None of the conditions meet the domain name-based traffic process required by the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：ALB 主要用于处理入站流量，而不是出站流量。错误：ALB 的规则侦听器直接根据 URL 传递出站流量。",
+          "en": "Incorrect. Technical reason: ALB is mainly used to handle inbound traffic, not outbound traffic. Error: ALB's rule listener passes outbound traffic directly based on URL."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 更新私有子网的路由表以将出站流量路由到 AWS Network Firewall 防火墙。配置域列表规则组。",
+        "en": "A. Update the route table for the private subnet to route the outbound traffic to an AWS Network Firewall firewall. Configure domain list rule groups."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (92%) 8%。热门讨论与考点摘要：AWS Network Firewall 支持基于域名的规则组，可以有效限制流向指定第三方软件库的出站流量。正确：可以通过更新路由表将流量引导至 AWS 网络防火墙来实现集中管理和路由。满足问题要求：只允许访问指定的第三方软件库，阻止其他流量。",
+        "en": "Community vote as displayed: A (92%) 8%. Popular discussion and key point summary: AWS Network Firewall supports domain name-based rule groups, which can effectively restrict outbound traffic to specified third-party software libraries. Correct: Centralized management and routing can be achieved by updating routing tables to direct traffic to AWS Network Firewall. Meets the requirements of the question: only access to designated third-party software libraries is allowed, and other traffic is blocked."
+      }
+    },
+    {
+      "question_no": 328,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 云中托管一个三层电子商务应用程序。该公司在 Amazon S3 上托管该网站，并将该网站与处理销售请求的 API 集成。该公司在应用程序负载均衡器 (ALB) 后面的三个 Amazon EC2 实例上托管 API。该 API 由静态和动态前端内容以及异步处理销售请求的后端工作人员组成。该公司预计，在新产品发布活动期间，销售请求数量将大幅突然增加。解决方案架构师应该建议什么来确保成功处理所有请求？",
+        "en": "A company is hosting a three-tier ecommerce application in the AWS Cloud. The company hosts the website on Amazon S3 and integrates the website with an API that handles sales requests. The company hosts the API on three Amazon EC2 instances behind an Application Load Balancer (ALB). The API consists of static and dynamic front-end content along with backend workers that process sales requests asynchronously. The company is expecting a significant and sudden increase in the number of sales requests during events for the launch of new products. What should a solutions architect recommend to ensure that all the requests are processed successfully?"
+      },
+      "options": {
+        "A": {
+          "zh": "为动态内容添加 Amazon CloudFront 分配。增加 EC2 实例的数量以应对流量的增加。",
+          "en": "Add an Amazon CloudFront distribution for the dynamic content. Increase the number of EC2 instances to handle the increase in traffic."
+        },
+        "B": {
+          "zh": "为静态内容添加 Amazon CloudFront 分配。将 EC2 实例放入 Auto Scaling 组中，以根据网络流量启动新实例。",
+          "en": "Add an Amazon CloudFront distribution for the static content. Place the EC2 instances in an Auto Scaling group to launch new instances based on network traffic."
+        },
+        "C": {
+          "zh": "为动态内容添加 Amazon CloudFront 分配。在 ALB 前面添加 Amazon ElastiCache 实例以减少 API 要处理的流量。",
+          "en": "Add an Amazon CloudFront distribution for the dynamic content. Add an Amazon ElastiCache instance in front of the ALB to reduce traffic for the API to handle."
+        },
+        "D": {
+          "zh": "为静态内容添加 Amazon CloudFront 分配。添加 Amazon Simple Queue Service (Amazon SQS) 队列以接收来自网站的请求，以便稍后由 EC2 实例进行处理。",
+          "en": "Add an Amazon CloudFront distribution for the static content. Add an Amazon Simple Queue Service (Amazon SQS) queue to receive requests from the website for later processing by the EC2 instances."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：CloudFront主要用于优化静态内部文件的分发，而动态内部文件的分发通常需要其他优化方法。错误：简单地增加EC2实例的数量可能会解决异步处理的需要，而无需剥离，这保证了所有请求都被成功处理。",
+          "en": "Incorrect. Technical reason: CloudFront is mainly used to optimize the distribution of static internal files, while the distribution of dynamic internal files usually requires other optimization methods. Error: Simply increasing the number of EC2 instances may solve the need for asynchronous processing without stripping, which guarantees that all requests are successfully processed."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：CloudFront不适合动态内容的分发，而ElastiCache主要用于缓存数据而不是处理异步请求。错误：ElastiCache 异步处理请求没有问题。",
+          "en": "Incorrect. Technical reason: CloudFront is not suitable for the distribution of dynamic content, and ElastiCache is mainly used to cache data rather than handle asynchronous requests. Error: ElastiCache has no problem with asynchronous processing of requests."
+        },
+        "D": {
+          "zh": "正確。技术原因：CloudFront 优化静态内容的分发以减少网站的负载。正确：SQS队列可以接收请求并异步处理它们，确保所有请求都被成功处理。",
+          "en": "Correct. Technical reason: CloudFront optimizes the distribution of static content to reduce the load on the website. Correct: SQS queues can receive requests and process them asynchronously, ensuring that all requests are processed successfully."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 为静态内容添加 Amazon CloudFront 分配。添加 Amazon Simple Queue Service (Amazon SQS) 队列以接收来自网站的请求，以便稍后由 EC2 实例进行处理。",
+        "en": "D. Add an Amazon CloudFront distribution for the static content. Add an Amazon Simple Queue Service (Amazon SQS) queue to receive requests from the website for later processing by the EC2 instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (73%) B (27%)。热门讨论与考点摘要：CloudFront 优化静态内容的分发以减少网站的负载。正确：SQS队列可以接收请求并异步处理它们，确保所有请求都被成功处理。",
+        "en": "Community vote as displayed: D (73%) B (27%). Popular discussion and key point summary: CloudFront optimizes the distribution of static content to reduce the load on the website. Correct: SQS queues can receive requests and process them asynchronously, ensuring that all requests are processed successfully."
+      }
+    },
+    {
+      "question_no": 329,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "安全审计显示 Amazon EC2 实例没有定期修补。解决方案架构师需要提供一种解决方案，能够对大量 EC2 实例运行定期安全扫描。该解决方案还应定期修补 EC2 实例，并提供每个实例的修补状态报告。哪种解决方案可以满足这些要求？",
+        "en": "A security audit reveals that Amazon EC2 instances are not being patched regularly. A solutions architect needs to provide a solution that will run regular security scans across a large fleet of EC2 instances. The solution should also patch the EC2 instances on a regular schedule and provide a report of each instance’s patch status. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "设置 Amazon Macie 以扫描 EC2 实例是否存在软件漏洞。在每个 EC2 实例上设置一个 cron 作业，以定期修补实例。",
+          "en": "Set up Amazon Macie to scan the EC2 instances for software vulnerabilities. Set up a cron job on each EC2 instance to patch the instance on a regular schedule."
+        },
+        "B": {
+          "zh": "在账户中打开 Amazon GuardDuty。配置 GuardDuty 以扫描 EC2 实例是否存在软件漏洞。设置 AWS Systems Manager 会话管理器以定期修补 EC2 实例。",
+          "en": "Turn on Amazon GuardDuty in the account. Configure GuardDuty to scan the EC2 instances for software vulnerabilities. Set up AWS Systems Manager Session Manager to patch the EC2 instances on a regular schedule."
+        },
+        "C": {
+          "zh": "设置 Amazon Detective 扫描 EC2 实例是否存在软件漏洞。设置 Amazon EventBridge 计划规则以定期修补 EC2 实例。",
+          "en": "Set up Amazon Detective to scan the EC2 instances for software vulnerabilities. Set up an Amazon EventBridge scheduled rule to patch the EC2 instances on a regular schedule."
+        },
+        "D": {
+          "zh": "在账户中打开 Amazon Inspector。配置 Amazon Inspector 以扫描 EC2 实例是否存在软件漏洞。设置 AWS Systems Manager Patch Manager 以定期修补 EC2 实例。",
+          "en": "Turn on Amazon Inspector in the account. Configure Amazon Inspector to scan the EC2 instances for software vulnerabilities. Set up AWS Systems Manager Patch Manager to patch the EC2 instances on a regular schedule."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Macie 主要用于数据分类和敏感数据保护，不适合扫描 EC2 实例的软件漏洞。错误：使用cron作业手动管理补丁更新不符合自动化和集中管理的要求。",
+          "en": "Incorrect. Technical reason: Amazon Macie is mainly used for data classification and sensitive data protection, and is not suitable for scanning EC2 instances for software vulnerabilities. Error: Using cron jobs to manually manage patch updates does not meet the requirements for automation and centralized management."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon GuardDuty 主要用于检测恶意活动和异常行为，不适合扫描软件漏洞。错误：AWS Systems Manager 会话管理器用于远程访问 EC2 实例，而不是用于补丁管理。",
+          "en": "Incorrect. Technical reason: Amazon GuardDuty is mainly used to detect malicious activities and abnormal behaviors, and is not suitable for scanning software vulnerabilities. Error: AWS Systems Manager Session Manager is used for remote access to EC2 instances, not for patch management."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Amazon Detective主要用于调查和分析安全事件，不适合扫描软件漏洞。错误：虽然 Amazon EventBridge 可以触发计划任务，但它并不是专门为补丁管理设计的工具。",
+          "en": "Incorrect. Technical reason: Amazon Detective is mainly used to investigate and analyze security incidents and is not suitable for scanning software vulnerabilities. Error: Although Amazon EventBridge can trigger scheduled tasks, it is not a tool specifically designed for patch management."
+        },
+        "D": {
+          "zh": "正確。技术原因：Amazon Inspector 专门用于扫描 EC2 实例是否存在软件漏洞。正确：AWS Systems Manager Patch Manager 可自动执行补丁管理并定期更新 EC2 实例。",
+          "en": "Correct. Technical reason: Amazon Inspector is specifically designed to scan EC2 instances for software vulnerabilities. Correct: AWS Systems Manager Patch Manager automates patch management and regularly updates EC2 instances."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 在账户中打开 Amazon Inspector。配置 Amazon Inspector 以扫描 EC2 实例是否存在软件漏洞。设置 AWS Systems Manager Patch Manager 以定期修补 EC2 实例。",
+        "en": "D. Turn on Amazon Inspector in the account. Configure Amazon Inspector to scan the EC2 instances for software vulnerabilities. Set up AWS Systems Manager Patch Manager to patch the EC2 instances on a regular schedule."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：Amazon Inspector 专门用于扫描 EC2 实例是否存在软件漏洞。正确：AWS Systems Manager Patch Manager 可自动执行补丁管理并定期更新 EC2 实例。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: Amazon Inspector is specifically designed to scan EC2 instances for software vulnerabilities. Correct: AWS Systems Manager Patch Manager automates patch management and regularly updates EC2 instances."
+      }
+    },
+    {
+      "question_no": 330,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司计划在 Amazon RDS 数据库实例上存储数据。公司必须对静态数据进行加密。解决方案架构师应该怎样做才能满足这一要求？",
+        "en": "A company is planning to store data on Amazon RDS DB instances. The company must encrypt the data at rest. What should a solutions architect do to meet this requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Key Management Service (AWS KMS) 中创建密钥。为数据库实例启用加密。",
+          "en": "Create a key in AWS Key Management Service (AWS KMS). Enable encryption for the DB instances."
+        },
+        "B": {
+          "zh": "创建加密密钥。将密钥存储在 AWS Secrets Manager 中。使用密钥加密数据库实例。",
+          "en": "Create an encryption key. Store the key in AWS Secrets Manager. Use the key to encrypt the DB instances."
+        },
+        "C": {
+          "zh": "在 AWS Certificate Manager (ACM) 中生成证书。使用证书在数据库实例上启用 SSL/TLS。",
+          "en": "Generate a certificate in AWS Certificate Manager (ACM). Enable SSL/TLS on the DB instances by using the certificate."
+        },
+        "D": {
+          "zh": "在 AWS Identity and Access Management (IAM) 中生成证书。使用证书在数据库实例上启用 SSL/TLS。",
+          "en": "Generate a certificate in AWS Identity and Access Management (IAM). Enable SSL/TLS on the DB instances by using the certificate."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS KMS 是一项用于管理加密密钥的服务。 RDS 支持 KMS 密钥以启用数据状态加密。创建RDS实例时，您可以选择使用KMS加密来加密数据。",
+          "en": "Correct. Technical reason: AWS KMS is a service used to manage encryption keys. RDS supports KMS keys to enable data state encryption. When creating an RDS instance, you can choose to use KMS encryption to encrypt data."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Secrets Manager 主要用于存储和管理敏感信息（例如密钥、API 密钥），并不直接用于加密 RDS 实例。 RDS 实例的加密需要 KMS 密钥，该密钥不是 Secrets Manager 中的密钥。",
+          "en": "Incorrect. Technical reason: AWS Secrets Manager is mainly used to store and manage sensitive information (such as secrets, API secrets), and is not directly used to encrypt RDS instances. Encryption of the RDS instance requires a KMS key, which is not a key in Secrets Manager."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：ACM 用于管理 SSL/TLS 证书。这些证书主要用于传输中的加密，而不是数据状态加密。这个问题需要的是数据状态加密，而不是传输层加密。",
+          "en": "Incorrect. Technical reason: ACM is used to manage SSL/TLS certificates. These certificates are mainly used for encryption in transit, not data state encryption. What this question requires is data state encryption, not transport layer encryption."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：IAM 不用于生成 SSL/TLS 证书。 SSL/TLS 证书由 ACM 管理。另外，本题需要的是数据状态加密，而不是传输层加密。",
+          "en": "Incorrect. Technical reason: IAM is not used to generate SSL/TLS certificates. SSL/TLS certificates are managed by ACM. In addition, this question requires data state encryption, not transport layer encryption."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 AWS Key Management Service (AWS KMS) 中创建密钥。为数据库实例启用加密。",
+        "en": "A. Create a key in AWS Key Management Service (AWS KMS). Enable encryption for the DB instances."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：AWS KMS 是一项用于管理加密密钥的服务。 RDS 支持 KMS 密钥以启用数据状态加密。创建RDS实例时，您可以选择使用KMS加密来加密数据。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS KMS is a service used to manage encryption keys. RDS supports KMS keys to enable data state encryption. When creating an RDS instance, you can choose to use KMS encryption to encrypt data."
+      }
+    }
+  ]
+}

@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 481,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司在 AWS 云中托管一个三层 Web 应用程序。多可用区 Amazon RDS for MySQL 服务器构成数据库层 Amazon ElastiCache 构成缓存层。该公司需要一种缓存策略，当客户将项目添加到数据库时，该策略可以添加或更新缓存中的数据。缓存中的数据必须始终与数据库中的数据匹配。哪种解决方案可以满足这些要求？",
+        "en": "A company hosts a three-tier web application in the AWS Cloud. A Multi-AZAmazon RDS for MySQL server forms the database layer Amazon ElastiCache forms the cache layer. The company wants a caching strategy that adds or updates data in the cache when a customer adds an item to the database. The data in the cache must always match the data in the database. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "实现延迟加载缓存策略",
+          "en": "Implement the lazy loading caching strategy"
+        },
+        "B": {
+          "zh": "实施直写式缓存策略",
+          "en": "Implement the write-through caching strategy"
+        },
+        "C": {
+          "zh": "实现添加TTL缓存策略",
+          "en": "Implement the adding TTL caching strategy"
+        },
+        "D": {
+          "zh": "实施 AWS AppConfig 缓存策略",
+          "en": "Implement the AWS AppConfig caching strategy"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：延迟加载是一种缓存策略，仅在请求时才将数据从数据库加载到缓存中。这种策略无法保证缓存和数据库数据的一致性，因为数据更新后并不会自动更新到缓存中。因此这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Lazy loading is a caching strategy where data is loaded from the database into the cache only when it is requested. This strategy cannot ensure the consistency of the cache and database data because the data is not automatically updated in the cache after it is updated. Therefore this option is wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因：Write-through是一种缓存策略，在将数据写入数据库的同时将数据写入缓存。该策略确保缓存与数据库数据的一致性，因为每次更新都会同步到缓存。这个选项是正确的。",
+          "en": "Correct. Technical reason: Write-through is a caching strategy that writes data to the cache at the same time as it is written to the database. This strategy ensures cache consistency with database data because every update is synchronized to the cache. This option is correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：添加TTL是一种设置缓存过期时间的策略。数据在缓存中保存一段时间后会自动过期。虽然可以减少缓存中过期数据的数量，但是无法保证缓存和数据库数据的一致性。因此这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Adding TTL is a strategy for setting cache expiration time. Data will automatically expire after being stored in the cache for a period of time. Although you can reduce the amount of expired data in the cache, you cannot ensure the consistency of the cache and database data. Therefore this option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS AppConfig 主要用于管理应用程序配置，并不专门用于缓存数据。该选项与题目要求无关，因此不正确。",
+          "en": "Incorrect. Technical reason: AWS AppConfig is primarily used to manage application configuration and is not specifically used to cache data. This option has nothing to do with the question requirements and is therefore incorrect."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 实施直写式缓存策略",
+        "en": "B. Implement the write-through caching strategy"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：Write-through是一种缓存策略，在将数据写入数据库的同时将数据写入缓存。该策略确保缓存与数据库数据的一致性，因为每次更新都会同步到缓存。这个选项是正确的。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: Write-through is a caching strategy that writes data to the cache at the same time as it is written to the database. This strategy ensures cache consistency with database data because every update is synchronized to the cache. This option is correct."
+      }
+    },
+    {
+      "question_no": 482,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将 100 GB 的历史数据从本地位置迁移到 Amazon S3 存储桶。该公司拥有每秒 100 兆比特 (Mbps) 的内部互联网连接。该公司需要对传输到 S3 存储桶的数据进行加密。该公司将把新数据直接存储在Amazon S3中。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company wants to migrate 100 GB of historical data from an on-premises location to an Amazon S3 bucket. The company has a 100 megabits per second (Mbps) internet connection on premises. The company needs to encrypt the data in transit to the S3 bucket. The company will store new data directly in Amazon S3. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS CLI 中的 s3 同步命令将数据直接移动到 S3 存储桶",
+          "en": "Use the s3 sync command in the AWS CLI to move the data directly to an S3 bucket"
+        },
+        "B": {
+          "zh": "使用 AWS DataSync 将数据从本地位置迁移到 S3 存储桶",
+          "en": "Use AWS DataSync to migrate the data from the on-premises location to an S3 bucket"
+        },
+        "C": {
+          "zh": "使用 AWS Snowball 将数据移动到 S3 存储桶",
+          "en": "Use AWS Snowball to move the data to an S3 bucket"
+        },
+        "D": {
+          "zh": "设置从本地位置到 AWS 的 IPsec VPN。使用 AWS CLI 中的 s3 cp 命令将数据直接移动到 S3 存储桶",
+          "en": "Set up an IPsec VPN from the on-premises location to AWS. Use the s3 cp command in the AWS CLI to move the data directly to an S3 bucket"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：s3sync命令可以直接从本地同步数据到S3，但是取决于本地网络连接的稳定性和速度。加密分析：AWS CLI确认使用HTTPS协议传输数据，满足加密传输的要求。操作简单：操作虽然简单，但对于100GB的数据量，使用CLI可能会受到网络带宽的限制，迁移时间也相对较短。结论：这个选项是正确的，但不是最优解。",
+          "en": "Incorrect. Technical reason: Technical analysis: The s3 sync command can directly synchronize data from local to S3, but it depends on the stability and speed of the local network connection. Encryption analysis: AWS CLI confirms that the HTTPS protocol is used to transmit data, which meets the requirements for encrypted transmission. Simplified operation: Although the operation is simple, for a data volume of 100 GB, using the CLI may be limited by network bandwidth and the migration time is relatively short. Conclusion: This option is correct, but not the optimal solution."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析：AWS DataSync是专门用于迁移数据的服务，支持高效的数据传输。加密分析：DataSync自动对数据传输进行加密，满足加密要求。操作简化：DataSync 提供自动化功能，降低手动操作的复杂性。结论：该选项正确，是最优解。",
+          "en": "Correct. Technical reason: Technical analysis: AWS DataSync is a service specifically designed to migrate data and supports efficient data transfer. Encryption analysis: DataSync automatically encrypts data transmission to meet encryption requirements. Operational simplification: DataSync provides automation capabilities that reduce the complexity of manual operations. Conclusion: This option is correct and the optimal solution."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：AWS Snowball适合大规模数据迁移，但100GB的数据量较小，Snowball不适合。加密分析：Snowball 设备支持数据加密，但需要额外的硬件操作。操作简单：使用Snowball需要申请设备、配置和恢复设备，操作复杂度较高。结论：这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Technical analysis: AWS Snowball is suitable for large-scale data migration, but the data volume of 100 GB is small, so Snowball is not suitable. Encryption analysis: Snowball devices support data encryption, but require additional hardware operations. Simplified operation: Using Snowball requires applying for equipment, configuring and restoring equipment, and the operation complexity is high. Conclusion: This option is wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：设置IPsec VPN可以实现加密传输，但需要额外的网络配置。加密分析：VPN提供加密传输，但AWS CLI本身已经支持加密传输，使得VPN设置变得多余。运营简化：设置VPN增加了运营复杂性，不符合“最小运营开销”的要求。结论：这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Technical analysis: Setting up IPsec VPN can achieve encrypted transmission, but requires additional network configuration. Encryption analysis: VPN provides encrypted transmission, but AWS CLI itself already supports encrypted transmission, making VPN settings redundant. Operational simplification: Setting up a VPN increases operational complexity and does not meet the requirement of “minimum operational overhead”. Conclusion: This option is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS DataSync 将数据从本地位置迁移到 S3 存储桶",
+        "en": "B. Use AWS DataSync to migrate the data from the on-premises location to an S3 bucket"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (62%) A (38%)。热门讨论与考点摘要：技术分析：AWS DataSync是专门用于迁移数据的服务，支持高效的数据传输。加密分析：DataSync自动对数据传输进行加密，满足加密要求。操作简化：DataSync 提供自动化功能，降低手动操作的复杂性。结论：该选项正确，是最优解。",
+        "en": "Community vote as displayed: B (62%) A (38%). Popular discussion and key point summary: Technical analysis: AWS DataSync is a service specifically designed to migrate data and supports efficient data transfer. Encryption analysis: DataSync automatically encrypts data transmission to meet encryption requirements. Operational simplification: DataSync provides automation capabilities that reduce the complexity of manual operations. Conclusion: This option is correct and the optimal solution."
+      }
+    },
+    {
+      "question_no": 483,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司对在 Windows 容器下的 .NET 6 Framework 上运行的 Windows 作业进行了容器化。该公司希望在 AWS 云中运行此作业。该作业每 10 分钟运行一次。作业的运行时间在 1 分钟到 3 分钟之间变化。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company containerized a Windows job that runs on .NET 6 Framework under a Windows container. The company wants to run this job in the AWS Cloud. The job runs every 10 minutes. The job’s runtime varies between 1 minute and 3 minutes. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "根据作业的容器映像创建 AWS Lambda 函数。配置 Amazon EventBridge 以每 10 分钟调用该函数。",
+          "en": "Create an AWS Lambda function based on the container image of the job. Configure Amazon EventBridge to invoke the function every 10 minutes."
+        },
+        "B": {
+          "zh": "使用 AWS Batch 创建使用 AWS Fargate 资源的作业。将作业计划配置为每 10 分钟运行一次。",
+          "en": "Use AWS Batch to create a job that uses AWS Fargate resources. Configure the job scheduling to run every 10 minutes."
+        },
+        "C": {
+          "zh": "使用 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS) 来运行作业。根据作业的容器镜像创建计划任务，每10分钟运行一次。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate to run the job. Create a scheduled task based on the container image of the job to run every 10 minutes."
+        },
+        "D": {
+          "zh": "使用 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS) 来运行作业。根据作业的容器镜像创建独立任务。使用 Windows 任务计划程序每 10 分钟运行一次作业。",
+          "en": "Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate to run the job. Create a standalone task based on the container image of the job. Use Windows task scheduler to run the job every 10 minutes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然AWS Lambda支持基于容器镜像的功能，但AWS Lambda目前不支持运行Windows容器。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Although AWS Lambda supports functions based on container images, AWS Lambda does not currently support running Windows containers. This option does not meet the question requirements."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Batch 适用于批处理任务，通常用于处理大规模计划任务或需要队列管理的场景。对于单个计划任务，使用 AWS Batch 会过于复杂且成本高昂。",
+          "en": "Incorrect. Technical reason: AWS Batch is suitable for batch processing tasks, and is usually used to handle large-scale planning tasks or scenarios that require queue management. For a single scheduled task, using AWS Batch will be too complex and costly."
+        },
+        "C": {
+          "zh": "正確。技术原因：Amazon ECS 支持运行 Windows 容器，并且可以使用 Fargate 以无服务器方式运行。使用ECS的定时任务功能，您可以轻松满足每10分钟运行一次的需求，同时保持较低的成本和管理疯狂的订单。",
+          "en": "Correct. Technical reason: Amazon ECS supports running Windows containers and can be run serverless with Fargate. Using the scheduled task function of ECS, you can easily meet the requirement of running every 10 minutes while keeping costs low and managing crazy orders."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该选项提到使用Windows任务计划程序来安排任务，但这与AWS云的本地服务无关。使用ECS的定时任务功能已经可以满足需求了，不需要再使用Windows任务计划程序了。",
+          "en": "Incorrect. Technical reason: This option mentions using the Windows Task Scheduler to schedule tasks, but this has nothing to do with the AWS cloud's native services. Using the scheduled task function of ECS can already meet the needs, and there is no need to use the Windows task scheduler."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 AWS Fargate 上的 Amazon Elastic Container Service (Amazon ECS) 来运行作业。根据作业的容器镜像创建计划任务，每10分钟运行一次。",
+        "en": "C. Use Amazon Elastic Container Service (Amazon ECS) on AWS Fargate to run the job. Create a scheduled task based on the container image of the job to run every 10 minutes."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (51%) B (29%) A (20%)。热门讨论与考点摘要：Amazon ECS 支持运行 Windows 容器，并且可以使用 Fargate 以无服务器方式运行。使用ECS的定时任务功能，您可以轻松满足每10分钟运行一次的需求，同时保持较低的成本和管理疯狂的订单。",
+        "en": "Community vote as displayed: C (51%) B (29%) A (20%). Popular discussion and key point summary: Amazon ECS supports running Windows containers and can be run serverless with Fargate. Using the scheduled task function of ECS, you can easily meet the requirement of running every 10 minutes while keeping costs low and managing crazy orders."
+      }
+    },
+    {
+      "question_no": 484,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望从许多独立的 AWS 账户迁移到整合的多账户架构。该公司计划为不同的业务部门创建许多新的AWS账户。该公司需要使用集中式企业目录服务来验证对这些 AWS 账户的访问权限。解决方案架构师应该推荐哪种操作组合来满足这些要求？ （选择两个。）",
+        "en": "A company wants to move from many standalone AWS accounts to a consolidated, multi-account architecture. The company plans to create many new AWS accounts for different business units. The company needs to authenticate access to these AWS accounts by using a centralized corporate directory service. Which combination of actions should a solutions architect recommend to meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "在 AWS Organizations 中创建一个新组织并启用所有功能。在组织中创建新的 AWS 账户。",
+          "en": "Create a new organization in AWS Organizations with all features turned on. Create the new AWS accounts in the organization."
+        },
+        "B": {
+          "zh": "设置 Amazon Cognito 身份池。配置 AWS IAM Identity Center (AWS Single Sign-On) 以接受 Amazon Cognito 身份验证。",
+          "en": "Set up an Amazon Cognito identity pool. Configure AWS IAM Identity Center (AWS Single Sign-On) to accept Amazon Cognito authentication."
+        },
+        "C": {
+          "zh": "配置服务控制策略 (SCP) 来管理 AWS 账户。将 AWS IAM Identity Center（AW​​S Single Sign-On）添加到 AWS Directory Service。",
+          "en": "Configure a service control policy (SCP) to manage the AWS accounts. Add AWS IAM Identity Center (AWS Single Sign-On) to AWS Directory Service."
+        },
+        "D": {
+          "zh": "在 AWS Organizations 中创建新组织。配置组织的身份验证机制以直接使用 AWS Directory Service。",
+          "en": "Create a new organization in AWS Organizations. Configure the organization's authentication mechanism to use AWS Directory Service directly."
+        },
+        "E": {
+          "zh": "在组织中设置 AWS IAM Identity Center (AWS Single Sign-On)。配置 IAM Identity Center，并将其与公司的企业目录服务集成。",
+          "en": "Set up AWS IAM Identity Center (AWS Single Sign-On) in the organization. Configure IAM Identity Center, and integrate it with the company's corporate directory service."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：组织。分析：正确。 AWS Organizations 允许集中管理多个 AWS 账户，所有功能启用后即可使用服务控制策略 (SCP) 等高级功能。在组织中创建新账户是实施多账户架构的关键步骤。",
+          "en": "Correct. Technical reason: organization. Analysis: Correct. AWS Organizations allows centralized management of multiple AWS accounts, and advanced features such as Service Control Policies (SCP) can be used after all features are enabled. Creating new accounts in an organization is a critical step in implementing a multi-account architecture."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：认知身份验证。分析：错误。 Amazon Cognito 主要用于管理应用程序用户身份，而不是集中管理对 AWS 账户的访问。 AWS IAM Identity Center 不直接依赖 Amazon Cognito 进行身份验证。",
+          "en": "Incorrect. Technical reason: Cognito authentication. Analysis: Error. Amazon Cognito is primarily used to manage application user identities, rather than centrally managing access to AWS accounts. AWS IAM Identity Center does not rely directly on Amazon Cognito for authentication."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：开）到 AWS Directory Service。分析：错误。尽管 SCP 可以管理账户权限，但不建议将 AWS IAM Identity Center 与 AWS Directory Service 直接集成。 IAM Identity Center 通常与 Active Directory 等企业目录服务集成。",
+          "en": "Incorrect. Technical reason: On) to AWS Directory Service. Analysis: Error. Although SCP can manage account permissions, direct integration of AWS IAM Identity Center with AWS Directory Service is not recommended. IAM Identity Center typically integrates with enterprise directory services such as Active Directory."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：直接目录服务。分析：错误。 AWS Organizations 本身不支持直接使用 AWS Directory Service 作为身份验证机制。身份验证通常通过 IAM Identity Center 与企业目录服务集成来实现。",
+          "en": "Incorrect. Technical reason: Directory Service directly. Analysis: Error. AWS Organizations itself does not support direct use of AWS Directory Service as an authentication mechanism. Authentication is typically achieved through IAM Identity Center integration with enterprise directory services."
+        },
+        "E": {
+          "zh": "正確。技术原因：将其与公司的企业目录服务集成。分析：正确。 AWS IAM Identity Center (AWS Single Sign-On) 是用于集中管理用户对多个 AWS 账户的访问的推荐解决方案。可以与企业目录服务（如Active Directory）集成，实现统一的身份认证。",
+          "en": "Correct. Technical reason: integrate it with the company's corporate directory service. Analysis: Correct. AWS IAM Identity Center (AWS Single Sign-On) is the recommended solution for centrally managing user access to multiple AWS accounts. It can be integrated with enterprise directory services (such as Active Directory) to achieve unified identity authentication."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 在 AWS Organizations 中创建一个新组织并启用所有功能。在组织中创建新的 AWS 账户。；E. 在组织中设置 AWS IAM Identity Center (AWS Single Sign-On)。配置 IAM Identity Center，并将其与公司的企业目录服务集成。",
+        "en": "A. Create a new organization in AWS Organizations with all features turned on. Create the new AWS accounts in the organization.; E. Set up AWS IAM Identity Center (AWS Single Sign-On) in the organization. Configure IAM Identity Center, and integrate it with the company's corporate directory service."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：AE (100%)。热门讨论与考点摘要：组织。分析：正确。 AWS Organizations 允许集中管理多个 AWS 账户，所有功能启用后即可使用服务控制策略 (SCP) 等高级功能。在组织中创建新账户是实施多账户架构的关键步骤。；将其与公司的企业目录服务集成。分析：正确。 AWS IAM Identity Center (AWS Single Sign-On) 是用于集中管理用户对多个 AWS 账户的访问的推荐解决方案。可以与企业目录服务（如Active Directory）集成，实现统一的身份认证。",
+        "en": "Community vote as displayed: AE (100%). Popular discussion and key point summary: organization. Analysis: Correct. AWS Organizations allows centralized management of multiple AWS accounts, and advanced features such as Service Control Policies (SCP) can be used after all features are enabled. Creating new accounts in an organization is a critical step in implementing a multi-account architecture.; integrate it with the company's corporate directory service. Analysis: Correct. AWS IAM Identity Center (AWS Single Sign-On) is the recommended solution for centrally managing user access to multiple AWS accounts. It can be integrated with enterprise directory services (such as Active Directory) to achieve unified identity authentication."
+      }
+    },
+    {
+      "question_no": 485,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在寻找一种解决方案，可以将旧新闻片段的视频档案存储在 AWS 中。公司需要最大限度地降低成本，并且很少需要恢复这些文件。当需要这些文件时，它们必须在最多五分钟内可用。最具成本效益的解决方案是什么？",
+        "en": "A company is looking for a solution that can store video archives in AWS from old news footage. The company needs to minimize costs and will rarely need to restore these files. When the files are needed, they must be available in a maximum of five minutes. What is the MOST cost-effective solution?"
+      },
+      "options": {
+        "A": {
+          "zh": "将视频档案存储在 Amazon S3 Glacier 中并使用加急检索。",
+          "en": "Store the video archives in Amazon S3 Glacier and use Expedited retrievals."
+        },
+        "B": {
+          "zh": "将视频档案存储在 Amazon S3 Glacier 中并使用标准检索。",
+          "en": "Store the video archives in Amazon S3 Glacier and use Standard retrievals."
+        },
+        "C": {
+          "zh": "将视频档案存储在 Amazon S3 标准-不频繁访问 (S3 标准-IA) 中。",
+          "en": "Store the video archives in Amazon S3 Standard-Infrequent Access (S3 Standard-IA)."
+        },
+        "D": {
+          "zh": "将视频档案存储在 Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA) 中。",
+          "en": "Store the video archives in Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon S3 Glacier 是一种专为长期存储而设计的低成本存储解决方案，适合存储不经常访问的数据。加急检索可以在1-5分钟内检索到数据，满足问题中“最多五分钟内可用”的要求。虽然加急检索的成本较高，但由于检索频率较低，总体成本仍然是最优的。",
+          "en": "Correct. Technical reason: Amazon S3 Glacier is a low-cost storage solution designed for long-term storage and is suitable for storing infrequently accessed data. Expedited retrievals can retrieve data within 1-5 minutes, meeting the requirement of \"must be available within a maximum of five minutes\" in the question. Although the cost of Expedited retrievals is higher, the overall cost is still optimal due to the low retrieval frequency."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：标准检索的检索时间为3-5小时，不符合问题中“最多五分钟内可用”的要求。",
+          "en": "Incorrect. Technical reason: The retrieval time for Standard retrievals is 3-5 hours, which does not meet the requirement of \"must be available within a maximum of five minutes\" in the question."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：S3 Standard-IA 适用于需要更高可用性和更低访问延迟的数据，但其存储成本高于 S3 Glacier，并不是最具成本效益的选择。另外，标题中明确指出数据“很少需要恢复”，S3 Standard-IA不适合这种访问模式。",
+          "en": "Incorrect. Technical reason: S3 Standard-IA is suitable for data that requires higher availability and lower access latency, but its storage cost is higher than S3 Glacier and is not the most cost-effective option. In addition, the title clearly states that data \"rarely needs to be restored\" and S3 Standard-IA is not suitable for this access mode."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：S3 One Zone-IA 的存储成本低于 S3 Standard-IA，但仍高于 S3 Glacier。另外，S3 One Zone-IA 旨在存储不需要跨多个可用区冗余的数据，适合可用性要求不高的场景，但标题中并未提及这一要求。",
+          "en": "Incorrect. Technical reason: The storage cost of S3 One Zone-IA is lower than S3 Standard-IA, but still higher than S3 Glacier. In addition, S3 One Zone-IA is designed to store data that does not require redundancy across multiple availability zones, and is suitable for scenarios with low availability requirements, but this requirement is not mentioned in the title."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 将视频档案存储在 Amazon S3 Glacier 中并使用加急检索。",
+        "en": "A. Store the video archives in Amazon S3 Glacier and use Expedited retrievals."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (97%) 3%。热门讨论与考点摘要：Amazon S3 Glacier 是一种专为长期存储而设计的低成本存储解决方案，适合存储不经常访问的数据。加急检索可以在1-5分钟内检索到数据，满足问题中“最多五分钟内可用”的要求。虽然加急检索的成本较高，但由于检索频率较低，总体成本仍然是最优的。",
+        "en": "Community vote as displayed: A (97%) 3%. Popular discussion and key point summary: Amazon S3 Glacier is a low-cost storage solution designed for long-term storage and is suitable for storing infrequently accessed data. Expedited retrievals can retrieve data within 1-5 minutes, meeting the requirement of \"must be available within a maximum of five minutes\" in the question. Although the cost of Expedited retrievals is higher, the overall cost is still optimal due to the low retrieval frequency."
+      }
+    },
+    {
+      "question_no": 486,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 AWS 上构建三层应用程序。表示层将服务于静态网站。逻辑层是容器化应用程序。该应用程序将数据存储在关系数据库中。该公司希望简化部署并降低运营成本。哪种解决方案可以满足这些要求？",
+        "en": "A company is building a three-tier application on AWS. The presentation tier will serve a static website The logic tier is a containerized application. This application will store data in a relational database. The company wants to simplify deployment and to reduce operational costs. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon S3 托管静态内容。将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 结合使用以获得计算能力。使用托管 Amazon RDS 集群作为数据库。",
+          "en": "Use Amazon S3 to host static content. Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate for compute power. Use a managed Amazon RDS cluster for the database."
+        },
+        "B": {
+          "zh": "使用 Amazon CloudFront 托管静态内容。将 Amazon Elastic Container Service (Amazon ECS) 与 Amazon EC2 结合使用以获得计算能力。使用托管 Amazon RDS 集群作为数据库。",
+          "en": "Use Amazon CloudFront to host static content. Use Amazon Elastic Container Service (Amazon ECS) with Amazon EC2 for compute power. Use a managed Amazon RDS cluster for the database."
+        },
+        "C": {
+          "zh": "使用 Amazon S3 托管静态内容。将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 AWS Fargate 结合使用以获得计算能力。使用托管 Amazon RDS 集群作为数据库。",
+          "en": "Use Amazon S3 to host static content. Use Amazon Elastic Kubernetes Service (Amazon EKS) with AWS Fargate for compute power. Use a managed Amazon RDS cluster for the database."
+        },
+        "D": {
+          "zh": "使用 Amazon EC2 预留实例托管静态内容。将 Amazon Elastic Kubernetes Service (Amazon EKS) 与 Amazon EC2 结合使用以获得计算能力。使用托管 Amazon RDS 集群作为数据库。",
+          "en": "Use Amazon EC2 Reserved Instances to host static content. Use Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 for compute power. Use a managed Amazon RDS cluster for the database."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon S3 是托管静态网站内容的最佳选择，具有高可用性和低成本。正确：Amazon ECS 和 AWS Fargate 的组合可以简化容器化应用程序的部署，无需管理底层 EC2 实例并降低运营成本。正确：Amazon RDS 是托管关系数据库的最佳选择，提供自动化管理功能以进一步简化操作。",
+          "en": "Correct. Technical reason: Amazon S3 is the best choice for hosting static website content, with high availability and low cost. Correct: The combination of Amazon ECS and AWS Fargate can simplify the deployment of containerized applications, eliminating the need to manage underlying EC2 instances and reducing operating costs. Correct: Amazon RDS is the best choice for hosting relational databases, providing automated management capabilities to further simplify operations."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon CloudFront 是内容分发网络 (CDN)，无法直接托管静态内容。需要与Amazon S3结合才能实现托管功能。错误：使用Amazon ECS和Amazon EC2需要管理底层实例，这增加了操作复杂性，不满足简化部署的要求。正确：Amazon RDS 是托管关系数据库的正确选择。",
+          "en": "Incorrect. Technical reason: Amazon CloudFront is a content delivery network (CDN) and cannot host static content directly. It needs to be combined with Amazon S3 to realize the hosting function. Error: Using Amazon ECS and Amazon EC2 requires management of underlying instances, which increases operational complexity and does not meet the requirements for simplified deployment. Correct: Amazon RDS is the right choice for hosting relational databases."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：使用 Amazon EC2 预留实例托管静态内容既昂贵又复杂，而且不是最佳实践。错误：使用 Amazon EKS 和 Amazon EC2 会增加管理复杂性，并且不满足简化部署的要求。正确：Amazon RDS 是托管关系数据库的正确选择。",
+          "en": "Incorrect. Technical reason: Using Amazon EC2 Reserved Instances to host static content is expensive and complex, and is not a best practice. Error: Using Amazon EKS and Amazon EC2 increases management complexity and does not meet the requirements for simplified deployment. Correct: Amazon RDS is the right choice for hosting relational databases."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon S3 托管静态内容。将 Amazon Elastic Container Service (Amazon ECS) 与 AWS Fargate 结合使用以获得计算能力。使用托管 Amazon RDS 集群作为数据库。",
+        "en": "A. Use Amazon S3 to host static content. Use Amazon Elastic Container Service (Amazon ECS) with AWS Fargate for compute power. Use a managed Amazon RDS cluster for the database."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：Amazon S3 是托管静态网站内容的最佳选择，具有高可用性和低成本。正确：Amazon ECS 和 AWS Fargate 的组合可以简化容器化应用程序的部署，无需管理底层 EC2 实例并降低运营成本。正确：Amazon RDS 是托管关系数据库的最佳选择，提供自动化管理功能以进一步简化操作。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon S3 is the best choice for hosting static website content, with high availability and low cost. Correct: The combination of Amazon ECS and AWS Fargate can simplify the deployment of containerized applications, eliminating the need to manage underlying EC2 instances and reducing operating costs. Correct: Amazon RDS is the best choice for hosting relational databases, providing automated management capabilities to further simplify operations."
+      }
+    },
+    {
+      "question_no": 487,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司为其应用程序寻求存储解决方案。该解决方案必须具有高可用性和可扩展性。该解决方案还必须充当文件系统，可由 AWS 中和本地的多个 Linux 实例通过本地协议安装，并且没有最小大小要求。该公司建立了一个站点到站点 VPN，用于从其本地网络访问其 VPC。哪种存储解决方案可以满足这些要求？",
+        "en": "A company seeks a storage solution for its application. The solution must be highly available and scalable. The solution also must function as a file system be mountable by multiple Linux instances in AWS and on premises through native protocols, and have no minimum size requirements. The company has set up a Site-to-Site VPN for access from its on-premises network to its VPC. Which storage solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon FSx 多可用区部署",
+          "en": "Amazon FSx Multi-AZ deployments"
+        },
+        "B": {
+          "zh": "Amazon Elastic Block Store (Amazon EBS) 多重附加卷",
+          "en": "Amazon Elastic Block Store (Amazon EBS) Multi-Attach volumes"
+        },
+        "C": {
+          "zh": "具有多个挂载目标的 Amazon Elastic File System (Amazon EFS) 具有多个挂载目标的 Amazon Elastic File System (Amazon EFS)",
+          "en": "Amazon Elastic File System (Amazon EFS) with multiple mount targets"
+        },
+        "D": {
+          "zh": "具有单个挂载目标和多个访问点的 Amazon Elastic File System (Amazon EFS)",
+          "en": "Amazon Elastic File System (Amazon EFS) with a single mount target and multiple access points"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：“本地协议安装”和“多Linux实例支持”不符合问题的要求。",
+          "en": "Incorrect. Technical reason: \"Native protocol mounting\" and \"Multiple Linux instance support\" do not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：不符合题目要求的“文件存储”和“跨区域访问”。",
+          "en": "Incorrect. Technical reason: \"File storage\" and \"cross-region access\" that do not meet the requirements of the topic."
+        },
+        "C": {
+          "zh": "正確。技术原因：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+          "en": "Correct. Technical reason: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 具有多个挂载目标的 Amazon Elastic File System (Amazon EFS) 具有多个挂载目标的 Amazon Elastic File System (Amazon EFS)",
+        "en": "C. Amazon Elastic File System (Amazon EFS) with multiple mount targets"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+      }
+    },
+    {
+      "question_no": 488,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家成立 4 年的媒体公司正在使用 AWS Organizations 所有功能集来组织其 AWS 账户。据公司财务团队称，会员账户的账单信息不得被任何人访问，包括会员账户的根用户。哪种解决方案可以满足这些要求？",
+        "en": "A 4-year-old media company is using the AWS Organizations all features feature set to organize its AWS accounts. According to the company's finance team, the billing information on the member accounts must not be accessible to anyone, including the root user of the member accounts. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "将所有财务团队用户添加到 IAM 组。将名为 Billing 的 AWS 托管策略附加到该组。",
+          "en": "Add all finance team users to an IAM group. Attach an AWS managed policy named Billing to the group."
+        },
+        "B": {
+          "zh": "附加基于身份的策略以拒绝所有用户（包括 root 用户）访问计费信息。",
+          "en": "Attach an identity-based policy to deny access to the billing information to all users, including the root user."
+        },
+        "C": {
+          "zh": "创建服务控制策略 (SCP) 以拒绝对计费信息的访问。将 SCP 附加到根组织单位 (OU)。",
+          "en": "Create a service control policy (SCP) to deny access to the billing information. Attach the SCP to the root organizational unit (OU)."
+        },
+        "D": {
+          "zh": "从组织所有功能功能集转换为组织合并计费功能集。",
+          "en": "Convert from the Organizations all features feature set to the Organizations consolidated billing feature set."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该选项仅提供财务团队用户访问计费信息的权限，但并不能解决“禁止所有用户（包括root用户）访问计费信息”的问题。 IAM策略对root用户的权限没有任何限制，因为root用户拥有所有权限。",
+          "en": "Incorrect. Technical reason: This option only provides finance team users with access to billing information, but does not solve the problem of \"forbidding all users (including root users) from accessing billing information.\" IAM policies have no restrictions on the permissions of the root user because the root user has all permissions."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：基于身份的 IAM 策略不能限制成员账户的根用户，因此无法阻止所有主体访问账单信息。",
+          "en": "Incorrect. Technical reason: An identity-based IAM policy cannot restrict the root user of a member account, so it cannot block billing access for every principal."
+        },
+        "C": {
+          "zh": "正確。技术原因：服务控制策略 (SCP) 是 AWS Organizations 提供的一项功能，可以限制组织中所有账户（包括根用户）的权限。通过将 SCP 附加到根组织单位 (OU)，您可以确保所有成员账户（包括根用户）都可以畅通无阻地访问计费信息。该选项完全满足题目要求。",
+          "en": "Correct. Technical reason: Service Control Policy (SCP) is a feature provided by AWS Organizations that can limit the permissions of all accounts in the organization, including root users. By attaching the SCP to the root organizational unit (OU), you ensure that all member accounts, including the root user, have unblocked access to billing information. This option fully meets the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：改用仅整合账单功能会停用 SCP；没有 SCP 就无法限制成员账户根用户访问账单信息。",
+          "en": "Incorrect. Technical reason: Switching to consolidated billing only disables SCPs. Without an SCP, the organization cannot restrict billing access for member-account root users."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 创建服务控制策略 (SCP) 以拒绝对计费信息的访问。将 SCP 附加到根组织单位 (OU)。",
+        "en": "C. Create a service control policy (SCP) to deny access to the billing information. Attach the SCP to the root organizational unit (OU)."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：服务控制策略 (SCP) 是 AWS Organizations 提供的一项功能，可以限制组织中所有账户（包括根用户）的权限。通过将 SCP 附加到根组织单位 (OU)，您可以确保所有成员账户（包括根用户）都可以畅通无阻地访问计费信息。该选项完全满足题目要求。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Service Control Policy (SCP) is a feature provided by AWS Organizations that can limit the permissions of all accounts in the organization, including root users. By attaching the SCP to the root organizational unit (OU), you ensure that all member accounts, including the root user, have unblocked access to billing information. This option fully meets the question requirements."
+      }
+    },
+    {
+      "question_no": 489,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家电子商务公司在 AWS 云中运行与本地仓库解决方案集成的应用程序。该公司使用 Amazon Simple Notification Service (Amazon SNS) 将订单消息发送到本地 HTTPS 终端节点，以便仓库应用程序可以处理订单。本地数据中心团队发现部分订单消息未收到。解决方案架构师需要保留未传递的消息并分析这些消息最多 14 天。哪种解决方案能够以最少的开发工作满足这些要求？",
+        "en": "An ecommerce company runs an application in the AWS Cloud that is integrated with an on-premises warehouse solution. The company uses Amazon Simple Notification Service (Amazon SNS) to send order messages to an on-premises HTTPS endpoint so the warehouse application can process the orders. The local data center team has detected that some of the order messages were not received. A solutions architect needs to retain messages that are not delivered and analyze the messages for up to 14 days. Which solution will meet these requirements with the LEAST development effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "配置具有保留期为 14 天的 Amazon Kinesis Data Stream 目标的 Amazon SNS 死信队列。",
+          "en": "Configure an Amazon SNS dead letter queue that has an Amazon Kinesis Data Stream target with a retention period of 14 days."
+        },
+        "B": {
+          "zh": "在应用程序和 Amazon SNS 之间添加保留期为 14 天的 Amazon Simple Queue Service (Amazon SQS) 队列。",
+          "en": "Add an Amazon Simple Queue Service (Amazon SQS) queue with a retention period of 14 days between the application and Amazon SNS."
+        },
+        "C": {
+          "zh": "配置具有 Amazon Simple Queue Service (Amazon SQS) 目标且保留期为 14 天的 Amazon SNS 死信队列。",
+          "en": "Configure an Amazon SNS dead letter queue that has an Amazon Simple Queue Service (Amazon SQS) target with a retention period of 14 days."
+        },
+        "D": {
+          "zh": "配置具有 Amazon DynamoDB 目标的 Amazon SNS 死信队列，该目标的 TTL 属性设置为保留期 14 天。",
+          "en": "Configure an Amazon SNS dead letter queue that has an Amazon DynamoDB target with a TTL attribute set for a retention period of 14 days."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：Amazon Kinesis Data Streams 的默认数据保留期为 1 到 7 天，虽然可以延长至 14 天，但这需要额外的配置和成本，而且 Kinesis Data Streams 并不是 SNS 死信队列的直接支持目标。",
+          "en": "Incorrect. Technical reason: The default data retention period for Amazon Kinesis Data Streams is 1 to 7 days, although it can be extended to 14 days, but this requires additional configuration and cost, and Kinesis Data Streams is not a direct support target for SNS dead letter queues."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该选项建议在SNS和应用程序之间添加SQS队列，但这改变了现有架构的淘汰流逻辑，增加了开发复杂度，不符合“最小开发工作量”的要求。",
+          "en": "Incorrect. Technical reason: This option recommends adding an SQS queue between SNS and the application, but this changes the elimination flow logic of the existing architecture, increases development complexity, and does not meet the requirements of \"minimum development effort\"."
+        },
+        "C": {
+          "zh": "正確。技术原因：Amazon SNS 支持将未成功传送的消息作为死信队列发送到 SQS。 SQS可以将消息保留期配置为14天，完全满足问题要求，并且开发工作量最小。",
+          "en": "Correct. Technical reason: Amazon SNS supports sending unsuccessfully delivered messages to SQS as a dead letter queue. SQS can configure the message retention period to 14 days, which fully meets the question requirements and requires minimal development workload."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：虽然DynamoDB可以通过TTL属性设置数据过期时间，但它并不是SNS死信队列的直接支持目标。需要额外的开发工作来实施消除存储和分析。",
+          "en": "Incorrect. Technical reason: Although DynamoDB can set the data expiration time through the TTL attribute, it is not a direct support target for SNS dead letter queues. Additional development work is required to implement elimination storage and analysis."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置具有 Amazon Simple Queue Service (Amazon SQS) 目标且保留期为 14 天的 Amazon SNS 死信队列。",
+        "en": "C. Configure an Amazon SNS dead letter queue that has an Amazon Simple Queue Service (Amazon SQS) target with a retention period of 14 days."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (80%) B (20%)。热门讨论与考点摘要：Amazon SNS 支持将未成功传送的消息作为死信队列发送到 SQS。 SQS可以将消息保留期配置为14天，完全满足问题要求，并且开发工作量最小。",
+        "en": "Community vote as displayed: C (80%) B (20%). Popular discussion and key point summary: Amazon SNS supports sending unsuccessfully delivered messages to SQS as a dead letter queue. SQS can configure the message retention period to 14 days, which fully meets the question requirements and requires minimal development workload."
+      }
+    },
+    {
+      "question_no": 490,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家游戏公司使用 Amazon DynamoDB 来存储用户信息，例如地理位置、玩家数据和排行榜。该公司需要使用最少的编码来配置对 Amazon S3 存储桶的连续备份。备份不得影响应用程序的可用性，也不得影响为表定义的读取容量单位 (RCU)。哪种解决方案满足这些要求？",
+        "en": "A gaming company uses Amazon DynamoDB to store user information such as geographic location, player data, and leaderboards. The company needs to configure continuous backups to an Amazon S3 bucket with a minimal amount of coding. The backups must not affect availability of the application and must not affect the read capacity units (RCUs) that are defined for the table. Which solution meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon EMR 集群。创建 Apache Hive 作业以将数据备份到 Amazon S3。",
+          "en": "Use an Amazon EMR cluster. Create an Apache Hive job to back up the data to Amazon S3."
+        },
+        "B": {
+          "zh": "通过持续备份将数据直接从 DynamoDB 导出到 Amazon S3。打开表的时间点恢复。",
+          "en": "Export the data directly from DynamoDB to Amazon S3 with continuous backups. Turn on point-in-time recovery for the table."
+        },
+        "C": {
+          "zh": "配置 Amazon DynamoDB 流。创建 AWS Lambda 函数来使用流并将数据导出到 Amazon S3 存储桶。",
+          "en": "Configure Amazon DynamoDB Streams. Create an AWS Lambda function to consume the stream and export the data to an Amazon S3 bucket."
+        },
+        "D": {
+          "zh": "创建 AWS Lambda 函数以定期将数据从数据库表导出到 Amazon S3。打开表的时间点恢复。",
+          "en": "Create an AWS Lambda function to export the data from the database tables to Amazon S3 on a regular basis. Turn on point-in-time recovery for the table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：使用 Amazon EMR 和 Apache Hive 需要额外的复杂性和大量的编码工作，这不符合“最少编码”要求。错误：由于需要读取大量数据，此方法可能会影响 DynamoDB 性能。",
+          "en": "Incorrect. Technical reason: Using Amazon EMR and Apache Hive requires additional complexity and significant coding effort that does not meet the \"minimal coding\" requirement. Error: This approach may impact DynamoDB performance because of the large amount of data that needs to be read."
+        },
+        "B": {
+          "zh": "正確。技术原因：DynamoDB 支持直接导出到 Amazon S3，并且启用时间点恢复可实现连续备份。正确：此方法不会影响应用程序可用性或 RCU，因为导出操作是异步的。",
+          "en": "Correct. Technical reason: DynamoDB supports direct export to Amazon S3, and enabling point-in-time recovery enables continuous backup. Correct: This method does not impact application availability nor RCU because the export operation is asynchronous."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：DynamoDB Streams 主要用于实时数据处理，而不是备份。这种方法需要额外的开发工作，并且不满足“最少编码”的要求。错误：使用 Lambda 函数处理流可能会影响应用程序的性能和 RCU，因为流会消耗额外的资源。",
+          "en": "Incorrect. Technical reason: DynamoDB Streams is primarily used for real-time data processing, not backup. This approach requires additional development work and does not meet the \"minimal coding\" requirement. Error: Using Lambda functions to process streams may impact your application's performance and RCU because streams consume additional resources."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：定期导出数据需要额外的开发工作，并且不满足“最低编码”要求。错误：此方法可能会影响 DynamoDB 性能，因为需要定期读取大量数据。",
+          "en": "Incorrect. Technical reason: Exporting data regularly requires additional development work and does not meet the \"minimum coding\" requirement. Error: This method may impact DynamoDB performance because large amounts of data need to be read regularly."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 通过持续备份将数据直接从 DynamoDB 导出到 Amazon S3。打开表的时间点恢复。",
+        "en": "B. Export the data directly from DynamoDB to Amazon S3 with continuous backups. Turn on point-in-time recovery for the table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (87%) 13%。热门讨论与考点摘要：DynamoDB 支持直接导出到 Amazon S3，并且启用时间点恢复可实现连续备份。正确：此方法不会影响应用程序可用性或 RCU，因为导出操作是异步的。",
+        "en": "Community vote as displayed: B (87%) 13%. Popular discussion and key point summary: DynamoDB supports direct export to Amazon S3, and enabling point-in-time recovery enables continuous backup. Correct: This method does not impact application availability nor RCU because the export operation is asynchronous."
+      }
+    },
+    {
+      "question_no": 491,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "解决方案架构师正在设计一个异步应用程序来处理银行的信用卡数据验证请求。应用程序必须是安全的并且能够至少处理每个请求一次。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A solutions architect is designing an asynchronous application to process credit card data validation requests for a bank. The application must be secure and be able to process each request at least once. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) 标准队列设置为事件源。使用 AWS Key Management Service (SSE-KMS) 进行加密。为 Lambda 执行角色添加 kms:Decrypt 权限。",
+          "en": "Use AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the event source. Use AWS Key Management Service (SSE-KMS) for encryption. Add the kms:Decrypt permission for the Lambda execution role."
+        },
+        "B": {
+          "zh": "使用 AWS Lambda 事件源映射。使用 Amazon Simple Queue Service (Amazon SQS) FIFO 队列作为事件源。使用 SQS 托管加密密钥 (SSE-SQS) 进行加密。添加Lambda函数的加密密钥调用权限。",
+          "en": "Use AWS Lambda event source mapping. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues as the event source. Use SQS managed encryption keys (SSE-SQS) for encryption. Add the encryption key invocation permission for the Lambda function."
+        },
+        "C": {
+          "zh": "使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) FIFO 队列设置为事件源。使用 AWS KMS 密钥 (SSE-KMS)。为 Lambda 执行角色添加 kms:Decrypt 权限。",
+          "en": "Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) FIFO queues as the event source. Use AWS KMS keys (SSE-KMS). Add the kms:Decrypt permission for the Lambda execution role."
+        },
+        "D": {
+          "zh": "使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) 标准队列设置为事件源。使用 AWS KMS 密钥 (SSE-KMS) 进行加密。添加Lambda函数的加密密钥调用权限。",
+          "en": "Use the AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the event source. Use AWS KMS keys (SSE-KMS) for encryption. Add the encryption key invocation permission for the Lambda function."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：SQS标准队列支持“至少一次”消息处理，满足问题的要求。正确：使用SSE-KMS加密可以保证数据安全，需要给Lambda执行角色添加kms:Decrypt权限。成本更低：标准队列比先进先出队列便宜，适合对成本敏感的场景。",
+          "en": "Correct. Technical reason: The SQS standard queue supports \"at least once\" message processing, which meets the requirements of the question. Correct: Using SSE-KMS encryption can ensure data security, and you need to add kms:Decrypt permission to the Lambda execution role. Lower cost: Standard queues are cheaper than FIFO queues and are suitable for cost-sensitive scenarios."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：FIFO队列支持“恰好一次”消息处理，但题目要求“至少一次”，所以不满足要求。正确：SSE-SQS是SQS托管的加密机制，适合加密需求。成本较高： FIFO 队列的成本高于标准队列，并且不是最具成本效益的选择。",
+          "en": "Incorrect. Technical reason: FIFO queue supports \"exactly once\" message processing, but the question requires \"at least once\", so it does not meet the requirements. Correct: SSE-SQS is an encryption mechanism hosted by SQS and is suitable for encryption needs. Higher cost: FIFO queues cost more than standard queues and are not the most cost-effective option."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：FIFO队列支持“恰好一次”消息处理，但题目要求“至少一次”，所以不满足要求。正确：使用SSE-KMS加密可以保证数据安全，需要给Lambda执行角色添加kms:Decrypt权限。成本较高： FIFO 队列的成本高于标准队列，并且不是最具成本效益的选择。",
+          "en": "Incorrect. Technical reason: FIFO queue supports \"exactly once\" message processing, but the question requires \"at least once\", so it does not meet the requirements. Correct: Using SSE-KMS encryption can ensure data security, and you need to add kms:Decrypt permission to the Lambda execution role. Higher cost: FIFO queues cost more than standard queues and are not the most cost-effective option."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Lambda 事件源映射。将 Amazon Simple Queue Service (Amazon SQS) 标准队列设置为事件源。使用 AWS Key Management Service (SSE-KMS) 进行加密。为 Lambda 执行角色添加 kms:Decrypt 权限。",
+        "en": "A. Use AWS Lambda event source mapping. Set Amazon Simple Queue Service (Amazon SQS) standard queues as the event source. Use AWS Key Management Service (SSE-KMS) for encryption. Add the kms:Decrypt permission for the Lambda execution role."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (75%) B (24%) 2%。热门讨论与考点摘要：SQS标准队列支持“至少一次”消息处理，满足问题的要求。正确：使用SSE-KMS加密可以保证数据安全，需要给Lambda执行角色添加kms:Decrypt权限。成本更低：标准队列比先进先出队列便宜，适合对成本敏感的场景。",
+        "en": "Community vote as displayed: A (75%) B (24%) 2%. Popular discussion and key point summary: The SQS standard queue supports \"at least once\" message processing, which meets the requirements of the question. Correct: Using SSE-KMS encryption can ensure data security, and you need to add kms:Decrypt permission to the Lambda execution role. Lower cost: Standard queues are cheaper than FIFO queues and are suitable for cost-sensitive scenarios."
+      }
+    },
+    {
+      "question_no": 492,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司拥有多个用于开发工作的 AWS 账户。一些员工持续使用超大的 Amazon EC2 实例，这导致公司超出了开发账户的年度预算。该公司希望集中限制这些账户中 AWS 资源的创建。哪种解决方案能够以最少的开发工作满足这些要求？",
+        "en": "A company has multiple AWS accounts for development work. Some staff consistently use oversized Amazon EC2 instances, which causes the company to exceed the yearly budget for the development accounts. The company wants to centrally restrict the creation of AWS resources in these accounts. Which solution will meet these requirements with the LEAST development effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "开发使用经批准的 EC2 创建流程的 AWS Systems Manager 模板。使用批准的 Systems Manager 模板来预置 EC2 实例。",
+          "en": "Develop AWS Systems Manager templates that use an approved EC2 creation process. Use the approved Systems Manager templates to provision EC2 instances."
+        },
+        "B": {
+          "zh": "使用 AWS Organizations 将账户组织到组织单位 (OU)。定义并附加服务控制策略 (SCP) 以控制 EC2 实例类型的使用。",
+          "en": "Use AWS Organizations to organize the accounts into organizational units (OUs). Define and attach a service control policy (SCP) to control the usage of EC2 instance types."
+        },
+        "C": {
+          "zh": "配置 Amazon EventBridge 规则，以便在创建 EC2 实例时调用 AWS Lambda 函数。停止不允许的 EC2 实例类型。",
+          "en": "Configure an Amazon EventBridge rule that invokes an AWS Lambda function when an EC2 instance is created. Stop disallowed EC2 instance types."
+        },
+        "D": {
+          "zh": "为员工设置 AWS Service Catalog 产品以创建允许的 EC2 实例类型。确保员工只能使用服务目录产品来部署 EC2 实例。",
+          "en": "Set up AWS Service Catalog products for the staff to create the allowed EC2 instance types. Ensure that staff can deploy EC2 instances only by using the Service Catalog products."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 Systems Manager 可以帮助标准化流程，但它需要额外的开发工作来创建和维护模板，并且不会直接限制用户创建不符合要求的 EC2 实例。开发成本高，不符合“最小开发工作量”的要求。",
+          "en": "Incorrect. Technical reason: While Systems Manager can help standardize processes, it requires additional development work to create and maintain templates and does not directly restrict users from creating EC2 instances that do not meet requirements. Development costs are high and do not meet the \"minimum development effort\" requirement."
+        },
+        "B": {
+          "zh": "正確。技术原因：AWS Organizations 和 SCP 是专门为集中管理和限制资源使用而设计的工具。 SCP可以直接限制用户创建不符合要求的EC2实例类型。开发成本低，满足“最小开发工作量”要求。",
+          "en": "Correct. Technical reason: AWS Organizations and SCP are tools specifically designed to centrally manage and limit resource usage. SCP can directly restrict users from creating EC2 instance types that do not meet the requirements. Development costs are low and meet the \"minimum development effort\" requirement."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：尽管可以通过 EventBridge 和 Lambda 实现资源限制，但这种方法是反应性的（事后处理），并且需要额外的开发工作来编写和维护 Lambda 函数。开发成本高，不符合“最小开发工作量”的要求。",
+          "en": "Incorrect. Technical reason: Although resource limiting can be achieved through EventBridge and Lambda, this approach is reactive (processed after the fact) and requires additional development work to write and maintain Lambda functions. Development costs are high and do not meet the \"minimum development effort\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Service Catalog 可以帮助标准化资源创建，但需要额外的配置工作，并不能完全阻止用户直接创建不符合要求的 EC2 实例。开发成本高，不符合“最小开发工作量”的要求。",
+          "en": "Incorrect. Technical reason: AWS Service Catalog can help standardize resource creation, but it requires additional configuration work and does not completely prevent users from directly creating EC2 instances that do not meet requirements. Development costs are high and do not meet the \"minimum development effort\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 AWS Organizations 将账户组织到组织单位 (OU)。定义并附加服务控制策略 (SCP) 以控制 EC2 实例类型的使用。",
+        "en": "B. Use AWS Organizations to organize the accounts into organizational units (OUs). Define and attach a service control policy (SCP) to control the usage of EC2 instance types."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (93%) 7%。热门讨论与考点摘要：AWS Organizations 和 SCP 是专门为集中管理和限制资源使用而设计的工具。 SCP可以直接限制用户创建不符合要求的EC2实例类型。开发成本低，满足“最小开发工作量”要求。",
+        "en": "Community vote as displayed: B (93%) 7%. Popular discussion and key point summary: AWS Organizations and SCP are tools specifically designed to centrally manage and limit resource usage. SCP can directly restrict users from creating EC2 instance types that do not meet the requirements. Development costs are low and meet the \"minimum development effort\" requirement."
+      }
+    },
+    {
+      "question_no": 493,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望使用人工智能 (AI) 来确定其客户服务呼叫的质量。该公司目前管理四种不同语言的通话，其中包括英语。该公司未来将提供新的语言。该公司没有资源来定期维护机器学习 (ML) 模型。该公司需要根据客户服务通话录音创建书面情绪分析报告。客户服务通话录音文本必须翻译成英文。哪种步骤组合可以满足这些要求？ （选择三项。）",
+        "en": "A company wants to use artificial intelligence (AI) to determine the quality of its customer service calls. The company currently manages calls in four different languages, including English. The company will offer new languages in the future. The company does not have the resources to regularly maintain machine learning (ML) models. The company needs to create written sentiment analysis reports from the customer service call recordings. The customer service call recording text must be translated into English. Which combination of steps will meet these requirements? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Comprehend 将录音翻译成英语。",
+          "en": "Use Amazon Comprehend to translate the audio recordings into English."
+        },
+        "B": {
+          "zh": "使用 Amazon Lex 创建书面情绪分析报告。",
+          "en": "Use Amazon Lex to create the written sentiment analysis reports."
+        },
+        "C": {
+          "zh": "使用 Amazon Polly 将录音转换为文本。",
+          "en": "Use Amazon Polly to convert the audio recordings into text."
+        },
+        "D": {
+          "zh": "使用 Amazon Transcribe 将任何语言的录音转换为文本。",
+          "en": "Use Amazon Transcribe to convert the audio recordings in any language into text."
+        },
+        "E": {
+          "zh": "使用 Amazon Translate 将任何语言的文本翻译成英语。",
+          "en": "Use Amazon Translate to translate text in any language to English."
+        },
+        "F": {
+          "zh": "使用 Amazon Comprehend 创建情绪分析报告。",
+          "en": "Use Amazon Comprehend to create the sentiment analysis reports."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：错误。 Amazon Comprehend的功能是执行自然语言处理（NLP），包括情感分析、实体识别等，但它无法翻译音频或文本。",
+          "en": "Incorrect. Technical reason: Error. Amazon Comprehend's function is to perform natural language processing (NLP), including sentiment analysis, entity recognition, etc., but it cannot translate audio or text."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：错误。 Amazon Lex是用于构建会话饺子的服务（例如Gantian Robot），它不适合生成情感分析报告。",
+          "en": "Incorrect. Technical reason: Error. Amazon Lex is a service used to build conversational dumplings (such as Gantian Robot), and it is not suitable for generating sentiment analysis reports."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：错误。 Amazon Polly 将文本转换为语音，而不是将音频转换为文本。",
+          "en": "Incorrect. Technical reason: Error. Amazon Polly converts text to speech, not audio to text."
+        },
+        "D": {
+          "zh": "正確。技术原因：正确。 Amazon Transcribe 可以将录音转换为文本，支持多种语言。",
+          "en": "Correct. Technical reason: Correct. Amazon Transcribe can convert audio recordings into text, supporting multiple languages."
+        },
+        "E": {
+          "zh": "正確。技术原因：正确。 Amazon Translate 可以将文本从一种语言翻译成另一种语言，包括英语。",
+          "en": "Correct. Technical reason: Correct. Amazon Translate can translate text from one language to another, including into English."
+        },
+        "F": {
+          "zh": "正確。技术原因：正确。 Amazon Comprehend 可以对文本执行情感分析并生成边界报告。",
+          "en": "Correct. Technical reason: Correct. Amazon Comprehend can perform sentiment analysis on text and generate boundary reports."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "D",
+        "E",
+        "F"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 Amazon Transcribe 将任何语言的录音转换为文本。；E. 使用 Amazon Translate 将任何语言的文本翻译成英语。；F. 使用 Amazon Comprehend 创建情绪分析报告。",
+        "en": "D. Use Amazon Transcribe to convert the audio recordings in any language into text.; E. Use Amazon Translate to translate text in any language to English.; F. Use Amazon Comprehend to create the sentiment analysis reports."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：DEF (100%)。热门讨论与考点摘要：正确。 Amazon Transcribe 可以将录音转换为文本，支持多种语言。；正确。 Amazon Translate 可以将文本从一种语言翻译成另一种语言，包括英语。；正确。 Amazon Comprehend 可以对文本执行情感分析并生成边界报告。",
+        "en": "Community vote as displayed: DEF (100%). Popular discussion and key point summary: Correct. Amazon Transcribe can convert audio recordings into text, supporting multiple languages.; Correct. Amazon Translate can translate text from one language to another, including into English.; Correct. Amazon Comprehend can perform sentiment analysis on text and generate boundary reports."
+      }
+    },
+    {
+      "question_no": 494,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon EC2 实例来托管其内部系统。作为部署操作的一部分，管理员尝试使用 AWS CLI 终止 EC2 实例。但是，管理员收到 403（访问被拒绝）错误消息。管理员正在使用附加了以下 IAM 策略的 IAM 角色：请求失败的原因是什么？",
+        "en": "A company uses Amazon EC2 instances to host its internal systems. As part of a deployment operation, an administrator tries to use the AWS CLI to terminate an EC2 instance. However, the administrator receives a 403 (Access Denied) error message. The administrator is using an IAM role that has the following IAM policy attached: What is the cause of the unsuccessful request?"
+      },
+      "options": {
+        "A": {
+          "zh": "EC2 实例具有带有 Deny 语句的基于资源的策略。",
+          "en": "The EC2 instance has a resource-based policy with a Deny statement."
+        },
+        "B": {
+          "zh": "政策声明中并未明确具体负责人。",
+          "en": "The principal has not been specified in the policy statement."
+        },
+        "C": {
+          "zh": "“操作”字段不授予终止 EC2 实例所需的操作。",
+          "en": "The \"Action\" field does not grant the actions that are required to terminate the EC2 instance."
+        },
+        "D": {
+          "zh": "终止 EC2 实例的请求并非源自 CIDR 块 192.0.2.0/24 或 203.0.113.0/24。",
+          "en": "The request to terminate the EC2 instance does not originate from the CIDR blocks 192.0.2.0/24 or 203.0.113.0/24."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：该问题没有提到 EC2 实例有任何基于资源的策略。 IAM 策略特定于用户或角色，而不是资源本身。",
+          "en": "Incorrect. Technical reason: The question does not mention that EC2 instances have any resource-based policy. IAM policies are specific to users or roles, not the resources themselves."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：IAM 策略不需要显式指定委托人 (Principal)，因为它已经附加到 IAM 角色。该问题明确指出管理员正在使用 IAM 角色，因为主题隐含在角色中。",
+          "en": "Incorrect. Technical reason: IAM policies do not need to explicitly specify the principal (Principal) because it is already attached to the IAM role. The question clearly states that the administrator is using an IAM role because the subject is implicit in the role."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：IAM 策略明确允许“ec2:TerminateInstances”操作。问题的根本原因不是“Action”桶，而是限制操作执行的“Deny”条件。",
+          "en": "Incorrect. Technical reason: The \"ec2:TerminateInstances\" operation is explicitly allowed in the IAM policy. The root cause of the problem is not the \"Action\" bucket, but the \"Deny\" condition that limits the execution of the operation."
+        },
+        "D": {
+          "zh": "正確。技术原因：IAM 策略中的“拒绝”语句包含一个条件，要求请求的源 IP 在指定的 CIDR 块范围内。如果请求的源IP不在这些范围内，“Deny”语句就会生效，导致访问被拒绝。",
+          "en": "Correct. Technical reason: The \"Deny\" statement in the IAM policy contains a condition that requires the source IP of the request to be within the specified CIDR block range. If the source IP of the request is not within these ranges, the \"Deny\" statement will take effect, causing access to be denied."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 终止 EC2 实例的请求并非源自 CIDR 块 192.0.2.0/24 或 203.0.113.0/24。",
+        "en": "D. The request to terminate the EC2 instance does not originate from the CIDR blocks 192.0.2.0/24 or 203.0.113.0/24."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：D (100%)。热门讨论与考点摘要：IAM 策略中的“拒绝”语句包含一个条件，要求请求的源 IP 在指定的 CIDR 块范围内。如果请求的源IP不在这些范围内，“Deny”语句就会生效，导致访问被拒绝。",
+        "en": "Community vote as displayed: D (100%). Popular discussion and key point summary: The \"Deny\" statement in the IAM policy contains a condition that requires the source IP of the request to be within the specified CIDR block range. If the source IP of the request is not within these ranges, the \"Deny\" statement will take effect, causing access to be denied."
+      }
+    },
+    {
+      "question_no": 495,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "某公司正在进行内部审计。该公司希望确保与公司的 AWS Lake Formation 数据湖关联的 Amazon S3 存储桶中的数据不包含敏感的客户或员工数据。该公司希望发现个人身份信息 (PII) 或财务信息，包括护照号码和信用卡号码。哪种解决方案可以满足这些要求？",
+        "en": "A company is conducting an internal audit. The company wants to ensure that the data in an Amazon S3 bucket that is associated with the company’s AWS Lake Formation data lake does not contain sensitive customer or employee data. The company wants to discover personally identifiable information (PII) or financial information, including passport numbers and credit card numbers. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "在账户上配置 AWS Audit Manager。选择支付卡行业数据安全标准 (PCI DSS) 进行审核。",
+          "en": "Configure AWS Audit Manager on the account. Select the Payment Card Industry Data Security Standards (PCI DSS) for auditing."
+        },
+        "B": {
+          "zh": "在 S3 存储桶上配置 Amazon S3 清单 配置 Amazon Athena 以查询清单。",
+          "en": "Configure Amazon S3 Inventory on the S3 bucket Configure Amazon Athena to query the inventory."
+        },
+        "C": {
+          "zh": "配置 Amazon Macie 以运行使用所需数据类型的托管标识符的数据发现作业。",
+          "en": "Configure Amazon Macie to run a data discovery job that uses managed identifiers for the required data types."
+        },
+        "D": {
+          "zh": "使用 Amazon S3 Select 在 S3 存储桶中运行报告。",
+          "en": "Use Amazon S3 Select to run a report across the S3 bucket."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Audit Manager主要用于帮助企业评估和审计其合规性（例如PCI DSS），但它不具备直接扫描S3存储桶中的数据以发现敏感信息的能力。",
+          "en": "Incorrect. Technical reason: AWS Audit Manager is mainly used to help enterprises assess and audit their compliance (such as PCI DSS), but it does not have the ability to directly scan data in S3 buckets to discover sensitive information."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：Amazon S3 Inventory 提供有关 S3 存储桶中对象的元数据报告，但它无法识别 PII 或财务信息等敏感数据。 Amazon Athena 可以查询这些库存，但仍然无法直接发现敏感信息。",
+          "en": "Incorrect. Technical reason: Amazon S3 Inventory provides metadata reports about objects in S3 buckets, but it cannot identify sensitive data such as PII or financial information. Amazon Athena can query these inventories, but it still cannot directly discover sensitive information."
+        },
+        "C": {
+          "zh": "正確。技术原因：Amazon Macie 是一项专门用于发现和保护敏感数据的服务。它可以扫描 S3 存储桶中的数据并使用托管标识符来识别 PII 和财务信息（例如护照号码和信用卡号码）。",
+          "en": "Correct. Technical reason: Amazon Macie is a service specifically designed to discover and protect sensitive data. It can scan data in S3 buckets and use managed identifiers to identify PII and financial information (such as passport numbers and credit card numbers)."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon S3 Select 用于从 S3 对象中提取特定数据，但它无法自动识别敏感信息或运行数据发现作业。",
+          "en": "Incorrect. Technical reason: Amazon S3 Select is used to extract specific data from S3 objects, but it cannot automatically identify sensitive information or run data discovery jobs."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 配置 Amazon Macie 以运行使用所需数据类型的托管标识符的数据发现作业。",
+        "en": "C. Configure Amazon Macie to run a data discovery job that uses managed identifiers for the required data types."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：Amazon Macie 是一项专门用于发现和保护敏感数据的服务。它可以扫描 S3 存储桶中的数据并使用托管标识符来识别 PII 和财务信息（例如护照号码和信用卡号码）。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Amazon Macie is a service specifically designed to discover and protect sensitive data. It can scan data in S3 buckets and use managed identifiers to identify PII and financial information (such as passport numbers and credit card numbers)."
+      }
+    }
+  ]
+}

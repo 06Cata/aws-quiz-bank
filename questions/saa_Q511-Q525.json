@@ -1,0 +1,872 @@
+{
+  "exam": "AWS SAA-C03",
+  "questions": [
+    {
+      "question_no": 511,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在开发使用 PostgreSQL 数据库模式的软件。公司需要为公司的开发人员配置多种开发环境和数据库。平均而言，每个开发环境的使用时间为每天 8 小时工作日的一半。哪种解决方案能够最具成本效益地满足这些要求？",
+        "en": "A company is developing software that uses a PostgreSQL database schema. The company needs to configure multiple development environments and databases for the company's developers. On average, each development environment is used for half of the 8-hour workday. Which solution will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用自己的 Amazon Aurora PostgreSQL 数据库配置每个开发环境",
+          "en": "Configure each development environment with its own Amazon Aurora PostgreSQL database"
+        },
+        "B": {
+          "zh": "使用自己的 Amazon RDS for PostgreSQL 单可用区数据库实例配置每个开发环境",
+          "en": "Configure each development environment with its own Amazon RDS for PostgreSQL Single-AZ DB instances"
+        },
+        "C": {
+          "zh": "使用自己的 Amazon Aurora On-Demand PostgreSQL 兼容数据库配置每个开发环境",
+          "en": "Configure each development environment with its own Amazon Aurora On-Demand PostgreSQL-Compatible database"
+        },
+        "D": {
+          "zh": "使用 Amazon S3 Object Select 为每个开发环境配置其自己的 Amazon S3 存储桶",
+          "en": "Configure each development environment with its own Amazon S3 bucket by using Amazon S3 Object Select"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：Amazon Aurora是高性能托管数据库服务，但成本较高，尤其是对于开发环境的短期使用场景。结论：不符合“性价比最高”的要求。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon Aurora is a high-performance managed database service, but its cost is high, especially for short-term usage scenarios of development environments. Conclusion: Does not meet the \"most cost-effective\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：Amazon RDS 提供托管 PostgreSQL 数据库服务。单可用区实例成本较低，但您仍然需要为整个实例运行时付费，即使开发环境仅在部分时间使用。结论：不如Aurora点播划算。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon RDS provides a managed PostgreSQL database service. Single-AZ instances are less expensive, but you still need to pay for the entire instance runtime, even if the development environment is only used part of the time. Conclusion: Not as cost-effective as Aurora on-demand."
+        },
+        "C": {
+          "zh": "正確。技术原因：分析：Amazon Aurora On-Demand模式允许根据实际使用时间付费，非常适合短期使用场景的开发。结论：满足“最具成本效益”的要求。",
+          "en": "Correct. Technical reason: Analysis: Amazon Aurora On-Demand mode allows payment based on actual usage time, which is very suitable for the development of short-term usage scenarios. Conclusion: Meets the “most cost-effective” requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：Amazon S3是一种对象存储服务，不适合直接用作数据库。 S3 Object Select 主要用于查询存储在 S3 中的数据，而不是运行数据库。结论：不符合问题要求。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon S3 is an object storage service and is not suitable for use directly as a database. S3 Object Select is primarily used to query data stored in S3, rather than running a database. Conclusion: Does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用自己的 Amazon Aurora On-Demand PostgreSQL 兼容数据库配置每个开发环境",
+        "en": "C. Configure each development environment with its own Amazon Aurora On-Demand PostgreSQL-Compatible database"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (67%) B (33%)。热门讨论与考点摘要：分析：Amazon Aurora On-Demand模式允许根据实际使用时间付费，非常适合短期使用场景的开发。结论：满足“最具成本效益”的要求。",
+        "en": "Community vote as displayed: C (67%) B (33%). Popular discussion and key point summary: Analysis: Amazon Aurora On-Demand mode allows payment based on actual usage time, which is very suitable for the development of short-term usage scenarios. Conclusion: Meets the “most cost-effective” requirement."
+      }
+    },
+    {
+      "question_no": 512,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 AWS Organizations 以及按账户标记的资源。该公司还使用 AWS Backup 来备份其 AWS 基础设施资源。公司需要备份所有AWS资源。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company uses AWS Organizations with resources tagged by account. The company also uses AWS Backup to back up its AWS infrastructure resources. The company needs to back up all AWS resources. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Config 识别所有未标记的资源。以编程方式标记已识别的资源。在备份计划中使用标签。",
+          "en": "Use AWS Config to identify all untagged resources. Tag the identified resources programmatically. Use tags in the backup plan."
+        },
+        "B": {
+          "zh": "使用 AWS Config 识别所有未运行的资源。将这些资源添加到备份保管库。",
+          "en": "Use AWS Config to identify all resources that are not running. Add those resources to the backup vault."
+        },
+        "C": {
+          "zh": "要求所有 AWS 账户所有者检查其资源以确定需要备份的资源。",
+          "en": "Require all AWS account owners to review their resources to identify the resources that need to be backed up."
+        },
+        "D": {
+          "zh": "使用 Amazon Inspector 识别所有不合规资源。",
+          "en": "Use Amazon Inspector to identify all noncompliant resources."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Config 可以帮助识别未标记的资源，然后可以通过编程方式对其进行标记。使用标签可以简化备份计划的管理并减少运营开销。",
+          "en": "Correct. Technical reason: AWS Config can help identify untagged resources, which can then be programmatically tagged. Using tags can simplify the management of backup plans and reduce operational overhead."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Config 的主要功能是记录资源配置和合规性，而不是直接识别“非运行资源”。另外，备份未运行的资源也不符合题目要求。",
+          "en": "Incorrect. Technical reason: The main function of AWS Config is to record resource configuration and compliance, rather than directly identifying \"non-running resources\". In addition, backing up resources that are not running does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：这种方法需要人工干预，增加了运行开销，不满足问题所要求的“LEAST运行开销”。",
+          "en": "Incorrect. Technical reason: This method requires manual intervention, increases operational overhead, and does not meet the \"LEAST operational overhead\" required by the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon Inspector主要用于安全漏洞扫描和合规性检查，与备份资源的识别无关。",
+          "en": "Incorrect. Technical reason: Amazon Inspector is mainly used for security vulnerability scanning and compliance inspection, and has nothing to do with the identification of backup resources."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 AWS Config 识别所有未标记的资源。以编程方式标记已识别的资源。在备份计划中使用标签。",
+        "en": "A. Use AWS Config to identify all untagged resources. Tag the identified resources programmatically. Use tags in the backup plan."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：AWS Config 可以帮助识别未标记的资源，然后可以通过编程方式对其进行标记。使用标签可以简化备份计划的管理并减少运营开销。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: AWS Config can help identify untagged resources, which can then be programmatically tagged. Using tags can simplify the management of backup plans and reduce operational overhead."
+      }
+    },
+    {
+      "question_no": 513,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家社交媒体公司希望允许其用户在 AWS 云中托管的应用程序中上传图像。该公司需要一种能够自动调整图像大小的解决方案，以便图像可以在多种设备类型上显示。该应用程序全天都会经历不可预测的流量模式。该公司正在寻求一种高度可用的解决方案，以最大限度地提高可扩展性。解决方案架构师应该怎样做才能满足这些要求？",
+        "en": "A social media company wants to allow its users to upload images in an application that is hosted in the AWS Cloud. The company needs a solution that automatically resizes the images so that the images can be displayed on multiple device types. The application experiences unpredictable traffic patterns throughout the day. The company is seeking a highly available solution that maximizes scalability. What should a solutions architect do to meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "创建一个在 Amazon S3 中托管的静态网站，该网站调用 AWS Lambda 函数来调整图像大小并将图像存储在 Amazon S3 存储桶中。",
+          "en": "Create a static website hosted in Amazon S3 that invokes AWS Lambda functions to resize the images and store the images in an Amazon S3 bucket."
+        },
+        "B": {
+          "zh": "创建一个在 Amazon CloudFront 中托管的静态网站，该网站调用 AWS Step Functions 来调整图像大小并将图像存储在 Amazon RDS 数据库中。",
+          "en": "Create a static website hosted in Amazon CloudFront that invokes AWS Step Functions to resize the images and store the images in an Amazon RDS database."
+        },
+        "C": {
+          "zh": "创建托管在 Amazon EC2 实例上运行的 Web 服务器上的动态网站。配置在 EC2 实例上运行的进程以调整图像大小并将图像存储在 Amazon S3 存储桶中。",
+          "en": "Create a dynamic website hosted on a web server that runs on an Amazon EC2 instance. Configure a process that runs on the EC2 instance to resize the images and store the images in an Amazon S3 bucket."
+        },
+        "D": {
+          "zh": "创建一个托管在自动扩展的 Amazon Elastic Container Service (Amazon ECS) 集群上的动态网站，该集群在 Amazon Simple Queue Service (Amazon SQS) 中创建调整大小作业。设置在 Amazon EC2 实例上运行的图像调整大小程序来处理调整大小作业。",
+          "en": "Create a dynamic website hosted on an automatically scaling Amazon Elastic Container Service (Amazon ECS) cluster that creates a resize job in Amazon Simple Queue Service (Amazon SQS). Set up an image-resizing program that runs on an Amazon EC2 instance to process the resize jobs."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：Amazon S3 可以托管具有高可用性和可扩展性的静态网站。正确：AWS Lambda 是一种无服务器计算服务，可以自动扩展以处理图像大小调整任务。正确：Amazon S3 是图像文件的理想存储解决方案。该选项完全满足问题的要求：高可用性、可扩展性和自动化图像处理。",
+          "en": "Correct. Technical reason: Amazon S3 can host static websites with high availability and scalability. Correct: AWS Lambda is a serverless compute service that automatically scales to handle image resizing tasks. Correct: Amazon S3 is an ideal storage solution for image files. This option fully meets the requirements of the question: high availability, scalability, and automated image processing."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：CloudFront 是一个内容分发网络 (CDN)，不直接托管静态网站。错误：AWS Step Functions 是工作流编排服务，不适合直接处理图像调整任务。错误：Amazon RDS 是关系数据库，不适合存储图像文件。该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: CloudFront is a content delivery network (CDN) that does not host static websites directly. Error: AWS Step Functions is a workflow orchestration service and is not suitable for directly handling image adjustment tasks. Error: Amazon RDS is a relational database and is not suitable for storing image files. This option does not meet the question requirements."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：EC2 需要手动管理，并且无法自动扩展以处理不可预测的流量模式。正确：可以通过 EC2 实例运行图像缩放器，但这不是最佳解决方案。正确：Amazon S3 是理想的存储解决方案。该选项不满足高可用性和自动可扩展性要求的问题。",
+          "en": "Incorrect. Technical reason: EC2 requires manual management and cannot automatically scale to handle unpredictable traffic patterns. Correct: It is possible to run the image resizer through an EC2 instance, but this is not the best solution. Correct: Amazon S3 is the ideal storage solution. This option does not meet the high availability and automatic scalability requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 创建一个在 Amazon S3 中托管的静态网站，该网站调用 AWS Lambda 函数来调整图像大小并将图像存储在 Amazon S3 存储桶中。",
+        "en": "A. Create a static website hosted in Amazon S3 that invokes AWS Lambda functions to resize the images and store the images in an Amazon S3 bucket."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：Amazon S3 可以托管具有高可用性和可扩展性的静态网站。正确：AWS Lambda 是一种无服务器计算服务，可以自动扩展以处理图像大小调整任务。正确：Amazon S3 是图像文件的理想存储解决方案。该选项完全满足问题的要求：高可用性、可扩展性和自动化图像处理。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Amazon S3 can host static websites with high availability and scalability. Correct: AWS Lambda is a serverless compute service that automatically scales to handle image resizing tasks. Correct: Amazon S3 is an ideal storage solution for image files. This option fully meets the requirements of the question: high availability, scalability, and automated image processing."
+      }
+    },
+    {
+      "question_no": 514,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司正在 Amazon EC2 实例上运行微服务应用程序。该公司希望将应用程序迁移到 Amazon Elastic Kubernetes Service (Amazon EKS) 集群以实现可扩展性。公司必须配置 Amazon EKS 控制平面，将终端节点私有访问设置为 true，将终端节点公共访问设置为 false，以保持安全合规性。公司还必须将数据平面置于私有子网中。然而，该公司收到了错误通知，因为该节点无法加入集群。哪种解决方案将允许节点加入集群？",
+        "en": "A company is running a microservices application on Amazon EC2 instances. The company wants to migrate the application to an Amazon Elastic Kubernetes Service (Amazon EKS) cluster for scalability. The company must configure the Amazon EKS control plane with endpoint private access set to true and endpoint public access set to false to maintain security compliance. The company must also put the data plane in private subnets. However, the company has received error notifications because the node cannot join the cluster. Which solution will allow the node to join the cluster?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 AWS Identity and Access Management (IAM) 中所需的权限授予 AmazonEKSNodeRole IAM 角色。",
+          "en": "Grant the required permission in AWS Identity and Access Management (IAM) to the AmazonEKSNodeRole IAM role."
+        },
+        "B": {
+          "zh": "创建接口VPC端点以允许节点访问控制平面。",
+          "en": "Create interface VPC endpoints to allow nodes to access the control plane."
+        },
+        "C": {
+          "zh": "在公共子网中重新创建节点。限制 EC2 节点的安全组。",
+          "en": "Recreate nodes in the public subnet. Restrict security groups for EC2 nodes."
+        },
+        "D": {
+          "zh": "允许节点安全组内的出站流量。",
+          "en": "Allow outbound traffic in the security group of the nodes."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：虽然IAM角色权限是Amazon EKS节点正常运行的必备条件，但问题中并未提及IAM权限不足的问题。结论：该选项与问题中描述的错误通知无关，因此是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Although IAM role permissions are an essential condition for the normal operation of Amazon EKS nodes, the question does not mention the issue of insufficient IAM permissions. Conclusion: This option has nothing to do with the error notification described in the question, so it is wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因：分析：当控制平面设置为私有访问（端点私有访问 = true）并且禁用公共访问（端点公共访问 = false）时，节点需要通过接口 VPC 端点访问控制平面。结论：该选项解决了节点无法加入集群的问题，因此是正确的。",
+          "en": "Correct. Technical reason: Analysis: When the control plane is set to private access (endpoint private access = true) and public access is disabled (endpoint public access = false), the node needs to access the control plane through the interface VPC endpoint. Conclusion: This option solves the problem of nodes not being able to join the cluster and is therefore correct."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：分析：题目明确要求数据密度节点必须位于私有子网中，所以将节点放在公有子网中是不符合要求的。结论：该选项违反了题目要求，故错误。",
+          "en": "Incorrect. Technical reason: Analysis: The question clearly requires that the data density node must be located in a private subnet, so placing the node in a public subnet does not meet the requirements. Conclusion: This option violates the question requirements and is therefore wrong."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：虽然允许出站流量是节点访问外部资源的重要条件，但问题中并没有提及安全组配置问题。结论：该选项与问题中描述的错误通知无关，因此是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Although allowing outbound traffic is an important condition for nodes to access external resources, the question does not mention the security group configuration issue. Conclusion: This option has nothing to do with the error notification described in the question, so it is wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 创建接口VPC端点以允许节点访问控制平面。",
+        "en": "B. Create interface VPC endpoints to allow nodes to access the control plane."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (60%) A (40%)。热门讨论与考点摘要：分析：当控制平面设置为私有访问（端点私有访问 = true）并且禁用公共访问（端点公共访问 = false）时，节点需要通过接口 VPC 端点访问控制平面。结论：该选项解决了节点无法加入集群的问题，因此是正确的。",
+        "en": "Community vote as displayed: B (60%) A (40%). Popular discussion and key point summary: Analysis: When the control plane is set to private access (endpoint private access = true) and public access is disabled (endpoint public access = false), the node needs to access the control plane through the interface VPC endpoint. Conclusion: This option solves the problem of nodes not being able to join the cluster and is therefore correct."
+      }
+    },
+    {
+      "question_no": 515,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司正在将本地应用程序迁移到 AWS。该公司希望使用 Amazon Redshift 作为解决方案。在这种情况下，哪些用例适合 Amazon Redshift？ （选择三项。）",
+        "en": "A company is migrating an on-premises application to AWS. The company wants to use Amazon Redshift as a solution. Which use cases are suitable for Amazon Redshift in this scenario? (Choose three.)"
+      },
+      "options": {
+        "A": {
+          "zh": "支持数据 API 以通过传统、容器化和事件驱动的应用程序访问数据",
+          "en": "Supporting data APIs to access data with traditional, containerized, and event-driven applications"
+        },
+        "B": {
+          "zh": "支持客户端和服务器端加密",
+          "en": "Supporting client-side and server-side encryption"
+        },
+        "C": {
+          "zh": "在指定时间和应用程序不活动时构建分析工作负载",
+          "en": "Building analytics workloads during specified hours and when the application is not active"
+        },
+        "D": {
+          "zh": "缓存数据，减轻后端数据库压力",
+          "en": "Caching data to reduce the pressure on the backend database"
+        },
+        "E": {
+          "zh": "全球扩展以支持 PB 级数据和每分钟数千万个请求",
+          "en": "Scaling globally to support petabytes of data and tens of millions of requests per minute"
+        },
+        "F": {
+          "zh": "使用 AWS 管理控制台创建集群的辅助副本",
+          "en": "Creating a secondary replica of the cluster by using the AWS Management Console"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：Amazon Redshift 主要用于数据仓库和分析工作负载，并不是专门为支持数据 API 访问而设计的。此选项更适合 Amazon DynamoDB 或 Amazon RDS 等服务，因此此选项是错误的。",
+          "en": "Incorrect. Technical reason: Analytics: Amazon Redshift is primarily used for data warehousing and analytics workloads and is not specifically designed to support data API access. This option is more suitable for services like Amazon DynamoDB or Amazon RDS, so this option is wrong."
+        },
+        "B": {
+          "zh": "正確。技术原因：分析：Amazon Redshift支持加密功能，包括客户端加密和服务器端加密，保证数据安全。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analysis: Amazon Redshift supports encryption capabilities, including client-side and server-side encryption, ensuring data security. This option is correct."
+        },
+        "C": {
+          "zh": "正確。技术原因：分析：Amazon Redshift 非常适合构建分析工作负载，尤其是应用程序不活动时的批处理。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analytics: Amazon Redshift is great for building analytics workloads, especially batch processing when the application is inactive. This option is correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：Amazon Redshift 并不是专门为缓存数据而设计的服务。缓存功能通常由 Amazon ElastiCache 或 Amazon DynamoDB Accelerator (DAX) 提供，因此此选项不正确。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon Redshift is not a service specifically designed to cache data. Caching functionality is typically provided by Amazon ElastiCache or Amazon DynamoDB Accelerator (DAX), so this option is incorrect."
+        },
+        "E": {
+          "zh": "正確。技术原因：分析：Amazon Redshift 可以扩展以支持 PB 级数据，但它是为数据仓库和分析工作负载而设计的，而不是每分钟处理数千万个请求（更适合 Amazon DynamoDB）。这个选项是正确的。",
+          "en": "Correct. Technical reason: Analytics: Amazon Redshift can scale to support petabytes of data, but it is designed for data warehousing and analytics workloads rather than handling tens of millions of requests per minute (which is better suited for Amazon DynamoDB). This option is correct."
+        },
+        "F": {
+          "zh": "錯誤。技术原因：分析：Amazon Redshift 不支持通过 AWS 管理控制台创建辅助副本。这个选项是错误的。",
+          "en": "Incorrect. Technical reason: Analysis: Amazon Redshift does not support creating secondary replicas through the AWS Management Console. This option is wrong."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 支持客户端和服务器端加密；C. 在指定时间和应用程序不活动时构建分析工作负载；E. 全球扩展以支持 PB 级数据和每分钟数千万个请求",
+        "en": "B. Supporting client-side and server-side encryption; C. Building analytics workloads during specified hours and when the application is not active; E. Scaling globally to support petabytes of data and tens of millions of requests per minute"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：BCE (59%) ACE (20%) 7% 7%。热门讨论与考点摘要：分析：Amazon Redshift支持加密功能，包括客户端加密和服务器端加密，保证数据安全。这个选项是正确的。；分析：Amazon Redshift 非常适合构建分析工作负载，尤其是应用程序不活动时的批处理。这个选项是正确的。；分析：Amazon Redshift 可以扩展以支持 PB 级数据，但它是为数据仓库和分析工作负载而设计的，而不是每分钟处理数千万个请求（更适合 Amazon DynamoDB）。这个选项是正确的。",
+        "en": "Community vote as displayed: BCE (59%) ACE (20%) 7% 7%. Popular discussion and key point summary: Analysis: Amazon Redshift supports encryption capabilities, including client-side and server-side encryption, ensuring data security. This option is correct.; Analytics: Amazon Redshift is great for building analytics workloads, especially batch processing when the application is inactive. This option is correct.; Analytics: Amazon Redshift can scale to support petabytes of data, but it is designed for data warehousing and analytics workloads rather than handling tens of millions of requests per minute (which is better suited for Amazon DynamoDB). This option is correct."
+      }
+    },
+    {
+      "question_no": 516,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司向客户提供 API 接口，以便客户可以检索他们的财务信息。该公司预计在一年中的高峰使用时段会出现大量请求。该公司要求 API 能够以低延迟做出一致响应，以确保客户满意度。公司需要为 API 提供计算主机。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company provides an API interface to customers so the customers can retrieve their financial information. Еhe company expects a larger number of requests during peak usage times of the year. The company requires the API to respond consistently with low latency to ensure customer satisfaction. The company needs to provide a compute host for the API. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用应用程序负载均衡器和 Amazon Elastic Container Service (Amazon ECS)。",
+          "en": "Use an Application Load Balancer and Amazon Elastic Container Service (Amazon ECS)."
+        },
+        "B": {
+          "zh": "使用具有预配置并发性的 Amazon API Gateway 和 AWS Lambda 函数。",
+          "en": "Use Amazon API Gateway and AWS Lambda functions with provisioned concurrency."
+        },
+        "C": {
+          "zh": "使用 Application Load Balancer 和 Amazon Elastic Kubernetes Service (Amazon EKS) 集群。",
+          "en": "Use an Application Load Balancer and an Amazon Elastic Kubernetes Service (Amazon EKS) cluster."
+        },
+        "D": {
+          "zh": "使用具有预留并发性的 Amazon API Gateway 和 AWS Lambda 函数。",
+          "en": "Use Amazon API Gateway and AWS Lambda functions with reserved concurrency."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：Amazon ECS 是一种容器服务，可以提供高性能和可扩展性，但需要手动管理容器的部署和扩展，增加了运维开销。低延迟：可以通过负载均衡实现低延迟，但需要额外的配置。运维开销：较高，因为需要管理容器和集群。结论：不符合“最小运维开销”的要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Amazon ECS is a container service that can provide high performance and scalability, but it requires manual management of the deployment and expansion of containers, which increases operation and maintenance overhead. Low latency: Low latency can be achieved through load balancing, but requires additional configuration. Operation and maintenance overhead: higher because containers and clusters need to be managed. Conclusion: It does not meet the requirements of \"minimum operation and maintenance overhead\"."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析：Amazon API Gateway 和 AWS Lambda 都是无服务器服务，几乎不需要运维开销。低延迟：启用预配置并发可确保 Lambda 函数始终拥有预热的实例，从而减少冷启动时间并确保低延迟。运营开销：最低，因为 API Gateway 和 Lambda 是完全托管的服务。结论：符合问题要求，为最佳答案。",
+          "en": "Correct. Technical reason: Technical analysis: Amazon API Gateway and AWS Lambda are serverless services and require almost no operation and maintenance overhead. Low latency: Enabling Provisioned Concurrency ensures that the Lambda function always has a preheated instance, reducing cold start time and ensuring low latency. Operational overhead: lowest because API Gateway and Lambda are fully managed services. Conclusion: It meets the requirements of the question and is the best answer."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：Amazon EKS 是一项托管 Kubernetes 服务，提供高性能和可扩展性，但需要手动管理集群和容器部署。低延迟：可以通过负载均衡实现低延迟，但需要额外的配置。运维开销：较高，因为需要管理 Kubernetes 集群和容器。结论：不符合“最小运维开销”的要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Amazon EKS is a managed Kubernetes service that provides high performance and scalability, but requires manual management of cluster and container deployment. Low latency: Low latency can be achieved through load balancing, but requires additional configuration. Operation and maintenance overhead: higher because Kubernetes clusters and containers need to be managed. Conclusion: It does not meet the requirements of \"minimum operation and maintenance overhead\"."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：Reserved Concurrency可以限制Lambda函数的最大并发数，但不能保证实例预热，可能会导致冷启动问题。低延迟：由于冷启动问题，可能无法始终保证低延迟。运维开销：较低，但不如预配置并发针对冷启动问题进行优化。结论：不如选项B。",
+          "en": "Incorrect. Technical reason: Technical analysis: Reserved Concurrency can limit the maximum number of concurrent Lambda functions, but it cannot guarantee preheating instances, which may cause cold start problems. Low latency: Low latency may not always be guaranteed due to cold start issues. Operation and maintenance overhead: lower, but not as optimized as Provisioned Concurrency for cold start problems. Conclusion: Not as good as option B."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用具有预配置并发性的 Amazon API Gateway 和 AWS Lambda 函数。",
+        "en": "B. Use Amazon API Gateway and AWS Lambda functions with provisioned concurrency."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (79%) A (21%)。热门讨论与考点摘要：技术分析：Amazon API Gateway 和 AWS Lambda 都是无服务器服务，几乎不需要运维开销。低延迟：启用预配置并发可确保 Lambda 函数始终拥有预热的实例，从而减少冷启动时间并确保低延迟。运营开销：最低，因为 API Gateway 和 Lambda 是完全托管的服务。结论：符合问题要求，为最佳答案。",
+        "en": "Community vote as displayed: B (79%) A (21%). Popular discussion and key point summary: Technical analysis: Amazon API Gateway and AWS Lambda are serverless services and require almost no operation and maintenance overhead. Low latency: Enabling Provisioned Concurrency ensures that the Lambda function always has a preheated instance, reducing cold start time and ensuring low latency. Operational overhead: lowest because API Gateway and Lambda are fully managed services. Conclusion: It meets the requirements of the question and is the best answer."
+      }
+    },
+    {
+      "question_no": 517,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将所有 AWS Systems Manager 会话管理器日志发送到 Amazon S3 存储桶以进行存档。哪种解决方案能够以最高的运营效率满足这一要求？",
+        "en": "A company wants to send all AWS Systems Manager Session Manager logs to an Amazon S3 bucket for archival purposes. Which solution will meet this requirement with the MOST operational efficiency?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 Systems Manager 控制台中启用 S3 日志记录。选择要将会话数据发送到的 S3 存储桶。",
+          "en": "Enable S3 logging in the Systems Manager console. Choose an S3 bucket to send the session data to."
+        },
+        "B": {
+          "zh": "安装 Amazon CloudWatch 代理。将所有日志推送到 CloudWatch 日志组。将日志从组导出到 S3 存储桶以进行存档。",
+          "en": "Install the Amazon CloudWatch agent. Push all logs to a CloudWatch log group. Export the logs to an S3 bucket from the group for archival purposes."
+        },
+        "C": {
+          "zh": "创建 Systems Manager 文档以将所有服务器日志上传到中央 S3 存储桶。使用 Amazon EventBridge 每天针对账户中的所有服务器运行 Systems Manager 文档。",
+          "en": "Create a Systems Manager document to upload all server logs to a central S3 bucket. Use Amazon EventBridge to run the Systems Manager document against all servers that are in the account daily."
+        },
+        "D": {
+          "zh": "安装 Amazon CloudWatch 代理。将所有日志推送到 CloudWatch 日志组。创建 CloudWatch 日志订阅，将任何传入日志事件推送到 Amazon Kinesis Data Firehose 传输流。将 Amazon S3 设置为目标。",
+          "en": "Install an Amazon CloudWatch agent. Push all logs to a CloudWatch log group. Create a CloudWatch logs subscription that pushes any incoming log events to an Amazon Kinesis Data Firehose delivery stream. Set Amazon S3 as the destination."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Systems Manager 会话管理器支持将会话日志直接发送到 Amazon S3。通过在 Systems Manager 控制台中启用 S3 日志记录并选择目标 S3 存储桶，无需额外配置或服务即可实现高效的日志存储。运行效率高，因为这是原生支持的功能，配置也疯狂。",
+          "en": "Correct. Technical reason: AWS Systems Manager Session Manager supports sending session logs directly to Amazon S3. Efficient log storage can be achieved without additional configuration or services by enabling S3 logging in the Systems Manager console and selecting the target S3 bucket. The operation efficiency is high because this is a natively supported function and the configuration is crazy."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然可以通过CloudWatch日志组将日志导出到S3，但这需要额外安装CloudWatch代理并手动配置导出任务，增加了操作复杂度。与方案A相比，运行效率较低。",
+          "en": "Incorrect. Technical reason: Although logs can be exported to S3 through the CloudWatch log group, this requires additional installation of the CloudWatch agent and manual configuration of the export task, which increases operational complexity. Compared with option A, the operation efficiency is lower."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：此方法需要创建自定义 Systems Manager 文档并通过 EventBridge 定期运行任务，从而增加了复杂性。不适合直接存储Session Manager日志，运行效率较低。",
+          "en": "Incorrect. Technical reason: This approach requires creating a custom Systems Manager document and running tasks periodically through EventBridge, adding complexity. It is not suitable for direct storage of Session Manager logs, and the operation efficiency is low."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该方式涉及多个服务（CloudWatch、Kinesis Data Firehose），需要额外安装代理和配置订阅规则，操作复杂。虽然日志可以存储在S3中，但运行效率明显低于选项A。",
+          "en": "Incorrect. Technical reason: This method involves multiple services (CloudWatch, Kinesis Data Firehose), requires additional installation of agents and configuration of subscription rules, and is complex to operate. Although logs can be stored in S3, the operation efficiency is significantly lower than option A."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 Systems Manager 控制台中启用 S3 日志记录。选择要将会话数据发送到的 S3 存储桶。",
+        "en": "A. Enable S3 logging in the Systems Manager console. Choose an S3 bucket to send the session data to."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (95%) 5%。热门讨论与考点摘要：AWS Systems Manager 会话管理器支持将会话日志直接发送到 Amazon S3。通过在 Systems Manager 控制台中启用 S3 日志记录并选择目标 S3 存储桶，无需额外配置或服务即可实现高效的日志存储。运行效率高，因为这是原生支持的功能，配置也疯狂。",
+        "en": "Community vote as displayed: A (95%) 5%. Popular discussion and key point summary: AWS Systems Manager Session Manager supports sending session logs directly to Amazon S3. Efficient log storage can be achieved without additional configuration or services by enabling S3 logging in the Systems Manager console and selecting the target S3 bucket. The operation efficiency is high because this is a natively supported function and the configuration is crazy."
+      }
+    },
+    {
+      "question_no": 518,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "应用程序使用 Amazon RDS MySQL 数据库实例。 RDS 数据库的磁盘空间不足。解决方案架构师希望在不停机的情况下增加磁盘空间。哪种解决方案能够以最少的努力满足这些要求？",
+        "en": "An application uses an Amazon RDS MySQL DB instance. The RDS database is becoming low on disk space. A solutions architect wants to increase the disk space without downtime. Which solution meets these requirements with the LEAST amount of effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 RDS 中启用存储Auto Scaling",
+          "en": "Enable storage autoscaling in RDS"
+        },
+        "B": {
+          "zh": "增加 RDS 数据库实例大小",
+          "en": "Increase the RDS database instance size"
+        },
+        "C": {
+          "zh": "将 RDS 数据库实例存储类型更改为预配置 IOPS",
+          "en": "Change the RDS database instance storage type to Provisioned IOPS"
+        },
+        "D": {
+          "zh": "备份RDS数据库、增加存储容量、恢复数据库、停止上一个实例",
+          "en": "Back up the RDS database, increase the storage capacity, restore the database, and stop the previous instance"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：正确。 Amazon RDS支持自动存储扩展，当数据库存储空间不足时，可以自动增加存储容量，无需停机。这是最简单且无中断的方法。",
+          "en": "Correct. Technical reason: Correct. Amazon RDS supports automatic storage expansion, which can automatically increase storage capacity without downtime when the database storage space is insufficient. This is the simplest and non-disruptive method."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：错误。增加实例大小（例如从小实例升级到大实例）主要影响计算能力（CPU 和内存），而不是存储容量。此选项不能解决存储空间不足的问题。",
+          "en": "Incorrect. Technical reason: Error. Increasing instance size (such as upgrading from a small instance to a large instance) primarily affects computing power (CPU and memory), not storage capacity. This option does not resolve low storage space issues."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：错误。更改存储类型（例如切换到Provisioned IOPS）可以提高性能，但不会直接增加存储容量。此外，更改存储类型可能需要停机。",
+          "en": "Incorrect. Technical reason: Error. Changing the storage type (such as switching to Provisioned IOPS) can improve performance but does not directly increase storage capacity. Additionally, changing storage types may require downtime."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：错误。这种方法需要手动备份和恢复数据库，并且会导致停机，不符合问题要求的“不停机”条件。",
+          "en": "Incorrect. Technical reason: Error. This method requires manual backup and recovery of the database, and will cause downtime, which does not meet the \"no downtime\" condition required by the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 RDS 中启用存储Auto Scaling",
+        "en": "A. Enable storage autoscaling in RDS"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：正确。 Amazon RDS支持自动存储扩展，当数据库存储空间不足时，可以自动增加存储容量，无需停机。这是最简单且无中断的方法。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: Correct. Amazon RDS supports automatic storage expansion, which can automatically increase storage capacity without downtime when the database storage space is insufficient. This is the simplest and non-disruptive method."
+      }
+    },
+    {
+      "question_no": 519,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家咨询公司为全球客户提供专业服务。该公司为客户提供解决方案和工具，以加快在 AWS 上收集和分析数据的速度。公司需要集中管理和部署一套通用的解决方案和工具，供客户用于自助服务。哪种解决方案可以满足这些要求？",
+        "en": "A consulting company provides professional services to customers worldwide. The company provides solutions and tools for customers to expedite gathering and analyzing data on AWS. The company needs to centrally manage and deploy a common set of solutions and tools for customers to use for self-service purposes. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "为客户创建 AWS CloudFormation 模板。",
+          "en": "Create AWS CloudFormation templates for the customers."
+        },
+        "B": {
+          "zh": "为客户创建 AWS Service Catalog 产品。",
+          "en": "Create AWS Service Catalog products for the customers."
+        },
+        "C": {
+          "zh": "为客户创建 AWS Systems Manager 模板。",
+          "en": "Create AWS Systems Manager templates for the customers."
+        },
+        "D": {
+          "zh": "为客户创建 AWS Config 项目。",
+          "en": "Create AWS Config items for the customers."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：CloudFormation主要用于定义和部署基础设施资源，并通过模板自动化资源创建。虽然您可以使用CloudFormation模板创建资源，但它不具有集中管理和自助服务功能。因此，该选项并不能完全满足题目要求。",
+          "en": "Incorrect. Technical reason: CloudFormation is mainly used to define and deploy infrastructure resources and automate resource creation through templates. Although you can use CloudFormation templates to create resources, it does not have centralized management and self-service capabilities. Therefore, this option does not fully meet the question requirements."
+        },
+        "B": {
+          "zh": "正確。技术原因：AWS Service Catalog 旨在集中管理和部署产品（解决方案和工具）并支持自助服务功能。它允许客户通过预定义的产品快速部署资源，同时确保符合公司标准。该选项完全符合题目要求，为正确答案。",
+          "en": "Correct. Technical reason: AWS Service Catalog is designed to centrally manage and deploy products (solutions and tools) and supports self-service capabilities. It allows customers to quickly deploy resources through predefined offerings while ensuring compliance with company standards. This option fully meets the question requirements and is the correct answer."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：Systems Manager主要用于操作任务的管理和自动化，例如补丁管理、运行命令等。虽然它可以帮助管理资源，但它不适合集中管理和部署解决方案的场景。因此，该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: Systems Manager is mainly used for management and automation of operational tasks, such as patch management, running commands, etc. While it can help manage resources, it is not suitable for scenarios where solutions are centrally managed and deployed. Therefore, this option does not meet the question requirements."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS Config主要用于资源合规性检查和配置审计。它不具备部署解决方案或工具的能力，也不支持自助服务。因此，该选项不符合题目要求。",
+          "en": "Incorrect. Technical reason: AWS Config is mainly used for resource compliance checking and configuration auditing. It does not have the capability to deploy solutions or tools, nor does it support self-service. Therefore, this option does not meet the question requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 为客户创建 AWS Service Catalog 产品。",
+        "en": "B. Create AWS Service Catalog products for the customers."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (100%)。热门讨论与考点摘要：AWS Service Catalog 旨在集中管理和部署产品（解决方案和工具）并支持自助服务功能。它允许客户通过预定义的产品快速部署资源，同时确保符合公司标准。该选项完全符合题目要求，为正确答案。",
+        "en": "Community vote as displayed: B (100%). Popular discussion and key point summary: AWS Service Catalog is designed to centrally manage and deploy products (solutions and tools) and supports self-service capabilities. It allows customers to quickly deploy resources through predefined offerings while ensuring compliance with company standards. This option fully meets the question requirements and is the correct answer."
+      }
+    },
+    {
+      "question_no": 520,
+      "domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+      "question_text": {
+        "zh": "一家公司正在设计一个将在 Amazon EC2 实例上运行的新 Web 应用程序。该应用程序将使用 Amazon DynamoDB 进行后端数据存储。应用程序流量将是不可预测的。该公司预计应用程序对数据库的读写吞吐量将为中等到高。该公司需要进行扩展以响应应用程序流量。哪种 DynamoDB 表配置能够最经济高效地满足这些要求？",
+        "en": "A company is designing a new web application that will run on Amazon EC2 Instances. The application will use Amazon DynamoDB for backend data storage. The application traffic will be unpredictable. The company expects that the application read and write throughput to the database will be moderate to high. The company needs to scale in response to application traffic. Which DynamoDB table configuration will meet these requirements MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 DynamoDB 标准表类配置具有预配置读取和写入功能的 DynamoDB。将 DynamoDB Auto Scaling设置为最大定义容量。",
+          "en": "Configure DynamoDB with provisioned read and write by using the DynamoDB Standard table class. Set DynamoDB auto scaling to a maximum defined capacity."
+        },
+        "B": {
+          "zh": "使用 DynamoDB 标准表类以按需模式配置 DynamoDB。",
+          "en": "Configure DynamoDB in on-demand mode by using the DynamoDB Standard table class."
+        },
+        "C": {
+          "zh": "使用 DynamoDB 标准不频繁访问 (DynamoDB Standard-IA) 表类配置具有预配置读取和写入功能的 DynamoDB。将 DynamoDB Auto Scaling设置为最大定义容量。",
+          "en": "Configure DynamoDB with provisioned read and write by using the DynamoDB Standard Infrequent Access (DynamoDB Standard-IA) table class. Set DynamoDB auto scaling to a maximum defined capacity."
+        },
+        "D": {
+          "zh": "使用 DynamoDB 标准不频繁访问 (DynamoDB Standard-IA) 表类以按需模式配置 DynamoDB。",
+          "en": "Configure DynamoDB in on-demand mode by using the DynamoDB Standard Infrequent Access (DynamoDB Standard-IA) table class."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：技术分析：使用自动扩容的Provisioned Mode可以处理动态流量，但需要提前定义最大容量，可能会导致资源消耗或容量不足。成本分析：在流量不可预测的情况下，On-Premise模式可能不够灵活，成本可能会更高。结论：“最具成本效益”的解决方案不符合问题的要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: Using Provisioned Mode with automatic expansion can handle dynamic traffic, but the maximum capacity needs to be defined in advance, which may lead to resource consumption or insufficient capacity. Cost analysis: On-premise mode may not be flexible enough when traffic is unpredictable, and the cost may be higher. Conclusion: The “most cost-effective” solution does not meet the requirements of the question."
+        },
+        "B": {
+          "zh": "正確。技术原因：技术分析：按需模式可以根据流量自动扩容，无需提前定义容量，适合流量不可预测的场景。成本分析：当流量不可预测时，按需模式更具成本效益，因为您只需为实际使用的读写操作付费。结论：满足问题要求的“最具成本效益”的解决方案。",
+          "en": "Correct. Technical reason: Technical analysis: On-Demand Mode can automatically expand according to traffic without defining capacity in advance, and is suitable for scenarios where traffic is unpredictable. Cost analysis: On-demand mode is more cost-effective when traffic is unpredictable because you only pay for the read and write operations that are actually used. Conclusion: The “most cost-effective” solution that meets the requirements of the question."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：技术分析：DynamoDB Standard-IA表类适合访问频率较低的场景，但标题提到读写吞吐量为“中到高”，因此不适合使用Standard-IA。成本分析：Standard-IA表类存储成本较低，但读写成本较高，不适合高吞吐量场景。结论：不符合问题要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: DynamoDB Standard-IA table class is suitable for scenarios with low access frequency, but the title mentions that the read and write throughput is \"medium to high\", so it is not suitable to use Standard-IA. Cost analysis: The Standard-IA table class has lower storage costs, but higher read and write costs, and is not suitable for high-throughput scenarios. Conclusion: Does not meet the requirements of the question."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：技术分析：按需模式适合动态流量，Standard-IA表类不适合高吞吐量场景。成本分析：Standard-IA表类读写成本较高，不适合标题中提到的“中高”吞吐量场景。结论：不符合问题要求。",
+          "en": "Incorrect. Technical reason: Technical analysis: On-demand mode is suitable for dynamic traffic, but Standard-IA table class is not suitable for high-throughput scenarios. Cost analysis: The Standard-IA table class has high read and write costs and is not suitable for the \"medium to high\" throughput scenario mentioned in the title. Conclusion: Does not meet the requirements of the question."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 DynamoDB 标准表类以按需模式配置 DynamoDB。",
+        "en": "B. Configure DynamoDB in on-demand mode by using the DynamoDB Standard table class."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：B (74%) A (22%) 2%。热门讨论与考点摘要：技术分析：按需模式可以根据流量自动扩容，无需提前定义容量，适合流量不可预测的场景。成本分析：当流量不可预测时，按需模式更具成本效益，因为您只需为实际使用的读写操作付费。结论：满足问题要求的“最具成本效益”的解决方案。",
+        "en": "Community vote as displayed: B (74%) A (22%) 2%. Popular discussion and key point summary: Technical analysis: On-Demand Mode can automatically expand according to traffic without defining capacity in advance, and is suitable for scenarios where traffic is unpredictable. Cost analysis: On-demand mode is more cost-effective when traffic is unpredictable because you only pay for the read and write operations that are actually used. Conclusion: The “most cost-effective” solution that meets the requirements of the question."
+      }
+    },
+    {
+      "question_no": 521,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家零售公司拥有多项业务。每个企业的 IT 团队管理自己的 AWS 账户。每个团队账户都是 AWS Organizations 中组织的一部分。每个团队都在自己的 AWS 账户的 Amazon DynamoDB 表中监控其产品库存水平。该公司正在将中央库存报告应用程序部署到共享 AWS 账户中。应用程序必须能够从所有团队的 DynamoDB 表中读取项目。哪种身份验证选项最安全地满足这些要求？",
+        "en": "A retail company has several businesses. The IT team for each business manages its own AWS account. Each team account is part of an organization in AWS Organizations. Each team monitors its product inventory levels in an Amazon DynamoDB table in the team's own AWS account. The company is deploying a central inventory reporting application into a shared AWS account. The application must be able to read items from all the teams' DynamoDB tables. Which authentication option will meet these requirements MOST securely?"
+      },
+      "options": {
+        "A": {
+          "zh": "将 DynamoDB 与库存应用程序账户中的 AWS Secrets Manager 集成。配置应用程序以使用 Secrets Manager 中的正确密钥来进行身份验证并读取 DynamoDB 表。每 30 天安排一次秘密轮换。",
+          "en": "Integrate DynamoDB with AWS Secrets Manager in the inventory application account. Configure the application to use the correct secret from Secrets Manager to authenticate and read the DynamoDB table. Schedule secret rotation for every 30 days."
+        },
+        "B": {
+          "zh": "在每个企业账户中，创建一个具有编程访问权限的 IAM 用户。配置应用程序以使用正确的 IAM 用户访问密钥 ID 和秘密访问密钥来验证和读取 DynamoDB 表。每 30 天手动轮换一次 IAM 访问密钥。",
+          "en": "In every business account, create an IAM user that has programmatic access. Configure the application to use the correct IAM user access key ID and secret access key to authenticate and read the DynamoDB table. Manually rotate IAM access keys every 30 days."
+        },
+        "C": {
+          "zh": "在每个企业账户中，创建一个名为 BU_ROLE 的 IAM 角色，该角色具有授予角色对 DynamoDB 表的访问权限的策略，以及信任库存应用程序账户中特定角色的信任策略。在库存账户中，创建一个名为 APP_ROLE 的角色，该角色允许访问 STS AssumeRole API 操作。将应用程序配置为使用 APP_ROLE 并承担跨账户角色 BU_ROLE 来读取 DynamoDB 表。",
+          "en": "In every business account, create an IAM role named BU_ROLE with a policy that gives the role access to the DynamoDB table and a trust policy to trust a specific role in the inventory application account. In the inventory account, create a role named APP_ROLE that allows access to the STS AssumeRole API operation. Configure the application to use APP_ROLE and assume the crossaccount role BU_ROLE to read the DynamoDB table."
+        },
+        "D": {
+          "zh": "将 DynamoDB 与 AWS Certificate Manager (ACM) 集成。生成身份证书以对 DynamoDB 进行身份验证。配置应用程序以使用正确的证书来验证和读取 DynamoDB 表。",
+          "en": "Integrate DynamoDB with AWS Certificate Manager (ACM). Generate identity certificates to authenticate DynamoDB. Configure the application to use the correct certificate to authenticate and read the DynamoDB table."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：分析：Secrets Manager主要用于存储和管理密钥、密码等敏感信息，但不直接支持跨账户访问DynamoDB表。该选项没有提及如何处理跨账户访问问题，因此不符合题目要求。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: Secrets Manager is mainly used to store and manage sensitive information such as keys and passwords, but it does not directly support cross-account access to DynamoDB tables. This option does not mention how to handle cross-account access issues, so it does not meet the question requirements. Conclusion: Wrong."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：分析：使用IAM用户进行跨账户访问需要共享访问密钥和密钥，存在安全风险。手动轮换密钥既麻烦又容易出错，而且不是最佳实践。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: Using IAM users for cross-account access requires sharing access keys and secret keys, which poses security risks. Manually rotating keys is cumbersome and error-prone, and is not a best practice. Conclusion: Wrong."
+        },
+        "C": {
+          "zh": "正確。技术原因：分析：通过IAM角色和信任策略实现跨账户访问是AWS推荐的最佳实践。使用 STS AssumeRole API 安全地临时获得访问权限并避免长期凭据的安全风险。该选项详细描述了如何配置角色和信任策略，满足问题的要求。结论：正确。",
+          "en": "Correct. Technical reason: Analysis: Achieving cross-account access through IAM roles and trust policies is a best practice recommended by AWS. Use the STS AssumeRole API to securely temporarily gain access and avoid the security risks of long-term credentials. This option describes in detail how to configure roles and trust policies, which meets the requirements of the question. Conclusion: Correct."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：分析：AWS Certificate Manager主要用于管理SSL/TLS证书，与DynamoDB身份验证无关。该选项没有提及如何处理跨账户访问问题，因此不符合题目要求。结论：错误。",
+          "en": "Incorrect. Technical reason: Analysis: AWS Certificate Manager is mainly used to manage SSL/TLS certificates and is not related to DynamoDB authentication. This option does not mention how to handle cross-account access issues, so it does not meet the question requirements. Conclusion: Wrong."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 在每个企业账户中，创建一个名为 BU_ROLE 的 IAM 角色，该角色具有授予角色对 DynamoDB 表的访问权限的策略，以及信任库存应用程序账户中特定角色的信任策略。在库存账户中，创建一个名为 APP_ROLE 的角色，该角色允许访问 STS AssumeRole API 操作。将应用程序配置为使用 APP_ROLE 并承担跨账户角色 BU_ROLE 来读取 DynamoDB 表。",
+        "en": "C. In every business account, create an IAM role named BU_ROLE with a policy that gives the role access to the DynamoDB table and a trust policy to trust a specific role in the inventory application account. In the inventory account, create a role named APP_ROLE that allows access to the STS AssumeRole API operation. Configure the application to use APP_ROLE and assume the crossaccount role BU_ROLE to read the DynamoDB table."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (100%)。热门讨论与考点摘要：分析：通过IAM角色和信任策略实现跨账户访问是AWS推荐的最佳实践。使用 STS AssumeRole API 安全地临时获得访问权限并避免长期凭据的安全风险。该选项详细描述了如何配置角色和信任策略，满足问题的要求。结论：正确。",
+        "en": "Community vote as displayed: C (100%). Popular discussion and key point summary: Analysis: Achieving cross-account access through IAM roles and trust policies is a best practice recommended by AWS. Use the STS AssumeRole API to securely temporarily gain access and avoid the security risks of long-term credentials. This option describes in detail how to configure roles and trust policies, which meets the requirements of the question. Conclusion: Correct."
+      }
+    },
+    {
+      "question_no": 522,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon Elastic Kubernetes Service (Amazon EKS) 运行容器应用程序。公司一天中的工作量并不一致。该公司希望 Amazon EKS 根据工作负载进行扩展和扩展。哪种步骤组合能够以最少的运营开销满足这些要求？ （选择两个。）",
+        "en": "A company runs container applications by using Amazon Elastic Kubernetes Service (Amazon EKS). The company's workload is not consistent throughout the day. The company wants Amazon EKS to scale in and out according to the workload. Which combination of steps will meet these requirements with the LEAST operational overhead? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Lambda 函数调整 EKS 集群的大小。",
+          "en": "Use an AWS Lambda function to resize the EKS cluster."
+        },
+        "B": {
+          "zh": "使用 Kubernetes Metrics Server 激活水平 Pod Auto Scaling。",
+          "en": "Use the Kubernetes Metrics Server to activate horizontal pod autoscaling."
+        },
+        "C": {
+          "zh": "使用 Kubernetes Cluster Autoscaler 来管理集群中的节点数量。",
+          "en": "Use the Kubernetes Cluster Autoscaler to manage the number of nodes in the cluster."
+        },
+        "D": {
+          "zh": "使用 Amazon API Gateway 并将其连接到 Amazon EKS。",
+          "en": "Use Amazon API Gateway and connect it to Amazon EKS."
+        },
+        "E": {
+          "zh": "使用 AWS App Mesh 观察网络活动。",
+          "en": "Use AWS App Mesh to observe network activity."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：虽然 AWS Lambda 可用于自动执行任务，但直接使用 Lambda 函数调整 EKS 集群的大小需要额外的编程和维护工作，从而增加了运营开销。",
+          "en": "Incorrect. Technical reason: While AWS Lambda can be used to automate tasks, using Lambda functions directly to resize an EKS cluster requires additional programming and maintenance effort, adding operational overhead."
+        },
+        "B": {
+          "zh": "正確。技术原因：Kubernetes Metrics Server 是实现 Pod Horizontal Autoscaling (HPA) 的关键组件。它可以根据CPU或内存使用情况动态调整Pod的数量。",
+          "en": "Correct. Technical reason: Kubernetes Metrics Server is a key component that implements Horizontal Pod Autoscaling (HPA). It can dynamically adjust the number of Pods based on CPU or memory usage."
+        },
+        "C": {
+          "zh": "正確。技术原因：Kubernetes Cluster Autoscaler 根据工作负载动态调整集群中的节点数量，以满足资源需求并降低运营开销。",
+          "en": "Correct. Technical reason: Kubernetes Cluster Autoscaler dynamically adjusts the number of nodes in a cluster based on workload to meet resource needs and reduce operational overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：API Gateway 是管理 API 的服务，与 EKS 的自动伸缩无关。",
+          "en": "Incorrect. Technical reason: API Gateway is a service for managing APIs and has nothing to do with automatic scaling of EKS."
+        },
+        "E": {
+          "zh": "錯誤。技术原因：AWS App Mesh 是一种服务网格工具，用于监控和管理服务间通信，独立于 EKS 的自动扩展。",
+          "en": "Incorrect. Technical reason: AWS App Mesh is a service mesh tool for monitoring and managing inter-service communication, independent of the automatic scaling of EKS."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Kubernetes Metrics Server 激活水平 Pod Auto Scaling。；C. 使用 Kubernetes Cluster Autoscaler 来管理集群中的节点数量。",
+        "en": "B. Use the Kubernetes Metrics Server to activate horizontal pod autoscaling.; C. Use the Kubernetes Cluster Autoscaler to manage the number of nodes in the cluster."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：BC (100%)。热门讨论与考点摘要：Kubernetes Metrics Server 是实现 Pod Horizontal Autoscaling (HPA) 的关键组件。它可以根据CPU或内存使用情况动态调整Pod的数量。；Kubernetes Cluster Autoscaler 根据工作负载动态调整集群中的节点数量，以满足资源需求并降低运营开销。",
+        "en": "Community vote as displayed: BC (100%). Popular discussion and key point summary: Kubernetes Metrics Server is a key component that implements Horizontal Pod Autoscaling (HPA). It can dynamically adjust the number of Pods based on CPU or memory usage.; Kubernetes Cluster Autoscaler dynamically adjusts the number of nodes in a cluster based on workload to meet resource needs and reduce operational overhead."
+      }
+    },
+    {
+      "question_no": 523,
+      "domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+      "question_text": {
+        "zh": "一家公司运行基于微服务的无服务器 Web 应用程序。应用程序必须能够从多个 Amazon DynamoDB 表检索数据 解决方案架构师需要赋予应用程序检索数据的能力，而不影响应用程序的基准性能。哪种解决方案能够以最高效的方式满足这些要求？",
+        "en": "A company runs a microservice-based serverless web application. The application must be able to retrieve data from multiple Amazon DynamoDB tables A solutions architect needs to give the application the ability to retrieve the data with no impact on the baseline performance of the application. Which solution will meet these requirements in the MOST operationally efficient way?"
+      },
+      "options": {
+        "A": {
+          "zh": "AWS AppSync 管道解析器",
+          "en": "AWS AppSync pipeline resolvers"
+        },
+        "B": {
+          "zh": "具有 Lambda@Edge 函数的 Amazon CloudFront",
+          "en": "Amazon CloudFront with Lambda@Edge functions"
+        },
+        "C": {
+          "zh": "具有 AWS Lambda 函数的边缘优化 Amazon API Gateway",
+          "en": "Edge-optimized Amazon API Gateway with AWS Lambda functions"
+        },
+        "D": {
+          "zh": "使用 DynamoDB 连接器的 Amazon Athena 联合查询",
+          "en": "Amazon Athena Federated Query with a DynamoDB connector"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+          "en": "Correct. Technical reason: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束，因此不是最佳选择。",
+          "en": "Incorrect. Technical reason: This solution cannot simultaneously meet the key performance, availability, security, cost or operation and maintenance constraints in the question, so it is not the best choice."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. AWS AppSync 管道解析器",
+        "en": "A. AWS AppSync pipeline resolvers"
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (44%) D (41%) B (15%)。热门讨论与考点摘要：该解决方案能够满足问题中的关键功能和非功能需求，并符合相关AWS服务的设计目的和最佳实践。",
+        "en": "Community vote as displayed: A (44%) D (41%) B (15%). Popular discussion and key point summary: The solution can meet the key functional and non-functional requirements in the question and conform to the design purposes and best practices of the relevant AWS services."
+      }
+    },
+    {
+      "question_no": 524,
+      "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+      "question_text": {
+        "zh": "一家公司想要分析和排除与 IAM 权限相关的访问被拒绝错误和未经授权错误。该公司已启用 AWS CloudTrail。哪种解决方案能够以最少的努力满足这些要求？",
+        "en": "A company wants to analyze and troubleshoot Access Denied errors and Unauthorized errors that are related to IAM permissions. The company has AWS CloudTrail turned on. Which solution will meet these requirements with the LEAST effort?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AWS Glue 并编写自定义脚本来查询 CloudTrail 日志中的错误。",
+          "en": "Use AWS Glue and write custom scripts to query CloudTrail logs for the errors."
+        },
+        "B": {
+          "zh": "使用 AWS Batch 并编写自定义脚本来查询 CloudTrail 日志中的错误。",
+          "en": "Use AWS Batch and write custom scripts to query CloudTrail logs for the errors."
+        },
+        "C": {
+          "zh": "使用 Amazon Athena 查询搜索 CloudTrail 日志以识别错误。",
+          "en": "Search CloudTrail logs with Amazon Athena queries to identify the errors."
+        },
+        "D": {
+          "zh": "使用 Amazon QuickSight 搜索 CloudTrail 日志。创建仪表板来识别错误。",
+          "en": "Search CloudTrail logs with Amazon QuickSight. Create a dashboard to identify the errors."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。技术原因：AWS Glue主要用于ETL（提取、转换、加载）任务，适合处理结构化和半结构化数据，但需要编写复杂的自定义脚本，工作量较大，不满足“最小努力”的要求。",
+          "en": "Incorrect. Technical reason: AWS Glue is mainly used for ETL (extract, transform, load) tasks and is suitable for processing structured and semi-structured data, but it requires writing complex custom scripts, which requires a large workload and does not meet the \"minimum effort\" requirement."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：AWS Batch 主要用于运行批处理作业，适合大规模计算任务。但需要编写脚本、管理作业队列，工作量较大，不符合“最小努力”的要求。",
+          "en": "Incorrect. Technical reason: AWS Batch is mainly used to run batch jobs and is suitable for large-scale computing tasks. However, it requires writing scripts and managing job queues, which requires a large workload and does not meet the \"minimum effort\" requirement."
+        },
+        "C": {
+          "zh": "正確。技术原因：Amazon Athena 是一项交互式查询服务，可直接查询存储在 S3 中的 CloudTrail 日志，无需预处理或复杂的脚本编写。支持SQL查询，可以快速定位IAM相关错误，满足“最小努力”的要求。",
+          "en": "Correct. Technical reason: Amazon Athena is an interactive query service that directly queries CloudTrail logs stored in S3 without preprocessing or complex scripting. It supports SQL queries, can quickly locate IAM-related errors, and meets the \"minimum effort\" requirement."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：Amazon QuickSight 主要用于数据可视化和仪表板创建。虽然可以用来分析数据，但是需要额外的配置和数据建模，工作量很大，不符合“最小努力”的要求。",
+          "en": "Incorrect. Technical reason: Amazon QuickSight is mainly used for data visualization and dashboard creation. Although it can be used to analyze data, it requires additional configuration and data modeling, which requires a large workload and does not meet the \"minimum effort\" requirement."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用 Amazon Athena 查询搜索 CloudTrail 日志以识别错误。",
+        "en": "C. Search CloudTrail logs with Amazon Athena queries to identify the errors."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：C (74%) D (26%)。热门讨论与考点摘要：Amazon Athena 是一项交互式查询服务，可直接查询存储在 S3 中的 CloudTrail 日志，无需预处理或复杂的脚本编写。支持SQL查询，可以快速定位IAM相关错误，满足“最小努力”的要求。",
+        "en": "Community vote as displayed: C (74%) D (26%). Popular discussion and key point summary: Amazon Athena is an interactive query service that directly queries CloudTrail logs stored in S3 without preprocessing or complex scripting. It supports SQL queries, can quickly locate IAM-related errors, and meets the \"minimum effort\" requirement."
+      }
+    },
+    {
+      "question_no": 525,
+      "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+      "question_text": {
+        "zh": "一家公司希望将其现有的 AWS 使用成本添加到其运营成本仪表板中。解决方案架构师需要推荐一个解决方案，使公司能够以编程方式访问其使用成本。公司必须能够访问当年的成本数据并预测未来 12 个月的成本。哪种解决方案能够以最少的运营开销满足这些要求？",
+        "en": "A company wants to add its existing AWS usage cost to its operation cost dashboard. A solutions architect needs to recommend a solution that will give the company access to its usage cost programmatically. The company must be able to access cost data for the current year and forecast costs for the next 12 months. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用带分页功能的 AWS Cost Explorer API 访问与使用成本相关的数据。",
+          "en": "Access usage cost-related data by using the AWS Cost Explorer API with pagination."
+        },
+        "B": {
+          "zh": "使用可下载的 AWS Cost Explorer 报告 .csv 文件访问与使用成本相关的数据。",
+          "en": "Access usage cost-related data by using downloadable AWS Cost Explorer report .csv files."
+        },
+        "C": {
+          "zh": "配置 AWS Budgets 操作以通过 FTP 将使用成本数据发送给公司。",
+          "en": "Configure AWS Budgets actions to send usage cost data to the company through FTP."
+        },
+        "D": {
+          "zh": "创建 AWS 预算报告以获取使用成本数据。通过SMTP将数据发送至公司。",
+          "en": "Create AWS Budgets reports for usage cost data. Send the data to the company through SMTP."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。技术原因：AWS Cost Explorer API 允许以编程方式访问详细的成本和使用数据，包括当前和未来的成本估算。正确：支持拆分功能，可以高效处理大量数据。正确：操作开销较低，因为 API 可以直接集成到现有系统中，无需手动下载或传输文件。",
+          "en": "Correct. Technical reason: The AWS Cost Explorer API allows programmatic access to detailed cost and usage data, including current and future cost estimates. Correct: Supports the splitting function and can efficiently process large amounts of data. Correct: Operational overhead is low because the API can be integrated directly into existing systems, eliminating the need to manually download or transfer files."
+        },
+        "B": {
+          "zh": "錯誤。技术原因：虽然可以下载 .csv 文件来获取成本数据，但这需要手动工作或额外的自动化脚本来处理文件。错误：操作开销较高，不适合需要实时或动态访问数据的场景。",
+          "en": "Incorrect. Technical reason: While it is possible to download .csv files to obtain cost data, this requires manual work or additional automated scripts to process the files. Error: The operation overhead is high and it is not suitable for scenarios that require real-time or dynamic access to data."
+        },
+        "C": {
+          "zh": "錯誤。技术原因：AWS Budgets 主要用于设置计算和警报，而不是直接提供详细的成本数据。错误：Dapi FTP 传输数据会增加额外的配置和维护开销。",
+          "en": "Incorrect. Technical reason: AWS Budgets is primarily used for setting up calculations and alerts, rather than providing detailed cost data directly. Error: Dapi FTP transfer data adds additional configuration and maintenance overhead."
+        },
+        "D": {
+          "zh": "錯誤。技术原因：AWS 预算报告主要用于预算跟踪，而不是提供详细的成本和使用数据。错误：Dapi SMTP FaNong 数据增加了额外的运营开销，并且不满足最低运营开销要求。",
+          "en": "Incorrect. Technical reason: AWS Budgets reports are primarily for budget tracking rather than providing detailed cost and usage data. Error: Dapi SMTP FaNong data adds additional operational overhead and does not meet the minimum operational overhead requirements."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用带分页功能的 AWS Cost Explorer API 访问与使用成本相关的数据。",
+        "en": "A. Access usage cost-related data by using the AWS Cost Explorer API with pagination."
+      },
+      "discussion": {
+        "zh": "社区投票原始结果：A (100%)。热门讨论与考点摘要：AWS Cost Explorer API 允许以编程方式访问详细的成本和使用数据，包括当前和未来的成本估算。正确：支持拆分功能，可以高效处理大量数据。正确：操作开销较低，因为 API 可以直接集成到现有系统中，无需手动下载或传输文件。",
+        "en": "Community vote as displayed: A (100%). Popular discussion and key point summary: The AWS Cost Explorer API allows programmatic access to detailed cost and usage data, including current and future cost estimates. Correct: Supports the splitting function and can efficiently process large amounts of data. Correct: Operational overhead is low because the API can be integrated directly into existing systems, eliminating the need to manually download or transfer files."
+      }
+    }
+  ]
+}
