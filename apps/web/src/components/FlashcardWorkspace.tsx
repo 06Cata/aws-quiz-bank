@@ -80,6 +80,12 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
       setIsLoading(false);
       return;
     }
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+      setMessage("請先回首頁使用 Google 登入，才能使用學習卡牌功能。");
+      setIsLoading(false);
+      return;
+    }
     try {
       const response = await fetch(`${apiBaseUrl}${FLASHCARD_EXAMS[exam].apiPrefix}/flashcards`, {
         cache: "no-store"

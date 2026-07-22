@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import type { Session, User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
@@ -773,6 +772,15 @@ export default function Home() {
     );
   }
 
+  function openMemberPage(path: "/flashcards" | "/flashcard-notes", featureName: string) {
+    if (!user) {
+      setQuizMessage(`請先登入才能使用${featureName}`);
+      setIsLoginPanelOpen(true);
+      return;
+    }
+    window.location.assign(path);
+  }
+
   function chooseOption(optionKey: string) {
     if (hasAnswered) {
       return;
@@ -1103,19 +1111,21 @@ export default function Home() {
               </button>
             </div>
 
-            <Link
-              href="/flashcards"
-              className="w-full border-2 border-hotRed bg-black px-7 py-4 text-center font-display text-sm uppercase text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1"
+            <button
+              type="button"
+              onClick={() => openMemberPage("/flashcards", "學習卡牌")}
+              className="w-full border-2 border-white bg-black px-7 py-4 text-center font-display text-sm uppercase text-white shadow-[8px_8px_0_#ffffff] transition hover:-translate-y-1"
             >
               學習卡牌
-            </Link>
+            </button>
 
-            <Link
-              href="/flashcard-notes"
-              className="w-full border-2 border-hotRed bg-black px-7 py-4 text-center font-display text-sm uppercase text-zinc-100 shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1"
+            <button
+              type="button"
+              onClick={() => openMemberPage("/flashcard-notes", "學習卡牌筆記")}
+              className="w-full border-2 border-white bg-black px-7 py-4 text-center font-display text-sm uppercase text-white shadow-[8px_8px_0_#ffffff] transition hover:-translate-y-1"
             >
               學習卡牌筆記
-            </Link>
+            </button>
 
             {!user ? (
               <button
