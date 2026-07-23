@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
   FLASHCARD_EXAMS,
@@ -18,6 +18,7 @@ type FlashcardWorkspaceProps = {
 
 export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
   const [selectedExam, setSelectedExam] = useState<FlashcardExam>("saa");
+  const [hasRestoredExam, setHasRestoredExam] = useState(false);
   const [cards, setCards] = useState<Flashcard[]>([]);
   const [notes, setNotes] = useState<FlashcardNote[]>([]);
   const [selectedChapter, setSelectedChapter] = useState("");
@@ -28,19 +29,33 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const environmentRequestId = useRef(0);
   const config = FLASHCARD_EXAMS[selectedExam];
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
 
   useEffect(() => {
+    const requestedExam = new URLSearchParams(window.location.search).get("exam");
     const storedExam = window.localStorage.getItem("aws-quiz-exam-type");
-    if (storedExam === "clf" || storedExam === "saa") {
-      setSelectedExam(storedExam);
-    }
+    const initialExam = requestedExam === "clf" || requestedExam === "saa"
+      ? requestedExam
+      : storedExam === "clf" || storedExam === "saa"
+        ? storedExam
+        : "saa";
+    setSelectedExam(initialExam);
+    window.localStorage.setItem("aws-quiz-exam-type", initialExam);
+    setHasRestoredExam(true);
   }, []);
 
   useEffect(() => {
-    void loadEnvironment(selectedExam);
-  }, [selectedExam]);
+    if (!hasRestoredExam) return;
+    const requestId = ++environmentRequestId.current;
+    void loadEnvironment(selectedExam, requestId);
+    return () => {
+      if (environmentRequestId.current === requestId) {
+        environmentRequestId.current += 1;
+      }
+    };
+  }, [hasRestoredExam, selectedExam]);
 
   async function getAccessToken() {
     const supabase = createClient();
@@ -49,8 +64,13 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
     return data.session?.access_token ?? null;
   }
 
-  async function fetchNotes(exam: FlashcardExam, showLoginMessage: boolean) {
+  function isCurrentEnvironmentRequest(requestId?: number) {
+    return requestId === undefined || environmentRequestId.current === requestId;
+  }
+
+  async function fetchNotes(exam: FlashcardExam, showLoginMessage: boolean, requestId?: number) {
     const accessToken = await getAccessToken();
+    if (!isCurrentEnvironmentRequest(requestId)) return;
     if (!accessToken) {
       setNotes([]);
       if (showLoginMessage) setMessage("請先回首頁使用 Google 登入，才能讀取學習卡牌筆記。");
@@ -62,10 +82,11 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
     });
     if (!response.ok) throw new Error("notes request failed");
     const data = (await response.json()) as { items?: FlashcardNote[] };
+    if (!isCurrentEnvironmentRequest(requestId)) return;
     setNotes(data.items ?? []);
   }
 
-  async function loadEnvironment(exam: FlashcardExam) {
+  async function loadEnvironment(exam: FlashcardExam, requestId: number) {
     setIsLoading(true);
     setMessage("");
     setCards([]);
@@ -81,6 +102,7 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
       return;
     }
     const accessToken = await getAccessToken();
+    if (!isCurrentEnvironmentRequest(requestId)) return;
     if (!accessToken) {
       setMessage("請先回首頁使用 Google 登入，才能使用學習卡牌功能。");
       setIsLoading(false);
@@ -92,21 +114,29 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
       });
       if (!response.ok) throw new Error("flashcards request failed");
       const data = (await response.json()) as { items?: Flashcard[] };
+      if (!isCurrentEnvironmentRequest(requestId)) return;
       const nextCards = data.items ?? [];
       setCards(nextCards);
       setSelectedChapter(nextCards[0]?.chapter_key ?? "");
-      await fetchNotes(exam, mode === "notes");
+      await fetchNotes(exam, mode === "notes", requestId);
+      if (!isCurrentEnvironmentRequest(requestId)) return;
       if (!nextCards.length) setMessage("這個考試目前沒有學習卡牌。");
     } catch {
+      if (!isCurrentEnvironmentRequest(requestId)) return;
       setMessage("學習卡牌讀取失敗，請確認 API 與 Supabase 卡牌資料表。");
     } finally {
-      setIsLoading(false);
+      if (isCurrentEnvironmentRequest(requestId)) {
+        setIsLoading(false);
+      }
     }
   }
 
   function switchExam(exam: FlashcardExam) {
     if (exam === selectedExam) return;
     window.localStorage.setItem("aws-quiz-exam-type", exam);
+    const nextUrl = new URL(window.location.href);
+    nextUrl.searchParams.set("exam", exam);
+    window.history.replaceState({}, "", `${nextUrl.pathname}${nextUrl.search}`);
     setSelectedExam(exam);
   }
 
@@ -245,7 +275,7 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
           </div>
           <nav className="flex flex-wrap gap-2" aria-label="學習卡牌導覽">
             <Link href="/" className="border border-zinc-700 px-4 py-2 text-sm font-black text-zinc-300 hover:border-white hover:text-white">回首頁</Link>
-            <Link href={mode === "study" ? "/flashcard-notes" : "/flashcards"} className="border border-flashYellow px-4 py-2 text-sm font-black text-flashYellow hover:bg-flashYellow hover:text-black">
+            <Link href={`${mode === "study" ? "/flashcard-notes" : "/flashcards"}?exam=${selectedExam}`} className="border border-flashYellow px-4 py-2 text-sm font-black text-flashYellow hover:bg-flashYellow hover:text-black">
               {mode === "study" ? `學習卡牌筆記 ${notes.length}` : "前往學習卡牌"}
             </Link>
           </nav>

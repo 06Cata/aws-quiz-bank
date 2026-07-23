@@ -778,7 +778,7 @@ export default function Home() {
       setIsLoginPanelOpen(true);
       return;
     }
-    window.location.assign(path);
+    window.location.assign(`${path}?exam=${selectedExam}`);
   }
 
   function chooseOption(optionKey: string) {
