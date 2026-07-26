@@ -1,28 +1,66 @@
 {
   "chapter1: AWS Identity & Access Management (AWS IAM)": {
-    "IAM Core Identity Entities": {
+    "IAM Identities and Roles": {
       "IAM Users & Groups (使用者與群組)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "IAM Users 代表與 AWS 互動的物理人員或應用程式，擁有獨立憑證。IAM Groups 僅能包含使用者，不支援群組嵌套。透過群組可輕鬆為多名使用者套用相同的 IAM Policies 安全政策，貫徹最低權限原則。"
       },
       "IAM Roles (角色)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
-        "Description": "一種具有臨時安全憑證的 AWS 身分實體，不與特定使用者綁定。主要用於授予 AWS 服務（如 Amazon EC2 執行個體、Lambda）或外部受信任身分存取您帳戶內其他 AWS 資源的權限，避免硬編碼（Hardcoding）長期憑證。"
+        "Description": "一種具有臨時安全憑證的 AWS 身分實體，不與特定使用者綁定。主要用於授予 AWS 服務（如 Amazon EC2 執行個體、Lambda）或外部受信任身分存取您帳戶內其他 AWS 資源的權限，避免硬編碼（Hardcoding）長期憑證。\n\n補充與常見考法：EC2、Lambda 等 AWS 服務需要呼叫其他服務時，應附加 IAM role，透過 STS 取得可自動輪替的臨時憑證。例如 EC2 讀取 S3 應使用 instance profile，而不是把 IAM user access keys 存在主機內。"
       }
     },
-    "IAM Policy & Audit": {
+    "IAM Policies and Evaluation": {
       "IAM JSON Policy Structure (JSON 策略文件結構)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
-        "Description": "由 Statement 陣列組成的 JSON 文件。包含：Sid（聲明 ID）、Effect（Allow/Deny）、Principal（身分主體）、Action（允許或拒絕的 API 行動列表，如 s3:GetObject）與 Resource（套用的 ARN 資源清單），以及 Optional Condition（條件限制，如 IP 限制、MFA 驗證等）。"
+        "Description": "由 Statement 陣列組成的 JSON 文件。\n\n包含：Sid（聲明 ID）、Effect（Allow/Deny）、Principal（身分主體）、Action（允許或拒絕的 API 行動列表，如 s3:GetObject）與 Resource（套用的 ARN 資源清單），以及 Optional Condition（條件限制，如 IP 限制、MFA 驗證等）。"
       },
+      "IAM Policy Inheritance": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "IAM user 可同時取得直接附加政策與所屬 groups 的政策；群組不能包含其他群組。實際權限由所有適用政策共同評估，預設為拒絕，明確 Allow 才能授權，而任何適用的 Explicit Deny 會優先於 Allow。"
+      }
+    },
+    "IAM Authentication and Account Protection": {
+      "AWS Account Root User": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Root user 是建立 AWS 帳戶時產生的最高權限身分，能執行部分只有 Root 才能完成的帳戶操作。日常工作不應使用 Root；應設定強密碼與 MFA、不建立 Root access keys，並使用具最小權限的 IAM 身分處理一般管理工作。"
+      },
+      "IAM Password Policy": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "IAM Password Policy 可設定最短長度、必要字元類型、密碼到期、避免重複使用及是否允許使用者自行變更密碼。它只保護密碼登入，不能取代 MFA；高權限身分應同時啟用 MFA。"
+      },
+      "Multi-Factor Authentication (MFA)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "MFA 要求密碼之外的第二項驗證因素，可降低密碼外洩造成的帳戶接管風險。Root 與高權限 IAM users 應優先啟用；AWS 支援 passkey／安全金鑰、虛擬驗證器及支援的硬體 TOTP 裝置。"
+      },
+      "AWS Management Console, CLI, and SDK": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Management Console 通常使用帳號、密碼與 MFA；AWS CLI 與 SDK 透過 API 操作 AWS。自動化應優先使用 IAM roles 提供的短期憑證，不要把 access key ID 與 secret access key 寫進程式碼、映像檔或版本控制。"
+      }
+    },
+    "IAM Auditing and Best Practices": {
       "IAM Security Auditing (安全稽核工具)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "主要包含兩大工具：IAM Credentials Report 屬於帳戶層級，能產出所有使用者憑證與 MFA 狀態的 CSV 報告；IAM Access Advisor 屬於使用者層級，能顯示特定使用者被賦予的權限及其最後一次使用該服務的時間，有助於修剪多餘權限。"
+      },
+      "IAM Least Privilege Best Practices": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "最小權限原則只授予完成工作所需的 actions、resources 與 conditions，並定期利用 Credentials Report、Access Advisor 與存取紀錄移除未使用權限。人員應使用個別身分與群組，工作負載使用 roles，避免共用帳號與長效憑證。"
+      }
+    },
+    "Shared Responsibility for IAM": {
+      "AWS Responsibility – Security OF IAM": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS 負責 IAM 服務的底層基礎設施、可用性與服務安全。這是 Security OF the Cloud。\n\n常見考法：AWS 不會替客戶決定誰應取得權限；過度授權、未啟用 MFA 或外洩 access keys 都屬於客戶責任。"
+      },
+      "Customer Responsibility – Security IN IAM": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "客戶負責 建立與管理 users、groups、roles、policies、MFA、federation 與憑證，並落實最小權限及定期撤銷不再需要的存取。這是 Security IN the Cloud。\n\n常見考法：AWS 不會替客戶決定誰應取得權限；過度授權、未啟用 MFA 或外洩 access keys 都屬於客戶責任。"
       }
     }
   },
   "chapter2: Amazon EC2 – Basics": {
-    "EC2 Instance Launching & Bootstrapping": {
+    "EC2 Launch and Bootstrapping": {
       "EC2 User Data (啟動引導腳本)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "在 EC2 首次啟動（First Boot）時自動執行的一段 Shell 引導腳本。常用於自動化安裝軟體包、更新作業系統、下載應用程式碼或進行初始化環境配置，是實現基礎設施自動化的基礎。"
@@ -32,31 +70,123 @@
         "Description": "套用於 EC2 執行個體層級（Instance-level）的有狀態（Stateful）虛擬防火牆。預設會拒絕所有傳入流量（Deny All Inbound）並允許所有傳出流量。若傳入流量被允許，其響應傳出流量會自動被允許，無需額外配置規則。"
       }
     },
-    "EC2 Sizing & Families": {
+    "EC2 Instance Sizing and Families": {
       "EC2 Instance Families (執行個體家族)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "AWS 根據工作負載優化 EC2 規格。General Purpose（平衡運算/記憶體/網路，如 t3, m5）；Compute Optimized（高 CPU 運算，如 c5）；Memory Optimized（大記憶體快取與大數據，如 r5, x1）；Storage Optimized（高 sequential 讀寫與 IOPS，如 i3）。"
+      },
+      "EC2 Sizing and Configuration Options": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "建立 EC2 時要選擇 AMI／作業系統、instance type 的 CPU 與 RAM、EBS 或 Instance Store、網路效能與 IP、Security Group，以及首次啟動的 User Data。正確選型要同時考量效能、可用性、安全與成本。"
+      },
+      "EC2 Instance Type Naming": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "例如 m5.2xlarge：m 代表 instance family／工作負載類型，5 代表世代，2xlarge 代表同 family 內的規模。更大的 size 通常提供更多 vCPU、RAM、網路與 EBS 頻寬，但價格也更高。"
+      },
+      "General Purpose vs Compute Optimized": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "General Purpose（如 T、M family）平衡 CPU、記憶體與網路，適合 Web server、程式伺服器與一般工作負載；Compute Optimized（C family）提供較高運算比例，適合 batch processing、媒體轉碼、HPC、遊戲伺服器與 CPU 密集分析。"
+      },
+      "Memory Optimized vs Storage Optimized": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Memory Optimized（R、X、z 等）適合 in-memory database、distributed cache 與大型即時資料處理；Storage Optimized（I、D、H 等）適合需要高本機 IOPS、低延遲或大量循序磁碟存取的資料庫、資料倉儲與分散式檔案系統。"
+      }
+    },
+    "EC2 Network Access": {
+      "Security Group Referencing": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Security Group 規則可把另一個 Security Group 當來源，而不是依賴會改變的 IP。例如 Application SG 只允許來自 ALB SG 的流量，Database SG 只允許來自 Application SG 的資料庫連線，可建立清楚的分層存取。"
+      },
+      "Classic Ports for EC2": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "常見考試 ports：SSH 22 管理 Linux；SFTP 22 經 SSH 傳檔；FTP 21；HTTP 80；HTTPS 443；RDP 3389 管理 Windows。Security Group 應只開放應用需要的 ports，管理 ports 不應對 0.0.0.0/0 全面開放。"
+      }
+    },
+    "EC2 Purchasing Models": {
+      "On-Demand Instances": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "On-Demand 無長期承諾，依實際運行時間付費，彈性最高但單價通常最高。適合短期、不可中斷、需求無法預測的新應用或測試；穩定長期工作負載應比較 Savings Plans 或 Reserved Instances。"
+      },
+      "Reserved Instances and Convertible RIs": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Reserved Instances 以 1 年或 3 年承諾換取折扣。Standard RI 折扣較高但變更彈性較低；Convertible RI 折扣較低但可交換成不同 instance family、OS、tenancy 等合格配置。Regional RI 提供折扣，Zonal RI 也可保留特定 AZ 容量。"
+      },
+      "EC2 Savings Plans": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Savings Plans 是承諾 1 年或 3 年的每小時運算支出以取得折扣。Compute Savings Plans 跨 instance family、Region、OS、tenancy，且可涵蓋 Fargate／Lambda，彈性較高；EC2 Instance Savings Plans 綁定 Region 與 family，折扣通常較高。"
+      },
+      "Spot Instances and Spot Fleet": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Spot 使用 AWS 閒置容量，折扣高但可能收到約兩分鐘中斷通知。適合可重試 batch、stateless、分散式分析與有 checkpoint 的工作；不適合無法中斷的關鍵資料庫。Spot Fleet 可混合多種 instance pools 與購買選項，提高取得容量與成本最佳化能力。"
+      },
+      "Dedicated Hosts, Dedicated Instances, and Capacity Reservations": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Dedicated Host 提供整台實體主機與 sockets／cores／placement 可見性，適合 BYOL 與嚴格合規；Dedicated Instance 只確保不與其他客戶共用硬體，沒有主機層控制；On-Demand Capacity Reservation 保證特定 AZ 有容量，但本身不提供折扣，可另搭配合格折扣方案。"
+      }
+    },
+    "Shared Responsibility for Amazon EC2": {
+      "AWS Responsibility – Security OF Amazon EC2": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 資料中心、實體伺服器、網路、儲存硬體與 hypervisor 等雲端底層基礎設施。這是 Security OF the Cloud。\n\n常見考法：EC2 是 IaaS；AWS 更換故障主機，但客戶仍要修補 EC2 內的作業系統與軟體。"
+      },
+      "Customer Responsibility – Security IN Amazon EC2": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 Guest OS 修補、Security Groups、IAM roles、已安裝軟體、應用程式、資料加密與備份。這是 Security IN the Cloud。\n\n常見考法：EC2 是 IaaS；AWS 更換故障主機，但客戶仍要修補 EC2 內的作業系統與軟體。"
       }
     }
   },
   "chapter3: Amazon EC2 – Associate": {
-    "EC2 Scaling & Placement Options": {
-      "EC2 Purchasing Options (EC2 購買選項)": {
-        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
-        "Description": "包含：On-Demand（按需付費，無合約）；Reserved Instances（預留，1 或 3 年期，省高達 72%）；Savings Plans（承諾每小時消費額，極具彈性）；Spot Instances（競標閒置容量，省高達 90%，但隨時可能因 AWS 收回而在 2 分鐘前通知中斷）；Dedicated Hosts（實體專用伺服器）。"
+    "EC2 Addressing and Network Interfaces": {
+      "Elastic Network Interfaces (ENI)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "VPC 中代表虛擬網卡的邏輯組件。可擁有主要私有 IPv4、一或多個次要私有 IPv4、彈性 IP（EIP）、MAC 位址與安全群組。可在 EC2 執行個體間熱插拔（Hot-attach），用於實現快速故障轉移（Failover）。"
       },
+      "Private IP vs Public IP": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Private IPv4 用於 VPC 內通訊，不直接在 Internet 路由；Public IPv4 可從 Internet 到達，通常在 instance stop/start 後改變。主要 private IP 會跟隨 ENI；架構應優先用 private networking，只有需要公開入口的資源才配置 public path。"
+      },
+      "Elastic IP Address": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Elastic IP 是可重新關聯的靜態 public IPv4，可在故障時移到另一個 instance／ENI。但它常形成手動管理與單點設計，且 public IPv4 會產生成本；一般高可用 Web 架構優先使用 ELB、Route 53 或 Global Accelerator。"
+      }
+    },
+    "EC2 Placement Groups": {
       "EC2 Placement Groups (置放群組)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "控制執行個體物理位置。Cluster（叢集置放：單一可用區內同機架，適低延遲 HPC）；Spread（分散置放：執行個體嚴格置於不同實體機架與 AZ，適高可用關鍵任務）；Partition（分割置放：多個分割區互不共用機架，適 HDFS、HBase 等分散式架構）。"
       },
-      "Elastic Network Interfaces (ENI)": {
+      "Cluster Placement Group": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Cluster Placement Group 把 instances 緊密放在單一 AZ，提供低延遲與高網路吞吐，適合 HPC 或需要節點間快速通訊的工作負載。缺點是硬體相關故障可能同時影響多台 instances。"
+      },
+      "Spread and Partition Placement Groups": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
-        "Description": "VPC 中代表虛擬網卡的邏輯組件。可擁有主要私有 IPv4、一或多個次要私有 IPv4、彈性 IP（EIP）、MAC 位址與安全群組。可在 EC2 執行個體間熱插拔（Hot-attach），用於實現快速故障轉移（Failover）。"
+        "Description": "Spread Placement Group 把少量關鍵 instances 分散到不同硬體，降低同時故障風險；Partition Placement Group 把大量節點分成不同 racks／partitions，適合 HDFS、HBase、Cassandra 等分散式系統，應用可感知分割區拓撲。"
+      }
+    },
+    "EC2 Purchasing and Lifecycle": {
+      "EC2 Purchasing Options (EC2 購買選項)": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "包含：On-Demand（按需付費，無合約）；Reserved Instances（預留，1 或 3 年期，省高達 72%）；Savings Plans（承諾每小時消費額，極具彈性）；Spot Instances（競標閒置容量，省高達 90%，但隨時可能因 AWS 收回而在 2 分鐘前通知中斷）；Dedicated Hosts（實體專用伺服器）。"
+      },
+      "EC2 Hibernate": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Hibernate 將 RAM 內容寫入加密的 EBS root volume，之後恢復時可延續記憶體中的程序，適合初始化時間很長的應用。它不同於 stop：stop 不保留 RAM；也不同於 terminate。使用時受支援的 AMI、instance type、root volume 與休眠期間限制。"
+      }
+    },
+    "Shared Responsibility for Advanced Amazon EC2": {
+      "AWS Responsibility – Security OF Advanced Amazon EC2": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 資料中心、實體伺服器、網路、儲存硬體與 hypervisor 等雲端底層基礎設施。這是 Security OF the Cloud。\n\n常見考法：EC2 是 IaaS；AWS 更換故障主機，但客戶仍要修補 EC2 內的作業系統與軟體。"
+      },
+      "Customer Responsibility – Security IN Advanced Amazon EC2": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 Guest OS 修補、Security Groups、IAM roles、已安裝軟體、應用程式、資料加密與備份。這是 Security IN the Cloud。\n\n常見考法：EC2 是 IaaS；AWS 更換故障主機，但客戶仍要修補 EC2 內的作業系統與軟體。"
       }
     }
   },
   "chapter4: Amazon EC2 – Instance Storage": {
-    "EBS Storage Optimization": {
+    "EC2 Storage Fundamentals": {
       "Elastic Block Store (EBS) Volumes": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "網絡附加區塊儲存（Network-attached Block Storage），其生命週期可獨立於 EC2。gp2/gp3 屬於通用型 SSD，平衡性高；io1/io2 Block Express 提供極高性能、亞毫秒級延遲，適合大型關鍵資料庫；st1 屬於高吞吐 HDD（適合大數據流）；sc1 則是最低成本 HDD。"
@@ -64,31 +194,153 @@
       "EC2 Instance Store (本地執行個體儲存)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "物理連接在 EC2 託管主機硬體上的臨時區塊儲存。提供極佳的隨機讀寫 I/O 性能與超低延遲，但屬於臨時（Ephemeral）儲存，當執行個體停止（Stop）或損壞時資料會完全丟失，僅適合快取、暫存或有複本的分散式系統。"
-      },
+      }
+    },
+    "EBS Snapshots and AMIs": {
       "EBS Snapshots & AMI (快照與映像檔)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "EBS Snapshots 屬於增量備訊（Incremental Backups），備份資料加密存放在 S3 中。AMI（Amazon Machine Image）則是打包好的系統範本（包含作業系統、軟體配置與 EBS 磁碟配置），用於跨可用區、跨帳戶快速重建或部署 EC2 執行個體。"
+      },
+      "EBS Delete on Termination": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Delete on Termination 控制 EC2 終止時 EBS volume 是否一併刪除。Root volume 預設通常啟用，額外 data volumes 預設通常停用；建立 instance 時應依資料保留需求明確設定，重要資料仍需 snapshots 或其他備份。"
+      },
+      "EBS Snapshot Archive and Recycle Bin": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "EBS Snapshot Archive 適合長期、極少還原的 snapshots，以較低儲存成本換取較長還原時間；Recycle Bin 可用 retention rules 保留誤刪的 snapshots／AMIs，在保留期內復原。兩者分別解決長期成本與誤刪保護。"
+      },
+      "Copying EBS Snapshots Across AZs and Regions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "EBS volume 綁定單一 AZ，但 snapshot 是 Region-level 資源，可在同 Region 的另一 AZ 建立新 volume；也能複製 snapshot 到另一 Region 或帳戶支援 DR。加密 snapshot 的分享與複製還需要正確的 KMS key permissions。"
+      },
+      "Amazon Machine Image (AMI)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AMI 是啟動 EC2 的 Region-specific 範本，描述作業系統、軟體、設定、權限及 block device mappings。來源可以是 AWS public AMI、自建 AMI 或 AWS Marketplace AMI；跨 Region 使用前要複製。"
+      },
+      "Creating an AMI from EC2": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "自建 AMI 通常先設定 EC2，再建立 image；AWS 會為相關 EBS volumes 建立 snapshots。為資料一致性可先停止或讓檔案系統靜止，再用 AMI 快速建立相同設定的 instances，支援 Auto Scaling 與跨 AZ 部署。"
+      }
+    },
+    "EBS Performance and Encryption": {
+      "EBS Volume Types and Use Cases": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "gp3／gp2 是一般 SSD；io2／io1 是高 IOPS、低延遲、關鍵資料庫用 Provisioned IOPS SSD；st1 是高吞吐 HDD，適合大數據與 log；sc1 是低成本冷資料 HDD。Boot volume 必須使用 SSD 類型，HDD 不適合作業系統或小型隨機 I/O。"
+      },
+      "EBS Multi-Attach": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Multi-Attach 可讓支援的 Provisioned IOPS EBS volume 同時連接同一 AZ 的多台 Nitro instances。應用程式必須使用能協調並行寫入的 cluster-aware 檔案系統；一般 EBS volume 仍以同時連接單一 instance 為主。"
+      },
+      "EBS Encryption": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "加密 EBS volume 會同時保護靜態資料、volume 與 instance 間資料、snapshots 及由 snapshot 建立的新 volumes，並由 KMS 管理 keys。要加密既有未加密 volume，通常建立 snapshot、複製並加密，再從加密 snapshot 建立新 volume。"
+      }
+    },
+    "Amazon EFS and Storage Comparison": {
+      "Amazon EFS Fundamentals": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "EFS 是受管、彈性擴展的 NFS file system，可由多個 AZ 的多台 Linux EC2 同時掛載，容量按使用自動成長縮減。它適合共享網站內容、home directories 與容器持久檔案，不是 Windows SMB 檔案服務。"
+      },
+      "EFS Performance and Storage Classes": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "EFS 可依工作負載選擇效能／吞吐模式，並使用 Standard、Infrequent Access 或 Archive 等儲存類別。Lifecycle Management 能把低頻檔案移到較便宜層；Regional 提供多 AZ 韌性，One Zone 成本較低但只存於單一 AZ。"
+      },
+      "EBS vs EFS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "EBS 是綁定 AZ 的 block storage，常作為單台 EC2 的系統碟、資料庫碟並按配置容量計費；EFS 是跨多 AZ、可供多台 Linux clients 共用的 NFS file storage，按實際使用容量計費。需要低延遲 block device 選 EBS，需要共享檔案系統選 EFS。"
+      }
+    },
+    "Shared Responsibility for EC2 Storage": {
+      "AWS Responsibility – Security OF EC2 Storage": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 儲存服務的實體設備、底層基礎設施、故障硬體更換，以及服務承諾範圍內的資料複寫機制。這是 Security OF the Cloud。\n\n常見考法：底層磁碟故障由 AWS 處理；是否建立備份、能否還原，以及誤刪資料的風險由客戶管理。"
+      },
+      "Customer Responsibility – Security IN EC2 Storage": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 資料內容、存取權限、KMS 加密設定、snapshot／backup 排程、保留政策、復原測試，以及理解 Instance Store 的暫時性風險。這是 Security IN the Cloud。\n\n常見考法：底層磁碟故障由 AWS 處理；是否建立備份、能否還原，以及誤刪資料的風險由客戶管理。"
       }
     }
   },
   "chapter5: High Availability & Scalability": {
-    "Scalability and High Availability Design": {
+    "Scalability and High Availability": {
       "Vertical vs Horizontal Scaling (垂直與水平擴充)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "垂直擴充（Scale Up/Down）意即增加單一 EC2 的規格（如改用大 CPU/RAM 的實體），通常受限於硬體上限，且需要重啟；水平擴充（Scale Out/In）意即增加/減少執行個體數量，屬於分散式系統與彈性架構（Elasticity）的黃金核心。"
-      },
+      }
+    },
+    "Elastic Load Balancing": {
       "Elastic Load Balancing (ELB 負載均衡器)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "自動將傳入流量分配給後端多個健康 targets（EC2、Containers、IP）。ALB（Layer 7 應用層，支援路徑與主機頭路由、HTTP/HTTPS）；NLB（Layer 4 傳輸層，處理超高流量、支援超低延遲與靜態 IP）；GWLB（Layer 3 網際網路層，用於第三方虛擬防火牆分析）。"
       },
+      "ELB Health Checks": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Load Balancer 對 target group 中的 targets 定期執行 health checks，只把流量送往健康目標。應設定能反映應用實際狀態的 protocol、port、path、interval 與 healthy／unhealthy thresholds，而不只檢查主機是否開機。"
+      },
+      "Application Load Balancer (ALB)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "ALB 是 Layer 7 HTTP／HTTPS／gRPC 負載平衡器，支援 host-based、path-based、HTTP headers、query strings 等內容路由，適合 microservices、containers 與 Web APIs。\n\nTarget 可為 instances、IP 或 Lambda，並可把多個服務放在同一 ALB 後方。"
+      },
+      "Network Load Balancer (NLB)": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "NLB 在 Layer 4 處理 TCP、UDP、TLS 等連線，適合每秒大量連線、極低延遲、保留 client IP 或需要每 AZ 靜態 IP／Elastic IP 的工作負載。它不提供 ALB 的 URL path／host 內容路由。"
+      },
+      "Gateway Load Balancer (GWLB)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "GWLB 用於透明部署、擴展與負載分配第三方虛擬網路設備，例如 firewall、IDS／IPS 與 deep packet inspection appliance。它使用 GENEVE 封裝，讓流量先經安全設備檢查再返回原路徑。"
+      },
+      "Load Balancer Security Groups": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Internet-facing ALB 的 Security Group 可允許客戶端 HTTP／HTTPS；後端 EC2 的 Security Group 則只允許來自 ALB Security Group 的應用 port。\n\nNLB 的安全設計與 target client IP preservation／是否配置 NLB Security Group 有關，需依架構設定。"
+      },
+      "Sticky Sessions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Sticky Sessions 使用 cookie 讓同一 client 在一段時間內持續連到同一 target，適合暫時無法外部化 session 的應用，但可能造成負載不均與單一 target 依賴。更可擴展的設計通常把 session 放到 ElastiCache、DynamoDB 等共享儲存。"
+      },
+      "Cross-Zone Load Balancing": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "啟用 Cross-Zone Load Balancing 後，每個 load balancer node 可把流量平均送到所有啟用 AZ 的 targets；未啟用時通常先按 AZ 分配，再由該 AZ targets 分擔。不同 ELB 類型的預設值與跨 AZ 資料費規則可能不同。"
+      },
+      "TLS Certificates and SNI": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Load Balancer 可在 listener 終止 TLS，憑證通常由 ACM 管理與自動續期。SNI 讓同一 listener 依 client 提供的 server name 選擇多張憑證，支援多個 HTTPS domains 共用同一 ALB／NLB listener。"
+      },
+      "Connection Draining and Deregistration Delay": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Target 被移除或判定不健康時，deregistration delay 讓既有 in-flight requests／connections 有時間完成，同時停止送入新請求。這能降低部署、scale in 或維護期間中斷長請求的風險。"
+      }
+    },
+    "Auto Scaling Groups": {
       "Auto Scaling Groups (ASG 自動縮放群組)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "自動根據定義之效能指標（如 CPU 使用率、網路吞吐）或排程自動調整 EC2 實體數量。提供自癒（Self-healing）機制，當某 AZ 的 EC2 損壞時，ASG 會自動在其他健康的 AZ 重新建立實體以維持 Desired Capacity。"
+      },
+      "ASG Scaling Policy Types": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Target Tracking 維持指定指標目標；Simple／Step Scaling 依 CloudWatch alarm 與超標幅度調整；Scheduled Scaling 依已知時間表改容量；Predictive Scaling 依歷史模式預測並提前準備。可組合 predictive 與 dynamic scaling 同時處理規律與突發流量。"
+      },
+      "Good Auto Scaling Metrics": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "好的 scaling metric 應與需求成比例、能反映每單位容量的負載，並在增加 capacity 後下降，例如平均 CPU、ALB request count per target 或 SQS queue backlog per instance。只看總請求數但不除以容量，可能無法正確 scale in。"
+      },
+      "ASG Scaling Cooldown and Instance Warmup": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Cooldown／instance warmup 讓新 instances 有時間初始化並讓監控指標穩定，避免 ASG 在前一次調整尚未生效時反覆 scale out／in。Target Tracking 通常使用 instance warmup；生命週期較長的應用應設定足夠啟動時間。"
+      }
+    },
+    "Shared Responsibility for High Availability and Scalability": {
+      "AWS Responsibility – Security OF High Availability and Scalability": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 ELB、Auto Scaling 控制平面及其底層基礎設施的可用性、修補與擴展。這是 Security OF the Cloud。\n\n常見考法：AWS 維運 ELB／ASG 服務，但不會替客戶選擇正確的 health check、容量上下限或修復無法水平擴展的應用程式。"
+      },
+      "Customer Responsibility – Security IN High Availability and Scalability": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 listener、target group、health check、launch template、minimum／desired／maximum capacity、跨 AZ 設計與應用程式可擴展性。這是 Security IN the Cloud。\n\n常見考法：AWS 維運 ELB／ASG 服務，但不會替客戶選擇正確的 health check、容量上下限或修復無法水平擴展的應用程式。"
       }
     }
   },
   "chapter6: RDS, Aurora & ElastiCache": {
-    "Managed Database Tier": {
+    "Amazon RDS Fundamentals and Operations": {
       "Amazon RDS & Multi-AZ Failover": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "提供 PostgreSQL、MySQL、Oracle、MariaDB、SQL Server 的受管關係型資料庫。Multi-AZ 部署採用同步複製（Synchronous Replication）至另一個 AZ 的 Standby 實體，當主實體故障時自動切換終端節點（Failover），保證高可用性與災難復原。"
@@ -97,18 +349,90 @@
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "採用非同步複製（Asynchronous Replication）技術，最多建立 15 個唯讀複本。專門用於將讀取密集型流量（Read-heavy Workloads）從主資料庫中分流，減少主庫負擔，實現極高的水平讀取擴充性。唯讀複本亦可被提升（Promoted）為獨立資料庫。"
       },
+      "RDS Storage Auto Scaling": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "RDS Storage Auto Scaling 在可用空間接近不足時，自動把 storage 增加到設定的 maximum threshold，減少手動擴容與停機風險。它解決儲存容量成長，不會自動改變 DB instance 的 CPU／RAM 規格。"
+      },
+      "RDS Read Replica vs Multi-AZ": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Read Replica 使用非同步複寫並提供可讀 endpoint，用來擴展 read workload，也可跨 AZ／Region；Multi-AZ 使用同步複寫到 standby，主要用於自動 failover 與高可用，standby 通常不拿來服務讀取。考題問讀取擴展選 Read Replica，問 DR／failover 選 Multi-AZ。"
+      },
+      "RDS Custom": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "RDS Custom 為需要存取底層 OS 與資料庫環境的 Oracle／SQL Server 特殊應用提供較高自訂能力，同時保留部分 RDS 自動化。適合 legacy、vendor application 或需安裝特定 agent；一般資料庫仍優先使用標準 RDS 以降低管理負擔。"
+      },
+      "RDS Backups, Snapshots, and Restore": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Automated backups 支援保留期內 point-in-time recovery；manual snapshots 由使用者管理並保留到刪除。從 backup／snapshot 還原會建立新的 DB instance，不會原地覆寫；\n\n跨 Region DR 可複製 snapshots 或使用跨 Region read replica／Aurora Global Database。"
+      },
+      "RDS Security": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "RDS 常部署在 private subnets，以 Security Groups 控制網路；KMS 加密保護 storage、snapshots 與 replicas，SSL/TLS 保護傳輸。IAM 可控制 RDS API，部分引擎支援 IAM DB authentication；資料庫帳號與權限仍由客戶管理。"
+      },
+      "Amazon RDS Proxy": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "RDS Proxy 是受管、高可用的資料庫連線池，重用 connections，避免 Lambda 或大量應用 instances 突然建立過多 DB connections。它能縮短 failover 影響並可整合 IAM authentication／Secrets Manager，但不會快取查詢結果。"
+      }
+    },
+    "Amazon Aurora": {
       "Amazon Aurora": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "AWS 專有的雲端優化關係型資料庫（相容 Postgres/MySQL）。其底層分散式儲存採用 3 個可用區、共 6 個複本的自我修復、自動擴展儲存（最高達 256TB）。提供極高速的故障切換與比標準庫高出數倍的效能，並支援 Serverless 與 Global Database 模式。"
       },
+      "Aurora Writer and Reader Endpoints": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Aurora cluster endpoint 連到目前 writer，供讀寫；reader endpoint 在 Aurora Replicas 間負載分配讀取，提供 read scaling。Failover 時 Aurora 會提升 replica 並更新 endpoint，應用不應硬編碼單一 instance endpoint。"
+      },
+      "Aurora Serverless and Replica Auto Scaling": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Aurora Serverless 依需求自動調整資料庫容量，適合間歇、不可預測或開發測試工作負載；Aurora Auto Scaling 則依指標增減 Aurora Replicas，擴展讀取。前者調整 DB compute capacity，後者調整 reader 數量。"
+      },
+      "Aurora Global Database": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Aurora Global Database 以一個 primary Region 處理寫入，將資料低延遲複寫到其他 Regions，讓全球讀取靠近使用者並支援跨 Region DR。次要 Region 可在災難時提升，但應用仍要設計 DNS／endpoint 切換。"
+      },
+      "Aurora Database Cloning": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Aurora cloning 使用 copy-on-write 快速建立新 cluster，初始不複製整份資料，建立速度快且節省空間。適合從 production 建立測試、開發或分析環境；clone 後的變更與來源逐步分離。"
+      }
+    },
+    "Amazon ElastiCache": {
       "Amazon ElastiCache (快取)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "受管記憶體快取。Redis 提供豐富資料結構、資料持久化（AOF/Snapshot）、集群與 Multi-AZ 自動容錯切換；Memcached 則是超高效、多線程、無持久化的簡單 Key-Value 結構，適合作為純粹的資料庫查詢快取。"
+      },
+      "Redis vs Memcached": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Redis 支援 replication、Multi-AZ failover、persistence、複雜資料結構、排序集合與 pub/sub，適合 session、leaderboard 與 HA cache；\n\nMemcached 是簡單、multi-threaded、易水平分片的 ephemeral cache，沒有原生 replication、backup 或高可用。"
+      },
+      "Cache-Aside and Session Store Patterns": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Cache-aside 先查 cache，miss 時查資料庫並回填，能降低 read pressure，但應處理 TTL、失效與 stale data。把 Web sessions 放入 Redis 等共享 cache，可讓 EC2 保持 stateless，使 ALB 與 ASG 更容易水平擴展。"
+      }
+    },
+    "Shared Responsibility for RDS, Aurora, and ElastiCache": {
+      "AWS Responsibility – Security OF RDS, Aurora, and ElastiCache": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 受管資料庫與分析服務的底層硬體、服務軟體、故障替換，以及各服務承諾範圍內的修補與可用性。這是 Security OF the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
+      },
+      "Customer Responsibility – Security IN RDS, Aurora, and ElastiCache": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 資料、schema、帳號權限、網路存取、加密、備份保留期、容量與高可用設定；若資料庫裝在 EC2，客戶還要管理資料庫引擎與 OS。這是 Security IN the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
       }
     }
   },
   "chapter7: Amazon Route 53": {
-    "Global DNS Traffic Routing": {
+    "DNS Fundamentals": {
+      "DNS Records and Hosted Zones": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Route 53 是 authoritative DNS、domain registration 與 health checking 服務。Public Hosted Zone 回答 Internet DNS 查詢；Private Hosted Zone 只在關聯 VPC 內解析。\n\n常見 records 包含 A／AAAA、CNAME、NS、MX、TXT 與 Alias。"
+      },
+      "DNS TTL": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "TTL 控制 resolver／client 快取 DNS 回應多久。高 TTL 減少 DNS 查詢與成本但變更生效較慢；低 TTL 提高切換靈活性但增加查詢量。準備 migration／failover 前可先降低 TTL，完成穩定後再調高。"
+      }
+    },
+    "Route 53 Records and Routing Policies": {
       "Route 53 Routing Policies (DNS 路由策略)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "包含：Simple Routing（簡單單一對應）；Weighted（權重比例分配）；Latency（根據用戶與 AWS 間最低延遲路由）；Failover（主/備 Active-Passive 災難切換）；Geolocation（依地理位置路由）；Multi-value Answer（返還多個健康 IP 加強容錯）。"
@@ -116,11 +440,59 @@
       "Alias Records vs CNAME Records": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "CNAME 將某個 DNS 名稱映射到另一個 DNS 名稱，無法映射 Root Domain（如 example.com）。Route 53 Alias（別名）是 AWS 專有擴充，能直接將任何 DNS 名稱（包括 Root）對應到 AWS 內部資源（如 ELB, CloudFront），且別名查詢完全免費。"
+      },
+      "Simple and Multi-Value Routing": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Simple Routing 適合單一資源或回傳多個值但不做健康判斷；Multi-Value Answer 可對多個 records 執行 health checks，回傳多個健康結果以提供 client-side 分散。Multi-Value 不是 ELB 的替代品。"
+      },
+      "Weighted Routing": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Weighted Routing 按相對權重分配 DNS 回應，適合藍綠部署、canary release、A/B testing 或跨 Region 流量比例控制。權重 0 可停止一般流量，所有 records 權重皆為 0 時則以相同比例回應。"
+      },
+      "Latency-Based Routing": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Latency-Based Routing 根據 AWS 對使用者來源到各 AWS Region 的延遲資料，回傳預期延遲最低的資源。它適合 multi-Region active-active 應用，通常搭配 health checks 避免導向故障 Region。"
+      },
+      "Failover Routing": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Failover Routing 建立 Primary 與 Secondary records，Route 53 以 health check 監控 primary，故障時回傳 secondary，形成 active-passive DR。要確保 health check 能真正反映端到端應用健康，而不是只檢查一個無關 endpoint。"
+      },
+      "Geolocation vs Geoproximity Routing": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Geolocation 依使用者所在 continent／country／US state 選 record，適合內容在地化與法規；Geoproximity 依使用者與資源地理距離分流，並可用 bias 擴大或縮小資源覆蓋區域，需使用 Route 53 Traffic Flow。"
+      },
+      "IP-Based Routing": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "IP-Based Routing 依 client IP 所屬 CIDR collection 選擇 records，適合已知 ISP、企業網路或需要精細控制特定來源流量的情境。它不同於 Geolocation，判斷依據是明確的 IP ranges。"
+      }
+    },
+    "Route 53 Health and Hybrid DNS": {
+      "Route 53 Health Checks": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Route 53 health checkers 可透過 HTTP、HTTPS 或 TCP 監控 public endpoints，也可建立 calculated health check 組合多個 child checks。\n\nPrivate endpoint 不能被 public checkers 直接存取，常用 CloudWatch Alarm 搭配 health check 間接監控。"
+      },
+      "Route 53 Resolver Endpoints": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Inbound Resolver Endpoint 讓 on-premises DNS 查詢 AWS VPC／Private Hosted Zones；Outbound Resolver Endpoint 讓 VPC 依 forwarding rules 查詢 on-premises DNS。\n\n兩者透過 Site-to-Site VPN 或 Direct Connect 建立 hybrid DNS，並需要正確 Security Group 規則。"
+      },
+      "Domain Registrar vs DNS Service": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Domain registrar 負責註冊與續約網域，DNS service 負責託管 records 與回答查詢；兩者可以分開。網域可在第三方 registrar，將 NS records 指向 Route 53 Hosted Zone，或由 Route 53 註冊但使用其他 DNS。"
+      }
+    },
+    "Shared Responsibility for Amazon Route 53": {
+      "AWS Responsibility – Security OF Amazon Route 53": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 全球網路、edge／DNS／加速服務的底層設施、服務可用性與硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
+      },
+      "Customer Responsibility – Security IN Amazon Route 53": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 DNS records、routing policies、origins、cache／TLS／存取設定、health checks，以及資料與應用程式本身的安全。這是 Security IN the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
       }
     }
   },
   "chapter8: Classic Solutions Architecture": {
-    "Traditional Multi-Tier Design Patterns": {
+    "Classic Web Architecture Patterns": {
       "Stateless Web App (無狀態 Web 架構)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "一種高度彈性的 Web 架構模式。不將用戶 Session、圖片等狀態存放於個別 EC2 中，而是使用外部獨立快取（ElastiCache、DynamoDB）或儲存庫（Amazon S3）保存狀態。如此後端的 ASG 隨時銷毀或建立 EC2 均不會中斷用戶體驗。"
@@ -128,23 +500,111 @@
       "Stateful Scaling & Read/Write Splitting (讀寫分離架構)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "典型的三層式架構設計。前端透過 ALB 分發，應用層（EC2）利用外置安全群組互相引用來落實嚴格網路安全（Security-Group Chaining）。資料庫端透過 Write Endpoint 寫入 RDS Master，並透過 Reader Endpoint 把大量的分析或查詢請求，負載均衡至多個 Read Replicas 上。"
+      },
+      "Stateless Application Sessions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "要讓 Web tier 可被 ASG 任意增加、替換或移除，不能把唯一 session 存在單一 EC2。可使用 ElastiCache、DynamoDB 或 client cookie 保存 session，將上傳檔案放 S3／EFS，使 instances 成為可替換的 stateless compute。"
+      },
+      "Three-Tier Web Application": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "典型三層架構把 public ALB 放 public subnets，stateless application EC2／containers 放 private subnets，RDS／Aurora 放 isolated database subnets。\n\n各層跨至少兩個 AZ，並用 Security Group references 只允許上一層到下一層必要 ports。"
+      },
+      "Rapid Application Instantiation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "快速啟動 instances 可使用預先建立且已安裝依賴的 AMI、啟動時 User Data、外部化設定與資料，並由 Auto Scaling Launch Template 重複部署。AMI 啟動較快但更新要重建 image；User Data 較彈性但會延長 boot。"
+      }
+    },
+    "Elastic Beanstalk Architecture": {
+      "Elastic Beanstalk Components": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Elastic Beanstalk 以 Application、Application Version 與 Environment 組織部署，代為建立 EC2、ASG、ELB、health monitoring 等資源。開發者上傳程式並選平台，仍可存取與控制底層 AWS 資源。"
+      },
+      "Elastic Beanstalk Web vs Worker Tiers": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Web Server Environment 透過 ELB 接收同步 HTTP requests；Worker Environment 從 SQS queue 拉取非同步工作，適合背景處理並可依 queue depth 擴展。兩者可組合，讓前端快速回應、耗時任務由 worker 解耦處理。"
+      },
+      "Elastic Beanstalk Deployment Modes": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "All at once 最快但有停機風險；Rolling 分批替換、暫時降低容量；Rolling with additional batch 先加容量再分批；Immutable 建立全新 instances 驗證後切換，回滾安全但成本較高；Traffic splitting 可進行 canary 驗證。"
+      }
+    },
+    "Shared Responsibility for Classic Solutions Architecture": {
+      "AWS Responsibility – Security OF Classic Solutions Architecture": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 AWS Cloud 的資料中心、實體硬體、全球網路、虛擬化層與受管服務底層平台。這是 Security OF the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      },
+      "Customer Responsibility – Security IN Classic Solutions Architecture": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
       }
     }
   },
   "chapter9: Amazon S3": {
-    "Object Storage Fundamentals": {
+    "S3 Buckets and Objects": {
       "Amazon S3 Object Storage (S3 物件儲存基礎)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "無限容量、無伺服器（Serverless）的物件儲存服務。每個物件（最高 50TB）由 Key（路徑鍵）、Value（資料位元組）、Metadata 與 Version ID 組成。提供 99.999999999% 的超強資料耐久性（Durability），且預設為跨可用區複製。"
       },
+      "S3 Bucket Naming and Region Scope": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "S3 bucket 名稱在所有 AWS accounts／Regions 間必須全域唯一，但 bucket 本身建立於特定 Region。Bucket 不是傳統資料夾；object key 的 prefix 形成類似目錄的顯示方式，架構應避免依賴真正的階層式檔案系統語意。"
+      },
+      "S3 Object Key, Metadata, and Size": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 object 由 key、value、metadata、tags，啟用 versioning 時還有 version ID 組成；單一 object 最大 5 TB，超過 5 GB 的單次 PUT 必須使用 multipart upload。S3 是 object storage，不能像 block storage 原地修改檔案片段。"
+      },
+      "S3 Versioning": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Versioning 為相同 key 保存多個版本，可復原誤覆寫與 delete marker 造成的邏輯刪除，也是 replication 與 Object Lock 等功能的必要條件。啟用後可 suspend 但不能回到從未啟用狀態，舊 versions 仍會產生儲存成本。"
+      },
+      "S3 Block Public Access": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "S3 Block Public Access 可在 account 或 bucket 層阻擋 public ACLs／policies，優先用來避免誤設公開。只有明確需要 public static website 等情境才評估放寬，通常更安全的公開內容架構是 private S3 origin 搭配 CloudFront OAC。"
+      },
+      "S3 Static Website Hosting": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 可透過 website endpoint 託管 HTML、CSS、JavaScript 等靜態網站並設定 index／error document。原生 website endpoint 只提供 HTTP，若需要 HTTPS、自訂網域與全球快取，通常在前方使用 CloudFront。"
+      }
+    },
+    "S3 Storage Classes": {
       "S3 Storage Classes & Cost Optimization": {
         "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
         "Description": "S3 Standard（高頻存取）；S3 Standard-IA（不常存取，低儲存費，收檢索費）；S3 One Zone-IA（不常存取，放單一 AZ 省成本，資料可重建）；S3 Intelligent-Tiering（由機器學習自動分析，按存取頻率在 Standard 與 IA 間自動切換以省去手動維護成本）。"
+      },
+      "S3 Durability vs Availability": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Durability 衡量資料不遺失的機率，S3 儲存類別普遍設計為 11 個 9 的 durability；Availability 衡量服務可存取時間，各 class 不同。One Zone-IA 仍有高 durability，但資料只放單一 AZ，不適合無法重建的唯一副本。"
+      },
+      "S3 Standard, Standard-IA, and One Zone-IA": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Standard 適合頻繁且低延遲存取；Standard-IA 適合需毫秒取回但低頻的多 AZ 資料，儲存較便宜但有 retrieval fee 與 minimum duration；One Zone-IA 成本更低，只存單一 AZ，適合可重建副本或次要備份。"
+      },
+      "S3 Glacier Storage Classes": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Glacier Instant Retrieval 適合極少存取但仍需毫秒取回；Glacier Flexible Retrieval 提供分鐘到小時的 restore 選項；Glacier Deep Archive 成本最低、還原通常以小時計，適合法規封存與長期備份。\n\n選擇要同時考量 minimum duration、restore time 與 retrieval cost。"
+      },
+      "S3 Intelligent-Tiering": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Intelligent-Tiering 監控 access pattern，自動把 objects 移到合適的 frequent／infrequent／archive tiers，適合存取模式未知或會變動的資料。它不收 retrieval fee，但有每 object monitoring／automation fee；\n\n小 objects 或可預測資料未必最省。"
+      },
+      "S3 Express One Zone": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 Express One Zone 使用 directory bucket，把資料放在單一 AZ，提供比一般 S3 更低延遲與高 request performance，適合 latency-sensitive analytics、AI/ML training 與高頻小物件操作。它不具 multi-AZ resilience，應用需依資料重要性另做保護。"
+      }
+    },
+    "Shared Responsibility for Amazon S3": {
+      "AWS Responsibility – Security OF Amazon S3": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 S3 的實體基礎設施、服務可用性與耐久性機制，以及底層硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Amazon S3": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 objects 與資料分類、bucket／IAM policies、Block Public Access、加密選項、versioning、replication 與 lifecycle 設定。這是 Security IN the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
       }
     }
   },
   "chapter10: Amazon S3 – Advanced": {
-    "S3 Scale & High Performance Operations": {
+    "S3 Lifecycle and Replication": {
       "S3 Lifecycle Policies (生命週期政策)": {
         "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
         "Description": "定義規則自動管理物件。生命週期包含：Transition Actions（定時將儲存類別降級，例如 Standard 30天後轉 IA，90天後轉 Glacier）；Expiration Actions（定時自動徹底刪除過期物件或舊版本，大幅節省不必要的儲存支出）。"
@@ -152,63 +612,335 @@
       "S3 Replication (跨可用區與跨區域複製)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "包含 CRR（跨區域複製）與 SRR（同區域複製）。當啟用 Versioning 後，S3 能自動非同步地將一個 Bucket 中的新物件完整複製到另一個目標 Bucket，適用於低延遲存取、法規合規與跨區域災難復原部署。"
-      },
+      }
+    },
+    "S3 Performance Optimization": {
       "S3 Performance Optimizations (S3 性能優化技術)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "優化機制包含：Multi-part Upload（大於 100MB 啟用分段並行上傳，失敗免重頭，速度快）；S3 Transfer Acceleration（經由 AWS Global Edge Locations 優化網路骨幹路徑）；S3 Select / Glacier Select（在雲端直接用 SQL 過濾物件，僅傳回所需欄位，省頻寬與運算）。"
+      },
+      "S3 Prefix Performance": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 會自動擴展 request rate，每個 prefix 可提供高 GET／HEAD 與 PUT／COPY／POST／DELETE request performance；使用多個 prefixes 可平行取得更高總吞吐量。現代 S3 不需要為效能刻意把 key 前綴隨機化。"
+      },
+      "Multipart Upload and Byte-Range Fetch": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Multipart Upload 把大型 object 分段平行上傳並只重試失敗 parts，通常大於 100 MB 就值得考慮、超過 5 GB 必須使用；Byte-Range Fetch 平行下載不同 ranges，可提高吞吐量並只讀取需要的檔案區段。"
+      }
+    },
+    "S3 Events and Operations": {
+      "S3 Requester Pays": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Requester Pays bucket 讓 authenticated requester 承擔 request 與 data transfer 成本，bucket owner 仍支付 storage。適合分享大型公開資料集；requester 必須在請求中表明願意付費，anonymous requests 不適用。"
+      },
+      "S3 Event Notifications": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "S3 可在 object create、remove、restore 等事件發生時通知 SNS、SQS、Lambda 或透過 EventBridge 路由。事件通常至少一次傳遞且可能重複，consumer 應具 idempotency；S3 也需要被 target resource policy 授權發送。"
+      },
+      "S3 Event Notification Permissions": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "S3 發送到 SNS／SQS 時，需要 topic／queue resource policy 允許 S3 service principal；觸發 Lambda 時需要 Lambda resource-based policy 允許 S3 invoke。這不同於給 S3 一個 IAM role，考題常以 resource policy 判斷。"
+      },
+      "S3 Batch Operations": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 Batch Operations 根據 inventory report 或 manifest 對大量既有 objects 執行 copy、tag、restore、invoke Lambda、ACL／Object Lock 等批次工作，內建進度追蹤、重試與完成報告。它適合 millions／billions objects，不是單一即時事件處理。"
+      },
+      "S3 Storage Lens": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "S3 Storage Lens 提供 organization、account、Region、bucket、prefix 層級的 storage usage、activity、cost optimization 與 data protection 指標，協助找出未完成 multipart uploads、未加密或缺少 lifecycle 的資料。\n\n它是分析儀表板，不會自動修改 buckets。"
+      }
+    },
+    "Shared Responsibility for Amazon S3": {
+      "AWS Responsibility – Security OF Amazon S3": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "AWS 負責 S3 的實體基礎設施、服務可用性與耐久性機制，以及底層硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Amazon S3": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "客戶負責 objects 與資料分類、bucket／IAM policies、Block Public Access、加密選項、versioning、replication 與 lifecycle 設定。這是 Security IN the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
       }
     }
   },
   "chapter11: Amazon S3 – Security": {
-    "S3 Access & Data Encryption": {
+    "S3 Authorization and Temporary Access": {
       "S3 Bucket Policies & IAM Authorization (安全政策與授權)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "IAM 政策主要套用於 Identity。S3 Bucket Policies 則是資源表述政策（Resource-based），套用至 Bucket 層級。用於定義誰（Principal）可跨帳戶存取儲存桶，或強迫所有上傳物件必須含有加密標頭才能寫入。"
       },
+      "S3 CORS": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CORS 由 browser 強制，用 bucket CORS rules 允許特定 origins、methods 與 headers 跨網域存取 S3。它不是身分授權；即使 CORS 允許，request 仍需符合 bucket policy、IAM、ACL 或 pre-signed URL 權限。"
+      },
+      "S3 Pre-Signed URLs": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Pre-signed URL 由具 S3 權限的身分簽署，在有限時間內讓接收者執行特定 GET／PUT 等操作，無需取得 AWS credentials。URL 權限不會超過簽署者，應設定短有效期並避免透過不安全管道外洩。"
+      },
+      "S3 Access Points": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "S3 Access Point 為同一 bucket 建立不同 hostname 與 access point policy，讓不同應用或團隊各自管理 prefix 權限，降低大型 bucket policy 複雜度。VPC-origin access point 可限制經 VPC endpoint 的私有存取。"
+      },
+      "S3 Object Lambda": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "S3 Object Lambda 在 GET 回應返回 client 前呼叫 Lambda 轉換 object，例如遮蔽個資、轉格式、調整影像或依使用者客製內容，無需為每種版本保存副本。它透過 Object Lambda Access Point 提供轉換後資料。"
+      }
+    },
+    "S3 Encryption": {
       "S3 Server-Side Encryption (服務端加密方式)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "四種加密：SSE-S3（由 S3 託管與管理的 Key，使用 AES-256）；SSE-KMS（利用 KMS 密鑰，提供密鑰旋轉與 CloudTrail 行為審計）；SSE-C（由客戶提供加密密鑰，AWS 僅負責在寫入時加密、讀取時解密）；Client-Side Encryption（客戶上傳前自行加密）。"
+      },
+      "SSE-S3": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "SSE-S3 由 S3 管理 encryption keys，使用 AES-256 加密 objects，操作最簡單且不需要管理 KMS permissions。它提供 server-side encryption，但無法提供 customer-managed key 的細緻權限、rotation control 或 KMS audit。"
+      },
+      "SSE-KMS": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "SSE-KMS 使用 AWS managed 或 customer managed KMS key，提供 key policy、rotation 與 CloudTrail audit。讀寫除了 S3 權限也需要 KMS permissions，且大量 requests 可能受 KMS quota／成本影響；\n\nS3 Bucket Key 可降低 KMS calls。"
+      },
+      "SSE-C": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "SSE-C 由客戶在每次 request 透過 HTTPS 提供 encryption key，S3 使用後不保存 key，只保存驗證資訊。客戶必須自行安全管理與提供同一 key；遺失 key 就無法解密，也不能透過 Console 一般操作。"
+      },
+      "Client-Side Encryption": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Client-side encryption 在資料送到 S3 前由應用程式加密，下載後也由客戶解密；AWS 只看到 ciphertext。客戶完全負責演算法、keys、rotation 與復原，適合要求資料進入 AWS 前就加密的情境。"
+      },
+      "S3 Encryption in Transit": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "使用 HTTPS／TLS 保護 client 與 S3 間傳輸。Bucket policy 可用 aws:SecureTransport condition 明確 Deny 非 TLS requests，或使用 s3:TlsVersion 強制最低版本；這與 default server-side encryption 的 at-rest 保護不同。"
+      }
+    },
+    "S3 Protection and Audit": {
+      "S3 MFA Delete": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Versioned bucket 啟用 MFA Delete 後，永久刪除 object version 或變更 versioning state 需要 MFA，降低憑證遭濫用造成永久資料刪除的風險。啟用／停用需由 Root 使用 API／CLI 完成。"
+      },
+      "S3 Access Logs": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Server Access Logging 把 bucket requests 的詳細紀錄寫到指定 S3 target bucket，用於稽核與分析。Target 不應與 source 使用會造成 logging loop 的設定；更完整的 object-level API audit 也可使用 CloudTrail data events。"
+      },
+      "S3 Object Lock and Glacier Vault Lock": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "S3 Object Lock 在 versioned bucket 以 WORM retention 或 legal hold 防止 object version 被覆寫／刪除；Governance mode 可由特殊權限繞過，Compliance mode 在期限內連 Root 也不能刪。\n\nGlacier Vault Lock 以鎖定 policy 強制 archive vault 合規。"
+      }
+    },
+    "Shared Responsibility for Amazon S3 – Security": {
+      "AWS Responsibility – Security OF Amazon S3 – Security": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS 負責 S3 的實體基礎設施、服務可用性與耐久性機制，以及底層硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Amazon S3 – Security": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "客戶負責 objects 與資料分類、bucket／IAM policies、Block Public Access、加密選項、versioning、replication 與 lifecycle 設定。這是 Security IN the Cloud。\n\n常見考法：AWS 保護 S3 服務本身；bucket 意外公開、未啟用所需版本控制或錯誤刪除 objects 通常是客戶責任。"
       }
     }
   },
   "chapter12: CloudFront & Global Accelerator": {
-    "Global Edge Acceleration": {
+    "Amazon CloudFront": {
       "Amazon CloudFront CDN (內容分發網路)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "全球低延遲 CDN 服務。利用分佈全球的 Edge Locations 緩存（Cache）來自 Origin（S3, ALB, EC2）的靜態（圖片、影片）與動態內容。支援 SSL/TLS 加密認證，並能與 AWS WAF 及 Route 53 整合提供邊緣安全與高抗 DDoS 防護。"
       },
+      "CloudFront Origins": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "CloudFront distribution 可使用 S3、ALB、EC2、API Gateway 或 custom HTTP server 作 origin，並透過全球 edge locations 快取內容。Origin 應限制只接受 CloudFront 流量，避免使用者繞過 CDN、安全控制或付費內容規則。"
+      },
+      "CloudFront Origin Access Control (OAC)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "OAC 讓 CloudFront 使用 SigV4 安全存取 private S3 bucket，bucket policy 只允許指定 distribution。它是 OAI 的新一代做法，支援更多 S3 功能與 KMS；不需把 bucket 設為 public。"
+      },
+      "CloudFront Geo Restriction": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Geo Restriction 依 viewer country 建立 allowlist 或 blocklist，適合內容授權與基本地域限制。判斷依第三方 IP geolocation，不是精細身分授權；需要更複雜規則時搭配 AWS WAF、signed URLs／cookies。"
+      },
+      "CloudFront Cache Invalidation": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "更新 origin object 不會立即清除 edge cache；可等待 TTL 到期，或建立 invalidation 移除特定 paths／wildcards。大量 invalidations 會增加成本，常見最佳實踐是使用版本化檔名並設定合適 Cache-Control。"
+      },
+      "CloudFront vs S3 Cross-Region Replication": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "CloudFront 將熱門內容快取到全球 edges，適合大量全球讀取且內容可快取；S3 CRR 把 objects 非同步複製到指定 Region，適合法規、DR 或低延遲存取完整副本。CloudFront cache 可過期，不是持久 DR 副本。"
+      }
+    },
+    "AWS Global Accelerator": {
       "AWS Global Accelerator (全球加速器)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
-        "Description": "使用 AWS 全球專用骨幹網路（Private Network）與 Anycast IP 技術路由流量。將用戶請求導向距離最近的 Edge 進入 AWS 骨幹，跳過不穩定的公網，進而降低延遲、消除抖動，適用於需要高可用與低延遲的非 HTTP（TCP/UDP）工作負載。"
+        "Description": "使用 AWS 全球專用骨幹網路（Private Network）與 Anycast IP 技術路由流量。將用戶請求導向距離最近的 Edge 進入 AWS 骨幹，跳過不穩定的公網，進而降低延遲、消除抖動，適用於需要高可用與低延遲的非 HTTP（TCP/UDP）工作負載。\n\n補充與常見考法：Global Accelerator 提供兩個 anycast static IP，從最近 edge 將 TCP／UDP traffic 導入 AWS global network，再送往健康的 ALB、NLB、EC2 或 Elastic IP endpoints。\n\n適合非 HTTP、靜態 IP、快速 regional failover 與全球低延遲應用。"
+      },
+      "CloudFront vs Global Accelerator": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "CloudFront 是 HTTP／HTTPS CDN，會在 edge 快取內容並提供應用層功能；Global Accelerator 是 network layer proxy，不快取內容，支援 TCP／UDP、static anycast IP 與跨 Region endpoint health routing。\n\n靜態內容／影片分發選 CloudFront，非 HTTP 或固定 IP 全球入口選 Global Accelerator。"
+      }
+    },
+    "Shared Responsibility for CloudFront & Global Accelerator": {
+      "AWS Responsibility – Security OF CloudFront & Global Accelerator": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 全球網路、edge／DNS／加速服務的底層設施、服務可用性與硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
+      },
+      "Customer Responsibility – Security IN CloudFront & Global Accelerator": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 DNS records、routing policies、origins、cache／TLS／存取設定、health checks，以及資料與應用程式本身的安全。這是 Security IN the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
       }
     }
   },
   "chapter13: AWS Storage Extras": {
-    "Hybrid Cloud Storage & Mass Migration": {
+    "AWS Snow Family and Edge": {
+      "AWS Snow Family (離線資料遷移家族)": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "物理性離線儲存實體，包含 Snowcone（小型，可防塵，支援邊緣運算）、Snowball Edge（海量資料、配備運算資源可做 ML）、Snowmobile（貨櫃車級，適合 Exabyte 資料遷移）。用於解決企業因地端網路頻寬不足，需遷移 PB 級資料至 S3 的難題。"
+      },
+      "AWS Snowball Data Migration": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Snowball Edge 使用加密實體設備把大量資料離線移入／移出 AWS，適合網路頻寬不足、傳輸需數週或偏遠環境。工作流程由 Snowball job、設備寄送、local copy 與 AWS 匯入組成；不是即時雙向同步服務。"
+      },
+      "Snowball Edge Computing": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Snowball Edge 除了搬移資料，也能在無穩定網路的工廠、船舶、災區或邊緣地點執行 local compute／storage，之後再把結果送回 AWS。適合資料產生地需要低延遲處理或斷線操作的情境。"
+      }
+    },
+    "AWS Storage Gateway": {
       "AWS Storage Gateway (混合雲儲存閘道)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "橋接本地（On-premises）與 AWS 儲存服務。S3 File Gateway（透過 NFS/SMB 挂載 S3）；FSx File Gateway（掛載 EFS/FSx）；Volume Gateway（地端以 iSCSI 挂載，將 Block 資料同步/緩存在雲端）；Tape Gateway（VTL，虛擬磁帶備份至 Glacier）。"
       },
-      "AWS Snow Family (離線資料遷移家族)": {
+      "S3 File Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "S3 File Gateway 在 on-premises 提供 NFS／SMB file interface，把 files 以 objects 存入 S3，並用 local cache 加速近期資料。適合備份、archive、data lake ingestion 與逐步將 file data 移到 object storage。"
+      },
+      "Volume Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Volume Gateway 提供 iSCSI block volumes。Cached Volumes 把主要資料放 S3、on-premises 保留常用 cache；Stored Volumes 把完整主要資料留在本地，非同步備份為 EBS snapshots，適合需要本地低延遲與 AWS 備份的架構。"
+      },
+      "Tape Gateway": {
         "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
-        "Description": "物理性離線儲存實體，包含 Snowcone（小型，可防塵，支援邊緣運算）、Snowball Edge（海量資料、配備運算資源可做 ML）、Snowmobile（貨櫃車級，適合 Exabyte 資料遷移）。用於解決企業因地端網路頻寬不足，需遷移 PB 級資料至 S3 的難題。"
+        "Description": "Tape Gateway 以 iSCSI virtual tape library 取代實體磁帶，整合常見 backup software，virtual tapes 儲存在 S3 並可 archive 到 Glacier tiers。適合保留既有磁帶備份流程但移除實體設備與異地保管成本。"
+      }
+    },
+    "Amazon FSx": {
+      "FSx for Windows File Server": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "FSx for Windows File Server 提供受管 Windows SMB file system，整合 Microsoft Active Directory、NTFS、DFS、user quotas 與 shadow copies，\n\n適合 Windows applications、home directories 與 lift-and-shift file shares。"
+      },
+      "FSx for Lustre": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "FSx for Lustre 是高效能平行 file system，適合 HPC、machine learning、video processing 與大規模 analytics，可與 S3 整合把 objects 呈現為 files。Scratch deployment 強調暫時高效能，Persistent deployment 提供更高資料耐久性。"
+      },
+      "FSx for NetApp ONTAP": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "FSx for NetApp ONTAP 提供受管 ONTAP 功能與 NFS、SMB、iSCSI 多協定，支援 snapshots、cloning、compression、deduplication 與 on-premises NetApp migration，適合需要企業級 NAS／SAN 功能的混合雲。"
+      },
+      "FSx for OpenZFS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "FSx for OpenZFS 提供受管、低延遲 NFS file system，支援 ZFS snapshots、clones、compression 等功能，適合把 on-premises ZFS／Linux file workloads 移到 AWS 或需要高效 NFS 的應用。"
+      }
+    },
+    "Managed Data Transfer": {
+      "AWS Transfer Family": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS Transfer Family 提供受管 SFTP、FTPS、FTP、AS2 與 browser-based transfers，把檔案直接存入 S3／EFS。適合保留合作夥伴既有檔案傳輸協定，同時移除自管 transfer servers。"
+      },
+      "AWS DataSync": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "DataSync 是 online、排程式的大量資料搬移服務，可在 on-premises NFS／SMB／object storage、其他 clouds 與 S3／EFS／FSx 間平行傳輸，內建加密、驗證與增量 copy。它不同於一次性離線 Snowball。"
+      }
+    },
+    "Shared Responsibility for AWS Storage Extras": {
+      "AWS Responsibility – Security OF AWS Storage Extras": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "AWS 負責 儲存服務的實體設備、底層基礎設施、故障硬體更換，以及服務承諾範圍內的資料複寫機制。這是 Security OF the Cloud。\n\n常見考法：底層磁碟故障由 AWS 處理；是否建立備份、能否還原，以及誤刪資料的風險由客戶管理。"
+      },
+      "Customer Responsibility – Security IN AWS Storage Extras": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "客戶負責 資料內容、存取權限、KMS 加密設定、snapshot／backup 排程、保留政策、復原測試，以及理解 Instance Store 的暫時性風險。這是 Security IN the Cloud。\n\n常見考法：底層磁碟故障由 AWS 處理；是否建立備份、能否還原，以及誤刪資料的風險由客戶管理。"
       }
     }
   },
   "chapter14: AWS Integration & Messaging": {
-    "Decoupled Architecture Patterns": {
+    "Amazon SQS": {
       "Amazon SQS (簡單佇列服務)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "受管無伺服器（Serverless）訊息佇列。Standard Queue 擁有無限吞吐量、保證 At-least-once 傳遞、但可能亂序；FIFO Queue 保證 First-In-First-Out 嚴格順序，並達到 Exactly-once 處理，但吞吐量受限。主要用於系統解耦（Decoupling）與消除突發流量高峰（Throttling）。"
       },
+      "SQS Standard Queue": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SQS Standard 提供近乎無限吞吐量、at-least-once delivery 與 best-effort ordering，因此 message 可能重複或偶爾亂序。Consumer 必須 idempotent；\n\n它適合解耦 application tiers、buffer burst traffic 與讓 producers／consumers 獨立擴展。"
+      },
+      "SQS Visibility Timeout": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Consumer 收到 message 後，message 在 visibility timeout 期間對其他 consumers 隱藏；成功處理後必須 DeleteMessage。Timeout 太短可能重複處理，太長會延遲失敗重試；長工作可用 ChangeMessageVisibility 延長。"
+      },
+      "SQS Long Polling": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Long Polling 讓 ReceiveMessage 等待最多 20 秒直到 message 到達，減少 empty responses、API calls 與成本，通常優於 short polling。可在 queue 或 request 層設定，等待時間仍應小於 client HTTP timeout。"
+      },
+      "SQS FIFO Queue": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "FIFO queue 提供同一 MessageGroupId 內嚴格順序與 exactly-once processing 語意，使用 deduplication ID 防止重複寫入。名稱必須以 .fifo 結尾；不同 message groups 可平行處理，需要全域順序時使用同一 group 但吞吐受限。"
+      },
+      "SQS Queue-Based Auto Scaling": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Worker ASG／ECS service 可依 SQS backlog 擴展。比單看 CPU 更好的指標是 backlog per instance／task，也就是可見 messages 除以目前 consumer capacity，讓增加 workers 後 metric 能下降並支援正確 scale in。"
+      }
+    },
+    "Amazon SNS": {
       "Amazon SNS (簡單通知服務)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "無伺服器 Pub/Sub（發行者/訂閱者）一對多發行系統。Publisher 發布一條消息到 Topic 後，SNS 透過 Fan-out 技術將此訊息同時分發給多個 Subscribers。訂閱端可為 SQS 佇列、Lambda 函數、HTTP 端點、Email 或簡訊通知。"
+      },
+      "SNS Pub/Sub": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SNS topic 讓 publisher 將一則 message 推送給多個 subscribers，例如 SQS、Lambda、HTTP(S)、email、SMS 或 mobile push。SNS 本身是 push-based，不像 SQS 由 consumer polling；需要可靠緩衝與獨立重試時常訂閱 SQS queues。"
+      },
+      "SNS and SQS Fan-Out": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Fan-out 讓多個 SQS queues 訂閱同一 SNS topic，每個下游取得自己的 message copy、按自己的速度處理並隔離故障。Queue policy 必須允許 SNS topic 發送；可用於 S3 events 同時觸發 billing、analytics 與 notification。"
+      },
+      "SNS Message Filtering": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "SNS subscription filter policy 依 message attributes 或 body，只把符合條件的 messages 發給特定 subscriber，避免每個 consumer 收到無關事件並自行過濾。未設定 filter 的 subscription 預設接收全部 messages。"
+      },
+      "SNS FIFO Topics": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SNS FIFO topic 保留 message ordering 並支援 deduplication，通常搭配 SQS FIFO queues 建立有順序的 fan-out。只能訂閱支援的 FIFO endpoints，若不需要嚴格順序與去重，Standard SNS 提供更簡單的大規模推送。"
+      }
+    },
+    "Kinesis and Streaming": {
+      "Kinesis Data Streams": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Kinesis Data Streams 是即時、可重播的 ordered streaming service；records 依 partition key 進入 shards，同 shard 內有順序，多個 consumers 可讀相同 stream。適合 clickstream、IoT、logs 與即時 analytics，而非傳統工作 queue。"
+      },
+      "Kinesis Data Streams Capacity Modes": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Provisioned mode 由使用者管理 shards，適合可預測流量並可精細控成本；On-Demand mode 自動管理容量，適合不可預測或快速變化流量。Partition key 分布不均仍可能造成 hot shard。"
+      },
+      "Amazon Data Firehose": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Data Firehose 是全受管 delivery service，將 streaming records buffer、可選 Lambda transformation／format conversion，送到 S3、Redshift、OpenSearch 或第三方 destinations。\n\n它是 near-real-time delivery，不提供 Kinesis Data Streams 相同的 consumer replay 與 shard 控制。"
+      },
+      "SQS vs SNS vs Kinesis": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SQS 是 pull-based queue，一則工作通常由一個 consumer 處理；SNS 是 push-based pub/sub，一則訊息廣播給多個 subscribers；Kinesis Data Streams 是有 retention、partition order、可由多個 consumers 重播的即時資料流。\n\n依 work queue、通知 fan-out 或 streaming analytics 選擇。"
+      }
+    },
+    "Amazon MQ": {
+      "Amazon MQ and High Availability": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Amazon MQ 是受管 ActiveMQ／RabbitMQ broker，支援 JMS、AMQP、MQTT、OpenWire、STOMP 等傳統協定，適合 migration 既有 messaging app。高可用部署可跨 AZ 使用 active／standby 或 cluster；新 cloud-native 應用通常優先評估 SQS／SNS。"
+      }
+    },
+    "Shared Responsibility for AWS Integration & Messaging": {
+      "AWS Responsibility – Security OF AWS Integration & Messaging": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 SQS、SNS、EventBridge、Kinesis 等受管整合服務的基礎設施、服務修補與可用性。這是 Security OF the Cloud。\n\n常見考法：AWS 確保受管服務運作；訊息是否被正確授權、處理、重試或送入 DLQ 由客戶設計。"
+      },
+      "Customer Responsibility – Security IN AWS Integration & Messaging": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 queue／topic／event bus policies、加密、retention、DLQ、consumer 錯誤處理、資料內容及 least-privilege 存取。這是 Security IN the Cloud。\n\n常見考法：AWS 確保受管服務運作；訊息是否被正確授權、處理、重試或送入 DLQ 由客戶設計。"
       }
     }
   },
   "chapter15: Containers on AWS": {
-    "Managed Container Orchestration": {
+    "Container Fundamentals and Orchestration": {
       "Amazon ECS vs. Amazon EKS": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "ECS 是 AWS 原生、簡潔的容器協調服務，整合度極佳；EKS 則是 AWS 完全託管的 Kubernetes（K8s）平台，相容開源社群 K8s API。兩者皆可透過 EC2（自主管理硬體與實體）或 Fargate 進行無伺服器化的彈性部署。"
@@ -216,83 +948,463 @@
       "AWS Fargate": {
         "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
         "Description": "專為容器（ECS/EKS）設計的無伺服器（Serverless）運算引擎。使用 Fargate 部署容器時，企業無需再預配、管理、補丁或擴充任何 EC2 執行個體硬體，只需為容器定義其所需的 CPU 與 Memory 大小，並完全按照其執行時間與資源用量精準計費。"
+      },
+      "Docker Containers vs Virtual Machines": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Containers 封裝 application 與 dependencies 並共享 host OS kernel，啟動快、密度高；Virtual Machines 各自包含完整 guest OS，隔離較重。Container image 應保持 immutable，runtime state 放到 EFS、EBS、S3 或 database。"
+      },
+      "Amazon Elastic Container Registry (ECR)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "ECR 是受管 private／public container image registry，整合 IAM、KMS encryption、image scanning、lifecycle policies 與 cross-Region／cross-account replication。\n\nECS／EKS tasks 使用 execution role 拉取 private images。"
+      }
+    },
+    "Amazon ECS": {
+      "ECS EC2 Launch Type": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "ECS EC2 launch type 把 tasks 放在客戶管理的 EC2 capacity 上；客戶選 instance types、patch OS、管理 ASG 與容量，能使用 Reserved／Spot、GPU 或特殊硬體。適合需要主機控制或穩定大規模工作負載。"
+      },
+      "ECS Fargate Launch Type": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Fargate 是 serverless container compute，使用者只定義 task CPU、memory、network 與 image，不管理 EC2 cluster。按 task 資源與執行時間付費，適合快速部署、隔離與不想管理 hosts；長期穩定大規模時需比較 EC2 成本。"
+      },
+      "ECS Task Role vs Execution Role": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Task Role 是 container application 呼叫 S3、DynamoDB 等 AWS APIs 的權限；Task Execution Role 供 ECS agent／Fargate 拉 ECR image、寫 CloudWatch Logs、取得 Secrets 等啟動工作。兩者應分開並使用最小權限。"
+      },
+      "ECS Load Balancing and EFS": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "ECS service 可整合 ALB 做 dynamic port mapping、path／host routing 與 target health checks；需要跨多個 tasks／AZ 共用檔案時可掛載 EFS。Container image 不是持久資料庫，task 被替換後本機 ephemeral data 可能消失。"
+      },
+      "ECS Service Auto Scaling vs Cluster Scaling": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "ECS Service Auto Scaling 調整 desired task count；使用 EC2 launch type 時還需透過 Capacity Provider／ASG 調整 cluster EC2 capacity。Task 數增加但 host 沒空間會 pending；只增加 hosts 但不增加 tasks 也不會處理更多應用流量。"
+      },
+      "Event-Driven ECS Tasks": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "EventBridge 可依事件或 schedule 啟動一次性 ECS task；長期 worker service 可從 SQS 消費並依 queue backlog 擴展。Stopped task events 也可送到 EventBridge 觸發通知、診斷或補救流程。"
+      }
+    },
+    "Amazon EKS": {
+      "Amazon EKS Fundamentals": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "EKS 是受管 Kubernetes control plane，適合需要 Kubernetes APIs、生態系與跨環境可攜性的團隊。Worker capacity 可使用 managed node groups、self-managed EC2、Fargate 或 Auto Mode；\n\nAWS 管 control plane，客戶仍管理 workloads、RBAC、network policies 與資料。"
+      },
+      "EKS Node Types and Storage": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Managed node groups 簡化 EC2 worker lifecycle；Fargate 不需管理 nodes；self-managed nodes 控制最高但營運最多。\n\nEKS 可用 EBS CSI 提供單 AZ block volumes、EFS CSI 提供跨 AZ shared NFS、FSx for Lustre 提供 HPC file storage。"
+      }
+    },
+    "Shared Responsibility for Containers on AWS": {
+      "AWS Responsibility – Security OF Containers on AWS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 ECS／EKS／ECR／Fargate 受管控制平面與底層服務基礎設施；Fargate 另負責執行工作節點的 OS。這是 Security OF the Cloud。\n\n常見考法：Fargate 不代表應用程式完全免管理；映像漏洞、容器權限與資料安全仍是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Containers on AWS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 container images、應用程式依賴、task／pod IAM、secrets、network policies、日誌，以及 EC2 launch type 的 worker nodes。這是 Security IN the Cloud。\n\n常見考法：Fargate 不代表應用程式完全免管理；映像漏洞、容器權限與資料安全仍是客戶責任。"
       }
     }
   },
   "chapter16: Serverless Overview": {
-    "Serverless Foundations": {
+    "AWS Lambda": {
       "AWS Lambda (無伺服器運算)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "事件驅動（Event-driven）的 Serverless 運算平台。只需上傳程式碼，Lambda 就會在被觸發（如 S3 新檔案、API 呼叫）時自動運行，並精準地根據請求數量（Requests）與執行時間（100毫秒為計費單位）收費，最高執行時間限制為 15 分鐘。"
       },
+      "Lambda Execution Model and Limits": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Lambda 依 event 啟動短生命週期 execution environments，按 requests 與執行時間計費，自動擴展且不管理 servers。重要限制包含每次 invocation 最長 15 分鐘、部署套件／ephemeral storage／memory 等 quotas；\n\n長時間工作改用 ECS、Batch 或 Step Functions 拆分。"
+      },
+      "Lambda Concurrency and Throttling": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Concurrency 是同時執行的 Lambda invocations 數。超過 account／function 可用 concurrency 會 throttling；同步呼叫回傳錯誤，非同步與 event source 依服務重試。\n\nReserved concurrency 同時保留並限制 function 容量，可防止單一 function 壓垮下游。"
+      },
+      "Provisioned Concurrency and Cold Starts": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Cold start 是新 execution environment 初始化 runtime、程式與 dependencies 的延遲。Provisioned Concurrency 預先初始化指定數量環境，適合 latency-sensitive API，但即使閒置也會付費；可搭配 Application Auto Scaling 或排程調整。"
+      },
+      "Lambda SnapStart": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Lambda SnapStart 在 publish version 時初始化 function 並保存加密 memory／disk snapshot，invoke 時從 snapshot 恢復以降低支援 runtime 的 cold start。\n\n初始化後的 unique state、connections、randomness 必須設計成 restore-safe。"
+      },
+      "Lambda in a VPC": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Lambda 預設可存取 Internet 與 public AWS endpoints，但不能直接進 private VPC resources；附加 VPC 後透過 Hyperplane ENIs 存取 private subnets。若仍需 Internet，要從 private subnet 經 NAT Gateway；\n\n存取 S3／DynamoDB 可用 VPC endpoints。"
+      },
+      "Lambda with RDS Proxy": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "大量 Lambda concurrency 直接連 RDS 可能耗盡 database connections。RDS Proxy 在 VPC 內 pool／reuse connections、整合 Secrets Manager／IAM 並改善 failover，讓 serverless applications 更安全穩定地連接 RDS／Aurora。"
+      }
+    },
+    "Amazon API Gateway": {
       "Amazon API Gateway (API 閘道)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "受管無伺服器服務，用於創建、發佈、維護和保護 REST、HTTP 與 WebSocket API。內建支持 API 快取、速率限制（Throttling）、API Keys 金鑰授權、以及與 Cognito/IAM 整合進行身分驗證，能完美地與 Lambda 進行前端路由銜接。"
+      },
+      "API Gateway Integrations": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "API Gateway 可整合 Lambda、HTTP backends、AWS services，或透過 VPC Link 連 private ALB／NLB。\n\n它提供 request validation、transformation、throttling、stages、caching 與 monitoring，是 API 管理層而不是 application compute。"
+      },
+      "API Gateway Endpoint Types": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Edge-Optimized endpoint 經 CloudFront edge 適合全球 clients；Regional endpoint 適合同 Region clients 或自行搭 CloudFront；Private endpoint 透過 interface VPC endpoint 只供 VPC 私有存取。\n\n選擇依 client 位置與網路隔離需求。"
+      },
+      "API Gateway Security": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "API Gateway 可使用 IAM SigV4、Cognito User Pools、Lambda authorizer、resource policy、API keys 與 usage plans。API key 主要用於識別、配額與計量，不應單獨當 authentication；TLS certificates 可由 ACM 管理。"
+      }
+    },
+    "Edge Compute": {
+      "CloudFront Functions vs Lambda@Edge": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "CloudFront Functions 在 viewer request／response 執行輕量 JavaScript，延遲極低、規模大，適合 URL rewrite、header 與簡單 authentication；\n\nLambda@Edge 功能與 runtime 更完整，可在 viewer／origin events 執行較重邏輯，但延遲與成本較高。"
+      }
+    },
+    "Amazon DynamoDB": {
+      "DynamoDB Capacity Modes": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Provisioned mode 設定 RCU／WCU，可搭配 Auto Scaling，適合可預測流量；On-Demand 依 request 付費並自動處理流量，適合未知或尖峰工作負載。Partition key 必須高 cardinality、均勻分布，否則可能 hot partition。"
+      },
+      "DynamoDB Accelerator (DAX)": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "DAX 是 DynamoDB API-compatible、in-memory cache，把 eventually consistent reads 降到 microseconds，應用只需改 endpoint。它不適合強一致 reads 或通用 relational query cache；\n\n其他資料庫與複雜 cache pattern 可用 ElastiCache。"
+      },
+      "DynamoDB Streams": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "DynamoDB Streams 依時間順序保存 item-level changes，可讓 Lambda 做 replication、audit、notifications、materialized views 等事件處理。每個 item 的修改按順序出現，stream records 有有限 retention，consumer 必須處理重試與重複。"
+      },
+      "DynamoDB Global Tables": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Global Tables 是 multi-Region、multi-active DynamoDB，每個 replica Region 都能讀寫並自動複寫，適合全球低延遲與 Region-level DR。\n\n需要啟用 Streams，應用要理解 eventual cross-Region replication 與 concurrent update conflict handling。"
+      },
+      "DynamoDB TTL and Backups": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "TTL 依 Unix epoch attribute 在到期後背景刪除 items，適合 session、events 與暫存資料，刪除不是精確排程；PITR 可將 table 還原到保留窗口內任一秒，On-Demand Backup 長期保存，restore 會建立新 table。"
+      }
+    },
+    "Serverless Workflow and Identity": {
+      "AWS Step Functions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Step Functions 以 state machine 編排 Lambda 與 AWS services，支援 sequence、parallel、choice、wait、retry、catch 與 human approval，讓工作流狀態、錯誤處理與視覺追蹤從應用程式碼分離。Standard 適合長流程，Express 適合高事件率短流程。\n\n補充與常見考法：受管視覺化工作流協調器。用於將多個獨立的 Lambda 函數或 AWS 服務串聯成一個複雜的、具有狀態（State Machine）的分步式工作流，內建自動重試、例外處理、序列或並行邏輯控制，適合處理如訂單支付、審核等長事務流。"
+      },
+      "Cognito User Pools vs Identity Pools": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "User Pool 是 application user directory，負責註冊、登入、MFA 與 JWT，常保護 ALB／API Gateway；\n\nIdentity Pool 把 Cognito、社群或 SAML 等已驗證／訪客身分交換成臨時 AWS credentials，讓 client 依 IAM role 直接存取 S3 等 AWS resources。"
+      }
+    },
+    "Shared Responsibility for Serverless Overview": {
+      "AWS Responsibility – Security OF Serverless Overview": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 Lambda、API Gateway、Step Functions 等受管服務的伺服器、OS、runtime 基礎設施與自動擴展平台。這是 Security OF the Cloud。\n\n常見考法：Serverless 免除伺服器管理，不會免除程式碼、權限、資料及安全設定責任。"
+      },
+      "Customer Responsibility – Security IN Serverless Overview": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 程式碼、dependencies、IAM execution roles、API authorization、資料、secrets、timeout／concurrency 與 workflow 錯誤處理。這是 Security IN the Cloud。\n\n常見考法：Serverless 免除伺服器管理，不會免除程式碼、權限、資料及安全設定責任。"
       }
     }
   },
   "chapter17: Serverless Architectures": {
-    "Serverless Microservices Design": {
+    "Serverless Application Architectures": {
       "Serverless Web App Architecture (Serverless 網站設計)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "全無伺服器化架構：S3 負責託管靜態前端資源（SPA 網頁）；CloudFront 做全球 CDN 低延遲快取；API Gateway 接收前端請求；Lambda 處理核心業務邏輯；Cognito 負責登入認證；DynamoDB 做為高性能無伺服器資料庫。架構極具彈性且無硬體維護成本。"
       },
-      "AWS Step Functions (工作流服務)": {
+      "Serverless Mobile and Web Backend": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
-        "Description": "受管視覺化工作流協調器。用於將多個獨立的 Lambda 函數或 AWS 服務串聯成一個複雜的、具有狀態（State Machine）的分步式工作流，內建自動重試、例外處理、序列或並行邏輯控制，適合處理如訂單支付、審核等長事務流。"
+        "Description": "典型 serverless backend 使用 Cognito 驗證使用者、API Gateway 提供 API、Lambda 執行商業邏輯、DynamoDB 儲存資料、S3 保存檔案。每個服務獨立擴展並按用量付費，應以 IAM roles、throttling、DLQ／destinations 與 idempotency 處理安全和失敗。"
+      },
+      "Secure Static Website Architecture": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "安全全球靜態網站可把內容存入 private S3 bucket，由 CloudFront OAC 存取，Route 53 Alias 指向 distribution，ACM 提供 HTTPS，AWS WAF 過濾惡意 requests。不要為了 CloudFront 而把 bucket 設成 public。"
+      },
+      "API Gateway Caching": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "API Gateway stage cache 可暫存 backend responses，降低 Lambda／database 負載與 API latency，適合可重複讀取且允許短暫 stale 的資料。應設定 TTL、cache key parameters 與 invalidation 權限；個人化或高度動態資料要避免錯誤共用 cache。"
+      },
+      "DynamoDB Global Serverless Application": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "全球 serverless app 可用 DynamoDB Global Tables 提供 multi-Region reads/writes，搭配 Route 53／CloudFront／Global Accelerator 導向就近入口。\n\n應用需處理跨 Region eventual replication、conflicts，以及每個 Region API／Lambda 的 deployment 與 failover。"
+      },
+      "Event-Driven Thumbnail Generation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "使用者把原圖上傳 S3 後，S3 event 觸發 Lambda 產生縮圖並寫回另一 prefix／bucket，再透過 SNS、SQS 或 EventBridge 通知後續服務。要避免輸出再次觸發同一流程造成 loop，並讓處理具 idempotency。"
+      }
+    },
+    "Serverless Workflows and Microservices": {
+      "Serverless Microservices": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Microservices 依業務能力拆分部署與資料，每個服務可使用最合適的 Lambda、ECS、DynamoDB、RDS 等技術。同步 API 簡單但形成即時相依；SQS、SNS、EventBridge 提供非同步解耦與故障隔離，需接受 eventual consistency。"
+      },
+      "Software Update Offloading": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "大型軟體檔案不應由 application servers 重複傳送。可把 artifacts 放 S3、由 CloudFront 全球快取，使用 signed URL／cookie 控制下載；這能降低 EC2 CPU、頻寬與負載，並改善全球下載速度。"
+      }
+    },
+    "Shared Responsibility for Serverless Architectures": {
+      "AWS Responsibility – Security OF Serverless Architectures": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 Lambda、API Gateway、Step Functions 等受管服務的伺服器、OS、runtime 基礎設施與自動擴展平台。這是 Security OF the Cloud。\n\n常見考法：Serverless 免除伺服器管理，不會免除程式碼、權限、資料及安全設定責任。"
+      },
+      "Customer Responsibility – Security IN Serverless Architectures": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 程式碼、dependencies、IAM execution roles、API authorization、資料、secrets、timeout／concurrency 與 workflow 錯誤處理。這是 Security IN the Cloud。\n\n常見考法：Serverless 免除伺服器管理，不會免除程式碼、權限、資料及安全設定責任。"
       }
     }
   },
   "chapter18: Databases in AWS": {
-    "Specialized NoSQL Database Engines": {
+    "Database Selection Fundamentals": {
+      "Relational vs NoSQL vs Object Storage": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "需要 SQL joins、transactions 與固定 schema 通常選 RDS／Aurora；key-value、巨大規模與低延遲選 DynamoDB；非結構檔案與 data lake 選 S3；搜尋、圖形、文件、時序與 Cassandra workload 應評估專用引擎，而不是把所有資料塞進單一 relational database。"
+      }
+    },
+    "Core Managed Databases": {
       "Amazon DynamoDB (受管 NoSQL 資料庫)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "完全託管、無伺服器的 NoSQL 鍵值（Key-Value）與文件資料庫。提供單位毫秒級（Single-digit Millisecond）超低延遲回應。支援 DynamoDB Streams（追蹤異動並觸發 Lambda），並可搭配 DAX 快取（將回應速度縮短至微秒級）。"
       },
       "Amazon Redshift (雲端資料倉儲)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
-        "Description": "託管、基於 PostgreSQL 的 SQL 大數據分析倉儲。採用大規模並行處理（MPP）與列式儲存（Columnar Storage）架構，優化大量 Analytical / BI（OLAP）複合查詢。支援 Amazon Redshift Spectrum 直接向 S3 中的 PB 級冷資料進行免載入 SQL 查詢。"
+        "Description": "託管、基於 PostgreSQL 的 SQL 大數據分析倉儲。採用大規模並行處理（MPP）與列式儲存（Columnar Storage）架構，優化大量 Analytical / BI（OLAP）複合查詢。支援 Amazon Redshift Spectrum 直接向 S3 中的 PB 級冷資料進行免載入 SQL 查詢。\n\n補充與常見考法：Redshift 是 columnar、MPP data warehouse，適合 PB-scale OLAP、BI 與複雜 aggregation，不適合高頻單筆 OLTP。Provisioned cluster 由 leader／compute nodes 組成；\n\nRedshift Serverless 可依工作負載自動配置 warehouse capacity。"
+      }
+    },
+    "Specialized Database Engines": {
+      "Amazon DocumentDB": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "DocumentDB 是受管、MongoDB-compatible document database，適合 JSON-like documents、content management、catalog 與 profile。它不是原生 MongoDB service，migration 前要確認 driver／feature compatibility；\n\n高可用使用 replicas 與分散式 storage。"
+      },
+      "Amazon Neptune": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Neptune 是受管 graph database，支援 property graph／RDF 查詢，適合社群關係、推薦、fraud detection、knowledge graph 與 network topology。Neptune Streams 可輸出 graph changes 供事件處理與同步。"
+      },
+      "Amazon Keyspaces": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Amazon Keyspaces 是 serverless、Apache Cassandra-compatible wide-column database，使用 CQL，適合需要 Cassandra API、大規模高可用與不想管理 clusters 的應用。\n\n它不是 DynamoDB API，也不提供所有 self-managed Cassandra features。"
+      },
+      "Amazon Timestream": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Timestream 是 serverless time-series database，針對 IoT、operational metrics、application telemetry 等時間序列 ingestion、retention 與時間函數查詢最佳化，自動分層 memory／magnetic storage。\n\n一般 relational transactions 不應選它。"
+      }
+    },
+    "Shared Responsibility for Databases in AWS": {
+      "AWS Responsibility – Security OF Databases in AWS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 受管資料庫與分析服務的底層硬體、服務軟體、故障替換，以及各服務承諾範圍內的修補與可用性。這是 Security OF the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
+      },
+      "Customer Responsibility – Security IN Databases in AWS": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 資料、schema、帳號權限、網路存取、加密、備份保留期、容量與高可用設定；若資料庫裝在 EC2，客戶還要管理資料庫引擎與 OS。這是 Security IN the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
       }
     }
   },
   "chapter19: Data & Analytics": {
-    "Data Ingestion & Serverless Analysis": {
+    "Query and Warehouse Services": {
       "Amazon Athena (無伺服器 SQL 查詢)": {
         "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
-        "Description": "無伺服器、互動式查詢服務。允許企業直接在 Amazon S3 的大數據桶中，使用標準 SQL 對 CSV、JSON、Parquet 檔案進行臨時（Ad-hoc）分析查詢。無需預配任何伺服器，只需為每次查詢掃描的資料容量（Data Scanned）付費。"
+        "Description": "無伺服器、互動式查詢服務。允許企業直接在 Amazon S3 的大數據桶中，使用標準 SQL 對 CSV、JSON、Parquet 檔案進行臨時（Ad-hoc）分析查詢。無需預配任何伺服器，只需為每次查詢掃描的資料容量（Data Scanned）付費。\n\n補充與常見考法：Athena 是 serverless interactive query service，使用 SQL 直接查詢 S3 data lake，按掃描資料量付費。用 Parquet／ORC columnar formats、compression、partitioning 與適當檔案大小可降低掃描量、成本與延遲；\n\nschema 通常存於 Glue Data Catalog。"
       },
+      "Athena Federated Query": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Athena Federated Query 透過 Lambda connector 查詢除 S3 外的 relational、NoSQL 或 custom data sources，並可在單一 SQL 結合多來源。適合臨時分析，不一定取代高頻 transactional application queries。"
+      },
+      "Redshift Spectrum": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Redshift Spectrum 讓 Redshift SQL 直接查詢 S3 中的 external tables，不需先把所有資料載入 cluster，可結合 warehouse local tables 與 data lake。效能與成本仍受檔案格式、partitioning 與掃描量影響。"
+      },
+      "Redshift Snapshots and Disaster Recovery": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Redshift automated／manual snapshots 儲存在 S3，可跨 Region copy 支援 DR；cluster relocation／multi-AZ 等功能依部署類型提供可用性選項。\n\nSnapshot restore 建立新 cluster／namespace，不等同即時 active-active database replication。"
+      }
+    },
+    "Streaming Analytics": {
       "Amazon Kinesis Platform (即時資料串流平台)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "處理大數據即時流。Kinesis Data Streams（低延遲、高吞吐收集點，需預留 Shards）；Kinesis Data Firehose（無伺服器自動載入，能將大數據即時批處理並寫入 S3, Redshift, OpenSearch）；Kinesis Data Analytics（即時利用標準 SQL 進行串流大數據分析）。"
+      },
+      "Managed Service for Apache Flink": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Managed Service for Apache Flink 使用 Java、Scala、Python 或 SQL 對 Kinesis／MSK 等 streams 做 stateful real-time processing、windowing、aggregation 與 anomaly detection。\n\n它負責運算，不是 durable event ingestion stream 本身。"
+      },
+      "Amazon MSK vs Kinesis Data Streams": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "MSK 是受管 Apache Kafka，適合既有 Kafka APIs、ecosystem、topics／partitions 與 migration；Kinesis Data Streams 是 AWS-native streaming，與 IAM、Lambda 等深度整合且免管理 brokers。\n\n選擇取決於 Kafka compatibility、營運模型與生態需求。"
+      }
+    },
+    "Search, Big Data, and BI": {
+      "Amazon OpenSearch Service": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "OpenSearch Service 適合全文搜尋、log analytics、observability 與近即時 indexing，可由 Kinesis Firehose、CloudWatch Logs 等匯入資料並用 dashboards 視覺化。它不是 primary transactional relational database。"
+      },
+      "Amazon EMR": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "EMR 是受管 big-data platform，可執行 Hadoop、Spark、Hive、Presto 等 frameworks。Master／primary node 管理 cluster，core nodes 儲存與運算，task nodes 只運算；task nodes 適合 Spot，重要 core data 不應只依賴易中斷容量。"
+      },
+      "Amazon QuickSight": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "QuickSight 是 serverless BI service，可連 Athena、Redshift、RDS、S3 等建立 analyses、dashboards 與 embedded analytics。SPICE in-memory engine 加速互動查詢並減少來源負載；Enterprise 功能可整合 row-level security。"
+      }
+    },
+    "Data Catalog and Lake": {
+      "AWS Glue": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Glue 是 serverless data integration／ETL 服務；Crawler 探索 data source 並更新 Glue Data Catalog，ETL jobs 轉換清理資料，常把 CSV／JSON 轉成 compressed Parquet 提升 Athena／Redshift Spectrum 效率。"
+      },
+      "AWS Lake Formation": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Lake Formation 建立、治理與保護 S3 data lake，整合 Glue Catalog 並提供 database、table、column、row／cell-level permissions、跨帳戶分享與 audit。它簡化 lake governance，但底層 S3、IAM、KMS 權限仍要協調。"
+      }
+    },
+    "Shared Responsibility for Data & Analytics": {
+      "AWS Responsibility – Security OF Data & Analytics": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "AWS 負責 受管資料庫與分析服務的底層硬體、服務軟體、故障替換，以及各服務承諾範圍內的修補與可用性。這是 Security OF the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
+      },
+      "Customer Responsibility – Security IN Data & Analytics": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "客戶負責 資料、schema、帳號權限、網路存取、加密、備份保留期、容量與高可用設定；若資料庫裝在 EC2，客戶還要管理資料庫引擎與 OS。這是 Security IN the Cloud。\n\n常見考法：題目先判斷是受管資料庫還是 EC2 自管資料庫；受管程度越高，AWS 承擔的作業越多，但資料與存取永遠由客戶負責。"
       }
     }
   },
   "chapter20: Machine Learning": {
-    "Managed AI and ML Services": {
+    "Managed Machine Learning Platforms": {
       "Amazon SageMaker (機器學習平台)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
-        "Description": "端到端、完全託管的機器學習平台。幫助數據科學家和開發者快速構建（Build）、訓練（Train）和部署（Deploy）高品質的機器學習與深度學習模型。它自動包辦底層 GPU 等算力調度，並支援大數據框架整合。"
-      },
+        "Description": "端到端、完全託管的機器學習平台。幫助數據科學家和開發者快速構建（Build）、訓練（Train）和部署（Deploy）高品質的機器學習與深度學習模型。它自動包辦底層 GPU 等算力調度，並支援大數據框架整合。\n\n補充與常見考法：SageMaker AI 是建置、訓練、調校、部署與監控 custom ML models 的受管平台，適合 data scientists／ML engineers。若只需要現成 OCR、翻譯、語音或推薦能力，優先使用對應 AI service，避免自行訓練模型。"
+      }
+    },
+    "Pre-Trained AI Services": {
       "AWS Out-of-the-Box AI Services (開箱即用 AI 服務)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "AWS 提供的開箱即用、預先訓練好（Pre-trained）的 AI 應用服務。例如：Amazon Rekognition（圖像與影片深度分析辨識）；Polly（文字轉語音）；Lex（構建對話機器人）；Comprehend（自然語言處理 NLP）。開發者只需透過簡易的 API 即可套用機器學習能力。"
+      },
+      "Amazon Rekognition": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Rekognition 分析 images／videos，提供 objects、scenes、faces、text、unsafe content 與 custom labels detection。Content Moderation 可標記不當內容並搭配 human review；\n\n它不是 document OCR 表格擷取的首選，該情境用 Textract。"
+      },
+      "Amazon Transcribe and Polly": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Transcribe 把 speech 轉成 text，支援 timestamps、speaker identification、custom vocabulary 與部分 redaction；Polly 把 text 轉成自然語音，支援 lexicons 與 SSML 控制發音、速度和語調。語音轉文字選 Transcribe，文字轉語音選 Polly。"
+      },
+      "Amazon Translate": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Translate 提供 neural machine translation，適合網站、客服內容、文件與即時訊息多語轉換。它處理語言翻譯，不做情緒／實體分析；自然語言洞察應使用 Comprehend。"
+      },
+      "Amazon Lex and Connect": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Lex 使用語音／文字建立 conversational chatbot，提供 automatic speech recognition 與 natural language understanding；Amazon Connect 是 cloud contact center。兩者整合可建立語音 IVR、客服 bot 與自助服務流程。"
+      },
+      "Amazon Comprehend": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Comprehend 使用 NLP 從文字擷取 language、entities、key phrases、sentiment、topics 與 PII；Comprehend Medical 專注臨床文字中的醫療 entities 與關係。它不是 speech transcription 或文件版面 OCR。"
+      },
+      "Amazon Kendra": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Kendra 是 ML-powered enterprise search，可連接 S3、SharePoint、databases 等文件來源，以 natural language 查詢並依文件存取權限回傳答案。它不是一般 Internet search engine，也不是 OpenSearch 的直接全文索引替代情境。"
+      },
+      "Amazon Personalize": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Personalize 使用使用者互動、item 與 user metadata 建立即時 recommendations 與 personalized ranking，適合電商商品、影音與內容推薦，無需自行建 ML pipeline。它不等同 Personalize UI 或一般搜尋。"
+      },
+      "Amazon Textract": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Textract 從掃描文件與影像擷取 printed／handwritten text、forms、tables、queries 與 identity／expense document 結構，優於只做平面 OCR。圖片中的物件或人臉辨識使用 Rekognition。"
+      }
+    },
+    "Shared Responsibility for Machine Learning": {
+      "AWS Responsibility – Security OF Machine Learning": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 SageMaker 與各項 AI 服務的受管基礎設施、平台修補與服務可用性。這是 Security OF the Cloud。\n\n常見考法：AWS 維運 ML 平台；資料合法性、模型結果、權限與商業決策仍由客戶負責。"
+      },
+      "Customer Responsibility – Security IN Machine Learning": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 訓練／推論資料、模型、notebooks、IAM roles、network isolation、加密、輸出品質與負責任 AI 使用。這是 Security IN the Cloud。\n\n常見考法：AWS 維運 ML 平台；資料合法性、模型結果、權限與商業決策仍由客戶負責。"
       }
     }
   },
   "chapter21: AWS Monitoring, Audit & Performance": {
-    "Governance & Auditing Tools": {
+    "Amazon CloudWatch": {
       "Amazon CloudWatch (雲端監控與日誌)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "AWS 資源與應用的全方位監控中心。收集 Metrics（指標，如 CPU, 網路）；Alarms（當指標突破臨界值時觸發 ASG 縮放或發送 SNS 警告）；Logs（集中收集地端或雲端的所有應用與系統日誌）；Events / EventBridge（排程或監聽資源狀態變更）。"
       },
+      "CloudWatch Metrics and Custom Metrics": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "CloudWatch Metrics 由 namespace、metric name、dimensions 與 timestamps 組成，多數 AWS services 自動發佈基礎 metrics。EC2 預設不提供 memory／disk usage，需 CloudWatch Agent 發佈 custom metrics；\n\ndetailed monitoring 可提高 EC2 metrics 頻率。"
+      },
+      "CloudWatch Logs and Log Groups": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CloudWatch Logs 以 log groups 與 log streams 組織 application、service 與 instance logs，可設定 retention、KMS encryption、metric filters、subscription filters 與 cross-account aggregation。\n\nEC2 不會自動送 OS／application logs，必須安裝 agent。"
+      },
+      "CloudWatch Logs Insights": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Logs Insights 使用查詢語言互動搜尋、filter、parse、aggregate CloudWatch Logs，按掃描資料量計費。它適合臨時 troubleshooting 與 dashboard queries；\n\n長期 archive 可 export 到 S3，但 export 不是 real-time，streaming 使用 subscription filter。"
+      },
+      "CloudWatch Logs Subscriptions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Subscription filter 近即時把匹配 log events 送到 Lambda、Kinesis Data Streams 或 Firehose，用於處理、集中或外送；cross-account subscription 需要 destination 與 resource policy。\n\n每個 log group 的 subscription 數量受 quota 限制。"
+      },
+      "CloudWatch Unified Agent": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Unified Agent 可在 EC2 與 on-premises servers 收集 system-level metrics（memory、disk、process、network）和 logs，設定可存於 Systems Manager Parameter Store 並集中管理。Agent 需要 IAM permissions 發送資料。"
+      },
+      "CloudWatch Alarms": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Alarm 依一個 metric 或 metric math expression 的 threshold／evaluation periods 進入 OK、ALARM、INSUFFICIENT_DATA，可通知 SNS、觸發 ASG policy 或 EC2 stop／terminate／reboot／recover。\n\nAlarm 不會自己收集 logs，需先有 metric。"
+      },
+      "Composite Alarms": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Composite Alarm 以 AND／OR／NOT 組合多個 alarms，只有整體規則成立才通知，能降低單一指標短暫異常造成的 alert noise。它監控其他 alarms 狀態，不直接監控新的 metric。"
+      },
+      "CloudWatch Insights Portfolio": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Container Insights 監控 ECS／EKS containers；Lambda Insights 提供 Lambda system metrics 與診斷；Contributor Insights 從 logs 找出 top contributors；\n\nApplication Insights 自動建立 application dashboards 與問題偵測。依 workload 選擇，不要混同 Logs Insights 查詢。"
+      }
+    },
+    "Amazon EventBridge": {
+      "Amazon EventBridge Rules": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "EventBridge event bus 接收 AWS services、custom applications 與 SaaS events，rule 依 event pattern 或 schedule 路由到 Lambda、SQS、SNS、Step Functions、ECS 等 targets。\n\n它適合 event-driven integration，並可用 archive／replay 處理過去事件。"
+      },
+      "EventBridge Resource Policies and Schema Registry": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Event bus resource policy 控制哪些 accounts／organizations 可 PutEvents，支援 cross-account event routing；Schema Registry 可探索事件結構並產生 code bindings，降低 producer／consumer schema 整合成本。"
+      }
+    },
+    "AWS CloudTrail and Config": {
       "AWS CloudTrail (API 行為審計)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "全天候記錄您 AWS 帳戶內所有 API 調用行為的審計（Auditing）與合規服務。包含：誰調用了 API、在什麼時間、調用了哪個服務（如建立了 S3、銷毀了 EC2），日誌皆會寫入指定的 S3 中，是安全與法規遵從的關鍵。"
+      },
+      "CloudTrail Event Types and Retention": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CloudTrail 記錄 AWS API activity。Management events 是控制平面操作；Data events 是 S3 object、Lambda invoke 等大量資料平面操作；Insights events 偵測異常 API activity。\n\nEvent History 保留約 90 天 management events，長期保留需 Trail／Lake。"
+      },
+      "CloudTrail Insights": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CloudTrail Insights 建立正常 write API call rate／error rate 基線，偵測突增或異常並產生 Insights event，例如大量資源刪除或權限錯誤。它不同於 GuardDuty 的威脅偵測與 CloudWatch metric alarms。"
+      },
+      "AWS Config Rules and Remediation": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS Config 記錄支援資源的 configuration history、relationships 與合規狀態；managed／custom rules 評估設定，可用 SSM Automation remediation 修正。它不防止變更，也不記錄誰呼叫 API；API audit 使用 CloudTrail。"
+      },
+      "CloudWatch vs CloudTrail vs Config": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CloudWatch 回答「系統現在表現如何」：metrics、logs、alarms；CloudTrail 回答「誰在何時呼叫哪個 AWS API」；AWS Config 回答「資源設定如何改變、目前是否合規」。情境題依 performance monitoring、API audit 或 configuration compliance 選擇。"
+      }
+    },
+    "Shared Responsibility for AWS Monitoring, Audit & Performance": {
+      "AWS Responsibility – Security OF AWS Monitoring, Audit & Performance": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 CloudWatch、CloudTrail、Config 等監控與稽核服務的平台、底層儲存與服務可用性。這是 Security OF the Cloud。\n\n常見考法：AWS 提供監控工具，但不會自動替客戶開啟所有紀錄、設定正確門檻或處理告警。"
+      },
+      "Customer Responsibility – Security IN AWS Monitoring, Audit & Performance": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 啟用所需 logs／trails／rules、設定保留與加密、建立 alarms、限制 log access，並實際回應告警與調查事件。這是 Security IN the Cloud。\n\n常見考法：AWS 提供監控工具，但不會自動替客戶開啟所有紀錄、設定正確門檻或處理告警。"
       }
     }
   },
   "chapter22: Advanced Identity in AWS": {
-    "Advanced Access Control & Directory Services": {
+    "STS and Application Identity": {
       "AWS STS (安全權杖服務)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "一個發放臨時安全憑證的全域服務。當進行 IAM Role AssumeRole 操作、或者是跨帳戶（Cross-account）授權、外部聯合登入（Identity Federation）時，STS 會生成一個有效期限通常在幾分鐘到幾小時的臨時權杖（Token）以供存取。"
@@ -301,73 +1413,535 @@
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "應用程式身分認證。Cognito User Pools 提供使用者目錄（Sign-up/Sign-in），支持自訂登入、社群登入（Google, Facebook）；Cognito Identity Pools 則能將上述驗證過的「使用者」映射並獲取 STS 臨時 AWS 憑證，進而存取 AWS 資源（如 S3）。"
       }
+    },
+    "AWS Organizations and Governance": {
+      "AWS Organizations and Organizational Units": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS Organizations 集中管理多 accounts、consolidated billing、policies 與 account creation。Accounts 可依 business unit、environment、workload 等放入階層式 OUs，政策從 Root／parent OU 繼承；\n\norganization management account 不受 SCP 限制。"
+      },
+      "Service Control Policies (SCPs)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "SCP 為 member accounts 的 IAM users／roles 設定最大可用權限 guardrail，本身不授予權限。實際允許必須同時被 SCP 與 IAM policy 允許，Explicit Deny 優先；SCP 不影響 management account，也不直接限制 service-linked roles。"
+      },
+      "AWS Organizations Tag Policies": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Tag Policies 定義 organization 中資源 tags 的標準 key、value 與大小寫，協助成本、治理與自動化一致性。它主要報告／強制合規的 tag 格式，不授予存取權，也不同於 SCP 的 API permissions guardrail。"
+      },
+      "AWS Control Tower": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Control Tower 以 Organizations 建立與治理 multi-account landing zone，自動配置 logging、audit accounts、Account Factory 與 preventive／detective／proactive controls。\n\n它簡化最佳實踐基線，但不取代所有客製 IAM、network 與 workload security 設計。"
+      },
+      "Control Tower Controls": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Preventive controls 常透過 SCP 阻止不允許操作；Detective controls 透過 Config 偵測不合規；Proactive controls 在資源部署前檢查 CloudFormation。Control／guardrail 是治理分類，不等同單一 IAM policy。"
+      }
+    },
+    "Advanced IAM Policies": {
+      "IAM Conditions and Global Condition Keys": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Condition 可依 aws:SourceIp、aws:RequestedRegion、aws:MultiFactorAuthPresent、aws:PrincipalOrgID、resource tags 等限制 Allow／Deny。\n\n它讓政策超越 action／resource，但要理解 key 是否存在、資料型別與使用 IfExists／Null 的影響。"
+      },
+      "IAM Role vs Resource-Based Policy": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AssumeRole 會切換成 role 身分並使用 role permissions，原身分權限不會在 session 中合併；resource-based policy 可直接授權另一 principal 存取 S3、SQS、SNS 等資源而不切換身分。跨帳戶是否還需 identity policy 取決於 principal 與 policy 類型。"
+      },
+      "IAM Permission Boundaries": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Permission Boundary 為 IAM user／role 的 identity-based permissions 設定最大上限，本身不授權。實際權限是 identity policy 與 boundary 的交集，仍受 SCP、resource policies、session policies 與 Explicit Deny 影響；\n\n適合委派建立 roles 而不允許 privilege escalation。"
+      },
+      "IAM Policy Evaluation Logic": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "評估從 implicit deny 開始，若適用政策有 Explicit Deny 則拒絕；否則至少一個適用 Allow 才允許。還要同時考量 Organizations SCP、resource policy、identity policy、permissions boundary、session policy 與 VPC endpoint policy。"
+      }
+    },
+    "Workforce Identity and Directory Services": {
+      "AWS IAM Identity Center": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "IAM Identity Center 提供 workforce 單一登入，集中把 users／groups 對應到多個 AWS accounts 的 permission sets，並支援 SAML applications。身分來源可用內建 directory、Active Directory 或外部 IdP；\n\n比在每個 account 建 IAM users 更易治理。"
+      },
+      "AWS Directory Service Options": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS Managed Microsoft AD 是完整受管 AD，可建立 trusts；AD Connector 是 proxy，把 AWS authentication 轉到既有 on-premises AD，不在 cloud 保存使用者；Simple AD 是相容 Samba 的基本 directory。\n\n依是否需要完整 AD 功能、trust 或只做代理選擇。"
+      }
+    },
+    "Shared Responsibility for Advanced Identity in AWS": {
+      "AWS Responsibility – Security OF Advanced Identity in AWS": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS 負責 IAM 服務的底層基礎設施、可用性與服務安全。這是 Security OF the Cloud。\n\n常見考法：AWS 不會替客戶決定誰應取得權限；過度授權、未啟用 MFA 或外洩 access keys 都屬於客戶責任。"
+      },
+      "Customer Responsibility – Security IN Advanced Identity in AWS": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "客戶負責 建立與管理 users、groups、roles、policies、MFA、federation 與憑證，並落實最小權限及定期撤銷不再需要的存取。這是 Security IN the Cloud。\n\n常見考法：AWS 不會替客戶決定誰應取得權限；過度授權、未啟用 MFA 或外洩 access keys 都屬於客戶責任。"
+      }
     }
   },
   "chapter23: AWS Security & Encryption": {
-    "Infrastructure Defense & Cryptography": {
+    "AWS KMS and Encryption": {
       "AWS Key Management Service (KMS 密鑰管理)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "高可用、安全受管的金鑰管理服務，採用 FIPS 140-2 Level 2/3 硬體密碼模組。負責掌控客戶端主密鑰（KMS Keys）之創建、旋轉、啟用與廢止。與 S3、EBS、RDS 等大量 AWS 核心服務深度整合，實現便捷的「信封加密（Envelope Encryption）」。"
       },
+      "KMS Key Types": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS owned keys 由 AWS 跨多帳戶管理、不可見；AWS managed keys 由 AWS 為服務建立、可見但控制有限；Customer managed keys 由客戶管理 policy、rotation、alias 與 lifecycle，控制與成本較高。\n\n需要跨帳戶或細緻 key policy 時通常使用 customer managed key。"
+      },
+      "KMS Key Policies": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "KMS key policy 是控制 KMS key 存取的主要 resource policy。預設政策可讓 account 使用 IAM policies 委派；跨帳戶通常需要 source key policy 信任外部 account，加上外部 principal 的 IAM Allow。\n\n只給 IAM Allow 而 key policy 不信任通常不足。"
+      },
+      "KMS Envelope Encryption": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "KMS 常用 envelope encryption：KMS key 加密 data key，應用用 plaintext data key 本地加密大量資料，再保存 encrypted data key。這避免把大型資料直接送 KMS，提升效能；plaintext data key 使用後應從 memory 清除。"
+      },
+      "KMS Multi-Region Keys": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Multi-Region KMS keys 在多 Regions 建立具有相同 key material／key ID 的 primary 與 replica keys，讓 client-side encryption、DynamoDB Global Tables 等全球應用在各 Region 解密而不重新加密。\n\nPolicies、aliases 與啟停狀態仍各 Region 管理。"
+      },
+      "Sharing Encrypted Snapshots and AMIs": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "跨帳戶分享加密 EBS snapshot／AMI 時，不能使用無法分享的預設 AWS managed key；要用 customer managed KMS key，修改 key policy 與 snapshot／AMI launch permissions。接收帳戶通常複製並以自己的 KMS key 重新加密。"
+      }
+    },
+    "Secrets and Parameters": {
+      "SSM Parameter Store": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Parameter Store 以階層名稱保存 configuration 與 secrets，String／StringList／SecureString 可搭配 KMS、versioning、policies 與 IAM path permissions。Standard tier 成本低；\n\nAdvanced 支援較大值、更多數量與 parameter policies，但會收費。"
+      },
+      "AWS Secrets Manager": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Secrets Manager 專為 database credentials、API keys 等 secrets 設計，使用 KMS 加密，支援透過 Lambda 自動 rotation、fine-grained access、version stages 與 cross-Region replication。\n\n需要自動密碼輪替時通常優於 Parameter Store。"
+      },
+      "Parameter Store vs Secrets Manager": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Parameter Store 適合一般 configuration、hierarchical parameters 與低成本 SecureString；Secrets Manager 成本較高但提供原生 secret lifecycle、rotation workflows 與 RDS 等整合。\n\n兩者都可用 KMS，選擇重點是是否需要自動 rotation 與專用 secret 管理。"
+      }
+    },
+    "Certificates and Hardware Security": {
+      "AWS Certificate Manager (ACM)": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "ACM 建立、匯入與部署 TLS certificates 到 ALB／NLB、CloudFront、API Gateway 等整合服務。ACM-issued public certificates 在持續符合 DNS／email validation 與使用條件時可自動續期；不能把 AWS-issued private key 匯出到一般 EC2。"
+      },
+      "CloudHSM vs KMS": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "KMS 是多租戶受管 key service，與 AWS services 深度整合；CloudHSM 提供 single-tenant、客戶控制的 HSM cluster，支援 PKCS#11／JCE／CNG、自管 users／keys，營運與成本更高。需要專屬硬體或自訂 cryptographic operations 時選 CloudHSM。"
+      }
+    },
+    "Perimeter and Threat Protection": {
       "AWS WAF & Shield": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "WAF 屬於 Layer 7 Web 應用防火牆，防止常見 SQL 注入、跨站腳本等漏洞，可部署於 ALB、CloudFront。Shield 則是 DDoS 防禦系統：Shield Standard 預設免費防禦 Layer 3/4 攻擊；Shield Shield Advanced 提供全天候 DRT 團隊響應與損失理賠。"
+      },
+      "AWS WAF": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS WAF 在 Layer 7 依 IP、HTTP headers、body、URI、SQL injection、XSS、rate 等規則允許、封鎖或計數 Web requests，可附加 CloudFront、ALB、API Gateway 等。它不直接保護一般 TCP／UDP 或提供 network firewall routing。"
+      },
+      "AWS Shield Standard vs Advanced": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Shield Standard 免費自動保護 AWS customers 免受常見 Layer 3／4 DDoS；Shield Advanced 是付費服務，提供進階偵測、DRT 支援、攻擊期間特定 scaling cost protection 與更完整 visibility，適合關鍵公開應用。"
+      },
+      "AWS Firewall Manager": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Firewall Manager 透過 Organizations 集中跨 accounts／Regions 部署與稽核 WAF rules、Shield Advanced、Security Groups、Network Firewall、Route 53 Resolver DNS Firewall 等 policies。\n\n它是中央治理層，不是封包處理引擎本身。"
+      },
+      "Amazon GuardDuty": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "GuardDuty 分析 CloudTrail、VPC Flow Logs、DNS logs、EKS／S3／runtime 等資料來源，用 ML 與 threat intelligence 偵測 compromised credentials、惡意 IP、cryptomining、異常 API 等威脅。\n\n它產生 findings，不會自動阻擋，需 EventBridge／Security Hub／automation 回應。"
+      },
+      "Amazon Inspector": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Inspector 持續掃描 EC2、ECR container images 與 Lambda functions 的 software vulnerabilities／package CVEs，並對部分 EC2 做 network reachability 評估，依風險排序 findings。\n\n它不是 Web request firewall 或帳戶行為異常偵測。"
+      },
+      "Amazon Macie": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Macie 使用 ML 與 pattern matching 探索 S3 buckets、評估 access／encryption 並辨識 PII、credentials、financial 或其他敏感資料，產生 findings。它專注 S3 data security，不掃 EC2 vulnerabilities 或 DDoS。"
+      },
+      "WAF vs Shield vs GuardDuty vs Inspector vs Macie": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "WAF 過濾 Web requests；Shield 防 DDoS；GuardDuty 偵測帳戶／workload 威脅；Inspector 找 EC2／ECR／Lambda vulnerabilities；Macie 找 S3 敏感資料。考題先判斷要阻擋流量、抵禦 DDoS、偵測威脅、掃漏洞或分類資料。"
+      }
+    },
+    "Shared Responsibility for AWS Security & Encryption": {
+      "AWS Responsibility – Security OF AWS Security & Encryption": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "AWS 負責 雲端底層安全，以及 KMS、Shield、WAF、GuardDuty 等安全服務本身的可用性與基礎設施。這是 Security OF the Cloud。\n\n常見考法：AWS 提供安全能力與合規文件；客戶仍要正確設定、監看發現結果並保護自己的資料與身分。"
+      },
+      "Customer Responsibility – Security IN AWS Security & Encryption": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "客戶負責 資料分類、keys 與 policies 的使用方式、偵測服務啟用範圍、告警回應、修復弱點及合規決策。這是 Security IN the Cloud。\n\n常見考法：AWS 提供安全能力與合規文件；客戶仍要正確設定、監看發現結果並保護自己的資料與身分。"
       }
     }
   },
   "chapter24: Amazon VPC": {
-    "Virtual Private Network Design": {
+    "VPC Foundations and Addressing": {
       "VPC Network Infrastructure (子網路與路由網路)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "AWS 內的私有邏輯網路。Public Subnet（包含 Route 至 Internet Gateway 路由，可被公網存取）；Private Subnet（無 IGW 路由，通常透過 NAT Gateway 來讓其內的 EC2 安全、單向地訪問外網）；NACL（套用於子網路層級，Stateless，傳入/傳出皆須配置）。"
       },
+      "VPC CIDR and Subnet Sizing": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "VPC 使用 IPv4 CIDR 定義 address range，再切成不重疊的 subnets；較小 prefix number 代表較大網段。每個 subnet 屬於單一 AZ，AWS 會保留每個 IPv4 subnet 的前四個與最後一個位址。設計時要預留未來成長與 on-premises／peering 不重疊空間。"
+      },
+      "Public vs Private Subnets": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Public subnet 的 route table 有到 Internet Gateway 的 route，instance 還需要 public IPv4／Elastic IP 才能直接 Internet 通訊；Private subnet 不提供直接 IGW route，outbound Internet 通常經 NAT Gateway。\n\nSubnet 名稱本身不決定 public 或 private，route table 才是關鍵。"
+      },
+      "Route Tables": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Route table 依 longest prefix match 決定 subnet traffic 的下一跳，例如 local、IGW、NAT Gateway、Transit Gateway、VPC peering、VPN 或 endpoint。每個 subnet 必須關聯一張 route table；\n\nmain route table 只是在未明確關聯時使用。"
+      }
+    },
+    "Internet and NAT Connectivity": {
+      "Internet Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Internet Gateway 是水平擴展、高可用的 VPC component，提供 public IPv4 NAT 與 Internet 路由。每個 VPC 同時只能 attach 一個 IGW；要讓 EC2 上網仍需 public IP、route table 與允許的 Security Group／NACL。"
+      },
+      "Bastion Host": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Bastion Host 位於 public subnet，作為管理 private instances 的受控 SSH／RDP 跳板；應限制來源 IP、強化與稽核並保持最小權限。更少暴露 public management ports 的替代方案是 Systems Manager Session Manager。"
+      },
+      "NAT Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Public NAT Gateway 建在 public subnet、綁定 Elastic IP，讓 private subnet instances 主動連 Internet，同時不接受 Internet 主動連入。NAT Gateway 是 AZ-scoped；\n\n高可用架構通常每個 AZ 一個並讓 private subnets 使用同 AZ NAT，避免跨 AZ 相依與資料費。"
+      },
+      "NAT Gateway vs NAT Instance": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "NAT Gateway 是受管、高可用、可擴展，無 Security Group，按小時與資料量收費；NAT Instance 是自管 EC2，可套 Security Group、做 port forwarding 或 bastion，但要自行 patch、scale、HA 並停用 source/destination check。\n\n新架構通常優先 NAT Gateway。"
+      }
+    },
+    "VPC Network Security": {
+      "Security Groups vs Network ACLs": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Security Group 套在 ENI／instance 層、stateful、只有 Allow rules，回應流量自動允許；NACL 套在 subnet 層、stateless、支援 Allow 與 Deny，依 rule number 由小到大第一個匹配決定，回應方向也要明確允許。"
+      },
+      "NACL Ephemeral Ports": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "因 NACL stateless，client 對 server port 80／443 發出連線後，回應會送到 client ephemeral port range；雙向 NACL 必須同時允許服務 port 與對應 ephemeral ports。不同 OS 的 ephemeral range可能不同，考題常用此解釋 NACL 造成的單向連線失敗。"
+      },
+      "Default vs Custom NACL": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Default NACL 預設允許所有 inbound／outbound；新 custom NACL 預設全部拒絕，必須加入規則。NACL 適合 subnet-wide coarse deny／allow，細緻 workload-to-workload 控制通常使用 Security Groups。"
+      },
+      "VPC Flow Logs": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Flow Logs 擷取 VPC、subnet 或 ENI 的 IP traffic metadata，可送 CloudWatch Logs、S3 或 Firehose，用 ACCEPT／REJECT 與 ports 診斷 SG、NACL、routes 或可疑流量。\n\n它不擷取 packet payload，也不是 real-time blocking firewall。"
+      }
+    },
+    "Private VPC Connectivity": {
       "VPC Endpoints & PrivateLink (私有節點與專線)": {
         "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
         "Description": "PrivateLink。Gateway Endpoints（專為 S3 與 DynamoDB 設計，直接修改路由表進行私網連線，免收費）；Interface Endpoints（使用 ENI 與私有 IP，適用其他 AWS 服務）。使私有子網路的 EC2 繞過公有網際網路，直接以內網（Intranet）安全存取 AWS 服務。"
+      },
+      "VPC Peering": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "VPC Peering 以 AWS network 私有連接兩個 CIDR 不重疊的 VPC，可跨帳戶／Region；需要雙方 route tables 與 security rules。Peering 不具 transitive routing：A-B、B-C 不代表 A 能到 C，大量 VPC full mesh 應評估 Transit Gateway。"
+      },
+      "Gateway and Interface VPC Endpoints": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Gateway Endpoint 只支援 S3／DynamoDB，以 route table target 方式使用且無小時費；Interface Endpoint 使用 PrivateLink，在 subnets 建 ENIs、可套 Security Groups，支援許多 AWS／partner services並收費。\n\n兩者都讓 private traffic 不需 IGW／NAT。"
+      },
+      "VPC Endpoint Policies": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Endpoint policy 控制哪些 principals 可透過該 VPC endpoint 對哪些 AWS resources 執行 actions，是額外 guardrail，不會取代 IAM／bucket／key policies。S3 bucket policy 可用 aws:SourceVpce 限制只能從指定 endpoint 存取。"
+      },
+      "AWS Transit Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Transit Gateway 是 Regional hub，集中連接大量 VPC、Site-to-Site VPN 與 Direct Connect Gateway，透過多張 TGW route tables 實現 segmentation 與 transitive routing。\n\n它比 full-mesh peering 易管理，並可用 RAM 跨帳戶分享。"
+      },
+      "VPC Traffic Mirroring": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Traffic Mirroring 從支援 ENI 複製 network traffic 到 monitoring appliance／NLB target，供 deep packet inspection、threat monitoring 與 troubleshooting。它複製流量做觀察，不會像 firewall 一樣自動阻擋原流量。"
+      }
+    },
+    "Hybrid Connectivity": {
+      "Site-to-Site VPN": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Site-to-Site VPN 在 customer gateway 與 AWS virtual private gateway／Transit Gateway 間建立兩條加密 IPsec tunnels，經 public Internet，部署快但效能與延遲受 Internet 影響。\n\n可使用 BGP dynamic routing，並作為 Direct Connect 備援。"
+      },
+      "AWS Direct Connect": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Direct Connect 提供 on-premises 到 AWS 的專用私有網路連線，頻寬與延遲較穩定並可降低大量 data transfer 成本，但 provisioning 較久。DX 本身不加密，敏感流量可在其上建立 VPN或使用支援的 MACsec；關鍵架構需要多連線／多地點韌性。"
+      },
+      "Direct Connect Gateway": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Direct Connect Gateway 讓一個 Direct Connect private VIF 連到多 Regions 的 VGWs 或 Transit Gateways，簡化全球 hybrid connectivity。\n\n它不是 packet transit hub 本身，VPC 間 transitive routing 仍依 Transit Gateway 與 routes 設計。"
+      }
+    },
+    "IPv6, Network Firewall, and Cost": {
+      "IPv6 and Egress-Only Internet Gateway": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "IPv6 addresses 通常 globally unique，VPC 不使用 NAT 來隱藏 private IPv6。\n\nEgress-Only Internet Gateway 允許 private IPv6 resources 主動連 Internet並阻止 Internet 主動建立連線，角色類似 IPv6 outbound-only gateway；仍需 routes、SG 與 NACL。"
+      },
+      "AWS Network Firewall": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Network Firewall 是受管、可擴展的 stateful network firewall／IDS/IPS，可檢查 VPC ingress、egress 與 east-west traffic，支援 stateless／stateful rules、domain lists 與 Suricata-compatible rules。\n\n需要修改 route tables 把流量導經 firewall endpoints。"
+      },
+      "Minimizing AWS Network Costs": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "降低 network cost 可讓服務使用同 AZ traffic path、避免不必要 cross-AZ／cross-Region transfer、使用 S3／DynamoDB Gateway Endpoints 避免 NAT data processing、用 CloudFront 快取 outbound content，\n\n並讓每 AZ private subnet 使用同 AZ NAT。成本最佳化不能犧牲必要 HA。"
+      }
+    },
+    "Shared Responsibility for Amazon VPC": {
+      "AWS Responsibility – Security OF Amazon VPC": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 AWS 全球網路、實體路由與 VPC 服務底層的隔離、可用性及硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 保護網路基礎設施；允許 0.0.0.0/0、錯誤路由或過寬 firewall rules 是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Amazon VPC": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 CIDR、subnets、route tables、Security Groups、NACLs、endpoints、VPN／Direct Connect 邏輯設定與流量監控。這是 Security IN the Cloud。\n\n常見考法：AWS 保護網路基礎設施；允許 0.0.0.0/0、錯誤路由或過寬 firewall rules 是客戶責任。"
       }
     }
   },
   "chapter25: Disaster Recovery & Migrations": {
-    "Disaster Recovery & Data Migration": {
+    "Disaster Recovery Fundamentals": {
       "AWS Disaster Recovery Patterns (災難復原四大模式)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
-        "Description": "1. Backup & Restore (最便宜，RTO/RPO 數小時)；2. Pilot Light (僅核心資料同步，其餘需要時再透過 CloudFormation 建立)；3. Warm Standby (在另一個 Region 維持縮小版的運作架構)；4. Multi-site Active-Active (兩邊同步跑，RTO/RPO 近乎為零，但成本最高)。"
+        "Description": "1. Backup & Restore (最便宜，RTO/RPO 數小時)；2. Pilot Light (僅核心資料同步，其餘需要時再透過 CloudFormation 建立)；3. Warm Standby (在另一個 Region 維持縮小版的運作架構)；\n\n4. Multi-site Active-Active (兩邊同步跑，RTO/RPO 近乎為零，但成本最高)。"
       },
+      "Recovery Point Objective (RPO) and Recovery Time Objective (RTO)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "RPO 是災難後最多可接受遺失多久資料，決定 backup／replication 頻率；RTO 是服務最多可中斷多久，決定還原與切換速度。RPO／RTO 越接近零，通常需要同步複寫、預先運行容量與更高成本。"
+      },
+      "Backup and Restore": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Backup and Restore 只在 DR Region 保存 snapshots／backups 與 IaC，災難時才建立完整環境並還原資料，成本最低但 RTO／RPO 通常最高。適合可接受較長中斷的非關鍵系統，必須定期測試 restoration。"
+      },
+      "Pilot Light": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Pilot Light 在 DR Region 持續運行最核心資料層或複寫服務，application／compute 關閉或最小化；災難時快速啟動其餘資源並 scale。成本與復原速度介於 Backup/Restore 和 Warm Standby。"
+      },
+      "Warm Standby": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Warm Standby 在 DR Region 運行縮小但完整可用的 application stack，持續複寫資料；災難時提升容量並切換流量。比 Pilot Light RTO 更短、成本更高，需持續 patch、測試與保持設定一致。"
+      },
+      "Multi-Site Active-Active": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Multi-Site／Hot Site 在多 Regions 同時運行並服務流量，透過 Route 53、Global Accelerator 等做健康路由，RTO 可最低但成本與資料一致性複雜度最高。應用與 database 必須真正支援 multi-Region writes／conflicts。"
+      }
+    },
+    "AWS Disaster Recovery Services": {
+      "AWS Elastic Disaster Recovery": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Elastic Disaster Recovery 持續把 on-premises／cloud servers 的 block data 複寫到 AWS staging area，平時使用低成本 resources，演練或災難時轉換並啟動 full-size EC2。\n\n適合 server-level lift-and-shift DR，應測試 networking、dependencies 與 failback。"
+      },
+      "AWS Backup": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS Backup 以中央 policies 管理多 accounts／Regions 的 EBS、RDS、DynamoDB、EFS、FSx、S3 等支援服務備份，提供 schedules、lifecycle、copy、restore testing、audit 與 Organizations integration。\n\n它集中治理備份，不等同跨 Region active application DR。"
+      },
+      "AWS Backup Vault Lock": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Backup Vault Lock 以 WORM controls 防止 backups 在 retention 到期前被刪除或 lifecycle 被惡意縮短，支援 governance／compliance 需求與 ransomware 防護。Compliance mode 的 grace period 結束後設定不可任意變更。"
+      }
+    },
+    "Database and Application Migration": {
       "AWS Database Migration Service (DMS 資料庫遷移)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
-        "Description": "幫助企業將地端資料庫快速、安全地遷移至 AWS，並保證源資料庫在遷移期間維持正常運作。支援同構（Homogeneous，如 Oracle to Oracle）與異構（Heterogeneous，如 Oracle to Aurora，此時需搭配 Schema Conversion Tool SCT 工具）遷移。"
+        "Description": "幫助企業將地端資料庫快速、安全地遷移至 AWS，並保證源資料庫在遷移期間維持正常運作。支援同構（Homogeneous，如 Oracle to Oracle）與異構（Heterogeneous，如 Oracle to Aurora，此時需搭配 Schema Conversion Tool SCT 工具）遷移。\n\n補充與常見考法：DMS 使用 replication instance／serverless replication 把 homogeneous 或 heterogeneous databases 遷移到 AWS，支援 full load 加 CDC 以降低停機。Source 在遷移期間可持續服務；\n\nDMS 搬資料，不自動轉換不相容 schema／stored procedures。"
+      },
+      "AWS Schema Conversion Tool (SCT)": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "SCT 分析並轉換 heterogeneous database schema、views、procedures 與 code，例如 Oracle 到 Aurora PostgreSQL，並產生 assessment report；無法自動轉換的部分需人工修改。資料持續搬移使用 DMS。"
+      },
+      "AWS Application Migration Service (MGN)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "MGN 持續 block-level 複寫 physical、virtual 或 cloud servers 到 AWS staging area，執行 test launch 後 cutover 成 EC2，適合 lift-and-shift 大量 servers。\n\nApplication Discovery Service 可先收集 inventory、dependencies 與 utilization 協助規劃。"
+      },
+      "Large Data Transfer Migration Options": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Online migration 可用 DataSync、Transfer Family、Direct Connect／VPN；網路傳輸時間過長時使用 Snowball Edge；database 使用 DMS；server 使用 MGN。選擇要比較資料量、頻寬、變更率、停機窗口、加密、驗證與是否需持續同步。"
+      }
+    },
+    "Shared Responsibility for Disaster Recovery & Migrations": {
+      "AWS Responsibility – Security OF Disaster Recovery & Migrations": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 遷移與復原服務的底層平台、硬體、服務可用性及受管元件。這是 Security OF the Cloud。\n\n常見考法：AWS 提供遷移與 DR 工具，但成功切換、資料驗證和是否達到企業 RPO／RTO 是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Disaster Recovery & Migrations": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 選擇 RPO／RTO、資料一致性、複寫與 cutover 設定、備份保留、權限、網路及定期復原演練。這是 Security IN the Cloud。\n\n常見考法：AWS 提供遷移與 DR 工具，但成功切換、資料驗證和是否達到企業 RPO／RTO 是客戶責任。"
       }
     }
   },
   "chapter26: More Solutions Architecture": {
-    "High Performance Computing & Integration Patterns": {
+    "Event-Driven Integration Patterns": {
+      "Event-Driven Architectures (事件驅動系統)": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "利用 Amazon EventBridge（無伺服器事件匯流排）、Lambda 與 SQS 佇列建立的高彈性、非同步系統。應用程式之間不需要互相等待回應（Asynchronous），系統僅在特定「事件」發生時才觸發下一階段處理，實現強大、靈活的水平擴展力。"
+      },
+      "Lambda with SNS and SQS": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SNS 可把事件 fan-out 到多個 SQS queues，每個 queue 再由 Lambda／workers 獨立處理，提供緩衝、重試、DLQ 與故障隔離。直接 SNS→Lambda latency 低，但缺少 queue backlog；依是否需要 durable buffer 選擇。"
+      },
+      "API Gateway Direct AWS Service Integration": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "API Gateway 可使用 execution role 直接呼叫 SQS、Step Functions、Kinesis 等 AWS services，透過 mapping templates 轉換 request／response，省去只做轉送的 Lambda，降低成本與維護。複雜商業邏輯仍適合 Lambda／containers。"
+      },
+      "Caching Strategy Selection": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "CloudFront 快取全球 HTTP content；API Gateway cache 快取 API responses；ElastiCache 快取 database／application data 與 sessions；DAX 專門加速 DynamoDB eventually consistent reads。\n\n先判斷 cache 位置、資料一致性與 invalidation，再選服務。"
+      },
+      "Blocking Malicious IP Addresses": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "ALB／CloudFront／API Gateway 的 Web requests 可用 WAF IP set 阻擋；NACL 可在 subnet 層 deny IP；Security Group 不能寫 Deny；NLB target 若保留 client IP 可用 NACL／application 處理。\n\n全球 Web app 通常 CloudFront＋WAF 最能在 edge 提前阻擋。"
+      }
+    },
+    "High Performance Computing": {
       "High-Performance Computing (HPC 高效能運算)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "在 AWS 上設計緊密耦合（Tightly Coupled）的大型運算。主要使用 AWS ParallelCluster（自動調度資源）、Amazon FSx for Lustre（為運算節點提供超高速分散式檔案系統）、以及 Elastic Fabric Adapter (EFA) 網卡以提供極低延遲的 MPI 節點通訊。"
       },
-      "Event-Driven Architectures (事件驅動系統)": {
+      "AWS HPC Building Blocks": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "HPC 可用 compute optimized／GPU EC2、Cluster Placement Group、Elastic Fabric Adapter、FSx for Lustre、S3、AWS Batch／ParallelCluster 與 high-throughput networking。\n\n選擇依 tightly coupled latency、storage throughput、job scheduling 與 Spot 中斷容忍度。"
+      },
+      "Highly Available Single-Instance Workload": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
-        "Description": "利用 Amazon EventBridge（無伺服器事件匯流排）、Lambda 與 SQS 佇列建立的高彈性、非同步系統。應用程式之間不需要互相等待回應（Asynchronous），系統僅在特定「事件」發生時才觸發下一階段處理，實現強大、靈活的水平擴展力。"
+        "Description": "無法同時運行多副本的 legacy workload，可用 ASG desired=1 跨多 AZ 配合 health checks，故障時在健康 AZ 重建 instance；資料放 EBS snapshot／EFS／RDS 等可恢復儲存，再用 Route 53／ENI／NLB 更新入口。這是自動重建，不是零停機 active-active。"
+      }
+    },
+    "Shared Responsibility for More Solutions Architecture": {
+      "AWS Responsibility – Security OF More Solutions Architecture": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 AWS Cloud 的資料中心、實體硬體、全球網路、虛擬化層與受管服務底層平台。這是 Security OF the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      },
+      "Customer Responsibility – Security IN More Solutions Architecture": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
       }
     }
   },
   "chapter27: Other Services": {
-    "Management & Automatic Deployment": {
+    "Infrastructure as Code and Deployment": {
+      "AWS Elastic Beanstalk (自動部署平台)": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 提供的 PaaS（平台即服務）快速部署工具。開發者只需將程式碼（如 Java, Python, Node.js, .NET）打包上傳，Beanstalk 就會自動處理底層 EC2、ELB、ASG、RDS 等所有基礎設施的配置、負載均衡與自動縮放，並保留對硬體的完全控制權。"
+      },
+      "AWS CloudFormation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "CloudFormation 以 YAML／JSON template 宣告 AWS resources、parameters、mappings、conditions、outputs 與 dependencies，建立可重複、可審查的 stacks。\n\n它負責 resource lifecycle、change sets、rollback 與 drift detection，template 存於版本控制可減少手動偏差。"
+      },
+      "CloudFormation Service Role": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "CloudFormation service role 讓 CloudFormation 以指定 role 權限建立／更新／刪除 stack resources，而不是每次使用操作者的全部權限。能建立 stack 的人可能間接使用該 role，必須嚴格限制 iam:PassRole 與 stack 操作。"
+      },
+      "Infrastructure Composer": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS Infrastructure Composer 提供視覺化 canvas 設計 serverless／AWS architectures，並產生或整合 CloudFormation／SAM template。它協助 IaC 建模，不會取代對 IAM、network、cost 與 resource properties 的架構判斷。"
+      }
+    },
+    "AWS Systems Manager": {
       "AWS Systems Manager (SSM 系統管理工具)": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
         "Description": "協助監控與管理地端或雲端的伺服器群。其熱門功能 SSM Session Manager 能讓管理員直接在 AWS 主控台一鍵開啟 EC2 控制台（Shell），無需再開啟 EC2 的 22 (SSH) 或 3389 (RDP) 連接埠，極大化縮小系統受攻擊面。"
       },
-      "AWS Elastic Beanstalk (自動部署平台)": {
+      "SSM Session Manager": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Session Manager 透過 SSM Agent 與 IAM 提供 EC2／hybrid managed nodes 的 shell 存取，不需 inbound SSH/RDP port、bastion 或管理 SSH keys，並可記錄 sessions 到 CloudWatch Logs／S3。\n\nInstance 需有 SSM role 與到 SSM endpoints 的連線。"
+      },
+      "SSM Run Command": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Run Command 以 SSM documents 對大量 managed nodes 遠端執行命令、安裝軟體或收集資訊，提供 concurrency、error threshold 與輸出，不需登入每台主機。權限應限制可執行 documents、targets 與 parameters。"
+      },
+      "SSM Patch Manager and Maintenance Windows": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Patch Manager 依 patch baselines 掃描或安裝 OS patches；Maintenance Windows 定義允許執行 Run Command、Automation、Lambda 等維護任務的時間、targets 與 concurrency。兩者搭配可建立可控的 fleet patch 流程。"
+      },
+      "SSM Automation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "SSM Automation 執行多步驟 runbook，自動建立 AMI、修復 Config finding、重啟 resources、套用 approvals 或呼叫 AWS APIs，可由 EventBridge／Config 觸發。它比單一 Run Command 更適合有條件、分支與 rollback 的維運流程。"
+      }
+    },
+    "Communication Services": {
+      "Amazon SES vs Amazon Pinpoint": {
         "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
-        "Description": "AWS 提供的 PaaS（平台即服務）快速部署工具。開發者只需將程式碼（如 Java, Python, Node.js, .NET）打包上傳，Beanstalk 就會自動處理底層 EC2、ELB、ASG、RDS 等所有基礎設施的配置、負載均衡與自動縮放，並保留對硬體的完全控制權。"
+        "Description": "SES 是可擴展 email sending／receiving 服務，適合 transactional email、通知與 bulk mail；Pinpoint 提供使用者 segmentation、campaign、journeys、analytics 與多通道 engagement。只需應用寄信選 SES，需要行銷活動與受眾分析選 Pinpoint。"
+      }
+    },
+    "Cost Management": {
+      "AWS Cost Explorer": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Cost Explorer 依 service、account、Region、tag、usage type 等分析歷史成本與用量、預測未來支出並查看 RI／Savings Plans recommendations。Resource-level／hourly granularity 依服務與設定而定；它是分析工具，不會自動關閉 resources。"
+      },
+      "AWS Cost Anomaly Detection": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Cost Anomaly Detection 用 ML 建立正常支出基線，依 service／account／tag 等 cost monitor 偵測異常並透過 subscription 通知，適合找出意外資源或流量。它不同於 AWS Budgets 的固定 threshold 控制。"
+      },
+      "Instance Scheduler on AWS": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Instance Scheduler on AWS 是可部署的 AWS Solution，依 tags 與 schedules 自動啟停 EC2／RDS，降低非上班時間 dev/test 成本。它不是 EC2 Auto Scaling 的需求型擴展；關鍵 production workload 不應只以排程停機。"
+      }
+    },
+    "Hybrid and Batch Services": {
+      "AWS Outposts": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Outposts 把 AWS-managed racks／servers 與部分 AWS services 放到 on-premises，使用一致 APIs、tools 與 control plane，適合需要本地低延遲、local data processing 或 residency 的 hybrid workload。客戶仍提供機房空間、電力與網路。"
+      },
+      "AWS Batch vs Lambda": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS Batch 排程與執行 containerized batch jobs，可使用 EC2／Spot／Fargate、長時間、多 CPU/GPU 與 job dependencies；Lambda 適合最長 15 分鐘、event-driven、快速自動擴展的短函數。長運算或特殊硬體選 Batch。"
+      },
+      "Amazon AppFlow": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AppFlow 是受管 integration service，在 Salesforce、SAP、ServiceNow 等 SaaS 與 S3／Redshift 等 AWS services 間安全傳輸、filter、validate、transform data，可依 schedule、event 或 on-demand 執行，\n\n減少自建 connector。"
+      },
+      "AWS Amplify": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Amplify 提供 Web／mobile full-stack 開發、hosting、CI/CD 與前端 libraries，整合 Cognito、AppSync、API、storage 等服務，適合前端團隊快速建立雲端應用。需要底層網路與運算完全控制時仍使用直接 AWS services／IaC。"
+      }
+    },
+    "Shared Responsibility for Other Services": {
+      "AWS Responsibility – Security OF Other Services": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "AWS 負責 CloudFormation、Beanstalk、Systems Manager 等受管部署與管理服務的底層平台和可用性。這是 Security OF the Cloud。\n\n常見考法：受管部署工具會依客戶宣告執行；template 錯誤、過大的 role 或部署後資源設定仍是客戶責任。"
+      },
+      "Customer Responsibility – Security IN Other Services": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "客戶負責 templates、application code、service roles、parameters／secrets、變更審查、部署設定與服務建立之資源的安全。這是 Security IN the Cloud。\n\n常見考法：受管部署工具會依客戶宣告執行；template 錯誤、過大的 role 或部署後資源設定仍是客戶責任。"
       }
     }
   },
   "chapter28: White Papers & Architectures": {
-    "Design Best Practices": {
+    "AWS Well-Architected Framework": {
       "AWS Well-Architected Framework (架構優化評估框架)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "AWS 架構設計最優實務的六大支柱：Operational Excellence（卓越營運）、Security（安全）、Reliability（可靠性）、Performance Efficiency（效能效率）、Cost Optimization（成本優化）、Sustainability（永續性）。用於系統架構的定期自我檢實與優化。"
+      },
+      "Operational Excellence Pillar": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Operational Excellence 強調把 operations 當程式碼、頻繁小型可逆變更、預測與學習 failure、持續改善 procedures。常見手段包括 IaC、observability、runbooks、automated remediation 與 post-incident learning。"
+      },
+      "Security Pillar": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "Security Pillar 強調強身分基礎、traceability、多層防禦、自動化安全、保護 data in transit／at rest、讓人員遠離資料並準備 security events。共享責任模型與最小權限是核心。"
+      },
+      "Reliability Pillar": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Reliability Pillar 要求自動從 failure 復原、測試 recovery、水平擴展、停止猜測容量並以 automation 管理變更。Multi-AZ、loose coupling、backups、quota management 與 DR testing 都服務於可恢復能力。"
+      },
+      "Performance Efficiency Pillar": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Performance Efficiency 強調 democratize advanced technologies、全球部署、serverless、頻繁實驗與理解 mechanical sympathy。應依 workload 選 compute、storage、database、network，持續用 metrics 與 load tests 調整。"
+      },
+      "Cost Optimization Pillar": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Cost Optimization 強調實施 cloud financial management、採 consumption model、衡量整體效率、停止為無差異重工付費並分析支出。\n\nRightsizing、Auto Scaling、Savings Plans、storage lifecycle 與 cost allocation tags 都要建立持續流程。"
+      },
+      "Sustainability Pillar": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "Sustainability Pillar 以最小化 workload 的能源與資源消耗為目標，透過最大化利用率、選擇高效率硬體／Region、使用 managed／serverless、縮減閒置資源、優化資料與軟體模式持續改善環境影響。"
+      },
+      "AWS Well-Architected Tool and Trusted Advisor": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Well-Architected Tool 依 Framework／lenses 對 workload 提問、記錄 risks 與 improvement plan；Trusted Advisor 自動檢查帳戶的 cost、performance、security、fault tolerance、service limits／quota 等項目。\n\n前者是架構 review，後者是帳戶資源檢查。"
+      }
+    },
+    "Shared Responsibility for AWS Architectures and Best Practices": {
+      "AWS Responsibility – Security OF AWS Architectures and Best Practices": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 AWS Cloud 的資料中心、實體硬體、全球網路、虛擬化層與受管服務底層平台。這是 Security OF the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      },
+      "Customer Responsibility – Security IN AWS Architectures and Best Practices": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
       }
     }
   },
@@ -376,6 +1950,60 @@
       "Solutions Architect Associate Test Strategy (SAA-C03 考試答題心法)": {
         "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
         "Description": "SAA-C03 考試注重「情境分析」。重點在於仔細找出題目中的「關鍵約束條件」（Constraint）。若題目要求「最低成本（Lowest Cost）」，選無伺服器（Athena, S3）或 Spot 執行個體；若要求「極低延遲/最高效能」，則考慮 NLB, Cluster Placement Group 或 DAX。"
+      }
+    },
+    "Shared Responsibility for Exam Preparation": {
+      "AWS Responsibility – Security OF Exam Preparation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 AWS Cloud 的資料中心、實體硬體、全球網路、虛擬化層與受管服務底層平台。這是 Security OF the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      },
+      "Customer Responsibility – Security IN Exam Preparation": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      }
+    }
+  },
+  "chapter30: AWS Global Infrastructure & Getting Started": {
+    "AWS Global Infrastructure": {
+      "AWS Regions": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS Region 是一個地理區域，包含多個彼此隔離的 Availability Zones。多數 AWS 服務與資料屬於 Region scope；選擇 Region 時要考量法規與資料治理、使用者延遲、服務可用性及價格。"
+      },
+      "Availability Zones": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "Availability Zone 由一或多個具獨立電力、網路與連線能力的資料中心組成，同一 Region 的 AZ 以高頻寬、低延遲網路互連。關鍵應用跨至少兩個 AZ 部署，可降低單一資料中心或 AZ 故障風險。"
+      },
+      "Edge Locations and Regional Edge Caches": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "Points of Presence 包含 Edge Locations 與 Regional Edge Caches，讓 CloudFront、Route 53、Global Accelerator 等全球服務把內容或入口靠近使用者，降低延遲。Edge Location 不是部署一般 EC2／RDS 的 Availability Zone。"
+      },
+      "Global vs Regional AWS Services": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "IAM、Route 53、CloudFront 等具有 global service 特性；EC2、RDS、Lambda 等通常在選定 Region 建立。即使服務為 global，相關資源、資料與控制平面行為仍應依官方文件確認，架構不能假設所有服務會自動跨 Region 複寫。"
+      }
+    },
+    "Choosing an AWS Region": {
+      "Region Selection – Compliance": {
+        "Domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+        "Description": "資料落地、產業法規與主權要求可能限制可以使用的 Regions。設計前先確認哪些資料能離開特定司法管轄區、服務是否符合所需 compliance programs，以及備份或 replication 是否會跨境。"
+      },
+      "Region Selection – Latency and Services": {
+        "Domain": "領域 2：設計高性能架構 (Design High-Performing Architectures)",
+        "Description": "通常選擇靠近主要使用者的 Region 以降低 latency，但也要確認所需 AWS services、instance types 與功能是否已在該 Region 提供。全球使用者可採 multi-Region、CloudFront 或 Global Accelerator，而不是只以單一 Region 解決所有延遲。"
+      },
+      "Region Selection – Pricing": {
+        "Domain": "領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)",
+        "Description": "相同服務在不同 Region 的運算、儲存與資料傳輸價格可能不同；最便宜 Region 不一定符合延遲、法規或韌性需求。應同時估算服務費、跨 AZ／跨 Region data transfer、備援與營運成本。"
+      }
+    },
+    "Shared Responsibility for AWS Global Infrastructure & Getting Started": {
+      "AWS Responsibility – Security OF AWS Global Infrastructure & Getting Started": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "AWS 負責 全球網路、edge／DNS／加速服務的底層設施、服務可用性與硬體維護。這是 Security OF the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
+      },
+      "Customer Responsibility – Security IN AWS Global Infrastructure & Getting Started": {
+        "Domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+        "Description": "客戶負責 DNS records、routing policies、origins、cache／TLS／存取設定、health checks，以及資料與應用程式本身的安全。這是 Security IN the Cloud。\n\n常見考法：AWS 維運全球基礎設施；錯誤 DNS、公開 origin、錯誤路由或未保護內容屬於客戶設定責任。"
       }
     }
   }

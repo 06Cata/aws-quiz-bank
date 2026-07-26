@@ -78,6 +78,25 @@ def flashcard_tables(exam: str = "clf") -> FlashcardTables:
         raise ValueError("exam must be either 'clf' or 'saa'") from exc
 
 
+def _flashcard_topic_rank(topic: str) -> int:
+    normalized = topic.casefold()
+    if topic.startswith("角色扮演") or "role-play" in normalized or "roleplay" in normalized:
+        return 2
+    if normalized.startswith("shared responsibility for "):
+        return 1
+    return 0
+
+
+def _flashcard_sort_key(card: dict) -> tuple[int, int, str, str]:
+    topic = str(card.get("topic") or "")
+    return (
+        int(card.get("chapter_order") or 0),
+        _flashcard_topic_rank(topic),
+        topic.casefold(),
+        str(card.get("title") or "").casefold(),
+    )
+
+
 async def select_flashcards(exam: str = "clf") -> list[dict]:
     if not settings.supabase_url or not settings.supabase_service_role_key:
         return []
@@ -92,7 +111,9 @@ async def select_flashcards(exam: str = "clf") -> list[dict]:
     async with httpx.AsyncClient(timeout=20) as client:
         response = await client.get(url, headers=_service_headers(), params=params)
         response.raise_for_status()
-        return response.json()
+        cards = response.json()
+        cards.sort(key=_flashcard_sort_key)
+        return cards
 
 
 async def save_flashcard_note(user_id: str, flashcard_id: str, exam: str = "clf") -> dict:

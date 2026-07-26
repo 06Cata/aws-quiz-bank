@@ -10,6 +10,11 @@ EXAMS = {"clf", "saa"}
 CHAPTER_PATTERN = re.compile(r"^chapter(?P<order>[1-9]\d*)\s*:\s*(?P<label>.+)$", re.IGNORECASE)
 
 
+def _is_roleplay_topic(topic: str) -> bool:
+    normalized = topic.casefold()
+    return topic.startswith("角色扮演") or "role-play" in normalized or "roleplay" in normalized
+
+
 @dataclass(frozen=True)
 class LocalFlashcard:
     source_key: str
@@ -154,6 +159,33 @@ def load_local_flashcards(directory: Path, exam: str) -> list[LocalFlashcard]:
                         content_hash=_content_hash(hash_payload),
                     )
                 )
+
+        responsibility_topics = [
+            topic
+            for topic in topics
+            if topic.casefold().startswith("shared responsibility for ")
+        ]
+        if len(responsibility_topics) != 1:
+            raise ValueError(
+                f"{source_file.name}.{chapter_key} 必須且只能有一個 "
+                "Shared Responsibility for ... topic"
+            )
+        topic_names = list(topics)
+        roleplay_topics = [topic for topic in topic_names if _is_roleplay_topic(topic)]
+        expected_responsibility_index = -2 if roleplay_topics else -1
+        if topic_names[expected_responsibility_index] != responsibility_topics[0]:
+            position = "倒數第二個" if roleplay_topics else "最後一個"
+            raise ValueError(
+                f"{source_file.name}.{chapter_key} 的 {responsibility_topics[0]} "
+                f"必須是該 chapter {position} topic"
+            )
+        if roleplay_topics and (
+            len(roleplay_topics) != 1 or topic_names[-1] != roleplay_topics[0]
+        ):
+            raise ValueError(
+                f"{source_file.name}.{chapter_key} 有角色扮演時，"
+                "必須且只能有一個角色扮演 topic，並放在 chapter 最後"
+            )
 
     if not result:
         raise ValueError(f"{source_file.name} 沒有任何卡牌")

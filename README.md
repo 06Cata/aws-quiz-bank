@@ -9,6 +9,7 @@ aws-quiz-bank/
 ├── AWS_QUIZ_BUILD_GUIDE.md # 從 Supabase 建表、Google 登入到 Vercel 部署的實作指南
 ├── AWS_QUIZ_SITE_PLAN.md # 產品規劃、資料流、UI 規則與 Mermaid 架構圖
 ├── FLASHCARDS_SUPABASE_SETUP.md # CLF/SAA 卡牌分流、建表與自動同步操作指南
+├── FLASHCARDS_AUTHORING_GUIDE.md # PDF/投影片轉卡牌 JSON、整理規則與新考試擴充指南
 ├── README.md # 專案入口說明
 ├── question_sources/ # PDF 原始來源、prompt_saa.md 與 prompt_clf.md
 ├── questions/ # 正式題庫，依 clf_ / saa_ 檔名前綴分流
