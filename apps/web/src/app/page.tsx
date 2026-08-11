@@ -168,23 +168,23 @@ const EXAMS: Record<ExamType, ExamConfig> = {
 
 const REVIEW_DOMAINS: Record<ExamType, Array<{ key: Exclude<ReviewDomainKey, "all">; label: string }>> = {
   aif: [
-    { key: "domain_1", label: "領域 1｜AI 和 ML 基礎" },
-    { key: "domain_2", label: "領域 2｜生成式 AI 基礎" },
-    { key: "domain_3", label: "領域 3｜基礎模型的應用" },
-    { key: "domain_4", label: "領域 4｜負責任 AI 指南" },
-    { key: "domain_5", label: "領域 5｜安全、合規與治理" }
+    { key: "domain_1", label: "領域 1｜AI 和 ML 基礎（20%）" },
+    { key: "domain_2", label: "領域 2｜生成式 AI 基礎（24%）" },
+    { key: "domain_3", label: "領域 3｜基礎模型的應用（28%）" },
+    { key: "domain_4", label: "領域 4｜負責任 AI 指南（14%）" },
+    { key: "domain_5", label: "領域 5｜安全、合規與治理（14%）" }
   ],
   clf: [
-    { key: "domain_1", label: "領域 1｜雲端概念" },
-    { key: "domain_2", label: "領域 2｜安全與合規" },
-    { key: "domain_3", label: "領域 3｜雲端技術與服務" },
-    { key: "domain_4", label: "領域 4｜計費、定價與支援" }
+    { key: "domain_1", label: "領域 1｜雲端概念（24%）" },
+    { key: "domain_2", label: "領域 2｜安全與合規（30%）" },
+    { key: "domain_3", label: "領域 3｜雲端技術與服務（34%）" },
+    { key: "domain_4", label: "領域 4｜計費、定價與支援（12%）" }
   ],
   saa: [
-    { key: "domain_1", label: "領域 1｜設計安全架構" },
-    { key: "domain_2", label: "領域 2｜設計彈性架構" },
-    { key: "domain_3", label: "領域 3｜設計高性能架構" },
-    { key: "domain_4", label: "領域 4｜設計成本優化架構" }
+    { key: "domain_1", label: "領域 1｜設計安全架構（30%）" },
+    { key: "domain_2", label: "領域 2｜設計彈性架構（26%）" },
+    { key: "domain_3", label: "領域 3｜設計高性能架構（24%）" },
+    { key: "domain_4", label: "領域 4｜設計成本優化架構（20%）" }
   ]
 };
 
