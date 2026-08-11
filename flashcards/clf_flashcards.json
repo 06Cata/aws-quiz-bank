@@ -1339,7 +1339,7 @@
       },
       "AWS Infrastructure Composer": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS Infrastructure Composer（原名 AWS Application Composer）提供 drag-and-drop 視覺化畫布，讓使用者以 cards 放置、設定並連接 AWS resources，藉此設計及理解 modern application architecture，不必先成為 CloudFormation 語法專家。\n\n使用者在 canvas 與 template code 之間所做的變更會同步；Infrastructure Composer 可建立或修改 AWS CloudFormation 與 AWS Serverless Application Model（AWS SAM）templates，也能匯入既有 templates 進行視覺化。它可從 Infrastructure Composer console、CloudFormation console mode 或 AWS Toolkit for Visual Studio Code 使用。\n\nInfrastructure Composer 的主要工作是視覺化設計與產生 Infrastructure as Code。它本身不是運行 application 的 compute service，也不取代 CloudFormation／AWS SAM CLI 的驗證與部署流程；實際建立的 Lambda、API Gateway、DynamoDB 或其他 resources 仍依各服務定價計費。\n\n補充與常見考法：題目出現「用視覺化 canvas 拖放 AWS resources、建立或修改 CloudFormation／SAM template」時，答案是 AWS Infrastructure Composer。CloudFormation 負責依 template 建立與管理 stacks；Application Composer 是此服務的舊名稱。"
+        "Description": "AWS Infrastructure Composer 提供視覺化畫布來設計應用架構，能產生或修改 Infrastructure as Code，特別適合快速組合 serverless resources；它不取代 CloudFormation 執行部署。"
       },
       "AWS Cloud Development Kit (CDK)": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2181,7 +2181,7 @@
     "Pricing Model: Save When You Reserve": {
       "Save When You Reserve": {
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
-        "Description": "對可預測且長期使用的工作負載做出 1 年或 3 年承諾，可取得比隨用隨付更低的價格、降低價格波動風險，並協助企業做長期預算規劃。常見付款方式包括 All Upfront、Partial Upfront 與 No Upfront；一般而言，承諾越長、預付比例越高，有效費率可能越低，但彈性與現金流也需要一起評估。\n\n保留或承諾型優惠可見於 EC2 Reserved Instances／Savings Plans、DynamoDB Reserved Capacity、ElastiCache Reserved Nodes、RDS Reserved DB Instances 與 Redshift Reserved Nodes；各服務的正式名稱、涵蓋範圍與條件不同，不應把所有方案一律稱為 EC2 Reserved Instances。\n\n補充與常見考法：題目問哪一種 pricing model 能降低風險、可預測管理預算、符合長期需求，而且列出 EC2、DynamoDB、ElastiCache、RDS、Redshift 時，答案是 Save When You Reserve。若需求短期或不確定，Pay As You Go 通常較靈活；保留方案主要是 billing discount／usage commitment，不一定代表保留專屬實體容量。"
+        "Description": "對可預測且長期使用的工作負載做出 1 年或 3 年承諾，可取得比隨用隨付更低的價格，並協助企業穩定預算。\n\n常見於 EC2 Reserved Instances、Savings Plans、RDS Reserved DB Instances、DynamoDB Reserved Capacity、ElastiCache Reserved Nodes 與 Redshift Reserved Nodes。\n\n補充與常見考法：看到「穩定用量、長期運行、可預測預算、1 或 3 年」時，優先考慮保留或承諾型方案。它主要節省費用，不等於所有方案都自動保留實體容量。"
       },
       "RDS Reserved DB Instances – 1- or 3-Year Term": {
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
@@ -2377,7 +2377,7 @@
     "Temporary and Application Identities": {
       "AWS STS (Security Token Service)": {
         "Domain": "領域 2：安全與合規 (Security and Compliance)",
-        "Description": "AWS Security Token Service（AWS STS）依請求簽發 temporary security credentials，讓受信任的使用者、應用程式或 AWS services 在有限時間內，以指定權限存取 AWS resources。臨時憑證包含 access key ID、secret access key 與 session token；到期後即無法再使用。\n\n常見用途包括 assume an IAM role、跨帳戶存取、identity federation，以及讓應用程式取得短期 AWS access。權限仍受 role policies、session policies、resource policies、SCPs 等適用控制限制；STS 不會因為發出臨時憑證就自動給予管理員權限。相較於把長期 access keys 寫入程式或分發給人員，短期憑證能降低憑證外洩後可被持續利用的風險。\n\n補充與常見考法：題目問「哪個 AWS service 可建立或請求 temporary、limited-privilege credentials」，答案是 AWS STS。IAM Identity Center 是集中管理 workforce access 與 SSO 的服務，登入 AWS account 時可在背後使用 role sessions／temporary credentials，但它不是這道題直接詢問的權杖服務。"
+        "Description": "安全權杖服務。允許請求分發臨時、有限權限的安全憑證以存取 AWS 資源，支持身分聯合（Federation）與服務角色假定。\n\n補充與常見考法：AWS Security Token Service 發行有期限的 access key、secret key 與 session token，供 assume role、federation 與臨時存取使用；短期憑證可降低長期 access keys 外洩風險。"
       },
       "Amazon Cognito": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2387,7 +2387,7 @@
     "Directory and Workforce Identity": {
       "AWS Directory Service": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS Directory Service 提供多種方式，讓組織在 AWS Cloud 使用 Microsoft Active Directory（AD），或讓支援的 AWS resources 與既有 on-premises Microsoft AD 整合。它是服務家族，實際方案包括 AWS Managed Microsoft AD、AD Connector 與 Simple AD，應依是否要在 AWS 建立目錄、沿用現有目錄及所需功能選擇。\n\n若只想讓相容的 AWS applications／resources 使用現有 on-premises AD 帳號驗證，通常選 AD Connector。它像 proxy／directory gateway，將登入請求轉送至現有 AD domain controllers，不把目錄資料複製到 AWS；因此仍需要 VPC 與地端網路之間的 VPN 或 Direct Connect 等連線。若需要 AWS 中由 AWS 管理、具有完整 Microsoft AD 功能的 directory，則考慮 AWS Managed Microsoft AD，並可依需求與地端 AD 建立 trust。\n\n補充與常見考法：題目若概括問「公司想使用 on-premises Microsoft Active Directory 連接 AWS resources，可使用哪個服務」，答案是 AWS Directory Service；若進一步強調「保留現有 AD、不在 AWS 建新 directory 或同步資料」，更精確的選項是 AD Connector。"
+        "Description": "目錄服務。將 AWS 服務與地端 Microsoft Active Directory (AD) 原生整合或是在 AWS 建立 AD 目錄。"
       },
       "AWS IAM Identity Center": {
         "Domain": "領域 2：安全與合規 (Security and Compliance)",
@@ -2447,7 +2447,7 @@
     "End-User Computing": {
       "Amazon WorkSpaces": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "Amazon WorkSpaces 是 managed、secure Desktop as a Service（DaaS），能快速為員工提供 Windows 或 Linux cloud-based virtual desktops，減少採購、部署與維護實體桌面及傳統 VDI infrastructure 的負擔。使用者可從支援的裝置或瀏覽器遠端連線；WorkSpaces Personal 提供指定給個人的 persistent desktop，WorkSpaces Pools 則提供標準化的 non-persistent desktops。\n\nWorkSpaces 運行於 Amazon VPC，可透過公司的 hybrid network design 存取 AWS resources；若 VPC 已透過 Site-to-Site VPN 或 Direct Connect 等方式連接 data center，也能依路由、安全群組與公司政策存取允許的 on-premises resources。它可搭配 AWS Directory Service 或既有 Microsoft Active Directory，讓員工沿用企業身分登入，但網路連線與權限仍需另外正確設定。\n\n補充與常見考法：題目出現「為全球或 hybrid workforce 供應完整、安全的 Windows／Linux desktops，讓員工存取 AWS Cloud 與 data center」，答案通常是 Amazon WorkSpaces。只向瀏覽器串流特定 applications 時比較 AppStream 2.0；WorkSpaces 不等於自動建立 AWS 與地端的 VPN／Direct Connect。"
+        "Description": "Amazon WorkSpaces 提供 persistent managed virtual desktops；使用者每次登入同一個人桌面，資料與設定可保留，適合 VDI、遠距工作與集中桌面管理。"
       },
       "AWS AppStream 2.0": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2461,7 +2461,7 @@
     "Application and Device Services": {
       "AWS IoT Core": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS IoT Core 是 managed cloud service，讓大量 sensors、appliances、embedded devices 等 Internet-connected devices 透過 MQTT、MQTT over WebSocket、HTTPS 等方式，與 AWS Cloud applications 或其他 devices 進行安全的雙向通訊。AWS 管理連線與訊息基礎設施，客戶不必自行建立及擴展 message broker servers。\n\nDevice Gateway 接收裝置連線；Message Broker 負責 publish／subscribe 訊息；Rules Engine 可把資料送往 Lambda、DynamoDB、S3 等服務；Device Shadow 保存裝置狀態，使 applications 在裝置暫時離線時仍能讀寫預期狀態。裝置通常使用 X.509 certificates 與 IoT policies 驗證及限制權限。\n\n補充與常見考法：題目問「哪個 serverless／managed AWS service 能安全連接並支援極大量、甚至 billions of IoT devices」，答案是 AWS IoT Core。Transit Gateway 連接 networks，Amazon Connect 是 contact center，Elastic Transcoder 處理 media，皆不是 IoT device connectivity service。"
+        "Description": "AWS IoT Core 讓大量 connected devices 透過 MQTT、HTTPS 等安全連線至 AWS，支援 message broker、device shadow、rules engine 與 certificate-based authentication。"
       },
       "AWS AppSync": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2473,7 +2473,7 @@
       },
       "AWS Device Farm": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS Device Farm 是 application testing service，讓開發者在 AWS 託管的真實 physical phones 與 tablets 上測試及互動 Android、iOS 與 Web apps，也支援在 desktop browsers 上測試 Web applications。團隊不必自行購買與維護大量不同品牌、型號和作業系統版本的測試設備。\n\nAutomated testing 可將同一組測試平行執行於多個 devices，完成後產生 results、logs、screenshots、videos 與其他 artifacts；Remote access 則讓開發者從 browser 即時操作實體裝置，以重現特定 device 上的錯誤。\n\n補充與常見考法：題目問「哪個 AWS service 能跨 real mobile devices 與 desktop browsers 測試 application」，答案是 AWS Device Farm。IoT Core 負責連接 IoT devices；AppStream 2.0 串流 applications；WorkSpaces 提供員工 virtual desktops，三者都不是跨裝置 app testing service。"
+        "Description": "AWS Device Farm 讓開發者在 AWS 託管的真實 mobile devices 與 browsers 上自動或遠端測試 Android、iOS 與 Web apps，找出跨裝置相容性問題。"
       },
       "Amazon Pinpoint": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2483,7 +2483,7 @@
     "Backup and Disaster Recovery": {
       "AWS Backup": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS Backup 是 centralized、policy-based backup service，以 backup plans 統一設定 schedules、retention、backup vaults 與 lifecycle policies，自動保護 EBS、RDS、DynamoDB、EFS、FSx 等支援的 AWS resources，也支援部分 hybrid workloads。它可跨 accounts／Regions 複製 backups，並集中監控與 compliance reporting。\n\nAWS Backup 的核心是建立、保存及還原資料備份，不是持續將整台來源 server 複寫到低成本 staging area，也不會自動把所有 application servers 在數分鐘內轉換成可開機的 EC2 recovery instances。"
+        "Description": "AWS Backup 以中央 backup plans、schedules、retention 與 policies 自動保護 EBS、RDS、DynamoDB、EFS、FSx 等支援 resources，可跨 accounts／Regions 複製並集中 compliance reporting。"
       },
       "AWS Backup Vault Lock": {
         "Domain": "領域 2：安全與合規 (Security and Compliance)",
@@ -2507,7 +2507,7 @@
       },
       "AWS Elastic Disaster Recovery": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
-        "Description": "AWS Elastic Disaster Recovery（AWS DRS，CloudEndure Disaster Recovery 的後繼服務）在來源 servers 安裝 replication agent，將 on-premises 或其他 cloud servers 的 block-level data 持續複寫到客戶 AWS account 內的低成本 staging area。平時主要維持 affordable storage 與少量 replication compute，發生中斷時才把資料轉換並啟動可在 AWS 運行的 EC2 recovery instances。\n\nAWS DRS 支援 point-in-time recovery、non-disruptive recovery drills 與 failback，可減少 downtime 與 data loss；實際 RTO／RPO 仍受 operating system boot time、network bandwidth、replication lag、application dependencies 與 recovery design 影響，不能只啟用服務就假設業務連續性已獲保證。\n\n補充與常見考法：題目出現「快速可靠地把 physical、virtual 或 cloud-based servers 復原到 AWS」、「continuous block-level replication」或「low-cost staging area」，答案是 AWS Elastic Disaster Recovery。CloudEndure Disaster Recovery 是教材可能使用的舊名稱。"
+        "Description": "AWS Elastic Disaster Recovery 持續把 on-premises 或其他 cloud servers 的 block data 複寫到 AWS 的低成本 staging area，災難時快速啟動可恢復的 EC2 instances。"
       },
       "AWS Backup vs AWS Elastic Disaster Recovery": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
@@ -2611,35 +2611,35 @@
     "AWS Well-Architected Framework": {
       "AWS Well-Architected Framework": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Well-Architected Framework 是一套 cloud architecture best practices 與提問方法，協助團隊理解設計決策的優缺點，建立 secure、reliable、efficient、cost-effective 且 sustainable 的 workloads。核心由六大支柱組成：Operational Excellence、Security、Reliability、Performance Efficiency、Cost Optimization 與 Sustainability。\n\nFramework 透過官方 whitepapers、pillar guidance、questions、best practices 與 workload／industry lenses 提供評估基準。它不是單一 AWS service、合規認證或一次完成的 audit，也不保證架構零風險；團隊應定期 review workload、記錄風險、依商業優先順序改善，再以 milestones 追蹤進展。\n\n補充與常見考法：題目看到「用六大 pillars 評估架構決策、理解 trade-offs、持續改善 workload」，答案是 AWS Well-Architected Framework。實際在 Console 記錄 review、HRIs／MRIs 與 improvement plan 的服務則是 AWS Well-Architected Tool。"
+        "Description": "AWS 架構優良評估框架。基於六大支柱，提供設計最佳實踐評估基準。包括安全性、可靠性、效能效率、成本最佳化、卓越營運與可持續性。"
       },
       "Operational Excellence Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Operational Excellence Pillar 著重有效運行與監控 systems，並持續改善 supporting processes 以交付 business value。核心領域包括組織文化、準備工作、日常營運及持續演進。\n\n常見設計原則是以 Infrastructure／Operations as Code 執行作業、頻繁進行小幅且可逆的變更、定期改善 procedures、預期失敗並測試反應，以及從所有 operational events 與 failures 學習。\n\n補充與常見考法：題目出現 runbooks、automation、observability、small reversible changes、post-incident learning 或持續改善營運流程，通常對應 Operational Excellence。"
+        "Description": "Operational Excellence 強調以程式碼執行 operations、頻繁小幅可逆變更、預期失敗、從事件學習及持續改進流程，目標是有效運行與監控系統。"
       },
       "Security Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Security Pillar 著重利用 cloud technologies 保護 information、systems 與 assets，同時支援風險評估及緩解。主要領域包括 security foundations、identity and access management、detection、infrastructure protection、data protection、application security 與 incident response。\n\n設計重點包含建立強身分基礎與 least privilege、維持 traceability、在各層套用防禦、保護傳輸中與靜態資料、讓人員遠離資料、將安全最佳實務自動化，以及事先準備與演練 security events。\n\n補充與常見考法：題目出現 IAM、MFA、encryption、logging、detective controls、defense in depth 或 incident response，通常對應 Security Pillar。"
+        "Description": "Security Pillar 著重強身分基礎、traceability、分層防禦、資料保護、自動化安全最佳實務及預先準備安全事件。"
       },
       "Reliability Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Reliability Pillar 是 workload 在預期時間內正確且一致執行功能，並在 infrastructure／service disruption 後恢復的能力。主要領域包括 foundations、workload architecture、change management 與 failure management。\n\n五項設計原則是：Automatically recover from failure、Test recovery procedures、Scale horizontally to increase aggregate workload availability、Stop guessing capacity，以及 Manage change through automation。實務上要定義 RTO／RPO、移除 single points of failure、監控健康狀態並定期演練復原。\n\n補充與常見考法：題目出現 fault recovery、Multi-AZ、automatic failover、capacity planning、backup restore tests 或 disaster recovery，通常對應 Reliability Pillar。若題目聲稱「testing recovery procedures、stopping guessing capacity、managing changes through automation 都是 Performance Efficiency 的設計原則」，答案是 False；這三項屬於 Reliability。"
+        "Description": "Reliability Pillar 強調自動從故障恢復、測試 recovery procedures、水平擴展、停止猜測容量及以自動化管理變更，讓 workload 持續正確運作。"
       },
       "Performance Efficiency Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Performance Efficiency Pillar 著重有效率地使用 computing resources 滿足需求，並在 technologies 與 business requirements 改變時維持效率。團隊應以資料選擇合適的 compute、storage、database、network 與 architecture，持續監控 latency、throughput、errors 與 utilization。\n\n五項設計原則是：Democratize advanced technologies、Go global in minutes、Use serverless architectures、Experiment more often，以及 Consider mechanical sympathy。服務或規格不是越大越好，而是與 workload pattern 相符。\n\n補充與常見考法：題目出現選擇正確資源類型、比較 performance trade-offs、使用全球基礎設施或隨新技術持續實驗，通常對應 Performance Efficiency。不要和 Reliability 混淆：測試 recovery、停止猜測 capacity 與以 automation 管理 changes 是 Reliability principles；Performance Efficiency 的關鍵字是 advanced technologies、global、serverless、experimentation 與 mechanical sympathy。"
+        "Description": "Performance Efficiency 著重依 workload 選擇合適 resources、採用 serverless／managed services、全球部署、持續實驗並理解 mechanical sympathy。"
       },
       "Cost Optimization Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Cost Optimization Pillar 著重以最低合理成本持續交付 business value，而不是不顧效能、安全與可靠性地選擇最便宜資源。主要工作包括實施 Cloud Financial Management、建立支出與用量可視性、選擇 cost-effective resources、管理 demand／supply，以及長期持續最佳化。\n\n設計原則包含採用 consumption model、衡量整體效率、停止把錢花在沒有差異化價值的 heavy lifting、分析與歸屬支出，以及建立財務與技術共同負責的機制。實務工具可包含 tags、Cost Explorer、Budgets、Compute Optimizer、Auto Scaling、Savings Plans 與 Reserved Instances。\n\nAWS Cost Explorer 用圖表分析 historical cost／usage、趨勢與部分最佳化建議；AWS Trusted Advisor 依 AWS best practices 執行包含 cost optimization 在內的多類 checks；AWS Budgets 管理實際或預測門檻與通知；Cost and Usage Report（CUR）提供最詳細的原始成本和用量資料。這些工具可支援 Cost Optimization，但用途不相同。\n\n補充與常見考法：題目問「AWS Cost Explorer 與 AWS Trusted Advisor 是哪一個 Well-Architected pillar 的服務例子」，答案是 Cost Optimization。題目出現 eliminate unneeded resources、right sizing、cost allocation、pay only for use 或 Cloud Financial Management，也通常對應本支柱。"
+        "Description": "Cost Optimization 強調實施 cloud financial management、採用消費模式、衡量整體效率、停止無價值支出，並分析與分攤成本。"
       },
       "Sustainability Pillar": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Sustainability Pillar 聚焦降低 cloud workloads 長期運行所產生的環境影響，特別是能源使用與資源效率。團隊要理解 workload 的 environmental impact、設定 sustainability goals、建立衡量方式，並在功能、效能、成本與永續性之間作出明確 trade-offs。\n\n常見實務包括最大化資源利用率、關閉 idle resources、依需求 scaling、選用較有效率的新硬體與 managed services、減少不必要的資料保存與傳輸、改善 software efficiency，以及在符合 latency、法規與資料主權的前提下考慮較合適的 Region。\n\n補充與常見考法：題目出現 minimize environmental impact、提高 utilization、使用 efficient hardware、減少能源或不必要資料處理時，對應 Sustainability Pillar。它不是只購買 renewable energy 或只查看碳排報表。"
+        "Description": "Sustainability Pillar 聚焦降低 cloud workloads 的能源消耗與環境影響，例如提高資源利用率、使用 managed services、減少不必要資料移動與採用更有效率的硬體。"
       },
       "AWS Well-Architected Tool": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Well-Architected Tool 是 AWS Management Console 中用來記錄及執行 Well-Architected workload review 的服務。團隊先定義 workload，再依 Framework 與選用 lenses 回答 questions；Tool 會根據回答標示 High Risk Issues（HRIs）與 Medium Risk Issues（MRIs），並提供 improvement plan 與相關 best-practice guidance。\n\n使用者可以保存 milestones 比較改善前後狀態、產生 workload report、分享 reviews，並持續更新風險處理進度。Lenses 可針對特定 technology 或 industry 增加額外問題。\n\n補充與常見考法：Well-Architected Framework 是知識與最佳實務框架；Well-Architected Tool 是用框架執行及記錄 review 的工具。Tool 不會自動掃描並修復所有 resources，也不等於 AWS 已對 workload 作出合規或安全保證。"
+        "Description": "Well-Architected Tool 以 Framework pillars 與 lenses 引導 workload review，辨識 high-risk issues、記錄改善計畫與 milestones。它提供評估，不會自動修復所有架構問題。"
       }
     },
     "AWS Cloud Adoption Framework": {
@@ -2687,22 +2687,14 @@
       },
       "Customer Carbon Footprint Tool": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Customer Carbon Footprint Tool（CCFT）是舊版 AWS 工具，用來查看 AWS usage 所歸屬的 carbon emissions estimates、依 service／Region 觀察趨勢，並支援企業的 sustainability reporting。教材或舊考題看到「檢視 AWS 使用所產生的 carbon footprint」時，可能仍以 CCFT 為答案。\n\n時效性補充：CCFT 已於 2026 年 6 月 30 日停止，現行替代方案是 AWS Sustainability console／service。新服務建立在 CCFT 之上，可依 Region、service、usage account 及 Scope 1、2、3 emissions 篩選與匯出資料，並加入 water withdrawals 等 environmental impact information。\n\n這類工具提供歸屬與估算資料，協助找出趨勢和 hotspots；它不會自動修改 workloads 或保證達成減碳目標。實際改善仍需搭配 Sustainability Pillar 的 right sizing、關閉 idle resources、選擇有效率架構與資料生命週期等措施。"
+        "Description": "Customer Carbon Footprint Tool 提供 AWS 使用相關的歷史碳排放估算、依服務／Region 分析及相對 on-premises 的減排資訊，協助企業追蹤 sustainability goals。"
       },
       "AWS Right Sizing": {
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
-        "Description": "Right sizing 是持續分析 workload configuration、utilization 與 performance requirements，再選擇最合適的 resource type、family、size 或 service。它同時處理 over-provisioning 與 under-provisioning：資源過大會浪費成本，過小則可能造成 latency、throttling 或 availability risk。\n\nAWS Compute Optimizer 可分析 metrics 並對 EC2、EBS、Lambda 等支援資源提出 price-performance recommendations；Cost Explorer rightsizing recommendations 可找出 underutilized EC2 的 downsizing／termination 機會；Cost Optimization Hub 可彙整多種成本最佳化建議。建議先由 workload owner 檢查尖峰、memory、network、storage、license、HA 與成長需求，再於測試或 maintenance window 實施並持續監控。\n\n補充與常見考法：Right sizing 不是一次性選最小 instance，也不是 Auto Scaling。前者調整每項資源的合適規格，後者依需求調整資源數量；兩者可以一起使用。應先確認穩定的 rightsized baseline，再購買 Savings Plans／Reservations，以免承諾過多。"
+        "Description": "Right sizing 持續分析 workload utilization，選擇符合效能需求的最小適當 instance family、size 與 service，避免 over-provisioning，也不能只為省成本而造成效能不足。"
       }
     },
     "AWS Ecosystem": {
-      "AWS Ecosystem – Learn, Build, Migrate, and Operate": {
-        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Ecosystem 不只包含 AWS services，也包含協助組織學習、取得產品、尋求專家與營運環境的資源網路。AWS Training and Certification 建立 skills；AWS re:Post、Knowledge Center 與 documentation 提供自助知識；AWS Marketplace 提供第三方 software、data 與 services；AWS Professional Services 與 AWS Partner Network 協助規劃、遷移及建置；AWS Managed Services 協助持續 infrastructure operations。\n\n補充與常見考法：先辨識需求再選資源：買第三方 solution 選 Marketplace；培訓與證照選 Training and Certification；社群問答選 re:Post；常見問題的 AWS 官方故障排除選 Knowledge Center；複雜轉型專案找 Professional Services／APN；希望 AWS 持續協助營運 infrastructure 則評估 AMS。"
-      },
-      "APN Partner Types – Legacy Terms vs Current Partner Paths": {
-        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Partner Network（APN）是協助 partners 在 AWS 上建立、推廣及交付 solutions／services 的全球合作夥伴計畫。舊版教材常使用 APN Technology Partners、APN Consulting Partners 與 APN Training Partners：Technology Partners 提供在 AWS 上運行或整合的 hardware／software solutions；Consulting Partners 協助 customers design、architect、build、migrate 與 manage workloads；Training Partners 提供經授權的 AWS Training。\n\n依這份舊課程題目的分類，「Which is NOT an APN type?」在 APN Technology Partners、APN Services Partners、APN Consulting Partners、APN Training Partners 四個選項中，預期答案是 APN Services Partners。這是教材當時設計的 distractor。\n\n時效性補充：不要把這個答案當成現行 AWS Partner terminology。AWS 自 2022 年起以 offering-based Partner Paths 取代舊 Technology／Consulting type model；官方公布的 Paths 包含 Software、Hardware、Services、Training 與 Distribution。因此在現行制度中，Services Path 與 Training Path 都存在，而 Technology／Consulting 是應辨識的 legacy terms。遇到考題時應先判斷題目採用舊版 APN types 還是現行 Partner Paths。"
-      },
       "AWS Marketplace": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
         "Description": "AWS Marketplace 是第三方軟體、data products 與 professional services 的數位目錄，可使用既有 AWS billing 購買與部署 AMIs、SaaS、containers 等產品。"
@@ -2717,15 +2709,23 @@
       },
       "AWS re:Post": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS re:Post 是 AWS-managed cloud knowledge service 與 public community，使用者可搜尋既有內容、提出 AWS technical questions、分享 answers、articles 與 curated selections。內容可能來自 community members、AWS employees 或標示為 AWS Official 的來源，適合學習與非緊急疑難排解。\n\nre:Post 免費社群內容不等同 AWS Support case，沒有依 support plan severity 提供的正式 response-time commitment。企業若需要組織內部的私有知識社群，可評估 AWS re:Post Private；它與公開 re:Post 的存取方式及方案要求不同。"
+        "Description": "AWS re:Post 是 AWS-managed community knowledge service，使用者可詢問技術問題、分享答案及查找知識內容；適合社群協助，不等同付費 Support case 的回應承諾。"
       },
       "AWS re:Post Knowledge Center": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Knowledge Center 現已整合於 AWS re:Post，收錄 AWS Official articles 與 videos，回答 AWS customers 最常提出的問題與 requests，通常以「如何解決某個錯誤」或「如何完成某項設定」的形式提供具體 troubleshooting steps。\n\n補充與常見考法：需要搜尋一般 community Q&A 或自行提問時選 re:Post；需要 AWS 官方整理的常見故障排除文章時選 Knowledge Center。兩者都是自助知識來源，不取代需要正式回應目標的 AWS Support case。"
+        "Description": "AWS Knowledge Center 內容整合於 re:Post，提供由 AWS 專家整理的常見問題、疑難排解與操作說明，可作為官方文件之外的實務解答來源。"
       },
       "AWS Managed Services (AMS)": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "AWS Managed Services（AMS）是 enterprise infrastructure operations management service，透過 AWS expertise、automation、configurations 與 runbooks 持續協助 provision、run 及 support AWS infrastructure。常見能力包括 monitoring、incident management、patch support、backup、security guidance 與 change management，可降低 operational overhead 與營運風險。\n\nAMS 適合需要 AWS 協助補強或承擔部分 day-to-day cloud operations 的組織；AMS Accelerate 與 AMS Advanced 等 operations plans 的涵蓋方式不同，實際責任應依選定方案與 RACI 確認。\n\n補充與常見考法：AMS 是持續營運服務，不是 AWS Support Plan、Professional Services 的一次性轉型專案，也不是讓客戶免除 shared responsibility。客戶仍負責 application code、data、business decisions、access requirements，以及合約中未交由 AMS 管理的工作。"
+        "Description": "AWS Managed Services 提供持續的 AWS infrastructure operations，例如監控、incident、patch、backup、security 與變更管理，適合希望由 AWS 協助營運雲端環境的企業。"
+      },
+      "APN Partner Types – Legacy Terms vs Current Partner Paths": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "AWS Partner Network（APN）是協助 partners 在 AWS 上建立、推廣及交付 solutions／services 的全球合作夥伴計畫。舊版教材常使用 APN Technology Partners、APN Consulting Partners 與 APN Training Partners：Technology Partners 提供在 AWS 上運行或整合的 hardware／software solutions；Consulting Partners 協助 customers design、architect、build、migrate 與 manage workloads；Training Partners 提供經授權的 AWS Training。\n\n依這份舊課程題目的分類，「Which is NOT an APN type?」在 APN Technology Partners、APN Services Partners、APN Consulting Partners、APN Training Partners 四個選項中，預期答案是 APN Services Partners。這是教材當時設計的 distractor。\n\n時效性補充：不要把這個答案當成現行 AWS Partner terminology。AWS 自 2022 年起以 offering-based Partner Paths 取代舊 Technology／Consulting type model；官方公布的 Paths 包含 Software、Hardware、Services、Training 與 Distribution。因此在現行制度中，Services Path 與 Training Path 都存在，而 Technology／Consulting 是應辨識的 legacy terms。遇到考題時應先判斷題目採用舊版 APN types 還是現行 Partner Paths。"
+      },
+      "AWS Ecosystem – Learn, Build, Migrate, and Operate": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "AWS Ecosystem 不只包含 AWS services，也包含協助組織學習、取得產品、尋求專家與營運環境的資源網路。AWS Training and Certification 建立 skills；AWS re:Post、Knowledge Center 與 documentation 提供自助知識；AWS Marketplace 提供第三方 software、data 與 services；AWS Professional Services 與 AWS Partner Network 協助規劃、遷移及建置；AWS Managed Services 協助持續 infrastructure operations。\n\n補充與常見考法：先辨識需求再選資源：買第三方 solution 選 Marketplace；培訓與證照選 Training and Certification；社群問答選 re:Post；常見問題的 AWS 官方故障排除選 Knowledge Center；複雜轉型專案找 Professional Services／APN；希望 AWS 持續協助營運 infrastructure 則評估 AMS。"
       }
     },
     "Shared Responsibility for AWS Architecture and Ecosystem": {
@@ -2757,11 +2757,19 @@
       }
     }
   },
-  "chapter20: Exam Preparation": {
-    "Exam Preparation": {
-      "AWS CCP CLF-C02 Exam Profile": {
+  "chapter20: Preparing for the Exam + Practice Exam - AWS Certified Cloud Practitioner": {
+    "CLF-C02 Test Strategies": {
+      "AWS Certified Cloud Practitioner Exam Profile": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Cloud Practitioner 考試簡介。旨在驗證對 AWS 雲端平台、全球設施、核心安全、定價與支援服務的整體基本理解。適合 IT 或商務背景考生。"
+        "Description": "CLF-C02 是驗證 AWS Cloud 整體基礎知識的 Foundational certification，適合技術與非技術背景考生。正式考試共有 65 題，其中 50 題計分、15 題不計分；題型為單選與複選，考試時間 90 分鐘，最低通過分數為 700。"
+      },
+      "CLF-C02 Domain Weighting": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "CLF-C02 與本站模擬考的領域比例相同：領域 1 雲端概念 24%、領域 2 安全與合規 30%、領域 3 雲端技術與服務 34%、領域 4 計費、定價與支援 12%。領域 3 比例最高，但考試採整體補償式計分，不要求每個領域各自及格。"
+      },
+      "Cloud Practitioner Test Strategy (CLF-C02 考試答題心法)": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "CLF-C02 多為高階的服務選擇與雲端價值題。先找出題目要解決的商業需求，再排除用途明顯不符的 distractors；若兩個答案看似可行，選擇最直接符合需求、維運負擔較低且不超出題目要求的 AWS 服務。\n\n常見考法：先分辨題目在問雲端優勢、安全責任、核心服務用途，還是成本與支援；不要因為選項名稱陌生就假設它一定正確。"
       }
     },
     "Shared Responsibility for Exam Preparation": {

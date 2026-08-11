@@ -2172,12 +2172,20 @@
       "Pay As You Go": {
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
         "Description": "只為實際使用的資源與用量付費，不需預先購買硬體，也不必承諾長期使用。適合需求尚未確定、流量波動或剛開始驗證的工作負載。\n\n補充與常見考法：看到「無前期承諾、按實際使用量計費、可隨時增減」時，通常選 Pay As You Go。彈性高，但若長期穩定運作，可能比承諾型方案昂貴。"
+      },
+      "EC2 On-Demand Linux Billing – Per Second": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "EC2 On-Demand Instances 不需要長期承諾。執行 Linux instance 時，compute capacity 依秒計費，最低計費時間為 60 秒；停止或終止 instance 後不再收取該 instance 的運算費。\n\n停止 instance 不代表所有費用都消失：連接的 EBS volumes、snapshots、public IPv4 addresses 或其他保留中的資源仍可能繼續計費。不同作業系統、軟體授權及附加服務也可能有不同計費規則。\n\n補充與常見考法：題目若明確問「running an On-Demand Linux EC2 instance 的 billing timing」，答案是 Pay per second，不是 per minute、per hour 或 per day；同時記住 60-second minimum。"
       }
     },
     "Pricing Model: Save When You Reserve": {
       "Save When You Reserve": {
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
         "Description": "對可預測且長期使用的工作負載做出 1 年或 3 年承諾，可取得比隨用隨付更低的價格，並協助企業穩定預算。\n\n常見於 EC2 Reserved Instances、Savings Plans、RDS Reserved DB Instances、DynamoDB Reserved Capacity、ElastiCache Reserved Nodes 與 Redshift Reserved Nodes。\n\n補充與常見考法：看到「穩定用量、長期運行、可預測預算、1 或 3 年」時，優先考慮保留或承諾型方案。它主要節省費用，不等於所有方案都自動保留實體容量。"
+      },
+      "RDS Reserved DB Instances – 1- or 3-Year Term": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "Amazon RDS Reserved DB Instances 適合規格與用量可預測、會持續運行 1 年或 3 年的資料庫。購買相符的 offering 後，符合 Region、DB engine、DB instance class 及其他必要屬性的 On-Demand DB instance 會套用較低費率。它是帳務折扣，不是一台與其他客戶隔離的實體資料庫。\n\n承諾期間內即使刪除原本的 DB instance，承諾費用仍存在；之後建立符合條件的 DB instance，折扣仍可套用。因此購買前應以 Cost Explorer 或歷史用量確認穩定基準，避免承諾超過實際需求。\n\n補充與常見考法：若題目問「需要 RDS capacity 3 年，哪個選項最具成本效益」，在 On-Demand、Spot Instances、Dedicated Instances 與 Reserved Instances 之間，答案是 Reserved Instances；更精確的 RDS 名稱是 Reserved DB Instances。Spot Instances 與 Dedicated Instances 是 EC2 選項，不是 RDS 購買方案。"
       }
     },
     "Pricing Model: Pay Less by Using More": {
@@ -2345,6 +2353,24 @@
         "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
         "Description": "客戶負責 帳戶結構、SCP／IAM、付款資料、Budgets／alerts、成本標籤、資源使用與收到告警後的處置。這是 Security IN the Cloud。\n\n常見考法：AWS 提供帳單與成本工具，但不會自動停止所有超支資源；客戶要設定門檻並採取行動。"
       }
+    },
+    "角色扮演：向 Priya 解釋多帳戶治理與成本管理": {
+      "1. 用商業語言說明 Organizations 與 Control Tower": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "Catalina：Priya，可以把 AWS Organizations 想成公司的「帳戶組織圖與總帳」。我們能為財務、臨床系統、開發與正式環境建立不同 AWS accounts，再依部門或用途放入 Organizational Units（OUs）。每個帳戶的資源與責任範圍保持分開，但公司可以集中付款、查看各帳戶費用，並用 Service Control Policies（SCPs）訂出整個部門都不能超越的使用邊界。SCP 是權限上限，不會直接授予員工權限。\n\nAWS Control Tower 則像依公司規範設計好的「新辦公室開設流程與巡檢中心」。它在 Organizations 基礎上建立 multi-account landing zone，透過 Account Factory 以一致方式建立新帳戶，並套用 preventive、detective 與 proactive controls，讓團隊更容易發現不符合治理要求的帳戶。簡單說，Organizations 負責組織與政策骨架，Control Tower 負責快速建立並持續治理標準化環境。"
+      },
+      "2. 建立部門成本透明度與問責機制": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "Catalina：對財務管理而言，多帳戶策略的價值不是增加複雜度，而是建立清楚的成本邊界。每個部門或 workload 使用適當帳戶，搭配一致的 cost allocation tags，例如 Department、Application、Environment 與 CostCenter，就能把支出對應到負責單位。Organizations 的 consolidated billing 提供單一付款窗口，也可能彙整部分用量與承諾型折扣；各 member account 的花費仍可分開查看。\n\n我們可以先用 Cost Explorer 依帳戶、服務與標籤查看歷史趨勢；需要財務或稽核級明細時使用 Cost and Usage Report（CUR）；再為各部門設定 AWS Budgets，針對實際或預測超支發出通知，並用 Cost Anomaly Detection 找出偏離正常模式的突增。這些工具提供透明度與預警，但收到警示後仍需要指定負責人審查和採取行動。"
+      },
+      "3. 用 Compute Optimizer 將使用資料轉成節省行動": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "Catalina：AWS Compute Optimizer 可以想成「容量使用健檢」。它分析 CloudWatch 的實際使用指標，找出長期配置過大的 EC2、EBS、Lambda 或其他支援資源，也會標示可能容量不足的項目，提出 right-sizing 建議並呈現成本與效能取捨。\n\n建議不應不經確認就全部套用。醫療公司的穩健流程是：先以 Cost Explorer 找出高支出部門與服務，再由 Compute Optimizer 找候選資源；由應用負責人確認尖峰需求、可用性及病患服務風險後，先在非正式環境試調整並持續監控。穩定的基本用量確認後，才評估 Savings Plans 或 Reserved DB Instances；短期、波動或尚未確認的需求則保留 On-Demand 彈性。"
+      },
+      "4. 確認疑慮、責任與下一步": {
+        "Domain": "領域 4：計費、定價與支援 (Billing, Pricing, and Support)",
+        "Description": "Priya：我最擔心的是集中管理後看不出哪個部門花了錢，或為了節省成本而影響重要醫療系統。\n\nCatalina：這兩點會直接寫進治理流程。我們會保留帳戶與部門成本明細，要求必要標籤，為每個成本中心設定預算、預測與異常通知，並指定收到警示後的負責人。任何 right-sizing 或長期承諾都先經 workload owner 與財務審核；病患照護相關系統會先確認效能、可用性、安全與合規需求，不以最低價格作為唯一決策。Organizations、Control Tower 與成本工具協助落實規則，但不會自動保證醫療合規，也不取代公司的審批與風險管理。\n\n我們可以先選一個非關鍵部門做 30 天試點：整理帳戶與標籤、建立 Cost Explorer 報表、設定 Budgets 與異常通知，再審查 Compute Optimizer 建議並量測節省效果。Priya，您最希望先釐清的是部門分攤方式、警示門檻、批准流程，還是承諾型折扣的風險？"
+      }
     }
   },
   "chapter17: Advanced Identity": {
@@ -2396,6 +2422,24 @@
       "Customer Responsibility – Security IN Advanced Identity": {
         "Domain": "領域 2：安全與合規 (Security and Compliance)",
         "Description": "客戶負責 建立與管理 users、groups、roles、policies、MFA、federation 與憑證，並落實最小權限及定期撤銷不再需要的存取。這是 Security IN the Cloud。\n\n常見考法：AWS 不會替客戶決定誰應取得權限；過度授權、未啟用 MFA 或外洩 access keys 都屬於客戶責任。"
+      }
+    },
+    "角色扮演：向 Alex 解釋應用程式與員工存取管理": {
+      "1. 簡單區分 Cognito 與 IAM Identity Center": {
+        "Domain": "領域 2：安全與合規 (Security and Compliance)",
+        "Description": "Catalina：Alex，可以先按「登入的人是誰」來選服務。Amazon Cognito 面向使用我們 mobile app 的 customers，例如註冊帳號、登入、重設密碼、MFA，或用 Google、Apple 等外部身分登入。它幫助產品團隊建立 app 的 customer identity and access management。\n\nIAM Identity Center 面向公司的 workforce，也就是 developers、project managers、finance 或 operations employees。它集中管理哪些員工可以進入哪些 AWS accounts 與 business applications，以及他們進去後可以扮演什麼工作角色。簡單記法：Cognito 管產品使用者進 app；IAM Identity Center 管員工進公司工作環境。兩者解決的對象與入口不同，不互相取代。"
+      },
+      "2. 為 mobile app 使用者選擇 Cognito": {
+        "Domain": "領域 2：安全與合規 (Security and Compliance)",
+        "Description": "Catalina：新 mobile app 可以使用 Cognito User Pool 處理 customer sign-up、sign-in、帳號復原、MFA 與社群登入，成功後向 app 簽發 tokens，讓 API 判斷使用者身分與可用功能。公司不需要自己從零建立密碼儲存與登入系統。\n\n只有當 app users 需要在受控條件下直接存取 S3、DynamoDB 等 AWS resources 時，才另外評估 Cognito Identity Pool，依 IAM role 換取短期 AWS credentials；權限必須限制在完成該功能所需的最小範圍。一般 customers 不應被建立成公司的 IAM users，也不需要進入員工使用的 AWS access portal。"
+      },
+      "3. 用 IAM Identity Center 提供員工 SSO": {
+        "Domain": "領域 2：安全與合規 (Security and Compliance)",
+        "Description": "Catalina：Single Sign-On（SSO）可以想成公司的「一張數位員工證」。員工先完成一次公司身分驗證，再從 AWS access portal 開啟被指派的 AWS accounts 與 applications，不必為每個系統維護不同的 AWS 帳號和密碼。\n\nIAM Identity Center 可以使用內建目錄，也能連接公司現有的 Microsoft AD 或外部 identity provider。管理員以 groups 和 permission sets 按職務配置權限，例如 developers 可進 development account，少數 operations 人員才可進 production。這讓新人到職、調職與離職時能集中調整存取，也能減少共用帳號、長期 access keys、密碼疲勞與逐一管理多帳戶權限的負擔。SSO 簡化登入，但仍應搭配 MFA 與 least privilege。"
+      },
+      "4. 說明整體價值並確認 Alex 的疑慮": {
+        "Domain": "領域 2：安全與合規 (Security and Compliance)",
+        "Description": "Alex：所以我們需要兩套服務，會不會反而更難管理？\n\nCatalina：它們是清楚分工，而不是重複建兩套員工系統。Cognito 處理大量 app customers 的註冊與登入體驗；IAM Identity Center 處理規模較小但權限更敏感的 employees。AWS 管理這些服務的底層可用性與擴展，公司則決定誰能存取什麼、設定 MFA 與最小權限，並在離職或不再需要時撤銷存取。這種分離也能避免把 customer identities 與內部管理權限混在一起。\n\n建議先畫出兩條簡單流程：customer 如何登入 app、需要呼叫哪些 APIs；employee groups 需要進入哪些 AWS accounts、各自要做什麼。再以一個測試 User Pool 和一個開發團隊 permission set 驗證流程，確認登入體驗、權限與離職撤銷都符合要求後再擴大。Alex，您現在最想先釐清 customer login 體驗、員工權限分組、SSO 與現有目錄整合，還是導入維運成本？"
       }
     }
   },
@@ -2464,6 +2508,10 @@
       "AWS Elastic Disaster Recovery": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
         "Description": "AWS Elastic Disaster Recovery 持續把 on-premises 或其他 cloud servers 的 block data 複寫到 AWS 的低成本 staging area，災難時快速啟動可恢復的 EC2 instances。"
+      },
+      "AWS Backup vs AWS Elastic Disaster Recovery": {
+        "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
+        "Description": "AWS Backup 與 AWS Elastic Disaster Recovery 都能支援復原需求，但工作不同。AWS Backup 集中自動化支援資源的 backups、retention、vaults 與 restore；AWS DRS 持續複寫來源 servers 的 block data，並在災難或演練時快速啟動 EC2 recovery instances。\n\n簡單記法：AWS Backup 管「資料備份政策與保存」，AWS DRS 管「伺服器持續複寫與快速復機」。完整 business continuity plan 可能同時使用兩者，並搭配 traffic failover、應用相依性、runbooks 與定期演練。\n\n補充與常見考法：「CloudEndure Disaster Recovery centrally automates backups across AWS services，而 AWS Backup quickly recovers servers into AWS」把兩項服務的功能顛倒，因此是 False。正確方向是 AWS Backup 集中管理 backups；CloudEndure／AWS Elastic Disaster Recovery 快速將 servers 復原到 AWS。"
       }
     },
     "Migration and Data Transfer": {
@@ -2538,6 +2586,24 @@
       "Customer Responsibility – Security IN Other AWS Services": {
         "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
         "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
+      }
+    },
+    "角色扮演：向 Alex 說明醫療公司的遷移與災難復原": {
+      "1. 以業務連續性說明 AWS Elastic Disaster Recovery": {
+        "Domain": "領域 3：雲端技術與服務 (Cloud Technology and Services)",
+        "Description": "Catalina：Alex，可以把 AWS Elastic Disaster Recovery 想成重要伺服器的「持續更新緊急備援站」。它將地端或其他雲端伺服器的變更持續複寫到 AWS 的低成本 staging area；平時不必維持一套與正式環境同規模的完整待命系統。發生機房中斷時，公司可用最近的復原點在 AWS 啟動 EC2 recovery instances，縮短服務停止時間並減少資料損失。\n\n對醫療公司而言，商業價值是讓掛號、營運或其他關鍵系統有較明確的復原路徑，而不是只在事故後臨時找設備重建。公司仍須為每套系統訂出可接受的 RTO（多久內必須恢復）與 RPO（最多能承受遺失多少時間的資料），並定期執行不影響正式系統的 recovery drills。DRS 協助複寫、啟動與 failback，但 traffic switching、application dependencies、資料一致性、runbooks 與醫療合規仍需公司規劃及驗證。"
+      },
+      "2. 用商業選項解釋遷移的 7Rs": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Catalina：7Rs 不是要求所有系統用同一種方法，而是為每項 application 選擇最合理的投資方式。Retire 是停止沒有商業價值的舊系統；Retain 是因法規、時程或相依性暫時保留；Repurchase 是改買合適的 SaaS product。這三項先回答「是否值得現在搬，以及是否仍要自己維護」。\n\n若決定搬遷，Relocate 是把整個既有平台環境搬走、少改應用；Rehost 是 lift-and-shift，快速把 servers 搬到 AWS；Replatform 是做有限改善，例如把自管 database 改用 Amazon RDS；Refactor／Re-architect 則重新設計以取得更大的 cloud-native 效益。通常從左到右，改造程度、時間、初期成本與執行風險逐步提高，但長期彈性與最佳化機會也可能增加。\n\n財務上不應把「全部 Refactor」或「全部 Rehost」當成固定答案。建議先按病患服務重要性、系統壽命、授權、相依性、合規、停機容忍度與預期節省逐項分類，將資金集中在真正有商業回報的轉型。"
+      },
+      "3. 用 Migration Evaluator 建立財務商業案例": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Catalina：Migration Evaluator 的作用像遷移前的財務盤點工具。它收集或匯入現有 servers、使用率、配置與 software licensing 等資料，找出長期配置過大的設備，建立 rightsized AWS alternatives，並比較不同目標方案、BYOL 與 License Included 的預估成本。\n\n它能把「上雲可能比較省」轉成有資料基礎的 business case，協助您比較目前成本、預估 AWS 運行成本與不同遷移情境，並作為 roadmap 與預算審查的輸入。但結果是依資料品質與假設建立的 estimate，不是保證帳單或完整的 migration project budget；仍要加入一次性遷移、網路、重構、測試、培訓、合規、支援與退役舊設備等成本。"
+      },
+      "4. 回應財務風險並確認下一步": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Alex：我如何避免先投入一大筆遷移費用，最後既沒有省錢，也沒有真正改善復原能力？\n\nCatalina：我們可以採分階段且可衡量的方式。第一，利用 Migration Evaluator 建立現況成本基準與多種遷移情境；第二，依 7Rs 將 applications 分類，不遷移沒有價值的系統，也不急著改造尚未具備商業理由的系統；第三，選一項非最高風險但具代表性的 workload 做 pilot，同時驗證成本、效能、安全與營運流程。\n\n對關鍵醫療系統，另外定義 RTO／RPO、完成 DRS recovery drill、測試使用者與網路切換、確認資料一致性，並記錄實際恢復時間。決策報表應同時呈現預估節省、一次性成本、剩餘風險與測試證據，而不只展示較低的月費。Alex，您想先檢視目前成本基準、7Rs 分類標準，還是最關鍵系統的復原目標與演練預算？"
       }
     }
   },
@@ -2652,6 +2718,14 @@
       "AWS Managed Services (AMS)": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
         "Description": "AWS Managed Services 提供持續的 AWS infrastructure operations，例如監控、incident、patch、backup、security 與變更管理，適合希望由 AWS 協助營運雲端環境的企業。"
+      },
+      "APN Partner Types – Legacy Terms vs Current Partner Paths": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "AWS Partner Network（APN）是協助 partners 在 AWS 上建立、推廣及交付 solutions／services 的全球合作夥伴計畫。舊版教材常使用 APN Technology Partners、APN Consulting Partners 與 APN Training Partners：Technology Partners 提供在 AWS 上運行或整合的 hardware／software solutions；Consulting Partners 協助 customers design、architect、build、migrate 與 manage workloads；Training Partners 提供經授權的 AWS Training。\n\n依這份舊課程題目的分類，「Which is NOT an APN type?」在 APN Technology Partners、APN Services Partners、APN Consulting Partners、APN Training Partners 四個選項中，預期答案是 APN Services Partners。這是教材當時設計的 distractor。\n\n時效性補充：不要把這個答案當成現行 AWS Partner terminology。AWS 自 2022 年起以 offering-based Partner Paths 取代舊 Technology／Consulting type model；官方公布的 Paths 包含 Software、Hardware、Services、Training 與 Distribution。因此在現行制度中，Services Path 與 Training Path 都存在，而 Technology／Consulting 是應辨識的 legacy terms。遇到考題時應先判斷題目採用舊版 APN types 還是現行 Partner Paths。"
+      },
+      "AWS Ecosystem – Learn, Build, Migrate, and Operate": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "AWS Ecosystem 不只包含 AWS services，也包含協助組織學習、取得產品、尋求專家與營運環境的資源網路。AWS Training and Certification 建立 skills；AWS re:Post、Knowledge Center 與 documentation 提供自助知識；AWS Marketplace 提供第三方 software、data 與 services；AWS Professional Services 與 AWS Partner Network 協助規劃、遷移及建置；AWS Managed Services 協助持續 infrastructure operations。\n\n補充與常見考法：先辨識需求再選資源：買第三方 solution 選 Marketplace；培訓與證照選 Training and Certification；社群問答選 re:Post；常見問題的 AWS 官方故障排除選 Knowledge Center；複雜轉型專案找 Professional Services／APN；希望 AWS 持續協助營運 infrastructure 則評估 AMS。"
       }
     },
     "Shared Responsibility for AWS Architecture and Ecosystem": {
@@ -2663,13 +2737,39 @@
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
         "Description": "客戶負責 資料、身分與權限、服務組態、加密、備份、應用程式，以及依業務需求選擇並正確使用 AWS 服務。這是 Security IN the Cloud。\n\n常見考法：考題先判斷 Security OF the Cloud 與 Security IN the Cloud；AWS 管底層，客戶管資料、存取與設定。"
       }
+    },
+    "角色扮演：向 Jordan 說明 QuickCart 的雲端架構與轉型": {
+      "1. 用業務語言解釋 Well-Architected 六大支柱": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Catalina：Jordan，AWS Well-Architected Framework 可以想成 QuickCart 的「雲端營運健檢表」，讓我們在系統上線前與營運期間，從六個角度檢查設計取捨。它不是要求購買六項服務，也不是一次完成就不必再檢查。\n\nOperational Excellence 確保變更、監控與故障處理有一致流程；Security 保護顧客資料、帳號與交易；Reliability 讓購物、付款及庫存流程在設備故障時仍能恢復；Performance Efficiency 確保網站速度與使用的資源符合實際需求；Cost Optimization 找出閒置、過大或沒有商業價值的支出；Sustainability 則減少不必要的運算、儲存與能源使用。\n\n這六個支柱要一起看。例如只為省錢而把容量降得太低，可能傷害效能與可靠性；為了可靠性無限制增加備援，也可能造成成本浪費。Framework 的價值是讓團隊看見這些 trade-offs，再依 QuickCart 的業務優先順序做有紀錄的決策。"
+      },
+      "2. 說明 CAF 如何支援 QuickCart 的轉型": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Catalina：Well-Architected Framework 關心「workload 是否設計與運行良好」；AWS Cloud Adoption Framework（CAF）則關心「整家公司是否準備好用雲端創造成果」。CAF 從六個 perspectives 檢查轉型能力：Business 定義商業成果，People 準備角色與技能，Governance 管理投資、風險與責任，Platform 建立可重複使用的雲端基礎，Security 建立保護與合規能力，Operations 建立日常監控、事件及持續營運流程。\n\nQuickCart 可以依 Envision、Align、Launch、Scale 逐步進行：先 Envision 並選定要改善的成果，例如降低結帳中斷與基礎設施浪費；再 Align 找出技能、流程、權限與成本管理缺口；接著 Launch 一個可衡量的 production pilot；確認價值與風險後才 Scale 到更多門市、系統與團隊。\n\n這能避免把 cloud transition 當成單純搬 servers。即使技術已部署，若沒有 owner、預算規則、員工訓練、incident process 與衡量指標，QuickCart 仍難以取得穩定的商業效益。"
+      },
+      "3. 將框架連結到可靠性、成本與營運成果": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Catalina：我們會把框架原則轉成 Jordan 能追蹤的營運數字。可靠性方面，跨 Availability Zones 部署關鍵流程、設定 health checks、backups 與復原演練，並追蹤 checkout availability、order success rate、recovery time 與 failed transactions。這能把「系統更穩」轉成較少漏單及較快恢復。\n\n成本方面，為資源標記 Department、Application 與 Environment，使用 Budgets、Cost Explorer 與 Compute Optimizer，定期關閉閒置環境並 right size；可追蹤 cost per order、idle-resource spend、budget variance 與促銷後 scale-in 是否正常。穩定基準確認後，再評估 Savings Plans 或 Reservations，避免過早承諾。\n\n營運效率方面，以 Infrastructure as Code、standard runbooks、automated deployment、CloudWatch monitoring 與小幅可逆變更降低人工錯誤；可追蹤 deployment frequency、change failure rate、incident volume、mean time to recovery 與人工處理工時。指標必須連結到顧客體驗和營收，而不只展示技術數字。"
+      },
+      "4. 建議可衡量的試點並確認 Jordan 的疑慮": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "Jordan：這些框架聽起來很完整，但我要怎麼避免它們變成只增加會議和文件的理論？\n\nCatalina：我們先選一項明確且可衡量的流程，例如非最高風險的 online inventory lookup 或測試環境。記錄目前的 availability、response time、incident hours、部署時間與每月成本，利用 CAF 確認 owner、skills、budget、security 與 operations readiness，再用 Well-Architected Tool 做一次 workload review，挑出少數高影響改善，不一次處理所有問題。\n\n試點期間實施監控、預算警示、right sizing、automated deployment、backup 與 recovery test；30 至 60 天後比較改善前後數據。只有在顧客影響、營運工時、可靠性與成本確實改善時才擴大。Jordan，您想先從促銷期間的可靠性、雲端支出透明度，還是部署與故障處理時間開始設定基準？"
+      }
     }
   },
-  "chapter20: Exam Preparation": {
-    "Exam Preparation": {
-      "AWS CCP CLF-C02 Exam Profile": {
+  "chapter20: Preparing for the Exam + Practice Exam - AWS Certified Cloud Practitioner": {
+    "CLF-C02 Test Strategies": {
+      "AWS Certified Cloud Practitioner Exam Profile": {
         "Domain": "領域 1：雲端概念 (Cloud Concepts)",
-        "Description": "Cloud Practitioner 考試簡介。旨在驗證對 AWS 雲端平台、全球設施、核心安全、定價與支援服務的整體基本理解。適合 IT 或商務背景考生。"
+        "Description": "CLF-C02 是驗證 AWS Cloud 整體基礎知識的 Foundational certification，適合技術與非技術背景考生。正式考試共有 65 題，其中 50 題計分、15 題不計分；題型為單選與複選，考試時間 90 分鐘，最低通過分數為 700。"
+      },
+      "CLF-C02 Domain Weighting": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "CLF-C02 與本站模擬考的領域比例相同：領域 1 雲端概念 24%、領域 2 安全與合規 30%、領域 3 雲端技術與服務 34%、領域 4 計費、定價與支援 12%。領域 3 比例最高，但考試採整體補償式計分，不要求每個領域各自及格。"
+      },
+      "Cloud Practitioner Test Strategy (CLF-C02 考試答題心法)": {
+        "Domain": "領域 1：雲端概念 (Cloud Concepts)",
+        "Description": "CLF-C02 多為高階的服務選擇與雲端價值題。先找出題目要解決的商業需求，再排除用途明顯不符的 distractors；若兩個答案看似可行，選擇最直接符合需求、維運負擔較低且不超出題目要求的 AWS 服務。\n\n常見考法：先分辨題目在問雲端優勢、安全責任、核心服務用途，還是成本與支援；不要因為選項名稱陌生就假設它一定正確。"
       }
     },
     "Shared Responsibility for Exam Preparation": {
