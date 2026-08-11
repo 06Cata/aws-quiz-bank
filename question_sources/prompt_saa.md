@@ -197,9 +197,9 @@ question_sources/questions_11-25_raw/question_011.txt
 
 `domain` 必須完全使用以下四個值之一：
 
-- `領域 1：設計彈性架構 (Design Resilient Architectures)`
-- `領域 2：設計高性能架構 (Design High-Performing Architectures)`
-- `領域 3：設計安全架構 (Design Secure Architectures)`
+- `領域 1：設計安全架構 (Design Secure Architectures)`
+- `領域 2：設計彈性架構 (Design Resilient Architectures)`
+- `領域 3：設計高性能架構 (Design High-Performing Architectures)`
 - `領域 4：設計成本優化架構 (Design Cost-Optimized Architectures)`
 
 判斷提示：
@@ -229,7 +229,7 @@ question_sources/questions_11-25_raw/question_011.txt
 ```json
 {
   "question_no": 11,
-  "domain": "領域 1：設計彈性架構 (Design Resilient Architectures)",
+  "domain": "領域 2：設計彈性架構 (Design Resilient Architectures)",
   "question_text": {
     "zh": "完整簡體中文題幹",
     "en": "Complete English question"
@@ -264,7 +264,7 @@ question_sources/questions_11-25_raw/question_011.txt
 ```json
 {
   "question_no": 12,
-  "domain": "領域 3：設計安全架構 (Design Secure Architectures)",
+  "domain": "領域 1：設計安全架構 (Design Secure Architectures)",
   "question_text": {
     "zh": "一家公司需要提升工作負載的安全性。解決方案架構師應選擇哪兩項措施？（選擇兩項。）",
     "en": "A company needs to improve the security of its workload. Which TWO actions should a solutions architect take? (Choose two.)"

@@ -56,9 +56,9 @@ export const FLASHCARD_EXAMS: Record<FlashcardExam, FlashcardExamConfig> = {
     shortName: "Solutions Architect Associate",
     apiPrefix: "/api/saa",
     domains: [
-      { key: "domain_1", label: "領域 1｜設計彈性架構" },
-      { key: "domain_2", label: "領域 2｜設計高性能架構" },
-      { key: "domain_3", label: "領域 3｜設計安全架構" },
+      { key: "domain_1", label: "領域 1｜設計安全架構" },
+      { key: "domain_2", label: "領域 2｜設計彈性架構" },
+      { key: "domain_3", label: "領域 3｜設計高性能架構" },
       { key: "domain_4", label: "領域 4｜設計成本優化架構" }
     ]
   }

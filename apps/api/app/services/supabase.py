@@ -14,9 +14,9 @@ EXAM_DOMAIN_WEIGHTS_BY_EXAM = {
         "domain_4": 0.12,
     },
     "saa": {
-        "domain_1": 0.26,
-        "domain_2": 0.24,
-        "domain_3": 0.30,
+        "domain_1": 0.30,
+        "domain_2": 0.26,
+        "domain_3": 0.24,
         "domain_4": 0.20,
     },
 }
@@ -273,11 +273,11 @@ def _exam_domain_key(question: dict, exam: str = "clf") -> str | None:
         return "domain_4"
 
     if normalized_exam == "saa":
-        if "design resilient architectures" in exam_domain or "設計彈性架構" in exam_domain:
-            return "domain_1"
-        if "design high-performing architectures" in exam_domain or "設計高性能架構" in exam_domain:
-            return "domain_2"
         if "design secure architectures" in exam_domain or "設計安全架構" in exam_domain:
+            return "domain_1"
+        if "design resilient architectures" in exam_domain or "設計彈性架構" in exam_domain:
+            return "domain_2"
+        if "design high-performing architectures" in exam_domain or "設計高性能架構" in exam_domain:
             return "domain_3"
         if "design cost-optimized architectures" in exam_domain or "設計成本優化架構" in exam_domain:
             return "domain_4"
