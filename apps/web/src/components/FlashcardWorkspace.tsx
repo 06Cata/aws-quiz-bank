@@ -36,9 +36,9 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
   useEffect(() => {
     const requestedExam = new URLSearchParams(window.location.search).get("exam");
     const storedExam = window.localStorage.getItem("aws-quiz-exam-type");
-    const initialExam = requestedExam === "clf" || requestedExam === "saa"
+    const initialExam = requestedExam === "aif" || requestedExam === "clf" || requestedExam === "saa"
       ? requestedExam
-      : storedExam === "clf" || storedExam === "saa"
+      : storedExam === "aif" || storedExam === "clf" || storedExam === "saa"
         ? storedExam
         : "saa";
     setSelectedExam(initialExam);
@@ -248,7 +248,7 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
   return (
     <main className="min-h-screen px-5 py-8 text-zinc-100 md:px-12">
       <section className="mx-auto max-w-6xl">
-        <div className="mb-7 grid grid-cols-1 border-2 border-zinc-700 bg-black sm:grid-cols-2">
+        <div className="mb-7 grid grid-cols-1 border-2 border-zinc-700 bg-black sm:grid-cols-3">
           {(Object.entries(FLASHCARD_EXAMS) as [FlashcardExam, (typeof FLASHCARD_EXAMS)[FlashcardExam]][]).map(([exam, examConfig]) => (
             <button
               type="button"

@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 
-EXAMS = {"clf", "saa"}
+EXAMS = {"aif", "clf", "saa"}
 CHAPTER_PATTERN = re.compile(r"^chapter(?P<order>[1-9]\d*)\s*:\s*(?P<label>.+)$", re.IGNORECASE)
 
 
@@ -75,7 +75,7 @@ def _content_hash(payload: dict[str, object]) -> str:
 def load_local_flashcards(directory: Path, exam: str) -> list[LocalFlashcard]:
     normalized_exam = exam.strip().lower()
     if normalized_exam not in EXAMS:
-        raise ValueError("exam 必須是 clf 或 saa")
+        raise ValueError("exam 必須是 aif、clf 或 saa")
     if not directory.is_dir():
         raise FileNotFoundError(f"找不到 flashcards 資料夾：{directory}")
 

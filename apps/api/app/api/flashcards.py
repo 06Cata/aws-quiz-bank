@@ -13,6 +13,7 @@ from app.services.supabase import (
 
 clf_router = APIRouter(tags=["flashcards"])
 saa_router = APIRouter(prefix="/saa", tags=["saa-flashcards"])
+aif_router = APIRouter(prefix="/aif", tags=["aif-flashcards"])
 
 
 class FlashcardNotePayload(BaseModel):
@@ -65,3 +66,4 @@ def register_routes(router: APIRouter, exam: str) -> None:
 
 register_routes(clf_router, "clf")
 register_routes(saa_router, "saa")
+register_routes(aif_router, "aif")

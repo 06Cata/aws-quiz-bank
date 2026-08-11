@@ -61,6 +61,7 @@ class FlashcardTables:
 FLASHCARD_TABLES = {
     "clf": FlashcardTables("clf_flashcards", "clf_flashcard_notes"),
     "saa": FlashcardTables("saa_flashcards", "saa_flashcard_notes"),
+    "aif": FlashcardTables("aif_flashcards", "aif_flashcard_notes"),
 }
 
 
@@ -75,7 +76,7 @@ def flashcard_tables(exam: str = "clf") -> FlashcardTables:
     try:
         return FLASHCARD_TABLES[exam.strip().lower()]
     except KeyError as exc:
-        raise ValueError("exam must be either 'clf' or 'saa'") from exc
+        raise ValueError("exam must be 'aif', 'clf', or 'saa'") from exc
 
 
 def _flashcard_topic_rank(topic: str) -> int:

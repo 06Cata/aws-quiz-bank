@@ -1,5 +1,5 @@
-export type FlashcardExam = "clf" | "saa";
-export type FlashcardDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4";
+export type FlashcardExam = "aif" | "clf" | "saa";
+export type FlashcardDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4" | "domain_5";
 
 export type Flashcard = {
   id: string;
@@ -28,6 +28,18 @@ type FlashcardExamConfig = {
 };
 
 export const FLASHCARD_EXAMS: Record<FlashcardExam, FlashcardExamConfig> = {
+  aif: {
+    name: "AWS Certified AI Practitioner",
+    shortName: "AI Practitioner",
+    apiPrefix: "/api/aif",
+    domains: [
+      { key: "domain_1", label: "領域 1｜AI 和 ML 基礎" },
+      { key: "domain_2", label: "領域 2｜生成式 AI 基礎" },
+      { key: "domain_3", label: "領域 3｜基礎模型的應用" },
+      { key: "domain_4", label: "領域 4｜負責任 AI 指南" },
+      { key: "domain_5", label: "領域 5｜安全、合規與治理" }
+    ]
+  },
   clf: {
     name: "AWS Cloud Practitioner",
     shortName: "Cloud Practitioner",
@@ -54,7 +66,7 @@ export const FLASHCARD_EXAMS: Record<FlashcardExam, FlashcardExamConfig> = {
 
 export function flashcardDomainKey(domain: string): Exclude<FlashcardDomainKey, "all"> | null {
   const normalized = domain.toLowerCase();
-  for (const domainNumber of [1, 2, 3, 4] as const) {
+  for (const domainNumber of [1, 2, 3, 4, 5] as const) {
     if (normalized.includes(`領域 ${domainNumber}`) || normalized.includes(`domain ${domainNumber}`)) {
       return `domain_${domainNumber}`;
     }

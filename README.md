@@ -261,7 +261,7 @@ QUESTIONS_DIR=/path/to/questions QUIZ_EXAM=clf python3 -m app.jobs.sync_local_qu
 
 ## 學習卡牌與 Supabase
 
-CLF 與 SAA 學習卡牌必須使用不同的 JSON、資料表、API 查詢範圍及使用者收藏，兩邊的學習環境不互通。完整的資料夾整理方式、Supabase SQL、RLS、GitHub Secrets、自動同步設計與逐步驗證方式請參考 [`FLASHCARDS_SUPABASE_SETUP.md`](./FLASHCARDS_SUPABASE_SETUP.md)。
+CLF、SAA 與 AIF 學習卡牌使用不同的 JSON、資料表、API 查詢範圍及使用者收藏，三套學習環境互不相通。完整的資料夾整理方式、Supabase SQL、RLS、GitHub Secrets、自動同步設計與逐步驗證方式請參考 [`FLASHCARDS_SUPABASE_SETUP.md`](./FLASHCARDS_SUPABASE_SETUP.md)。
 
 卡牌 JSON 驗證器、Supabase upsert 同步程式、GitHub Actions 自動同步與網站 API 串接皆已建立；部署與驗證方式請依操作文件執行。
 
@@ -272,6 +272,7 @@ CLF 與 SAA 學習卡牌必須使用不同的 JSON、資料表、API 查詢範�
 ```bash
 cp flashcards_sources/clf_flashcards.json flashcards/clf_flashcards.json
 cp flashcards_sources/saa_flashcards.json flashcards/saa_flashcards.json
+cp flashcards_sources/aif_flashcards.json flashcards/aif_flashcards.json
 ```
 
 只修改 `flashcards_sources/*.json` 不會觸發同步。GitHub Actions 只會在以下正式檔案或卡牌同步程式被 push 時，自動驗證並 upsert 到 Supabase：

@@ -23,8 +23,8 @@ type QuizQuestion = {
 };
 
 type QuizMode = "practice" | "wrong" | "exam";
-type ExamType = "clf" | "saa";
-type ReviewDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4";
+type ExamType = "aif" | "clf" | "saa";
+type ReviewDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4" | "domain_5";
 
 type ExamConfig = {
   name: string;
@@ -34,6 +34,7 @@ type ExamConfig = {
   mockQuestionCount: number;
   durationSeconds: number;
   resultNote: string;
+  quizEnabled: boolean;
 };
 
 type ExamResult = {
@@ -105,7 +106,44 @@ const sampleQuestion: QuizQuestion = {
   }
 };
 
+const sampleAifQuestion: QuizQuestion = {
+  question_no: 1,
+  exam_domain: "領域 3：基礎模型的應用",
+  question_text: {
+    zh: "哪一種方法能讓基礎模型使用最新的公司文件回答問題，而不需要修改模型權重？",
+    en: "Which approach lets a foundation model answer from current company documents without changing model weights?"
+  },
+  options: {
+    A: { zh: "Retrieval-Augmented Generation（RAG）", en: "Retrieval-Augmented Generation (RAG)" },
+    B: { zh: "增加 Temperature", en: "Increase temperature" },
+    C: { zh: "資料蒸餾", en: "Data distillation" },
+    D: { zh: "影像分類", en: "Image classification" }
+  },
+  option_explanations: {
+    A: {
+      zh: "RAG 先檢索相關企業文件，再把內容提供給模型產生回答，不需要重新訓練模型。",
+      en: "RAG retrieves relevant enterprise content and supplies it to the model without retraining it."
+    }
+  },
+  correct_options: ["A"],
+  choice_type: "single",
+  discussion: {
+    zh: "AIF 第一階段先提供學習卡牌；正式題庫將在後續階段加入。",
+    en: "AIF flashcards are available first; the question bank will be added in a later phase."
+  }
+};
+
 const EXAMS: Record<ExamType, ExamConfig> = {
+  aif: {
+    name: "AWS Certified AI Practitioner",
+    shortName: "AI Practitioner",
+    apiPrefix: "/api/aif",
+    certification: "AWS Certified AI Practitioner",
+    mockQuestionCount: 65,
+    durationSeconds: 90 * 60,
+    resultNote: "AIF-C01 採 100–1,000 分的量尺計分，最低通過分數為 700；正式題庫功能將在第二階段開放。",
+    quizEnabled: false
+  },
   clf: {
     name: "AWS Cloud Practitioner",
     shortName: "Cloud Practitioner",
@@ -113,7 +151,8 @@ const EXAMS: Record<ExamType, ExamConfig> = {
     certification: "AWS Cloud Practitioner",
     mockQuestionCount: 65,
     durationSeconds: 90 * 60,
-    resultNote: "AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。"
+    resultNote: "AWS 基礎級考試滿分爲1000分，及格分數為 700 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。",
+    quizEnabled: true
   },
   saa: {
     name: "AWS Solutions Architect Associate",
@@ -122,11 +161,19 @@ const EXAMS: Record<ExamType, ExamConfig> = {
     certification: "AWS Solutions Architect Associate",
     mockQuestionCount: 65,
     durationSeconds: 130 * 60,
-    resultNote: "AWS 助理級考試滿分爲1000分，及格分數為 720 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。"
+    resultNote: "AWS 助理級考試滿分爲1000分，及格分數為 720 分，每題難易度與權重不同，建議在練習時，將目標穩定設定在 80% 以上的正確率。",
+    quizEnabled: true
   }
 };
 
 const REVIEW_DOMAINS: Record<ExamType, Array<{ key: Exclude<ReviewDomainKey, "all">; label: string }>> = {
+  aif: [
+    { key: "domain_1", label: "領域 1｜AI 和 ML 基礎" },
+    { key: "domain_2", label: "領域 2｜生成式 AI 基礎" },
+    { key: "domain_3", label: "領域 3｜基礎模型的應用" },
+    { key: "domain_4", label: "領域 4｜負責任 AI 指南" },
+    { key: "domain_5", label: "領域 5｜安全、合規與治理" }
+  ],
   clf: [
     { key: "domain_1", label: "領域 1｜雲端概念" },
     { key: "domain_2", label: "領域 2｜安全與合規" },
@@ -143,7 +190,7 @@ const REVIEW_DOMAINS: Record<ExamType, Array<{ key: Exclude<ReviewDomainKey, "al
 
 function reviewDomainKey(domain: string | null | undefined): Exclude<ReviewDomainKey, "all"> | null {
   const normalizedDomain = domain?.trim().toLowerCase() ?? "";
-  for (const domainNumber of [1, 2, 3, 4] as const) {
+  for (const domainNumber of [1, 2, 3, 4, 5] as const) {
     if (normalizedDomain.includes(`領域 ${domainNumber}`) || normalizedDomain.includes(`domain ${domainNumber}`)) {
       return `domain_${domainNumber}`;
     }
@@ -232,7 +279,7 @@ export default function Home() {
 
   useEffect(() => {
     const storedExam = window.localStorage.getItem("aws-quiz-exam-type");
-    if (storedExam === "clf" || storedExam === "saa") {
+    if (storedExam === "aif" || storedExam === "clf" || storedExam === "saa") {
       setSelectedExam(storedExam);
       setExamSecondsRemaining(EXAMS[storedExam].durationSeconds);
     }
@@ -494,6 +541,11 @@ export default function Home() {
   }
 
   async function loadReviewNotes() {
+    if (!currentExam.quizEnabled) {
+      setNotesMessage("AIF 複習筆記會在正式題庫完成後開放；目前可使用學習卡牌筆記。");
+      return;
+    }
+
     if (!user) {
       setNotesMessage("請先登入才能讀取複習筆記");
       setIsLoginPanelOpen(true);
@@ -645,6 +697,11 @@ export default function Home() {
     loadedMessage: string,
     options: { mode: QuizMode; createSession?: boolean } = { mode: "practice" }
   ) {
+    if (!currentExam.quizEnabled) {
+      setQuizMessage("AIF 第一階段先開放學習卡牌與學習卡牌筆記；刷題功能將在題庫資料表完成後開放。");
+      return;
+    }
+
     if (!user) {
       setQuizMessage("請先登入才能記錄您的答題狀態");
       setIsLoginPanelOpen(true);
@@ -972,7 +1029,11 @@ export default function Home() {
   }
 
   const gmail = user?.email ?? "";
-  const currentQuestion = hasStartedQuiz ? questions[currentQuestionIndex] : sampleQuestion;
+  const currentQuestion = hasStartedQuiz
+    ? questions[currentQuestionIndex]
+    : selectedExam === "aif"
+      ? sampleAifQuestion
+      : sampleQuestion;
   const questionText = localizedText(currentQuestion?.question_text);
   const discussion = localizedText(currentQuestion?.discussion);
   const correctOptions = currentQuestion?.correct_options ?? [];
@@ -1034,9 +1095,10 @@ export default function Home() {
             >
               <option value="clf">AWS Cloud Practitioner</option>
               <option value="saa">AWS Solutions Architect Associate</option>
+              <option value="aif">AWS Certified AI Practitioner</option>
             </select>
 
-            <div className="hidden grid-cols-2 border-2 border-zinc-700 bg-black md:grid">
+            <div className="hidden grid-cols-3 border-2 border-zinc-700 bg-black md:grid">
               {(Object.entries(EXAMS) as [ExamType, ExamConfig][]).map(([examKey, exam]) => (
                 <button
                   type="button"
@@ -1068,6 +1130,11 @@ export default function Home() {
             <p className="max-w-xl text-lg leading-8 text-zinc-300">
               Beta版，題目持續更新中。初次登入使用gmail帳號，系統會自動建立會員資料，並將答題紀錄寫入資料庫。若要複習錯題，請先完成幾題後再回來複習。答案解析可以存入筆記卡牌，方便複習。
             </p>
+            {!currentExam.quizEnabled ? (
+              <p className="max-w-xl border-l-4 border-flashYellow bg-[#16120a] px-4 py-3 text-sm font-bold leading-6 text-flashYellow">
+                AIF 第一階段：先開放「學習卡牌」與「學習卡牌筆記」。刷題、複習錯題、模擬考與複習筆記會在 AIF 題庫完成後開放。
+              </p>
+            ) : null}
           </div>
 
           <div className="grid max-w-lg gap-5 sm:grid-cols-2 md:max-w-[480px]">
@@ -1075,19 +1142,19 @@ export default function Home() {
               <button
                 type="button"
                 onClick={startQuiz}
-                disabled={isLoadingQuestions}
+                disabled={isLoadingQuestions || !currentExam.quizEnabled}
                 className="w-full border-2 border-acidGreen bg-acidGreen px-7 py-4 font-display text-sm uppercase text-black shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
-                {isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
+                {!currentExam.quizEnabled ? "刷題（後續開放）" : isLoadingQuestions ? "讀取題庫中..." : hasStartedQuiz ? "重新開始刷題" : "開始刷題"}
               </button>
 
               <button
                 type="button"
                 onClick={startMockExam}
-                disabled={isLoadingQuestions}
+                disabled={isLoadingQuestions || !currentExam.quizEnabled}
                 className="w-full border-2 border-deepPink bg-black px-7 py-4 text-center font-display text-sm uppercase text-deepPink shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
-                模擬考模式
+                {currentExam.quizEnabled ? "模擬考模式" : "模擬考（後續開放）"}
               </button>
             </div>
 
@@ -1095,19 +1162,19 @@ export default function Home() {
               <button
                 type="button"
                 onClick={startWrongReview}
-                disabled={isLoadingQuestions}
+                disabled={isLoadingQuestions || !currentExam.quizEnabled}
                 className="w-full border-2 border-flashYellow bg-black px-7 py-4 font-display text-sm uppercase text-flashYellow shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
-                複習錯題
+                {currentExam.quizEnabled ? "複習錯題" : "錯題複習（後續開放）"}
               </button>
 
               <button
                 type="button"
                 onClick={isNotesOpen ? () => setIsNotesOpen(false) : loadReviewNotes}
-                disabled={isLoadingNotes}
+                disabled={isLoadingNotes || !currentExam.quizEnabled}
                 className="w-full border-2 border-acidGreen bg-black px-7 py-4 text-center font-display text-sm uppercase text-acidGreen shadow-[8px_8px_0_#ff3b30] transition hover:-translate-y-1 disabled:cursor-wait disabled:opacity-70"
               >
-                複習筆記
+                {currentExam.quizEnabled ? "複習筆記" : "複習筆記（後續開放）"}
               </button>
             </div>
 

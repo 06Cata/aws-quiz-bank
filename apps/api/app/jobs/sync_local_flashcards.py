@@ -29,13 +29,14 @@ class SyncStats:
 def get_sync_target(exam: str | None = None) -> SyncTarget:
     normalized_exam = (exam or settings.quiz_exam).strip().lower()
     targets = {
+        "aif": SyncTarget("aif", "aif_flashcards"),
         "clf": SyncTarget("clf", "clf_flashcards"),
         "saa": SyncTarget("saa", "saa_flashcards"),
     }
     try:
         return targets[normalized_exam]
     except KeyError as exc:
-        raise RuntimeError("QUIZ_EXAM must be either 'clf' or 'saa'") from exc
+        raise RuntimeError("QUIZ_EXAM must be 'aif', 'clf', or 'saa'") from exc
 
 
 class SupabaseFlashcardClient:
@@ -206,7 +207,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="驗證並同步 flashcards 目錄中的卡牌 JSON")
     parser.add_argument(
         "--exam",
-        choices=("clf", "saa"),
+        choices=("aif", "clf", "saa"),
         help="要驗證或同步的考試卡牌（未指定時使用 QUIZ_EXAM）",
     )
     parser.add_argument(

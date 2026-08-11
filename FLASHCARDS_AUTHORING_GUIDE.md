@@ -103,6 +103,7 @@ flashcards/<exam>_flashcards.json
 
 | 考試代碼 | 來源 JSON | 正式 JSON | Supabase 卡牌表 | Supabase 筆記表 |
 | :--- | :--- | :--- | :--- | :--- |
+| `aif` | `aif_flashcards.json` | `aif_flashcards.json` | `aif_flashcards` | `aif_flashcard_notes` |
 | `clf` | `clf_flashcards.json` | `clf_flashcards.json` | `clf_flashcards` | `clf_flashcard_notes` |
 | `saa` | `saa_flashcards.json` | `saa_flashcards.json` | `saa_flashcards` | `saa_flashcard_notes` |
 
@@ -684,7 +685,7 @@ is_active = false
 
 ## 12. 新增第三種考試
 
-目前程式只內建 `clf` 與 `saa`。新增例如 `soa` 時，不能只建立 `soa_flashcards.json`，必須完成以下項目。
+目前程式已內建 `aif`、`clf` 與 `saa`。新增例如 `soa` 時，不能只建立 `soa_flashcards.json`，必須完成以下項目。
 
 ### 12.1 建立 JSON
 
