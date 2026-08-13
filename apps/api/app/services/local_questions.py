@@ -8,15 +8,17 @@ from typing import Any
 
 
 QUESTION_FILE_PATTERN = re.compile(
-    r"^(?P<exam>clf|saa)_Q(?P<start>\d+)-Q(?P<end>\d+)\.json$",
+    r"^(?P<exam>aif|clf|saa)_Q(?P<start>\d+)-Q(?P<end>\d+)\.json$",
     re.IGNORECASE,
 )
 OPTION_KEYS = set("ABCDEF")
 EXAM_NAMES = {
+    "aif": {"AWS AIF-C01", "AWS Certified AI Practitioner"},
     "clf": {"AWS CLF-C02", "AWS Cloud Practitioner"},
     "saa": {"AWS SAA-C03", "AWS Solutions Architect Associate"},
 }
 MAX_QUESTIONS_PER_FILE = {
+    "aif": 30,
     "clf": 30,
     "saa": 15,
 }
@@ -161,7 +163,7 @@ def _normalize_question(
 def load_local_questions(directory: Path, exam: str) -> list[LocalQuestion]:
     normalized_exam = exam.strip().lower()
     if normalized_exam not in EXAM_NAMES:
-        raise ValueError("exam 必須是 clf 或 saa")
+        raise ValueError("exam 必須是 aif、clf 或 saa")
     if not directory.is_dir():
         raise FileNotFoundError(f"找不到 questions 資料夾：{directory}")
 

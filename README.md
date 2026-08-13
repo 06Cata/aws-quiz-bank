@@ -13,8 +13,8 @@ aws-quiz-bank/
 ├── README.md # 專案入口說明
 ├── question_sources/ # PDF 原始來源、prompt_saa.md 與 prompt_clf.md
 ├── questions/ # 正式題庫，依 clf_ / saa_ 檔名前綴分流
-├── flashcards_sources/ # 編輯中、尚未發布的 CLF/SAA 卡牌 JSON
-├── flashcards/ # 已確認，可驗證及同步的 CLF/SAA 正式卡牌 JSON
+├── flashcards_sources/ # 編輯中、尚未發布的 CLF/SAA/AIF 卡牌 JSON
+├── flashcards/ # 已確認，可驗證及同步的 CLF/SAA/AIF 正式卡牌 JSON
 ├── package.json # monorepo npm scripts 與 workspace 設定
 ├── .env.example # 後端與同步工作需要的環境變數範例
 ├── .dockerignore # Docker build 排除本機依賴、快取與密鑰
@@ -43,7 +43,7 @@ aws-quiz-bank/
 │           ├── api/questions.py # 題目 API router
 │           ├── api/saa.py # SAA 四大功能、作答與回合 API router
 │           ├── core/config.py # 環境變數設定
-│           └── services/supabase.py # CLF/SAA 白名單資料表與 Supabase REST 查詢服務
+│           └── services/supabase.py # CLF/SAA/AIF 白名單資料表與 Supabase REST 查詢服務
 ``` 
 
 ## Next Step
@@ -152,6 +152,7 @@ Supabase 資料表、RLS policy 及 Google 登入尚未設定時，先依照 `AW
 ```bash
 npm run validate:questions:clf
 npm run validate:questions:saa
+npm run validate:questions:aif
 ```
 
 成功輸出範例：
@@ -167,12 +168,14 @@ Local JSON validation completed for clf: questions=30, latest=Q30
 ```bash
 npm run sync:questions:clf
 npm run sync:questions:saa
+npm run sync:questions:aif
 ```
 
 兩類題庫的寫入位置不同：
 
 - CLF 寫入 Supabase `questions` table。
 - SAA 寫入 Supabase `saa_questions` table。
+- AIF 寫入 Supabase `aif_questions` table。
 
 同步器只新增 Supabase 最新題號之後的連續新題，不會更新或覆蓋已存在的題號。例如 Supabase 已有 Q1-Q30，再次同步本機 Q1-Q30 時會全部跳過；修改舊題內容後執行同步，也不會覆蓋資料庫舊內容。
 
@@ -225,6 +228,7 @@ GitHub repository 必須設定 `SUPABASE_URL` 與 `SUPABASE_SERVICE_ROLE_KEY` se
 | :--- | ---: | :--- |
 | `clf_Q起始-Q結束.json` | 30 題 | `questions` |
 | `saa_Q起始-Q結束.json` | 15 題 | `saa_questions` |
+| `aif_Q起始-Q結束.json` | 30 題 | `aif_questions` |
 
 例如：
 
@@ -241,6 +245,7 @@ questions/
 ```bash
 npm run sync:questions:saa
 npm run sync:questions:clf
+npm run sync:questions:aif
 ```
 
 只驗證檔名、schema、題號連續性並查看本機最後一題，不連線 Supabase：
@@ -249,6 +254,7 @@ npm run sync:questions:clf
 npm run validate:questions
 npm run validate:questions:saa
 npm run validate:questions:clf
+npm run validate:questions:aif
 ```
 
 需要自訂題庫資料夾時可設定 `QUESTIONS_DIR`：
@@ -257,6 +263,7 @@ npm run validate:questions:clf
 cd apps/api
 QUESTIONS_DIR=/path/to/questions QUIZ_EXAM=saa python3 -m app.jobs.sync_local_questions
 QUESTIONS_DIR=/path/to/questions QUIZ_EXAM=clf python3 -m app.jobs.sync_local_questions
+QUESTIONS_DIR=/path/to/questions QUIZ_EXAM=aif python3 -m app.jobs.sync_local_questions
 ```
 
 ## 學習卡牌與 Supabase
@@ -297,7 +304,7 @@ npm run sync:flashcards:clf
 npm run sync:flashcards:saa
 ```
 
-同步器不是以檔名作為每筆資料的唯一鍵。檔名只決定 CLF／SAA 的目標資料表；每張卡牌的 `source_key` 由 `exam + chapter_key + topic + title` 產生。修改 `Domain` 或 `Description` 會更新原卡牌，未變更的卡牌會跳過，從 JSON 移除的卡牌會標記為 `is_active = false`。
+同步器不是以檔名作為每筆資料的唯一鍵。檔名只決定 CLF／SAA／AIF 的目標資料表；每張卡牌的 `source_key` 由 `exam + chapter_key + topic + title` 產生。修改 `Domain` 或 `Description` 會更新原卡牌，未變更的卡牌會跳過，從 JSON 移除的卡牌會標記為 `is_active = false`。
 
 ## Docker
 

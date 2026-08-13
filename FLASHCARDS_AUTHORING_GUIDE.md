@@ -471,8 +471,12 @@ EC2
 新增前先搜尋：
 
 ```bash
-rg -n "關鍵字|服務名稱" flashcards_sources/<exam>_flashcards.json
+rg -n "關鍵字|服務名稱" flashcards_sources/clf_flashcards.json
+rg -n "關鍵字|服務名稱" flashcards_sources/saa_flashcards.json
+rg -n "關鍵字|服務名稱" flashcards_sources/aif_flashcards.json
 ```
+
+只需要搜尋目前正在編輯的那一種考試；三行不用每次全部執行。
 
 如果卡牌已存在：
 
@@ -535,45 +539,60 @@ Domain 必須使用該考試官方藍圖，不可因為 AWS 服務名稱相同�
 - 前端篩選標籤。
 - 該考試是否仍為四個 Domain。
 
-目前前端只內建 `domain_1` 到 `domain_4`。若新考試不是四個 Domain，必須同步修改前端型別與篩選邏輯，不能只修改 JSON。
+目前前端依考試分流：CLF 與 SAA 使用 `domain_1`～`domain_4`，AIF 使用 `domain_1`～`domain_5`。新增其他考試時，仍須同步加入該考試的 Domain 名稱、比例與篩選邏輯，不能只修改 JSON。
 
 ## 10. 發布、驗證與同步
 
-以下範例使用 `<exam>` 代表考試代碼。
+以下全部使用實際考試代碼，可以從專案根目錄整段直接貼上，不需要替換 `<exam>`。
 
 ### 10.1 編輯來源檔
 
 ```text
-flashcards_sources/<exam>_flashcards.json
+flashcards_sources/clf_flashcards.json
+flashcards_sources/saa_flashcards.json
+flashcards_sources/aif_flashcards.json
 ```
 
 ### 10.2 複製成正式檔
 
 ```bash
-cp flashcards_sources/<exam>_flashcards.json flashcards/<exam>_flashcards.json
+cp flashcards_sources/clf_flashcards.json flashcards/clf_flashcards.json
+cp flashcards_sources/saa_flashcards.json flashcards/saa_flashcards.json
+cp flashcards_sources/aif_flashcards.json flashcards/aif_flashcards.json
 ```
 
 ### 10.3 檢查 JSON
 
 ```bash
-jq empty flashcards_sources/<exam>_flashcards.json
-jq empty flashcards/<exam>_flashcards.json
-cmp -s flashcards_sources/<exam>_flashcards.json flashcards/<exam>_flashcards.json
+jq empty flashcards_sources/clf_flashcards.json
+jq empty flashcards_sources/saa_flashcards.json
+jq empty flashcards_sources/aif_flashcards.json
+jq empty flashcards/clf_flashcards.json
+jq empty flashcards/saa_flashcards.json
+jq empty flashcards/aif_flashcards.json
+cmp -s flashcards_sources/clf_flashcards.json flashcards/clf_flashcards.json
+cmp -s flashcards_sources/saa_flashcards.json flashcards/saa_flashcards.json
+cmp -s flashcards_sources/aif_flashcards.json flashcards/aif_flashcards.json
 ```
+
+三個 `cmp` 都沒有輸出且 exit code 為 `0`，代表來源與正式檔完全相同。
 
 ### 10.4 執行內容驗證
 
-已有 npm script 時：
-
 ```bash
-npm run validate:flashcards:<exam>
+npm run validate:flashcards:clf
+npm run validate:flashcards:saa
+npm run validate:flashcards:aif
 ```
 
-或直接執行：
+上面是建議用法。若要直接呼叫 Python，可使用：
 
 ```bash
 cd apps/api
-python -m app.jobs.sync_local_flashcards --exam <exam> --validate-only
+python -m app.jobs.sync_local_flashcards --exam clf --validate-only
+python -m app.jobs.sync_local_flashcards --exam saa --validate-only
+python -m app.jobs.sync_local_flashcards --exam aif --validate-only
+cd ../..
 ```
 
 驗證器會檢查：
@@ -589,14 +608,19 @@ python -m app.jobs.sync_local_flashcards --exam <exam> --validate-only
 ### 10.5 同步 Supabase
 
 ```bash
-npm run sync:flashcards:<exam>
+npm run sync:flashcards:clf
+npm run sync:flashcards:saa
+npm run sync:flashcards:aif
 ```
 
-或：
+上面三行會寫入三張對應的卡牌內容表。若要直接呼叫 Python，可使用：
 
 ```bash
 cd apps/api
-python -m app.jobs.sync_local_flashcards --exam <exam>
+python -m app.jobs.sync_local_flashcards --exam clf
+python -m app.jobs.sync_local_flashcards --exam saa
+python -m app.jobs.sync_local_flashcards --exam aif
+cd ../..
 ```
 
 成功輸出範例：
@@ -696,7 +720,9 @@ flashcards/soa_flashcards.json
 
 ### 12.2 建立獨立 Supabase 表
 
-先把下方 `<exam>` 全部替換成實際小寫代碼：
+CLF、SAA、AIF 已有可直接貼上的正式 SQL，請使用 `FLASHCARDS_SUPABASE_SETUP.md` 的步驟 3～4，不要執行本節模板。
+
+本節只適用於未來尚未支援的新考試。因為新考試代碼尚未決定，必須先把下方 `<exam>` 全部替換成實際小寫代碼；仍含有 `<exam>` 時不可貼進 Supabase：
 
 ```sql
 create table public.<exam>_flashcards (

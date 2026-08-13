@@ -7,6 +7,13 @@ import httpx
 from app.core.config import settings
 
 EXAM_DOMAIN_WEIGHTS_BY_EXAM = {
+    "aif": {
+        "domain_1": 0.20,
+        "domain_2": 0.24,
+        "domain_3": 0.28,
+        "domain_4": 0.14,
+        "domain_5": 0.14,
+    },
     "clf": {
         "domain_1": 0.24,
         "domain_2": 0.30,
@@ -33,6 +40,14 @@ class QuizTables:
 
 
 QUIZ_TABLES = {
+    "aif": QuizTables(
+        questions="aif_questions",
+        sessions="aif_quiz_sessions",
+        attempts="aif_question_attempts",
+        stats="aif_user_question_stats",
+        notes="aif_review_notes",
+        stores_certification=False,
+    ),
     "clf": QuizTables(
         questions="questions",
         sessions="quiz_sessions",
@@ -69,7 +84,7 @@ def quiz_tables(exam: str = "clf") -> QuizTables:
     try:
         return QUIZ_TABLES[exam.strip().lower()]
     except KeyError as exc:
-        raise ValueError("exam must be either 'clf' or 'saa'") from exc
+        raise ValueError("exam must be 'aif', 'clf', or 'saa'") from exc
 
 
 def flashcard_tables(exam: str = "clf") -> FlashcardTables:
@@ -271,8 +286,21 @@ def _exam_domain_key(question: dict, exam: str = "clf") -> str | None:
         return "domain_3"
     if "領域 4" in exam_domain or "domain 4" in exam_domain:
         return "domain_4"
+    if "領域 5" in exam_domain or "domain 5" in exam_domain:
+        return "domain_5"
 
-    if normalized_exam == "saa":
+    if normalized_exam == "aif":
+        if "fundamentals of ai and ml" in exam_domain or "ai 和 ml 基礎" in exam_domain:
+            return "domain_1"
+        if "fundamentals of genai" in exam_domain or "生成式 ai 基礎" in exam_domain:
+            return "domain_2"
+        if "applications of foundation models" in exam_domain or "基礎模型的應用" in exam_domain:
+            return "domain_3"
+        if "guidelines for responsible ai" in exam_domain or "負責任 ai 指南" in exam_domain:
+            return "domain_4"
+        if "security, compliance, and governance" in exam_domain or "安全、合規與治理" in exam_domain:
+            return "domain_5"
+    elif normalized_exam == "saa":
         if "design secure architectures" in exam_domain or "設計安全架構" in exam_domain:
             return "domain_1"
         if "design resilient architectures" in exam_domain or "設計彈性架構" in exam_domain:

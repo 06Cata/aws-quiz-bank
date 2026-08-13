@@ -28,13 +28,14 @@ class SyncStats:
 def get_sync_target(exam: str | None = None) -> SyncTarget:
     exam = (exam or settings.quiz_exam).strip().lower()
     targets = {
+        "aif": SyncTarget("aif", "aif_questions", "aif_sync_runs"),
         "clf": SyncTarget("clf", "questions", "sync_runs"),
         "saa": SyncTarget("saa", "saa_questions", "saa_sync_runs"),
     }
     try:
         return targets[exam]
     except KeyError as exc:
-        raise RuntimeError("QUIZ_EXAM must be either 'clf' or 'saa'") from exc
+        raise RuntimeError("QUIZ_EXAM must be 'aif', 'clf', or 'saa'") from exc
 
 
 class SupabaseRestClient:
@@ -175,7 +176,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="增量同步 questions 目錄中的 JSON 題庫")
     parser.add_argument(
         "--exam",
-        choices=("clf", "saa"),
+        choices=("aif", "clf", "saa"),
         help="要同步的考試題庫（未指定時使用 QUIZ_EXAM）",
     )
     parser.add_argument(

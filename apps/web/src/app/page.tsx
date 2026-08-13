@@ -128,8 +128,8 @@ const sampleAifQuestion: QuizQuestion = {
   correct_options: ["A"],
   choice_type: "single",
   discussion: {
-    zh: "AIF 第一階段先提供學習卡牌；正式題庫將在後續階段加入。",
-    en: "AIF flashcards are available first; the question bank will be added in a later phase."
+    zh: "正式 AIF 題目會從 Supabase aif_questions 表讀取。",
+    en: "Production AIF questions are loaded from the Supabase aif_questions table."
   }
 };
 
@@ -141,8 +141,8 @@ const EXAMS: Record<ExamType, ExamConfig> = {
     certification: "AWS Certified AI Practitioner",
     mockQuestionCount: 65,
     durationSeconds: 90 * 60,
-    resultNote: "AIF-C01 採 100–1,000 分的量尺計分，最低通過分數為 700；正式題庫功能將在第二階段開放。",
-    quizEnabled: false
+    resultNote: "AIF-C01 採 100–1,000 分的量尺計分，最低通過分數為 700；每題難易度與權重不同，建議在練習時將目標穩定設定在 80% 以上的正確率。",
+    quizEnabled: true
   },
   clf: {
     name: "AWS Cloud Practitioner",
@@ -542,7 +542,7 @@ export default function Home() {
 
   async function loadReviewNotes() {
     if (!currentExam.quizEnabled) {
-      setNotesMessage("AIF 複習筆記會在正式題庫完成後開放；目前可使用學習卡牌筆記。");
+      setNotesMessage("這個考試的複習筆記目前尚未開放。");
       return;
     }
 
@@ -698,7 +698,7 @@ export default function Home() {
     options: { mode: QuizMode; createSession?: boolean } = { mode: "practice" }
   ) {
     if (!currentExam.quizEnabled) {
-      setQuizMessage("AIF 第一階段先開放學習卡牌與學習卡牌筆記；刷題功能將在題庫資料表完成後開放。");
+      setQuizMessage("這個考試的刷題功能目前尚未開放。");
       return;
     }
 
@@ -1130,11 +1130,6 @@ export default function Home() {
             <p className="max-w-xl text-lg leading-8 text-zinc-300">
               Beta版，題目持續更新中。初次登入使用gmail帳號，系統會自動建立會員資料，並將答題紀錄寫入資料庫。若要複習錯題，請先完成幾題後再回來複習。答案解析可以存入筆記卡牌，方便複習。
             </p>
-            {!currentExam.quizEnabled ? (
-              <p className="max-w-xl border-l-4 border-flashYellow bg-[#16120a] px-4 py-3 text-sm font-bold leading-6 text-flashYellow">
-                AIF 第一階段：先開放「學習卡牌」與「學習卡牌筆記」。刷題、複習錯題、模擬考與複習筆記會在 AIF 題庫完成後開放。
-              </p>
-            ) : null}
           </div>
 
           <div className="grid max-w-lg gap-5 sm:grid-cols-2 md:max-w-[480px]">
