@@ -1,0 +1,1727 @@
+{
+  "exam": "AWS AIF-C01",
+  "questions": [
+    {
+      "question_no": 421,
+      "domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+      "question_text": {
+        "zh": "一家公司正在构建一个聊天机器人。该聊天机器人使用大型语言模型( LLM),并回答客戶关于产品的问题。公司希望该聊天机器人只回答产品问题。公司不希望该聊天机器人回答关于其他主题的问题。 哪种解决方案能够以最少的运维开销满足这些要求?",
+        "en": "A company is building a chatbot. The chatbot uses a large language model (LLM) and answers customer questions about products. The company wants the chatbot to answer only product questions. The company does not want the chatbot to answer questions about other topics. Which solution will meet these requirements with the LEAST operational overhead?"
+      },
+      "options": {
+        "A": {
+          "zh": "在 LLM 提示词模板上设置护栏( guardrails)。",
+          "en": "Set guardrails on the LLM prompt template."
+        },
+        "B": {
+          "zh": "编写自定义应用程序逻辑来识别关于其他主题的问题。",
+          "en": "Write custom application logic to identify questions about other topics."
+        },
+        "C": {
+          "zh": "减少 LLM 可以访问的信息。",
+          "en": "Reduce the information the LLM can access."
+        },
+        "D": {
+          "zh": "将 temperature 参数值设置为较低的数值。",
+          "en": "Set the temperature parameter value to a lower number."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，可以在系统提示词 /提示词模板中明确规定:仅回答产品相关问题;若问题不相关则礼貌拒答或引导用戶问产品问题。 对现有架构侵入小:主要是提示词配置与少量测试迭代。 符合 “最小运维开销 ”:无需额外构建分类器、规则引擎或复杂的旁路服务。 潜在局限(但不影响本题最优选择): 仅靠提示词护栏并非绝对安全,可能被提示注入绕过;但题干只要求 “不要回答其他话题 ”,且强调最小运维开销,因此该方案仍最匹配",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which solution will meet these requirements with the LEAST operational overhead?"
+        },
+        "B": {
+          "zh": "錯誤。原因是，(不满足最小运维开销): 需要实现主题识别(规则 /关键词 /分类模型 /意图识别),还要处理边界案例与持续迭代。 后续产品线变化、用戶表达多样化都会增加维护成本。 运维与开发开销明显高于直接做提示词护栏",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements with the LEAST operational overhead? The source-supported choice is A. Set guardrails on the LLM prompt template.."
+        },
+        "C": {
+          "zh": "錯誤。原因是，限制可访问信息(例如缩小检索范围或知识库)并不等于 “不会回答其他话题 ”。 即使模型拿不到外部资料,仍可能利用通用知识生成非产品话题的回答,从而违背要求。 该方法更偏向降低泄露 /幻觉面,但无法形成明确的 “话题拒答 ”策略",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements with the LEAST operational overhead? The source-supported choice is A. Set guardrails on the LLM prompt template.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，temperature 主要影响输出的随机性 /创造性;降低 temperature 只能让回答更稳定一致。 无法从机制上限制话题范围,模型仍可能稳定地回答非产品问题。 不满足 “只回答产品问题 ”的核心要求",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements with the LEAST operational overhead? The source-supported choice is A. Set guardrails on the LLM prompt template.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 在 LLM 提示词模板上设置护栏( guardrails)。",
+        "en": "A. Set guardrails on the LLM prompt template."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 A 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A。",
+        "en": "The source community vote distribution is A 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A."
+      }
+    },
+    {
+      "question_no": 422,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司正在构建一个基于大型语言模型( LLM)的 AI 助手,通过自动管理客戶咨询来支持服务坐席。该公司希望减少客戶服务坐席在支持电话过程中所需的工作量。 公司需要选择一个指标,以根据公司的某个业务目标来评估该 AI 助手。 哪个指标将满足这些要求?",
+        "en": "A company is building a large language model (LLM)-based AI assistant to support service agents by automatically managing customer inquiries. The company wants to reduce the effort that customer service agents require during support calls. The company needs to select a metric to evaluate the AI assistant against one of the company’s business objectives. Which metric will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "网站参与率",
+          "en": "Website engagement rate"
+        },
+        "B": {
+          "zh": "平均通话时⻓",
+          "en": "Average call duration"
+        },
+        "C": {
+          "zh": "坐席离职率",
+          "en": "Agent attrition rate"
+        },
+        "D": {
+          "zh": "首次联系解决率",
+          "en": "First contact resolution rate"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，理由:该指标衡量用戶在网站上的交互 /停留 /转化等,主要用于数字渠道或营销 / 产品体验评估。 与“支持坐席通话中减少努力 ”的目标关联弱,不能直接反映通话效率或坐席工作量变化",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Average call duration."
+        },
+        "B": {
+          "zh": "正確。原因是，理由:题目明确场景是 “support calls(支持通话) ”,并希望减少坐席在通话中的努力。 在可用选项里, “平均通话时⻓ ”是最直接的业务代理指标: LLM助手若能自动总结、检索知识库、生成回复建议、自动处理信息收集与记录,通常会让通话更快结束,从而降低坐席在通话中的时间投入。 备注:真实业务中还会结合 AHT(含通话后处理 ACW) 与质量指标一起看,但本题选项中 B最贴近目标",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which metric will meet these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。原因是，理由:离职率受薪酬、排班、管理、压力、文化等多因素影响,变化周期较⻓。 虽然 AI 助手可能⻓期降低压力从而间接影响离职率,但它不是衡量 “通话中努力减少 ”的直接指标,且归因困难",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Average call duration."
+        },
+        "D": {
+          "zh": "錯誤。原因是，)。 理由: FCR衡量客戶问题是否在首次联系中解决,体现解决效果与流程效率,但不等同于 “减少坐席在通话中的努力 ”。 可能出现:为了确保一次解决,坐席在同一次通话中花更多时间解释与排障,导致通话更⻓;因此 FCR与“减少通话投入 ”并不总是同向。 若题目目标是 “提高一次解决、降低重复来电”,D会更合适,但题干强调的是 “减少通话中的坐席努力 ”。 4)",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Average call duration."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 平均通话时⻓",
+        "en": "B. Average call duration"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 423,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司已经微调了一个 Amazon Bedrock 基础模型 (FM),用于生成简短的文档摘要。该公司希望使用一种自动化指标,将每个模型生成的摘要与其人工撰写的参考摘要进行比较。 哪种指标可以满足这些要求?",
+        "en": "A company has fine-tuned an Amazon Bedrock foundation model (FM) to produce short document summaries. The company wants an automated metric that compares each model-generated summary with its human-written reference summary. Which metric will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "分数",
+          "en": "F1 score"
+        },
+        "B": {
+          "zh": "面向召回的摘要评估替代方法 (ROUGE",
+          "en": "Recall-Oriented Understudy for Gisting Evaluation (ROUGE)"
+        },
+        "C": {
+          "zh": "困惑度 (Perplexity",
+          "en": "Perplexity"
+        },
+        "D": {
+          "zh": "生成距离 (FID",
+          "en": "Fréchet inception distance (FID)"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 面向召回的摘要评估替代方法 (ROUGE。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        },
+        "B": {
+          "zh": "正確。原因是，的选择",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which metric will meet these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 面向召回的摘要评估替代方法 (ROUGE。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 面向召回的摘要评估替代方法 (ROUGE。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric will meet these requirements? The source-supported choice is B. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 面向召回的摘要评估替代方法 (ROUGE",
+        "en": "B. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 424,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司创建了一个 AI助手,为员工提供有关内部流程的相关信息。该 AI助手使用了一个经过微调的基础模型( FM)。公司希望利用员工的反馈进一步优化模型的响应。 哪种解决方案可以满足这些需求?",
+        "en": "A company has created an AI assistant to provide relevant information to employees about internal processes. The AI assistant uses a fine-tuned foundation model (FM). The company wants to use feedback from employees to further refine the model's responses. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "实施模型蒸馏。",
+          "en": "Implement model distillation."
+        },
+        "B": {
+          "zh": "执行持续预训练并结合员工评分反馈。",
+          "en": "Perform continued pre-training and incorporate feedback from employee ratings."
+        },
+        "C": {
+          "zh": "使用来自人类反馈的强化学习( RLHF)。",
+          "en": "Use reinforcement learning from human feedback (RLHF)."
+        },
+        "D": {
+          "zh": "启用智能提示路由。",
+          "en": "Enable intelligent prompt routing."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，原因: 与题目要求的 “使用员工反馈进一步优化模型 ”无关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is C. Use reinforcement learning from human feedback (RLHF).."
+        },
+        "B": {
+          "zh": "錯誤。原因是，原因: 持续预训练的过程较为复杂,且不如 RLHF直接有效地利用人类反馈",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is C. Use reinforcement learning from human feedback (RLHF).."
+        },
+        "C": {
+          "zh": "正確。原因是，原因: RLHF能够高效地利用员工反馈来改进模型的响应质量,完全符合题目要求",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which solution will meet these requirements?"
+        },
+        "D": {
+          "zh": "錯誤。原因是，原因: 与题目要求的 “使用员工反馈进一步优化模型 ”无关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is C. Use reinforcement learning from human feedback (RLHF).."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 使用来自人类反馈的强化学习( RLHF)。",
+        "en": "C. Use reinforcement learning from human feedback (RLHF)."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 C。",
+        "en": "The source community vote distribution is C 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: C."
+      }
+    },
+    {
+      "question_no": 425,
+      "domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+      "question_text": {
+        "zh": "哪个 AWS 服务提供广泛的高性能生成式 AI 基础模型 (FMs)?",
+        "en": "Which AWS service provides a broad range of high-performing generative AI foundation models (FMs)?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Bedrock",
+          "en": "Amazon Bedrock"
+        },
+        "B": {
+          "zh": "使用 Amazon Rekognition",
+          "en": "Amazon Rekognition"
+        },
+        "C": {
+          "zh": "使用 Amazon Lex",
+          "en": "Amazon Lex"
+        },
+        "D": {
+          "zh": "使用 Amazon Kendra",
+          "en": "Amazon Kendra"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，的",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS service provides a broad range of high-performing generative AI foundation models (FMs)?"
+        },
+        "B": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service provides a broad range of high-performing generative AI foundation models (FMs)? The source-supported choice is A. Amazon Bedrock."
+        },
+        "C": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service provides a broad range of high-performing generative AI foundation models (FMs)? The source-supported choice is A. Amazon Bedrock."
+        },
+        "D": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service provides a broad range of high-performing generative AI foundation models (FMs)? The source-supported choice is A. Amazon Bedrock."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon Bedrock",
+        "en": "A. Amazon Bedrock"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 A 83%, C 17%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A。",
+        "en": "The source community vote distribution is A 83%, C 17%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A."
+      }
+    },
+    {
+      "question_no": 426,
+      "domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+      "question_text": {
+        "zh": "一家公司正在准备数据以微调一个大型语言模型( LLM)。该公司必须遵循负责任的人工智能原则。 哪些行动将满足此要求?(选择两个。 )",
+        "en": "A company is preparing data to fine-tune a large language model (LLM). The company must follow the principles of responsible AI. Which actions will meet this requirement? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "包括具有不同人口统计特征的数据来源以提高模型的公平性。",
+          "en": "Include demographically diverse data sources to improve model fairness."
+        },
+        "B": {
+          "zh": "在训练数据集上应用一致的标注标准。",
+          "en": "Apply consistent labeling standards across the training dataset."
+        },
+        "C": {
+          "zh": "仅关注高容量数据而忽略质量。",
+          "en": "Focus exclusively on high-volume data regardless of quality."
+        },
+        "D": {
+          "zh": "仅使用合成数据来训练模型。",
+          "en": "Use only synthetic data to train the model."
+        },
+        "E": {
+          "zh": "使用更少的标签以减少模型训练期间数据的模糊性。",
+          "en": "Use fewer labels to reduce ambiguity in data during model training."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，正确",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "B": {
+          "zh": "正確。原因是，正确",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "C": {
+          "zh": "錯誤。原因是，错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Include demographically diverse data sources to improve model fairness.; B. Apply consistent labeling standards across the training dataset.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Include demographically diverse data sources to improve model fairness.; B. Apply consistent labeling standards across the training dataset.."
+        },
+        "E": {
+          "zh": "錯誤。原因是，错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Include demographically diverse data sources to improve model fairness.; B. Apply consistent labeling standards across the training dataset.."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 包括具有不同人口统计特征的数据来源以提高模型的公平性。；B. 在训练数据集上应用一致的标注标准。",
+        "en": "A. Include demographically diverse data sources to improve model fairness.; B. Apply consistent labeling standards across the training dataset."
+      },
+      "discussion": {
+        "zh": "來源未提供可可靠擷取的投票百分比。最終答案依來源解析與技術判斷採用 A, B。",
+        "en": "The source does not provide a reliably extractable vote percentage. The final answer follows the source analysis and technical reasoning: A, B."
+      }
+    },
+    {
+      "question_no": 427,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "公司通过使用持续的预训练来微调基础模型( FM)可以获得哪些好处?",
+        "en": "Which benefit does a company gain by using ongoing pre-training to fine-tune a foundation model (FM)?"
+      },
+      "options": {
+        "A": {
+          "zh": "降低模型复杂性",
+          "en": "Decreased model complexity"
+        },
+        "B": {
+          "zh": "随着时间推移提高模型性能",
+          "en": "Improved model performance over time"
+        },
+        "C": {
+          "zh": "减少训练模型所需的时间",
+          "en": "Decreased time required to train the model"
+        },
+        "D": {
+          "zh": "降低模型训练成本",
+          "en": "Reduced model training cost"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 随着时间推移提高模型性能。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which benefit does a company gain by using ongoing pre-training to fine-tune a foundation model (FM)? The source-supported choice is B. Improved model performance over time."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：公司通过使用持续的预训练来微调基础模型( FM)可以获得哪些好处?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which benefit does a company gain by using ongoing pre-training to fine-tune a foundation model (FM)?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 随着时间推移提高模型性能。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which benefit does a company gain by using ongoing pre-training to fine-tune a foundation model (FM)? The source-supported choice is B. Improved model performance over time."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 随着时间推移提高模型性能。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which benefit does a company gain by using ongoing pre-training to fine-tune a foundation model (FM)? The source-supported choice is B. Improved model performance over time."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 随着时间推移提高模型性能",
+        "en": "B. Improved model performance over time"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 428,
+      "domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+      "question_text": {
+        "zh": "一家软件开发公司希望提高其产品交付速度。该公司需要一个解决方案,帮助开发人员生成实时代码和单元测试。 哪项 AWS 服务满足这些需求?",
+        "en": "A software development company wants to increase its speed to market delivery. The company needs a solution that helps developers generate real-time code and unit tests. Which AWS service meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "Amazon Personalize",
+          "en": "Amazon Personalize"
+        },
+        "B": {
+          "zh": "Amazon Q Developer",
+          "en": "Amazon Q Developer"
+        },
+        "C": {
+          "zh": "Amazon Comprehend",
+          "en": "Amazon Comprehend"
+        },
+        "D": {
+          "zh": "使用 Amazon Kendra",
+          "en": "Amazon Kendra"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. Amazon Q Developer。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service meets these requirements? The source-supported choice is B. Amazon Q Developer."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家软件开发公司希望提高其产品交付速度。该公司需要一个解决方案,帮助开发人员生成实时代码和单元测试。 哪项 AWS 服务满足这些需求?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS service meets these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. Amazon Q Developer。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service meets these requirements? The source-supported choice is B. Amazon Q Developer."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. Amazon Q Developer。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service meets these requirements? The source-supported choice is B. Amazon Q Developer."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. Amazon Q Developer",
+        "en": "B. Amazon Q Developer"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 71%, A 29%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 71%, A 29%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 429,
+      "domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+      "question_text": {
+        "zh": "一家公司计划使用一个数据集来训练一个新的 AI模型。公司需要在训练模型之前确定数据集中是否存在针对特定用戶群体的偏⻅。 哪种解决方案可以满足这些需求?",
+        "en": "A company plans to use a dataset to train a new AI model. The company needs to determine whether a bias against a specific user group exists in the dataset before the company trains the model. Which solution will meet these requirement?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon SageMaker Clarify计算训练前的偏⻅指标。",
+          "en": "Use Amazon SageMaker Clarify to compute pre-training bias metrics."
+        },
+        "B": {
+          "zh": "使用 Amazon SageMaker Model Cards计算训练前的偏⻅指标。",
+          "en": "Use Amazon SageMaker Model Cards to compute pre-training bias metrics."
+        },
+        "C": {
+          "zh": "使用 Amazon SageMaker Clarify计算训练后的偏⻅指标。",
+          "en": "Use Amazon SageMaker Clarify to compute post-training bias metrics."
+        },
+        "D": {
+          "zh": "使用 Amazon SageMaker Model Cards计算训练后的偏⻅指标。",
+          "en": "Use Amazon SageMaker Model Cards to compute post-training bias metrics."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，,因为它直接满足题目要求:在训练模型之前检测数据集中的偏⻅",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which solution will meet these requirement?"
+        },
+        "B": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 A. 使用 Amazon SageMaker Clarify计算训练前的偏⻅指标。。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirement? The source-supported choice is A. Use Amazon SageMaker Clarify to compute pre-training bias metrics.."
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 A. 使用 Amazon SageMaker Clarify计算训练前的偏⻅指标。。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirement? The source-supported choice is A. Use Amazon SageMaker Clarify to compute pre-training bias metrics.."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 A. 使用 Amazon SageMaker Clarify计算训练前的偏⻅指标。。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirement? The source-supported choice is A. Use Amazon SageMaker Clarify to compute pre-training bias metrics.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 使用 Amazon SageMaker Clarify计算训练前的偏⻅指标。",
+        "en": "A. Use Amazon SageMaker Clarify to compute pre-training bias metrics."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 A 86%, C 14%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A。",
+        "en": "The source community vote distribution is A 86%, C 14%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A."
+      }
+    },
+    {
+      "question_no": 430,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一位人工智能从业者希望使用检索增强生成( RAG)架构。然而,公司领导层认为 RAG会使架构过于复杂。 哪种回应会支持人工智能从业者推荐使用 RAG?",
+        "en": "An AI practitioner wants to use Retrieval Augmented Generation (RAG) architecture. However, company leadership thinks RAG will make the architecture too complex. Which response will support the AI practitioner's recommendation to use RAG?"
+      },
+      "options": {
+        "A": {
+          "zh": "提高了大型语言模型( LLM)的推理时间。",
+          "en": "RAG improves large language model (LLM) inference time."
+        },
+        "B": {
+          "zh": "提高了模型训练速度。",
+          "en": "RAG improves model training speed."
+        },
+        "C": {
+          "zh": "减少了幻觉现象。",
+          "en": "RAG decreases hallucinations."
+        },
+        "D": {
+          "zh": "减少了开发控制。",
+          "en": "RAG decreases development controls."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，RAG的主要优势并不是提高推理时间,实际上由于需要检索外部数据, RAG可能会增加推理时间",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which response will support the AI practitioner's recommendation to use RAG? The source-supported choice is C. RAG decreases hallucinations.."
+        },
+        "B": {
+          "zh": "錯誤。原因是，RAG的设计主要用于推理阶段,而不是训练阶段,因此它对训练速度没有直接影响",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which response will support the AI practitioner's recommendation to use RAG? The source-supported choice is C. RAG decreases hallucinations.."
+        },
+        "C": {
+          "zh": "正確。原因是，RAG通过检索相关的外部知识来增强生成模型的准确性,从而减少了模型生成不真实或不相关内容(即幻觉现象)的可能性",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which response will support the AI practitioner's recommendation to use RAG?"
+        },
+        "D": {
+          "zh": "錯誤。原因是，RAG并不会减少开发控制,实际上它可能会增加架构的复杂性和开发的管理需求",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which response will support the AI practitioner's recommendation to use RAG? The source-supported choice is C. RAG decreases hallucinations.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 减少了幻觉现象。",
+        "en": "C. RAG decreases hallucinations."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 86%, B 14%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 C。",
+        "en": "The source community vote distribution is C 86%, B 14%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: C."
+      }
+    },
+    {
+      "question_no": 431,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司使用 Amazon Bedrock Agents 构建了一个基于检索增强生成( RAG)的 AI 助手。有时该 AI 助手会给出不完整或不准确的答案。该公司希望改进并评估 AI 助手的性能。 哪种解决方案可以满足这些要求?",
+        "en": "A company built a Retrieval Augmented Generation (RAG) based AI assistant by using Amazon Bedrock Agents. Sometimes the AI assistant gives incomplete or inaccurate answers. The company wants to improve and evaluate the AI assistant's performance. Which solution will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用自动化指标,例如双语评估替代( BLEU)分数来衡量回答与参考答案的相似性。",
+          "en": "Use automated metrics such as Bilingual Evaluation Understudy (BLEU) scores to measure response similarity to reference answers."
+        },
+        "B": {
+          "zh": "监控响应延迟和令牌生成速度以优化性能。",
+          "en": "Monitor response latency and token generation speed to optimize performance."
+        },
+        "C": {
+          "zh": "仅根据最终答案质量与真实答案进行评估。",
+          "en": "Evaluate only the final answer quality against ground truth responses."
+        },
+        "D": {
+          "zh": "确认检索到的文档是相关的,并且最终答案是准确的。",
+          "en": "Confirm that the retrieved documents are relevant and that the final answers are accurate."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，原因: 无法解决检索文档相关性和生成答案准确性的问题",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is D. Confirm that the retrieved documents are relevant and that the final answers are accurate.."
+        },
+        "B": {
+          "zh": "錯誤。原因是，原因: 与题目要求的 “提高回答质量 ”无关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is D. Confirm that the retrieved documents are relevant and that the final answers are accurate.."
+        },
+        "C": {
+          "zh": "錯誤。原因是，原因: 忽略了检索阶段的评估,无法全面优化 RAG模型",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will meet these requirements? The source-supported choice is D. Confirm that the retrieved documents are relevant and that the final answers are accurate.."
+        },
+        "D": {
+          "zh": "正確。原因是，原因: 全面覆盖了 RAG模型的检索和生成两个阶段,符合题目要求",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which solution will meet these requirements?"
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 确认检索到的文档是相关的,并且最终答案是准确的。",
+        "en": "D. Confirm that the retrieved documents are relevant and that the final answers are accurate."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 D 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 D。",
+        "en": "The source community vote distribution is D 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: D."
+      }
+    },
+    {
+      "question_no": 432,
+      "domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+      "question_text": {
+        "zh": "一家公司希望开发一个 AI解决方案,以便从扫描的 PDF文档和表单中自动提取结构化和非结构化数据。 哪个 AWS服务可以满足这些需求?",
+        "en": "A company wants to develop an AI solution to automatically extract structured and unstructured data from scanned PDF documents and forms. Which AWS service will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Polly",
+          "en": "Amazon Polly"
+        },
+        "B": {
+          "zh": "使用 Amazon Lex",
+          "en": "Amazon Lex"
+        },
+        "C": {
+          "zh": "Amazon Personalize",
+          "en": "Amazon Personalize"
+        },
+        "D": {
+          "zh": "使用 Amazon Textract",
+          "en": "Amazon Textract"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 使用 Amazon Textract。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service will meet these requirements? The source-supported choice is D. Amazon Textract."
+        },
+        "B": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 使用 Amazon Textract。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service will meet these requirements? The source-supported choice is D. Amazon Textract."
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 使用 Amazon Textract。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service will meet these requirements? The source-supported choice is D. Amazon Textract."
+        },
+        "D": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司希望开发一个 AI解决方案,以便从扫描的 PDF文档和表单中自动提取结构化和非结构化数据。 哪个 AWS服务可以满足这些需求?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS service will meet these requirements?"
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 使用 Amazon Textract",
+        "en": "D. Amazon Textract"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 D 62%, B 38%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 D。",
+        "en": "The source community vote distribution is D 62%, B 38%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: D."
+      }
+    },
+    {
+      "question_no": 433,
+      "domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+      "question_text": {
+        "zh": "一家公司正在开发一个 AI解决方案,以帮助做出招聘决策。 哪种策略符合 AWS关于负责任 AI的指导?",
+        "en": "A company is developing an AI solution to help make hiring decisions. Which strategy complies with AWS guidance for responsible AI?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 AI解决方案在没有人工审核的情况下做出最终招聘决策。",
+          "en": "Use the AI solution to make final hiring decisions without human review."
+        },
+        "B": {
+          "zh": "仅使用以前成功招聘的数据来训练 AI解决方案。",
+          "en": "Train the AI solution exclusively on data from previous successful hires."
+        },
+        "C": {
+          "zh": "测试 AI解决方案以确保其不会歧视任何受保护群体。",
+          "en": "Test the AI solution to ensure that it does not discriminate against any protected groups."
+        },
+        "D": {
+          "zh": "将AI决策过程保密以保持竞争优势。",
+          "en": "Keep the AI decision-making process confidential to maintain a competitive advantage."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，AWS负责任 AI的指导原则强调 AI系统的决策应受到人类监督,尤其是在涉及重大影响(如招聘决策)时。完全依赖 AI做出最终决策可能导致偏⻅或错误,违反了负责任 AI的原则",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy complies with AWS guidance for responsible AI? The source-supported choice is C. Test the AI solution to ensure that it does not discriminate against any protected groups.."
+        },
+        "B": {
+          "zh": "錯誤。原因是，仅使用过去成功招聘的数据可能导致数据偏倚( bias),因为这些数据可能包含历史上的偏⻅或不公平性。 AWS建议在训练 AI 模型时应确保数据的多样性和公平性",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy complies with AWS guidance for responsible AI? The source-supported choice is C. Test the AI solution to ensure that it does not discriminate against any protected groups.."
+        },
+        "C": {
+          "zh": "正確。原因是，AWS负责任 AI的指导原则要求对 AI系统进行测试,以确保其公平性和不会对受保护群体(如种族、性别等)产生歧视。这是负责任 AI的核心要求之一",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which strategy complies with AWS guidance for responsible AI?"
+        },
+        "D": {
+          "zh": "錯誤。原因是，虽然商业竞争优势很重要,但 AWS负责任 AI的原则强调透明性。 AI决策过程的透明性对于确保公平性和伦理性至关重要,完全保密可能导致不信任和潜在的伦理问题",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy complies with AWS guidance for responsible AI? The source-supported choice is C. Test the AI solution to ensure that it does not discriminate against any protected groups.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 测试 AI解决方案以确保其不会歧视任何受保护群体。",
+        "en": "C. Test the AI solution to ensure that it does not discriminate against any protected groups."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 C。",
+        "en": "The source community vote distribution is C 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: C."
+      }
+    },
+    {
+      "question_no": 434,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一位人工智能从业者正在开发一个推荐系统。该人工智能从业者希望记录业务问题、数据假设、训练注意事项以及使用⻛险。公司必须遵循透明性和治理的指导原则。 哪项 Amazon SageMaker AI 功能可以满足这些要求?",
+        "en": "An AI practitioner is developing a recommendation system. The AI practitioner wants to document a business problem, data assumptions, training considerations, and usage risks. The company must follow guidelines for transparency and governance. Which Amazon SageMaker AI feature will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "模型注册表",
+          "en": "Model Registry"
+        },
+        "B": {
+          "zh": "模型卡片",
+          "en": "Model Cards"
+        },
+        "C": {
+          "zh": "模型监控",
+          "en": "Model Monitor"
+        },
+        "D": {
+          "zh": "模型仪表板",
+          "en": "Model Dashboard"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 模型卡片。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon SageMaker AI feature will meet these requirements? The source-supported choice is B. Model Cards."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一位人工智能从业者正在开发一个推荐系统。该人工智能从业者希望记录业务问题、数据假设、训练注意事项以及使用⻛险。公司必须遵循透明性和治理的指导原则。 哪项 Amazon SageMaker AI 功能可以满足这些要求?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which Amazon SageMaker AI feature will meet these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 模型卡片。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon SageMaker AI feature will meet these requirements? The source-supported choice is B. Model Cards."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 模型卡片。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon SageMaker AI feature will meet these requirements? The source-supported choice is B. Model Cards."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 模型卡片",
+        "en": "B. Model Cards"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 435,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一家公司在 Amazon Bedrock 上运行 AI 工作负载,需要评估并记录符合监管标准的情况。 哪项 AWS 服务或功能满足这些要求?",
+        "en": "A company that runs AI workloads on Amazon Bedrock needs to evaluate and document compliance with regulatory standards. Which AWS service or feature meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "审计管理器 (AWS Audit Manager",
+          "en": "AWS Audit Manager"
+        },
+        "B": {
+          "zh": "模型卡 (Amazon SageMaker Model Cards",
+          "en": "Amazon SageMaker Model Cards"
+        },
+        "C": {
+          "zh": "模型监控 (Amazon SageMaker Model Monitor",
+          "en": "Amazon SageMaker Model Monitor"
+        },
+        "D": {
+          "zh": "使用 AWS Artifact",
+          "en": "AWS Artifact"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，AWS Audit Manager 是专⻔设计用于帮助用戶自动化收集证据和评估合规性。它可以生成审计报告,满足监管要求",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS service or feature meets these requirements?"
+        },
+        "B": {
+          "zh": "錯誤。原因是，SageMaker Model Cards 的主要功能是记录机器学习模型的元数据和性能信息,帮助团队共享模型信息,但它并不直接用于合规性评估或文档记录",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature meets these requirements? The source-supported choice is A. AWS Audit Manager."
+        },
+        "C": {
+          "zh": "錯誤。原因是，SageMaker Model Monitor 的主要功能是监控模型的性能和数据漂移,确保模型在生产环境中的表现,但它不涉及合规性文档或评估",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature meets these requirements? The source-supported choice is A. AWS Audit Manager."
+        },
+        "D": {
+          "zh": "錯誤。原因是，AWS Artifact 是一个提供合规性报告和文档的服务,但它主要是用于访问和下载合规性相关的文档,而不是用于评估或记录合规性",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature meets these requirements? The source-supported choice is A. AWS Audit Manager."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 审计管理器 (AWS Audit Manager",
+        "en": "A. AWS Audit Manager"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 A 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A。",
+        "en": "The source community vote distribution is A 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A."
+      }
+    },
+    {
+      "question_no": 436,
+      "domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+      "question_text": {
+        "zh": "一家公司希望将基础模型( FMs)用于多个用例,包括内容摘要、代码生成和客戶服务 AI助手。 哪种解决方案能够以最具成本效益的方式实现 FMs?",
+        "en": "A company wants to use foundation models (FMs) for multiple use cases, including content summarization, code generation, and customer service AI assistants. Which solution will implement FMs MOST cost-effectively?"
+      },
+      "options": {
+        "A": {
+          "zh": "选择满足每个具体用例性能要求的最小模型。",
+          "en": "Select the smallest model that meets the performance requirements for each specific use case."
+        },
+        "B": {
+          "zh": "为所有任务使用最大且功能最强的模型以确保质量。",
+          "en": "Use the largest and most capable model available for all tasks to ensure quality."
+        },
+        "C": {
+          "zh": "为每个单独的用例构建和训练一个定制的 FM。",
+          "en": "Build and train a custom FM for each individual use case."
+        },
+        "D": {
+          "zh": "对所有推理请求使用批处理以减少每个请求的成本和延迟。",
+          "en": "Use batch processing for all inference requests to reduce the costs and latency for each request."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，性分析:选择满足性能要求的最小模型是一个成本优化的策略,因为较小的模型通常需要更少的计算资源,从而降低成本。 优点:这种方法可以根据具体用例的需求灵活调整,避免资源浪费。 缺点:如果性能需求评估不准确,可能会导致模型无法满足实际需求。 结论:此选项是正确的,符合成本效益的原则",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which solution will implement FMs MOST cost-effectively?"
+        },
+        "B": {
+          "zh": "錯誤。原因是，性分析:使用最大且功能最强的模型虽然可以确保质量,但成本非常高,且对于简单任务可能是资源浪费。 优点:质量和性能可能会非常高,适合对质量要求极高的场景。 缺点:不符合成本效益的原则,尤其是对于简单任务来说,使用大型模型会导致过度开销。 结论:此选项是错误的,因为它忽略了成本优化",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will implement FMs MOST cost-effectively? The source-supported choice is A. Select the smallest model that meets the performance requirements for each specific use case.."
+        },
+        "C": {
+          "zh": "錯誤。原因是，性分析:为每个用例构建和训练定制模型成本非常高,且需要大量的时间和资源。 优点:可以完全针对特定用例优化模型性能。 缺点:训练定制模型的成本和复杂性通常远高于使用现有模型,尤其是对于中小型企业来说,这种方法不具备成本效益。 结论:此选项是错误的,因为它不符合 “最具成本效益 ”的要求",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will implement FMs MOST cost-effectively? The source-supported choice is A. Select the smallest model that meets the performance requirements for each specific use case.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，性分析:批处理可以优化推理效率,但它并不能直接解决模型选择的问题,也无法确保满足不同用例的性能需求。 优点:批处理确实可以降低推理成本,但它是一个技术优化手段,而不是模型选择策略。 缺点:此选项偏离了题目重点,未直接解决如何选择最具成本效益的模型的问题。 结论:此选项是错误的,因为它与题目要求不完全相关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which solution will implement FMs MOST cost-effectively? The source-supported choice is A. Select the smallest model that meets the performance requirements for each specific use case.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "A"
+      ],
+      "answer_text": {
+        "zh": "A. 选择满足每个具体用例性能要求的最小模型。",
+        "en": "A. Select the smallest model that meets the performance requirements for each specific use case."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 A 75%, B 25%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A。",
+        "en": "The source community vote distribution is A 75%, B 25%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A."
+      }
+    },
+    {
+      "question_no": 437,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一位 AI从业者希望快速部署和微调基础模型( FMs),用于生成式 AI(GenAI)任务。该 AI从业者需要访问预训练模型、解决方案模板和示例笔记本,以加速开发过程。 哪个 AWS功能或资源满足这些需求?",
+        "en": "An AI practitioner wants to quickly deploy and fine-tune foundation models (FMs) for generative AI (GenAI) tasks. The AI practitioner needs access to pre-trained models, solution templates, and example notebooks that can accelerate the development process. Which AWS feature or resource meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon SageMaker Studio",
+          "en": "Amazon SageMaker Studio"
+        },
+        "B": {
+          "zh": "使用 Amazon SageMaker JumpStart",
+          "en": "Amazon SageMaker JumpStart"
+        },
+        "C": {
+          "zh": "模型目录",
+          "en": "Amazon Bedrock model catalog"
+        },
+        "D": {
+          "zh": "使用 Amazon SageMaker Canvas",
+          "en": "Amazon SageMaker Canvas"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 使用 Amazon SageMaker JumpStart。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS feature or resource meets these requirements? The source-supported choice is B. Amazon SageMaker JumpStart."
+        },
+        "B": {
+          "zh": "正確。原因是，答案",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS feature or resource meets these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 使用 Amazon SageMaker JumpStart。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS feature or resource meets these requirements? The source-supported choice is B. Amazon SageMaker JumpStart."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 使用 Amazon SageMaker JumpStart。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS feature or resource meets these requirements? The source-supported choice is B. Amazon SageMaker JumpStart."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 使用 Amazon SageMaker JumpStart",
+        "en": "B. Amazon SageMaker JumpStart"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 438,
+      "domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+      "question_text": {
+        "zh": "一家人力资源公司正在构建一个 AI/ML解决方案,用于筛选简历并为各种职位选择相关申请人。 哪些 AI方法论将有助于确保对所有人口群体的公平对待?(选择两个)",
+        "en": "A human resources company is building an AI/ML solution to screen resumes and select relevant applicants for various job roles. Which AI methodologies will help ensure impartial treatment for all demographic groups? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "模块化",
+          "en": "Modularity"
+        },
+        "B": {
+          "zh": "公平性",
+          "en": "Fairness"
+        },
+        "C": {
+          "zh": "可解释性",
+          "en": "Explainability"
+        },
+        "D": {
+          "zh": "保密性",
+          "en": "Secrecy"
+        },
+        "E": {
+          "zh": "欠拟合",
+          "en": "Underfitting"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 公平性；C. 可解释性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. Fairness; C. Explainability."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家人力资源公司正在构建一个 AI/ML解决方案,用于筛选简历并为各种职位选择相关申请人。 哪些 AI方法论将有助于确保对所有人口群体的公平对待?(选择两个)",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "C": {
+          "zh": "正確。原因是，可解释性是指能够理解和解释 AI模型的决策过程。它对于确保透明性和信任至关重要,特别是在涉及人群差异的任务中。因此此选项正确",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 公平性；C. 可解释性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. Fairness; C. Explainability."
+        },
+        "E": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 公平性；C. 可解释性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. Fairness; C. Explainability."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "B. 公平性；C. 可解释性",
+        "en": "B. Fairness; C. Explainability"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 33%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B, C。",
+        "en": "The source community vote distribution is C 33%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B, C."
+      }
+    },
+    {
+      "question_no": 439,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司需要评估 AI 生成的摘要与参考文本的对比。公司必须衡量语义相似性和关键信息的覆盖率。 哪些指标满足这些要求?(选择两个。 )",
+        "en": "A company needs to evaluate AI-generated summaries against reference text. The company must measure semantic similarity and coverage of key information. Which metrics meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "分数",
+          "en": "F1 score"
+        },
+        "B": {
+          "zh": "技术选项：BERTScore",
+          "en": "BERTScore"
+        },
+        "C": {
+          "zh": "双语评估替代( BLEU)分数",
+          "en": "Bilingual Evaluation Understudy (BLEU) score"
+        },
+        "D": {
+          "zh": "准确率",
+          "en": "Accuracy"
+        },
+        "E": {
+          "zh": "面向召回的摘要评估替代( ROUGE",
+          "en": "Recall-Oriented Understudy for Gisting Evaluation (ROUGE)"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 技术选项：BERTScore；E. 面向召回的摘要评估替代( ROUGE。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. BERTScore; E. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司需要评估 AI 生成的摘要与参考文本的对比。公司必须衡量语义相似性和关键信息的覆盖率。 哪些指标满足这些要求?(选择两个。 )",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 技术选项：BERTScore；E. 面向召回的摘要评估替代( ROUGE。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. BERTScore; E. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        },
+        "D": {
+          "zh": "錯誤。原因是，的比例。它不适用于生成文本的评估,因此此选项错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is B. BERTScore; E. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)."
+        },
+        "E": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司需要评估 AI 生成的摘要与参考文本的对比。公司必须衡量语义相似性和关键信息的覆盖率。 哪些指标满足这些要求?(选择两个。 )",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "B",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "B. 技术选项：BERTScore；E. 面向召回的摘要评估替代( ROUGE",
+        "en": "B. BERTScore; E. Recall-Oriented Understudy for Gisting Evaluation (ROUGE)"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 33%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B, E。",
+        "en": "The source community vote distribution is C 33%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B, E."
+      }
+    },
+    {
+      "question_no": 440,
+      "domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+      "question_text": {
+        "zh": "一家公司需要记录一个机器学习模型的用途、所有者和局限性。 哪项 AWS 服务或功能提供此功能?",
+        "en": "A company needs to document an ML model's purpose, owners, and limitations. Which AWS service or feature provides this capability?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Bedrock",
+          "en": "Amazon Bedrock"
+        },
+        "B": {
+          "zh": "服务卡",
+          "en": "AWS AI Service Cards"
+        },
+        "C": {
+          "zh": "规范指导",
+          "en": "AWS Prescriptive Guidance"
+        },
+        "D": {
+          "zh": "模型卡",
+          "en": "Amazon SageMaker Model Cards"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 模型卡。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature provides this capability? The source-supported choice is D. Amazon SageMaker Model Cards."
+        },
+        "B": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 模型卡。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature provides this capability? The source-supported choice is D. Amazon SageMaker Model Cards."
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 模型卡。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which AWS service or feature provides this capability? The source-supported choice is D. Amazon SageMaker Model Cards."
+        },
+        "D": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司需要记录一个机器学习模型的用途、所有者和局限性。 哪项 AWS 服务或功能提供此功能?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which AWS service or feature provides this capability?"
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 模型卡",
+        "en": "D. Amazon SageMaker Model Cards"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 D 75%, C 25%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 D。",
+        "en": "The source community vote distribution is D 75%, C 25%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: D."
+      }
+    },
+    {
+      "question_no": 441,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一家公司正在训练一个基础模型( FM)。该公司希望 FM训练数据在整个数据生命周期中得到良好的管理、安全保护和合规性。数据必须遵循治理实践。 以下哪项是用于管理数据生命周期的 AWS数据治理策略?",
+        "en": "A company is training a foundation model (FM). The company wants the FM training data to be well managed, secure, and compliant throughout the data lifecycle. The data must follow governance practices. Which option is an AWS data governance strategy for managing data across the data lifecycle?"
+      },
+      "options": {
+        "A": {
+          "zh": "允许所有员工对所有数据进行不受限制的访问。",
+          "en": "Allow unrestricted access to all data for every employee."
+        },
+        "B": {
+          "zh": "无限期存储数据而不进行分类或设置保留策略。",
+          "en": "Store data indefinitely without classification or retention policies."
+        },
+        "C": {
+          "zh": "仅依赖人工审查来确保数据质量和合规性。",
+          "en": "Rely solely on manual reviews for data quality and compliance."
+        },
+        "D": {
+          "zh": "建立数据生命周期策略、访问控制、日志记录和监控。",
+          "en": "Establish data lifecycle policies, access controls, logging, and monitoring."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，此选项完全违背了数据治理的基本原则。数据治理要求对数据访问进行严格控制,以确保数据安全性和合规性。允许不受限制的访问会导致数据泄露和合规性问题",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which option is an AWS data governance strategy for managing data across the data lifecycle? The source-supported choice is D. Establish data lifecycle policies, access controls, logging, and monitoring.."
+        },
+        "B": {
+          "zh": "錯誤。原因是，数据治理要求对数据进行分类并设置保留策略,以确保数据的合规性和有效性。无限期存储数据不仅会增加存储成本,还可能违反数据隐私法规(如 GDPR)",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which option is an AWS data governance strategy for managing data across the data lifecycle? The source-supported choice is D. Establish data lifecycle policies, access controls, logging, and monitoring.."
+        },
+        "C": {
+          "zh": "錯誤。原因是，人工审查效率低下且容易出错,无法满足现代数据治理的需求。 AWS提供了自动化工具(如 AWS Config、AWS CloudTrail)来帮助实现数据质量和合规性管理",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which option is an AWS data governance strategy for managing data across the data lifecycle? The source-supported choice is D. Establish data lifecycle policies, access controls, logging, and monitoring.."
+        },
+        "D": {
+          "zh": "正確。原因是，此选项符合 AWS数据治理的最佳实践。通过数据生命周期策略,可以管理数据的存储和删除;通过访问控制,可以限制数据访问权限;通过日志记录和监控,可以跟踪数据活动并确保合规性",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which option is an AWS data governance strategy for managing data across the data lifecycle?"
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 建立数据生命周期策略、访问控制、日志记录和监控。",
+        "en": "D. Establish data lifecycle policies, access controls, logging, and monitoring."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 D 75%, B 25%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 D。",
+        "en": "The source community vote distribution is D 75%, B 25%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: D."
+      }
+    },
+    {
+      "question_no": 442,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "热点 - 一家公司正在使用 Amazon Bedrock AgentCore 来构建、部署和大规模实施代理。该公司需要确定使用哪些资源。 从以下列表中为每个描述选择正确的 AgentCore 资源。每个资源可以选择一次或不选择。",
+        "en": "HOTSPOT - A company is using Amazon Bedrock AgentCore to build, deploy, and implement agents at scale. The company needs to identify which resources to use. Select the correct AgentCore resource from the following list for each description. Select each resource one time or not at all."
+      },
+      "options": {
+        "A": {
+          "en": "Monitor agent behavior with dashboards: AgentCore Observability.",
+          "zh": "通过仪表板监控代理行为：AgentCore Observability。"
+        },
+        "B": {
+          "en": "Execute code securely across multiple languages: AgentCore Code Interpreter.",
+          "zh": "跨多种语言安全执行代码：AgentCore Code Interpreter。"
+        },
+        "C": {
+          "en": "Provide a secure serverless browser runtime for agents: AgentCore Browser tool.",
+          "zh": "为代理提供安全的无服务器浏览器运行环境：AgentCore Browser tool。"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，Observability 监控代理，Code Interpreter 执行代码，Browser 提供浏览器自动化运行环境。",
+          "en": "Correct. Observability monitors agents, Code Interpreter executes code, and Browser provides browser automation runtime."
+        },
+        "B": {
+          "zh": "正確。原因是，Observability 监控代理，Code Interpreter 执行代码，Browser 提供浏览器自动化运行环境。",
+          "en": "Correct. Observability monitors agents, Code Interpreter executes code, and Browser provides browser automation runtime."
+        },
+        "C": {
+          "zh": "正確。原因是，Observability 监控代理，Code Interpreter 执行代码，Browser 提供浏览器自动化运行环境。",
+          "en": "Correct. Observability monitors agents, Code Interpreter executes code, and Browser provides browser automation runtime."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answer_text": {
+        "zh": "A. 通过仪表板监控代理行为：AgentCore Observability。；B. 跨多种语言安全执行代码：AgentCore Code Interpreter。；C. 为代理提供安全的无服务器浏览器运行环境：AgentCore Browser tool。",
+        "en": "A. Monitor agent behavior with dashboards: AgentCore Observability.; B. Execute code securely across multiple languages: AgentCore Code Interpreter.; C. Provide a secure serverless browser runtime for agents: AgentCore Browser tool."
+      },
+      "discussion": {
+        "zh": "来源为 HOTSPOT 配对或排序题，未提供可靠投票百分比。Observability 监控代理，Code Interpreter 执行代码，Browser 提供浏览器自动化运行环境。",
+        "en": "The source is a HOTSPOT matching or ordering item and provides no reliable vote percentage. Observability monitors agents, Code Interpreter executes code, and Browser provides browser automation runtime."
+      }
+    },
+    {
+      "question_no": 443,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "热点 - 一家公司希望使用 Amazon Bedrock 从现有文档中创建一个知识库。这些文档包括文本、表格和图像。 从以下列表中选择并排序步骤,以正确描述如何通过 Amazon Bedrock 的数据摄取过程将文档中的数据转换为知识库。每个步骤选择一次或不选择。",
+        "en": "HOTSPOT - A company wants to use Amazon Bedrock to create a knowledge base from existing documents. The documents include text, tables, and images. Select and order the steps from the following list to correctly describe how to convert data from the documents into a knowledge base by using an ingestion process in Amazon Bedrock. Select each step one time or not at all."
+      },
+      "options": {
+        "A": {
+          "en": "Parse the documents.",
+          "zh": "解析文档。"
+        },
+        "B": {
+          "en": "Divide the parsed data into chunks.",
+          "zh": "将解析后的数据切分成区块。"
+        },
+        "C": {
+          "en": "Convert the chunks into vector embeddings.",
+          "zh": "将区块转换为向量嵌入。"
+        },
+        "D": {
+          "en": "Write the vector embeddings to the vector store.",
+          "zh": "将向量嵌入写入向量存储。"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，Bedrock 知识库摄取依序解析、切分、嵌入并存储来源数据。",
+          "en": "Correct. Bedrock knowledge-base ingestion parses, chunks, embeds, and stores the source data in that order."
+        },
+        "B": {
+          "zh": "正確。原因是，Bedrock 知识库摄取依序解析、切分、嵌入并存储来源数据。",
+          "en": "Correct. Bedrock knowledge-base ingestion parses, chunks, embeds, and stores the source data in that order."
+        },
+        "C": {
+          "zh": "正確。原因是，Bedrock 知识库摄取依序解析、切分、嵌入并存储来源数据。",
+          "en": "Correct. Bedrock knowledge-base ingestion parses, chunks, embeds, and stores the source data in that order."
+        },
+        "D": {
+          "zh": "正確。原因是，Bedrock 知识库摄取依序解析、切分、嵌入并存储来源数据。",
+          "en": "Correct. Bedrock knowledge-base ingestion parses, chunks, embeds, and stores the source data in that order."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_text": {
+        "zh": "A. 解析文档。；B. 将解析后的数据切分成区块。；C. 将区块转换为向量嵌入。；D. 将向量嵌入写入向量存储。",
+        "en": "A. Parse the documents.; B. Divide the parsed data into chunks.; C. Convert the chunks into vector embeddings.; D. Write the vector embeddings to the vector store."
+      },
+      "discussion": {
+        "zh": "来源为 HOTSPOT 配对或排序题，未提供可靠投票百分比。Bedrock 知识库摄取依序解析、切分、嵌入并存储来源数据。",
+        "en": "The source is a HOTSPOT matching or ordering item and provides no reliable vote percentage. Bedrock knowledge-base ingestion parses, chunks, embeds, and stores the source data in that order."
+      }
+    },
+    {
+      "question_no": 444,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一家公司希望为其 AI系统建立一个数据治理框架。该框架必须使公司能够监控数据生成、更新以及计划删除的时间。 哪个数据治理组件满足这些要求?",
+        "en": "A company wants to establish a data governance framework for its AI system. The framework must give the company the ability to monitor when data is generated, updated, and scheduled for deletion. Which data governance component meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "数据驻留",
+          "en": "Data residency"
+        },
+        "B": {
+          "zh": "数据生命周期管理",
+          "en": "Data lifecycle management"
+        },
+        "C": {
+          "zh": "数据可观测性",
+          "en": "Data observability"
+        },
+        "D": {
+          "zh": "数据日志记录",
+          "en": "Data logging"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 数据生命周期管理。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which data governance component meets these requirements? The source-supported choice is B. Data lifecycle management."
+        },
+        "B": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司希望为其 AI系统建立一个数据治理框架。该框架必须使公司能够监控数据生成、更新以及计划删除的时间。 哪个数据治理组件满足这些要求?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which data governance component meets these requirements?"
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 数据生命周期管理。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which data governance component meets these requirements? The source-supported choice is B. Data lifecycle management."
+        },
+        "D": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 B. 数据生命周期管理。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which data governance component meets these requirements? The source-supported choice is B. Data lifecycle management."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 数据生命周期管理",
+        "en": "B. Data lifecycle management"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 445,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一家公司正在使用 Model Context Protocol (MCP) 服务器和 Amazon Q Developer CLI 构建一个自主 AI 应用程序。该公司希望遵循 MCP 安全实践。 哪些解决方案可以满足这些要求?(选择两个。 )",
+        "en": "A company is building an agentic AI application by using Model Context Protocol (MCP) servers with Amazon Q Developer CLI. The company wants to follow MCP security practices. Which solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "保持 MCP 服务器和 Amazon Q Developer CLI 更新。",
+          "en": "Keep MCP servers and the Amazon Q Developer CLI updated."
+        },
+        "B": {
+          "zh": "监控 MCP 日志以确保正常的成功活动。",
+          "en": "Monitor MCP logs for normal successful activity."
+        },
+        "C": {
+          "zh": "使用纯文本文件存储敏感配置。",
+          "en": "Use plain text files to store sensitive configurations."
+        },
+        "D": {
+          "zh": "自动批准所有由 MCP 服务器提供的工具。",
+          "en": "Automatically approve all tools that are provided by MCP servers."
+        },
+        "E": {
+          "zh": "仅从可信来源安装服务器。",
+          "en": "Install servers only from trusted sources."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，的",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "B": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Keep MCP servers and the Amazon Q Developer CLI updated.; E. Install servers only from trusted sources.."
+        },
+        "C": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Keep MCP servers and the Amazon Q Developer CLI updated.; E. Install servers only from trusted sources.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，的",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Keep MCP servers and the Amazon Q Developer CLI updated.; E. Install servers only from trusted sources.."
+        },
+        "E": {
+          "zh": "正確。原因是，的",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "E"
+      ],
+      "answer_text": {
+        "zh": "A. 保持 MCP 服务器和 Amazon Q Developer CLI 更新。；E. 仅从可信来源安装服务器。",
+        "en": "A. Keep MCP servers and the Amazon Q Developer CLI updated.; E. Install servers only from trusted sources."
+      },
+      "discussion": {
+        "zh": "來源未提供可可靠擷取的投票百分比。最終答案依來源解析與技術判斷採用 A, E。",
+        "en": "The source does not provide a reliably extractable vote percentage. The final answer follows the source analysis and technical reasoning: A, E."
+      }
+    },
+    {
+      "question_no": 446,
+      "domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+      "question_text": {
+        "zh": "一家公司正在使用基础模型( FM)来创建产品描述。该模型有时会提供不正确的信息。 这描述了生成式人工智能的哪种潜在⻛险?",
+        "en": "A company is using a foundation model (FM) to create product descriptions. The model sometimes provides incorrect information. Which potential risk of generative AI does this describe?"
+      },
+      "options": {
+        "A": {
+          "zh": "有害内容",
+          "en": "Toxicity"
+        },
+        "B": {
+          "zh": "幻觉",
+          "en": "Hallucinations"
+        },
+        "C": {
+          "zh": "技术选项：Interpretability",
+          "en": "Interpretability"
+        },
+        "D": {
+          "zh": "确定性输出",
+          "en": "Deterministic outputs"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，信息 ”无关,因此此选项错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which potential risk of generative AI does this describe? The source-supported choice is B. Hallucinations."
+        },
+        "B": {
+          "zh": "正確。原因是，或虚假的。这正是题目中描述的情况, 因此此选项正确",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which potential risk of generative AI does this describe?"
+        },
+        "C": {
+          "zh": "錯誤。原因是，解释: Interpretability指的是理解模型决策的透明度或可解释性。虽然这是生成式 AI的一个重要问题,但与题目中描述的 “提供错误信息”无关,因此此选项错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which potential risk of generative AI does this describe? The source-supported choice is B. Hallucinations."
+        },
+        "D": {
+          "zh": "錯誤。原因是，信息 ”无关,因此此选项错误",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which potential risk of generative AI does this describe? The source-supported choice is B. Hallucinations."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 幻觉",
+        "en": "B. Hallucinations"
+      },
+      "discussion": {
+        "zh": "來源未提供可可靠擷取的投票百分比。最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source does not provide a reliably extractable vote percentage. The final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 447,
+      "domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+      "question_text": {
+        "zh": "一家公司正在使用生成式人工智能( GenAI)系统从患者记录中生成医疗摘要。该系统有时会生成看似可信但不准确的信息。 哪种策略可以缓解这一问题?",
+        "en": "A company is using a generative AI (GenAI) system to generate medical summaries from patient records. The system sometimes produces inaccurate information that appears credible. Which strategy will mitigate the issue?"
+      },
+      "options": {
+        "A": {
+          "zh": "实施严格的输入验证和输出格式规则。",
+          "en": "Implement strict input validation and output formatting rules."
+        },
+        "B": {
+          "zh": "实施检索增强生成( RAG)以使响应有依据。",
+          "en": "Implement Retrieval Augmented Generation (RAG) to ground responses."
+        },
+        "C": {
+          "zh": "在医疗应用中使用更小、更透明的模型。",
+          "en": "Use smaller, more transparent models for medical applications."
+        },
+        "D": {
+          "zh": "增加计算资源和模型规模。",
+          "en": "Increase computational resources and model size."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，性分析:输入验证和输出格式规则可以帮助确保输入数据的质量以及输出的结构化,但它无法解决生成式 AI的幻觉问题,因为幻觉问题通常是模型生成内容时的内在问题,而不是输入或输出的格式问题。 结论:此选项不适合解决幻觉问题",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy will mitigate the issue? The source-supported choice is B. Implement Retrieval Augmented Generation (RAG) to ground responses.."
+        },
+        "B": {
+          "zh": "正確。原因是，性分析: RAG是一种结合检索和生成的技术,通过在生成内容时引入外部知识库或文档检索,确保生成的内容有依据。这种方法可以有效减少幻觉问题,特别是在需要准确性和可信度的场景(如医疗领域)。 结论:此选项是解决幻觉问题的最佳策略",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which strategy will mitigate the issue?"
+        },
+        "C": {
+          "zh": "錯誤。原因是，性分析:使用更小、更透明的模型可能会提高模型的可解释性,但这并不能直接解决幻觉问题。更小的模型可能会牺牲性能, 而透明性并不保证生成内容的准确性。 结论:此选项不是最佳解决方案",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy will mitigate the issue? The source-supported choice is B. Implement Retrieval Augmented Generation (RAG) to ground responses.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，性分析:增加计算资源和模型规模可能会提高模型的性能,但幻觉问题是生成式 AI的固有问题,与模型规模无直接关系。更大的模型甚至可能生成更复杂但仍然不准确的内容。 结论:此选项无法有效解决幻觉问题",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which strategy will mitigate the issue? The source-supported choice is B. Implement Retrieval Augmented Generation (RAG) to ground responses.."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "B"
+      ],
+      "answer_text": {
+        "zh": "B. 实施检索增强生成( RAG)以使响应有依据。",
+        "en": "B. Implement Retrieval Augmented Generation (RAG) to ground responses."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 B 83%, A 17%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 B。",
+        "en": "The source community vote distribution is B 83%, A 17%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: B."
+      }
+    },
+    {
+      "question_no": 448,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司希望调用单个 Amazon Bedrock 端点,并需要 Amazon Bedrock 为每个请求选择最合适的基础模型 (FM)。该公司不希望硬编码模型。 哪项 Amazon Bedrock 功能或资源可以满足这些需求?",
+        "en": "A company wants to call a single Amazon Bedrock endpoint and needs Amazon Bedrock to pick the most suitable foundation model (FM) for each request. The company does not want to hardcode a model. Which Amazon Bedrock feature or resource will meet these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "使用 Amazon Bedrock Guardrails",
+          "en": "Amazon Bedrock Guardrails"
+        },
+        "B": {
+          "zh": "使用 Amazon Bedrock Knowledge Bases",
+          "en": "Amazon Bedrock Knowledge Bases"
+        },
+        "C": {
+          "zh": "提示路由器",
+          "en": "Amazon Bedrock prompt router"
+        },
+        "D": {
+          "zh": "代理内存",
+          "en": "Amazon Bedrock agent memory"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。原因是，Amazon Bedrock Guardrails主要用于确保生成的内容符合预定义的安全和合规标准,而不是动态选择最适合的基础模型。它与模型选择无关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon Bedrock feature or resource will meet these requirements? The source-supported choice is C. Amazon Bedrock prompt router."
+        },
+        "B": {
+          "zh": "錯誤。原因是，Amazon Bedrock Knowledge Bases是用于存储和管理知识库的功能,通常与知识检索相关,而不是动态选择基础模型",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon Bedrock feature or resource will meet these requirements? The source-supported choice is C. Amazon Bedrock prompt router."
+        },
+        "C": {
+          "zh": "正確。原因是，Amazon Bedrock的提示路由器( Prompt Router)功能可以根据请求的内容动态选择最适合的基础模型。这正是题目要求的功能",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which Amazon Bedrock feature or resource will meet these requirements?"
+        },
+        "D": {
+          "zh": "錯誤。原因是，Amazon Bedrock agent memory用于存储会话上下文或代理的记忆,与动态选择基础模型无关",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which Amazon Bedrock feature or resource will meet these requirements? The source-supported choice is C. Amazon Bedrock prompt router."
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "C"
+      ],
+      "answer_text": {
+        "zh": "C. 提示路由器",
+        "en": "C. Amazon Bedrock prompt router"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 83%, A 17%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 C。",
+        "en": "The source community vote distribution is C 83%, A 17%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: C."
+      }
+    },
+    {
+      "question_no": 449,
+      "domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+      "question_text": {
+        "zh": "一家全球物流公司正在使用 Amazon Bedrock 上的生成式 AI (GenAI) 模型来自动化文书工作和运输文件。该公司希望建立一个明确的 AI 治理流程,以确保模型的使用符合公司政策并负责任。 哪些解决方案可以满足这些要求?(选择两个)",
+        "en": "A global logistics company is using generative AI (GenAI) models on Amazon Bedrock to automate paperwork and shipment documentation. The company wants to set up a clear AI governance process to make sure the models are used responsibly and meet company policies. Which solutions will meet these requirements? (Choose two.)"
+      },
+      "options": {
+        "A": {
+          "zh": "建立定期审查流程,以检查模型的结果是否准确、公平,并遵循公司政策。",
+          "en": "Set up a regular review process to check that the models' results are accurate and fair and follow company policies."
+        },
+        "B": {
+          "zh": "为所有使用 AI 工具的员工提供培训,使员工了解公司规则、数据处理和负责任的 AI 使用。",
+          "en": "Provide training for all employees who work with AI tools so the employees understand company rules, data handling, and responsible AI use."
+        },
+        "C": {
+          "zh": "让云服务提供商管理所有 AI 安全检查和审查,以节省内部精力。",
+          "en": "Let the cloud provider manage all AI safety checks and reviews to save internal effort."
+        },
+        "D": {
+          "zh": "仅让开发人员参与治理审查,因为开发人员构建和部署 AI 系统。",
+          "en": "Involve only developers in governance reviews because the developers build and deploy the AI systems."
+        },
+        "E": {
+          "zh": "仅在用戶报告系统问题或错误时审查模型。",
+          "en": "Review the models only when users report problems or errors in the system."
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "正確。原因是，定期审查模型结果是 AI治理的重要组成部分,可以确保模型的输出符合公司政策,并且避免偏⻅或错误。 这是负责任的 AI使用的核心实践之一",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "B": {
+          "zh": "正確。原因是，员工培训是 AI治理的重要环节,确保所有相关人员了解如何正确使用 AI工具以及遵守公司政策。 这有助于减少误用 AI工具的⻛险,并提高整体合规性",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: (Choose two.)"
+        },
+        "C": {
+          "zh": "錯誤。原因是，虽然云服务提供商可以提供技术支持,但 AI治理是公司内部的责任,不能完全依赖外部供应商。 这可能导致公司失去对 AI使用的控制权,无法确保符合内部政策",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Set up a regular review process to check that the models' results are accurate and fair and follow company policies.; B. Provide training for all employees who work with AI tools so the employees understand company rules, data handling, and responsible AI use.."
+        },
+        "D": {
+          "zh": "錯誤。原因是，AI治理需要多方参与,包括业务部⻔、法律团队、数据科学家等,而不仅仅是开发人员。 开发人员虽然重要,但他们的视⻆可能过于技术化,无法全面覆盖治理需求",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Set up a regular review process to check that the models' results are accurate and fair and follow company policies.; B. Provide training for all employees who work with AI tools so the employees understand company rules, data handling, and responsible AI use.."
+        },
+        "E": {
+          "zh": "錯誤。原因是，时审查模型。 错误:被动审查无法确保 AI系统的持续合规性和可靠性,可能导致问题积累。 定期主动审查是更好的治理实践",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: (Choose two.) The source-supported choice is A. Set up a regular review process to check that the models' results are accurate and fair and follow company policies.; B. Provide training for all employees who work with AI tools so the employees understand company rules, data handling, and responsible AI use.."
+        }
+      },
+      "selection_type": "複選",
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "answer_text": {
+        "zh": "A. 建立定期审查流程,以检查模型的结果是否准确、公平,并遵循公司政策。；B. 为所有使用 AI 工具的员工提供培训,使员工了解公司规则、数据处理和负责任的 AI 使用。",
+        "en": "A. Set up a regular review process to check that the models' results are accurate and fair and follow company policies.; B. Provide training for all employees who work with AI tools so the employees understand company rules, data handling, and responsible AI use."
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 C 25%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 A, B。",
+        "en": "The source community vote distribution is C 25%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: A, B."
+      }
+    },
+    {
+      "question_no": 450,
+      "domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+      "question_text": {
+        "zh": "一家公司在其生成式人工智能 (GenAI) 应用中使用了检索增强生成 (RAG)。 该公司希望使用 Amazon Bedrock 知识库评估来衡量响应是否基于检索到的文本避免幻觉。 哪项指标符合这些要求?",
+        "en": "A company is using Retrieval Augmented Generation (RAG) in its generative AI (GenAI) application. The company wants to use Amazon Bedrock Knowledge Bases evaluations to measure how well responses avoid hallucination based on the retrieved texts. Which metric meets these requirements?"
+      },
+      "options": {
+        "A": {
+          "zh": "拒绝",
+          "en": "Refusal"
+        },
+        "B": {
+          "zh": "有害性",
+          "en": "Harmfulness"
+        },
+        "C": {
+          "zh": "刻板印象",
+          "en": "Stereotyping"
+        },
+        "D": {
+          "zh": "忠实性",
+          "en": "Faithfulness"
+        }
+      },
+      "option_explanations": {
+        "A": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 忠实性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric meets these requirements? The source-supported choice is D. Faithfulness."
+        },
+        "B": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 忠实性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric meets these requirements? The source-supported choice is D. Faithfulness."
+        },
+        "C": {
+          "zh": "錯誤。此選項不能完整滿足題目的主要要求；相較之下，來源確認的適當答案是 D. 忠实性。",
+          "en": "Incorrect. This option addresses a different task or misses a key constraint in: Which metric meets these requirements? The source-supported choice is D. Faithfulness."
+        },
+        "D": {
+          "zh": "正確。此選項直接滿足題目要求，並且是來源解析確認的答案；本題的核心判斷是：一家公司在其生成式人工智能 (GenAI) 应用中使用了检索增强生成 (RAG)。 该公司希望使用 Amazon Bedrock 知识库评估来衡量响应是否基于检索到的文本避免幻觉。 哪项指标符合这些要求?",
+          "en": "Correct. Choosing this option directly addresses the source-confirmed requirement: Which metric meets these requirements?"
+        }
+      },
+      "selection_type": "單選",
+      "correct_answers": [
+        "D"
+      ],
+      "answer_text": {
+        "zh": "D. 忠实性",
+        "en": "D. Faithfulness"
+      },
+      "discussion": {
+        "zh": "來源社群投票分布為 D 100%。討論重點是比較各選項是否真正滿足題目主要需求；最終答案依來源解析與技術判斷採用 D。",
+        "en": "The source community vote distribution is D 100%. The discussion focuses on whether each option satisfies the primary requirement; the final answer follows the source analysis and technical reasoning: D."
+      }
+    }
+  ]
+}
