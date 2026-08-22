@@ -45,7 +45,7 @@
       },
       "Intelligent Document Processing": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "智慧文件處理結合 OCR、Computer Vision、NLP 與 ML，從掃描文件或 PDF 擷取欄位、分類內容並送入後續系統，可減少人工輸入但仍應驗證低信心或高風險結果。"
+        "Description": "Intelligent Document Processing（IDP，智慧型文件處理）結合 OCR、Computer Vision、NLP 與 ML，從發票、合約、收據、申請表及表格等不同格式的掃描文件或 PDF，自動辨識文字、擷取欄位與表格、分類文件，並將結果轉成可供後續系統使用的結構化資料。它可減少人工輸入，但仍應人工驗證低信心或高風險結果。\n\n快速辨識：從 invoices、contracts、forms 等多種文件自動提取 structured data＝IDP。Computer vision 著重理解影像；facial recognition 辨識人臉；fraud detection 找出可疑行為，三者都不是這題要求的完整文件處理用途。"
       }
     },
     "AI, ML, Deep Learning, and GenAI": {
@@ -71,9 +71,17 @@
   },
   "chapter3: Introduction to AWS & Cloud Computing": {
     "AWS Cloud Fundamentals": {
+      "AWS Region vs. Availability Zone vs. Edge Location": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "AWS Region（區域）：世界上一個獨立的地理區域，由多個彼此隔離、實體分離的 Availability Zones 組成。依 AWS 目前的全球基礎設施定義，每個 Region 至少有 3 個 AZ；Region 用來選擇資料落地、延遲、法規、價格與服務可用性。Regions 彼此獨立，跨 Region 災難復原需要另外設計。\n\nAvailability Zone（可用區，AZ）：Region 內的隔離位置，由 1 個或多個 discrete data centers 組成，每個資料中心具有獨立／備援的 power、networking 與 connectivity，並位於分開的實體設施。不同 AZ 之間距離足以降低火災、停電、淹水等 correlated failure，同時又以低延遲、高頻寬的冗餘網路互連。EC2、RDS 等資源可跨多個 AZ 部署以提高可用性。\n\nDiscrete data center 的 discrete＝separate、distinct、physically independent（分開且可區分的實體機房設施），不是 continuous／同一個共享故障點，也不是同一棟機房中劃出的虛擬區塊。它強調各設施有自己的電力、網路、冷卻與實體安全／故障隔離設計。若一個 AZ 含多個 data centers，這些資料中心共同構成同一個 AZ；客戶一般選擇 AZ 部署，不會指定某一棟 data center。\n\nEdge Location（邊緣節點）：靠近終端使用者的全球站點，主要供 CloudFront 快取內容、Route 53 DNS 等 edge services 使用；它不是一般部署 EC2 基礎設施的 AZ，也不是 Region 的下一層替代名稱。\n\n本題 Select two：① Each AZ consists of one or more discrete data centers＝正確；one or more 包含可能只有 1 個，所以 two or more 錯。② Each AWS Region consists of a minimum of three AZs＝依目前 AWS 定義正確；minimum of two 錯。\n\n快速辨識：地理區域、至少 3 個 AZ＝Region；1 個或多個分離資料中心、備援電力與網路＝AZ；靠近使用者、快取與 DNS＝Edge Location。部署層級可記為 Region → AZ → one or more data centers；Edge Location 不在這條一般工作負載部署層級中。"
+      },
       "Cloud Computing": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "雲端運算透過網路按需提供運算、儲存與其他 IT 資源，通常依實際用量付費。對 AI 工作負載而言，可避免先購買昂貴硬體，並依訓練或推論需求快速調整容量。"
+        "Description": "雲端運算是透過網路按需取得運算能力、資料儲存及其他 IT 資源，使用者不必直接主動管理底層基礎設施，通常依實際用量付費。對 AI 工作負載而言，可避免先購買昂貴硬體，並依訓練或推論需求快速調整容量。\n\n快速辨識：on-demand availability of computer system resources, especially data storage and computing power, without direct active management by the user，是 Cloud Computing 的定義。Automatic and quick ability to acquire and release resources 則是在描述 elasticity，不是完整定義。"
+      },
+      "Five Characteristics of Cloud Computing": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "雲端運算的五大特徵：\n\n1. On-demand self-service（隨需自助服務）：使用者可自行配置運算、儲存等資源，不必等待供應商人員介入。\n\n2. Broad network access（廣泛網路存取）：資源透過網路提供，可由電腦、手機和平板等標準用戶端存取。\n\n3. Resource pooling / multi-tenancy（資源池化／多租戶）：供應商集中管理共享資源，依需求動態分配給多個客戶，同時維持邏輯隔離。\n\n4. Rapid elasticity and scalability（快速彈性與擴展性）：資源可隨需求快速擴展或縮減，對使用者而言容量近似可無限取得。\n\n5. Measured service（可計量服務）：系統會量測資源使用量，支援監控、最佳化及依用量計費。\n\n快速辨識：Dedicated Support Agent to help you deploy applications（由專屬支援人員協助部署）不是五大特徵；雲端強調 on-demand self-service，不需要供應商人員逐次介入。"
       },
       "On-Demand Self-Service": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -86,6 +94,14 @@
       "Pay-as-You-Go": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Pay-as-you-go 讓組織依資源使用量付費，把部分前期資本支出轉成可調整的營運支出；但未關閉的閒置端點或運算資源仍會產生成本。"
+      },
+      "Six Advantages of Cloud Computing": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "雲端運算的六項常見優勢：\n\n1. Trade fixed expense for variable expense：以依用量計費的營運支出（OPEX）取代資料中心等前期資本支出（CAPEX）。\n\n2. Benefit from massive economies of scale：利用雲端供應商的大規模經濟降低變動成本。\n\n3. Stop guessing capacity：不必預先猜測容量，可依需求擴展或縮減。\n\n4. Increase speed and agility：快速取得資源，縮短實驗與部署時間。\n\n5. Stop spending money running and maintaining data centers：減少資料中心營運與維護工作。\n\n6. Go global in minutes：可快速部署到多個 AWS Regions。\n\n快速辨識：Train your employees less（減少員工訓練）不是雲端運算優勢；導入雲端通常仍需培訓員工，使其具備有效且安全使用雲端的能力。"
+      },
+      "Considerations for Choosing an AWS Region": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "選擇 AWS Region 時的四項主要考量：\n\n1. Compliance with data governance and legal requirements：資料落地、法規及治理要求。\n\n2. Proximity and latency：Region 與使用者或系統的距離會影響延遲。\n\n3. Available services and features：並非每個 AWS 服務或功能都在所有 Region 提供。\n\n4. Pricing：相同服務在不同 Region 的價格可能不同。\n\n快速辨識：Capacity availability（容量是否充足）不是這組標準的 Region 選擇考量。不要把 available services and features（服務與功能是否在該 Region 上線）誤認為 capacity availability。"
       },
       "Regions, Availability Zones, and Edge Locations": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
@@ -112,6 +128,10 @@
       "Customer Responsibility – Security IN AWS Cloud": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
         "Description": "客戶負責資料、身分權限、加密選項、應用程式與正確設定；使用越接近 IaaS 的服務，客戶維運責任通常越多。 這是 Security IN the Cloud。"
+      },
+      "AWS Shared Responsibility Model – Security OF vs. IN the Cloud": {
+        "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+        "Description": "AWS responsibility＝Security OF the Cloud（雲端本身的安全）：AWS 保護運行 AWS Cloud 的實體 facilities／data centers、hardware、global networking、storage／compute infrastructure、virtualization layer、host operating system，以及受管服務的底層平台與服務端軟體。正確選項中的 AWS software 指 AWS 雲端基礎設施與受管平台軟體，不包括客戶自行部署的應用程式。\n\nCustomer responsibility＝Security IN the Cloud（客戶放進雲端之內容與設定的安全）：客戶負責自己的 data、data classification、IAM identities and permissions、applications、network／security group configuration、encryption options、credentials 與合規使用。使用 Amazon EC2 時，客戶還要管理 guest OS 的更新與修補，以及安裝在 instance 上的軟體。\n\n責任會隨服務改變：EC2 等 IaaS 給客戶較多控制，因此 guest OS、applications 與 firewall settings 等責任較多；Amazon S3、DynamoDB、Bedrock 等較抽象或受管服務由 AWS 管理更多 OS／platform 工作，但客戶仍負責資料、IAM、服務設定、輸入輸出與實際使用方式。Managed service 不等於 AWS 接管全部安全責任。\n\n本題正確答案：AWS is responsible for security OF the cloud—including infrastructure, hardware and AWS platform software；customer is responsible for security IN the cloud—including data, applications and access management。\n\n錯誤選項辨識：① Customers manage physical data-center security＝顛倒，實體機房由 AWS 負責；network traffic controls 與 user identities 通常需要客戶依自己的工作負載設定。② AWS handles all security／customer only manages VMs＝錯，資料加密選項、IAM、應用安全等仍有客戶責任。③ AWS configures customer applications while customer manages underlying hardware＝完全顛倒；AWS 管底層硬體，客戶管自己的應用與安全設定。\n\n快速記憶：AWS protects the cloud；customer protects what they put in and configure in the cloud。共同責任不是把同一件工作各做一半，而是雙方各自保護其控制的層級。"
       }
     }
   },
@@ -134,6 +154,30 @@
         "Description": "Cost allocation tags 可依專案、部門或環境分類支出，協助追蹤 AI 試驗與正式服務的成本責任。標籤要先啟用並一致套用，才有可靠的成本報表。"
       }
     },
+    "Model Customization Fundamentals": {
+      "Purpose of Fine-Tuning": {
+        "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+        "Description": "Fine-tuning（微調）是使用新的特定任務資料，進一步訓練已經預訓練完成的 foundation model，藉此調整模型權重，讓模型更符合特定領域、任務、語氣或輸出格式。常見作法是使用高品質的標註範例。\n\n快速辨識：Train a pre-trained foundation model on new specific data＝fine-tuning。它不是從零開始訓練模型；不是單純調整 learning rate、batch size 等 hyperparameters；也不是清理訓練資料。資料清理與超參數調校可能是訓練流程的一部分，但不是 fine-tuning 的定義。"
+      },
+      "RAG for Current and Private Data": {
+        "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+        "Description": "Retrieval-Augmented Generation（RAG）會在收到問題時，先從外部知識來源檢索相關資料，再把檢索內容提供給 foundation model 產生回答。更新外部資料來源與索引即可讓模型使用較新或私有資訊，不必重新訓練或修改模型權重。\n\n快速辨識：always-updated data、proprietary data、without retraining＝RAG。In-context learning 是在 prompt 中提供指令或範例；pre-training 與 fine-tuning 都涉及訓練模型，不適合只為持續更新外部知識。"
+      }
+    },
+    "Foundation Model Evaluation and Infrastructure": {
+      "Human Evaluation for User-Aligned Outputs": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "Human evaluation 讓代表目標使用者或具領域知識的人員，依相關性、正確性、語氣、偏好與安全性等標準評估模型輸出。當需求是確認輸出是否符合實際使用者期待時，人類判斷能捕捉自動化指標或通用 benchmark 不易衡量的主觀品質。\n\n快速辨識：ensure outputs are adapted to your users＝human evaluation。Automated testing 與 benchmark datasets 適合一致、可量化的比較；code review 是檢查程式碼，不直接衡量一般模型輸出是否符合使用者。"
+      },
+      "Amazon OpenSearch Serverless as a Vector Store": {
+        "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+        "Description": "Amazon OpenSearch Serverless 的 vector search collection 可儲存 embeddings、建立向量索引並執行相似度搜尋，也能作為 Amazon Bedrock Knowledge Bases 的向量儲存選項。\n\n快速辨識：在 Amazon S3、Amazon DynamoDB、Amazon OpenSearch Serverless、Amazon Kinesis Data Streams 這組選項中，能將 embeddings 儲存在向量資料庫並進行向量搜尋的是 Amazon OpenSearch Serverless。S3 常作為原始文件來源；Kinesis Data Streams 用於串流資料。"
+      },
+      "When to Use Amazon Bedrock": {
+        "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+        "Description": "Amazon Bedrock 是全受管服務，適合透過統一 API 選用多家預訓練 foundation models、在不管理底層模型基礎設施的情況下建置生成式 AI 應用，並可用自己的資料私下客製化支援的模型。客戶的 prompts、outputs 與客製化資料不會在未經同意下用來訓練底層共用模型。\n\n快速辨識：Customers want to build and train foundation models from scratch 不是選擇 Amazon Bedrock 的典型理由；需要從資料準備到模型架構與訓練流程的高度控制時，通常評估 Amazon SageMaker AI 等訓練平台。"
+      }
+    },
     "Shared Responsibility for AWS Billing": {
       "AWS Responsibility – Security OF AWS Billing": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
@@ -153,7 +197,7 @@
       },
       "Foundation Model (FM)": {
         "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
-        "Description": "Foundation Model 是在廣泛資料上預先訓練的大型模型，可透過 prompting、RAG 或 fine-tuning 適用於多種下游任務。選模時應考量能力、模態、延遲、成本與風險。"
+        "Description": "Foundation Model（FM）是在非常大量、廣泛且通常未經人工逐筆標註的資料上預先訓練的大型深度學習模型。核心特徵是 general-purpose 與 adaptable：同一個 base model 能支援文字生成、摘要、問答、分類、資訊擷取、影像理解等多種下游任務，而傳統 task-specific model 通常只針對單一狹窄任務訓練。LLM 是專注於語言任務的一類 Foundation Model，但不是所有 FM 都是 LLM。\n\nSelf-supervised pre-training：FM 從 input data 本身建立 labels／proxy targets，例如遮住 token 再預測或預測下一個 token，因此能利用大量 unlabeled datasets，不需要人員先為每筆資料提供答案。題目問 FMs use unlabeled training data sets for self-supervised learning，這是正確敘述。\n\n適配下游任務：許多需求可先用 zero-shot／few-shot prompting；需要最新或私有知識時可用 RAG；需要固定領域行為、語氣或格式時可 fine-tune。FM 的優點是可以用較少 task-specific data 與較少額外訓練快速適配，但 minimal fine-tuning 不代表所有任務完全不需要客製化或評估。\n\n重要精確度：self-supervised learning 通常描述 FM 的大規模預訓練階段，不代表模型整個生命週期只使用未標註資料。後續仍可能使用 supervised fine-tuning、instruction tuning、human preference data 或 RLHF 進行對齊。\n\n本題情境：medical report generation、data analysis、personalized patient communications 都可由同一類 FM 能力延伸，但醫療輸出不能因模型是 FM 就直接視為正確。仍需保護病患資料、驗證 grounding／accuracy／bias、限制用途並由合格醫療人員審查高風險內容。\n\n選模考量：任務品質、支援模態、context window、延遲、throughput、成本、customization、資料隱私、安全、responsible AI 與法規需求；模型越大不一定越適合。"
       },
       "Large Language Model (LLM)": {
         "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
@@ -181,9 +225,17 @@
         "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
         "Description": "Amazon Bedrock 是全受管服務，透過統一 API 使用多家基礎模型並建置生成式 AI 應用，不需自行管理模型伺服器。它也提供 Knowledge Bases、Agents、Guardrails 與模型評估等能力。"
       },
+      "LLM Development on AWS – Bedrock vs. JumpStart vs. Amazon Q vs. Trainium vs. Inferentia": {
+        "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+        "Description": "Amazon Bedrock（本題正確）：建置與擴展生成式 AI applications／agents 的全受管平台，透過 API 存取多家 foundation models，並提供 model evaluation、customization、Knowledge Bases、Agents、Guardrails、security 與 monitoring 等能力。題目若要求快速開發文字生成、摘要、chatbot、RAG 或 agent，而且不想管理模型基礎設施，選 Bedrock。Bedrock 通常是使用與客製化既有 FM，不是從零訓練全新 LLM 的服務。\n\nAmazon SageMaker JumpStart（本題正確）：SageMaker AI 內的 ML hub，提供 foundation models、pretrained models、built-in algorithms、solution templates 與 notebooks；可透過 UI 或 SDK evaluate、compare、fine-tune／customize 並部署支援的模型。題目若強調 model hub、快速取得並客製化或部署預訓練／open-weight model，選 JumpStart。相較 Bedrock，JumpStart 通常更接近 SageMaker 的模型與 endpoint 工作流程，給 ML 團隊較多控制。\n\nAmazon Q（本題不選）：已建好的生成式 AI 助理產品家族。Amazon Q Developer 協助 coding、testing、debugging、AWS 開發與維運；Amazon Q Business 使用企業資料協助員工問答與工作。它們本身使用 GenAI，但不是讓團隊選模型、訓練並託管任意 LLM 的通用 model-development platform。題目出現 coding assistant 或 enterprise knowledge assistant 才選 Q。\n\nAWS Trainium（本題不選）：AWS purpose-built AI accelerator／chip，主要用於高效能、具成本效益的深度學習與大型模型 training，也可在部分架構支援 serving。它透過 EC2 Trn instances、SageMaker AI／HyperPod、EKS 等環境使用，屬於底層運算選擇，不等於包含模型目錄、應用 API、RAG、Guardrails 與生命週期管理的完整 LLM 開發服務。若題目明確問 purpose-built chip for training large models，才選 Trainium。\n\nAWS Inferentia（本題不選）：AWS purpose-built inference accelerator；EC2 Inf instances 適合以高 throughput、低 latency 與較佳 cost-performance 執行已訓練的深度學習／GenAI 模型。它解決 serving／inference compute，不負責模型訓練或提供完整 LLM 應用平台。題目問 purpose-built chip for inference，選 Inferentia。\n\n本題判斷：developing LLM-based solutions + managed access to foundation／pretrained models + customization／deployment + integration with AWS，Select two＝Amazon Bedrock + Amazon SageMaker JumpStart。你選對 JumpStart；Amazon Q 選錯，因為它是特定用途的成品助理。\n\n快速辨識：用 API 建 GenAI app／RAG／agent＝Bedrock；SageMaker model hub／客製化與部署預訓練模型＝JumpStart；程式或企業助理＝Amazon Q；訓練晶片＝Trainium；推論晶片＝Inferentia。Trainium／Inferentia 可支援 LLM 基礎設施，但若題目問最佳 end-to-end services，而選項同時有 Bedrock 與 JumpStart，通常選後兩者。"
+      },
       "Choosing a Foundation Model": {
         "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
         "Description": "模型選擇應以任務品質、支援模態、context 長度、延遲、吞吐量、價格、客製化與合規需求評估。最大的模型不一定是最佳或最便宜的選擇。"
+      },
+      "Amazon Bedrock Pricing and Custom Model Inference Modes": {
+        "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+        "Description": "Smaller models are cheaper to use than larger models（本題正確的考試原則）：同一模型家族或能力層級比較時，較小模型通常 token price／compute requirement 較低、速度較快，適合大量分類、摘要或簡單文字工作；較大模型通常能處理更複雜推理，但成本與延遲可能較高。選模應先以最小且能達到品質門檻的模型為起點。\n\n精確度提醒：成本不只由 parameter count 決定，也受 provider、model family、輸入／輸出 token 單價、context 長度、Region、inference mode、吞吐量與 customization 影響。因此 smaller is cheaper 是本題的概括性取捨，不是跨所有供應商與計價方案都成立的數學定律；larger model 也不保證一定更準。\n\nOn-Demand inference：對支援的模型依實際使用量付費，不需預先配置 dedicated capacity，也不要求 time-based term commitment，適合流量不規則、試驗或剛開始的工作負載。因此 You can use On-Demand mode only with time-based term commitments 是錯誤敘述。\n\nBatch inference：非同步處理 S3 中的大批輸入，適合不要求即時回應的離線工作；支援範圍與價格依模型而異。不要把 Batch 和為即時穩定流量保留容量的 Provisioned Throughput 混淆。\n\nProvisioned Throughput：為模型配置 dedicated compute capacity 與較可預期／保證的 throughput，適合穩定、高流量或需要一致效能的 production workload。依模型、Region 與購買類型，可能有 no commitment、1-month 或 6-month 等選項；所以不能一概說所有 Provisioned Throughput 都必須有長期承諾。\n\nCustomized model inference（本題正確）：建立 custom model 後，可依支援情況選擇 ① 購買 Provisioned Throughput，取得 dedicated capacity；或 ② 建立 custom model deployment 做 On-Demand inference，部署完成後使用 deployment ARN 作為 modelId 呼叫。實際可用模式、base model、Region、quota 與計價必須查最新支援表。You can use a customized model only in Provisioned Throughput mode 已不符合目前的一般官方說明。\n\n本題 Select two＝Smaller models are cheaper to use than larger models + You can use a customized model in the Provisioned Throughput or On-Demand mode。快速辨識：pay as you go／unpredictable traffic／no commitment＝On-Demand；offline large dataset＝Batch；dedicated capacity／predictable throughput＝Provisioned Throughput；custom model 可用 PT 或受支援的 on-demand deployment。"
       },
       "Prompting": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
@@ -259,6 +311,10 @@
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
         "Description": "對需要多步推理的任務，可要求模型以結構化方式分析或先產生中間步驟。實務上更應要求簡短可驗證的理由與引用，避免把冗長內部推理當成正確保證。"
       },
+      "Zero-Shot vs. Few-Shot vs. Chain-of-Thought Prompting": {
+        "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+        "Description": "Zero-shot prompting（零樣本提示）：只提供任務指令，不提供示範範例。適合模型已熟悉、規則明確或格式簡單的任務。關鍵字是 no examples。\n\nFew-shot prompting（少樣本提示）：在 prompt 中提供少量成功的 input-output examples，讓模型模仿相同的任務模式、推理方式或輸出格式，再處理新的輸入；不會修改模型權重。關鍵字是 examples、demonstrations、performed successfully in the past、same type of output。\n\nChain-of-thought prompting（思維鏈提示）：引導模型把複雜問題拆成多個中間步驟，適合數學、邏輯或多步推理。考題通常強調 step-by-step reasoning，而不只是模仿既有答案格式。\n\n快速辨識：過去有成功完成的任務範例，希望 LLM 對不同輸入採用相同類型的推理與輸出＝Few-shot prompting。若只有指令、沒有範例＝Zero-shot；若重點是逐步拆解複雜問題＝Chain-of-thought。"
+      },
       "Prompt Templates": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
         "Description": "Prompt template 把固定指令與動態變數分開，能重複使用、版本控制並維持一致格式。動態欄位仍需驗證，避免不可信內容改寫原始指令。"
@@ -303,7 +359,7 @@
     "Amazon Q Business": {
       "Amazon Q Business": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
-        "Description": "Amazon Q Business 是以企業資料為基礎的生成式 AI 助理，可回答問題、摘要與產生內容。它透過 connectors 和索引使用企業知識，並依使用者身分與來源權限限制答案。"
+        "Description": "Amazon Q Business 是以企業資料為基礎的全受管生成式 AI 助理，可回答問題、摘要、產生內容與執行支援的動作。它透過內建 connectors 連接企業資料來源，以 RAG 檢索企業知識，並依使用者身分與來源 ACL 限制答案；設定的 plugins 還能對支援的企業應用程式執行動作。\n\n快速辨識：built-in enterprise data integrations、plugins、fully managed RAG 都是 Amazon Q Business 能力。Enterprise storage（企業儲存服務）不是它的核心能力；Q Business 會連接及索引既有企業資料，但不是用來取代 Amazon S3、文件管理系統或其他企業儲存平台。"
       },
       "Amazon Q Business Connectors": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
@@ -311,7 +367,7 @@
       },
       "Amazon Q Business Uses RAG": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
-        "Description": "Q Business 使用 retrieval-augmented generation，先尋找授權範圍內的企業內容，再以基礎模型生成回答。這比只依賴模型訓練知識更適合內部、更新中的資料。"
+        "Description": "Large Language Model（LLM，本題正確）：Amazon Q Business 使用擅長自然語言的 foundation model 來理解問題並產生回答、摘要、草稿及其他文字內容。LLM 是 generation／reasoning engine；它能處理語言，但單靠模型內部訓練知識不一定知道組織最新、私有或具存取限制的資料。\n\nRetrieval-Augmented Generation（RAG，本題正確）：收到 web experience 查詢後，Q Business 使用管理員選擇的 retriever 搜尋與問題相關的 enterprise documents，並遵守 authorization 與 access control；接著把檢索內容提供給生成模型作為 context，產生 grounded response，再把答案和可用的來源引用回傳給使用者。RAG 不需要為每次企業文件更新重新訓練 LLM。\n\n流程可記為：User query → identity／ACL check → retrieve authorized enterprise documents → augment model context → LLM generates answer／summary → response with sources。管理員可設定回答使用 retrieved enterprise data，並決定是否允許模型知識補充；這是在控制 grounding source，不是把 RAG 與 LLM 當成完全互斥的模型架構。\n\nVariational Autoencoder（VAE，本題不選）：encoder 將資料映射到機率 latent space，decoder 從樣本重建／生成資料，常見於 representation learning 與生成影像等工作；不是 Q Business 企業文件問答流程的核心技術。\n\nGenerative Adversarial Network（GAN，本題不選）：generator 產生樣本、discriminator 判斷真假，兩者競爭訓練；常見於合成影像等生成任務，不負責 Q Business 的企業檢索問答。\n\nDiffusion model（本題不選）：從雜訊開始反覆 denoise 產生資料，最常見於 image／video generation；不是 Q Business web application 進行文件搜尋、摘要與問答的核心模型。\n\n本題 Select two＝RAG + LLM。快速辨識：企業知識、connectors、ACL、retrieve documents、source citations＝RAG；理解與生成自然語言＝LLM；latent encoder／decoder＝VAE；generator vs discriminator＝GAN；noise／denoising＝Diffusion。"
       },
       "Amazon Q Apps": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
@@ -325,7 +381,7 @@
     "Amazon Q Developer and Integrations": {
       "Amazon Q Developer": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
-        "Description": "Amazon Q Developer 協助開發人員理解、撰寫、測試與轉換程式碼，也能回答 AWS 架構及資源問題。產生的程式碼仍須 review、測試與安全掃描。"
+        "Description": "Amazon Q Developer 是生成式 AI 開發與程式設計助理，可協助開發人員理解、撰寫、測試、除錯、審查與轉換程式碼，也能回答 AWS 架構、最佳實務及帳戶資源問題。它可在 IDE、命令列及部分 AWS 介面中提供協助；產生的程式碼仍須 review、測試與安全掃描。\n\n快速辨識：What is Amazon Q Developer?＝an AI coding assistant。它不是用語音控制 AWS 部署的專屬助手，也不是 AWS 外部專家團隊。Amazon Q Business 面向使用企業知識的員工；Amazon Q Developer 面向軟體開發及 AWS 維運工作。"
       },
       "Amazon Q Developer in the IDE": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
@@ -360,6 +416,10 @@
       "Machine Learning": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Machine Learning 讓演算法從資料學習模式，再對未見資料進行預測或決策，不必為每種情況明確編寫規則。"
+      },
+      "Primary ML Implementation Challenge – High-Quality Data": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "Difficulty in collecting and preparing high-quality training data（本題正確）：ML 模型從資料學習，因此 training data 的品質、數量、相關性與代表性會直接限制模型能學到什麼。常見工作包括整合多個來源、處理 missing values、duplicates、outliers、noise 與 inconsistent formats，建立可靠 labels、避免 data leakage，並確認資料涵蓋實際 production population。這些工作通常耗時且需要業務領域知識；garbage in, garbage out。\n\n零售情境：customer segmentation 與 personalized marketing 可能要整合門市／網站交易、瀏覽行為、忠誠會員與行銷互動資料，還要正確解析同一客戶、處理不同 schema、退貨與缺失紀錄、取得合法 consent，並避免資料只代表最活躍客群。資料不完整或偏斜會造成錯誤分群、不佳推薦，甚至對部分客群產生不公平影響。\n\nLimited applications of ML in real-world scenarios（錯誤）：ML 已廣泛用於推薦、詐欺偵測、需求預測、影像分析、自然語言、醫療與製造等場景；真正挑戰是正確定義問題、取得資料、部署、監控與治理，而不是缺乏實際用途。\n\nLack of available ML algorithms（錯誤）：classification、regression、clustering、trees、neural networks 等演算法及開源／AWS 工具很多。選擇正確演算法和調整模型可能有難度，但「沒有可用演算法」通常不是主要障礙。\n\nInsufficient computational power to run basic ML models（錯誤）：大型深度學習的運算、成本與 scalability 確實可能是挑戰，但 basic ML models 通常可使用一般運算資源；AWS 也提供可擴展 compute。題目刻意加入 basic，表示它不是此處最佳答案。\n\n其他真實挑戰還包括 overfitting／underfitting、bias、model explainability、deployment／monitoring、skills、cost 與 scalability；但在這組選項中，最普遍且最上游的答案是 collecting and preparing high-quality data。快速辨識：clean、relevant、representative、complete training data＝data quality／preparation challenge。"
       },
       "Deep Learning and Neural Networks": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -405,7 +465,7 @@
       },
       "Self-Supervised Learning": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Self-supervised learning 從資料本身建立訓練目標，例如遮住 token 再預測，能利用大量未人工標註資料進行預訓練。"
+        "Description": "Self-supervised learning（自監督學習，正確）：使用大量未人工標註的原始資料，從 input data 本身自動構造 labels／proxy targets／supervisory signals，再像 supervised learning 一樣以預測目標進行訓練。例如遮住句子中的 token 要模型復原、根據前文預測下一個 token，或從同一影像建立不同 views 進行學習。Foundation Models 因而能利用網路文字、影像等海量 unlabeled data 做 pre-training，不需要人工逐筆標註。\n\nSupervised learning（監督式學習）：訓練資料已由人員或既有流程提供明確 input-label pairs，例如病歷加上確診疾病、影像標成良性／惡性。常見任務是 classification 與 regression；關鍵字是 labeled dataset、known target／ground truth。\n\nUnsupervised learning（非監督式學習，本題誤選）：同樣使用 unlabeled data，但主要目標是找出資料內在結構或分布，例如 clustering、association、dimensionality reduction 與 anomaly detection。它通常不先構造預測目標來進行類似監督式的預訓練，因此題目強調 Foundation Models create labels from input data 時應選 self-supervised，而不是 unsupervised。\n\nReinforcement learning（強化學習）：agent 與 environment 互動，根據 actions 得到 rewards／penalties，學習能最大化累積回饋的 policy。關鍵字是 agent、environment、action、reward、trial and error；它不是 Foundation Model 從原始資料建立預訓練標籤的方法。RLHF 則是在預訓練後使用人類偏好回饋對生成模型做 alignment。\n\n本題判斷：vast amounts of raw／unlabeled data + models generate labels themselves + Foundation Model pre-training＝Self-supervised learning。你選的 Unsupervised learning 雖也不需要人工標籤，但關鍵差異在 self-supervised 會從資料本身製造可預測的 proxy target。\n\n醫療情境提醒：這裡的 create labels 是預訓練用的自動監督訊號，不代表模型能自動產生可靠的疾病診斷 ground-truth labels。病歷與臨床標註仍需資料治理、隱私保護、領域專家驗證及人工監督，才能用於高風險診斷或治療模型。"
       },
       "Reinforcement Learning": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -428,6 +488,10 @@
       "Overfitting": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Overfitting 表示模型記住訓練資料細節，訓練表現好但新資料差，通常呈現高 variance。可增加資料、正則化、簡化模型或 early stopping。"
+      },
+      "Overfitting vs. Underfitting and Bias-Variance": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "本題正確配對：Underfit models experience high bias；overfit models experience high variance。你選的 underfit low bias + overfit low variance 把兩個典型關係都反過來。\n\nUnderfitting（欠擬合）：模型假設太簡單、有效特徵不足、regularization 過強或訓練不足，連 training data 的主要規律都無法捕捉。典型 learning pattern 是 training error 高，validation／test error 也高；屬於 high bias、通常 low variance。模型可能穩定地給出相似答案，但答案系統性地偏離真實關係。\n\n改善 underfitting：增加有意義的 features、提高模型彈性／複雜度、訓練足夠時間，或降低過強的 regularization。不能只盲目加入雜訊特徵；應用 validation metrics 確認是否改善。\n\nOverfitting（過擬合）：模型太複雜、資料太少／不具代表性、雜訊太多或訓練過久，導致模型記住 training examples 的細節與 noise，卻無法 generalize。典型 pattern 是 training error 很低，但 validation／test error 明顯較高，形成 large generalization gap；屬於 high variance、通常 low bias。換一批訓練資料，模型可能學出很不同的規則。\n\n改善 overfitting：增加且多樣化 training data、data augmentation、移除無關 features、簡化／prune 模型、增加 regularization、dropout、cross-validation、ensembling 或 early stopping。更多 training epochs 可能降低 training bias，卻提高 variance 並讓 overfitting 更嚴重；增加更多具代表性的資料和單純訓練更久不是同一件事。\n\n醫療情境：只用非常簡單的規則和少量特徵預測 patient outcomes，導致在訓練醫院與新醫院都表現差＝underfitting／high bias。複雜模型記住特定病患 ID、單一醫院流程或小型資料集中的偶然 noise，在 training set 很準但新病患／其他醫院很差＝overfitting／high variance。應依病患層級正確切分資料，避免同一病患同時出現在 train 與 test 造成 leakage。\n\nBias 是因過度簡化假設造成的系統性誤差；variance 是模型對訓練樣本變動的敏感程度。考試口訣：太簡單、train 和 test 都差＝underfit＝high bias；背答案、train 好但 unseen data 差＝overfit＝high variance。理想 well-fitted model 是 training 與 validation 表現都達標且差距合理，而不是只追求 training accuracy。"
       },
       "Confusion Matrix": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -461,11 +525,11 @@
     "Language and Speech Services": {
       "Amazon Comprehend": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Amazon Comprehend 使用 NLP 從文字中擷取實體、關鍵片語、語言、情緒與主題，也支援自訂分類與實體辨識。它分析文字，不是語音轉文字服務。"
+        "Description": "Amazon Comprehend 使用 Natural Language Processing（NLP）分析文字，可擷取實體、關鍵片語、語言、情緒與主題，也支援自訂分類與實體辨識。Topic modeling 可檢查一組未標註文件中的共同主題，並指出每份文件與各主題的關聯，因此適合依 topics 分析或分組研究文章。\n\n快速辨識：group articles by topics using NLP＝Amazon Comprehend。Translate 負責語言翻譯；Lex 建立對話介面；Rekognition 分析影像與影片。AWS 目前已不向新客戶提供 Comprehend topic modeling 功能，但既有客戶與考題中的服務概念仍依此辨識。"
       },
       "Amazon Translate": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Amazon Translate 是神經機器翻譯服務，用於在支援的語言間翻譯文字。若來源是音訊，通常先用 Transcribe 轉文字。"
+        "Description": "Amazon Translate 是使用 machine learning 的文字翻譯服務，可把來源語言的文字即時或批次翻譯成目標語言，適合網站、文件、電子郵件、聊天訊息與多語言內容在地化。它也支援自動偵測來源語言及自訂術語。\n\n快速辨識：translate words、text、documents 或 content from one language to another＝Amazon Translate。Transcribe 是 speech-to-text；Polly 是 text-to-speech；Comprehend 是 NLP 文字分析，例如情緒、實體、關鍵片語與主題，不負責語言翻譯。若來源是語音，通常先用 Transcribe 轉成文字，再使用 Translate 翻譯。"
       },
       "Amazon Transcribe": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -483,7 +547,7 @@
     "Vision, Documents, and Search": {
       "Amazon Rekognition": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Amazon Rekognition 可分析影像與影片中的物件、場景、文字、臉部與不安全內容。臉部比對涉及高風險生物特徵資料，需審慎使用與人工監督。"
+        "Description": "Amazon Rekognition 是影像與影片分析服務，可偵測物件、人物、場景、概念、活動與文字，也能分析或比對臉部並辨識不安全內容。臉部比對涉及高風險生物特徵資料，需審慎使用與人工監督。\n\n快速辨識：find objects, people, text, or scenes in images and videos＝Amazon Rekognition。Polly 將文字轉語音；Kendra 搜尋文件；Lex 建立文字或語音聊天機器人。"
       },
       "Rekognition Custom Labels": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
@@ -495,10 +559,14 @@
       },
       "Amazon Kendra": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Amazon Kendra 是以 ML 支援的企業搜尋服務，可從多種內容來源找出語意相關答案。它偏向企業搜尋，不是通用 Web 搜尋引擎。"
+        "Description": "Amazon Kendra 是以 machine learning 支援的企業文件搜尋服務，可連接並索引多種文件來源，以自然語言或關鍵字查詢找出語意相關的文件、答案或 passages，也能作為 RAG 系統的 retriever。它偏向組織內部內容搜尋，不是通用 Web 搜尋引擎。\n\n快速辨識：document search service powered by machine learning＝Amazon Kendra。Translate 翻譯文字；Comprehend 從文字擷取情緒、實體、關鍵片語與主題；Polly 將文字轉為語音。"
       }
     },
     "Conversational, Recommendation, and Human Review": {
+      "Amazon Connect (Connect Customer)": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "Amazon Connect 是 AWS 的全通路雲端聯絡中心（cloud contact center）服務；AWS 現行文件將原本的產品稱為 Connect Customer，但仍交替使用 Amazon Connect 舊名。它讓組織建立客服中心，透過語音、聊天、SMS、電子郵件與任務等管道，把客戶路由給合適的客服人員，並提供流程、佇列、即時指標及客服體驗管理。\n\nAmazon Connect 可整合 Amazon Lex 建立 IVR／聊天機器人，以 Amazon Polly 將文字轉語音，並利用語音轉錄、情緒分析與 Contact Lens 等能力分析客服互動。\n\n快速辨識：cloud contact center、call center、customer service agents、call routing、queues、IVR＝Amazon Connect。Lex 是對話式 chatbot 技術；Polly 是 text-to-speech；Transcribe 是 speech-to-text；這些可成為 Connect 聯絡中心的一部分，但不等同完整聯絡中心平台。"
+      },
       "Amazon Lex": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Amazon Lex 用於建立文字與語音對話介面，提供 automatic speech recognition 與 natural language understanding；常搭配 Lambda 執行後端業務邏輯。"
@@ -547,6 +615,14 @@
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Amazon SageMaker AI 是建立、訓練與部署 ML 模型的全受管平台，涵蓋資料準備、實驗、訓練、部署、監控與 MLOps。相較 Bedrock，它提供更完整的傳統 ML 與自訂模型控制。"
       },
+      "Amazon Q vs. Amazon SageMaker AI vs. AWS Elastic Beanstalk": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "Amazon Q＝直接使用的生成式 AI 助理產品家族。Amazon Q Developer 協助 coding、testing、troubleshooting、AWS 開發與維運；Amazon Q Business 連接企業資料，提供具權限控管的問答、摘要與內容生成。題目出現 AI coding assistant、developer productivity、enterprise knowledge assistant、internal company data 時選 Amazon Q。它不是用來訓練及託管任意自訂模型的通用 ML 平台。\n\nAmazon SageMaker AI＝建立、訓練、調整、部署與監控 ML／foundation models 的全受管 ML 平台。它支援 notebooks、資料準備、training jobs、hyperparameter tuning、自訂演算法或 containers、inference endpoints 與 MLOps。題目出現 data scientist、train a custom model、feature engineering、model endpoint、model monitoring、完整 ML lifecycle 時選 SageMaker AI。\n\nAWS Elastic Beanstalk＝部署及擴展一般 Web application／service 的受管應用平台。開發者上傳應用程式原始碼，Beanstalk 會建立及設定 EC2、load balancing、health monitoring 與 Auto Scaling 等資源。題目出現 quickly deploy a web app、upload application code、web server environment、automatic scaling of an application environment 時選 Elastic Beanstalk。它本身不負責 ML 模型訓練、調整或模型生命週期管理。\n\n三秒判斷：要一個現成 AI 助理＝Amazon Q；要自己建立、訓練與部署 ML 模型＝Amazon SageMaker AI；要部署 Python／Java／Node.js／Docker 等 Web 應用程式＝AWS Elastic Beanstalk。\n\n三者可以一起使用：例如 Web API 部署在 Elastic Beanstalk，API 再呼叫 SageMaker AI endpoint；開發人員可用 Amazon Q Developer 協助撰寫與除錯程式碼。這時 Beanstalk 管應用程式執行環境，SageMaker AI 管模型，Amazon Q 提供助理能力。"
+      },
+      "Amazon Bedrock vs. Amazon SageMaker AI": {
+        "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
+        "Description": "Amazon Bedrock：適合快速把生成式 AI 能力整合進應用程式。它透過統一 API 提供 Amazon 與第三方的預訓練 foundation models，採 serverless／全受管方式，使用者不必管理模型推論基礎設施。常用能力包括 prompting、Knowledge Bases for RAG、Agents、Guardrails、模型評估，以及對支援模型進行 fine-tuning、continued pre-training、distillation 或 custom model import。目標使用者通常是希望以較少 ML 與基礎設施工作建置 GenAI 應用的開發人員。\n\nAmazon SageMaker AI：適合完整的 ML 生命週期與高度客製化需求，涵蓋資料準備、特徵工程、標註、notebooks、訓練、hyperparameter tuning、部署、監控與 MLOps。可使用 built-in algorithms、JumpStart 預訓練模型、自訂 training scripts、frameworks 或 containers，也能從零建立及訓練模型。使用者可細部控制訓練運算、instance type、scaling、network 與 inference endpoint，通常需要較多資料科學、ML 工程與基礎設施知識。\n\n快速比較：\n\n• 快速呼叫多家預訓練 FM、統一 API、不管理伺服器、建立 RAG／agent／guardrails＝Amazon Bedrock。\n\n• 傳統 ML、自訂演算法或 container、從零訓練、完整資料與訓練流程、細部控制運算和 endpoint、MLOps＝Amazon SageMaker AI。\n\n• Bedrock 並非完全不能客製化模型，SageMaker AI 也不只用於從零訓練；差別主要是抽象層級、控制程度與管理負擔。兩者不是互斥，也可以先在 SageMaker AI 訓練或客製化模型，再依支援方式部署或匯入 Bedrock 使用。"
+      },
       "SageMaker Studio": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "SageMaker Studio 提供整合式 ML 開發環境，集中 notebooks、資料、訓練、部署與治理工具。存取仍需 IAM 與網路隔離設定。"
@@ -569,7 +645,7 @@
       },
       "SageMaker Ground Truth": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "Ground Truth 管理資料標註工作，可使用內部、供應商或 Mechanical Turk workforce，並以 active learning 降低部分標註量。敏感資料要選擇適當 workforce 與權限。"
+        "Description": "Amazon SageMaker Ground Truth 用於建立及管理高品質的 labeled training datasets。它把影像分類、bounding boxes、semantic segmentation、文字分類等資料標註任務派送給人工標註者，也支援自訂 labeling workflow。可選擇三種 workforce：private workforce（組織員工或承包商）、AWS Marketplace vendor，以及由 Amazon Mechanical Turk 提供的 public workforce。敏感或受管制資料通常應選受控的 private workforce，並設定適當 IAM、網路與資料存取權限。\n\n對支援的內建任務，Ground Truth 可使用 active learning／automated data labeling：先由人員標註部分資料，再訓練模型自動標註高信心項目，把需要人工判斷的資料交回標註者，以降低大型資料集的人工成本與時間；自動標籤仍需抽樣驗證品質。\n\n快速辨識：create labeled training datasets、data annotation、bounding boxes、assign labeling tasks to a workforce＝SageMaker Ground Truth。Amazon A2I 是將 human review 加入 production ML predictions；Clarify 偵測 bias 並解釋模型；Data Wrangler 用於資料探索、清理與轉換。\n\n現況提醒：AWS 自 2026-07-30 起不再向新客戶開放 Ground Truth，既有客戶仍可繼續使用；考題中的功能定位仍依上述概念判斷。"
       }
     },
     "SageMaker Inference": {
@@ -588,12 +664,16 @@
       "Batch Transform": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
         "Description": "Batch Transform 對儲存在 S3 的大量資料執行離線推論，不建立持續運行端點，適合定期評分與大批次處理。"
+      },
+      "Real-Time vs. Asynchronous vs. Batch Inference": {
+        "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
+        "Description": "Real-Time Inference（即時推論）：使用持續運行的 managed endpoint，以同步 request-response 方式回傳預測，適合需要毫秒級低延遲、持續或穩定流量的線上互動，例如即時推薦、詐欺判斷，或比賽進行中逐幀預測下一分勝方。一般 request payload 可達 25 MB，正常回應處理時間最長 60 秒。端點即使閒置仍可能產生 instance 成本。\n\nAsynchronous Inference（非同步推論）：每次請求仍個別處理，但先排入 queue，呼叫端不必保持連線等待；輸入與輸出通常透過 Amazon S3，完成時可使用 Amazon SNS 通知。適合 near-real-time、較大 payload（最高 1 GB）或較長處理時間（最長 1 小時）的影像、影片、音訊與文件工作。沒有請求時可將 endpoint instances scale to zero。\n\nBatch Transform（批次推論）：把事先準備好並儲存在 S3 的整批資料進行離線預測，工作完成後將結果寫回 S3；不需要持續運行的 endpoint。適合每日／每週批次評分、歷史資料分析或一次處理大型 dataset，不適合使用者正在等待的即時結果。\n\n快速辨識：live、immediate response、milliseconds、as players play＝Real-Time。Individual requests、queue、large payload、long processing、result later＝Asynchronous。Entire dataset available upfront、offline、scheduled processing、no persistent endpoint＝Batch Transform。\n\n截圖題目中，模型要在網球比賽進行時分析 video frames 並預測每一分勝方，結果必須立刻提供，因此答案是 Real-Time Inference；Asynchronous 回傳較慢，Batch 要等整批資料準備完成。"
       }
     },
     "SageMaker Governance and No-Code": {
       "SageMaker Clarify": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
-        "Description": "SageMaker Clarify 可偵測資料與模型預測中的 bias，並用 feature attribution 協助解釋預測。工具提供量測結果，公平性門檻與處置仍是組織責任。"
+        "Description": "Amazon SageMaker Clarify 用於偵測資料與模型中的 bias，並提升模型可解釋性與行為透明度。它可計算 pre-training 與 post-training bias metrics，使用 SHAP feature attribution 說明哪些特徵影響模型整體行為或單次預測，也可產生分析報告與視覺化結果，並監控 production 模型的 bias 與 feature-attribution drift。工具提供量測與解釋結果，但公平性定義、門檻及處置仍是組織責任。\n\n快速辨識：visualize bias、model explainability、feature importance、increase visibility into model behavior＝SageMaker Clarify。Data Wrangler 用於資料探索與前處理；JumpStart 提供預訓練模型與解決方案；Amazon A2I 把人工審查加入 ML workflow。\n\n現況提醒：AWS 自 2026-07-30 起不再向新客戶開放 SageMaker Clarify，既有客戶仍可繼續使用；考題中的功能定位仍依上述概念判斷。"
       },
       "SageMaker Model Cards": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
@@ -601,7 +681,11 @@
       },
       "SageMaker Model Monitor": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
-        "Description": "Model Monitor 監測 production 模型的資料品質、模型品質、bias 與 feature attribution drift。偵測異常後仍需警示、調查與再訓練流程。"
+        "Description": "Amazon SageMaker Model Monitor 持續監控 production 模型與 endpoint，支援四類監控：data quality、model quality（例如 accuracy）、bias drift，以及 feature attribution drift。它使用 baseline／constraints 與排程監控工作偵測偏移或品質問題，並可配合警示、調查及再訓練流程；其中 bias 與 feature-attribution 分析使用 SageMaker Clarify 的能力。\n\n快速辨識：production monitoring、data／model quality drift、bias drift、feature attribution drift＝Model Monitor；訓練前後 bias metrics、SHAP explanations、解釋單次預測＝Clarify。兩者能協助 Responsible AI 的持續評估，但不會自行保證模型公平，也不會自動修正所有問題。\n\n現況提醒：AWS 自 2026-07-30 起不再向新客戶開放 SageMaker Model Monitor，既有客戶仍可繼續使用；考題中的功能定位仍依上述概念判斷。"
+      },
+      "Responsible AI Tools – SageMaker Clarify vs. Model Monitor vs. JumpStart vs. Audit Manager vs. Inspector": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "Amazon SageMaker Clarify（正確）：直接支援 fairness、bias detection 與 explainability。它可分析 pre-training data bias 與 post-training model bias、計算 bias metrics，並以 SHAP feature attribution 解釋模型整體行為或個別預測。題目出現 fair、transparent、free from bias、explain predictions、feature importance，通常選 Clarify。\n\nAmazon SageMaker Model Monitor（正確）：用於部署後持續監控 production 模型，涵蓋 data quality、model quality、bias drift 與 feature attribution drift。題目出現 monitor over time、production drift、alert when bias／quality changes，通常選 Model Monitor。它把 Responsible AI 從一次性評估延伸到持續監控。\n\nAmazon SageMaker JumpStart（本題不選）：提供 pretrained models、foundation models、solution templates 與 example notebooks，讓團隊快速開始、微調、評估或部署模型。關鍵字是 model hub、pretrained model、quick start，不是專門偵測公平性或 bias drift。\n\nAWS Audit Manager（本題不選）：依 compliance frameworks 自動收集、整理 AWS 使用證據並產生 audit-ready assessment reports。它支援稽核與合規治理，但不分析 ML 模型是否公平、不計算 bias metrics，也不解釋預測。\n\nAmazon Inspector（本題不選）：掃描 EC2、ECR container images 與 Lambda functions 的 software vulnerabilities，關鍵字是 CVE、vulnerable package 與 workload exposure；它不是模型偏差或可解釋性工具。\n\n考試情境：醫療 AI 團隊要評估診斷模型對不同群體是否公平、說明哪些特徵影響診斷，並在上線後偵測 bias／feature-attribution drift，Select two＝SageMaker Clarify + SageMaker Model Monitor。若只問建立與部署預訓練模型選 JumpStart；收集稽核證據選 Audit Manager；掃描軟體弱點選 Inspector。\n\n重要觀念：Responsible AI 不是宣稱模型可以完全 free from bias。Clarify 與 Model Monitor提供量測、解釋、監控及警示；公平性定義、可接受門檻、資料代表性、人工審查與修正措施仍由組織負責。"
       },
       "SageMaker Model Registry": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
@@ -613,11 +697,11 @@
       },
       "SageMaker JumpStart": {
         "Domain": "領域 3：基礎模型的應用 (Applications of Foundation Models)",
-        "Description": "JumpStart 提供預先訓練模型、基礎模型、範例與解決方案範本，加快實驗與部署。使用前仍應檢查授權、資料、模型限制及安全設定。"
+        "Description": "Amazon SageMaker JumpStart 是 SageMaker AI 的 ML hub／快速啟動資源，提供預訓練模型、foundation models、built-in algorithms、可執行範例 notebooks 與常見使用案例的 end-to-end solution templates，減少自行搜尋模型及從零建置訓練與部署流程的工作。對支援的模型，可從 SageMaker Studio 或 Python SDK 執行 evaluate、fine-tune、customize 與 deploy；部署後由 SageMaker AI 建立可供推論的 endpoint。\n\n快速辨識：pretrained models、prebuilt solutions、model hub、quickly get started、least operational effort for fine-tuning an open-source model＝SageMaker JumpStart。它不是用於偵測 bias 的 Clarify，不是用於資料準備的 Data Wrangler，也不是用於 production drift 監控的 Model Monitor。\n\n限制：並非所有模型都支援 fine-tuning、customization 或 evaluation；使用第三方或 proprietary 模型前，要確認授權／EULA、可用 Region、instance 成本、資料安全與模型限制。"
       },
       "SageMaker Canvas": {
         "Domain": "領域 1：AI 和 ML 基礎 (Fundamentals of AI and ML)",
-        "Description": "SageMaker Canvas 提供 no-code 視覺介面，讓分析師建立預測或使用生成式 AI。No-code 只降低技術門檻，不會消除資料品質、偏差與治理責任。"
+        "Description": "Amazon SageMaker Canvas（本題正確）：提供 visual no-code 介面，讓 business analysts 等使用者不必撰寫程式碼，就能匯入資料、建立與評估 custom ML models，並產生單筆或批次 predictions。Canvas 也可使用 Ready-to-use models，以及和 LLM 對話進行生成、摘要、分類與問答。AWS 的核心定義是 use machine learning to generate predictions without needing to write any code。\n\nSageMaker Data Wrangler（本題誤選所描述的重點）：用於 prepare、featurize、analyze、clean 與 transform ML data，支援 visual transformations 和 feature engineering。現行 Data Wrangler 是從 SageMaker Canvas 內使用，因此 Canvas 確實也具備資料準備能力；但若題目問哪個敘述最能定義 Canvas，no-code predictions 比 data preparation 更完整、更具識別性。\n\nSageMaker JumpStart（一鍵式端到端方案選項）：ML hub，提供 pretrained／foundation models、built-in algorithms、notebooks 與 solution templates；傳統 JumpStart Solutions 可為常見 use case 建立 data processing、training、deployment、inference 與 monitoring 等 end-to-end workflow。快速開始預建模型／方案＝JumpStart，不是 Canvas 的主要定義。現況上舊的一鍵式 JumpStart Solutions 僅存在 Studio Classic，而 Studio Classic 已不再開放新建；考題仍可能使用其經典功能描述。\n\nSageMaker Clarify（特徵影響選項）：使用 SHAP feature attributions、PDP 等方式解釋 input features 如何影響模型整體行為或單次 prediction，並支援 bias detection。題目出現 explain predictions、feature importance、bias、transparency，選 Clarify。\n\n本題判斷：Which best describes SageMaker Canvas?＝It allows users to use ML to generate predictions without writing code。你選的 preparing tabular and image data 比較接近 Data Wrangler；one-click end-to-end solutions＝JumpStart；explain how input features affect predictions＝Clarify。\n\n限制：no-code 只是降低技術門檻，不代表不需要理解 business goal、target column、資料品質與評估指標；使用者仍需檢查 bias、避免 data leakage、保護敏感資料並驗證 predictions。"
       },
       "MLflow with SageMaker": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
@@ -637,6 +721,10 @@
   },
   "chapter11: AI Challenges and Responsibilities": {
     "Responsible AI Dimensions": {
+      "Responsible AI": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "Responsible AI（負責任 AI）是在 AI 的設計、開發、部署與營運生命週期中，盡量發揮效益並識別、預防及降低可能的風險、傷害與負面結果。它涵蓋 fairness、explainability、transparency、privacy and security、safety、controllability、veracity and robustness，以及 governance，並需要持續測試、監控、人工監督與問責。\n\n快速辨識：mitigating potential risks and negative outcomes that can emanate from an AI system＝Responsible AI。它不只是 AWS Shared Responsibility Model 中的安全合規規則，也不只是提升創意與生產力；而且適用於傳統 ML、生成式 AI 與其他 AI 系統，不只適用 GenAI。"
+      },
       "Fairness": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
         "Description": "Fairness 關注 AI 是否對不同群體產生不合理差異。應檢查資料代表性、分群指標與業務影響；單一整體 accuracy 可能掩蓋群體差異。"
@@ -660,9 +748,17 @@
       "Governance": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
         "Description": "AI governance 建立角色、政策、風險分類、核准、文件與監控機制，確保 AI 從構想到退役都有負責人與可稽核流程。"
+      },
+      "Governance vs. Veracity and Robustness vs. Privacy and Security vs. Fairness": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "Governance（治理）：把負責任 AI 落實為組織制度與供應鏈流程，包括角色與責任、政策、風險分級、核准門檻、文件、稽核、監控與法規遵循。題目若提到 who is accountable、governance committee、policies and standards、approval process、audit trail，或從設計到退役的 lifecycle oversight，選 Governance。\n\nVeracity and robustness（真實性與穩健性）：veracity 是輸出是否事實正確，robustness 是遇到雜訊、非預期、分布改變或 adversarial inputs 時仍能可靠運作。題目若提到 hallucination／factual accuracy、stress testing、edge cases、input perturbation 或系統在攻擊下的可靠性，選此項。\n\nPrivacy and security（隱私與安全）：適當取得、使用與管理資料，並保護資料和模型免於外洩、未授權存取及攻擊。題目若提到 PII、encryption、access control、data minimization、credentials、model/data exfiltration，選此項。\n\nFairness（公平性）：比較 AI 對不同利害關係人或人口群體是否造成不合理差異。題目若提到 protected groups、representation、disparate impact，或各群體 false-positive rate／approval rate 差距，選 Fairness。\n\n快速辨識：制度與問責＝Governance；正確且抗異常＝Veracity and robustness；保護資料與模型＝Privacy and security；群體影響差異＝Fairness。截圖未包含題幹，因此只有當完整題目描述政策、責任或生命週期監督時，Governance 才是正確答案。"
       }
     },
     "Generative AI Risks": {
+      "Generative AI Capabilities and Non-Determinism": {
+        "Domain": "領域 2：生成式 AI 基礎 (Fundamentals of GenAI)",
+        "Description": "Personalization（個人化）：依使用者、角色、語言、偏好或上下文調整內容，例如為不同客群撰寫不同版本的行銷文案。\n\nScalability（規模化）：大量產生、摘要、翻譯或轉換內容，例如一次建立數千筆商品描述；實際吞吐量仍取決於架構、配額與成本。\n\nSimplicity（簡化）：以自然語言介面或內容自動化降低某些複雜工作的操作門檻，例如用文字指令產生程式碼或摘要；這是工作流程效益，不代表所有 GenAI 系統都容易建置或治理。\n\nDeterminism（確定性）：同一輸入每次都保證得到完全相同輸出。Foundation models 通常是 probabilistic／non-deterministic，因此 determinism 不是 GenAI 的固有能力；相同提示可能因取樣參數、模型版本或執行條件得到不同答案。\n\n考試情境：tailored recommendations／不同客群內容＝Personalization；thousands of descriptions／serve content at scale＝Scalability；natural-language interface／reduce manual effort＝Simplicity；same prompt produces varying answers，或問 What isn’t a capability of Gen AI?＝Determinism。降低 temperature、固定 seed（若支援）或限制輸出格式可提高一致性，但通常仍不應把完全可重現視為保證；重要輸出需持續評估與驗證。"
+      },
       "Hallucination": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
         "Description": "Hallucination 是模型產生流暢但錯誤或無依據內容。可用 RAG、來源引用、較低隨機性、事實驗證與人工複核降低風險，但無法保證完全消除。"
@@ -682,9 +778,17 @@
       "Jailbreaking": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
         "Description": "Jailbreaking 使用精心設計的輸入繞過模型限制。應採多層防護，包括 Guardrails、權限最小化、輸出驗證、紅隊測試與監控，而不是只依賴提示拒絕。"
+      },
+      "Jailbreaking vs. Prompt Leakage vs. Data Exposure vs. Goal Hijacking": {
+        "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+        "Description": "Jailbreaking（越獄）：攻擊者以角色扮演、編碼、many-shot 或其他誘導方式繞過模型原生 safety／moderation 限制，使模型產生原本禁止的有害或危險內容。核心是 bypass safety controls。\n\nPrompt leakage／system prompt leakage（提示洩漏）：攻擊者誘使模型輸出 system prompt、developer instructions、prompt template、tool schema 或其他機密設定。核心是 reveal hidden instructions，例如要求 repeat everything above。\n\nData exposure／sensitive information disclosure（資料暴露）：PII、credentials、商業機密、其他使用者資料、RAG 內容或訓練資料被未授權的人看到。Exposure 是較廣泛的資料洩露結果，可能由 prompt injection、prompt leakage、錯誤 ACL、過度權限、logs 或不安全輸出處理造成；不只限於 system prompt。\n\nGoal hijacking／prompt hijacking（目標劫持）：攻擊者加入新指令，使模型忽略開發者原本任務、改變 persona 或把流程導向攻擊者的目標。它通常屬於 prompt injection 的效果或手法，例如把銀行助理劫持成回答無關問題，或誘使 agent 執行非預期動作。\n\n快速辨識：繞過內容安全限制＝Jailbreaking；要求揭露隱藏提示＝Prompt leakage；敏感或機密資料實際被不當揭露＝Exposure；模型原本任務／目標被惡意指令取代＝Hijacking。這些風險可能串連發生，例如 hijacking 成功後造成 prompt leakage，最後導致 sensitive data exposure。\n\n截圖只有選項而沒有題幹，因此無法單憑圖片確認答案；若完整題目描述的是 confidential or sensitive information becoming visible to unauthorized users，答案才是 Exposure。"
       }
     },
     "Human-Centered AI": {
+      "Human-Centered Design – Amplified Decision-Making": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "Design for amplified decision-making 是讓 AI 增強而不是取代人的判斷。系統應在正確時間提供清楚、優先排序、可採取行動的資訊，呈現來源、理由、confidence／uncertainty 與可能後果，並保留人工確認、覆寫及升級處理機制。這能減少認知負荷，特別有助於決策者在緊張、時間有限或高壓環境中避免錯誤。\n\n快速辨識：help decision-makers prevent mistakes in stressful or high-pressure environments＝design for amplified decision-making。重點不是讓 AI 自動取代決策者，而是把重要訊號與選項清楚呈現，支援人類做出更好且可問責的決策。題目中的 environmental decision-making、unbiased decision-making、human and AI learning 並不是這個情境所指的 HCD 原則名稱。"
+      },
       "Human-in-the-Loop": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
         "Description": "Human-in-the-loop 讓人員審查低信心、例外或高風險結果。它適合醫療、金融與權益影響大的決策，但需定義審核標準、權限與時效。"
@@ -692,6 +796,10 @@
       "AI Service Cards": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
         "Description": "AWS AI Service Cards 說明特定服務或使用案例的預期用途、限制、負責任 AI 設計與效能考量，可支援風險評估但不取代客戶自己的測試。"
+      },
+      "AWS AI Service Cards vs. Marketplace vs. Skill Builder vs. Artifact": {
+        "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
+        "Description": "AWS AI Service Cards（AI 服務卡）：負責任 AI 的透明度文件，說明特定 AWS AI 服務／功能的基本概念、intended use cases and limitations、負責任 AI 設計考量，以及部署與效能最佳實務。題目若問到了解 AI 服務適用情境、已知限制、公平性／透明度考量或 responsible use，選它；但客戶仍須用自己的資料與情境測試。\n\nAWS Marketplace：尋找、購買、部署與管理第三方軟體、資料、服務及部分 ML 模型／演算法的數位型錄。題目若提到 third-party solution、AMI／SaaS、subscribe、seller、license 或 procurement，選 Marketplace。\n\nAWS Skill Builder：AWS 線上學習中心，提供數位課程、learning plans、labs、game-based learning 與 certification exam prep。題目若提到 learn AWS skills、training、hands-on lab 或 prepare for certification，選 Skill Builder。\n\nAWS Artifact：按需取得 AWS 與第三方的安全／合規報告，以及管理部分協議；常見關鍵字是 SOC、PCI、ISO、C5、compliance report、auditor 或 agreement。它不是教學平台，也不是 AI 服務限制說明。\n\n快速辨識：AI 的 intended use／limitations／responsible design＝AI Service Cards；買第三方方案＝Marketplace；學習與考證照＝Skill Builder；下載合規報告／管理協議＝Artifact。截圖未包含題幹，因此只有當完整題目詢問 AI 服務的負責任使用、用途與限制時，答案才是 AWS AI Service Cards。"
       },
       "Partial Dependence Plots": {
         "Domain": "領域 4：負責任 AI 指南 (Guidelines for Responsible AI)",
@@ -752,6 +860,10 @@
       "AWS Artifact": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
         "Description": "AWS Artifact 提供 AWS 合規報告與特定協議的自助存取。它提供文件證據，不會自動讓客戶工作負載符合規範。"
+      },
+      "Amazon Macie vs. AWS Artifact vs. Amazon Inspector vs. AWS Config": {
+        "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",
+        "Description": "Amazon Macie（敏感資料探索）：使用 machine learning 與模式比對盤點及偵測 Amazon S3 中的 sensitive data，例如 PII、financial data 與 credentials，並產生 findings 協助識別資料安全風險。考題若出現 discover／classify sensitive data、protect sensitive data in S3、PII in buckets，選 Macie。Macie 能協助發現風險，但不代表會自動修正所有 bucket permissions 或移除敏感資料。\n\nAWS Artifact（合規文件與協議）：提供 on-demand access to AWS compliance reports 及特定 AWS agreements。考題若出現 SOC、PCI、ISO、C5、compliance documentation、auditor，或下載／接受 agreement，選 Artifact。Artifact 提供稽核證據與協議管理，不會掃描工作負載，也不會自動使系統合規。\n\nAmazon Inspector（工作負載弱點管理）：自動探索並持續掃描 Amazon EC2 instances、Amazon ECR container images 與 AWS Lambda functions 的 software vulnerabilities；部分資源也會評估 unintended network exposure。考題若出現 CVE、vulnerable package、container image scan、EC2／Lambda vulnerability，選 Inspector。它不負責搜尋 S3 的 PII，也不提供 AWS 合規報告。\n\nAWS Config（資源組態歷史與規則合規）：記錄支援 AWS resources 的 configuration state 與 changes over time，建立 configuration history，並可用 Config rules 評估設定是否符合要求。考題若出現 record configurations、configuration history、resource changed from public to private、configuration drift 或 rule compliance，選 Config。若題目問誰在何時呼叫了哪個 API，通常是 CloudTrail，不是 Config。\n\n快速辨識：S3 敏感資料＝Macie；合規報告／協議＝Artifact；EC2／ECR／Lambda 弱點＝Inspector；組態變更歷史／設定合規＝Config。"
       },
       "AWS Audit Manager": {
         "Domain": "領域 5：AI 解決方案的安全、合規與治理 (Security, Compliance, and Governance for AI Solutions)",

@@ -107,6 +107,126 @@ ZH_OPTION_FALLBACKS = {
     "Decrease the number of tokens in the prompt.": "减少提示中的 token 数量。",
 }
 
+# Reviewed exceptions for source-PDF sections that are missing or extracted as
+# clipped fragments. Keeping them in the builder makes future rebuilds stable.
+ZH_EXPLANATION_OVERRIDES: dict[int, dict[str, str]] = {
+    294: {
+        "A": "正確。原因是，轉化率直接衡量與 AI 助手互動後完成購買的客戶比例，因此最能反映它對銷售成果的影響。",
+        "B": "錯誤。原因是，互動次數只能衡量使用量，無法證明互動是否帶來購買或營收。",
+        "C": "錯誤。原因是，情緒分析分數衡量客戶態度與體驗，並不是直接的銷售績效指標。",
+        "D": "錯誤。原因是，自然語言理解準確率是模型品質指標，不能直接衡量產品是否因此售出。",
+    },
+    340: {
+        "A": "錯誤。原因是，ROUGE 主要比較生成摘要與參考摘要的文字重疊，適合摘要評估，不是翻譯品質的典型指標。",
+        "B": "正確。原因是，BLEU 比較機器翻譯與參考翻譯的 n-gram 重疊程度，適合自動評估多語言翻譯品質。",
+        "C": "錯誤。原因是，AUC 評估分類模型區分正負類別的能力，與翻譯文字品質無關。",
+        "D": "錯誤。原因是，Precision 評估分類預測中的陽性命中比例，不能比較譯文與參考翻譯。",
+    },
+    341: {
+        "D": "錯誤。原因是，降維用來壓縮特徵並保留主要變異，不能直接把無標籤影像分成生長與背景區域；聚類才會依特徵相似性形成群組。",
+    },
+    342: {
+        "A": "錯誤。原因是，題目要比較模型可接受的資料模態與成本，不是用未獲題目支持的 Transformer 架構差異來選模型。",
+        "B": "錯誤。原因是，Nova Lite 並非只針對數值資料；它能處理文字、圖片與影片，因此描述不正確。",
+        "C": "正確。原因是，Nova Micro 是成本較低的 text-only 模型，但題目還要處理圖片；Nova Lite 支援文字、圖片與影片，是兩者中能滿足需求的選擇。",
+        "D": "錯誤。原因是，Nova 是透過 Amazon Bedrock 使用的受管模型，僅能在 CPU 或 GPU 執行不是本題的模型選擇特性。",
+    },
+    346: {
+        "A": "錯誤。原因是，使用大量新資料更新模型權重屬於訓練或持續預訓練；RAG 在推論時檢索外部資料，不必重新訓練 LLM。",
+        "B": "正確。原因是，RAG 先從外部權威知識庫檢索相關內容，再加入 LLM 上下文，以提升回答的相關性、時效性與準確性。",
+        "C": "錯誤。原因是，只依賴原始訓練資料正是 RAG 要改善的限制；RAG 會在推論時加入外部檢索內容。",
+        "D": "錯誤。原因是，語言翻譯是生成式 AI 的一種任務，但不等於檢索外部知識後再生成的 RAG 架構。",
+    },
+    358: {
+        "C": "錯誤。原因是，用戶滿意度可反映體驗，但它對營收的影響是間接的；轉化率才直接衡量推薦後完成購買的比例。",
+    },
+    364: {
+        "A": "錯誤。原因是，Amazon Q Business 主要以企業資料回答員工問題，不是專門用來撰寫軟體測試程式碼。",
+        "B": "錯誤。原因是，Bedrock Agents 需要自行配置模型、工具與流程；對寫測試程式碼而言，營運工作量高於現成的 Q Developer。",
+        "C": "正確。原因是，Amazon Q Developer 是現成的生成式 AI 開發助理，可協助撰寫、測試、除錯及審查程式碼。",
+        "D": "錯誤。原因是，SageMaker Clarify 用於偵測模型偏差與解釋預測，不是程式碼或測試產生工具。",
+    },
+    367: {
+        "A": "錯誤。原因是，高準確性與可靠性若能達成是優點，而且生成式 AI 並不保證永遠具備這些特性。",
+        "B": "錯誤。原因是，生成式 AI 輸出可能隨抽樣參數與上下文改變，通常不是完全確定且一致。",
+        "C": "錯誤。原因是，生成式 AI 模型通常需要可觀的訓練與推論資源，『幾乎不需運算資源』並不正確。",
+        "D": "正確。原因是，模型可能產生看似合理但虛構或不準確的內容；幻覺是上線時必須以 grounding、驗證及人工審查降低的風險。",
+    },
+    368: {
+        "B": "錯誤。原因是，SageMaker AI 提供完整模型生命週期與較多控制，但通常需要較多 ML 與基礎設施設定，不符合最低開發工作量。",
+        "C": "錯誤。原因是，PartyRock 適合學習及快速製作示範型生成式 AI 應用，不是正式部署任意 AI 模型的通用生產平台。",
+        "D": "錯誤。原因是，Amazon Q Developer 是程式設計與 AWS 開發助理，不是讓團隊選擇、開發及部署 foundation model 的平台。",
+    },
+    369: {
+        "A": "錯誤。原因是，OpenSearch Service 著重全文、向量與分析搜尋；題目明確要求以關係連結進行圖形分析。",
+        "B": "錯誤。原因是，Aurora 是關聯式資料庫，適合 SQL 與交易式工作負載，不是專門遍歷詐欺關係圖的服務。",
+        "C": "正確。原因是，Amazon Neptune 是受管 graph database，適合分析帳戶、交易與行為之間的複雜關係並支援詐欺調查。",
+        "D": "錯誤。原因是，MemoryDB 是記憶體資料庫，適合低延遲存取，不提供 Neptune 的原生圖形關係與遍歷能力。",
+    },
+    390: {
+        "A": "錯誤。原因是，AWS KMS 管理加密金鑰並保護資料機密性，但不負責定義哪些人員有權存取訓練資料。",
+        "B": "錯誤。原因是，Amazon EMR 用於大數據處理，不是管理使用者身分與資料存取權限的服務。",
+        "C": "正確。原因是，AWS IAM 以使用者、角色與政策授予最小必要權限，可限制只有獲授權人員能存取模型訓練資料。",
+        "D": "錯誤。原因是，Amazon Redshift 是資料倉儲；題目詢問跨 AWS 資源管理身分與授權的核心服務，應選 IAM。",
+    },
+    394: {
+        "C": "錯誤。原因是，metadata 可用於篩選及管理文件，但本身不能表示文字語意；RAG 語意檢索仍需將文件分塊並建立 embeddings。",
+    },
+    399: {
+        "A": "錯誤。原因是，對大量網路內容持續預訓練可能增加一般知識，卻不能保證符合公司的價值觀，還可能吸收新的不良內容。",
+        "B": "錯誤。原因是，歷史審核資料只反映過去決策，不能持續因應新型態問題內容與即時價值判斷。",
+        "C": "錯誤。原因是，各種通用倫理準則可能彼此衝突，也不一定符合該公司的特定政策或快速變化的內容趨勢。",
+        "D": "正確。原因是，RLHF 使用熟練審核員的回饋對齊公司價值與倫理，並可透過新的人工回饋因應持續出現的問題內容。",
+    },
+    401: {
+        "C": "正確。原因是，SageMaker Ground Truth 可建立人工標註工作，且資料不含機密資訊時可使用 Mechanical Turk 公開工作團隊取得標籤。",
+        "D": "錯誤。原因是，OCR 用來從影像擷取文字，不適合替信用卡交易紀錄建立分類標籤，也不能取代正確的資料標註流程。",
+        "E": "正確。原因是，SageMaker Ground Truth labeling job 能安排人工或自動化標註，將未標記交易轉成可供 fine-tuning 的帶標籤樣本。",
+    },
+    402: {
+        "B": "錯誤。原因是，MCP 是連接模型與工具或資料來源的協定；只選協定名稱並未提供題目所需的旅行系統 API 與可執行動作。此題來源要求 custom API。",
+    },
+    405: {
+        "A": "錯誤。原因是，On-Demand 適合即時或不規則請求，但每週一次的大量離線目錄更新使用 Batch inference 通常更具成本效益。",
+        "B": "錯誤。原因是，Provisioned Throughput 適合需要保留穩定吞吐量的持續負載，週期性的每週批次工作會讓預留容量閒置。",
+        "C": "正確。原因是，Batch inference 適合不要求即時回應的大量離線請求，可一次處理每週目錄更新並降低推論成本。",
+        "D": "錯誤。原因是，Model evaluation 是評估模型品質的功能，不是用於執行每週推論工作的定價模式。",
+    },
+    407: {
+        "B": "錯誤。原因是，Denied topics 用來封鎖指定主題；它不專門偵測使用者試圖越獄、忽略系統指令或繞過安全能力的提示攻擊。",
+    },
+    411: {
+        "A": "錯誤。原因是，直接使用 Amazon 預訓練模型只能依賴既有能力，沒有讓模型針對公司的專屬資料與回應模式進行調整。",
+        "B": "錯誤。原因是，開源預訓練模型本身沒有學習公司的私有資料；仍需 fine-tuning 或 RAG 才能根據公司資料回答。",
+        "C": "正確。原因是，以公司資料 fine-tune 自訂模型會調整模型權重，使輸出更符合公司的領域內容、術語與任務模式。",
+        "D": "錯誤。原因是，第三方預訓練模型同樣不會自動知道公司的專屬資料；只選擇模型供應商不能滿足題意。",
+    },
+    423: {
+        "A": "錯誤。原因是，F1 score 通常綜合分類任務的 precision 與 recall，不是比較摘要與參考摘要的標準指標。",
+        "B": "正確。原因是，ROUGE 以生成摘要與人工參考摘要之間的 n-gram 或序列重疊衡量摘要品質，正符合題目需求。",
+        "C": "錯誤。原因是，Perplexity 衡量語言模型預測文字序列的不確定程度，不會直接比較兩份摘要的內容涵蓋度。",
+        "D": "錯誤。原因是，FID 比較真實與生成影像的特徵分布，主要用於影像生成評估，不能評估文字摘要。",
+    },
+    427: {
+        "A": "錯誤。原因是，持續預訓練會更新模型知識與權重，不以降低模型參數量或結構複雜度為主要效果。",
+        "B": "正確。原因是，持續預訓練讓模型從新增的未標記領域資料學習，使知識保持相關並可能隨時間改善領域表現。",
+        "C": "錯誤。原因是，持續預訓練仍需額外資料與運算，通常不會縮短訓練時間。",
+        "D": "錯誤。原因是，持續預訓練會產生額外資料處理與運算成本，降低訓練成本不是它的必然優點。",
+    },
+    429: {
+        "A": "正確。原因是，SageMaker Clarify 可在訓練前分析資料集並計算 pre-training bias metrics，以找出特定群體是否代表不足或分布不均。",
+        "B": "錯誤。原因是，SageMaker Model Cards 用來記錄模型用途、風險與評估資訊，不負責計算資料集的訓練前偏差指標。",
+        "C": "錯誤。原因是，Clarify 的 post-training bias metrics 分析已訓練模型的預測；題目要求在訓練之前檢查資料集。",
+        "D": "錯誤。原因是，Model Cards 不是偏差計算工具，post-training 的時間點也不符合題目要求。",
+    },
+    451: {
+        "A": "錯誤。原因是，Rekognition 分析圖片中的物件、臉部或文字，不能解釋好友推薦模型為何做出特定推薦。",
+        "B": "正確。原因是，SageMaker Clarify 能以 feature attribution 解釋模型預測並分析偏差，最直接地提升推薦模型透明度。",
+        "C": "錯誤。原因是，Amazon Personalize 可建立個人化推薦，但遷移模型不會自動滿足透明度及可解釋性要求。",
+        "D": "錯誤。原因是，Ground Truth 用於資料標註；人工檢查偏差不如 Clarify 的專用分析能力符合題意，也增加營運工作量。",
+    },
+}
+
 HOTSPOT_QUESTIONS = {
     114: {
         "domain": 1,
@@ -529,20 +649,77 @@ def clean_zh_option(en: str, raw_zh: str) -> str:
     return value
 
 
-def source_zh_explanations(block: str, options: dict[str, str], answers: list[str]) -> dict[str, str]:
+def analysis_zh_explanations(
+    block: str,
+    en_options: dict[str, str],
+    zh_options: dict[str, str],
+    answers: list[str],
+) -> dict[str, str]:
+    """Extract the per-option prose from the source's numbered option analysis.
+
+    Some source PDFs put the rationale directly after the bilingual option label,
+    without a ``原因``/``正確`` marker.  The older marker-based extractor skipped
+    those otherwise useful explanations and caused the generic fallback text to be
+    repeated for every option.
+    """
+
+    normalized = unicodedata.normalize("NFKC", block)
+    analysis = re.search(r"题目(?:分析与解答|解析|分析)", normalized)
+    if not analysis:
+        return {}
+
+    section = normalized[analysis.end():]
+    option_analysis = re.search(r"(?m)^\s*2[.、]\s*选项分析\s*$", section)
+    if option_analysis:
+        section = section[option_analysis.end():]
+    section_end = re.search(r"(?m)^\s*3[.、]\s*", section)
+    if section_end:
+        section = section[: section_end.start()]
+
+    matches = list(OPTION_RE.finditer(section))
+    result: dict[str, str] = {}
+    for index, match in enumerate(matches):
+        key = match.group(1)
+        if key not in en_options or key in result:
+            continue
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(section)
+        reason = clean_text(section[match.end():end])
+
+        en_option = clean_text(en_options[key])
+        if reason.lower().startswith(en_option.lower()):
+            reason = reason[len(en_option):].strip()
+        zh_option = clean_text(zh_options[key])
+        if reason.startswith(zh_option):
+            reason = reason[len(zh_option):].strip()
+
+        reason = re.sub(r"^(?:正确|错误|原因|结论)[：:]?\s*", "", reason)
+        reason = reason.strip(" 。；;:")
+        if len(reason) < 6 or not CHINESE_RE.search(reason):
+            continue
+        prefix = "正確。" if key in answers else "錯誤。"
+        result[key] = f"{prefix}原因是，{reason[:900]}"
+    return result
+
+
+def source_zh_explanations(
+    block: str,
+    en_options: dict[str, str],
+    zh_options: dict[str, str],
+    answers: list[str],
+) -> dict[str, str]:
     answer_comment_re = (
         r"(?:我(?:的)?(?:选择|選擇|选|選)(?:的)?(?:答案)?|我(?:的)?答案|"
         r"官方答案|与官方答案|與官方答案|答案比较|答案比較|比较与思考|比較與思考)"
     )
     matches = list(OPTION_RE.finditer(block))
-    candidates: dict[str, list[tuple[int, str]]] = {key: [] for key in options}
+    candidates: dict[str, list[tuple[int, str]]] = {key: [] for key in en_options}
     for index, match in enumerate(matches):
         key = match.group(1)
         if key not in candidates:
             continue
         end = matches[index + 1].start() if index + 1 < len(matches) else len(block)
         segment = clean_text(block[match.end():end])
-        option_text = clean_text(options[key])
+        option_text = clean_text(en_options[key])
         if segment.lower().startswith(option_text.lower()):
             segment = segment[len(option_text):].strip()
         marker = re.search(r"(?:正确|错误|问题点|正确点|是否支持|可解释性|原因|结论)[：:]?", segment)
@@ -572,6 +749,16 @@ def source_zh_explanations(block: str, options: dict[str, str], answers: list[st
         if reason:
             prefix = "正確。" if key in answers else "錯誤。"
             result[key] = f"{prefix}原因是，{reason[:900]}"
+    # The explicitly numbered option-analysis section is the cleanest source. It
+    # also avoids fragments that happen to contain words such as ``正确`` later
+    # in the paragraph, so let it replace marker-based candidates when present.
+    for key, explanation in analysis_zh_explanations(
+        block,
+        en_options,
+        zh_options,
+        answers,
+    ).items():
+        result[key] = explanation
     return result
 
 
@@ -622,7 +809,8 @@ def build_question(number: int, aizh: str, discussion: str) -> dict:
         raise ValueError(f"Q{number}: English and bilingual option keys differ")
 
     answers = correct_answers(aizh)
-    zh_source_reasons = source_zh_explanations(aizh, en_options, answers)
+    zh_source_reasons = source_zh_explanations(aizh, en_options, zh_options, answers)
+    zh_source_reasons.update(ZH_EXPLANATION_OVERRIDES.get(number, {}))
     requirement = compact_requirement(en_question)
     correct_en = "; ".join(f"{key}. {en_options[key]}" for key in answers)
     correct_zh = "；".join(f"{key}. {zh_options[key]}" for key in answers)

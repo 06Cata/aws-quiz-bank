@@ -211,6 +211,11 @@ function localizedText(value: LocalizedText | null | undefined, fallback = "") {
   };
 }
 
+function isGenericEnglishOptionExplanation(value: string) {
+  return value.startsWith("Correct. Choosing this option directly addresses the source-confirmed requirement")
+    || value.startsWith("Incorrect. This option addresses a different task or misses a key constraint");
+}
+
 function optionEntries(question: QuizQuestion) {
   return Object.entries(question.options ?? {}).sort(([left], [right]) => left.localeCompare(right));
 }
@@ -1481,10 +1486,18 @@ export default function Home() {
                         .sort(([left], [right]) => left.localeCompare(right))
                         .map(([key, explanation]) => {
                           const text = localizedText(explanation);
+                          const optionText = localizedText(currentQuestion.options[key]);
                           return (
                             <div key={key} className="border-l-2 border-zinc-700 pl-3">
                               <div className="flex items-start justify-between gap-3">
-                                <p className="text-base font-black leading-7 text-zinc-100">{key}. {text.zh}</p>
+                                <div className="min-w-0">
+                                  <p className="text-base font-black leading-7 text-zinc-100">
+                                    {key}. {optionText.zh || optionText.en}
+                                  </p>
+                                  {optionText.en && optionText.en !== optionText.zh ? (
+                                    <p className="mt-1 text-xs leading-5 text-zinc-500">{optionText.en}</p>
+                                  ) : null}
+                                </div>
                                 {hasStartedQuiz && currentQuestion?.id ? (
                                   <button
                                     type="button"
@@ -1496,7 +1509,10 @@ export default function Home() {
                                   </button>
                                 ) : null}
                               </div>
-                              {text.en ? <p className="mt-2 text-sm leading-6 text-zinc-400">{text.en}</p> : null}
+                              {text.zh ? <p className="mt-2 text-sm leading-6 text-zinc-300">{text.zh}</p> : null}
+                              {text.en && !isGenericEnglishOptionExplanation(text.en) ? (
+                                <p className="mt-1 text-xs leading-5 text-zinc-500">{text.en}</p>
+                              ) : null}
                             </div>
                           );
                         })}

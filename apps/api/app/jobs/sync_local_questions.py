@@ -22,6 +22,7 @@ class SyncTarget:
 class SyncStats:
     scanned_count: int = 0
     inserted_count: int = 0
+    updated_count: int = 0
     skipped_count: int = 0
 
 
@@ -65,6 +66,40 @@ class SupabaseRestClient:
             response.raise_for_status()
             rows = response.json()
         return int(rows[0]["question_no"]) if rows else 0
+
+    async def select_existing(self) -> dict[int, dict[str, Any]]:
+        rows: list[dict[str, Any]] = []
+        page_size = 1000
+        async with httpx.AsyncClient(timeout=30) as client:
+            offset = 0
+            while True:
+                response = await client.get(
+                    f"{self.base_url}/rest/v1/{self.target.questions_table}",
+                    headers=self.headers,
+                    params={
+                        "select": "id,question_no,content_hash,is_active",
+                        "question_no": "not.is.null",
+                        "order": "question_no.asc",
+                        "limit": str(page_size),
+                        "offset": str(offset),
+                    },
+                )
+                response.raise_for_status()
+                page = response.json()
+                rows.extend(page)
+                if len(page) < page_size:
+                    break
+                offset += page_size
+
+        existing: dict[int, dict[str, Any]] = {}
+        for row in rows:
+            question_no = int(row["question_no"])
+            if question_no in existing:
+                raise ValueError(
+                    f"Supabase {self.target.questions_table} 有重複的 Q{question_no}"
+                )
+            existing[question_no] = row
+        return existing
 
     async def insert_sync_run(self) -> str | None:
         payload = {
@@ -123,6 +158,22 @@ class SupabaseRestClient:
                     f"Q{payload.get('question_no')}: HTTP {response.status_code}: {detail}"
                 )
 
+    async def update_question(self, payload: dict[str, Any]) -> None:
+        question_no = payload.get("question_no")
+        async with httpx.AsyncClient(timeout=30) as client:
+            response = await client.patch(
+                f"{self.base_url}/rest/v1/{self.target.questions_table}",
+                headers={**self.headers, "Prefer": "return=minimal"},
+                params={"question_no": f"eq.{question_no}"},
+                json=payload,
+            )
+            if response.is_error:
+                detail = response.text.strip() or response.reason_phrase
+                raise RuntimeError(
+                    f"Supabase update failed for {self.target.exam.upper()} "
+                    f"Q{question_no}: HTTP {response.status_code}: {detail}"
+                )
+
 
 def pending_questions(
     questions: list[LocalQuestion],
@@ -147,24 +198,38 @@ async def sync_local_questions(exam: str | None = None) -> SyncStats:
     directory = Path(settings.questions_dir).expanduser().resolve()
     questions = load_local_questions(directory, target.exam)
     client = SupabaseRestClient(target)
-    latest = await client.latest_question_no()
+    existing = await client.select_existing()
+    latest = max(existing, default=0)
     local_latest = questions[-1].question_no
     if latest > local_latest:
         raise ValueError(
             f"Supabase 最新題號 Q{latest} 超過本機題庫最後一題 Q{local_latest}；"
             "questions 必須保留完整正式題庫，請先補齊本機 JSON"
         )
-    pending = pending_questions(questions, latest)
-    stats = SyncStats(
-        scanned_count=len(questions),
-        skipped_count=len(questions) - len(pending),
-    )
+    new_questions: list[LocalQuestion] = []
+    changed_questions: list[LocalQuestion] = []
+    skipped_count = 0
+    for item in questions:
+        current = existing.get(item.question_no)
+        if current is None:
+            new_questions.append(item)
+        elif current.get("content_hash") != item.payload.get("content_hash") or not current.get("is_active", False):
+            changed_questions.append(item)
+        else:
+            skipped_count += 1
+
+    if new_questions:
+        pending_questions(new_questions, latest)
+    stats = SyncStats(scanned_count=len(questions), skipped_count=skipped_count)
     sync_run_id = await client.insert_sync_run()
 
     try:
-        for item in pending:
+        for item in new_questions:
             await client.insert_question(item.payload)
             stats.inserted_count += 1
+        for item in changed_questions:
+            await client.update_question(item.payload)
+            stats.updated_count += 1
         await client.finish_sync_run(sync_run_id, "success", stats)
         return stats
     except Exception as exc:
@@ -199,6 +264,7 @@ def main() -> None:
     print(
         f"Local JSON sync completed for {target.exam}: "
         f"scanned={stats.scanned_count}, inserted={stats.inserted_count}, "
+        f"updated={stats.updated_count}, "
         f"skipped={stats.skipped_count}"
     )
 
