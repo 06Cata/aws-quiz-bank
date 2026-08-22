@@ -47,6 +47,7 @@ ZH_OPTION_FALLBACKS = {
     "Amazon Personalize": "Amazon Personalize",
     "Amazon Comprehend": "Amazon Comprehend",
     "Decision trees": "决策树",
+    "Decision tree": "決策樹",
     "Linear regression": "线性回归",
     "Logistic regression": "逻辑回归",
     "Neural networks": "神经网络",
@@ -65,6 +66,8 @@ ZH_OPTION_FALLBACKS = {
     "Generative pre-trained transformers (GPT)": "生成式预训练 Transformer（GPT）",
     "Residual neural network": "残差神经网络",
     "Support vector machine": "支持向量机",
+    "K-nearest neighbors (k-NN)": "K 最近鄰（k-NN）",
+    "K-means": "K-means 聚類",
     "WaveNet": "WaveNet 音频生成模型",
     "Training": "训练",
     "Inference": "推理",
@@ -110,11 +113,43 @@ ZH_OPTION_FALLBACKS = {
 # Reviewed exceptions for source-PDF sections that are missing or extracted as
 # clipped fragments. Keeping them in the builder makes future rebuilds stable.
 ZH_EXPLANATION_OVERRIDES: dict[int, dict[str, str]] = {
+    138: {
+        "A": "錯誤。原因是，K 最近鄰（k-NN）是監督式學習演算法，依鄰近的已標記樣本進行分類或回歸；本題沒有既有群組標籤，而是要自行發現客戶群組。",
+        "B": "正確。原因是，K-means 是無監督式聚類演算法，會依人口統計與購買特徵的相似程度將客戶分成不同群組，不需要預先提供群組標籤。",
+        "C": "錯誤。原因是，決策樹通常從帶標籤資料學習分類或回歸規則；它適合預測已定義的結果，不是用來自行探索未知客戶群組。",
+        "D": "錯誤。原因是，支援向量機（SVM）是監督式分類或回歸演算法，需要帶標籤範例學習決策邊界；本題需要的是無標籤聚類。",
+    },
+    261: {
+        "A": "錯誤。原因是，K 最近鄰（k-NN）是監督式學習演算法，依鄰近的已標記樣本進行分類或回歸；本題沒有既有群組標籤，而是要自行發現客戶群組。",
+        "B": "正確。原因是，K-means 是無監督式聚類演算法，會依人口統計與購買特徵的相似程度將客戶分成不同群組，不需要預先提供群組標籤。",
+        "C": "錯誤。原因是，決策樹通常從帶標籤資料學習分類或回歸規則；它適合預測已定義的結果，不是用來自行探索未知客戶群組。",
+        "D": "錯誤。原因是，支援向量機（SVM）是監督式分類或回歸演算法，需要帶標籤範例學習決策邊界；本題需要的是無標籤聚類。",
+    },
     294: {
         "A": "正確。原因是，轉化率直接衡量與 AI 助手互動後完成購買的客戶比例，因此最能反映它對銷售成果的影響。",
         "B": "錯誤。原因是，互動次數只能衡量使用量，無法證明互動是否帶來購買或營收。",
         "C": "錯誤。原因是，情緒分析分數衡量客戶態度與體驗，並不是直接的銷售績效指標。",
         "D": "錯誤。原因是，自然語言理解準確率是模型品質指標，不能直接衡量產品是否因此售出。",
+    },
+    304: {
+        "A": "錯誤。原因是，建立新 AI 演算法屬於模型研究與開發階段，目的是設計學習方法；inference 則是執行已訓練模型來產生結果。",
+        "B": "正確。原因是，inference（推論）就是把新的、未見過的輸入交給已訓練模型，讓模型輸出預測、分類、生成內容或決策。",
+        "C": "錯誤。原因是，將多個模型結果組合通常稱為 ensemble／集成學習，目的是改善預測穩健性；它不是 inference 的定義。",
+        "D": "錯誤。原因是，蒐集訓練資料屬於資料準備階段，目的是建立可供模型學習的資料集；inference 發生在模型訓練完成之後。",
+    },
+    321: {
+        "D": "錯誤。原因是，分析同業案例可提供靈感，但直接複製功能沒有先確認本公司的客戶、流程與收入目標，也缺少可量測的成效指標。",
+    },
+    345: {
+        "A": "錯誤。原因是，real-time inference 適合需要立即回應的個別請求；對大量、不要求立即完成的 prompts 逐次呼叫，成本與管理工作都高於批次推論。",
+        "B": "正確。原因是，Amazon Bedrock batch inference 能非同步處理存放在 Amazon S3 的大量 prompts，完成後再輸出結果，最符合大量、非即時與最低開發工作量。",
+        "C": "錯誤。原因是，Bedrock Agents 用來協調模型、知識庫與工具以完成多步驟任務；單純大量產生回應不需要代理規劃，建置 Agent 反而增加工作。",
+    },
+    446: {
+        "A": "錯誤。原因是，toxicity 指模型產生仇恨、侮辱、有害或冒犯內容；題目描述的是內容不正確，不是內容帶有毒性。",
+        "B": "正確。原因是，hallucination 指模型生成看似合理、實際上虛構或不正確的資訊，正符合產品描述包含錯誤事實的情境。",
+        "C": "錯誤。原因是，interpretability 指人們能否理解模型如何得出結果；可解釋性不足不等於模型產生錯誤事實。",
+        "D": "錯誤。原因是，deterministic output 指相同輸入總是得到相同結果；輸出是否固定與內容是否真實正確是不同問題。",
     },
     340: {
         "A": "錯誤。原因是，ROUGE 主要比較生成摘要與參考摘要的文字重疊，適合摘要評估，不是翻譯品質的典型指標。",

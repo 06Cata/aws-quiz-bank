@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 QuickSight 的内容访问权限是授予 QuickSight 用户与组，而不是直接将仪表板共享给 IAM 角色；此选项无法正确设置不同受众的内容权限。",
+          "zh": "錯誤。原因是，QuickSight 的内容访问权限是授予 QuickSight 用户与组，而不是直接将仪表板共享给 IAM 角色；此选项无法正确设置不同受众的内容权限。",
           "en": "Incorrect. QuickSight content permissions are granted to QuickSight users and groups rather than by directly sharing dashboards with IAM roles, so this does not correctly define audience access."
         },
         "B": {
-          "zh": "正確。 QuickSight 可连接 S3 与 RDS 数据集并创建交互式可视化。以用户和组共享仪表板，可让管理组获得完整权限，其他组仅获得所需的有限权限。",
+          "zh": "正確。原因是，QuickSight 可连接 S3 与 RDS 数据集并创建交互式可视化。以用户和组共享仪表板，可让管理组获得完整权限，其他组仅获得所需的有限权限。",
           "en": "Correct. QuickSight connects to S3 and RDS datasets and creates interactive visualizations. Sharing dashboards with users and groups lets management receive full permissions while other groups receive limited access."
         },
         "C": {
-          "zh": "錯誤。 Glue ETL 能转换数据但不是完整的可视化与仪表板服务，而且方案只处理 S3，没有纳入 RDS PostgreSQL 数据。",
+          "zh": "錯誤。原因是，Glue ETL 能转换数据但不是完整的可视化与仪表板服务，而且方案只处理 S3，没有纳入 RDS PostgreSQL 数据。",
           "en": "Incorrect. Glue ETL transforms data but is not a complete visualization and dashboard service, and this design only processes S3 without including RDS PostgreSQL."
         },
         "D": {
-          "zh": "錯誤。 Athena 可查询多个来源，但把查询结果发布到 S3 只提供文件而非所需的可视化报告与精细仪表板共享功能。",
+          "zh": "錯誤。原因是，Athena 可查询多个来源，但把查询结果发布到 S3 只提供文件而非所需的可视化报告与精细仪表板共享功能。",
           "en": "Incorrect. Athena can query multiple sources, but publishing query output to S3 provides files rather than the required visual reporting and granular dashboard sharing."
         }
       },
@@ -84,19 +84,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 EC2 实例配置文件可提供 IAM 角色的临时凭证，让两个实例遵循最小权限访问 S3，无需存储或轮换长期密钥。",
+          "zh": "正確。原因是，EC2 实例配置文件可提供 IAM 角色的临时凭证，让两个实例遵循最小权限访问 S3，无需存储或轮换长期密钥。",
           "en": "Correct. An EC2 instance profile supplies temporary credentials for an IAM role, allowing both instances least-privilege S3 access without stored or rotated long-term keys."
         },
         "B": {
-          "zh": "錯誤。 IAM 策略必须连接到 IAM 身份，例如角色、用户或组，不能直接连接到 EC2 实例。",
+          "zh": "錯誤。原因是，IAM 策略必须连接到 IAM 身份，例如角色、用户或组，不能直接连接到 EC2 实例。",
           "en": "Incorrect. An IAM policy must be attached to an IAM identity such as a role, user, or group; it cannot be attached directly to an EC2 instance."
         },
         "C": {
-          "zh": "錯誤。 IAM 组只能包含 IAM 用户，不能包含或连接到 EC2 实例。",
+          "zh": "錯誤。原因是，IAM 组只能包含 IAM 用户，不能包含或连接到 EC2 实例。",
           "en": "Incorrect. IAM groups can contain IAM users only and cannot contain or be attached to EC2 instances."
         },
         "D": {
-          "zh": "錯誤。 IAM 用户代表人员或固定工作负载身份，不能直接连接到实例；在实例存放用户长期凭证也违反最佳实践。",
+          "zh": "錯誤。原因是，IAM 用户代表人员或固定工作负载身份，不能直接连接到实例；在实例存放用户长期凭证也违反最佳实践。",
           "en": "Incorrect. An IAM user represents a person or fixed workload identity and cannot be attached to an instance. Storing user long-term credentials on EC2 also violates best practices."
         }
       },
@@ -144,23 +144,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 S3 事件通知可将每次上传可靠地送入耐久的 SQS 队列，解耦上传与图像处理并在 Lambda 暂时失败时保留工作。",
+          "zh": "正確。原因是，S3 事件通知可将每次上传可靠地送入耐久的 SQS 队列，解耦上传与图像处理并在 Lambda 暂时失败时保留工作。",
           "en": "Correct. S3 event notifications can place each upload in a durable SQS queue, decoupling ingestion from processing and retaining work during temporary Lambda failures."
         },
         "B": {
-          "zh": "正確。 Lambda 的 SQS 事件事件源映射会轮询队列并调用无状态函数；成功后移除消息，失败消息则可重试或移动到死信队列。",
+          "zh": "正確。原因是，Lambda 的 SQS 事件事件源映射会轮询队列并调用无状态函数；成功后移除消息，失败消息则可重试或移动到死信队列。",
           "en": "Correct. A Lambda SQS event source mapping polls the queue and invokes the stateless function. Successful messages are removed, while failures can be retried or sent to a dead-letter queue."
         },
         "C": {
-          "zh": "錯誤。 Lambda 的本地内存与临时文件不能在多次调用之间提供持久状态，且函数不应自行持续轮询 S3。",
+          "zh": "錯誤。原因是，Lambda 的本地内存与临时文件不能在多次调用之间提供持久状态，且函数不应自行持续轮询 S3。",
           "en": "Incorrect. Lambda memory and local temporary files are not durable across invocations, and a function should not continuously poll S3 itself."
         },
         "D": {
-          "zh": "錯誤。常驻 EC2 与本地文本档引入有状态组件、单点故障及服务器管理，违反耐久、无状态设计。",
+          "zh": "錯誤。原因是，常驻 EC2 与本地文本档引入有状态组件、单点故障及服务器管理，违反耐久、无状态设计。",
           "en": "Incorrect. A persistent EC2 instance and local text file introduce state, a single point of failure, and server management, violating the durable stateless design."
         },
         "E": {
-          "zh": "錯誤。电子邮件警报需要人工介入，不能自动触发压缩处理，也不是可扩展的工作队列。",
+          "zh": "錯誤。原因是，电子邮件警报需要人工介入，不能自动触发压缩处理，也不是可扩展的工作队列。",
           "en": "Incorrect. An email alert requires manual intervention, does not automatically invoke compression, and is not a scalable work queue."
         }
       },
@@ -205,19 +205,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 NLB 用于分配 TCP、UDP 或 TLS 连接到应用程序目标，不提供第三方虚拟设备所需的透明数据包插入、服务链与设备健康扩展功能。",
+          "zh": "錯誤。原因是，NLB 用于分配 TCP、UDP 或 TLS 连接到应用程序目标，不提供第三方虚拟设备所需的透明数据包插入、服务链与设备健康扩展功能。",
           "en": "Incorrect. An NLB distributes TCP, UDP, or TLS connections to application targets but does not provide transparent packet insertion, service chaining, and appliance scaling for third-party virtual appliances."
         },
         "B": {
-          "zh": "錯誤。 ALB 在第 7 层处理 HTTP/HTTPS，无法透明转送所有 IP 流量或保留虚拟防火墙需要的数据包语义。",
+          "zh": "錯誤。原因是，ALB 在第 7 层处理 HTTP/HTTPS，无法透明转送所有 IP 流量或保留虚拟防火墙需要的数据包语义。",
           "en": "Incorrect. An ALB processes HTTP/HTTPS at Layer 7 and cannot transparently forward all IP traffic or preserve packet semantics required by a virtual firewall."
         },
         "C": {
-          "zh": "錯誤。中转网关可连接多个 VPC，但单独使用不会将流量分配至一组防火墙设备，也缺少透明设备插入与运行状况检查。",
+          "zh": "錯誤。原因是，中转网关可连接多个 VPC，但单独使用不会将流量分配至一组防火墙设备，也缺少透明设备插入与运行状况检查。",
           "en": "Incorrect. A transit gateway connects VPCs, but by itself it does not distribute traffic across firewall appliances and lacks transparent appliance insertion and health checking."
         },
         "D": {
-          "zh": "正確。 Gateway Load Balancer 专为防火墙等虚拟网络设备设计，端点可在 VPC 间透明导引数据包，而负载均衡器负责设备运行状况检查、扩展与流量分配。",
+          "zh": "正確。原因是，Gateway Load Balancer 专为防火墙等虚拟网络设备设计，端点可在 VPC 间透明导引数据包，而负载均衡器负责设备运行状况检查、扩展与流量分配。",
           "en": "Correct. Gateway Load Balancer is purpose-built for virtual network appliances such as firewalls. Its endpoints transparently steer packets across VPCs while the load balancer handles appliance health, scaling, and distribution."
         }
       },
@@ -261,19 +261,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 EBS 快照只能创建新的 EBS 卷，不能直接恢复至临时的 EC2 实例存储。",
+          "zh": "錯誤。原因是，EBS 快照只能创建新的 EBS 卷，不能直接恢复至临时的 EC2 实例存储。",
           "en": "Incorrect. EBS snapshots create new EBS volumes and cannot be restored directly onto ephemeral EC2 instance store volumes."
         },
         "B": {
-          "zh": "錯誤。将生产环境卷直接 Multi-Attach 到测试实例不会创建隔离副本，测试写入可能改变正式数据； Multi-Attach 也只适用特定卷类型与同一可用区。",
+          "zh": "錯誤。原因是，将生产环境卷直接 Multi-Attach 到测试实例不会创建隔离副本，测试写入可能改变正式数据； Multi-Attach 也只适用特定卷类型与同一可用区。",
           "en": "Incorrect. Multi-Attaching the production volume to test instances does not create an isolated copy, so test writes could modify production data. Multi-Attach also has volume-type and same-AZ constraints."
         },
         "C": {
-          "zh": "錯誤。一般从快照创建的卷采延迟加载，尚未读取的区块第一次访问时可能有较高延迟；选项描述的先构建与初始化流程也不是从快照快速复制的正确顺序。",
+          "zh": "錯誤。原因是，一般从快照创建的卷采延迟加载，尚未读取的区块第一次访问时可能有较高延迟；选项描述的先构建与初始化流程也不是从快照快速复制的正确顺序。",
           "en": "Incorrect. Ordinary snapshot-restored volumes use lazy loading, so first access to untouched blocks can have higher latency. The described create-and-initialize-before-restore sequence is also not the proper fast clone workflow."
         },
         "D": {
-          "zh": "正確。快速快照恢复会创建在创建时即完整初始化的 EBS 卷，立即提供其预置性能，且新卷与生产环境隔离，可安全修改。",
+          "zh": "正確。原因是，快速快照恢复会创建在创建时即完整初始化的 EBS 卷，立即提供其预置性能，且新卷与生产环境隔离，可安全修改。",
           "en": "Correct. Fast snapshot restore creates fully initialized EBS volumes that immediately deliver provisioned performance. The new volumes are isolated from production and can be modified safely."
         }
       },
@@ -317,19 +317,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 S3 适合静态网站内容，但不是交易式订单数据库，无法提供订单写入所需的 API 处理、条件更新与一致性控制。",
+          "zh": "錯誤。原因是，S3 适合静态网站内容，但不是交易式订单数据库，无法提供订单写入所需的 API 处理、条件更新与一致性控制。",
           "en": "Incorrect. S3 is suitable for static site content but not as a transactional order database and does not provide the API processing, conditional updates, and consistency controls needed for orders."
         },
         "B": {
-          "zh": "錯誤。 EC2、两个 ALB 与关系数据库可以扩展，但需要容量规划、修补、Auto Scaling 与数据库连接管理，运维负担较高。",
+          "zh": "錯誤。原因是，EC2、两个 ALB 与关系数据库可以扩展，但需要容量规划、修补、Auto Scaling 与数据库连接管理，运维负担较高。",
           "en": "Incorrect. EC2, two ALBs, and a relational database can scale, but they require capacity planning, patching, Auto Scaling, and database connection management, creating higher overhead."
         },
         "C": {
-          "zh": "錯誤。 EKS 可处理高峰，但需管理 Kubernetes 集群、节点、Pod 扩展及 RDS 容量，对此事件型网站并非最低运维负担。",
+          "zh": "錯誤。原因是，EKS 可处理高峰，但需管理 Kubernetes 集群、节点、Pod 扩展及 RDS 容量，对此事件型网站并非最低运维负担。",
           "en": "Incorrect. EKS can handle bursts but requires managing Kubernetes clusters, nodes, pod scaling, and RDS capacity, so it is not the lowest-overhead design for this event-driven site."
         },
         "D": {
-          "zh": "正確。 CloudFront 与 S3 能以低延迟大规模提供静态内容； API Gateway、Lambda 和 DynamoDB 都是受管且可自动扩展的服务，适合突发的数百万请求。",
+          "zh": "正確。原因是，CloudFront 与 S3 能以低延迟大规模提供静态内容； API Gateway、Lambda 和 DynamoDB 都是受管且可自动扩展的服务，适合突发的数百万请求。",
           "en": "Correct. CloudFront and S3 serve static content globally at low latency, while API Gateway, Lambda, and DynamoDB are managed, automatically scaling services suitable for millions of bursty requests."
         }
       },
@@ -373,19 +373,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。这个标准存储类别可跨多个可用区提供恢复能力，但所有对象都按常用访问层计费，无法针对不可预测的冷数据自动降低存储成本。",
+          "zh": "錯誤。原因是，这个标准存储类别可跨多个可用区提供恢复能力，但所有对象都按常用访问层计费，无法针对不可预测的冷数据自动降低存储成本。",
           "en": "Incorrect. This standard storage class is resilient across Availability Zones but charges all objects at the frequent-access tier and cannot automatically reduce storage cost for unpredictably cold data."
         },
         "B": {
-          "zh": "正確。 Intelligent-Tiering 跨至少三个可用区存储数据，并依实际访问模式自动将对象移动到合适层级，对不可预测模式可降低成本且没有访问层取回费。",
+          "zh": "正確。原因是，Intelligent-Tiering 跨至少三个可用区存储数据，并依实际访问模式自动将对象移动到合适层级，对不可预测模式可降低成本且没有访问层取回费。",
           "en": "Correct. Intelligent-Tiering stores data across at least three Availability Zones and automatically moves objects to appropriate tiers based on actual access, lowering cost for unpredictable patterns without retrieval fees for its access tiers."
         },
         "C": {
-          "zh": "錯誤。 Standard-IA 能承受可用区故障，但每次检索收费且有最低存储期间；由于哪些文件会变冷不可预测，手动选择此层可能增加频繁访问文件的成本。",
+          "zh": "錯誤。原因是，Standard-IA 能承受可用区故障，但每次检索收费且有最低存储期间；由于哪些文件会变冷不可预测，手动选择此层可能增加频繁访问文件的成本。",
           "en": "Incorrect. Standard-IA is resilient to an AZ failure but charges for retrieval and has a minimum storage duration. With unpredictable access, placing frequently used files there can increase cost."
         },
         "D": {
-          "zh": "錯誤。 One Zone-IA 只将数据存于单一可用区，无法符合丢失一个可用区后仍具恢复能力的要求。",
+          "zh": "錯誤。原因是，One Zone-IA 只将数据存于单一可用区，无法符合丢失一个可用区后仍具恢复能力的要求。",
           "en": "Incorrect. One Zone-IA stores data in one Availability Zone and therefore cannot meet the requirement to survive the loss of an AZ."
         }
       },
@@ -429,19 +429,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 Intelligent-Tiering 适合未知或变动的访问模式，但本题已知一个月后完全不再访问；监控费用与较昂贵的非归档层不如直接转入最便宜的归档层。",
+          "zh": "錯誤。原因是，Intelligent-Tiering 适合未知或变动的访问模式，但本题已知一个月后完全不再访问；监控费用与较昂贵的非归档层不如直接转入最便宜的归档层。",
           "en": "Incorrect. Intelligent-Tiering suits unknown or changing access, but this pattern is known to become inactive after one month. Monitoring and non-archive tiers are less economical than a direct move to the lowest-cost archive."
         },
         "B": {
-          "zh": "正確。生命周期规则可在常用期结束后自动转至 Deep Archive；此层针对长期、几乎不检索且必须保留的数据提供最低存储成本。",
+          "zh": "正確。原因是，生命周期规则可在常用期结束后自动转至 Deep Archive；此层针对长期、几乎不检索且必须保留的数据提供最低存储成本。",
           "en": "Correct. A lifecycle rule automatically moves files after their active month to Deep Archive, which provides the lowest storage cost for long-lived data that is almost never retrieved."
         },
         "C": {
-          "zh": "錯誤。 Standard-IA 的存储费低于 Standard，但仍高于 Deep Archive，适合偶尔需要快速检索的数据；题目明确表示一个月后不再访问。",
+          "zh": "錯誤。原因是，Standard-IA 的存储费低于 Standard，但仍高于 Deep Archive，适合偶尔需要快速检索的数据；题目明确表示一个月后不再访问。",
           "en": "Incorrect. Standard-IA costs less than Standard but more than Deep Archive and suits data needing occasional rapid retrieval. The files are explicitly never accessed after one month."
         },
         "D": {
-          "zh": "錯誤。 One Zone-IA 仍比 Deep Archive 昂贵，且只存于单一可用区，对必须无限期保留的备份降低了恢复能力。",
+          "zh": "錯誤。原因是，One Zone-IA 仍比 Deep Archive 昂贵，且只存于单一可用区，对必须无限期保留的备份降低了恢复能力。",
           "en": "Incorrect. One Zone-IA still costs more than Deep Archive and stores data in one AZ, reducing resiliency for backups that must be retained indefinitely."
         }
       },
@@ -485,19 +485,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 AWS Budgets 主要用于设置成本或用量门槛、预测与警报，不是依实例类型进行历史根本原因分析的工具。",
+          "zh": "錯誤。原因是，AWS Budgets 主要用于设置成本或用量门槛、预测与警报，不是依实例类型进行历史根本原因分析的工具。",
           "en": "Incorrect. AWS Budgets primarily sets cost or usage thresholds, forecasts, and alerts; it is not the tool for historical root-cause analysis by instance type."
         },
         "B": {
-          "zh": "正確。 Cost Explorer 内置历史图表、期间比较、组与精细筛选，可直接依服务、用量类型或实例相关维度分析成本，无需创建数据管线。",
+          "zh": "正確。原因是，Cost Explorer 内置历史图表、期间比较、组与精细筛选，可直接依服务、用量类型或实例相关维度分析成本，无需创建数据管线。",
           "en": "Correct. Cost Explorer provides built-in historical graphs, period comparisons, grouping, and granular filters to analyze costs by service, usage type, and instance-related dimensions without a data pipeline."
         },
         "C": {
-          "zh": "錯誤。 Billing 仪表板提供高级成本摘要，但其筛选与深入切分能力不足以有效找出特定实例类型垂直扩展的根因。",
+          "zh": "錯誤。原因是，Billing 仪表板提供高级成本摘要，但其筛选与深入切分能力不足以有效找出特定实例类型垂直扩展的根因。",
           "en": "Incorrect. The Billing dashboard provides high-level cost summaries but lacks the granular filtering and drill-down needed to identify the root cause of vertical scaling by instance type."
         },
         "D": {
-          "zh": "錯誤。 CUR 搭配 S3 与 QuickSight 可做高度定制分析，但需要设置报告、存储、数据集及可视化，运维负担高于直接使用 Cost Explorer。",
+          "zh": "錯誤。原因是，CUR 搭配 S3 与 QuickSight 可做高度定制分析，但需要设置报告、存储、数据集及可视化，运维负担高于直接使用 Cost Explorer。",
           "en": "Incorrect. CUR with S3 and QuickSight enables highly customized analysis but requires report delivery, storage, datasets, and visualization setup, adding more overhead than Cost Explorer."
         }
       },
@@ -541,19 +541,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。改写为 EC2 上的 Tomcat 会增加服务器、扩展、修补与高可用性管理，配置工作远高于使用受管的事件服务。",
+          "zh": "錯誤。原因是，改写为 EC2 上的 Tomcat 会增加服务器、扩展、修补与高可用性管理，配置工作远高于使用受管的事件服务。",
           "en": "Incorrect. Rewriting for Tomcat on EC2 adds server, scaling, patching, and high-availability management, creating far more configuration work than managed event services."
         },
         "B": {
-          "zh": "錯誤。更换成 DynamoDB 与 DAX 需要重新设计数据模型和应用程序； DAX 主要加速读取，不能解决大量写入 Aurora 所造成的 Lambda 高峰。",
+          "zh": "錯誤。原因是，更换成 DynamoDB 与 DAX 需要重新设计数据模型和应用程序； DAX 主要加速读取，不能解决大量写入 Aurora 所造成的 Lambda 高峰。",
           "en": "Incorrect. Moving to DynamoDB and DAX requires a new data model and application changes. DAX primarily accelerates reads and does not solve Lambda bursts while loading Aurora."
         },
         "C": {
-          "zh": "錯誤。 SNS 能扇出推送事件，但不提供与 SQS 相同的耐久积压缓冲与消费者节流控制；数据库处理速度跟不上时仍可能造成大量同时调用。",
+          "zh": "錯誤。原因是，SNS 能扇出推送事件，但不提供与 SQS 相同的耐久积压缓冲与消费者节流控制；数据库处理速度跟不上时仍可能造成大量同时调用。",
           "en": "Incorrect. SNS can fan out pushed events but does not provide the same durable backlog and consumer throttling controls as SQS. Concurrent invocations can still surge when database processing lags."
         },
         "D": {
-          "zh": "正確。 SQS 会耐久缓冲大量输入并解耦接收与数据库写入。第二个 Lambda 可依批量与保留并行量控制消费速率，吸收高峰且只需少量设置。",
+          "zh": "正確。原因是，SQS 会耐久缓冲大量输入并解耦接收与数据库写入。第二个 Lambda 可依批量与保留并行量控制消费速率，吸收高峰且只需少量设置。",
           "en": "Correct. SQS durably buffers high-volume input and decouples ingestion from database writes. The second Lambda can consume in batches with controlled concurrency, absorbing bursts with little configuration."
         }
       },
@@ -597,19 +597,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 AWS Config 会持续记录资源配置历史并以受管或自定义规则评估 S3 是否符合策略，可检测及追溯未授权变更。",
+          "zh": "正確。原因是，AWS Config 会持续记录资源配置历史并以受管或自定义规则评估 S3 是否符合策略，可检测及追溯未授权变更。",
           "en": "Correct. AWS Config continuously records resource configuration history and evaluates S3 against managed or custom rules, enabling detection and tracing of unauthorized changes."
         },
         "B": {
-          "zh": "錯誤。 Trusted Advisor 提供特定成本、性能、配额、容错与安全最佳实践检查，但不是完整的 S3 配置变更历史与规则合规引擎。",
+          "zh": "錯誤。原因是，Trusted Advisor 提供特定成本、性能、配额、容错与安全最佳实践检查，但不是完整的 S3 配置变更历史与规则合规引擎。",
           "en": "Incorrect. Trusted Advisor offers selected cost, performance, quota, fault-tolerance, and security checks but is not a complete S3 configuration history and rule-compliance engine."
         },
         "C": {
-          "zh": "錯誤。 Amazon Inspector 评估运算工作负载的软件漏洞与网络暴露，不负责监控 S3 存储桶配置变更。",
+          "zh": "錯誤。原因是，Amazon Inspector 评估运算工作负载的软件漏洞与网络暴露，不负责监控 S3 存储桶配置变更。",
           "en": "Incorrect. Amazon Inspector assesses software vulnerabilities and network exposure in compute workloads; it does not monitor S3 bucket configuration changes."
         },
         "D": {
-          "zh": "錯誤。 S3 服务器访问日志记录对象与存储桶请求，不提供资源配置时间轴或自动判定配置是否合规；仅加上 EventBridge 仍需自建完整逻辑。",
+          "zh": "錯誤。原因是，S3 服务器访问日志记录对象与存储桶请求，不提供资源配置时间轴或自动判定配置是否合规；仅加上 EventBridge 仍需自建完整逻辑。",
           "en": "Incorrect. S3 server access logs record bucket and object requests, not a configuration timeline or automatic compliance evaluation. EventBridge alone would still require custom logic."
         }
       },
@@ -653,19 +653,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 CloudWatch 仪表板共享可通过电子邮件邀请与专用链接让没有 AWS 账户的对象只查看指定仪表板，比授予控制台权限更符合最低权限。",
+          "zh": "正確。原因是，CloudWatch 仪表板共享可通过电子邮件邀请与专用链接让没有 AWS 账户的对象只查看指定仪表板，比授予控制台权限更符合最低权限。",
           "en": "Correct. CloudWatch dashboard sharing uses an email invitation and dedicated link so a person without an AWS account can view only the specified dashboard, providing less privilege than console access."
         },
         "B": {
-          "zh": "錯誤。 CloudWatchReadOnlyAccess 会授予产品经理读取广泛 CloudWatch 资源的控制台权限，范围超过只查看单一仪表板，且还需管理 IAM 凭证。",
+          "zh": "錯誤。原因是，CloudWatchReadOnlyAccess 会授予产品经理读取广泛 CloudWatch 资源的控制台权限，范围超过只查看单一仪表板，且还需管理 IAM 凭证。",
           "en": "Incorrect. CloudWatchReadOnlyAccess grants console visibility across broad CloudWatch resources, exceeding access to one dashboard and requiring IAM credential management."
         },
         "C": {
-          "zh": "錯誤。共享 IAM 用户违反不可共享凭证的安全实践，而 ViewOnlyAccess 涵盖大量 AWS 服务，权限远超需求。",
+          "zh": "錯誤。原因是，共享 IAM 用户违反不可共享凭证的安全实践，而 ViewOnlyAccess 涵盖大量 AWS 服务，权限远超需求。",
           "en": "Incorrect. A shared IAM user violates the practice of unique credentials, and ViewOnlyAccess spans many AWS services, far exceeding the requirement."
         },
         "D": {
-          "zh": "錯誤。堡垒主机、RDP 与缓存凭证带来服务器管理与凭证泄漏风险，且授权边界不如仪表板共享精确。",
+          "zh": "錯誤。原因是，堡垒主机、RDP 与缓存凭证带来服务器管理与凭证泄漏风险，且授权边界不如仪表板共享精确。",
           "en": "Incorrect. A bastion host, RDP, and cached credentials add server management and credential exposure risk, with a less precise authorization boundary than dashboard sharing."
         }
       },
@@ -709,19 +709,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。此集成情境需要 AWS Managed Microsoft AD 与本地部署树系之间受支持的双向林信任；单向信任不足以提供题目所需的用户与组集成。",
+          "zh": "錯誤。原因是，此集成情境需要 AWS Managed Microsoft AD 与本地部署树系之间受支持的双向林信任；单向信任不足以提供题目所需的用户与组集成。",
           "en": "Incorrect. This integration requires a supported two-way forest trust between AWS Managed Microsoft AD and the on-premises forest. A one-way trust is insufficient for the required user and group integration."
         },
         "B": {
-          "zh": "正確。 AWS IAM Identity Center（原 AWS SSO）可与 AWS Organizations 集成，在多账户提供集中登录；通过 AWS Managed Microsoft AD 的双向林信任，可继续在本地部署 AD 管理用户与组。",
+          "zh": "正確。原因是，AWS IAM Identity Center（原 AWS SSO）可与 AWS Organizations 集成，在多账户提供集中登录；通过 AWS Managed Microsoft AD 的双向林信任，可继续在本地部署 AD 管理用户与组。",
           "en": "Correct. AWS IAM Identity Center, formerly AWS SSO, integrates with AWS Organizations for centralized multi-account access. A two-way forest trust through AWS Managed Microsoft AD allows users and groups to remain managed in the on-premises AD."
         },
         "C": {
-          "zh": "錯誤。只有 Directory Service 信任关系没有启用及设置 AWS SSO，无法提供跨 Organizations 账户的单一登录入口与权限分配。",
+          "zh": "錯誤。原因是，只有 Directory Service 信任关系没有启用及设置 AWS SSO，无法提供跨 Organizations 账户的单一登录入口与权限分配。",
           "en": "Incorrect. A Directory Service trust alone does not enable or configure AWS SSO, so it does not provide the multi-account sign-in portal and permission assignments."
         },
         "D": {
-          "zh": "錯誤。自建本地部署 IdP 需要额外部署与维护，而且选项没有说明如何将既有 AD 用户与组正确集成为 AWS SSO 身份来源。",
+          "zh": "錯誤。原因是，自建本地部署 IdP 需要额外部署与维护，而且选项没有说明如何将既有 AD 用户与组正确集成为 AWS SSO 身份来源。",
           "en": "Incorrect. A custom on-premises IdP adds deployment and maintenance, and the option does not establish how the existing AD users and groups become the AWS SSO identity source."
         }
       },
@@ -765,19 +765,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 NLB 支持 UDP 并可将流量分配到 Auto Scaling 实例； Global Accelerator 会通过 AWS 全球网络将客户端导向健康且延迟最佳的区域端点，并自动故障转移。",
+          "zh": "正確。原因是，NLB 支持 UDP 并可将流量分配到 Auto Scaling 实例； Global Accelerator 会通过 AWS 全球网络将客户端导向健康且延迟最佳的区域端点，并自动故障转移。",
           "en": "Correct. NLB supports UDP and distributes traffic to Auto Scaling instances. Global Accelerator uses the AWS global network to direct clients to the healthy, lowest-latency regional endpoint and automatically fails over."
         },
         "B": {
-          "zh": "錯誤。 ALB 只支持 HTTP 与 HTTPS 等第 7 层流量，不支持 VoIP 所使用的 UDP。",
+          "zh": "錯誤。原因是，ALB 只支持 HTTP 与 HTTPS 等第 7 层流量，不支持 VoIP 所使用的 UDP。",
           "en": "Incorrect. ALB handles Layer 7 protocols such as HTTP and HTTPS and does not support the UDP traffic used by VoIP."
         },
         "C": {
-          "zh": "錯誤。 NLB 与 Route 53 延迟路由可处理区域选择，但 CloudFront 是 HTTP/HTTPS 内容传递网络，不会代理一般 UDP VoIP 流量。",
+          "zh": "錯誤。原因是，NLB 与 Route 53 延迟路由可处理区域选择，但 CloudFront 是 HTTP/HTTPS 内容传递网络，不会代理一般 UDP VoIP 流量。",
           "en": "Incorrect. NLB and Route 53 latency routing can select Regions, but CloudFront is an HTTP/HTTPS content delivery network and does not proxy general UDP VoIP traffic."
         },
         "D": {
-          "zh": "錯誤。 ALB 与 CloudFront 都不支持此一般 UDP 工作负载，而且加权记录不会自动选择延迟最低的区域。",
+          "zh": "錯誤。原因是，ALB 与 CloudFront 都不支持此一般 UDP 工作负载，而且加权记录不会自动选择延迟最低的区域。",
           "en": "Incorrect. Neither ALB nor CloudFront supports this general UDP workload, and weighted records do not automatically choose the lowest-latency Region."
         }
       },
@@ -821,19 +821,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 RDS 数据库实例最多只能连续停止 7 天，之后会自动启动；每月只使用 48 小时时，仍会产生其余多周的运算费用。",
+          "zh": "錯誤。原因是，RDS 数据库实例最多只能连续停止 7 天，之后会自动启动；每月只使用 48 小时时，仍会产生其余多周的运算费用。",
           "en": "Incorrect. An RDS DB instance can remain stopped for only seven consecutive days before it is automatically restarted. A database used for 48 hours monthly would still accrue compute charges for the remaining weeks."
         },
         "B": {
-          "zh": "錯誤。一般 RDS 数据库实例没有依计划自动缩放实例类别的 Auto Scaling 策略； RDS 存储体自动扩展也不会停止运算费用。",
+          "zh": "錯誤。原因是，一般 RDS 数据库实例没有依计划自动缩放实例类别的 Auto Scaling 策略； RDS 存储体自动扩展也不会停止运算费用。",
           "en": "Incorrect. A standard RDS DB instance has no Auto Scaling policy that changes its instance class on this schedule. RDS storage autoscaling also does not eliminate compute charges."
         },
         "C": {
-          "zh": "正確。快照可耐久存储数据与配置，删除实例后不再支付数据库运算费用；下次测试时可从快照以相同实例规格恢复。",
+          "zh": "正確。原因是，快照可耐久存储数据与配置，删除实例后不再支付数据库运算费用；下次测试时可从快照以相同实例规格恢复。",
           "en": "Correct. A snapshot durably preserves data and configuration, and deleting the instance removes database compute charges. It can be restored with the same instance class for the next test."
         },
         "D": {
-          "zh": "錯誤。缩小实例会直接降低运算与内存规格，违反题目限制，而且每月变更类别也会造成停机与管理工作。",
+          "zh": "錯誤。原因是，缩小实例会直接降低运算与内存规格，违反题目限制，而且每月变更类别也会造成停机与管理工作。",
           "en": "Incorrect. Downsizing directly reduces compute and memory attributes, violating the requirement, and monthly class changes add downtime and management."
         }
       },

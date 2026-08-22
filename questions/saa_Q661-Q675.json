@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： Amazon DynamoDB 是一种与 Amazon RDS（关系数据库）完全不同的 NoSQL 数据库。将应用程序更改为使用 DynamoDB 终端节点需要重构应用程序逻辑，并且不满足“连接到现有 RDS 数据库”问题要求。",
+          "zh": "錯誤。原因是，Amazon DynamoDB 是一种与 Amazon RDS（关系数据库）完全不同的 NoSQL 数据库。将应用程序更改为使用 DynamoDB 终端节点需要重构应用程序逻辑，并且不满足“连接到现有 RDS 数据库”问题要求。",
           "en": "Incorrect. Technical reason: Amazon DynamoDB is a NoSQL database that is completely different from Amazon RDS (relational database). Changing the application to use the DynamoDB endpoint requires refactoring the application logic and does not meet the \"connect to an existing RDS database\" issue requirement."
         },
         "B": {
-          "zh": "正確。技术原因： Amazon RDS Proxy 是专门为优化数据库连接池而设计的服务。减少数据库连接开销，支持自动扩展，与现有RDS数据库无缝集成。使用 RDS Proxy 可以显著降低运营开销。",
+          "zh": "正確。原因是，Amazon RDS Proxy 是专门为优化数据库连接池而设计的服务。减少数据库连接开销，支持自动扩展，与现有RDS数据库无缝集成。使用 RDS Proxy 可以显著降低运营开销。",
           "en": "Correct. Technical reason: Amazon RDS Proxy is a service designed specifically for optimizing database connection pools. Reduce database connection overhead, support automatic expansion, and seamlessly integrate with existing RDS databases. Using RDS Proxy can significantly reduce operational overhead."
         },
         "C": {
-          "zh": "錯誤。技术原因：自定义代理虽然可以实现类似的功能，但是需要额外的开发和维护工作，包括管理EC2实例、配置代理软件等，这增加了运营开销，不满足问题所要求的“最低运营开销”。",
+          "zh": "錯誤。原因是，自定义代理虽然可以实现类似的功能，但是需要额外的开发和维护工作，包括管理EC2实例、配置代理软件等，这增加了运营开销，不满足问题所要求的“最低运营开销”。",
           "en": "Incorrect. Technical reason: Although custom agents can achieve similar functions, they require additional development and maintenance work, including managing EC2 instances, configuring agent software, etc. This increases operating overhead and does not meet the \"minimum operating overhead\" required by the question."
         },
         "D": {
-          "zh": "錯誤。技术原因： AWS Lambda 函数通常用于事件驱动的计算，而不是长期连接池管理。使用 Lambda 函数进行连接池管理可能会导致性能问题并需要额外的开发工作。",
+          "zh": "錯誤。原因是，AWS Lambda 函数通常用于事件驱动的计算，而不是长期连接池管理。使用 Lambda 函数进行连接池管理可能会导致性能问题并需要额外的开发工作。",
           "en": "Incorrect. Technical reason: AWS Lambda functions are typically used for event-driven computations rather than long-term connection pool management. Using Lambda functions for connection pool management can cause performance issues and require additional development work."
         }
       },
@@ -84,19 +84,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： CloudWatch Logs 不是监控 EBS 存储利用率的最佳工具。虽然弹性卷可以调整卷大小，但减小卷大小并不能直接解决成本问题。",
+          "zh": "錯誤。原因是，CloudWatch Logs 不是监控 EBS 存储利用率的最佳工具。虽然弹性卷可以调整卷大小，但减小卷大小并不能直接解决成本问题。",
           "en": "Incorrect. Technical reason: CloudWatch Logs is not the best tool for monitoring EBS storage utilization. Although Elastic Volumes can resize the volume, reducing the volume size does not directly solve the cost issue."
         },
         "B": {
-          "zh": "錯誤。技术原因：自定义脚本会增加开发和维护工作，而且 EBS 卷不能直接缩小。该方案也没有自动执行符合公司策略的快照生命周期管理。",
+          "zh": "錯誤。原因是，自定义脚本会增加开发和维护工作，而且 EBS 卷不能直接缩小。该方案也没有自动执行符合公司策略的快照生命周期管理。",
           "en": "Incorrect. Technical reason: A custom script adds development and maintenance effort, and EBS volumes cannot be directly reduced in size. This option also does not automate snapshot lifecycle management according to company policy."
         },
         "C": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，刪除目前過期或未使用的 EBS 快照只能一次性降低費用，之後仍可能持續累積；Data Lifecycle Manager 能依保留政策自動建立及刪除快照，營運工作量更低。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "D": {
-          "zh": "正確。技术原因： Amazon Data Lifecycle Manager (DLM) 是一款旨在自动化数据库管理的工具。它可以根据策略自动删除不需要的数据库并创建新数据库，从而减少运营开销并优化成本。",
+          "zh": "正確。原因是，Amazon Data Lifecycle Manager (DLM) 是一款旨在自动化数据库管理的工具。它可以根据策略自动删除不需要的数据库并创建新数据库，从而减少运营开销并优化成本。",
           "en": "Correct. Technical reason: Amazon Data Lifecycle Manager (DLM) is a tool designed to automate database management. It can automatically delete unnecessary databases and create new ones according to policies, thereby reducing operational overhead and optimizing costs."
         }
       },
@@ -140,19 +140,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：技术分析：此选项通过使用 AWS KMS 管理员密钥加密 S3 和 RDS 并显式向 ECS 任务执行角色授予权限，确保只有 ECS 任务才能访问挖掘的数据。这符合题目要求。优点：直接使用KMS加密，通过KMS策略控制权限，安全性高，符合最佳实践。",
+          "zh": "正確。原因是，技术分析：此选项通过使用 AWS KMS 管理员密钥加密 S3 和 RDS 并显式向 ECS 任务执行角色授予权限，确保只有 ECS 任务才能访问挖掘的数据。这符合题目要求。优点：直接使用KMS加密，通过KMS策略控制权限，安全性高，符合最佳实践。",
           "en": "Correct. Technical reason: Technical Analysis: This option ensures that only ECS tasks can access the mined data by encrypting S3 and RDS with AWS KMS administrator keys and explicitly granting permissions to the ECS task execution role. This meets the question requirements. Advantages: Directly using KMS encryption, controlling permissions through KMS policies, high security, and in line with best practices."
         },
         "B": {
-          "zh": "錯誤。技术原因：错误分析： AWS管理密钥无法对特定角色提供详细的权限控制。将ECS任务执行角色指定为用户的S3桶策略不完全满足问题的要求。缺陷：管理密钥的权限控制不够灵活，无法保证只有ECS任务执行角色才能访问数据。",
+          "zh": "錯誤。原因是，错误分析： AWS管理密钥无法对特定角色提供详细的权限控制。将ECS任务执行角色指定为用户的S3桶策略不完全满足问题的要求。缺陷：管理密钥的权限控制不够灵活，无法保证只有ECS任务执行角色才能访问数据。",
           "en": "Incorrect. Technical reason: Error analysis: The AWS management key cannot provide detailed permission control for specific roles. The S3 bucket policy that specifies the ECS task execution role as the user does not fully meet the requirements of the problem. Defect: The permission control of the management key is not flexible enough, and it cannot ensure that only the ECS task execution role can access the data."
         },
         "C": {
-          "zh": "錯誤。技术原因：错误分析：该选项通过桶策略和安全组限制访问，但没有提及添加数据的要求，因此无法保证数据安全。问题：虽然访问受到限制，但数据未加密，不符合问题中的数据保护要求。",
+          "zh": "錯誤。原因是，错误分析：该选项通过桶策略和安全组限制访问，但没有提及添加数据的要求，因此无法保证数据安全。问题：虽然访问受到限制，但数据未加密，不符合问题中的数据保护要求。",
           "en": "Incorrect. Technical reason: Error analysis: This option restricts access through bucket policies and security groups, but does not mention the requirements for adding data, so data security cannot be guaranteed. Issue: Although access is restricted, the data is not encrypted and does not meet the data protection requirements in the question."
         },
         "D": {
-          "zh": "錯誤。技术原因：错误分析：该选项限制了通过VPC点和安全组的访问，但没有提及添加数据的要求，因此无法保证数据安全。问题：虽然访问受到限制，但数据未加密，不符合问题中的数据保护要求。",
+          "zh": "錯誤。原因是，错误分析：该选项限制了通过VPC点和安全组的访问，但没有提及添加数据的要求，因此无法保证数据安全。问题：虽然访问受到限制，但数据未加密，不符合问题中的数据保护要求。",
           "en": "Incorrect. Technical reason: Error analysis: This option restricts access through VPC points and security groups, but does not mention the requirements for adding data, so data security cannot be guaranteed. Issue: Although access is restricted, the data is not encrypted and does not meet the data protection requirements in the question."
         }
       },
@@ -196,19 +196,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：突发性能实例（如T系列实例）可以在CPU需求突然增加时提供额外的性能，特别是设置为Unlimited模式时，可以持续满足峰值需求。正确：基于请求的弹性伸缩可以动态响应流量变化，适合解决两个月的高峰。",
+          "zh": "正確。原因是，突发性能实例（如T系列实例）可以在CPU需求突然增加时提供额外的性能，特别是设置为Unlimited模式时，可以持续满足峰值需求。正确：基于请求的弹性伸缩可以动态响应流量变化，适合解决两个月的高峰。",
           "en": "Correct. Technical reason: Burst performance instances (such as T-series instances) can provide additional performance when CPU demand suddenly increases, especially when set to Unlimited mode, which can continuously meet peak demand. Correct: Request-based elastic scaling can dynamically respond to traffic changes and is suitable for solving the two-month peak."
         },
         "B": {
-          "zh": "錯誤。技术原因：计算优化实例适用于计算密集型任务，但题目并没有提到应用程序是计算密集型的，而是强调CPU利用率会增加。突发性能实例更适合这种场景。正确：根据请求自动扩容是合理的，但实例类型选择不符合问题要求。",
+          "zh": "錯誤。原因是，计算优化实例适用于计算密集型任务，但题目并没有提到应用程序是计算密集型的，而是强调CPU利用率会增加。突发性能实例更适合这种场景。正确：根据请求自动扩容是合理的，但实例类型选择不符合问题要求。",
           "en": "Incorrect. Technical reason: Compute Optimized Instances are suitable for compute-intensive tasks, but the title does not mention that the application is compute-intensive, but emphasizes that CPU utilization will increase. Burst performance instances are more suitable for this scenario. Correct: Automatic expansion based on requests is reasonable, but the instance type selection does not meet the requirements of the question."
         },
         "C": {
-          "zh": "錯誤。技术原因：计算优化实例不适合这种场景，原因与选项 B 相同。错误：基于计划的扩展适用于流量定期变化的场景，但问题提到峰值是零星的（每月两次），无法用固定计划进行预测。",
+          "zh": "錯誤。原因是，计算优化实例不适合这种场景，原因与选项 B 相同。错误：基于计划的扩展适用于流量定期变化的场景，但问题提到峰值是零星的（每月两次），无法用固定计划进行预测。",
           "en": "Incorrect. Technical reason: Compute optimized instances are not suitable for this scenario for the same reason as Option B. Error: Plan-based scaling is suitable for scenarios where traffic changes regularly, but the question mentions that the peaks are sporadic (twice a month) and cannot be predicted with a fixed plan."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Elastic Beanstalk 代管 Web 應用程式平台的佈署、容量調整與健康監控。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案可以满足这些要求」；本題應改用正確選項所述的「配置 Elastic Beanstalk 环境以在无限模式下使用突发性能实例。配置环境以根据请求进行扩展。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         }
       },
@@ -252,19 +252,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：虽然 AWS Organizations 可以帮助管理多个账户，但它并不是用于设置基础设施的工具。 AWS Config 确实会跟踪资源更改，但此选项没有提及自动化基础设施部署。",
+          "zh": "錯誤。原因是，虽然 AWS Organizations 可以帮助管理多个账户，但它并不是用于设置基础设施的工具。 AWS Config 确实会跟踪资源更改，但此选项没有提及自动化基础设施部署。",
           "en": "Incorrect. Technical reason: While AWS Organizations can help manage multiple accounts, it's not a tool for setting up infrastructure. AWS Config does track resource changes, but this option says nothing about automating infrastructure deployment."
         },
         "B": {
-          "zh": "正確。技术原因： AWS CloudFormation 是一种用于自动化基础设施部署以及定义和管理资源模板的工具。 AWS Config 可以跟踪和审核资源配置更改以满足问题需求。",
+          "zh": "正確。原因是，AWS CloudFormation 是一种用于自动化基础设施部署以及定义和管理资源模板的工具。 AWS Config 可以跟踪和审核资源配置更改以满足问题需求。",
           "en": "Correct. Technical reason: AWS CloudFormation is a tool for automating infrastructure deployment and defining and managing resource templates. AWS Config can track and audit resource configuration changes to address problem requirements."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS Organizations 用于账户管理，而不是基础设施部署。 AWS Service Catalog 用于管理预定义的产品目录，而不是跟踪资源更改。",
+          "zh": "錯誤。原因是，AWS Organizations 用于账户管理，而不是基础设施部署。 AWS Service Catalog 用于管理预定义的产品目录，而不是跟踪资源更改。",
           "en": "Incorrect. Technical reason: AWS Organizations is for account management, not infrastructure deployment. AWS Service Catalog is used to manage predefined product catalogs, not to track resource changes."
         },
         "D": {
-          "zh": "錯誤。技术原因： AWS CloudFormation 可以自动化基础设施部署，但 AWS Service Catalog 不是跟踪资源更改的工具。",
+          "zh": "錯誤。原因是，AWS CloudFormation 可以自动化基础设施部署，但 AWS Service Catalog 不是跟踪资源更改的工具。",
           "en": "Incorrect. Technical reason: AWS CloudFormation can automate infrastructure deployment, but AWS Service Catalog is not a tool for tracking resource changes."
         }
       },
@@ -312,23 +312,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：互联网网关用于VPC与互联网的连接，与高可用架构无关。高可用性主要涉及服务的冗余和故障转移，而不是网络连接的配置。",
+          "zh": "錯誤。原因是，互联网网关用于VPC与互联网的连接，与高可用架构无关。高可用性主要涉及服务的冗余和故障转移，而不是网络连接的配置。",
           "en": "Incorrect. Technical reason: The Internet gateway is used to connect the VPC to the Internet and has nothing to do with the high-availability architecture. High availability primarily involves redundancy and failover of services rather than the configuration of network connections."
         },
         "B": {
-          "zh": "正確。技术原因： Amazon RDS 多可用区提供数据库冗余和自动故障转移，以确保数据库的高可用性。",
+          "zh": "正確。原因是，Amazon RDS 多可用区提供数据库冗余和自动故障转移，以确保数据库的高可用性。",
           "en": "Correct. Technical reason: Amazon RDS Multi-AZ provides database redundancy and automatic failover to ensure high database availability."
         },
         "C": {
-          "zh": "錯誤。技术原因：虽然DynamoDB是高可用的NoSQL数据库，但问题中明确指出使用的是MySQL数据库，应用代码无法修改，因此无法迁移到DynamoDB。",
+          "zh": "錯誤。原因是，虽然DynamoDB是高可用的NoSQL数据库，但问题中明确指出使用的是MySQL数据库，应用代码无法修改，因此无法迁移到DynamoDB。",
           "en": "Incorrect. Technical reason: Although DynamoDB is a highly available NoSQL database, the question clearly states that the MySQL database is used and the application code cannot be modified, so it cannot be migrated to DynamoDB."
         },
         "D": {
-          "zh": "錯誤。技术原因： AWS DataSync用于数据迁移和同步，但它不提供高可用性解决方案，也不适合数据库的实时冗余。",
+          "zh": "錯誤。原因是，AWS DataSync用于数据迁移和同步，但它不提供高可用性解决方案，也不适合数据库的实时冗余。",
           "en": "Incorrect. Technical reason: AWS DataSync is used for data migration and synchronization, but it does not provide a high availability solution nor is it suitable for real-time redundancy of databases."
         },
         "E": {
-          "zh": "正確。技术原因：通过应用负载均衡和弹性伸缩组，可以实现Web应用的高可用和弹性扩展，并保证流量分配和故障转移。",
+          "zh": "正確。原因是，通过应用负载均衡和弹性伸缩组，可以实现Web应用的高可用和弹性扩展，并保证流量分配和故障转移。",
           "en": "Correct. Technical reason: By applying load balancing and elastic scaling groups, you can achieve high availability and elastic expansion of web applications and ensure traffic distribution and failover."
         }
       },
@@ -373,19 +373,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：网关终端节点用于支持与 Amazon S3 和 DynamoDB 的私有连接，但它仅适用于 VPC 内的流量。网关终端节点不直接支持从本地位置对 Amazon S3 的 Direct Connect 访问。因此这个选项是错误的。",
+          "zh": "錯誤。原因是，网关终端节点用于支持与 Amazon S3 和 DynamoDB 的私有连接，但它仅适用于 VPC 内的流量。网关终端节点不直接支持从本地位置对 Amazon S3 的 Direct Connect 访问。因此这个选项是错误的。",
           "en": "Incorrect. Technical reason: The gateway endpoint is used to support private connections to Amazon S3 and DynamoDB, but it is only available for traffic within a VPC. The gateway endpoint does not directly support Direct Connect access to Amazon S3 from an on-premises location. Therefore this option is wrong."
         },
         "B": {
-          "zh": "錯誤。技术原因： AWS Transit Gateway 主要用于连接多个 VPC 和本地网络，但不直接支持 Amazon S3 访问。该选项没有提及如何避免通过互联网传输数据，也没有提及 Direct Connect 的使用。因此这个选项是错误的。",
+          "zh": "錯誤。原因是，AWS Transit Gateway 主要用于连接多个 VPC 和本地网络，但不直接支持 Amazon S3 访问。该选项没有提及如何避免通过互联网传输数据，也没有提及 Direct Connect 的使用。因此这个选项是错误的。",
           "en": "Incorrect. Technical reason: AWS Transit Gateway is primarily used to connect multiple VPCs and on-premises networks, but does not directly support Amazon S3 access. This option does not mention how to avoid data transmission over the Internet, nor does it mention the use of Direct Connect. Therefore this option is wrong."
         },
         "C": {
-          "zh": "正確。技术原因：接口终端节点 AWS PrivateLink 提供私有连接，并支持从 VPC 和本地网络 Direct Connect 访问 Amazon S3。接口端点确保数据通过互联网传输并满足问题要求。这个选项是正确的。",
+          "zh": "正確。原因是，接口终端节点 AWS PrivateLink 提供私有连接，并支持从 VPC 和本地网络 Direct Connect 访问 Amazon S3。接口端点确保数据通过互联网传输并满足问题要求。这个选项是正确的。",
           "en": "Correct. Technical reason: The interface endpoint AWS PrivateLink provides private connectivity and supports access to Amazon S3 from VPC and on-premises network Direct Connect. Interface endpoints ensure that data is transmitted over the Internet and meets problem requirements. This option is correct."
         },
         "D": {
-          "zh": "錯誤。技术原因： AWS KMS 主要用于加密和加密管理，无论数据传输路径如何。此选项不包括如何避免通过 互联网 传输数据。因此这个选项是错误的。",
+          "zh": "錯誤。原因是，AWS KMS 主要用于加密和加密管理，无论数据传输路径如何。此选项不包括如何避免通过 互联网 传输数据。因此这个选项是错误的。",
           "en": "Incorrect. Technical reason: AWS KMS is primarily used for encryption and encryption management, regardless of the data transfer path. This option does not cover how to avoid data transmission over the Internet. Therefore this option is wrong."
         }
       },
@@ -429,19 +429,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： IAM 组策略可以限制用户操作，但无法直接强制执行资源标签合规性。 IAM 策略无法验证标签值是否符合预定义规则。",
+          "zh": "錯誤。原因是，IAM 组策略可以限制用户操作，但无法直接强制执行资源标签合规性。 IAM 策略无法验证标签值是否符合预定义规则。",
           "en": "Incorrect. Technical reason: IAM group policies can restrict user actions but cannot directly enforce resource tag compliance. The IAM policy cannot verify that the tag value complies with predefined rules."
         },
         "B": {
-          "zh": "錯誤。技术原因： Deny策略的目的是阻止某些操作，但问题需要强制资源标签的值符合预定义的规则，而不是简单地拒绝操作。",
+          "zh": "錯誤。原因是，Deny策略的目的是阻止某些操作，但问题需要强制资源标签的值符合预定义的规则，而不是简单地拒绝操作。",
           "en": "Incorrect. Technical reason: The purpose of the Deny policy is to prevent certain operations, but the question requires forcing the value of a resource tag to conform to predefined rules, rather than simply denying the operation."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS 资源组用于组织和管理资源，但无法强制遵守资源标签。它只能帮助用户查看和管理资源的标签。",
+          "zh": "錯誤。原因是，AWS 资源组用于组织和管理资源，但无法强制遵守资源标签。它只能帮助用户查看和管理资源的标签。",
           "en": "Incorrect. Technical reason: AWS resource groups are used to organize and manage resources, but they cannot enforce compliance with resource tags. It can only help users view and manage the tags of resources."
         },
         "D": {
-          "zh": "正確。技术原因： AWS Organizations 中的标签策略可以强制执行资源标签合规性并确保标签值符合预定义规则。这正是问题所需要的解决方案。",
+          "zh": "正確。原因是，AWS Organizations 中的标签策略可以强制执行资源标签合规性并确保标签值符合预定义规则。这正是问题所需要的解决方案。",
           "en": "Correct. Technical reason: Tag policies in AWS Organizations can enforce resource tag compliance and ensure tag values comply with predefined rules. This is exactly the solution the problem requires."
         }
       },
@@ -485,19 +485,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：技术分析：虽然可以通过EventBridge调度Lambda函数实现密码轮换，但这种方式需要自定义代码的开发和维护，增加了操作的复杂度。",
+          "zh": "錯誤。原因是，技术分析：虽然可以通过EventBridge调度Lambda函数实现密码轮换，但这种方式需要自定义代码的开发和维护，增加了操作的复杂度。",
           "en": "Incorrect. Technical reason: Technical analysis: Although EventBridge can be used to schedule Lambda functions to implement password rotation, this method requires the development and maintenance of custom code, which increases the complexity of the operation."
         },
         "B": {
-          "zh": "錯誤。技术原因：技术分析：使用AWS CLI手动修改密码需要人工干预，无法实现自动轮换，操作开销较高。",
+          "zh": "錯誤。原因是，技术分析：使用AWS CLI手动修改密码需要人工干预，无法实现自动轮换，操作开销较高。",
           "en": "Incorrect. Technical reason: Technical analysis: Manually changing the password using the AWS CLI requires manual intervention, cannot achieve automatic rotation, and has high operational overhead."
         },
         "C": {
-          "zh": "正確。技术原因：技术分析： AWS Secrets Manager支持与Amazon RDS集成，可以自动轮换数据库密码，完全满足问题需求，且运营成本最小。",
+          "zh": "正確。原因是，技术分析： AWS Secrets Manager支持与Amazon RDS集成，可以自动轮换数据库密码，完全满足问题需求，且运营成本最小。",
           "en": "Correct. Technical reason: Technical analysis: AWS Secrets Manager supports integration with Amazon RDS, which can automatically rotate database passwords, fully meet the problem requirements, and the operation cost is minimal."
         },
         "D": {
-          "zh": "錯誤。技术原因：技术分析：虽然Parameter Store可以存储密码，但它不支持自动密码轮换，需要额外的开发工作来实现轮换。",
+          "zh": "錯誤。原因是，技术分析：虽然Parameter Store可以存储密码，但它不支持自动密码轮换，需要额外的开发工作来实现轮换。",
           "en": "Incorrect. Technical reason: Technical Analysis: Although Parameter Store can store passwords, it does not support automatic password rotation and requires additional development work to implement rotation."
         }
       },
@@ -541,19 +541,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：按需模式适用于工作负载不确定或工作负载波动较大的场景。问题明确指出，测试每周一进行，持续4小时。工作量是可预测的，因此这种后续模式并不是成本优化的最佳选择。这个选项是错误的。",
+          "zh": "錯誤。原因是，按需模式适用于工作负载不确定或工作负载波动较大的场景。问题明确指出，测试每周一进行，持续4小时。工作量是可预测的，因此这种后续模式并不是成本优化的最佳选择。这个选项是错误的。",
           "en": "Incorrect. Technical reason: The on-demand mode is suitable for scenarios where the workload is uncertain or the workload fluctuates greatly. The question clearly states that the test is conducted every Monday and lasts for 4 hours. The workload is predictable, so this follow-up mode is not the best choice for cost optimization. This option is wrong."
         },
         "B": {
-          "zh": "正確。技术原因：开通模式适用于工作负载可预测、可通过设置读写容量单位来优化成本的场景。问题提到公司知道每秒的读写操作量，而且使用场景是固定的（每周一次，持续4小时），所以这种默认模式是最好的选择。这个选项是正确的。",
+          "zh": "正確。原因是，开通模式适用于工作负载可预测、可通过设置读写容量单位来优化成本的场景。问题提到公司知道每秒的读写操作量，而且使用场景是固定的（每周一次，持续4小时），所以这种默认模式是最好的选择。这个选项是正确的。",
           "en": "Correct. Technical reason: Provisioning mode is suitable for scenarios where the workload is predictable and costs can be optimized by setting read and write capacity units. The question mentioned that the company knows the amount of read and write operations per second, and the usage scenario is fixed (once a week, lasting 4 hours), so this default mode is the best choice. This option is correct."
         },
         "C": {
-          "zh": "錯誤。技术原因：预留容量适合DynamoDB的长期使用，可以显著降低成本。问题提到公司在测试期间只使用了DynamoDB，没有其他使用场景，因此购买预留容量会导致资源消耗。这个选项是错误的。",
+          "zh": "錯誤。原因是，预留容量适合DynamoDB的长期使用，可以显著降低成本。问题提到公司在测试期间只使用了DynamoDB，没有其他使用场景，因此购买预留容量会导致资源消耗。这个选项是错误的。",
           "en": "Incorrect. Technical reason: Reserved capacity is suitable for long-term use of DynamoDB and can significantly reduce costs. The question mentioned that the company only used DynamoDB during the test period and had no other usage scenarios, so purchasing reserved capacity would result in resource consumption. This option is wrong."
         },
         "D": {
-          "zh": "錯誤。技术原因：与选项C类似，预留容量适合长期使用场景。三年预留容量更适合持续使用DynamoDB，并且问题明确指出该公司仅在测试期间使用DynamoDB。这个选项是错误的。",
+          "zh": "錯誤。原因是，与选项C类似，预留容量适合长期使用场景。三年预留容量更适合持续使用DynamoDB，并且问题明确指出该公司仅在测试期间使用DynamoDB。这个选项是错误的。",
           "en": "Incorrect. Technical reason: Similar to option C, reserved capacity is suitable for long-term usage scenarios. Three-year reserved capacity is more suitable for ongoing use of DynamoDB, and the question clearly states that the company is only using DynamoDB during testing. This option is wrong."
         }
       },
@@ -597,19 +597,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Budgets 可以帮助设置预测和控制支出，但零支出预测不适合控制异常支出。零支出预测通常用于限制支出，而不是检测异常支出。",
+          "zh": "錯誤。原因是，AWS Budgets 可以帮助设置预测和控制支出，但零支出预测不适合控制异常支出。零支出预测通常用于限制支出，而不是检测异常支出。",
           "en": "Incorrect. Technical reason: AWS Budgets can help set forecasts and control spending, but Zero Spend Forecast is not suitable for controlling abnormal spending. Zero spend forecasts are often used to limit spending rather than detect abnormal spending."
         },
         "B": {
-          "zh": "正確。技术原因： AWS 成本异常检测是一项专门用于检测成本异常的服务。它可以通过机器学习模型控制成本，并在检测到异常情况时通知边境官员。",
+          "zh": "正確。原因是，AWS 成本异常检测是一项专门用于检测成本异常的服务。它可以通过机器学习模型控制成本，并在检测到异常情况时通知边境官员。",
           "en": "Correct. Technical reason: AWS Cost Anomaly Detection is a service specifically designed to detect cost anomalies. It can control costs through machine learning models and notify border officials when anomalies are detected."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS定价计算器用于估算成本，而不是用于实时控制或检测异常支出。无法满足问题中“控制成本并告知”的要求。",
+          "zh": "錯誤。原因是，AWS定价计算器用于估算成本，而不是用于实时控制或检测异常支出。无法满足问题中“控制成本并告知”的要求。",
           "en": "Incorrect. Technical reason: The AWS pricing calculator is for estimating costs, not for real-time control or detection of abnormal spending. The requirement of \"control costs and inform\" in the question cannot be met."
         },
         "D": {
-          "zh": "錯誤。技术原因： Amazon CloudWatch 主要用于控制资源性能和应用程序调度指标，并不是专门为成本控制或异常支出检测而设计的。",
+          "zh": "錯誤。原因是，Amazon CloudWatch 主要用于控制资源性能和应用程序调度指标，并不是专门为成本控制或异常支出检测而设计的。",
           "en": "Incorrect. Technical reason: Amazon CloudWatch is primarily used to control resource performance and application scheduling metrics and is not specifically designed for cost control or abnormal spend detection."
         }
       },
@@ -653,19 +653,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：尽管 Spark 和 AWS Glue 可以处理数据，但创建外部表和配置 Spark 作业需要较高的运营开销。另外， Spark Catalog的管理复杂度较高，不满足“最小运行开销”的要求。",
+          "zh": "錯誤。原因是，尽管 Spark 和 AWS Glue 可以处理数据，但创建外部表和配置 Spark 作业需要较高的运营开销。另外， Spark Catalog的管理复杂度较高，不满足“最小运行开销”的要求。",
           "en": "Incorrect. Technical reason: Although Spark and AWS Glue can process data, creating external tables and configuring Spark jobs requires high operational overhead. In addition, the management complexity of Spark Catalog is high and does not meet the requirement of \"minimum operating overhead\"."
         },
         "B": {
-          "zh": "正確。技术原因： AWS Glue 爬虫可以自动爬取数据并创建数据目录， Amazon Athena 可以直接查询 S3 中的数据，无需额外的基础设施管理。此选项可提供最低的运营开销，同时满足快速分析数据的需求。",
+          "zh": "正確。原因是，AWS Glue 爬虫可以自动爬取数据并创建数据目录， Amazon Athena 可以直接查询 S3 中的数据，无需额外的基础设施管理。此选项可提供最低的运营开销，同时满足快速分析数据的需求。",
           "en": "Correct. Technical reason: AWS Glue crawlers can automatically crawl data and create data catalogs, and Amazon Athena can directly query data in S3 without requiring additional infrastructure management. This option provides the lowest operational overhead while meeting the need to analyze data quickly."
         },
         "C": {
-          "zh": "錯誤。技术原因： Hive 元存储和 Amazon EMR 需要额外的基础设施管理和更高的运营开销。虽然可以实现数据查询，但是不满足“运行开销最小”的要求。",
+          "zh": "錯誤。原因是，Hive 元存储和 Amazon EMR 需要额外的基础设施管理和更高的运营开销。虽然可以实现数据查询，但是不满足“运行开销最小”的要求。",
           "en": "Incorrect. Technical reason: Hive metastore and Amazon EMR require additional infrastructure management and higher operational overhead. Although data query can be implemented, it does not meet the requirement of \"minimum running overhead\"."
         },
         "D": {
-          "zh": "錯誤。技术原因： Amazon Kinesis Data Analytics主要用于实时流数据分析，问题中的数据已存储在Amazon S3中。该选项不适合静态数据的查询需求。",
+          "zh": "錯誤。原因是，Amazon Kinesis Data Analytics主要用于实时流数据分析，问题中的数据已存储在Amazon S3中。该选项不适合静态数据的查询需求。",
           "en": "Incorrect. Technical reason: Amazon Kinesis Data Analytics is mainly used for real-time streaming data analysis, and the data in the question has been stored in Amazon S3. This option is not suitable for query needs of static data."
         }
       },
@@ -709,19 +709,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS DataSync是一个数据迁移工具，但问题需要一个长期的存储解决方案，而不是单一的数据迁移。此外， DataSync 没有提及它如何处理生命周期管理或结帐时间要求。",
+          "zh": "錯誤。原因是，AWS DataSync是一个数据迁移工具，但问题需要一个长期的存储解决方案，而不是单一的数据迁移。此外， DataSync 没有提及它如何处理生命周期管理或结帐时间要求。",
           "en": "Incorrect. Technical reason: AWS DataSync is a data migration tool, but the problem requires a long-term storage solution rather than a single data migration. Additionally, DataSync makes no mention of how it handles lifecycle management or checkout time requirements."
         },
         "B": {
-          "zh": "正確。技术原因： Amazon S3 文件网关允许公司将文件存储在 Amazon S3 中，同时提供本地访问。通过 S3 生命周期策略，数据可以在文件创建后 7 天传输到 S3 Glacier Deep Archive。虽然S3 Glacier Deep Archive的签出时间超过24小时，但问题明确要求签出时间必须小于24小时，因此该选项满足要求。",
+          "zh": "正確。原因是，Amazon S3 文件网关允许公司将文件存储在 Amazon S3 中，同时提供本地访问。通过 S3 生命周期策略，数据可以在文件创建后 7 天传输到 S3 Glacier Deep Archive。虽然S3 Glacier Deep Archive的签出时间超过24小时，但问题明确要求签出时间必须小于24小时，因此该选项满足要求。",
           "en": "Correct. Technical reason: Amazon S3 File Gateway allows companies to store files in Amazon S3 while providing local access. With S3 lifecycle policies, data can be transferred to S3 Glacier Deep Archive 7 days after file creation. Although the checkout time for S3 Glacier Deep Archive exceeds 24 hours, the question clearly requires that the checkout time must be less than 24 hours, so this option meets the requirement."
         },
         "C": {
-          "zh": "錯誤。技术原因： Amazon FSx 文件网关主要设计用于与 FSx 文件系统集成，而不是直接与 S3 集成。此外， FSx 文件网关没有提及它如何处理生命周期管理或结账时间要求。",
+          "zh": "錯誤。原因是，Amazon FSx 文件网关主要设计用于与 FSx 文件系统集成，而不是直接与 S3 集成。此外， FSx 文件网关没有提及它如何处理生命周期管理或结账时间要求。",
           "en": "Incorrect. Technical reason: Amazon FSx File Gateway is primarily designed to integrate with FSx file systems, not directly with S3. Additionally, FSx File Gateway makes no mention of how it handles lifecycle management or checkout time requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因： S3 Glacier灵活检索的检测时间满足要求（最长24小时），但直接配置用户访问S3不满足问题中提到的“文件服务器”场景。此外，该问题需要一个解决方案，而不是单个用户访问配置。",
+          "zh": "錯誤。原因是，S3 Glacier灵活检索的检测时间满足要求（最长24小时），但直接配置用户访问S3不满足问题中提到的“文件服务器”场景。此外，该问题需要一个解决方案，而不是单个用户访问配置。",
           "en": "Incorrect. Technical reason: The detection time of S3 Glacier flexible retrieval meets the requirements (up to 24 hours), but directly configuring users to access S3 does not meet the \"file server\" scenario mentioned in the question. Additionally, the problem requires a solution rather than a single user access configuration."
         }
       },
@@ -769,23 +769,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： Amazon RDS 不支持 Auto Scaling。 RDS实例扩容需要调整实例类型并使用只读副本。",
+          "zh": "錯誤。原因是，Amazon RDS 不支持 Auto Scaling。 RDS实例扩容需要调整实例类型并使用只读副本。",
           "en": "Incorrect. Technical reason: Amazon RDS does not support Auto Scaling. RDS instance expansion requires adjusting the instance type and using read-only replicas."
         },
         "B": {
-          "zh": "正確。技术原因：只读副本可以通过卸载数据库上的读取负载来提高性能。这是解决高读取负载问题的推荐方法。",
+          "zh": "正確。原因是，只读副本可以通过卸载数据库上的读取负载来提高性能。这是解决高读取负载问题的推荐方法。",
           "en": "Correct. Technical reason: Read replicas can improve performance by offloading the read load on the database. This is the recommended method for solving high read load issues."
         },
         "C": {
-          "zh": "錯誤。技术原因：部署在多个可用区的备实例仅用于故障转移，不支持处理读流量。",
+          "zh": "錯誤。原因是，部署在多个可用区的备实例仅用于故障转移，不支持处理读流量。",
           "en": "Incorrect. Technical reason: The standby instance deployed in multiple availability zones is only used for failover and does not support processing read traffic."
         },
         "D": {
-          "zh": "正確。技术原因：使用 ElastiCache 可以通过减慢查询结果速度并减少数据库读取负载来提高性能。",
+          "zh": "正確。原因是，使用 ElastiCache 可以通过减慢查询结果速度并减少数据库读取负载来提高性能。",
           "en": "Correct. Technical reason: Using ElastiCache can improve performance by slowing down query results and reducing read load on the database."
         },
         "E": {
-          "zh": "錯誤。技术原因：虽然将EC2实例和RDS实例放在同一可用区可以减少网络延迟，但并不能解决数据库读负载高的问题。",
+          "zh": "錯誤。原因是，虽然将EC2实例和RDS实例放在同一可用区可以减少网络延迟，但并不能解决数据库读负载高的问题。",
           "en": "Incorrect. Technical reason: Although placing EC2 instances and RDS instances in the same availability zone can reduce network latency, it does not solve the problem of high database read load."
         }
       },
@@ -830,19 +830,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：从新的 EC2 实例中删除快照。错误。此选项不能防止意外删除快照，但提供了一种删除快照的方法。不符合“防止误删除”的提问要求。",
+          "zh": "錯誤。原因是，从新的 EC2 实例中删除快照。错误。此选项不能防止意外删除快照，但提供了一种删除快照的方法。不符合“防止误删除”的提问要求。",
           "en": "Incorrect. Technical reason: Delete the snapshot from the new EC2 instance. mistake. This option does not prevent accidental deletion of snapshots, but provides a way to delete them. Does not meet the \"prevent accidental deletion\" question requirements."
         },
         "B": {
-          "zh": "錯誤。技术原因：创建拒绝删除快照的 IAM 策略。将策略附加到存储管理员用户。错误。该选项虽然可以防止快照删除，但是却改变了存储管理员用户的权限，违反了问题中“存储管理员用户的权限不可更改”的条件。",
+          "zh": "錯誤。原因是，创建拒绝删除快照的 IAM 策略。将策略附加到存储管理员用户。错误。该选项虽然可以防止快照删除，但是却改变了存储管理员用户的权限，违反了问题中“存储管理员用户的权限不可更改”的条件。",
           "en": "Incorrect. Technical reason: Create an IAM policy that denies snapshot deletion. Attach the policy to the storage administrator user. mistake. Although this option prevents snapshot deletion, it changes the permissions of the storage administrator user, violating the condition of the question that \"the permissions of the storage administrator user cannot be changed\"."
         },
         "C": {
-          "zh": "錯誤。技术原因：为快照添加标签。为回收站中带标签的 EBS 快照创建保留规则。正确的。回收站功能允许为具有特定标签的EBS快照创建保留规则，从而防止意外删除。这是一个有效的解决方案，但可能比选项 D 需要更多的管理工作。",
+          "zh": "錯誤。原因是，为快照添加标签。为回收站中带标签的 EBS 快照创建保留规则。正确的。回收站功能允许为具有特定标签的EBS快照创建保留规则，从而防止意外删除。这是一个有效的解决方案，但可能比选项 D 需要更多的管理工作。",
           "en": "Incorrect. Technical reason: Add tags to snapshots. Create a retention rule for labeled EBS snapshots in the Recycle Bin. Correct. The Recycle Bin feature allows creating retention rules for EBS snapshots with specific labels, thus preventing accidental deletion. This is a valid solution, but may require more administrative effort than option D."
         },
         "D": {
-          "zh": "正確。技术原因：锁定 EBS 快照以防止删除。正确的。 AWS提供了锁定EBS快照的功能，可以直接防止快照被删除。这是最直接的解决方案，需要最少的管理工作，并且完全满足问题的要求。",
+          "zh": "正確。原因是，锁定 EBS 快照以防止删除。正确的。 AWS提供了锁定EBS快照的功能，可以直接防止快照被删除。这是最直接的解决方案，需要最少的管理工作，并且完全满足问题的要求。",
           "en": "Correct. Technical reason: Lock an EBS snapshot to prevent deletion. Correct. AWS provides the function of locking EBS snapshots, which can directly prevent snapshots from being deleted. This is the most straightforward solution, requires the least administrative effort, and fully meets the requirements of the problem."
         }
       },

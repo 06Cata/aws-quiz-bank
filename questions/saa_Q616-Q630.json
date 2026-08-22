@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Amazon Macie 主要探索與分類 S3 敏感資料；AWS Config 則記錄組態與合規狀態。兩者都不是用來偵測帳戶、工作負載及 S3 存取中的惡意活動。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Amazon Inspector 掃描 EC2、容器映像與 Lambda 的漏洞；CloudTrail 記錄 API 活動但不是集中安全發現儀表板，因此不符合持續威脅偵測需求。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，Amazon GuardDuty 分析 CloudTrail、VPC Flow Logs、DNS 與工作負載訊號來偵測威脅；Security Hub 集中顯示與彙整發現，兩者正好涵蓋監控與儀表板。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         },
         "D": {
-          "zh": "錯誤。技术原因：功能不匹配，不能满足题目要求。",
+          "zh": "錯誤。原因是，AWS Config 監控資源組態與合規，EventBridge 負責事件路由；兩者本身不會分析行為訊號來判斷惡意活動，也不提供完整威脅儀表板。",
           "en": "Incorrect. Technical reason: The functions do not match and cannot meet the question requirements."
         }
       },
@@ -88,23 +88,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： NFS协议访问要求不满足问题的要求。",
+          "zh": "錯誤。原因是，FSx for Lustre 是 HPC 用高效能平行檔案系統，不是一般 NFS 共用資料的最直接遷移目的地；題目需要可由多個 AWS 資源掛載的 EFS。",
           "en": "Incorrect. Technical reason: The NFS protocol access requirements do not meet the requirements of the problem."
         },
         "B": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，Amazon EFS 提供可由多個 AWS 運算資源同時掛載的受管 NFS 檔案系統，符合現有 NFS 工作負載的目的地需求。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         },
         "C": {
-          "zh": "錯誤。技术原因： NFS协议访问要求不满足问题的要求。",
+          "zh": "錯誤。原因是，Amazon S3 是物件儲存，使用物件 API 而不是原生 NFS 檔案系統語意；直接改用 S3 會要求應用程式變更。",
           "en": "Incorrect. Technical reason: The NFS protocol access requirements do not meet the requirements of the problem."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，作業系統複製命令可一次搬移檔案，但缺少 DataSync 的增量同步、驗證、重試與排程，持續有新資料時容易中斷或遺漏。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "E": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，AWS DataSync agent 可從內部 NFS 進行加速、增量且具驗證的線上傳輸，搭配 EFS 能在來源持續運作時完成遷移。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         }
       },
@@ -149,19 +149,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：错误 使用单一可用区 2 部署类型无法提供高可用性，并且可能无法满足 5 分钟 RPO 要求。虽然使用了使用 AWS Backup 和 Backup Vault Lock 的合规模型，但高可用性是关键要求，并且不适合单可用区部署。",
+          "zh": "錯誤。原因是，错误 使用单一可用区 2 部署类型无法提供高可用性，并且可能无法满足 5 分钟 RPO 要求。虽然使用了使用 AWS Backup 和 Backup Vault Lock 的合规模型，但高可用性是关键要求，并且不适合单可用区部署。",
           "en": "Incorrect. Technical reason: Error Using the Single Availability Zone 2 deployment type cannot provide high availability and may not meet the 5-minute RPO requirement. While compliant models using AWS Backup and Backup Vault Lock are used, high availability is a key requirement and are not suitable for single-AZ deployments."
         },
         "B": {
-          "zh": "錯誤。技术原因：错误 使用多可用区部署类型来提供高可用性并满足 RPO 要求。但Backup Vault Lock采用的是管理模式，问题是要求数据不能被删除。管理模式允许管理员修改或删除数据，不符合要求。",
+          "zh": "錯誤。原因是，错误 使用多可用区部署类型来提供高可用性并满足 RPO 要求。但Backup Vault Lock采用的是管理模式，问题是要求数据不能被删除。管理模式允许管理员修改或删除数据，不符合要求。",
           "en": "Incorrect. Technical reason: Error Use a multi-AZ deployment type to provide high availability and meet RPO requirements. However, Backup Vault Lock uses management mode, and the problem requires that the data cannot be deleted. Management mode allows administrators to modify or delete data, which does not meet the requirements."
         },
         "C": {
-          "zh": "正確。技术原因：正确使用多可用区部署类型可以提供高可用性并满足5分钟RPO要求。 AWS Backup and Backup Vault Lock 的合规性模型用于确保数据无法删除并满足 5 年保留要求。",
+          "zh": "正確。原因是，正确使用多可用区部署类型可以提供高可用性并满足5分钟RPO要求。 AWS Backup and Backup Vault Lock 的合规性模型用于确保数据无法删除并满足 5 年保留要求。",
           "en": "Correct. Technical reason: Proper use of the Multi-AZ deployment type can provide high availability and meet the 5-minute RPO requirement. AWS Backup and Backup Vault Lock's compliance model is used to ensure data cannot be deleted and meets 5-year retention requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：错误 使用单一可用区 2 部署类型无法提供高可用性，并且可能无法满足 5 分钟 RPO 要求。 Backup Vault Lock采用治理模型，不满足数据不可删除的要求。",
+          "zh": "錯誤。原因是，错误 使用单一可用区 2 部署类型无法提供高可用性，并且可能无法满足 5 分钟 RPO 要求。 Backup Vault Lock采用治理模型，不满足数据不可删除的要求。",
           "en": "Incorrect. Technical reason: Error Using the Single Availability Zone 2 deployment type cannot provide high availability and may not meet the 5-minute RPO requirement. Backup Vault Lock adopts a governance model and does not meet the requirement that data cannot be deleted."
         }
       },
@@ -205,19 +205,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：没有规则的IAM策略直接限制账户的root 用户权限。由于根用户对账户拥有完全控制权，因此任何 IAM 策略规则都不会覆盖根用户的权限。",
+          "zh": "錯誤。原因是，没有规则的IAM策略直接限制账户的root 用户权限。由于根用户对账户拥有完全控制权，因此任何 IAM 策略规则都不会覆盖根用户的权限。",
           "en": "Incorrect. Technical reason: IAM policies without rules directly restrict the account's root user permissions. Since the root user has full control over the account, no IAM policy rules will override the root user's permissions."
         },
         "B": {
-          "zh": "錯誤。技术原因：虽然启用组织跟踪选项可以集中 CloudTrail 管理，但它不会阻止开发人员修改或删除 CloudTrail 配置。",
+          "zh": "錯誤。原因是，虽然启用组织跟踪选项可以集中 CloudTrail 管理，但它不会阻止开发人员修改或删除 CloudTrail 配置。",
           "en": "Incorrect. Technical reason: While enabling the organization tracking option centralizes CloudTrail management, it does not prevent developers from modifying or deleting CloudTrail configurations."
         },
         "C": {
-          "zh": "正確。技术原因： SCP 可以限制账户中的所有用户（包括 root 用户），以确保 CloudTrail 配置不被修改。",
+          "zh": "正確。原因是，SCP 可以限制账户中的所有用户（包括 root 用户），以确保 CloudTrail 配置不被修改。",
           "en": "Correct. Technical reason: SCP can restrict all users in an account (including the root user) to ensure that CloudTrail configuration is not modified."
         },
         "D": {
-          "zh": "錯誤。技术原因：服务相关角色用于授权 AWS 服务代表客户访问资源。无法用于限制账户中IAM用户的权限，不符合要求。",
+          "zh": "錯誤。原因是，服务相关角色用于授权 AWS 服务代表客户访问资源。无法用于限制账户中IAM用户的权限，不符合要求。",
           "en": "Incorrect. Technical reason: Service-linked roles are used to authorize AWS services to access resources on behalf of customers. They cannot be used to restrict the permissions of IAM users in the account and therefore do not meet the requirements."
         }
       },
@@ -261,19 +261,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：实例存储是临时存储。当实例停止或终止时，数据会丢失并且不持久。不适合关键业务应用程序的存储需求。",
+          "zh": "錯誤。原因是，实例存储是临时存储。当实例停止或终止时，数据会丢失并且不持久。不适合关键业务应用程序的存储需求。",
           "en": "Incorrect. Technical reason: Instance storage is temporary storage. Data is lost when the instance is stopped or terminated and is not durable. Not suitable for the storage needs of business-critical applications."
         },
         "B": {
-          "zh": "錯誤。技术原因： ElastiCache 是一种内存级缓存服务，主要用于加速数据访问而不是持久存储。不满足“持久存储”的要求。",
+          "zh": "錯誤。原因是，ElastiCache 是一种内存级缓存服务，主要用于加速数据访问而不是持久存储。不满足“持久存储”的要求。",
           "en": "Incorrect. Technical reason: ElastiCache is a memory-level caching service primarily used to accelerate data access rather than persistent storage. The \"persistent storage\" requirement is not met."
         },
         "C": {
-          "zh": "正確。技术原因：预配置 IOPS SSD EBS 卷为关键业务应用程序提供高性能、低延迟和耐用性。支持高IOPS要求，能够满足应用性能需求。",
+          "zh": "正確。原因是，预配置 IOPS SSD EBS 卷为关键业务应用程序提供高性能、低延迟和耐用性。支持高IOPS要求，能够满足应用性能需求。",
           "en": "Correct. Technical reason: Provisioned IOPS SSD EBS volumes deliver high performance, low latency, and durability for business-critical applications. Supports high IOPS requirements and can meet application performance requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：吞吐量优化的HDD EBS卷适合大规模顺序读写操作（例如日志处理），但不适合低延迟和高性能要求。不满足关键业务应用的性能要求。",
+          "zh": "錯誤。原因是，吞吐量优化的HDD EBS卷适合大规模顺序读写操作（例如日志处理），但不适合低延迟和高性能要求。不满足关键业务应用的性能要求。",
           "en": "Incorrect. Technical reason: Throughput-optimized HDD EBS volumes are suitable for large-scale sequential read and write operations (such as log processing), but are not suitable for low latency and high performance requirements. Does not meet the performance requirements of business-critical applications."
         }
       },
@@ -317,19 +317,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： S3 跨区域复制 (CRR) 是专门设计用于在不同区域之间自动复制对象的功能。它需要在源存储桶和目标存储桶之间启用版本控制，并配置复制规则。最小的操作工作量：配置完成后，复制是自动的，不需要额外的手动干预。",
+          "zh": "正確。原因是，S3 跨区域复制 (CRR) 是专门设计用于在不同区域之间自动复制对象的功能。它需要在源存储桶和目标存储桶之间启用版本控制，并配置复制规则。最小的操作工作量：配置完成后，复制是自动的，不需要额外的手动干预。",
           "en": "Correct. Technical reason: S3 Cross-Region Replication (CRR) is a feature specifically designed to automatically replicate objects between different regions. It requires enabling versioning between the source and destination buckets, and configuring replication rules. Minimal operational effort: Once configured, replication is automatic and requires no additional manual intervention."
         },
         "B": {
-          "zh": "錯誤。技术原因： CORS是一种控制跨域访问的机制，与数据复制无关。无法满足将数据从一个区域复制到另一个区域的需求。",
+          "zh": "錯誤。原因是，CORS是一种控制跨域访问的机制，与数据复制无关。无法满足将数据从一个区域复制到另一个区域的需求。",
           "en": "Incorrect. Technical reason: CORS is a mechanism for controlling cross-domain access and has nothing to do with data replication. It cannot meet the needs of copying data from one region to another."
         },
         "C": {
-          "zh": "錯誤。技术原因： S3生命周期规则用于管理对象的生命周期，例如过期或转移到其他存储。它不能用于跨区域复制数据。",
+          "zh": "錯誤。原因是，S3生命周期规则用于管理对象的生命周期，例如过期或转移到其他存储。它不能用于跨区域复制数据。",
           "en": "Incorrect. Technical reason: S3 lifecycle rules are used to manage the lifecycle of objects, such as expiration or transfer to other storage. It cannot be used to copy data across regions."
         },
         "D": {
-          "zh": "錯誤。技术原因：这种方式虽然可以实现跨区域复制，但需要额外的配置和维护（如Lambda函数的编写和管理），操作工作量比较大。",
+          "zh": "錯誤。原因是，这种方式虽然可以实现跨区域复制，但需要额外的配置和维护（如Lambda函数的编写和管理），操作工作量比较大。",
           "en": "Incorrect. Technical reason: Although this method can achieve cross-region replication, it requires additional configuration and maintenance (such as the writing and management of Lambda functions), and the operation workload is relatively large."
         }
       },
@@ -377,23 +377,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： DynamoDB的按需容量模型可以根据流量动态调整资源，适合高峰和低峰流量场景。",
+          "zh": "正確。原因是，DynamoDB的按需容量模型可以根据流量动态调整资源，适合高峰和低峰流量场景。",
           "en": "Correct. Technical reason: DynamoDB's on-demand capacity model can dynamically adjust resources according to traffic, suitable for peak and low-peak traffic scenarios."
         },
         "B": {
-          "zh": "錯誤。技术原因：虽然Aurora Serverless支持自动扩展，但问题需要“快速切向数据库架构”。 Aurora 的架构共享不如 DynamoDB 灵活。",
+          "zh": "錯誤。原因是，虽然Aurora Serverless支持自动扩展，但问题需要“快速切向数据库架构”。 Aurora 的架构共享不如 DynamoDB 灵活。",
           "en": "Incorrect. Technical reason: Although Aurora Serverless supports automatic scaling, the problem requires \"quick tangential database architecture\". Aurora's schema sharing is not as flexible as DynamoDB's."
         },
         "C": {
-          "zh": "錯誤。技术原因：尽管 DynamoDB 自动扩展以满足需求，但按需容量模型（选项 A）更适合这种动态流量场景。",
+          "zh": "錯誤。原因是，尽管 DynamoDB 自动扩展以满足需求，但按需容量模型（选项 A）更适合这种动态流量场景。",
           "en": "Incorrect. Technical reason: Although DynamoDB automatically scales to meet demand, the on-demand capacity model (Option A) is better suited for this dynamic traffic scenario."
         },
         "D": {
-          "zh": "正確。技术原因： S3 和 CloudFront 的组合是提供具有高可用性和全球分发的静态内容的最佳实践。",
+          "zh": "正確。原因是，S3 和 CloudFront 的组合是提供具有高可用性和全球分发的静态内容的最佳实践。",
           "en": "Correct. Technical reason: The combination of S3 and CloudFront is a best practice for serving static content with high availability and global distribution."
         },
         "E": {
-          "zh": "錯誤。技术原因：与 S3 和 CloudFront 的组合相比，使用 EC2 实例和 EFS 提供静态内容效率较低且成本更高。",
+          "zh": "錯誤。原因是，与 S3 和 CloudFront 的组合相比，使用 EC2 实例和 EFS 提供静态内容效率较低且成本更高。",
           "en": "Incorrect. Technical reason: Using EC2 instances and EFS to serve static content is less efficient and more expensive than a combination of S3 and CloudFront."
         }
       },
@@ -438,19 +438,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Shield 主要旨在保护应用程序免受 DDoS 攻击，而不是 SQL 注入或跨站点脚本攻击。该选项不符合题目要求。",
+          "zh": "錯誤。原因是，AWS Shield 主要旨在保护应用程序免受 DDoS 攻击，而不是 SQL 注入或跨站点脚本攻击。该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: AWS Shield is primarily designed to protect applications from DDoS attacks, not SQL injection or cross-site scripting attacks. This option does not meet the question requirements."
         },
         "B": {
-          "zh": "正確。技术原因： AWS WAF 是一种 Web 应用程序防火墙，可保护 API 免受 SQL 注入和跨站点脚本攻击。这是解决这个问题最直接、最有效的方法。",
+          "zh": "正確。原因是，AWS WAF 是一种 Web 应用程序防火墙，可保护 API 免受 SQL 注入和跨站点脚本攻击。这是解决这个问题最直接、最有效的方法。",
           "en": "Correct. Technical reason: AWS WAF is a web application firewall that protects APIs from SQL injection and cross-site scripting attacks. This is the most direct and effective way to solve this problem."
         },
         "C": {
-          "zh": "錯誤。技术原因：虽然CloudFront可以与API Gateway集成来提高性能，但AWS Shield仍然主要用于DDoS防护，无法解决SQL注入和跨站脚本攻击的问题。",
+          "zh": "錯誤。原因是，虽然CloudFront可以与API Gateway集成来提高性能，但AWS Shield仍然主要用于DDoS防护，无法解决SQL注入和跨站脚本攻击的问题。",
           "en": "Incorrect. Technical reason: Although CloudFront can be integrated with API Gateway to improve performance, AWS Shield is still mainly used for DDoS protection and cannot solve the problems of SQL injection and cross-site scripting attacks."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，CloudFront 是全球內容傳遞網路，會在邊緣快取內容以降低使用者延遲與來源負載；API Gateway 用於建立、保護與管理 HTTP、REST 或 WebSocket API；AWS WAF 依 Web ACL 規則篩選 HTTP(S) 請求，可封鎖常見 Web 攻擊或限制請求速率。此做法雖能執行選項描述的工作，但沒有完整處理「满足这些要求的最高效的运营解决方案是什么」；本題應改用正確選項所述的「配置 AWS WAF。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         }
       },
@@ -494,19 +494,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：为每个用户创建 IAM 用户可能会导致管理复杂性，特别是对于 1,500 个用户的场景。这种方法不满足问题的要求，因为它要求用户维护单独的 AWS 身份，而问题明确要求避免这种情况。",
+          "zh": "錯誤。原因是，为每个用户创建 IAM 用户可能会导致管理复杂性，特别是对于 1,500 个用户的场景。这种方法不满足问题的要求，因为它要求用户维护单独的 AWS 身份，而问题明确要求避免这种情况。",
           "en": "Incorrect. Technical reason: Creating IAM users for each user can lead to administrative complexity, especially for a 1,500-user scenario. This approach does not meet the requirements of the question because it requires users to maintain separate AWS identities, which the question explicitly asks to avoid."
         },
         "B": {
-          "zh": "錯誤。技术原因： Amazon Cognito 主要用于管理应用程序用户池，而不是直接与 Active Directory 集成来管理企业用户访问。虽然这可以通过某些方式实现，但这并不是最好的解决方案。",
+          "zh": "錯誤。原因是，Amazon Cognito 主要用于管理应用程序用户池，而不是直接与 Active Directory 集成来管理企业用户访问。虽然这可以通过某些方式实现，但这并不是最好的解决方案。",
           "en": "Incorrect. Technical reason: Amazon Cognito is primarily used to manage application user pools, rather than integrating directly with Active Directory to manage enterprise user access. While this can be achieved in some ways, it's not the best solution."
         },
         "C": {
-          "zh": "錯誤。技术原因：跨账户角色主要用于授权多个 AWS 账户之间的访问，而不是用于与 Active Directory 集成。该选项不符合题目要求。",
+          "zh": "錯誤。原因是，跨账户角色主要用于授权多个 AWS 账户之间的访问，而不是用于与 Active Directory 集成。该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: Cross-account roles are primarily used to authorize access between multiple AWS accounts, not for integration with Active Directory. This option does not meet the question requirements."
         },
         "D": {
-          "zh": "正確。技术原因： SAML 2.0 联合身份允许企业通过 Active Directory 等身份提供商管理用户对 AWS 资源的访问。通过将 Active Directory 组映射到 IAM 角色，您可以实现无缝用户访问，同时保留对本地资源的访问权限。",
+          "zh": "正確。原因是，SAML 2.0 联合身份允许企业通过 Active Directory 等身份提供商管理用户对 AWS 资源的访问。通过将 Active Directory 组映射到 IAM 角色，您可以实现无缝用户访问，同时保留对本地资源的访问权限。",
           "en": "Correct. Technical reason: SAML 2.0 Federated Identity allows enterprises to manage user access to AWS resources through an identity provider such as Active Directory. By mapping Active Directory groups to IAM roles, you can achieve seamless user access while retaining access to local resources."
         }
       },
@@ -550,19 +550,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： CloudFront 是一个全球内容交付网络 (CDN)，有助于加速内容交付，但它本身并不提供基于地理位置的路由。 AWS WAF是一个Web应用程序防御墙，可以保护应用程序免受恶意流量的侵害，但它也不具有地理位置路由的功能。因此，该选项不满足题目要求。",
+          "zh": "錯誤。原因是，CloudFront 是一个全球内容交付网络 (CDN)，有助于加速内容交付，但它本身并不提供基于地理位置的路由。 AWS WAF是一个Web应用程序防御墙，可以保护应用程序免受恶意流量的侵害，但它也不具有地理位置路由的功能。因此，该选项不满足题目要求。",
           "en": "Incorrect. Technical reason: CloudFront is a global content delivery network (CDN) that helps accelerate content delivery, but it does not natively provide geolocation-based routing. AWS WAF is a web application defense wall that protects applications from malicious traffic, but it also does not have the functionality of geo-location routing. Therefore, this option does not satisfy the question requirements."
         },
         "B": {
-          "zh": "錯誤。技术原因： Application Load Balancer 可以分配流量， AWS WAF 可以过滤请求，但两者都无法根据用户的地理位置执行 DNS 路由，因此它们不符合条件。",
+          "zh": "錯誤。原因是，Application Load Balancer 可以分配流量， AWS WAF 可以过滤请求，但两者都无法根据用户的地理位置执行 DNS 路由，因此它们不符合条件。",
           "en": "Incorrect. Technical reason: An Application Load Balancer can distribute traffic, and AWS WAF can filter requests, but neither can perform DNS routing based on the user's geographic location, so they are not eligible."
         },
         "C": {
-          "zh": "正確。技术原因： Amazon Route 53 的地理位置路由策略允许根据用户的地理位置（例如国家或地区）将流量路由到特定资源。此选项可确保用户访问符合分发权限限制的内容，并且是正确的选择。",
+          "zh": "正確。原因是，Amazon Route 53 的地理位置路由策略允许根据用户的地理位置（例如国家或地区）将流量路由到特定资源。此选项可确保用户访问符合分发权限限制的内容，并且是正确的选择。",
           "en": "Correct. Technical reason: Amazon Route 53's geolocation routing policies allow traffic to be routed to specific resources based on the user's geographic location (such as country or region). This option ensures that users access content that complies with distribution rights restrictions and is the correct choice."
         },
         "D": {
-          "zh": "錯誤。技术原因： Geoproximity 路由策略根据用户与资源的距离来路由流量，但它不直接支持基于分发权限的内容限制。该选项不完全满足题目要求。",
+          "zh": "錯誤。原因是，Route 53 提供 DNS 與健康檢查，可依延遲、地理位置或容錯政策路由流量。此做法雖能執行選項描述的工作，但沒有完整處理「解决方案架构师应该选择哪种配置来满足这些要求」；本題應改用正確選項所述的「使用地理位置策略配置 Amazon Route 53」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: The Geoproximity routing policy routes traffic based on the user's distance from the resource, but it does not directly support content restrictions based on distribution permissions. This option does not fully meet the question requirements."
         }
       },
@@ -606,19 +606,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Snowball Edge 主要用于离线数据迁移，而不是在线数据传输。虽然可以将数据迁移到S3，但不支持自动验证数据完整性。",
+          "zh": "錯誤。原因是，AWS Snowball Edge 主要用于离线数据迁移，而不是在线数据传输。虽然可以将数据迁移到S3，但不支持自动验证数据完整性。",
           "en": "Incorrect. Technical reason: AWS Snowball Edge is primarily used for offline data migration, not online data transfer. Although data can be migrated to S3, automatic verification of data integrity is not supported."
         },
         "B": {
-          "zh": "正確。技术原因： AWS DataSync 是一项在线数据迁移服务，可实现从本地到 S3 的高效传输并自动验证数据完整性。这完全符合题目的要求。",
+          "zh": "正確。原因是，AWS DataSync 是一项在线数据迁移服务，可实现从本地到 S3 的高效传输并自动验证数据完整性。这完全符合题目的要求。",
           "en": "Correct. Technical reason: AWS DataSync is an online data migration service that enables efficient transfers from on-premises to S3 and automatically verifies data integrity. This fully meets the requirements of the topic."
         },
         "C": {
-          "zh": "錯誤。技术原因： Amazon S3 文件网关主要用于将本地文件系统与 S3 集成以提供文件级访问，并不专门用于数据迁移。它不具备自动验证数据完整性的能力。",
+          "zh": "錯誤。原因是，Amazon S3 文件网关主要用于将本地文件系统与 S3 集成以提供文件级访问，并不专门用于数据迁移。它不具备自动验证数据完整性的能力。",
           "en": "Incorrect. Technical reason: Amazon S3 File Gateway is primarily used to integrate local file systems with S3 to provide file-level access and is not specifically used for data migration. It does not have the ability to automatically verify data integrity."
         },
         "D": {
-          "zh": "錯誤。技术原因： Amazon S3 Transfer Acceleration用于加速从互联网到S3的数据传输，但不支持数据完整性的自动验证，不适合本地到云的批量数据迁移场景。",
+          "zh": "錯誤。原因是，Amazon S3 Transfer Acceleration用于加速从互联网到S3的数据传输，但不支持数据完整性的自动验证，不适合本地到云的批量数据迁移场景。",
           "en": "Incorrect. Technical reason: Amazon S3 Transfer Acceleration is used to accelerate data transfer from Dapi Internet to S3, but it does not support automatic verification of data integrity and is not suitable for batch data migration scenarios from local to cloud."
         }
       },
@@ -662,19 +662,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： Amazon Route 53 是 AWS 的托管 DNS 服务，旨在实现高可用性和低维护量。通过创建托管区域并导入现有区域文件，您可以轻松迁移现有 DNS 服务，同时减少管理开销。满足主题需求：最大化可用性，最小化运维工作。",
+          "zh": "正確。原因是，Amazon Route 53 是 AWS 的托管 DNS 服务，旨在实现高可用性和低维护量。通过创建托管区域并导入现有区域文件，您可以轻松迁移现有 DNS 服务，同时减少管理开销。满足主题需求：最大化可用性，最小化运维工作。",
           "en": "Correct. Technical reason: Amazon Route 53 is AWS's managed DNS service designed for high availability and low maintenance. By creating a hosted zone and importing an existing zone file, you can easily migrate your existing DNS service while reducing administrative overhead. Meet the theme requirements: maximize availability and minimize operation and maintenance work."
         },
         "B": {
-          "zh": "錯誤。技术原因：使用单个 EC2 实例托管 DNS 服务会导致单点故障和非结构化高可用性。虽然可以通过CloudWatch监控中断情况，但这并不能解决单点故障的问题。",
+          "zh": "錯誤。原因是，使用单个 EC2 实例托管 DNS 服务会导致单点故障和非结构化高可用性。虽然可以通过CloudWatch监控中断情况，但这并不能解决单点故障的问题。",
           "en": "Incorrect. Technical reason: Using a single EC2 instance to host a DNS service results in a single point of failure and unstructured high availability. While outages can be monitored through CloudWatch, this does not solve the problem of single points of failure."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS SMS 主要用于迁移虚拟机或管理服务器，并不专门用于迁移 DNS 服务。此选项不描述如何实现高可用性或减少操作工作量。",
+          "zh": "錯誤。原因是，AWS SMS 主要用于迁移虚拟机或管理服务器，并不专门用于迁移 DNS 服务。此选项不描述如何实现高可用性或减少操作工作量。",
           "en": "Incorrect. Technical reason: AWS SMS is primarily used for migrating virtual machines or management servers and is not specifically used for migrating DNS services. This option does not describe how to achieve high availability or reduce operational effort."
         },
         "D": {
-          "zh": "錯誤。技术原因：尽管Auto Scaling组可以提供一定的高可用性，但使用EC2实例托管DNS服务仍然需要较高的运维工作。另外， DNS服务通常不会受到CPU利用率的显著影响，因此基于CPU的扩展策略不适合这种场景。",
+          "zh": "錯誤。原因是，尽管Auto Scaling组可以提供一定的高可用性，但使用EC2实例托管DNS服务仍然需要较高的运维工作。另外， DNS服务通常不会受到CPU利用率的显著影响，因此基于CPU的扩展策略不适合这种场景。",
           "en": "Incorrect. Technical reason: Although Auto Scaling groups can provide certain high availability, using EC2 instances to host DNS services still requires high operation and maintenance work. In addition, DNS services are usually not significantly affected by CPU utilization, so CPU-based scaling strategies are not suitable for this scenario."
         }
       },
@@ -718,19 +718,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Config 主要用于资源配置的合规性检查，而不是直接报告 S3 存储指标。虽然这可以通过自定义规则来实现，但这会增加操作复杂性。",
+          "zh": "錯誤。原因是，AWS Config 主要用于资源配置的合规性检查，而不是直接报告 S3 存储指标。虽然这可以通过自定义规则来实现，但这会增加操作复杂性。",
           "en": "Incorrect. Technical reason: AWS Config is primarily used for compliance checking of resource configurations rather than directly reporting S3 storage metrics. While this can be achieved with custom rules, this adds operational complexity."
         },
         "B": {
-          "zh": "錯誤。技术原因： SCP用于限制或控制账户内的服务使用权限，不能直接上报S3存储指标。",
+          "zh": "錯誤。原因是，SCP用于限制或控制账户内的服务使用权限，不能直接上报S3存储指标。",
           "en": "Incorrect. Technical reason: SCP is used to limit or control the service usage permissions within the account, and cannot directly report S3 storage indicators."
         },
         "C": {
-          "zh": "正確。技术原因： S3 Storage Lens 是一款专门用于监控和分析 S3 存储使用情况的工具。支持未完成分片上传对象数量上报，操作简单。",
+          "zh": "正確。原因是，S3 Storage Lens 是一款专门用于监控和分析 S3 存储使用情况的工具。支持未完成分片上传对象数量上报，操作简单。",
           "en": "Correct. Technical reason: S3 Storage Lens is a tool specifically designed to monitor and analyze S3 storage usage. Supports reporting of the number of unfinished multi-part upload objects, and the operation is simple."
         },
         "D": {
-          "zh": "錯誤。技术原因： S3多区域接入点用于跨区域访问S3存储桶，无法直接报告未完成的分段上传对象的数量。",
+          "zh": "錯誤。原因是，S3多区域接入点用于跨区域访问S3存储桶，无法直接报告未完成的分段上传对象的数量。",
           "en": "Incorrect. Technical reason: The S3 multi-region access point is used to access S3 buckets across regions and cannot directly report the number of outstanding multipart upload objects."
         }
       },
@@ -774,19 +774,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：技术分析：手动创建快照可以保护数据，但升级生产数据库可能会导致服务中断，无法快速测试新版本的功能。说明：此选项操作复杂，并且不满足“最小操作开销”要求。",
+          "zh": "錯誤。原因是，技术分析：手动创建快照可以保护数据，但升级生产数据库可能会导致服务中断，无法快速测试新版本的功能。说明：此选项操作复杂，并且不满足“最小操作开销”要求。",
           "en": "Incorrect. Technical reason: Technical analysis: Manually creating snapshots can protect data, but upgrading production databases may cause service interruptions and prevent you from quickly testing the functionality of the new version. Disclaimer: This option is complex to operate and does not meet the \"minimum operational overhead\" requirement."
         },
         "B": {
-          "zh": "錯誤。技术原因：技术分析：使用原生备份恢复功能可以实现数据迁移，但需要手动进行备份恢复操作，繁琐且耗时。评论：此选项价格昂贵，而且不是最佳解决方案。",
+          "zh": "錯誤。原因是，技术分析：使用原生备份恢复功能可以实现数据迁移，但需要手动进行备份恢复操作，繁琐且耗时。评论：此选项价格昂贵，而且不是最佳解决方案。",
           "en": "Incorrect. Technical reason: Technical analysis: Data migration can be achieved using native backup and recovery functions, but manual backup and recovery operations are required, which is cumbersome and time-consuming. Comment: This option is expensive and not the best solution."
         },
         "C": {
-          "zh": "錯誤。技术原因：技术分析： AWS DMS可以实现数据迁移，但需要额外配置迁移任务，且不支持版本升级的自动化测试。说明：此选项操作复杂，并且不满足“最小操作开销”要求。",
+          "zh": "錯誤。原因是，技术分析： AWS DMS可以实现数据迁移，但需要额外配置迁移任务，且不支持版本升级的自动化测试。说明：此选项操作复杂，并且不满足“最小操作开销”要求。",
           "en": "Incorrect. Technical reason: Technical analysis: AWS DMS can realize data migration, but it requires additional configuration of migration tasks and does not support automated testing of version upgrades. Disclaimer: This option is complex to operate and does not meet the \"minimum operational overhead\" requirement."
         },
         "D": {
-          "zh": "正確。技术原因：技术分析： Amazon RDS Blue/Green Deployments 提供自动化版本升级和测试功能，可以快速创建绿色环境来测试新版本功能，同时保护数据。理论：这个选项操作最疯狂，满足“最少操作开销”的要求。",
+          "zh": "正確。原因是，技术分析： Amazon RDS Blue/Green Deployments 提供自动化版本升级和测试功能，可以快速创建绿色环境来测试新版本功能，同时保护数据。理论：这个选项操作最疯狂，满足“最少操作开销”的要求。",
           "en": "Correct. Technical reason: Technical analysis: Amazon RDS Blue/Green Deployments provides automated version upgrade and testing functions, which can quickly create a green environment to test new version functions while protecting data. Theory: This option operates the craziest and meets the requirement of \"least operational overhead\"."
         }
       },
@@ -830,19 +830,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：虽然 EC2 预留实例可以降低成本，但它们仍然需要预付费用，并且要求实例持续运行。即使任务只运行2小时，实例的成本仍然很高。此外，如果任务中断， EC2实例无法自动恢复任务，需要额外的逻辑来处理失败的任务。",
+          "zh": "錯誤。原因是，虽然 EC2 预留实例可以降低成本，但它们仍然需要预付费用，并且要求实例持续运行。即使任务只运行2小时，实例的成本仍然很高。此外，如果任务中断， EC2实例无法自动恢复任务，需要额外的逻辑来处理失败的任务。",
           "en": "Incorrect. Technical reason: Although EC2 Reserved Instances can reduce costs, they still require an upfront fee and require the instance to run continuously. Even if the task only runs for 2 hours, the cost of the instance is still high. In addition, if a task is interrupted, the EC2 instance cannot automatically resume the task, requiring additional logic to handle failed tasks."
         },
         "B": {
-          "zh": "錯誤。技术原因： AWS Lambda 适合短时间运行的任务（最多 15 分钟），但是本题中的任务最多需要运行 2 小时，这超出了 Lambda 的执行时间限制。因此， Lambda无法满足任务的运行时需求。",
+          "zh": "錯誤。原因是，AWS Lambda 适合短时间运行的任务（最多 15 分钟），但是本题中的任务最多需要运行 2 小时，这超出了 Lambda 的执行时间限制。因此， Lambda无法满足任务的运行时需求。",
           "en": "Incorrect. Technical reason: AWS Lambda is suitable for short-running tasks (up to 15 minutes), but the task in this question needs to run for up to 2 hours, which exceeds the execution time limit of Lambda. Therefore, Lambda cannot meet the runtime needs of the task."
         },
         "C": {
-          "zh": "正確。技术原因： Amazon ECS Fargate 是一种无服务器容器运行服务，按需计费，适合运行长期任务。通过EventBridge定时触发，可以保证任务每天运行一次。如果任务被中断， Fargate 可以重新启动该任务以确保它从头开始运行。这是最具成本效益且可靠的解决方案。",
+          "zh": "正確。原因是，Amazon ECS Fargate 是一种无服务器容器运行服务，按需计费，适合运行长期任务。通过EventBridge定时触发，可以保证任务每天运行一次。如果任务被中断， Fargate 可以重新启动该任务以确保它从头开始运行。这是最具成本效益且可靠的解决方案。",
           "en": "Correct. Technical reason: Amazon ECS Fargate is a serverless container running service that is billed on-demand and suitable for running long-term tasks. Through EventBridge scheduled triggering, the task can be guaranteed to run once a day. If a task is interrupted, Fargate can restart the task to ensure it runs from the beginning. This is the most cost-effective and reliable solution."
         },
         "D": {
-          "zh": "錯誤。技术原因：虽然 ECS 任务可以运行长期任务，但在 EC2 实例上运行它们需要持续的 EC2 实例费用。即使任务只运行2小时，实例的成本仍然很高。 EC2 的成本优化程度低于 Fargate，并且需要额外的管理工作。",
+          "zh": "錯誤。原因是，虽然 ECS 任务可以运行长期任务，但在 EC2 实例上运行它们需要持续的 EC2 实例费用。即使任务只运行2小时，实例的成本仍然很高。 EC2 的成本优化程度低于 Fargate，并且需要额外的管理工作。",
           "en": "Incorrect. Technical reason: While ECS tasks can run long-term tasks, running them on EC2 instances requires ongoing EC2 instance fees. Even if the task only runs for 2 hours, the cost of the instance is still high. EC2 is less cost-optimized than Fargate and requires additional management effort."
         }
       },

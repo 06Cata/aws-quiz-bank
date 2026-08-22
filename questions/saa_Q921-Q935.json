@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：调整 EC2 实例大小以增加 CPU 容量可以解决 CPU 利用率高的问题。正确：将 Auto Scaling 组的最小和最大大小配置为 1，以确保单实例运行满足当前应用程序的设计约束。正确：添加 RDS 只读副本可以通过卸载读取请求来提高数据库性能。",
+          "zh": "正確。原因是，调整 EC2 实例大小以增加 CPU 容量可以解决 CPU 利用率高的问题。正确：将 Auto Scaling 组的最小和最大大小配置为 1，以确保单实例运行满足当前应用程序的设计约束。正确：添加 RDS 只读副本可以通过卸载读取请求来提高数据库性能。",
           "en": "Correct. Technical reason: Resizing your EC2 instance to increase CPU capacity can resolve high CPU utilization issues. Correct: Configure the Auto Scaling group's minimum and maximum sizes to 1 to ensure that the single-instance run meets the current application's design constraints. Correct: Adding RDS read replicas can improve database performance by offloading read requests."
         },
         "B": {
-          "zh": "錯誤。技术原因： RDS只读副本仅用于处理读请求，无法处理写请求。将所有读/写流量重定向到只读副本是不正确的。正确：调整 EC2 实例大小以增加 CPU 容量可以解决 CPU 利用率过高的问题。正确：将Auto Scaling组的最小和最大大小配置为1，与当前应用程序的设计约束一致。",
+          "zh": "錯誤。原因是，RDS只读副本仅用于处理读请求，无法处理写请求。将所有读/写流量重定向到只读副本是不正确的。正确：调整 EC2 实例大小以增加 CPU 容量可以解决 CPU 利用率过高的问题。正确：将Auto Scaling组的最小和最大大小配置为1，与当前应用程序的设计约束一致。",
           "en": "Incorrect. Technical reason: RDS read-only replicas are only used to process read requests and cannot process write requests. It is incorrect to redirect all read/write traffic to read replicas. Correct: Resizing your EC2 instance to increase CPU capacity can resolve high CPU utilization. Correct: Configure the Auto Scaling group's minimum and maximum sizes to 1, consistent with the design constraints of the current application."
         },
         "C": {
-          "zh": "錯誤。技术原因：当前应用程序设计为仅在单个 EC2 实例上运行，因此将最大 Auto Scaling 组大小设置为 2 是不够的。正确：调整RDS实例增加CPU容量可以提升数据库性能，但无法解决读请求分流问题。",
+          "zh": "錯誤。原因是，当前应用程序设计为仅在单个 EC2 实例上运行，因此将最大 Auto Scaling 组大小设置为 2 是不够的。正确：调整RDS实例增加CPU容量可以提升数据库性能，但无法解决读请求分流问题。",
           "en": "Incorrect. Technical reason: The current application is designed to run only on a single EC2 instance, so setting the maximum Auto Scaling group size to 2 is not sufficient. Correct: Adjusting the RDS instance to increase the CPU capacity can improve database performance, but it cannot solve the problem of read request offloading."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，EC2 Auto Scaling 會依指標或排程調整執行個體數量，以維持容量與可用性。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案可以满足这些要求」；本題應改用正確選項所述的「将 EC2 实例大小调整为具有更多 CPU 容量的 EC2 实例类型。配置 Auto Scaling 组，最小和最大大小均为 1。为读取请求配置 RDS 只读副本。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         }
       },
@@ -84,19 +84,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：共享 IAM 用户凭证违反了安全最佳实践，因为它会带来凭证泄露的风险。错误：无法对敏感数据实施细粒度的访问控制。",
+          "zh": "錯誤。原因是，共享 IAM 用户凭证违反了安全最佳实践，因为它会带来凭证泄露的风险。错误：无法对敏感数据实施细粒度的访问控制。",
           "en": "Incorrect. Technical reason: Sharing IAM user credentials violates security best practices because it creates the risk of credential compromise. Error: Unable to implement fine-grained access control on sensitive data."
         },
         "B": {
-          "zh": "正確。技术原因：基于最小权限原则定义 IAM 角色是 AWS 推荐的最佳实践。正确： IAM 角色可以通过临时凭证提供细粒度的权限控制和对资源的安全访问。",
+          "zh": "正確。原因是，基于最小权限原则定义 IAM 角色是 AWS 推荐的最佳实践。正确： IAM 角色可以通过临时凭证提供细粒度的权限控制和对资源的安全访问。",
           "en": "Correct. Technical reason: Defining IAM roles based on the principle of least privilege is an AWS recommended best practice. Correct: IAM roles can provide fine-grained permission control and secure access to resources through temporary credentials."
         },
         "C": {
-          "zh": "錯誤。技术原因：虽然可以通过访问密钥进行编程访问，但长期使用静态访问密钥存在安全风险。错误：无法实现基于最小权限的细粒度控制。",
+          "zh": "錯誤。原因是，虽然可以通过访问密钥进行编程访问，但长期使用静态访问密钥存在安全风险。错误：无法实现基于最小权限的细粒度控制。",
           "en": "Incorrect. Technical reason: While programmatic access is possible through access keys, long-term use of static access keys is a security risk. Error: Fine-grained control based on least privileges cannot be implemented."
         },
         "D": {
-          "zh": "錯誤。技术原因： AWS Cognito 主要用于管理应用程序用户身份，而不是直接管理对 AWS 资源的访问。错误：无法满足敏感数据的细粒度权限控制要求。",
+          "zh": "錯誤。原因是，AWS Cognito 主要用于管理应用程序用户身份，而不是直接管理对 AWS 资源的访问。错误：无法满足敏感数据的细粒度权限控制要求。",
           "en": "Incorrect. Technical reason: AWS Cognito is primarily used to manage application user identities, rather than directly managing access to AWS resources. Error: Unable to meet fine-grained permission control requirements for sensitive data."
         }
       },
@@ -144,23 +144,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：正确。 AWS Compute Optimizer 会分析当前实例的性能，并推荐用于垂直扩展的更高性能的实例类型。这是解决CPU利用率高问题的有效方法。",
+          "zh": "正確。原因是，正确。 AWS Compute Optimizer 会分析当前实例的性能，并推荐用于垂直扩展的更高性能的实例类型。这是解决CPU利用率高问题的有效方法。",
           "en": "Correct. Technical reason: Correct. AWS Compute Optimizer analyzes the performance of your current instances and recommends higher-performance instance types for vertical scaling. This is an effective way to solve the problem of high CPU utilization."
         },
         "B": {
-          "zh": "錯誤。技术原因：错误。创建 AMI 和启动模板是部署新实例的一个步骤，但它本身并不能解决性能问题或直接提高应用程序可用性。",
+          "zh": "錯誤。原因是，错误。创建 AMI 和启动模板是部署新实例的一个步骤，但它本身并不能解决性能问题或直接提高应用程序可用性。",
           "en": "Incorrect. Technical reason: Error. Creating an AMI and launch template is a step in deploying new instances, but it does not by itself solve performance issues or directly improve application availability."
         },
         "C": {
-          "zh": "錯誤。技术原因：错误。 Auto Scaling 组和 Application Load Balancer 通常用于水平扩展，而不是垂直扩展。垂直扩展是通过替换更高性能的实例类型来实现的。",
+          "zh": "錯誤。原因是，错误。 Auto Scaling 组和 Application Load Balancer 通常用于水平扩展，而不是垂直扩展。垂直扩展是通过替换更高性能的实例类型来实现的。",
           "en": "Incorrect. Technical reason: Error. Auto Scaling groups and Application Load Balancers are typically used for horizontal scaling, not vertical scaling. Vertical scaling is achieved by replacing higher performance instance types."
         },
         "D": {
-          "zh": "錯誤。技术原因：错误。 AWS Compute Optimizer 主要用于为单个实例推荐优化类型，而不是水平可扩展的架构设计。",
+          "zh": "錯誤。原因是，错误。 AWS Compute Optimizer 主要用于为单个实例推荐优化类型，而不是水平可扩展的架构设计。",
           "en": "Incorrect. Technical reason: Error. AWS Compute Optimizer is primarily used to recommend optimization types for individual instances rather than horizontally scalable architectural designs."
         },
         "E": {
-          "zh": "正確。技术原因：正确。通过创建弹性伸缩组和负载均衡器，您可以实现水平扩展并动态增加实例数量以应对高负载，从而提高应用程序的可用性。",
+          "zh": "正確。原因是，正确。通过创建弹性伸缩组和负载均衡器，您可以实现水平扩展并动态增加实例数量以应对高负载，从而提高应用程序的可用性。",
           "en": "Correct. Technical reason: Correct. By creating auto scaling groups and load balancers, you can achieve horizontal scaling and dynamically increase the number of instances to cope with high loads, thereby improving application availability."
         }
       },
@@ -205,19 +205,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：网络访问分析器主要用于分析网络访问路径和网络配置，并非专门用于检查 IAM 用户权限。",
+          "zh": "錯誤。原因是，网络访问分析器主要用于分析网络访问路径和网络配置，并非专门用于检查 IAM 用户权限。",
           "en": "Incorrect. Technical reason: Network Access Analyzer is primarily used to analyze network access paths and network configurations, and is not specifically designed to check IAM user permissions."
         },
         "B": {
-          "zh": "錯誤。技术原因： CloudWatch 可以监控事件，但无法直接审核 IAM 用户权限。这种方法需要额外的配置和手动分析，增加了管理开销。",
+          "zh": "錯誤。原因是，CloudWatch 可以监控事件，但无法直接审核 IAM 用户权限。这种方法需要额外的配置和手动分析，增加了管理开销。",
           "en": "Incorrect. Technical reason: CloudWatch can monitor events but cannot directly audit IAM user permissions. This approach requires additional configuration and manual analysis, adding administrative overhead."
         },
         "C": {
-          "zh": "正確。技术原因： IAM 访问分析器专为分析权限和识别权限过高问题而设计，是解决此问题的最佳工具。",
+          "zh": "正確。原因是，IAM 访问分析器专为分析权限和识别权限过高问题而设计，是解决此问题的最佳工具。",
           "en": "Correct. Technical reason: Designed specifically to analyze permissions and identify over-privilege issues, IAM Access Analyzer is the best tool to solve this problem."
         },
         "D": {
-          "zh": "錯誤。技术原因： Amazon Inspector 主要用于检查 EC2 实例、容器和 Lambda 函数是否存在安全漏洞，而不是检查 IAM 权限。",
+          "zh": "錯誤。原因是，Amazon Inspector 主要用于检查 EC2 实例、容器和 Lambda 函数是否存在安全漏洞，而不是检查 IAM 权限。",
           "en": "Incorrect. Technical reason: Amazon Inspector is primarily used to check EC2 instances, containers, and Lambda functions for security vulnerabilities rather than checking IAM permissions."
         }
       },
@@ -261,19 +261,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：治理模式允许特定用户（具有适当的权限）绕过锁定并删除或修改对象。这种模式并不能完全满足“防止删除或修改”的要求，因为授权用户仍然可以对对象进行操作。因此，该选项不符合题目要求。",
+          "zh": "錯誤。原因是，治理模式允许特定用户（具有适当的权限）绕过锁定并删除或修改对象。这种模式并不能完全满足“防止删除或修改”的要求，因为授权用户仍然可以对对象进行操作。因此，该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: Governance mode allows specific users (with appropriate permissions) to bypass locks and delete or modify objects. This mode does not fully satisfy the \"protect from deletion or modification\" requirement because authorized users can still operate on the object. Therefore, this option does not meet the question requirements."
         },
         "B": {
-          "zh": "正確。技术原因：合规模式完全防止对象被删除或修改，即使具有管理员权限的用户也无法覆盖锁定。这种模式完全满足问题的要求，保证敏感文档在固定时间内无法被删除或修改。该选项是正确答案。",
+          "zh": "正確。原因是，合规模式完全防止对象被删除或修改，即使具有管理员权限的用户也无法覆盖锁定。这种模式完全满足问题的要求，保证敏感文档在固定时间内无法被删除或修改。该选项是正确答案。",
           "en": "Correct. Technical reason: Compliance mode completely prevents objects from being deleted or modified, and even users with administrator rights cannot override the lock. This mode fully meets the requirements of the problem and ensures that sensitive documents cannot be deleted or modified within a fixed period of time. This option is the correct answer."
         },
         "C": {
-          "zh": "錯誤。技术原因：版本控制可以保留对象的历史版本，但不能防止对象被删除或修改。生命周期策略仅用于管理对象的存储时间，无法满足“防止删除或修改”的要求。该选项不符合题目要求。",
+          "zh": "錯誤。原因是，版本控制可以保留对象的历史版本，但不能防止对象被删除或修改。生命周期策略仅用于管理对象的存储时间，无法满足“防止删除或修改”的要求。该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: Versioning can preserve historical versions of objects, but it cannot prevent objects from being deleted or modified. Lifecycle policies are only used to manage the storage time of objects and cannot meet the requirement of \"preventing deletion or modification\". This option does not meet the question requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：将对象移至 S3 Glacier 灵活检索可降低存储成本，但不能防止对象被删除或修改。该选项不符合题目要求。",
+          "zh": "錯誤。原因是，将对象移至 S3 Glacier 灵活检索可降低存储成本，但不能防止对象被删除或修改。该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: Moving objects to S3 Glacier Flexible Retrieval reduces storage costs but does not prevent objects from being deleted or modified. This option does not meet the question requirements."
         }
       },
@@ -317,19 +317,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，AWS Fargate 讓 ECS 或 EKS 容器無須管理底層伺服器即可執行；Amazon ECS 是 AWS 原生的受管容器協調服務。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够最具成本效益地满足这些要求」；本題應改用正確選項所述的「使用 Fargate 来配置 ECS 容量提供程序以实现稳定状态，并使用 Fargate Spot 来配置突发流量。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "B": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，Fargate Spot 使用可中斷的閒置容量降低成本，適合可容錯的工作，不宜單獨承載穩定基線；AWS Fargate 讓 ECS 或 EKS 容器無須管理底層伺服器即可執行；Amazon ECS 是 AWS 原生的受管容器協調服務。在此選項的架構中，這些能力會用來處理「哪种解决方案能够最具成本效益地满足这些要求」；因此它同時涵蓋題目指定的功能與限制，是本題應採用的做法。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         },
         "C": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Fargate Spot 使用可中斷的閒置容量降低成本，適合可容錯的工作，不宜單獨承載穩定基線；AWS Fargate 讓 ECS 或 EKS 容器無須管理底層伺服器即可執行；Amazon ECS 是 AWS 原生的受管容器協調服務。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够最具成本效益地满足这些要求」；本題應改用正確選項所述的「使用 Fargate 来配置 ECS 容量提供程序以实现稳定状态，并使用 Fargate Spot 来配置突发流量。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，AWS Fargate 讓 ECS 或 EKS 容器無須管理底層伺服器即可執行；Amazon ECS 是 AWS 原生的受管容器協調服務；AWS Compute Optimizer 依使用指標提出資源規格最佳化建議。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够最具成本效益地满足这些要求」；本題應改用正確選項所述的「使用 Fargate 来配置 ECS 容量提供程序以实现稳定状态，并使用 Fargate Spot 来配置突发流量。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         }
       },
@@ -373,19 +373,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Config主要用于资源配置的合规性检查和审计，不具备检测或防御DDoS攻击的功能。",
+          "zh": "錯誤。原因是，AWS Config主要用于资源配置的合规性检查和审计，不具备检测或防御DDoS攻击的功能。",
           "en": "Incorrect. Technical reason: AWS Config is mainly used for compliance checking and auditing of resource configuration, and does not have the function of detecting or defending against DDoS attacks."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，AWS WAF 依 Web ACL 規則篩選 HTTP(S) 請求，可封鎖常見 Web 攻擊或限制請求速率。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案可以满足这些要求」；本題應改用正確選項所述的「订阅 AWS Shield Advanced。在 Route 53 中配置托管区域。将 ALB 资源添加为受保护资源。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "錯誤。技术原因： Amazon GuardDuty主要用于检测恶意活动和异常行为（例如恶意IP地址、异常流量），但不具备直接防御DDoS攻击的功能。 GuardDuty 无法提供主动 DDoS 防护和事件响应服务。",
+          "zh": "錯誤。原因是，Amazon GuardDuty主要用于检测恶意活动和异常行为（例如恶意IP地址、异常流量），但不具备直接防御DDoS攻击的功能。 GuardDuty 无法提供主动 DDoS 防护和事件响应服务。",
           "en": "Incorrect. Technical reason: Amazon GuardDuty is mainly used to detect malicious activities and abnormal behaviors (such as malicious IP addresses, abnormal traffic), but it does not have the function to directly defend against DDoS attacks. GuardDuty cannot provide proactive DDoS protection and incident response services."
         },
         "D": {
-          "zh": "正確。技术原因： AWS Shield Advanced 是 AWS 的一款托管解决方案，旨在防范 DDoS 攻击，包括主动监控、事件响应支持和对受保护资源的经济补偿。它支持与 Route 53 和 ALB 集成，以提供全面的 DDoS 防护。",
+          "zh": "正確。原因是，AWS Shield Advanced 是 AWS 的一款托管解决方案，旨在防范 DDoS 攻击，包括主动监控、事件响应支持和对受保护资源的经济补偿。它支持与 Route 53 和 ALB 集成，以提供全面的 DDoS 防护。",
           "en": "Correct. Technical reason: AWS Shield Advanced is a managed solution from AWS designed to protect against DDoS attacks and includes proactive monitoring, incident response support, and financial compensation for protected resources. It supports integration with Route 53 and ALB to provide comprehensive DDoS protection."
         }
       },
@@ -429,19 +429,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，AWS WAF 只能檢查 HTTP(S) 第 7 層請求，不能直接附加到處理一般 TCP 流量的 Network Load Balancer，因此這個 Web ACL 架構不可行。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，NLB security group 可依來源 IP 與連接埠限制 TCP 流量；但若既有 NLB 建立時未關聯安全群組，之後不能直接補加，重建並切換 NLB 不符合最小架構變更。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，平行建立第二個 NLB 並設定 IP allowlist 能限制來源，但需新增負載平衡器、切換流量並維護兩套資源，架構變更與營運成本都較高。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "D": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，AWS Shield Advanced 可在不更換既有 NLB 的情況下加強網路與傳輸層 DDoS 偵測及緩解；依本題將未授權嘗試視為 DDoS 型流量的設定，這是列出的正確方案，但它不是一般使用者身分驗證服務。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         }
       },
@@ -493,27 +493,27 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：正确。 SNS 主题需要资源策略以允许 Lambda 函数发布消息。资源策略是控制对 SNS 主题的访问的关键部分。",
+          "zh": "正確。原因是，正确。 SNS 主题需要资源策略以允许 Lambda 函数发布消息。资源策略是控制对 SNS 主题的访问的关键部分。",
           "en": "Correct. Technical reason: Correct. The SNS topic requires a resource policy to allow the Lambda function to publish messages. Resource policies are a key part of controlling access to SNS topics."
         },
         "B": {
-          "zh": "錯誤。技术原因：错误。该问题明确指出， SNS 主题是使用客户管理的密钥进行加密的，因此无需将其替换为 SSE-KMS。",
+          "zh": "錯誤。原因是，错误。该问题明确指出， SNS 主题是使用客户管理的密钥进行加密的，因此无需将其替换为 SSE-KMS。",
           "en": "Incorrect. Technical reason: Error. The question clearly states that SNS topics are encrypted with customer-managed keys, so there is no need to replace them with SSE-KMS."
         },
         "C": {
-          "zh": "正確。技术原因：正确。 SNS 主题使用的加密密钥需要资源策略来授予必要的 AWS KMS 权限，以确保 Lambda 函数可以安全地使用该密钥。",
+          "zh": "正確。原因是，正确。 SNS 主题使用的加密密钥需要资源策略来授予必要的 AWS KMS 权限，以确保 Lambda 函数可以安全地使用该密钥。",
           "en": "Correct. Technical reason: Correct. The encryption key used by the SNS topic requires a resource policy to grant the necessary AWS KMS permissions to ensure that the key can be used securely by Lambda functions."
         },
         "D": {
-          "zh": "錯誤。技术原因：错误。尽管可以在 SNS 资源策略中指定 Lambda 函数的 ARN，但这不是问题所需的最佳实践。问题更多地集中在加密和权限管理上。",
+          "zh": "錯誤。原因是，错误。尽管可以在 SNS 资源策略中指定 Lambda 函数的 ARN，但这不是问题所需的最佳实践。问题更多地集中在加密和权限管理上。",
           "en": "Incorrect. Technical reason: Error. Although it is possible to specify the ARN of the Lambda function in the SNS resource policy, this is not the best practice required by the problem. The questions focus more on encryption and permissions management."
         },
         "E": {
-          "zh": "錯誤。技术原因：错误。 API网关和SNS主题之间的关系不相关，并且问题没有提到需要通过API网关控制访问。",
+          "zh": "錯誤。原因是，错误。 API网关和SNS主题之间的关系不相关，并且问题没有提到需要通过API网关控制访问。",
           "en": "Incorrect. Technical reason: Error. The relationship between API Gateway and SNS topics is not relevant, and the question does not mention the need to control access via API Gateway."
         },
         "F": {
-          "zh": "正確。技术原因：正确。 Lambda 函数需要一个执行角色，该执行角色具有必要的 IAM 权限才能使用客户管理的密钥，以便能够安全地发布加密消息。",
+          "zh": "正確。原因是，正确。 Lambda 函数需要一个执行角色，该执行角色具有必要的 IAM 权限才能使用客户管理的密钥，以便能够安全地发布加密消息。",
           "en": "Correct. Technical reason: Correct. The Lambda function requires an execution role with the necessary IAM permissions to use customer-managed keys to be able to securely publish encrypted messages."
         }
       },
@@ -559,19 +559,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：技术分析： EC2按需型实例可以提供高可用性和按需扩展性，满足门户100%正常运行的要求。 AWS Lambda 是无服务器的，适合不经常运行的文档提取器。调用Lambda函数时无需更改现有代码。优点：高可用性、成本优化、最少的实施工作。缺点：没有明显的缺点。",
+          "zh": "正確。原因是，技术分析： EC2按需型实例可以提供高可用性和按需扩展性，满足门户100%正常运行的要求。 AWS Lambda 是无服务器的，适合不经常运行的文档提取器。调用Lambda函数时无需更改现有代码。优点：高可用性、成本优化、最少的实施工作。缺点：没有明显的缺点。",
           "en": "Correct. Technical reason: Technical analysis: EC2 on-demand instances can provide high availability and on-demand scalability to meet the portal's 100% uptime requirements. AWS Lambda is serverless and suitable for document extractors that run infrequently. There is no need to change existing code when invoking Lambda functions. Advantages: High availability, cost optimization, minimal implementation effort. Disadvantages: No obvious disadvantages."
         },
         "B": {
-          "zh": "錯誤。技术原因：技术分析： EC2 竞价型实例价格实惠，但不适合需要 100% 正常运行时间的门户，因为 竞价型实例可能会中断。优点：成本较低。缺点：无法保证门户的高可用性，并且需要额外的逻辑来启动文档提取器实例。",
+          "zh": "錯誤。原因是，技术分析： EC2 竞价型实例价格实惠，但不适合需要 100% 正常运行时间的门户，因为 竞价型实例可能会中断。优点：成本较低。缺点：无法保证门户的高可用性，并且需要额外的逻辑来启动文档提取器实例。",
           "en": "Incorrect. Technical reason: Technical analysis: EC2 Spot instances are affordable, but not suitable for portals that require 100% uptime because Spot instances can be interrupted. Advantages: lower cost. Disadvantages: High availability of the portal is not guaranteed and additional logic is required to start the document extractor instance."
         },
         "C": {
-          "zh": "錯誤。技术原因：技术分析： Savings Plan 可以降低 EC2 成本，但将文档提取器与门户运行在同一个 Auto Scaling 组中会增加复杂性，并且不能满足按需运行的要求。优点：成本优化。缺点：文档提取程序无法按需运行，增加了系统复杂度。",
+          "zh": "錯誤。原因是，技术分析： Savings Plan 可以降低 EC2 成本，但将文档提取器与门户运行在同一个 Auto Scaling 组中会增加复杂性，并且不能满足按需运行的要求。优点：成本优化。缺点：文档提取程序无法按需运行，增加了系统复杂度。",
           "en": "Incorrect. Technical reason: Technical analysis: Savings Plan can reduce EC2 costs, but running the document extractor in the same Auto Scaling group as the portal adds complexity and does not meet the requirements of running on demand. Advantages: Cost optimization. Disadvantages: The document extraction program cannot be run on demand, which increases system complexity."
         },
         "D": {
-          "zh": "錯誤。技术原因：技术分析：将门户托管在S3上可以降低成本，但需要对现有门户进行代码更改以支持API网关，这与问题中的“不更改代码”要求相冲突。优点：成本优化。缺点：需要对现有系统进行代码改动，实现工作量较大。",
+          "zh": "錯誤。原因是，技术分析：将门户托管在S3上可以降低成本，但需要对现有门户进行代码更改以支持API网关，这与问题中的“不更改代码”要求相冲突。优点：成本优化。缺点：需要对现有系统进行代码改动，实现工作量较大。",
           "en": "Incorrect. Technical reason: Technical Analysis: Hosting the portal on S3 reduces costs, but requires code changes to the existing portal to support API Gateway, which conflicts with the \"no code changes\" requirement in the question. Advantages: Cost optimization. Disadvantages: It requires code changes to the existing system, and the implementation workload is large."
         }
       },
@@ -619,23 +619,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： Lambda 函数需要资源策略以允许 SNS 主题调用它。这是与 Lambda 进行跨账户 SNS 集成的必要步骤。",
+          "zh": "正確。原因是，Lambda 函数需要资源策略以允许 SNS 主题调用它。这是与 Lambda 进行跨账户 SNS 集成的必要步骤。",
           "en": "Correct. Technical reason: The Lambda function requires a resource policy to allow the SNS topic to invoke it. This is a necessary step for cross-account SNS integration with Lambda."
         },
         "B": {
-          "zh": "錯誤。技术原因：虽然SQS可以用来刷新SNS消息，但是问题没有提到需要刷新消息。让SNS调用Lambda函数更符合问题需求。",
+          "zh": "錯誤。原因是，虽然SQS可以用来刷新SNS消息，但是问题没有提到需要刷新消息。让SNS调用Lambda函数更符合问题需求。",
           "en": "Incorrect. Technical reason: Although SQS can be used to refresh SNS messages, the question does not mention the need to refresh messages. Letting SNS call the Lambda function is more in line with the problem requirements."
         },
         "C": {
-          "zh": "正確。技术原因： SNS 主题需要 IAM 策略以允许跨账户 Lambda 函数订阅它。这是启用与 Lambda 的跨账户 SNS 集成的另一个必要步骤。",
+          "zh": "正確。原因是，SNS 主题需要 IAM 策略以允许跨账户 Lambda 函数订阅它。这是启用与 Lambda 的跨账户 SNS 集成的另一个必要步骤。",
           "en": "Correct. Technical reason: The SNS topic requires an IAM policy to allow cross-account Lambda functions to subscribe to it. This is another necessary step to enable cross-account SNS integration with Lambda."
         },
         "D": {
-          "zh": "錯誤。技术原因： EventBridge规则可以捕获SNS通知，但问题没有提到需要使用EventBridge。直接使用SNS和Lambda集成更加简单，也满足了问题的要求。",
+          "zh": "錯誤。原因是，EventBridge规则可以捕获SNS通知，但问题没有提到需要使用EventBridge。直接使用SNS和Lambda集成更加简单，也满足了问题的要求。",
           "en": "Incorrect. Technical reason: EventBridge rules can capture SNS notifications, but the question doesn't mention the need to use EventBridge. Directly using SNS and Lambda integration is simpler and meets the requirements of the problem."
         },
         "E": {
-          "zh": "錯誤。技术原因：该问题要求 SNS 触发 Lambda 函数，而不是存储数据然后进行分析。该选项不符合题目要求。",
+          "zh": "錯誤。原因是，该问题要求 SNS 触发 Lambda 函数，而不是存储数据然后进行分析。该选项不符合题目要求。",
           "en": "Incorrect. Technical reason: The question requires the SNS to trigger a Lambda function instead of storing the data and then analyzing it. This option does not meet the question requirements."
         }
       },
@@ -680,19 +680,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Transit Gateway 主要用于连接多个 VPC 本地网络，而不是直接管理 Kubernetes Pod 的子网配置。此选项与问题要求“使用自定义子网”和“确保 VPC 内 Pod 之间的安全通信”无关。",
+          "zh": "錯誤。原因是，AWS Transit Gateway 主要用于连接多个 VPC 本地网络，而不是直接管理 Kubernetes Pod 的子网配置。此选项与问题要求“使用自定义子网”和“确保 VPC 内 Pod 之间的安全通信”无关。",
           "en": "Incorrect. Technical reason: AWS Transit Gateway is mainly used to connect multiple VPC local networks, rather than directly managing the subnet configuration of Kubernetes Pods. This option has nothing to do with the question requirements \"Use a custom subnet\" and \"Ensure secure communication between Pods within the VPC\"."
         },
         "B": {
-          "zh": "錯誤。技术原因： AWS Direct Connect 是一项专线服务，用于将本地数据连接到 AWS 云，无论 Kubernetes Pod 的子网配置如何。此选项不满足问题中“自定义子网”和“VPC 内的安全通信”的要求。",
+          "zh": "錯誤。原因是，AWS Direct Connect 是一项专线服务，用于将本地数据连接到 AWS 云，无论 Kubernetes Pod 的子网配置如何。此选项不满足问题中“自定义子网”和“VPC 内的安全通信”的要求。",
           "en": "Incorrect. Technical reason: AWS Direct Connect is a dedicated line service for connecting on-premises data to the AWS cloud, regardless of the Kubernetes Pod's subnet configuration. This option does not address the requirements for \"Custom subnets\" and \"Secure communication within the VPC\" in the question."
         },
         "C": {
-          "zh": "正確。技术原因： Amazon VPC CNI 插件允许 Kubernetes Pod 使用 VPC 的 IP 地址并支持自定义子网配置。该方案完全满足问题需求，保证VPC内Pod之间的安全通信，并支持自定义子网。",
+          "zh": "正確。原因是，Amazon VPC CNI 插件允许 Kubernetes Pod 使用 VPC 的 IP 地址并支持自定义子网配置。该方案完全满足问题需求，保证VPC内Pod之间的安全通信，并支持自定义子网。",
           "en": "Correct. Technical reason: The Amazon VPC CNI plugin allows Kubernetes Pods to use the VPC's IP address and supports custom subnet configuration. This solution fully meets the problem requirements, ensures secure communication between Pods in the VPC, and supports custom subnets."
         },
         "D": {
-          "zh": "錯誤。技术原因： Kubernetes 网络策略主要用于定义 Pod 的通信规则，而不是直接管理子网配置。 Pod 反亲和性规则仅限制 Pod 的放置，无法满足问题中“自定义子网”和“VPC 内安全通信”的要求。",
+          "zh": "錯誤。原因是，Kubernetes 网络策略主要用于定义 Pod 的通信规则，而不是直接管理子网配置。 Pod 反亲和性规则仅限制 Pod 的放置，无法满足问题中“自定义子网”和“VPC 内安全通信”的要求。",
           "en": "Incorrect. Technical reason: Kubernetes network policies are mainly used to define communication rules for Pods, rather than directly managing subnet configurations. Pod anti-affinity rules only restrict the placement of Pods and cannot meet the requirements of \"custom subnet\" and \"secure communication within VPC\" in the question."
         }
       },
@@ -736,19 +736,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： Amazon RDS 的多可用区部分专门设计用于提高数据库的高可用性和容错能力。启用多可用区后， AWS 会自动在另一个可用区中创建同步副本，并在主实例发生故障时自动切换到该副本。实施成本低：只需修改现有RDS实例配置，无需迁移数据和创建新实例。最少的实施工作：只需在控制台中启用多可用区并在控制台中应用更改。",
+          "zh": "正確。原因是，Amazon RDS 的多可用区部分专门设计用于提高数据库的高可用性和容错能力。启用多可用区后， AWS 会自动在另一个可用区中创建同步副本，并在主实例发生故障时自动切换到该副本。实施成本低：只需修改现有RDS实例配置，无需迁移数据和创建新实例。最少的实施工作：只需在控制台中启用多可用区并在控制台中应用更改。",
           "en": "Correct. Technical reason: The Multi-AZ portion of Amazon RDS is specifically designed to increase the high availability and fault tolerance of your database. When Multi-AZ is enabled, AWS automatically creates a synchronized replica in another Availability Zone and automatically switches to that replica if the primary instance fails. Low implementation cost: only need to modify the existing RDS instance configuration, no need to migrate data and create new instances. Minimal implementation effort: Just enable Multi-AZ in the console and apply the changes in the console."
         },
         "B": {
-          "zh": "錯誤。技术原因： DynamoDB是一种不同于RDS传统数据库结构的NoSQL数据库。迁移到 DynamoDB 需要架构调整和应用程序转换。实施成本高：需要使用AWS DMS进行异构迁移，并且需要重新设计应用程序模型以适应DynamoDB。不符合“以最小的努力实施”的要求。",
+          "zh": "錯誤。原因是，DynamoDB是一种不同于RDS传统数据库结构的NoSQL数据库。迁移到 DynamoDB 需要架构调整和应用程序转换。实施成本高：需要使用AWS DMS进行异构迁移，并且需要重新设计应用程序模型以适应DynamoDB。不符合“以最小的努力实施”的要求。",
           "en": "Incorrect. Technical reason: DynamoDB is a NoSQL database that is different from the traditional database structure of RDS. Migrating to DynamoDB requires schema adjustments and application conversion. High implementation costs: Requires use of AWS DMS for heterogeneous migrations, and application models need to be redesigned to accommodate DynamoDB. Does not meet the “implementation with minimum effort” requirement."
         },
         "C": {
-          "zh": "錯誤。技术原因：虽然创建新的多可用区 RDS 实例可以实现高可用性，但复制数据需要额外的时间和操作。实施成本高：需要创建新实例、恢复数据，复杂度增加。不符合“以最小的努力实施”的要求。",
+          "zh": "錯誤。原因是，虽然创建新的多可用区 RDS 实例可以实现高可用性，但复制数据需要额外的时间和操作。实施成本高：需要创建新实例、恢复数据，复杂度增加。不符合“以最小的努力实施”的要求。",
           "en": "Incorrect. Technical reason: While creating new Multi-AZ RDS instances can achieve high availability, copying data requires additional time and operations. High implementation cost: new instances need to be created and data restored, increasing complexity. Does not meet the “implementation with minimum effort” requirement."
         },
         "D": {
-          "zh": "錯誤。技术原因： EC2 Auto Scaling 组通常与独立服务器而不是数据库实例一起使用。数据库的高可用性通常是通过 RDS 的内置功能（例如多可用区）而不是通过 EC2 Auto Scaling 来实现。实施成本高： EC2实例、Auto Scaling组和Route 53路由规则需要手动配置。不符合“以最小的努力实施”的要求。",
+          "zh": "錯誤。原因是，EC2 Auto Scaling 组通常与独立服务器而不是数据库实例一起使用。数据库的高可用性通常是通过 RDS 的内置功能（例如多可用区）而不是通过 EC2 Auto Scaling 来实现。实施成本高： EC2实例、Auto Scaling组和Route 53路由规则需要手动配置。不符合“以最小的努力实施”的要求。",
           "en": "Incorrect. Technical reason: EC2 Auto Scaling groups are typically used with standalone servers rather than database instances. High availability of databases is typically achieved through built-in features of RDS (such as Multi-AZ) rather than through EC2 Auto Scaling. High implementation cost: EC2 instances, Auto Scaling groups, and Route 53 routing rules need to be manually configured. Does not meet the “implementation with minimum effort” requirement."
         }
       },
@@ -792,19 +792,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： Amazon FSx for NetApp ONTAP 支持使用 NFS 和 SMB 协议，并允许跨协议共享文件。这完全符合题主的要求。此外， Amazon FSx for NetApp ONTAP 提供高可用性和跨可用区冗余，以满足冗余要求。",
+          "zh": "正確。原因是，Amazon FSx for NetApp ONTAP 支持使用 NFS 和 SMB 协议，并允许跨协议共享文件。这完全符合题主的要求。此外， Amazon FSx for NetApp ONTAP 提供高可用性和跨可用区冗余，以满足冗余要求。",
           "en": "Correct. Technical reason: Amazon FSx for NetApp ONTAP supports the use of NFS and SMB protocols and allows file sharing across protocols. This fully meets the requirements of the question. In addition, Amazon FSx for NetApp ONTAP provides high availability and cross-AZ redundancy to meet redundancy requirements."
         },
         "B": {
-          "zh": "錯誤。技术原因：虽然 SMB 和 NFS 访问可通过 EC2 实例单独使用，但这不是托管服务，不能跨协议共享。此外， EC2 实例需要额外的管理工作，并且没有内置的高可用性和跨可用区冗余。",
+          "zh": "錯誤。原因是，虽然 SMB 和 NFS 访问可通过 EC2 实例单独使用，但这不是托管服务，不能跨协议共享。此外， EC2 实例需要额外的管理工作，并且没有内置的高可用性和跨可用区冗余。",
           "en": "Incorrect. Technical reason: While SMB and NFS access are available individually through EC2 instances, this is not a hosted service and cannot be shared across protocols. Additionally, EC2 instances require additional management effort and do not have built-in high availability and cross-AZ redundancy."
         },
         "C": {
-          "zh": "錯誤。技术原因： Amazon FSx for Lustre 仅支持 NFS 协议，但主要用于高性能计算场景，不适合一般文件共享。另外，这个方案无法跨协议共享文件，不符合问题的要求。",
+          "zh": "錯誤。原因是，Amazon FSx for Lustre 仅支持 NFS 协议，但主要用于高性能计算场景，不适合一般文件共享。另外，这个方案无法跨协议共享文件，不符合问题的要求。",
           "en": "Incorrect. Technical reason: Amazon FSx for Luster only supports the NFS protocol, but it is mainly used in high-performance computing scenarios and is not suitable for general file sharing. In addition, this solution cannot share files across protocols and does not meet the requirements of the question."
         },
         "D": {
-          "zh": "錯誤。技术原因： Amazon S3 是一种对象存储服务，而不是文件存储服务。虽然可以通过 S3 文件网关访问 S3，但它不支持 NFS 和 SMB 协议的直接访问。另外， S3文件网关无法跨协议共享文件，不满足题目要求。",
+          "zh": "錯誤。原因是，Amazon S3 是一种对象存储服务，而不是文件存储服务。虽然可以通过 S3 文件网关访问 S3，但它不支持 NFS 和 SMB 协议的直接访问。另外， S3文件网关无法跨协议共享文件，不满足题目要求。",
           "en": "Incorrect. Technical reason: Amazon S3 is an object storage service, not a file storage service. While S3 can be accessed through the S3 File Gateway, it does not support direct access for the NFS and SMB protocols. In addition, S3 file gateway cannot share files across protocols and does not meet the question requirements."
         }
       },
@@ -852,23 +852,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：故障转移路由策略虽然可以提高容灾能力，但无法实现实用的高可用性和可扩展性。单独启动 EC2 实例并不能解决数据库读取延迟问题。",
+          "zh": "錯誤。原因是，故障转移路由策略虽然可以提高容灾能力，但无法实现实用的高可用性和可扩展性。单独启动 EC2 实例并不能解决数据库读取延迟问题。",
           "en": "Incorrect. Technical reason: Although the failover routing strategy can improve disaster recovery capabilities, it cannot achieve practical high availability and scalability. Launching an EC2 instance alone does not solve the database read latency issue."
         },
         "B": {
-          "zh": "正確。技术原因：使用 Auto Scaling 组和应用程序负载均衡器跨多个可用区实现高可用性和可扩展性。",
+          "zh": "正確。原因是，使用 Auto Scaling 组和应用程序负载均衡器跨多个可用区实现高可用性和可扩展性。",
           "en": "Correct. Technical reason: Achieve high availability and scalability across multiple Availability Zones using Auto Scaling groups and Application Load Balancers."
         },
         "C": {
-          "zh": "正確。技术原因： Amazon Aurora MySQL 支持多可用区部署，通过只读副本降低数据库读取延迟，满足问题需求。",
+          "zh": "正確。原因是，Amazon Aurora MySQL 支持多可用区部署，通过只读副本降低数据库读取延迟，满足问题需求。",
           "en": "Correct. Technical reason: Amazon Aurora MySQL supports multi-availability zone deployment and reduces database read latency through read-only replicas to meet problem requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：虽然跨区域 Auto Scaling 组可以改善灾难恢复，但问题是需要在单个区域内实现高可用性和可扩展性。此外，跨区域部署会增加复杂性和成本。",
+          "zh": "錯誤。原因是，虽然跨区域 Auto Scaling 组可以改善灾难恢复，但问题是需要在单个区域内实现高可用性和可扩展性。此外，跨区域部署会增加复杂性和成本。",
           "en": "Incorrect. Technical reason: While cross-region Auto Scaling groups can improve disaster recovery, the problem is the need for high availability and scalability within a single region. Additionally, deploying across regions adds complexity and cost."
         },
         "E": {
-          "zh": "錯誤。技术原因：虽然跨区域只读副本可以减少跨区域读取延迟，但问题中并没有提到需要跨区域访问数据库。该选项超出了问题要求。",
+          "zh": "錯誤。原因是，虽然跨区域只读副本可以减少跨区域读取延迟，但问题中并没有提到需要跨区域访问数据库。该选项超出了问题要求。",
           "en": "Incorrect. Technical reason: Although cross-region read replicas can reduce cross-region read latency, the question does not mention the need to access the database across regions. This option is beyond the question requirements."
         }
       },

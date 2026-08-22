@@ -64,9 +64,15 @@ def _option_map(value: Any, location: str) -> dict[str, dict[str, str]]:
 
 def _content_hash(payload: dict[str, Any]) -> str:
     source = {
+        "exam_domain": payload["exam_domain"],
         "question_text": payload["question_text"],
         "options": payload["options"],
+        "option_explanations": payload["option_explanations"],
         "correct_options": payload["correct_options"],
+        "answer_text": payload["answer_text"],
+        "choice_type": payload["choice_type"],
+        "discussion": payload["discussion"],
+        "is_active": payload["is_active"],
     }
     stable = json.dumps(source, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(stable.encode("utf-8")).hexdigest()
@@ -114,6 +120,35 @@ def _normalize_question(
         if not explanation["en"].startswith(expected_en):
             raise ValueError(
                 f"{location}.option_explanations.{key}.en 必須以 {expected_en} 開頭"
+            )
+        zh_rationale = explanation["zh"][len(expected_zh):].lstrip()
+        if not zh_rationale.startswith("原因是，"):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.zh 必須說明該選項的用途及本題判斷"
+            )
+        zh_rationale = zh_rationale[len("原因是，"):].strip()
+        if len(zh_rationale) < 25:
+            raise ValueError(
+                f"{location}.option_explanations.{key}.zh 的實質解析過短；"
+                "必須說明該選項做什麼，以及為何適合或不適合本題"
+            )
+        if any(
+            phrase in zh_rationale
+            for phrase in (
+                "此選項不能完整滿足題目的主要要求",
+                "此選項直接滿足題目要求",
+                "來源確認的適當答案",
+                "來源解析確認的答案",
+                "该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或运维约束",
+                "该解决方案无法同时满足问题中的关键性能、可用性、安全性、成本或操作约束",
+                "该解决方案能够满足问题中的关键功能和非功能需求",
+                "该解决方案满足问题中的关键功能和非功能需求",
+                "功能不匹配，不能满足题目要求",
+            )
+        ):
+            raise ValueError(
+                f"{location}.option_explanations.{key}.zh 仍是通用模板，"
+                "必須改為該選項的具體用途與判斷原因"
             )
         if explanation["zh"][len(expected_zh):].lstrip().startswith(options[key]["zh"]):
             raise ValueError(

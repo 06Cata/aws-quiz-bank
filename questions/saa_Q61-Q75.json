@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 Lambda函数和EventBridge规则需要手动编写，增加了运维复杂度。",
+          "zh": "錯誤。原因是，Lambda函数和EventBridge规则需要手动编写，增加了运维复杂度。",
           "en": "Incorrect. Lambda functions and EventBridge rules need to be written manually, which increases operation and maintenance complexity."
         },
         "B": {
-          "zh": "錯誤。 Lambda函数和EventBridge规则需要手动编写，增加了运维复杂度。虽然S3 Versioning提供了回滚功能，但它不能直接支持自动轮换。",
+          "zh": "錯誤。原因是，Lambda函数和EventBridge规则需要手动编写，增加了运维复杂度。虽然S3 Versioning提供了回滚功能，但它不能直接支持自动轮换。",
           "en": "Incorrect. Lambda functions and EventBridge rules need to be written manually, which increases operation and maintenance complexity. Although S3 Versioning provides a rollback function, it cannot directly support automatic rotation."
         },
         "C": {
-          "zh": "正確。通过将适当的 IAM 权限附加到 EC2 实例，可以安全地访问存储的凭证。此解决方案的运维开销最低，因为自动轮换功能完全由 AWS 管理。",
+          "zh": "正確。原因是，通过将适当的 IAM 权限附加到 EC2 实例，可以安全地访问存储的凭证。此解决方案的运维开销最低，因为自动轮换功能完全由 AWS 管理。",
           "en": "Correct. Stored credentials can be accessed securely by attaching the appropriate IAM permissions to the EC2 instance. This solution has the lowest operational overhead because the automatic rotation feature is fully managed by AWS."
         },
         "D": {
-          "zh": "錯誤。轮换逻辑需要手动实现，增加了运维的复杂度。",
+          "zh": "錯誤。原因是，AWS Systems Manager Parameter Store 可安全保存設定值與機密，並能使用 KMS 加密；但它沒有 Secrets Manager 的內建資料庫憑證輪換流程，需自行以 Lambda 或其他程序實作輪換，因此營運工作較多。",
           "en": "Incorrect. The rotation logic needs to be implemented manually, which increases the complexity of operation and maintenance."
         }
       },
@@ -84,19 +84,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。问题明确要求证书由外部证书颁发机构（CA）颁发，但ACM颁发的证书是AWS内部CA提供的，不符合问题要求。",
+          "zh": "錯誤。原因是，问题明确要求证书由外部证书颁发机构（CA）颁发，但ACM颁发的证书是AWS内部CA提供的，不符合问题要求。",
           "en": "Incorrect. The question clearly requires that the certificate be issued by an external certificate authority (CA), but the certificate issued by ACM is provided by AWS's internal CA, which does not meet the question requirements."
         },
         "B": {
-          "zh": "錯誤。 ACM颁发的证书仍然是AWS内部CA提供的，不符合问题要求。可惜的是， ACM 的托管续约功能仅适用于 ACM 所核发的证书，不适用于导入的证书。",
+          "zh": "錯誤。原因是，ACM颁发的证书仍然是AWS内部CA提供的，不符合问题要求。可惜的是， ACM 的托管续约功能仅适用于 ACM 所核发的证书，不适用于导入的证书。",
           "en": "Incorrect. The certificate issued by ACM is still provided by AWS's internal CA and does not meet the question requirements. Unfortunately, ACM's managed renewal feature only works with certificates issued by ACM, not imported certificates."
         },
         "C": {
-          "zh": "錯誤。 ACM 私有证书颁发机构 (PCA) 是 AWS 提供的私有 CA 服务。颁发的证书仍然是内部证书，不符合问题所要求的「外部证书颁发机构」。",
+          "zh": "錯誤。原因是，ACM 私有证书颁发机构 (PCA) 是 AWS 提供的私有 CA 服务。颁发的证书仍然是内部证书，不符合问题所要求的「外部证书颁发机构」。",
           "en": "Incorrect. ACM Private Certificate Authority (PCA) is a private CA service provided by AWS. The certificate issued is still an internal certificate and does not meet the \"external certificate authority\" required by the question."
         },
         "D": {
-          "zh": "正確。技术原因：外部 CA 颁发的证书需要导入 ACM 后关联到 ALB。 ACM 不会自动续订导入的证书，因此应使用 EventBridge 在证书即将过期时发出通知，并手动导入轮换后的证书。",
+          "zh": "正確。原因是，外部 CA 颁发的证书需要导入 ACM 后关联到 ALB。 ACM 不会自动续订导入的证书，因此应使用 EventBridge 在证书即将过期时发出通知，并手动导入轮换后的证书。",
           "en": "Correct. Technical reason: An externally issued certificate must be imported into ACM and associated with the ALB. ACM does not automatically renew imported certificates, so EventBridge should notify the team before expiration and the rotated certificate must be imported manually."
         }
       },
@@ -140,19 +140,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。.jpg 格式并将其存储回 Amazon S3。分析： Amazon S3是一种高度可扩展、低成本的存储服务，适合存储大量文档。 S3 PUT 事件可以触发 AWS Lambda 函数，而无需额外的服务器资源。 AWS Lambda 可有效率地处理文件转换任务，并以使用量计费，成本低廉。此解决方案完美满足要求，是最具成本效益的解决方案。结论：。",
+          "zh": "正確。原因是，.jpg 格式并将其存储回 Amazon S3。分析： Amazon S3是一种高度可扩展、低成本的存储服务，适合存储大量文档。 S3 PUT 事件可以触发 AWS Lambda 函数，而无需额外的服务器资源。 AWS Lambda 可有效率地处理文件转换任务，并以使用量计费，成本低廉。此解决方案完美满足要求，是最具成本效益的解决方案。结论：。",
           "en": "Correct. .jpg format and store them back in Amazon S3. Analysis: Amazon S3 is a highly scalable, low-cost storage service suitable for storing large amounts of files. S3 PUT events can trigger AWS Lambda functions without requiring additional server resources. AWS Lambda can handle file conversion tasks efficiently and is billed based on usage at low cost. This solution perfectly meets the requirements and is the most cost-effective solution. Conclusion:."
         },
         "B": {
-          "zh": "錯誤。将文件转换为 .jpg 格式并将其存储回 DynamoDB。分析： Amazon DynamoDB是NoSQL数据库，适合存储结构化数据，但不适合存储大文件。虽然使用 DynamoDB Streams 触发 Lambda 函数有效，但在 DynamoDB 中存储大型文件成本高昂，且不符合最佳实践。这种场景不适合存储和处理大文件。结论：错误。",
+          "zh": "錯誤。原因是，将文件转换为 .jpg 格式并将其存储回 DynamoDB。分析： Amazon DynamoDB是NoSQL数据库，适合存储结构化数据，但不适合存储大文件。虽然使用 DynamoDB Streams 触发 Lambda 函数有效，但在 DynamoDB 中存储大型文件成本高昂，且不符合最佳实践。这种场景不适合存储和处理大文件。结论：错误。",
           "en": "Incorrect. convert the files to .jpg format and store them back in DynamoDB. Analysis: Amazon DynamoDB is a NoSQL database suitable for storing structured data, but not suitable for storing large files. While using DynamoDB Streams to trigger Lambda functions works, storing large files in DynamoDB is expensive and not in line with best practices. This scenario is not suitable for storing and processing large files. Conclusion: Wrong."
         },
         "C": {
-          "zh": "錯誤。 Store (Amazon EBS) 存储与 Auto Scaling 组。使用 EC2 实例中的程序将文件转换为 .jpg 格式。将 .pdf 文件和 .jpg 文件存储在 EBS 存储中。分析： Elastic Beanstalk可以管理EC2实例，但需要维护底层基础设施，这增加了复杂性。使用EBS存储文件成本较高，且不具备S3的高扩展性。这种方案成本高、管理复杂，不是最优选择。结论：错误。",
+          "zh": "錯誤。原因是，Store (Amazon EBS) 存储与 Auto Scaling 组。使用 EC2 实例中的程序将文件转换为 .jpg 格式。将 .pdf 文件和 .jpg 文件存储在 EBS 存储中。分析： Elastic Beanstalk可以管理EC2实例，但需要维护底层基础设施，这增加了复杂性。使用EBS存储文件成本较高，且不具备S3的高扩展性。这种方案成本高、管理复杂，不是最优选择。结论：错误。",
           "en": "Incorrect. Store (Amazon EBS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the files to .jpg format. Save the .pdf files and the .jpg files in the EBS store. Analysis: Elastic Beanstalk can manage EC2 instances, but it requires maintaining the underlying infrastructure, which increases complexity. Using EBS to store files is more expensive and does not have the high scalability of S3. This option has high cost and management complexity and is not the optimal choice. Conclusion: Wrong."
         },
         "D": {
-          "zh": "錯誤。系统 (Amazon EFS) 存储与 Auto Scaling 组。使用 EC2 实例中的程序将文件转换为 .jpg 格式。将 .pdf 文件和 .jpg 文件存储在 EBS 存储中。分析： Elastic Beanstalk 和 EFS 的组合增加了复杂性和成本。 EFS适合共享文件存储，但其成本高于S3，且不具备S3的事件触发功能。这种方案成本高、管理复杂，不是最优选择。结论：错误。",
+          "zh": "錯誤。原因是，系统 (Amazon EFS) 存储与 Auto Scaling 组。使用 EC2 实例中的程序将文件转换为 .jpg 格式。将 .pdf 文件和 .jpg 文件存储在 EBS 存储中。分析： Elastic Beanstalk 和 EFS 的组合增加了复杂性和成本。 EFS适合共享文件存储，但其成本高于S3，且不具备S3的事件触发功能。这种方案成本高、管理复杂，不是最优选择。结论：错误。",
           "en": "Incorrect. System (Amazon EFS) storage, and an Auto Scaling group. Use a program in the EC2 instances to convert the file to .jpg format. Save the .pdf files and the .jpg files in the EBS store. Analysis: The combination of Elastic Beanstalk and EFS adds complexity and cost. EFS is suitable for shared file storage, but its cost is higher than S3, and it does not have the event triggering function of S3. This option has high cost and management complexity and is not the optimal choice. Conclusion: Wrong."
         }
       },
@@ -196,19 +196,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 Windows 文件服务器。重新配置工作负载以使用 FSx for Windows File Server on AWS。此问题可能会导致本地工作负载访问AWS文件存储时出现较高的延迟，不符合「最小延迟」要求。",
+          "zh": "錯誤。原因是，Windows 文件服务器。重新配置工作负载以使用 FSx for Windows File Server on AWS。此问题可能会导致本地工作负载访问AWS文件存储时出现较高的延迟，不符合「最小延迟」要求。",
           "en": "Incorrect. Windows File Server. Reconfigure the workloads to use FSx for Windows File Server on AWS. This problem may result in higher latency when local workloads access AWS file storage, which does not meet the \"minimum latency\" requirement."
         },
         "B": {
-          "zh": "錯誤。重新配置本地工作负载和云工作负载以使用 S3 文件网关。 Windows 文件服务器工作负载通常需要文件级存储而不是对象存储。",
+          "zh": "錯誤。原因是，重新配置本地工作负载和云工作负载以使用 S3 文件网关。 Windows 文件服务器工作负载通常需要文件级存储而不是对象存储。",
           "en": "Incorrect. Reconfigure the on-premises workloads and the cloud workloads to use the S3 File Gateway. Windows file server workloads typically require file-level storage rather than object storage."
         },
         "C": {
-          "zh": "錯誤。重新配置工作负载以直接使用 Amazon S3 或 S3 文件网关，取决于每个工作负载的位置。与选项 B 类似， S3 是对象存储，不适合 Windows 文件服务器的工作负载需求。",
+          "zh": "錯誤。原因是，重新配置工作负载以直接使用 Amazon S3 或 S3 文件网关，取决于每个工作负载的位置。与选项 B 类似， S3 是对象存储，不适合 Windows 文件服务器的工作负载需求。",
           "en": "Incorrect. Reconfigure the workloads to use either Amazon S3 directly or the S3 File Gateway, depending on each workload's location. Similar to option B, S3 is object storage and is not suitable for the workload needs of Windows file servers."
         },
         "D": {
-          "zh": "正確。 FSx File Gateway 部署在本地。将本地文件数据移动到 FSx 文件网关。配置云工作负载以使用 FSx for Windows File Server on AWS。 FSx 文件网关允许本地工作负载以最小的延迟访问 AWS 上的 FSx 文件存储，而无需对现有文件访问模式进行重大变更。",
+          "zh": "正確。原因是，FSx File Gateway 部署在本地。将本地文件数据移动到 FSx 文件网关。配置云工作负载以使用 FSx for Windows File Server on AWS。 FSx 文件网关允许本地工作负载以最小的延迟访问 AWS 上的 FSx 文件存储，而无需对现有文件访问模式进行重大变更。",
           "en": "Correct. on premises. Move the on-premises file data to the FSx File Gateway. Configure the cloud workloads to use FSx for Windows File Server on AWS. FSx File Gateway allows on-premises workloads to access FSx file storage on AWS with minimal latency without requiring significant changes to existing file access patterns."
         }
       },
@@ -252,19 +252,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。虽然可以使用 Python 程序库提取文本并识别 PHI，但这需要开发和维护额外的代码，从而增加了操作复杂性。",
+          "zh": "錯誤。原因是，虽然可以使用 Python 程序库提取文本并识别 PHI，但这需要开发和维护额外的代码，从而增加了操作复杂性。",
           "en": "Incorrect. While it is possible to use a Python library to extract text and identify PHI, this requires developing and maintaining additional code, increasing operational complexity."
         },
         "B": {
-          "zh": "錯誤。 Amazon Textract 可以提取文本，但使用 Amazon SageMaker 识别 PHI 需要创建和训练自定义机器学习模型，这会增加操作复杂性。",
+          "zh": "錯誤。原因是，Amazon Textract 可以提取文本，但使用 Amazon SageMaker 识别 PHI 需要创建和训练自定义机器学习模型，这会增加操作复杂性。",
           "en": "Incorrect. Amazon Textract can extract text, but using Amazon SageMaker to identify PHI requires building and training a custom machine learning model, which increases operational complexity."
         },
         "C": {
-          "zh": "正確。 Amazon Textract 旨在从文档中提取文本， Amazon Comprehend Medical 可以直接识别敏感的医疗相关信息（例如 PHI），无需额外的开发工作，并且运维开销极低。",
+          "zh": "正確。原因是，Amazon Textract 旨在从文档中提取文本， Amazon Comprehend Medical 可以直接识别敏感的医疗相关信息（例如 PHI），无需额外的开发工作，并且运维开销极低。",
           "en": "Correct. Amazon Textract is designed to extract text from documents, and Amazon Comprehend Medical can directly identify sensitive medical-related information (such as PHI) with no additional development work and minimal operational overhead."
         },
         "D": {
-          "zh": "錯誤。 Amazon Rekognition 主要用于图像和视频分析，不适合从 PDF 或 JPEG 文档中提取文本。",
+          "zh": "錯誤。原因是，Amazon Rekognition 主要用于图像和视频分析，不适合从 PDF 或 JPEG 文档中提取文本。",
           "en": "Incorrect. Amazon Rekognition is primarily used for image and video analysis and is not suitable for extracting text from PDF or JPEG documents."
         }
       },
@@ -308,19 +308,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 S3 Glacier 是长期存储的低成本选项，但它不支持立即访问。该问题要求可以立即访问该文档，因此此选项不符合条件。",
+          "zh": "錯誤。原因是，S3 Glacier 是长期存储的低成本选项，但它不支持立即访问。该问题要求可以立即访问该文档，因此此选项不符合条件。",
           "en": "Incorrect. S3 Glacier is a low-cost option for long-term storage, but it does not support immediate access. The question requires that the file be immediately accessible, so this option is not eligible."
         },
         "B": {
-          "zh": "錯誤。虽然S3 One Zone-IA成本较低，但由于数据仅存储在一个可用区中，因此存储可靠性较低。对于业务关键数据，这种类型的存储不适合。",
+          "zh": "錯誤。原因是，虽然S3 One Zone-IA成本较低，但由于数据仅存储在一个可用区中，因此存储可靠性较低。对于业务关键数据，这种类型的存储不适合。",
           "en": "Incorrect. Although S3 One Zone-IA is lower cost, it has lower storage reliability because data is only stored in one Availability Zone. For business-critical data, this type of storage is not suitable."
         },
         "C": {
-          "zh": "正確。 S3 Standard-IA是适合不频繁访问但要求高可用性和实时访问的存储类别。其成本低于S3标准，并且符合问题所需的访问方式和存储可靠性。",
+          "zh": "正確。原因是，S3 Standard-IA是适合不频繁访问但要求高可用性和实时访问的存储类别。其成本低于S3标准，并且符合问题所需的访问方式和存储可靠性。",
           "en": "Correct. S3 Standard-IA is a storage category suitable for infrequent access but requiring high availability and instant access. Its cost is lower than S3 Standard, and it meets the access mode and storage reliability required by the question."
         },
         "D": {
-          "zh": "錯誤。虽然此选项可以通过在 4 年后将文档移动到 S3 Glacier 来进一步降低成本，但问题要求文档可以立即访问，因此此选项不满足要求。",
+          "zh": "錯誤。原因是，虽然此选项可以通过在 4 年后将文档移动到 S3 Glacier 来进一步降低成本，但问题要求文档可以立即访问，因此此选项不满足要求。",
           "en": "Incorrect. Although this option can further reduce costs by moving the files to S3 Glacier after 4 years, the question requires that the files be accessible immediately, so this option does not meet the requirements."
         }
       },
@@ -364,19 +364,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。创建新队列并不能解决重复记录的问题，因为问题的根源在于信息处理逻辑，而不是队列本身。",
+          "zh": "錯誤。原因是，创建新队列并不能解决重复记录的问题，因为问题的根源在于信息处理逻辑，而不是队列本身。",
           "en": "Incorrect. Creating a new queue does not solve the problem of duplicate records, because the root of the problem lies in the information processing logic, not the queue itself."
         },
         "B": {
-          "zh": "錯誤。添加权限与重复处理信息无关。权限设置主要是用来控制队列的访问，而不是解决信息处理逻辑的问题。",
+          "zh": "錯誤。原因是，添加权限与重复处理信息无关。权限设置主要是用来控制队列的访问，而不是解决信息处理逻辑的问题。",
           "en": "Incorrect. Adding permissions has nothing to do with repeated processing of information. Permission settings are mainly used to control queue access, not to solve the problem of information processing logic."
         },
         "C": {
-          "zh": "錯誤。设置等待时间（Wait Time）仅影响消息的接收延迟，并不能解决重复处理的问题。",
+          "zh": "錯誤。原因是，设置等待时间（Wait Time）仅影响消息的接收延迟，并不能解决重复处理的问题。",
           "en": "Incorrect. Setting the waiting time (Wait Time) only affects the reception delay of information and does not solve the problem of repeated processing."
         },
         "D": {
-          "zh": "正確。增加可见度逾时（Visibility Timeout）可以确保一个消费者处理过的信息不会被其他消费者再次处理，从而避免重复记录的产生。",
+          "zh": "正確。原因是，增加可见度逾时（Visibility Timeout）可以确保一个消费者处理过的信息不会被其他消费者再次处理，从而避免重复记录的产生。",
           "en": "Correct. Increasing the visibility timeout (Visibility Timeout) can ensure that information processed by one consumer will not be processed again by other consumers, thereby avoiding the generation of duplicate records."
         }
       },
@@ -420,19 +420,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 AWS Direct Connect 提供高性能、低延迟的专线连接，非常适合需要稳定连接的场景。 VPN 作为备份连接的成本较低，虽然其性能不如 Direct Connect，但可以满足故障转移的需求。满足问题的要求：高可用、低延迟、成本优化。",
+          "zh": "正確。原因是，AWS Direct Connect 提供高性能、低延迟的专线连接，非常适合需要稳定连接的场景。 VPN 作为备份连接的成本较低，虽然其性能不如 Direct Connect，但可以满足故障转移的需求。满足问题的要求：高可用、低延迟、成本优化。",
           "en": "Correct. AWS Direct Connect provides high-performance, low-latency dedicated line connections, which is very suitable for scenarios that require stable connections. VPN is less expensive as a backup connection, and although its performance is not as good as Direct Connect, it can meet the needs of failover. Meets the requirements of the question: high availability, low latency, and cost optimization."
         },
         "B": {
-          "zh": "錯誤。 VPN连接的性能和延迟不如Direct Connect，无法满足问题所要求的「低延迟」要求。错误：虽然成本较低，但两个 VPN 隧道无法提供 Direct Connect 的高性能连接。",
+          "zh": "錯誤。原因是，VPN连接的性能和延迟不如Direct Connect，无法满足问题所要求的「低延迟」要求。错误：虽然成本较低，但两个 VPN 隧道无法提供 Direct Connect 的高性能连接。",
           "en": "Incorrect. The performance and latency of the VPN connection are not as good as Direct Connect and cannot meet the \"low latency\" requirement required by the question. Wrong: Although less expensive, two VPN tunnels cannot provide the high-performance connection of Direct Connect."
         },
         "C": {
-          "zh": "錯誤。两条专线连接虽然可以提供高可用性，但成本较高，不符合问题所要求的「成本优化」。错误：问题明确指出该公司愿意接受较慢的备份连接，因此不需要两个 Direct Connect 连接。",
+          "zh": "錯誤。原因是，两条专线连接虽然可以提供高可用性，但成本较高，不符合问题所要求的「成本优化」。错误：问题明确指出该公司愿意接受较慢的备份连接，因此不需要两个 Direct Connect 连接。",
           "en": "Incorrect. Although two Direct Connect connections can provide high availability, the cost is high and does not meet the \"cost optimization\" required by the question. Wrong: The question clearly states that the company is willing to accept a slower backup connection, so two Direct Connect connections are not required."
         },
         "D": {
-          "zh": "錯誤。 Direct Connect 故障转移属性不会自动创建备份连接，它仅用于设置现有连接的故障转移。问题要求明确提到备份连接需要成本优化，但该选项并未提及 VPN 作为备份。",
+          "zh": "錯誤。原因是，Direct Connect 故障转移属性不会自动创建备份连接，它仅用于设置现有连接的故障转移。问题要求明确提到备份连接需要成本优化，但该选项并未提及 VPN 作为备份。",
           "en": "Incorrect. The Direct Connect failover property does not automatically create a backup connection, it is only used to configure failover of an existing connection. The question requirement clearly mentions that backup connections require cost optimization, but this option does not mention VPN as a backup."
         }
       },
@@ -476,19 +476,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。原因：将 EC2 实例放置在不同的 AWS 区域会增加复杂性和延迟，且不符合「最小运营工作量」要求。跨区域复制虽然可以提供灾难恢复，但不适合解决单一可用区故障的问题。",
+          "zh": "錯誤。原因是，将 EC2 实例放置在不同的 AWS 区域会增加复杂性和延迟，且不符合「最小运营工作量」要求。跨区域复制虽然可以提供灾难恢复，但不适合解决单一可用区故障的问题。",
           "en": "Incorrect. reason: Placing EC2 instances in different AWS regions increases complexity and latency and does not meet the \"minimum operational effort\" requirement. Although cross-region replication can provide disaster recovery, it is not suitable for solving the problem of single availability zone failure."
         },
         "B": {
-          "zh": "正確。原因：使用具有多个可用区的 Auto Scaling 组可确保 EC2 实例的高可用性。将 Aurora 数据库配置为多可用区可以提供数据冗余和快速故障恢复，从而减少数据丢失和停机时间。 Amazon RDS Proxy 可以优化数据库连接管理，进一步提高性能和可靠性。 发生故障时快照中的",
+          "zh": "正確。原因是，使用具有多个可用区的 Auto Scaling 组可确保 EC2 实例的高可用性。将 Aurora 数据库配置为多可用区可以提供数据冗余和快速故障恢复，从而减少数据丢失和停机时间。 Amazon RDS Proxy 可以优化数据库连接管理，进一步提高性能和可靠性。 发生故障时快照中的",
           "en": "Correct. Reason: Using an Auto Scaling group with multiple Availability Zones ensures high availability of the EC2 instance. Configuring Aurora database as Multi-AZ can provide data redundancy and fast fault recovery, reducing data loss and downtime. Amazon RDS Proxy can optimize database connection management to further improve performance and reliability."
         },
         "C": {
-          "zh": "錯誤。数据库。原因：仅使用一个可用区的Auto Scaling组无法提供高可用性。依赖快照来恢复数据库会导致恢复时间较长，不符合「最短停机时间」的要求。",
+          "zh": "錯誤。原因是，数据库。原因：仅使用一个可用区的Auto Scaling组无法提供高可用性。依赖快照来恢复数据库会导致恢复时间较长，不符合「最短停机时间」的要求。",
           "en": "Incorrect. database from the snapshots in the event of a failure. Cause of the An Auto Scaling group using only one availability zone cannot provide high availability. Relying on snapshots to restore the database will result in long recovery times and does not meet the \"minimum downtime\" requirement."
         },
         "D": {
-          "zh": "錯誤。原因：跨区域配置 Auto Scaling 组会增加复杂性和成本，且不符合「最小运营工作量」要求。使用 S3 和 Lambda 函数写入数据库是一种异步方法，可能会导致数据延迟和一致性问题。",
+          "zh": "錯誤。原因是，跨区域配置 Auto Scaling 组会增加复杂性和成本，且不符合「最小运营工作量」要求。使用 S3 和 Lambda 函数写入数据库是一种异步方法，可能会导致数据延迟和一致性问题。",
           "en": "Incorrect. reason: Configuring Auto Scaling groups across regions increases complexity and cost and does not meet the \"minimum operational effort\" requirement. Writing to the database using S3 and Lambda functions is an asynchronous method that can cause data latency and consistency issues."
         }
       },
@@ -532,19 +532,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 NLB 不支持基于 HTTP 的运行状况检查。 NLB的运行状况检查仅支持TCP等级的检查，无法检测HTTP错误。",
+          "zh": "錯誤。原因是，NLB 不支持基于 HTTP 的运行状况检查。 NLB的运行状况检查仅支持TCP等级的检查，无法检测HTTP错误。",
           "en": "Incorrect. NLB does not support HTTP-based health checks. NLB's health check only supports TCP-level checks and cannot detect HTTP errors."
         },
         "B": {
-          "zh": "錯誤。虽然可以通过cron作业实现一些功能，但这需要编写自定义脚本，并且无法自动替换不健康的实例，这违反了问题要求「无需编写自定义脚本或代码」。",
+          "zh": "錯誤。原因是，虽然可以通过cron作业实现一些功能，但这需要编写自定义脚本，并且无法自动替换不健康的实例，这违反了问题要求「无需编写自定义脚本或代码」。",
           "en": "Incorrect. Although some functions can be implemented through cron jobs, this requires writing custom scripts, and unhealthy instances cannot be automatically replaced, which violates the question requirement \"No need to write custom scripts or codes.\"."
         },
         "C": {
-          "zh": "正確。 ALB 支持基于 HTTP 的运行状况检查，并且可以检测 HTTP 错误。通过配置Auto Scaling组，可以自动替换不健康的实例，从而提高应用程序的可用性。",
+          "zh": "正確。原因是，ALB 支持基于 HTTP 的运行状况检查，并且可以检测 HTTP 错误。通过配置Auto Scaling组，可以自动替换不健康的实例，从而提高应用程序的可用性。",
           "en": "Correct. ALB supports HTTP-based health checks and can detect HTTP errors. By configuring an Auto Scaling group, unhealthy instances can be automatically replaced, thereby improving application availability."
         },
         "D": {
-          "zh": "錯誤。虽然可以通过CloudWatch监控UnhealthyHostCount，但NLB无法检测HTTP等级的错误，因此无法满足问题要求。",
+          "zh": "錯誤。原因是，虽然可以通过CloudWatch监控UnhealthyHostCount，但NLB无法检测HTTP等级的错误，因此无法满足问题要求。",
           "en": "Incorrect. Although UnhealthyHostCount can be monitored through CloudWatch, NLB cannot detect HTTP-level errors and therefore cannot meet the question requirements."
         }
       },
@@ -588,19 +588,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。原因： DynamoDB全局表虽然可以实现跨区域复制，但主要用于高可用和低延迟访问，而不是备份和恢复。全局表无法满足数据恢复到特定时间点的需求，因此无法满足15分钟的RPO要求。",
+          "zh": "錯誤。原因是，DynamoDB全局表虽然可以实现跨区域复制，但主要用于高可用和低延迟访问，而不是备份和恢复。全局表无法满足数据恢复到特定时间点的需求，因此无法满足15分钟的RPO要求。",
           "en": "Incorrect. reason: Although DynamoDB global table can achieve cross-region replication, it is mainly used for high availability and low-latency access, rather than backup and recovery. Global tables cannot meet the demand for data recovery to a specific point in time, and therefore cannot meet the RPO requirement of 15 minutes."
         },
         "B": {
-          "zh": "正確。原因：时间点恢复是DynamoDB的内置功能，可让用户将表恢复到过去35天内的任意时间点。这完全满足15分钟的RPO要求，恢复时间目标（RTO）也可以在1小时内完成。",
+          "zh": "正確。原因是，时间点恢复是DynamoDB的内置功能，可让用户将表恢复到过去35天内的任意时间点。这完全满足15分钟的RPO要求，恢复时间目标（RTO）也可以在1小时内完成。",
           "en": "Correct. reason: Point-in-Time Recovery is a built-in function of DynamoDB that allows users to restore tables to any point in time within the past 35 days. This fully meets the RPO requirement of 15 minutes, and the recovery time objective (RTO) can also be completed within 1 hour."
         },
         "C": {
-          "zh": "錯誤。原因：将数据导出到 S3 Glacier 是一种冷存储解决方案。数据恢复时间较长，无法满足1小时的RTO要求。另外，数据导出是每天进行，无法满足15分钟的RPO要求。",
+          "zh": "錯誤。原因是，将数据导出到 S3 Glacier 是一种冷存储解决方案。数据恢复时间较长，无法满足1小时的RTO要求。另外，数据导出是每天进行，无法满足15分钟的RPO要求。",
           "en": "Incorrect. reason: Exporting data to S3 Glacier is a cold storage solution. Data recovery takes a long time and cannot meet the RTO requirement of 1 hour. In addition, data export is performed daily and cannot meet the RPO requirement of 15 minutes."
         },
         "D": {
-          "zh": "錯誤。原因： Amazon DynamoDB 不使用 EBS 存储，因此无法在 DynamoDB 表上拍摄 EBS 快照。这种方法在技术上不可行。",
+          "zh": "錯誤。原因是，Amazon DynamoDB 不使用 EBS 存储，因此无法在 DynamoDB 表上拍摄 EBS 快照。这种方法在技术上不可行。",
           "en": "Incorrect. reason: Amazon DynamoDB does not use EBS storage, so EBS snapshot cannot be taken on the DynamoDB table. This approach is not technically feasible."
         }
       },
@@ -644,19 +644,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。 API Gateway 主要用于创建 RESTful API 或 WebSocket API，与 S3 的直接数据传输无关。 API Gateway并不能降低数据传输成本，也不能直接优化S3访问路由。",
+          "zh": "錯誤。原因是，API Gateway 主要用于创建 RESTful API 或 WebSocket API，与 S3 的直接数据传输无关。 API Gateway并不能降低数据传输成本，也不能直接优化S3访问路由。",
           "en": "Incorrect. API Gateway is mainly used to build RESTful API 𪥿 WebSocket API and has nothing to do with S3's direct data transmission. API Gateway does not reduce data transfer costs and cannot directly optimize S3 access routes."
         },
         "B": {
-          "zh": "錯誤。 NAT网关用于允许网络中的资源相互访问，但会产生额外的传输费用。使用 NAT 网关访问 S3 不会降低数据传输成本，反而会增加数据传输成本。",
+          "zh": "錯誤。原因是，NAT网关用于允许网络中的资源相互访问，但会产生额外的传输费用。使用 NAT 网关访问 S3 不会降低数据传输成本，反而会增加数据传输成本。",
           "en": "Incorrect. NAT Gateway is used to allow resources in the network to access each other, but it incurs additional transfer charges. Using a NAT Gateway to access S3 will not reduce data transfer costs, but will increase them."
         },
         "C": {
-          "zh": "錯誤。互联网网关访问 S3 会产生额外的相互数据传输费用。这种做法不符合降低成本的要求。",
+          "zh": "錯誤。原因是，互联网网关访问 S3 会产生额外的相互数据传输费用。这种做法不符合降低成本的要求。",
           "en": "Incorrect. Internet Gateway access to S3 incurs additional mutual data transfer charges. This approach does not meet the requirements of cost reduction."
         },
         "D": {
-          "zh": "正確。 S3 VPC 网关端点是专为使用 S3 进行优化而设计的 Marsh 解决方案。通过 VPC 网关端点，数据流量在 AWS 内部传输，消除了相互的数据传输费用。您可以创建特定策略来控制对 S3 存储桶的访问。",
+          "zh": "正確。原因是，S3 VPC 网关端点是专为使用 S3 进行优化而设计的 Marsh 解决方案。通过 VPC 网关端点，数据流量在 AWS 内部传输，消除了相互的数据传输费用。您可以创建特定策略来控制对 S3 存储桶的访问。",
           "en": "Correct. The S3 VPC Gateway Endpoint is a Marsh solution specifically designed to be optimized with S3. With the VPC Gateway Endpoint, data traffic is transmitted internally within AWS, eliminating mutual data transmission fees. You can create a specific policy to control access to the S3 bucket."
         }
       },
@@ -704,23 +704,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。堡垒主机的目的是允许外部用户通过 互联网 进行访问，因此其安全组需要允许来自公司外部 IP 范围的入站访问，而不是只允许来自冷应用程序实例的访问。",
+          "zh": "錯誤。原因是，堡垒主机的目的是允许外部用户通过 互联网 进行访问，因此其安全组需要允许来自公司外部 IP 范围的入站访问，而不是只允许来自冷应用程序实例的访问。",
           "en": "Incorrect. The purpose of the bastion host is to allow external users access over the Internet, so its security group needs to allow inbound access from the company's external IP range, rather than only allowing access from cold application instances."
         },
         "B": {
-          "zh": "錯誤。堡垒主机需要允许来自公司外部IP范围的访问，而不是内部IP范围。内部 IP 范围通常用于私有子网中的资源，而不是通过 互联网访问的资源。",
+          "zh": "錯誤。原因是，堡垒主机需要允许来自公司外部IP范围的访问，而不是内部IP范围。内部 IP 范围通常用于私有子网中的资源，而不是通过 互联网访问的资源。",
           "en": "Incorrect. The bastion host needs to allow access from the company's external IP range, not the internal IP range. Internal IP ranges are typically used for resources in private subnets, rather than resources accessible over the Internet."
         },
         "C": {
-          "zh": "正確。堡垒主机的安全组需要配置为允许公司外部IP范围的入站访问，以便公司员工可以通过互联网连接到堡垒主机。",
+          "zh": "正確。原因是，堡垒主机的安全组需要配置为允许公司外部IP范围的入站访问，以便公司员工可以通过互联网连接到堡垒主机。",
           "en": "Correct. The bastion host's security group needs to be configured to allow inbound access from the company's external IP range so that company employees can connect to the bastion host over the Internet."
         },
         "D": {
-          "zh": "正確。应用程序实例的安全组需要配置为仅允许堡垒主机私网IP地址的SSH访问，以确保安全性并限制访问来源。",
+          "zh": "正確。原因是，应用程序实例的安全组需要配置为仅允许堡垒主机私网IP地址的SSH访问，以确保安全性并限制访问来源。",
           "en": "Correct. The security group for the application instance needs to be configured to only allow SSH access from the bastion host private IP address to ensure security and limit the source of access."
         },
         "E": {
-          "zh": "錯誤。堡垒主机的公网IP地址用于外部访问，但应用程序实例位于私有子网中，应通过堡垒主机的私有IP地址进行访问。",
+          "zh": "錯誤。原因是，堡垒主机的公网IP地址用于外部访问，但应用程序实例位于私有子网中，应通过堡垒主机的私有IP地址进行访问。",
           "en": "Incorrect. The public IP address of the bastion host is used for external access, but the application instance is in a private subnet and should be accessed through the bastion host's private IP address."
         }
       },
@@ -769,23 +769,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 Web层需要允许来自互联网（端口443）的HTTPS流量，因此需要将其配置为允许来自0.0.0.0/0的入站流量。",
+          "zh": "正確。原因是，Web层需要允许来自互联网（端口443）的HTTPS流量，因此需要将其配置为允许来自0.0.0.0/0的入站流量。",
           "en": "Correct. The web layer needs to allow HTTPS traffic from the Internet (port 443), so it needs to be configured to allow inbound traffic from 0.0.0.0/0."
         },
         "B": {
-          "zh": "錯誤。 Web层一般不需要发送HTTPS流量到网络。出站流量的默认规则已允许所有流量，因此无需明确配置。",
+          "zh": "錯誤。原因是，Web层一般不需要发送HTTPS流量到网络。出站流量的默认规则已允许所有流量，因此无需明确配置。",
           "en": "Incorrect. The web layer generally does not need to send HTTPS traffic to the Internet. The default rules for outbound traffic already allow all traffic, so no explicit configuration is required."
         },
         "C": {
-          "zh": "正確。数据库层需要允许来自 Web 层的 SQL Server 通信（端口 1433），因此需要将其设置为允许来自 Web 层安全组的入站流量。",
+          "zh": "正確。原因是，数据库层需要允许来自 Web 层的 SQL Server 通信（端口 1433），因此需要将其设置为允许来自 Web 层安全组的入站流量。",
           "en": "Correct. The database tier needs to allow SQL Server communication (port 1433) from the web tier, so it needs to be configured to allow inbound traffic from the web tier security group."
         },
         "D": {
-          "zh": "錯誤。数据库层一般不需要向Web层发送HTTPS流量（端口443），且出站流量的默认规则已经允许所有流量，因此不需要明确设置。",
+          "zh": "錯誤。原因是，数据库层一般不需要向Web层发送HTTPS流量（端口443），且出站流量的默认规则已经允许所有流量，因此不需要明确设置。",
           "en": "Incorrect. The database tier generally does not need to send HTTPS traffic (port 443) to the web tier, and the default rules for outbound traffic already allow all traffic, so no explicit configuration is required."
         },
         "E": {
-          "zh": "錯誤。数据库层只需要允许来自 Web 层（端口 1433）的 SQL Server 流量，而不是 HTTPS 流量（端口 443）。",
+          "zh": "錯誤。原因是，数据库层只需要允许来自 Web 层（端口 1433）的 SQL Server 流量，而不是 HTTPS 流量（端口 443）。",
           "en": "Incorrect. The database tier only needs to allow SQL Server traffic from the web tier (port 1433), not HTTPS traffic (port 443)."
         }
       },
@@ -830,19 +830,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。 Simple Queue Service (Amazon SQS) 作为应用程序服务之间的通信层。分析： Amazon API Gateway 提供了高效的 RESTful API 管理解决方案，适合现代应用程序。 AWS Lambda 是一种无服务器运算服务，可动态扩展以避免重载问题。 Amazon SQS 是一种托管消息队列服务，可解耦应用程序层之间的通信并防止交易丢失。",
+          "zh": "正確。原因是，Simple Queue Service (Amazon SQS) 作为应用程序服务之间的通信层。分析： Amazon API Gateway 提供了高效的 RESTful API 管理解决方案，适合现代应用程序。 AWS Lambda 是一种无服务器运算服务，可动态扩展以避免重载问题。 Amazon SQS 是一种托管消息队列服务，可解耦应用程序层之间的通信并防止交易丢失。",
           "en": "Correct. Simple Queue Service (Amazon SQS) as the communication layer between application services. Analysis: Amazon API Gateway provides an efficient RESTful API management solution, suitable for modern applications. AWS Lambda is a serverless computing service that can be dynamically scaled to avoid overload problems. Amazon SQS is a managed message queue service that decouples communication between application layers and prevents transaction loss."
         },
         "B": {
-          "zh": "錯誤。性能故障期间的使用率。增加应用程序服务器的 Amazon EC2 实例的大小以满足峰值要求。分析：此选项依赖 EC2 实例的手动分析和规模调整，缺乏自动化和现代化。增加 EC2 实例大小可能会解决重载问题，但会不系统地解耦应用程序层之间的通信。它不符合问题的「现代应用」目标。 Auto Scaling 组中 Amazon EC2 上的",
+          "zh": "錯誤。原因是，性能故障期间的使用率。增加应用程序服务器的 Amazon EC2 实例的大小以满足峰值要求。分析：此选项依赖 EC2 实例的手动分析和规模调整，缺乏自动化和现代化。增加 EC2 实例大小可能会解决重载问题，但会不系统地解耦应用程序层之间的通信。它不符合问题的「现代应用」目标。 Auto Scaling 组中 Amazon EC2 上的",
           "en": "Incorrect. utilization during the performance failures. Increase the size of the application server's Amazon EC2 instances to meet the peak requirements. Analysis: This option relies on manual analysis and sizing of EC2 instances and lacks automation and modernization. Increasing the EC2 instance size may solve the overload problem, but unsystematically decouples communication between application tiers. It does not meet the \"modern application\" goal of the question."
         },
         "C": {
-          "zh": "錯誤。。使用 Amazon CloudWatch 监控 SNS 队列长度并根据需要进行扩展和缩减。分析： Amazon SNS是一种发布/订阅信息服务，适合广播消息，但不适合应用层之间的解耦通信。它不符合问题的「现代应用」目标。",
+          "zh": "錯誤。原因是，。使用 Amazon CloudWatch 监控 SNS 队列长度并根据需要进行扩展和缩减。分析： Amazon SNS是一种发布/订阅信息服务，适合广播消息，但不适合应用层之间的解耦通信。它不符合问题的「现代应用」目标。",
           "en": "Incorrect. on Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SNS queue length and scale up and down as required. Analysis: Amazon SNS is a publish/subscribe information service, suitable for broadcasting information, but not suitable for decoupling communication between application layers. It does not meet the \"modern application\" goal of the question."
         },
         "D": {
-          "zh": "錯誤。 Auto Scaling 组中的 Amazon EC2。使用 Amazon CloudWatch 监控 SQS 队列长度并在检测到通信故障时进行扩展。分析： Amazon SQS可以解耦应用层之间的通信，解决重载问题。尽管重载问题得到了解决，但应用程序的现代化目标并未实现。",
+          "zh": "錯誤。原因是，Auto Scaling 组中的 Amazon EC2。使用 Amazon CloudWatch 监控 SQS 队列长度并在检测到通信故障时进行扩展。分析： Amazon SQS可以解耦应用层之间的通信，解决重载问题。尽管重载问题得到了解决，但应用程序的现代化目标并未实现。",
           "en": "Incorrect. Amazon EC2 in an Auto Scaling group. Use Amazon CloudWatch to monitor the SQS queue length and scale up when communication failures are detected. Analysis: Amazon SQS can decouple the communication between application layers and solve the overload problem. Although the overload problem was solved, the application's modernization goal was not implemented."
         }
       },

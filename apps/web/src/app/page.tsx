@@ -166,6 +166,8 @@ const EXAMS: Record<ExamType, ExamConfig> = {
   }
 };
 
+const EXAM_ORDER: ExamType[] = ["aif", "clf", "saa"];
+
 const REVIEW_DOMAINS: Record<ExamType, Array<{ key: Exclude<ReviewDomainKey, "all">; label: string }>> = {
   aif: [
     { key: "domain_1", label: "領域 1｜AI 和 ML 基礎（20%）" },
@@ -280,6 +282,7 @@ export default function Home() {
   const ensuredProfileUserIds = useRef<Set<string>>(new Set());
   const profileCheckInFlightUserId = useRef<string | null>(null);
   const isFinishingExam = useRef(false);
+  const questionPanelRef = useRef<HTMLDivElement | null>(null);
   const currentExam = EXAMS[selectedExam];
 
   useEffect(() => {
@@ -1031,6 +1034,9 @@ export default function Home() {
     setSelectedOptions([]);
     setHasAnswered(false);
     setIsSavingAttempt(false);
+    window.requestAnimationFrame(() => {
+      questionPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   const gmail = user?.email ?? "";
@@ -1098,27 +1104,30 @@ export default function Home() {
               onChange={(event) => void switchExam(event.target.value as ExamType)}
               className="w-full border-2 border-zinc-700 bg-black px-4 py-3 text-sm font-black text-white outline-none focus:border-flashYellow md:hidden"
             >
-              <option value="clf">AWS Cloud Practitioner</option>
-              <option value="saa">AWS Solutions Architect Associate</option>
-              <option value="aif">AWS Certified AI Practitioner</option>
+              {EXAM_ORDER.map((examKey) => (
+                <option key={examKey} value={examKey}>{EXAMS[examKey].name}</option>
+              ))}
             </select>
 
             <div className="hidden grid-cols-3 border-2 border-zinc-700 bg-black md:grid">
-              {(Object.entries(EXAMS) as [ExamType, ExamConfig][]).map(([examKey, exam]) => (
-                <button
-                  type="button"
-                  key={examKey}
-                  onClick={() => void switchExam(examKey)}
-                  aria-pressed={selectedExam === examKey}
-                  className={`min-h-14 px-4 py-3 text-sm font-black transition ${
-                    selectedExam === examKey
-                      ? "bg-flashYellow text-black"
-                      : "text-zinc-400 hover:text-white"
-                  }`}
-                >
-                  {exam.shortName}
-                </button>
-              ))}
+              {EXAM_ORDER.map((examKey) => {
+                const exam = EXAMS[examKey];
+                return (
+                  <button
+                    type="button"
+                    key={examKey}
+                    onClick={() => void switchExam(examKey)}
+                    aria-pressed={selectedExam === examKey}
+                    className={`min-h-14 px-4 py-3 text-sm font-black transition ${
+                      selectedExam === examKey
+                        ? "bg-flashYellow text-black"
+                        : "text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    {exam.shortName}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -1369,7 +1378,7 @@ export default function Home() {
               )}
             </div>
           ) : (
-          <div className="border border-zinc-800 bg-filmBlack p-5">
+          <div ref={questionPanelRef} className="scroll-mt-20 border border-zinc-800 bg-filmBlack p-5">
             <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
               <div>
                 <p className="text-xs tracking-[0.28em] text-deepPink">

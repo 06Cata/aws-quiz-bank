@@ -28,19 +28,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS KMS 是一项用于加密密钥管理的服务，但它不直接用于存储和轮换数据库凭证。尽管您可以使用 KMS 加密凭据，但它不提供自动凭据轮换。",
+          "zh": "錯誤。原因是，AWS KMS 是一项用于加密密钥管理的服务，但它不直接用于存储和轮换数据库凭证。尽管您可以使用 KMS 加密凭据，但它不提供自动凭据轮换。",
           "en": "Incorrect. Technical reason: AWS KMS is a service for encryption key management, but it is not directly used to store and rotate database credentials. Although you can encrypt credentials using KMS, it does not provide automatic credential rotation."
         },
         "B": {
-          "zh": "錯誤。技术原因：将凭据存储在本地存储中并使用 cron 作业轮换它们是一种手动且不安全的方式。这种方法需要额外的编程工作，并且不符合 AWS 最佳实践。",
+          "zh": "錯誤。原因是，将凭据存储在本地存储中并使用 cron 作业轮换它们是一种手动且不安全的方式。这种方法需要额外的编程工作，并且不符合 AWS 最佳实践。",
           "en": "Incorrect. Technical reason: Storing credentials in local storage and rotating them using cron jobs is a manual and unsafe way. This approach requires additional programming effort and is inconsistent with AWS best practices."
         },
         "C": {
-          "zh": "正確。技术原因： AWS Secrets Manager 是一项旨在安全存储和轮换凭证的服务。它支持自动凭证轮换和通过 AWS Lambda 函数的无缝集成。这种方法需要最少的编程工作，同时提供较高的安全性。",
+          "zh": "正確。原因是，AWS Secrets Manager 是一项旨在安全存储和轮换凭证的服务。它支持自动凭证轮换和通过 AWS Lambda 函数的无缝集成。这种方法需要最少的编程工作，同时提供较高的安全性。",
           "en": "Correct. Technical reason: AWS Secrets Manager is a service designed to securely store and rotate credentials. It supports automatic credential rotation and seamless integration through AWS Lambda functions. This approach requires minimal programming effort while providing high security."
         },
         "D": {
-          "zh": "錯誤。技术原因：尽管 AWS Systems Manager Parameter Store 可以存储凭证，但它不支持自动凭证轮换。需要额外的编程工作来实现轮换功能，因此不满足问题的“最少编程工作”要求。",
+          "zh": "錯誤。原因是，尽管 AWS Systems Manager Parameter Store 可以存储凭证，但它不支持自动凭证轮换。需要额外的编程工作来实现轮换功能，因此不满足问题的“最少编程工作”要求。",
           "en": "Incorrect. Technical reason: Although AWS Systems Manager Parameter Store can store credentials, it does not support automatic credential rotation. Additional programming effort is required to implement the rotation functionality, so the question's \"minimal programming effort\" requirement is not met."
         }
       },
@@ -84,19 +84,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Amazon Athena 是無伺服器互動式查詢服務，可直接用 SQL 分析 S3 資料；SSE-KMS 使用 AWS KMS 金鑰加密資料，提供較細緻的權限與稽核控制；AWS KMS 是受管金鑰管理服務，用於建立、控制與稽核加密金鑰的使用。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够以最少的运营开销满足这些要求」；本題應改用正確選項所述的「在现有 S3 存储桶上配置跨区域复制 (CRR)。使用带有 Amazon S3 托管密钥 (SSE-S3) 的服务器端加密。使用 Amazon Athena 查询数据。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Amazon RDS 是受管關聯式資料庫，AWS 負責常見修補、備份與基礎維運；SSE-S3 使用由 Amazon S3 完全管理並自動輪換的金鑰進行伺服器端加密。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够以最少的运营开销满足这些要求」；本題應改用正確選項所述的「在现有 S3 存储桶上配置跨区域复制 (CRR)。使用带有 Amazon S3 托管密钥 (SSE-S3) 的服务器端加密。使用 Amazon Athena 查询数据。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "正確。技术原因：该解决方案满足问题中的关键功能和非功能需求，并且与相关AWS服务的设计意图和最佳实践一致。",
+          "zh": "正確。原因是，Amazon Athena 是無伺服器互動式查詢服務，可直接用 SQL 分析 S3 資料；SSE-S3 使用由 Amazon S3 完全管理並自動輪換的金鑰進行伺服器端加密。在此選項的架構中，這些能力會用來處理「哪种解决方案能够以最少的运营开销满足这些要求」；因此它同時涵蓋題目指定的功能與限制，是本題應採用的做法。",
           "en": "Correct. Technical reason: The solution meets the key functional and non-functional requirements in the problem and is consistent with the design intent and best practices of the relevant AWS service."
         },
         "D": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，Amazon RDS 是受管關聯式資料庫，AWS 負責常見修補、備份與基礎維運；SSE-KMS 使用 AWS KMS 金鑰加密資料，提供較細緻的權限與稽核控制；AWS KMS 是受管金鑰管理服務，用於建立、控制與稽核加密金鑰的使用。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案能够以最少的运营开销满足这些要求」；本題應改用正確選項所述的「在现有 S3 存储桶上配置跨区域复制 (CRR)。使用带有 Amazon S3 托管密钥 (SSE-S3) 的服务器端加密。使用 Amazon Athena 查询数据。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         }
       },
@@ -140,19 +140,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：用户上传的训练图像一年只访问两次，适合 S3 Glacier Deep Archive；高级用户生成的图像需要随时访问，适合 S3 Standard；非高级用户每 6 小时最多下载一次，适合 S3 Standard-IA。该组合最符合各类访问模式并优化成本。",
+          "zh": "正確。原因是，用户上传的训练图像一年只访问两次，适合 S3 Glacier Deep Archive；高级用户生成的图像需要随时访问，适合 S3 Standard；非高级用户每 6 小时最多下载一次，适合 S3 Standard-IA。该组合最符合各类访问模式并优化成本。",
           "en": "Correct. Technical reason: User-uploaded training images are accessed only twice a year and fit S3 Glacier Deep Archive. Premium-user images need anytime access and fit S3 Standard. Non-premium-user images are downloaded at most every 6 hours and fit S3 Standard-IA. This combination matches each access pattern at the lowest cost."
         },
         "B": {
-          "zh": "錯誤。技术原因：将上传的图像移至 Amazon S3 Glacier Deep Archive：正确。用户上传的图像访问频率很低，因此 S3 Glacier Deep Archive 是一个合适的选择。将所有生成的 AI 图像移至 S3 Glacier 灵活检索：错误。生成的AI图片需要根据用户类型提供不同的访问频率。 S3 Glacier灵活检索不适合访问频率较高的用户。",
+          "zh": "錯誤。原因是，将上传的图像移至 Amazon S3 Glacier Deep Archive：正确。用户上传的图像访问频率很低，因此 S3 Glacier Deep Archive 是一个合适的选择。将所有生成的 AI 图像移至 S3 Glacier 灵活检索：错误。生成的AI图片需要根据用户类型提供不同的访问频率。 S3 Glacier灵活检索不适合访问频率较高的用户。",
           "en": "Incorrect. Technical reason: Move uploaded images to Amazon S3 Glacier Deep Archive: Correct. User-uploaded images are accessed very infrequently, so S3 Glacier Deep Archive is a suitable choice. Move all generated AI images to S3 Glacier Flexible Retrieval: Error. The generated AI pictures need to provide different access frequencies according to user types. S3 Glacier flexible retrieval is not suitable for users with high access frequency."
         },
         "C": {
-          "zh": "錯誤。技术原因： S3 One Zone-IA 仅在一个可用区存储上传的训练图像，弹性低于多可用区存储。虽然生成图像的存储层选择合理，但整体方案不是最佳选择。",
+          "zh": "錯誤。原因是，S3 One Zone-IA 仅在一个可用区存储上传的训练图像，弹性低于多可用区存储。虽然生成图像的存储层选择合理，但整体方案不是最佳选择。",
           "en": "Incorrect. Technical reason: S3 One Zone-IA stores the uploaded training images in only one Availability Zone and is less resilient than multi-AZ storage. Although the generated-image tiers are reasonable, the overall solution is not the best choice."
         },
         "D": {
-          "zh": "錯誤。技术原因： S3 One Zone-IA 仅提供单可用区存储，而且 S3 Glacier Flexible Retrieval 不能满足生成图像需要每 6 小时或随时下载的访问要求。",
+          "zh": "錯誤。原因是，S3 One Zone-IA 仅提供单可用区存储，而且 S3 Glacier Flexible Retrieval 不能满足生成图像需要每 6 小时或随时下载的访问要求。",
           "en": "Incorrect. Technical reason: S3 One Zone-IA provides only single-AZ storage, and S3 Glacier Flexible Retrieval cannot meet the requirement to download generated images every 6 hours or at any time."
         }
       },
@@ -196,19 +196,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： AWS Lambda 函数的冷启动时间较长，将 1GB 模型数据加载到内存中可能会导致性能问题，尤其是在不规则的使用模式下。错误： NLB 不受限制地直接触发 Lambda 函数。 Lambda 函数通常通过 API 网关或其他服务触发。",
+          "zh": "錯誤。原因是，AWS Lambda 函数的冷启动时间较长，将 1GB 模型数据加载到内存中可能会导致性能问题，尤其是在不规则的使用模式下。错误： NLB 不受限制地直接触发 Lambda 函数。 Lambda 函数通常通过 API 网关或其他服务触发。",
           "en": "Incorrect. Technical reason: AWS Lambda functions have long cold start times, and loading 1GB of model data into memory can cause performance issues, especially under irregular usage patterns. Error: NLB triggers Lambda function directly without restriction. Lambda functions are typically triggered through an API gateway or other service."
         },
         "B": {
-          "zh": "錯誤。技术原因：虽然ECS可以处理模型加载，但ALB是同步请求处理方式，不适合异步API架构。 Bug： Unbarred 可以有效地处理不规则的使用模式和批量请求。",
+          "zh": "錯誤。原因是，虽然ECS可以处理模型加载，但ALB是同步请求处理方式，不适合异步API架构。 Bug： Unbarred 可以有效地处理不规则的使用模式和批量请求。",
           "en": "Incorrect. Technical reason: Although ECS can handle model loading, ALB is a synchronous request processing method and is not suitable for asynchronous API architecture. Bug: Unbarred handles irregular usage patterns and batch requests efficiently."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS Lambda 函数的冷启动时间较长，将 1GB 模型数据加载到内存中可能会导致性能问题。错误： Lambda 函数直接增加 vCPU 数量而不进行剥离。扩展的方式就是增加并发执行实例的数量。",
+          "zh": "錯誤。原因是，AWS Lambda 函数的冷启动时间较长，将 1GB 模型数据加载到内存中可能会导致性能问题。错误： Lambda 函数直接增加 vCPU 数量而不进行剥离。扩展的方式就是增加并发执行实例的数量。",
           "en": "Incorrect. Technical reason: AWS Lambda functions have long cold start times and loading 1GB of model data into memory can cause performance issues. Error: Lambda function directly increases the number of vCPUs without stripping. The way to expand is to increase the number of concurrent execution instances."
         },
         "D": {
-          "zh": "正確。技术原因： SQS队列可以高效处理异步请求和批量请求。正确： ECS服务可以将1GB的模型数据加载到内存中，并使模型驻留在内存中，适合处理不规则的使用模式。正确： ECS支持根据SQS队列大小自动扩容，可以动态调整服务数量和集群容量。",
+          "zh": "正確。原因是，SQS队列可以高效处理异步请求和批量请求。正确： ECS服务可以将1GB的模型数据加载到内存中，并使模型驻留在内存中，适合处理不规则的使用模式。正确： ECS支持根据SQS队列大小自动扩容，可以动态调整服务数量和集群容量。",
           "en": "Correct. Technical reason: SQS queues can efficiently handle asynchronous requests and batch requests. Correct: The ECS service can load 1GB of model data into memory and make the model resident in memory, making it suitable for handling irregular usage patterns. Correct: ECS supports automatic expansion based on SQS queue size, and can dynamically adjust the number of services and cluster capacity."
         }
       },
@@ -252,19 +252,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：在两个AWS区域之间设置灾难恢复基地设施，并将Auto Scaling组的目标容量和最大容量设置为最小值，以确保资源不浪费。正确：将 Aurora MySQL 数据库集群转换为 Aurora 全局数据库，以支持跨区域复制并满足灾难恢复需求。正确：使用 Amazon Route 53 配置主动-被动故障转移，以确保在主区域发生故障时快速故障转移到备份区域。",
+          "zh": "正確。原因是，在两个AWS区域之间设置灾难恢复基地设施，并将Auto Scaling组的目标容量和最大容量设置为最小值，以确保资源不浪费。正确：将 Aurora MySQL 数据库集群转换为 Aurora 全局数据库，以支持跨区域复制并满足灾难恢复需求。正确：使用 Amazon Route 53 配置主动-被动故障转移，以确保在主区域发生故障时快速故障转移到备份区域。",
           "en": "Correct. Technical reason: Set up a disaster recovery base facility between two AWS regions, and set the target capacity and maximum capacity of the Auto Scaling group to the minimum to ensure that resources are not wasted. Correct: Convert an Aurora MySQL DB cluster to an Aurora global database to support cross-region replication and meet disaster recovery needs. Correct: Use Amazon Route 53 to configure active-passive failover to ensure rapid failover to the backup region if the primary region fails."
         },
         "B": {
-          "zh": "錯誤。技术原因：双活故障转移不满足问题的要求，因为问题明确指出，在主基础设施健康的情况下，灾难恢复解决方案不需要支持客户使用。正确： Aurora全局数据库支持跨区域复制，满足灾难恢复需求。",
+          "zh": "錯誤。原因是，双活故障转移不满足问题的要求，因为问题明确指出，在主基础设施健康的情况下，灾难恢复解决方案不需要支持客户使用。正确： Aurora全局数据库支持跨区域复制，满足灾难恢复需求。",
           "en": "Incorrect. Technical reason: Active-active failover does not meet the requirements of the question because the question clearly states that the disaster recovery solution does not need to support customer use while the primary infrastructure is healthy. Correct: Aurora global database supports cross-region replication to meet disaster recovery needs."
         },
         "C": {
-          "zh": "錯誤。技术原因：使用 AWS Backup 备份 Aurora MySQL 数据库集群数据并在发生灾难时恢复数据可能无法满足 30 分钟恢复时间要求。错误：主动-主动故障转移不满足问题的要求。",
+          "zh": "錯誤。原因是，使用 AWS Backup 备份 Aurora MySQL 数据库集群数据并在发生灾难时恢复数据可能无法满足 30 分钟恢复时间要求。错误：主动-主动故障转移不满足问题的要求。",
           "en": "Incorrect. Technical reason: Using AWS Backup to back up your Aurora MySQL DB cluster data and recover it in the event of a disaster might not meet the 30-minute recovery time requirement. Error: Active-active failover does not meet the requirements of the question."
         },
         "D": {
-          "zh": "錯誤。技术原因：在发生灾难时备份基础设施配置并创建所需的基础设施可能无法满足 30 分钟恢复时间的要求。正确： Aurora全局数据库支持跨区域复制，满足灾难恢复需求。正确：主动-被动故障转移满足问题要求。",
+          "zh": "錯誤。原因是，在发生灾难时备份基础设施配置并创建所需的基础设施可能无法满足 30 分钟恢复时间的要求。正确： Aurora全局数据库支持跨区域复制，满足灾难恢复需求。正确：主动-被动故障转移满足问题要求。",
           "en": "Incorrect. Technical reason: Backing up the infrastructure configuration and creating the required infrastructure in the event of a disaster may not meet the 30-minute recovery time requirement. Correct: Aurora global database supports cross-region replication to meet disaster recovery needs. Correct: Active-passive failover meets the problem requirements."
         }
       },
@@ -308,19 +308,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： EC2 竞价型实例可能会被中断，不适合运行不能中断的批处理作业。正确： S3 Standard 适合长期存储， S3 Glacier Instant Retrieval 适合需要快速访问的归档数据。错误：虽然存储策略合理，但竞价型实例选择不符合问题要求。",
+          "zh": "錯誤。原因是，EC2 竞价型实例可能会被中断，不适合运行不能中断的批处理作业。正确： S3 Standard 适合长期存储， S3 Glacier Instant Retrieval 适合需要快速访问的归档数据。错误：虽然存储策略合理，但竞价型实例选择不符合问题要求。",
           "en": "Incorrect. Technical reason: EC2 Spot instances can be interrupted and are not suitable for running batch jobs that cannot be interrupted. Correct: S3 Standard is suitable for long-term storage and S3 Glacier Instant Retrieval is suitable for archived data that requires fast access. Error: Although the storage policy is reasonable, the Spot instance selection does not meet the requirements of the question."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，S3 Glacier Deep Archive 用於最低成本的長期封存，但取回通常需數小時，不能當作即時存取層；S3 Glacier Instant Retrieval 適合很少讀取、但需要毫秒級取回的封存物件。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案可以满足这些要求」；本題應改用正確選項所述的「部署 Amazon EC2 按需型实例以运行批处理作业。将数据存储在 Amazon S3 Standard 中。 30 天后将数据移至 Amazon S3 Glacier Deep Archive。设置期限以在 2 年后删除数据。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "錯誤。技术原因： EC2 竞价型实例可能会被中断，不适合运行不能中断的批处理作业。正确： S3 Standard 适合长期存储， S3 Glacier 灵活检索适合偶尔需要访问的归档数据。错误：竞价型实例选择不符合问题的要求。",
+          "zh": "錯誤。原因是，EC2 竞价型实例可能会被中断，不适合运行不能中断的批处理作业。正确： S3 Standard 适合长期存储， S3 Glacier 灵活检索适合偶尔需要访问的归档数据。错误：竞价型实例选择不符合问题的要求。",
           "en": "Incorrect. Technical reason: EC2 Spot instances can be interrupted and are not suitable for running batch jobs that cannot be interrupted. Correct: S3 Standard is suitable for long-term storage, and S3 Glacier flexible retrieval is suitable for archived data that needs to be accessed occasionally. Error: The Spot Instance selection does not meet the requirements of the question."
         },
         "D": {
-          "zh": "正確。技术原因： EC2 按需型实例适合运行不能中断的任务。正确： S3 Standard 适合短期存储， S3 Glacier Deep Archive 适合长期存储，成本最低。正确：生命周期策略满足问题要求。",
+          "zh": "正確。原因是，EC2 按需型实例适合运行不能中断的任务。正确： S3 Standard 适合短期存储， S3 Glacier Deep Archive 适合长期存储，成本最低。正确：生命周期策略满足问题要求。",
           "en": "Correct. Technical reason: EC2 On-Demand Instances are suitable for running tasks that cannot be interrupted. Correct: S3 Standard is suitable for short-term storage, and S3 Glacier Deep Archive is suitable for long-term storage at the lowest cost. Correct: The lifecycle policy meets the problem requirements."
         }
       },
@@ -368,23 +368,23 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： Site-to-Site VPN 连接通常用于低成本解决方案，但它们无法提供个位数的延迟，并且为每个 VPC 建立 VPN 连接会增加复杂性和成本。",
+          "zh": "錯誤。原因是，Site-to-Site VPN 连接通常用于低成本解决方案，但它们无法提供个位数的延迟，并且为每个 VPC 建立 VPN 连接会增加复杂性和成本。",
           "en": "Incorrect. Technical reason: Site-to-Site VPN connections are often used for low-cost solutions, but they cannot provide single-digit latency, and establishing VPN connections for each VPC adds complexity and cost."
         },
         "B": {
-          "zh": "正確。技术原因： Direct Connect 网关可以与传输网关关联，以实现高效的网络连接。该方式支持低时延通信，可以连接多个VPC，降低成本。",
+          "zh": "正確。原因是，Direct Connect 网关可以与传输网关关联，以实现高效的网络连接。该方式支持低时延通信，可以连接多个VPC，降低成本。",
           "en": "Correct. Technical reason: Direct Connect gateways can be associated with Transit Gateways for efficient network connectivity. This method supports low-latency communication and can connect multiple VPCs to reduce costs."
         },
         "C": {
-          "zh": "錯誤。技术原因：虽然可以通过 VPN 连接到 Direct Connect 网关，但 VPN 连接无法提供成为问题中“最具成本效益”解决方案所需的个位数延迟。",
+          "zh": "錯誤。原因是，虽然可以通过 VPN 连接到 Direct Connect 网关，但 VPN 连接无法提供成为问题中“最具成本效益”解决方案所需的个位数延迟。",
           "en": "Incorrect. Technical reason: While it is possible to connect to the Direct Connect gateway via VPN, the VPN connection does not provide the single-digit latency required to qualify as the \"most cost-effective\" solution in the question."
         },
         "D": {
-          "zh": "正確。技术原因： Direct Connect 提供私有、低延迟连接，中转虚拟接口 (VIF) 允许 Direct Connect 网关与中转网关集成，以支持跨多个 VPC 的连接。这是一种高效且成本优化的解决方案。",
+          "zh": "正確。原因是，Direct Connect 提供私有、低延迟连接，中转虚拟接口 (VIF) 允许 Direct Connect 网关与中转网关集成，以支持跨多个 VPC 的连接。这是一种高效且成本优化的解决方案。",
           "en": "Correct. Technical reason: Direct Connect provides private, low-latency connections, and Transit Virtual Interfaces (VIFs) allow Direct Connect gateways to integrate with Transit Gateways to support connections across multiple VPCs. This is an efficient and cost-optimized solution."
         },
         "E": {
-          "zh": "錯誤。技术原因：虽然可以通过 VPN 连接到 Transit Gateway，但 VPN 无法提供成为问题中“最具成本效益”解决方案所需的个位数延迟。",
+          "zh": "錯誤。原因是，虽然可以通过 VPN 连接到 Transit Gateway，但 VPN 无法提供成为问题中“最具成本效益”解决方案所需的个位数延迟。",
           "en": "Incorrect. Technical reason: While it is possible to connect to the Transit Gateway via VPN, a VPN does not provide the single-digit latency required to be the \"most cost-effective\" solution in the question."
         }
       },
@@ -429,19 +429,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因： Amazon RDS 代理可以帮助减少数据库故障转移时间，因为它提供服务器和数据库之间的连接池，允许快速切换到备用实例。此外， RDS Proxy 可以管理连接并减少常见的超时问题。",
+          "zh": "正確。原因是，Amazon RDS 代理可以帮助减少数据库故障转移时间，因为它提供服务器和数据库之间的连接池，允许快速切换到备用实例。此外， RDS Proxy 可以管理连接并减少常见的超时问题。",
           "en": "Correct. Technical reason: Amazon RDS Proxy can help reduce database failover times because it provides connection pooling between the server and database, allowing for rapid switchover to a standby instance. Additionally, RDS Proxy can manage connections and reduce common timeout issues."
         },
         "B": {
-          "zh": "錯誤。技术原因：只读副本主要用于共享读取流量，无法解决故障转移时间问题。当发生故障转移时，主实例的写入流量仍然受到影响，且问题无法解决。",
+          "zh": "錯誤。原因是，只读副本主要用于共享读取流量，无法解决故障转移时间问题。当发生故障转移时，主实例的写入流量仍然受到影响，且问题无法解决。",
           "en": "Incorrect. Technical reason: Read-only replicas are mainly used to share read traffic and cannot solve the problem of failover time. When a failover occurs, write traffic to the primary instance is still affected and the problem cannot be resolved."
         },
         "C": {
-          "zh": "錯誤。技术原因： Performance Insights是一个用于分析数据库性能问题的控制工具，但它不能直接减少故障转移时间。此选项与问题所需的“减少故障转移时间”无关。",
+          "zh": "錯誤。原因是，Performance Insights是一个用于分析数据库性能问题的控制工具，但它不能直接减少故障转移时间。此选项与问题所需的“减少故障转移时间”无关。",
           "en": "Incorrect. Technical reason: Performance Insights is a control tool used to analyze database performance issues, but it cannot directly reduce failover time. This option has nothing to do with the \"reduce failover time\" required by the problem."
         },
         "D": {
-          "zh": "錯誤。技术原因：它用于备份和灾难恢复，并不能解决故障转移时间的问题。恢复过程需要时间，无法满足问题中“减少故障转移时间”的要求。",
+          "zh": "錯誤。原因是，它用于备份和灾难恢复，并不能解决故障转移时间的问题。恢复过程需要时间，无法满足问题中“减少故障转移时间”的要求。",
           "en": "Incorrect. Technical reason: It is used for backup and disaster recovery and does not solve the problem of failover time. The recovery process takes time and cannot meet the requirement of \"reduce failover time\" in the question."
         }
       },
@@ -485,19 +485,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： CloudWatch Alarms主要用于监控指标和触发操作，但不适合直接用于基于时间表的资源调度。虽然可以通过 Lambda 函数实现启动和停止，但使用 CloudWatch Alarms 来识别需要停止的实例并不能满足问题的“基于计划”的要求。",
+          "zh": "錯誤。原因是，CloudWatch Alarms主要用于监控指标和触发操作，但不适合直接用于基于时间表的资源调度。虽然可以通过 Lambda 函数实现启动和停止，但使用 CloudWatch Alarms 来识别需要停止的实例并不能满足问题的“基于计划”的要求。",
           "en": "Incorrect. Technical reason: CloudWatch Alarms is mainly used for monitoring indicators and triggering operations, but is not suitable for direct use in schedule-based resource scheduling. While starting and stopping can be achieved through Lambda functions, using CloudWatch Alarms to identify instances that need to be stopped does not meet the \"schedule-based\" requirements of the problem."
         },
         "B": {
-          "zh": "錯誤。技术原因： AWS Trusted Advisor 主要用于提供优化建议，例如节省成本、安全性和性能改进。它不是调度工具，不能直接用于基于调度的资源管理。此选项不满足问题的“基于时间表”的要求。",
+          "zh": "錯誤。原因是，AWS Trusted Advisor 主要用于提供优化建议，例如节省成本、安全性和性能改进。它不是调度工具，不能直接用于基于调度的资源管理。此选项不满足问题的“基于时间表”的要求。",
           "en": "Incorrect. Technical reason: AWS Trusted Advisor is primarily used to provide optimization recommendations such as cost savings, security, and performance improvements. It is not a scheduling tool and cannot be used directly for scheduling-based resource management. This option does not meet the \"schedule-based\" requirement of the question."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS Systems Manager 状态管理器主要用于管理实例的状态配置，例如安装软件或应用补丁。不适合定时资源启动和停止。此选项的功能与问题的“基于时间表”的要求不匹配。",
+          "zh": "錯誤。原因是，AWS Systems Manager 状态管理器主要用于管理实例的状态配置，例如安装软件或应用补丁。不适合定时资源启动和停止。此选项的功能与问题的“基于时间表”的要求不匹配。",
           "en": "Incorrect. Technical reason: AWS Systems Manager State Manager is primarily used to manage the state configuration of instances, such as installing software or applying patches. It is not suitable for scheduled resource starting and stopping. The functionality of this option does not match the \"schedule-based\" requirements of the question."
         },
         "D": {
-          "zh": "正確。技术原因： Amazon EventBridge 可以根据计划触发事件，非常适合实施基于时间的资源调度。通过EventBridge规则，您可以设置RDS实例在工作时间启动，在非工作时间停止RDS实例，以满足问题需求。结合AWS Lambda函数，您可以启动和停止RDS实例。",
+          "zh": "正確。原因是，Amazon EventBridge 可以根据计划触发事件，非常适合实施基于时间的资源调度。通过EventBridge规则，您可以设置RDS实例在工作时间启动，在非工作时间停止RDS实例，以满足问题需求。结合AWS Lambda函数，您可以启动和停止RDS实例。",
           "en": "Correct. Technical reason: Amazon EventBridge can trigger events according to a schedule and is ideal for implementing time-based resource scheduling. Through EventBridge rules, you can set the RDS instance to start during working hours and stop the RDS instance during non-working hours to meet the problem requirements. Combined with AWS Lambda functions, you can start and stop RDS instances."
         }
       },
@@ -541,19 +541,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：请求者付费功能允许数据请求者而不是数据所有者承担数据传输的费用。这与企业承担的传输成本最小化的问题要求是一致的。",
+          "zh": "正確。原因是，请求者付费功能允许数据请求者而不是数据所有者承担数据传输的费用。这与企业承担的传输成本最小化的问题要求是一致的。",
           "en": "Correct. Technical reason: The requester pays feature allows the data requester to bear the cost of data transfer, rather than the data owner. This is consistent with the problem requirement of minimizing the transmission costs borne by the company."
         },
         "B": {
-          "zh": "錯誤。技术原因： CRR会将数据复制到另一个区域的S3桶中，这会产生额外的存储和传输成本，不符合问题中“最小化数据传输成本”的要求。",
+          "zh": "錯誤。原因是，CRR会将数据复制到另一个区域的S3桶中，这会产生额外的存储和传输成本，不符合问题中“最小化数据传输成本”的要求。",
           "en": "Incorrect. Technical reason: CRR will copy the data to an S3 bucket in another region, which will incur additional storage and transmission costs and does not meet the requirement of \"minimizing data transmission costs\" in the question."
         },
         "C": {
-          "zh": "錯誤。技术原因： AWS Resource Access Manager 用于共享资源（例如 VPC、子网等），但不适合连接共享 S3 存储桶。该选项与题目要求无关。",
+          "zh": "錯誤。原因是，AWS Resource Access Manager 用于共享资源（例如 VPC、子网等），但不适合连接共享 S3 存储桶。该选项与题目要求无关。",
           "en": "Incorrect. Technical reason: AWS Resource Access Manager is used for shared resources (such as VPCs, subnets, etc.), but is not suitable for connecting shared S3 buckets. This option has nothing to do with the question requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因： S3 智能分层是一项用于优化存储成本的功能，无论数据传输成本如何。同步到另一个 S3 存储桶会增加额外的存储和传输成本。",
+          "zh": "錯誤。原因是，S3 智能分层是一项用于优化存储成本的功能，无论数据传输成本如何。同步到另一个 S3 存储桶会增加额外的存储和传输成本。",
           "en": "Incorrect. Technical reason: S3 Intelligent Tiering is a feature used to optimize storage costs, regardless of data transmission costs. Syncing to another S3 bucket adds additional storage and transfer costs."
         }
       },
@@ -597,19 +597,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：虽然可以在 Global Accelerator 上配置 AWS WAF，但 Global Accelerator 本身并不直接支持 Web ACL。 AWS WAF 通常与 ALB或 CloudFront 结合使用。此外，在 Global Accelerator 上配置 WAF 需要额外的复杂性，违反了“最少实施工作”的要求。",
+          "zh": "錯誤。原因是，虽然可以在 Global Accelerator 上配置 AWS WAF，但 Global Accelerator 本身并不直接支持 Web ACL。 AWS WAF 通常与 ALB或 CloudFront 结合使用。此外，在 Global Accelerator 上配置 WAF 需要额外的复杂性，违反了“最少实施工作”的要求。",
           "en": "Incorrect. Technical reason: Although AWS WAF can be configured on Global Accelerator, Global Accelerator itself does not directly support web ACLs. AWS WAF is often used in conjunction with ALB𪥿 CloudFront. Additionally, configuring a WAF on Global Accelerator requires additional complexity, violating the \"minimum implementation effort\" requirement."
         },
         "B": {
-          "zh": "錯誤。技术原因：使用 Lambda 函数读取 ALB 指标并动态更新 VPC 网络 ACL 是一个复杂的解决方案，涉及多个组件的集成和编程。这种方法不符合“最小实施工作量”的要求。",
+          "zh": "錯誤。原因是，使用 Lambda 函数读取 ALB 指标并动态更新 VPC 网络 ACL 是一个复杂的解决方案，涉及多个组件的集成和编程。这种方法不符合“最小实施工作量”的要求。",
           "en": "Incorrect. Technical reason: Using Lambda functions to read ALB metrics and dynamically update VPC network ACLs is a complex solution that involves the integration and programming of multiple components. This approach does not meet the \"minimum implementation effort\" requirement."
         },
         "C": {
-          "zh": "正確。技术原因： AWS WAF 直接与 ALB 集成，并通过基于速率的规则有效阻止 DDoS 攻击。该方法简单、易于实现，满足“最小实现工作量”的要求。",
+          "zh": "正確。原因是，AWS WAF 直接与 ALB 集成，并通过基于速率的规则有效阻止 DDoS 攻击。该方法简单、易于实现，满足“最小实现工作量”的要求。",
           "en": "Correct. Technical reason: AWS WAF integrates directly with ALB and effectively blocks DDoS attacks through rate-based rules. This method is simple and easy to implement, and meets the requirement of \"minimum implementation effort\"."
         },
         "D": {
-          "zh": "錯誤。技术原因：尽管 CloudFront 可以帮助缓解 DDoS 攻击，但将 CloudFront 置于 Global Accelerator 之前会增加架构复杂性。此外， Global Accelerator 的主要目的是优化全球流量，而不是直接与 CloudFront 一起使用。",
+          "zh": "錯誤。原因是，尽管 CloudFront 可以帮助缓解 DDoS 攻击，但将 CloudFront 置于 Global Accelerator 之前会增加架构复杂性。此外， Global Accelerator 的主要目的是优化全球流量，而不是直接与 CloudFront 一起使用。",
           "en": "Incorrect. Technical reason: Although CloudFront can help mitigate DDoS attacks, placing CloudFront in front of Global Accelerator increases architectural complexity. Additionally, the primary purpose of Global Accelerator is to optimize global traffic, not to be used directly with CloudFront."
         }
       },
@@ -653,19 +653,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：技术分析： Amazon Athena 可以通过 DynamoDB 连接器直接查询 DynamoDB 表，但这种方式会直接读取表数据，可能会影响 DynamoDB 的读取能力，违反了“尽量减少对表读写能力的影响”的题目要求。",
+          "zh": "錯誤。原因是，技术分析： Amazon Athena 可以通过 DynamoDB 连接器直接查询 DynamoDB 表，但这种方式会直接读取表数据，可能会影响 DynamoDB 的读取能力，违反了“尽量减少对表读写能力的影响”的题目要求。",
           "en": "Incorrect. Technical reason: Technical analysis: Amazon Athena can directly query the DynamoDB table through the DynamoDB connector, but this method will directly read the table data, which may affect the reading ability of DynamoDB, violating the question requirement of \"minimizing the impact on the reading and writing ability of the table\"."
         },
         "B": {
-          "zh": "正確。技术原因：技术分析： AWS Glue DynamoDB 导出连接器可以将 DynamoDB 表数据导出到其他存储（例如 S3），然后进行分析。该方法不会直接影响DynamoDB表的读写能力，满足问题的要求。",
+          "zh": "正確。原因是，技术分析： AWS Glue DynamoDB 导出连接器可以将 DynamoDB 表数据导出到其他存储（例如 S3），然后进行分析。该方法不会直接影响DynamoDB表的读写能力，满足问题的要求。",
           "en": "Correct. Technical reason: Technical analysis: The AWS Glue DynamoDB export connector can export DynamoDB table data to other storage (such as S3) and then analyze it. This method will not directly affect the read and write capabilities of DynamoDB tables and meets the requirements of the problem."
         },
         "C": {
-          "zh": "錯誤。技术原因：技术分析： Amazon Redshift COPY命令需要将DynamoDB中的数据导入到Redshift中，但导入过程中可能会直接读取DynamoDB表数据，影响其读取能力，违反了题目要求。",
+          "zh": "錯誤。原因是，技术分析： Amazon Redshift COPY命令需要将DynamoDB中的数据导入到Redshift中，但导入过程中可能会直接读取DynamoDB表数据，影响其读取能力，违反了题目要求。",
           "en": "Incorrect. Technical reason: Technical analysis: The Amazon Redshift COPY command needs to import data from DynamoDB into Redshift, but the DynamoDB table data may be read directly during the import process, affecting its reading ability and violating the question requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：技术分析： Amazon EMR 可以通过 Hive 外部表查询 DynamoDB 数据，但该方法会直接读取 DynamoDB 表数据，可能会影响其读取能力，违反题目要求。",
+          "zh": "錯誤。原因是，技术分析： Amazon EMR 可以通过 Hive 外部表查询 DynamoDB 数据，但该方法会直接读取 DynamoDB 表数据，可能会影响其读取能力，违反题目要求。",
           "en": "Incorrect. Technical reason: Technical analysis: Amazon EMR can query DynamoDB data through Hive external tables, but this method will directly read the DynamoDB table data, which may affect its reading ability and violate the question requirements."
         }
       },
@@ -709,19 +709,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因： SNS是一种发布/订阅服务，适合通知和信息广播，但不适合存储和管理任务队列。问题要求任务必须持久化存储，但SNS不具备持久化存储能力。错误：基于CPU使用率的伸缩可能无法准确反映任务队列的处理需求，并且可能无法保证任务处理的效率。",
+          "zh": "錯誤。原因是，SNS是一种发布/订阅服务，适合通知和信息广播，但不适合存储和管理任务队列。问题要求任务必须持久化存储，但SNS不具备持久化存储能力。错误：基于CPU使用率的伸缩可能无法准确反映任务队列的处理需求，并且可能无法保证任务处理的效率。",
           "en": "Incorrect. Technical reason: SNS is a publish/subscribe service, suitable for notifications and information broadcasting, but not suitable for storing and managing task queues. The problem requires that tasks must be stored persistently, but SNS does not have persistent storage capabilities. Error: Scaling based on CPU usage may not accurately reflect the processing needs of the task queue, and may not guarantee the efficiency of task processing."
         },
         "B": {
-          "zh": "錯誤。技术原因：该解决方案不能同时满足问题的关键性能、可用性、安全性、成本或操作约束，因此不是最佳选择。",
+          "zh": "錯誤。原因是，EC2 Auto Scaling 會依指標或排程調整執行個體數量，以維持容量與可用性；Amazon SQS 是受管訊息佇列，可緩衝流量尖峰並解耦生產者與非同步工作者。此做法雖能執行選項描述的工作，但沒有完整處理「哪种解决方案可以满足这些要求」；本題應改用正確選項所述的「创建 Amazon Simple Queue Service (Amazon SQS) 队列来保存需要处理的作业。使用启动模板创建 Auto Scaling 组，并设置扩展策略以根据 SQS 队列中的项目数添加和删除 EC2 实例。」，其架構才具備缺少的關鍵能力。",
           "en": "Incorrect. Technical reason: This solution does not simultaneously satisfy the critical performance, availability, security, cost, or operational constraints of the problem and is therefore not the best choice."
         },
         "C": {
-          "zh": "正確。技术原因： SQS队列可以永久存储任务以满足问题需求。正确：根据SQS队列中的任务数量进行伸缩，可以准确反映任务处理需求，保证资源的高效利用。",
+          "zh": "正確。原因是，SQS队列可以永久存储任务以满足问题需求。正确：根据SQS队列中的任务数量进行伸缩，可以准确反映任务处理需求，保证资源的高效利用。",
           "en": "Correct. Technical reason: SQS queues can store tasks permanently to meet problem needs. Correct: Scaling based on the number of tasks in the SQS queue can accurately reflect task processing requirements and ensure efficient use of resources."
         },
         "D": {
-          "zh": "錯誤。技术原因： SNS不具备持久化存储的功能，不分类不符合问题的要求。 Bug：基于SNS消息数量的缩放可能无法准确反映任务队列的处理需求。",
+          "zh": "錯誤。原因是，SNS不具备持久化存储的功能，不分类不符合问题的要求。 Bug：基于SNS消息数量的缩放可能无法准确反映任务队列的处理需求。",
           "en": "Incorrect. Technical reason: SNS does not have the function of persistent storage, and uncategorization does not meet the requirements of the question. Bug: Scaling based on the number of SNS messages may not accurately reflect the processing needs of the task queue."
         }
       },
@@ -765,19 +765,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "錯誤。技术原因：使用EC2实例和RDS：正确： EC2实例可以支持服务器化， RDS可以存储结构化数据。问题： EC2实例需要主动管理和维护，增加了运维开销，不满足“最小运维开销”的要求。",
+          "zh": "錯誤。原因是，使用EC2实例和RDS：正确： EC2实例可以支持服务器化， RDS可以存储结构化数据。问题： EC2实例需要主动管理和维护，增加了运维开销，不满足“最小运维开销”的要求。",
           "en": "Incorrect. Technical reason: Using EC2 instances and RDS: Correct: EC2 instances can support serverization and RDS can store structured data. Problem: EC2 instances require active management and maintenance, which increases operation and maintenance overhead and does not meet the requirements of \"minimum operation and maintenance overhead\"."
         },
         "B": {
-          "zh": "錯誤。技术原因：使用 Lambda 和 DynamoDB：正确： Lambda 函数支持无服务器架构， DynamoDB 是高性能 NoSQL 数据库。问题： DynamoDB 是 NoSQL 数据库，不适合以结构化数据库模型存储数据。另外， Lambda函数不适合直接管理复杂的单一应用程序。",
+          "zh": "錯誤。原因是，使用 Lambda 和 DynamoDB：正确： Lambda 函数支持无服务器架构， DynamoDB 是高性能 NoSQL 数据库。问题： DynamoDB 是 NoSQL 数据库，不适合以结构化数据库模型存储数据。另外， Lambda函数不适合直接管理复杂的单一应用程序。",
           "en": "Incorrect. Technical reason: Using Lambda and DynamoDB: Correct: Lambda functions support serverless architecture and DynamoDB is a high-performance NoSQL database. Problem: DynamoDB is a NoSQL database and is not suitable for storing data in a structured database model. In addition, Lambda functions are not suitable for directly managing complex single applications."
         },
         "C": {
-          "zh": "錯誤。技术原因：使用 EKS 和 Aurora： 正确： EKS 支持基于服务器的应用程序，而 Aurora 是高性能关系数据库。问题： EKS 需要复杂的管理和配置，这会增加运营开销。 S3 Glacier Deep Archive 不适合存储经常访问的产品图像。",
+          "zh": "錯誤。原因是，使用 EKS 和 Aurora： 正确： EKS 支持基于服务器的应用程序，而 Aurora 是高性能关系数据库。问题： EKS 需要复杂的管理和配置，这会增加运营开销。 S3 Glacier Deep Archive 不适合存储经常访问的产品图像。",
           "en": "Incorrect. Technical reason: Using EKS and Aurora: Correct: EKS supports server-based applications, while Aurora is a high-performance relational database. Problem: EKS requires complex management and configuration, which increases operational overhead. S3 Glacier Deep Archive is not suitable for storing frequently accessed product images."
         },
         "D": {
-          "zh": "正確。技术原因：使用 ECS 和 Fargate：正确： ECS 和 Fargate 提供无服务器服务器管理，减少运营开销。 RDS多可用区部署提供高可用性， S3适合存储产品镜像。问题：没有明显问题，完全符合题目要求。",
+          "zh": "正確。原因是，使用 ECS 和 Fargate：正确： ECS 和 Fargate 提供无服务器服务器管理，减少运营开销。 RDS多可用区部署提供高可用性， S3适合存储产品镜像。问题：没有明显问题，完全符合题目要求。",
           "en": "Correct. Technical reason: Using ECS and Fargate: Correct: ECS and Fargate provide serverless server management, reducing operational overhead. RDS multi-availability zone deployment provides high availability, and S3 is suitable for storing product images. Problem: There are no obvious problems and it fully meets the requirements of the question."
         }
       },
@@ -821,19 +821,19 @@
       },
       "option_explanations": {
         "A": {
-          "zh": "正確。技术原因：数据使用客户端加密和客户管理的密钥进行加密。正确的。客户端加密意味着数据在上传到 Amazon S3 之前进行加密。使用客户管理的密钥可确保公司完全控制加密密钥并满足敏感数据保护要求。",
+          "zh": "正確。原因是，数据使用客户端加密和客户管理的密钥进行加密。正确的。客户端加密意味着数据在上传到 Amazon S3 之前进行加密。使用客户管理的密钥可确保公司完全控制加密密钥并满足敏感数据保护要求。",
           "en": "Correct. Technical reason: Data is encrypted using client-side encryption and customer-managed keys. Correct. Client-side encryption means data is encrypted before uploading to Amazon S3. Using customer-managed keys ensures the company has full control over the encryption keys and meets sensitive data protection requirements."
         },
         "B": {
-          "zh": "錯誤。技术原因：通过使用服务器端加密 (SSE-KMS) 和 AWS KMS 密钥来加密数据。错误。虽然 SSE-KMS 是一种强大的加密选项，但它是服务器端加密，数据在传输过程中不会加密。题目要求“存储前对数据进行加密”，所以不符合要求。",
+          "zh": "錯誤。原因是，通过使用服务器端加密 (SSE-KMS) 和 AWS KMS 密钥来加密数据。错误。虽然 SSE-KMS 是一种强大的加密选项，但它是服务器端加密，数据在传输过程中不会加密。题目要求“存储前对数据进行加密”，所以不符合要求。",
           "en": "Incorrect. Technical reason: Encrypt data by using server-side encryption (SSE-KMS) with AWS KMS keys. mistake. While SSE-KMS is a strong encryption option, it is server-side encryption and data is not encrypted in transit. The question requires \"encrypting data before storage\", so it does not meet the requirements."
         },
         "C": {
-          "zh": "錯誤。技术原因：数据使用服务器端加密和客户提供的密钥 (SSE-C) 进行加密。错误。 SSE-C是服务器端加密，数据在传输过程中不加密。题目要求“存储前对数据进行加密”，所以不符合要求。",
+          "zh": "錯誤。原因是，数据使用服务器端加密和客户提供的密钥 (SSE-C) 进行加密。错误。 SSE-C是服务器端加密，数据在传输过程中不加密。题目要求“存储前对数据进行加密”，所以不符合要求。",
           "en": "Incorrect. Technical reason: Data is encrypted using server-side encryption and customer-supplied keys (SSE-C). mistake. SSE-C is server-side encryption, and data is not encrypted during transmission. The question requires \"encrypting data before storage\", so it does not meet the requirements."
         },
         "D": {
-          "zh": "錯誤。技术原因：使用 Amazon S3 托管密钥使用客户端加密来加密数据。错误。 Amazon S3 托管密钥由 AWS 管理，客户对密钥没有完全控制权。题目要求使用客户管理机密，所以不符合要求。",
+          "zh": "錯誤。原因是，使用 Amazon S3 托管密钥使用客户端加密来加密数据。错误。 Amazon S3 托管密钥由 AWS 管理，客户对密钥没有完全控制权。题目要求使用客户管理机密，所以不符合要求。",
           "en": "Incorrect. Technical reason: Encrypt data using client-side encryption using Amazon S3 managed keys. mistake. Amazon S3 managed keys are managed by AWS and customers do not have full control over the keys. The question requires the use of customer management secrets, so it does not meet the requirements."
         }
       },
