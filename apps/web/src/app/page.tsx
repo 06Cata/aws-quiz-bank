@@ -1180,9 +1180,11 @@ export default function Home() {
     : reviewDomainOptions.find((domain) => domain.key === selectedReviewDomain)?.label ?? "此領域";
   const practiceStartValues = sequentialStartOptions(practiceQuestionBank);
   const practiceStartSliderIndex = Math.max(0, practiceStartValues.indexOf(sequentialStartQuestion));
-  const practiceStartLabels: Array<number | string> = practiceStartValues.length <= 5
+  const practiceStartLabels = practiceStartValues.length <= 5
     ? practiceStartValues
-    : [...practiceStartValues.slice(0, 3), "…", practiceStartValues[practiceStartValues.length - 1]];
+    : [0, 0.25, 0.5, 0.75, 1].map(
+        (position) => practiceStartValues[Math.round((practiceStartValues.length - 1) * position)]
+      );
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
