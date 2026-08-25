@@ -23,6 +23,7 @@ type QuizQuestion = {
 };
 
 type QuizMode = "practice" | "wrong" | "exam";
+type PracticeOrder = "random" | "sequential";
 type ExamType = "aif" | "clf" | "saa";
 type ReviewDomainKey = "all" | "domain_1" | "domain_2" | "domain_3" | "domain_4" | "domain_5";
 
@@ -222,6 +223,35 @@ function optionEntries(question: QuizQuestion) {
   return Object.entries(question.options ?? {}).sort(([left], [right]) => left.localeCompare(right));
 }
 
+function orderedQuestions(questions: QuizQuestion[]) {
+  return [...questions].sort((left, right) => (left.question_no ?? 0) - (right.question_no ?? 0));
+}
+
+function shuffledQuestions(questions: QuizQuestion[]) {
+  const shuffled = [...questions];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+function sequentialStartOptions(questions: QuizQuestion[]) {
+  const lastQuestionNumber = questions.reduce(
+    (highest, question, index) => Math.max(highest, question.question_no ?? index + 1),
+    0
+  );
+  if (lastQuestionNumber <= 0) return [];
+  if (lastQuestionNumber < 10) return [1, lastQuestionNumber].filter((value, index, values) => values.indexOf(value) === index);
+
+  const options: number[] = [];
+  for (let questionNumber = 10; questionNumber < lastQuestionNumber; questionNumber += 10) {
+    options.push(questionNumber);
+  }
+  options.push(lastQuestionNumber);
+  return options;
+}
+
 function sortedOptionKeys(options: string[]) {
   return [...options].map((option) => option.trim().toUpperCase()).filter(Boolean).sort();
 }
@@ -263,6 +293,9 @@ export default function Home() {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
+  const [practiceOrder, setPracticeOrder] = useState<PracticeOrder>("random");
+  const [sequentialStartQuestion, setSequentialStartQuestion] = useState(10);
+  const [practiceQuestionBank, setPracticeQuestionBank] = useState<QuizQuestion[]>([]);
   const [selectedExam, setSelectedExam] = useState<ExamType>("saa");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [examEndsAt, setExamEndsAt] = useState<number | null>(null);
@@ -521,6 +554,9 @@ export default function Home() {
     setHasAnswered(false);
     setHasStartedQuiz(false);
     setQuizMode("practice");
+    setPracticeOrder("random");
+    setSequentialStartQuestion(10);
+    setPracticeQuestionBank([]);
     setActiveSessionId(null);
     setIsNotesOpen(false);
     setReviewNotes([]);
@@ -751,11 +787,29 @@ export default function Home() {
       }
 
       const data = (await response.json()) as { items?: QuizQuestion[] };
-      const nextQuestions = data.items ?? [];
+      const loadedQuestions = data.items ?? [];
 
-      if (nextQuestions.length === 0) {
+      if (loadedQuestions.length === 0) {
         setQuizMessage(emptyMessage);
         return;
+      }
+
+      let nextQuestions = loadedQuestions;
+      if (options.mode === "practice") {
+        const nextQuestionBank = orderedQuestions(loadedQuestions);
+        const startOptions = sequentialStartOptions(nextQuestionBank);
+        const nextStartQuestion = startOptions.includes(sequentialStartQuestion)
+          ? sequentialStartQuestion
+          : startOptions[0] ?? 1;
+        setPracticeQuestionBank(nextQuestionBank);
+        setSequentialStartQuestion(nextStartQuestion);
+        nextQuestions = practiceOrder === "random"
+          ? shuffledQuestions(nextQuestionBank)
+          : nextQuestionBank.filter((question, index) =>
+              (question.question_no ?? index + 1) >= nextStartQuestion
+            );
+      } else {
+        setPracticeQuestionBank([]);
       }
 
       let nextSessionId: string | null = null;
@@ -802,6 +856,7 @@ export default function Home() {
       } else {
         setExamEndsAt(null);
       }
+      scrollToQuestionPanel();
     } catch (error) {
       const reason = error instanceof Error ? error.message : "網路連線失敗";
       setQuizMessage(`題庫讀取失敗（${reason}），請稍後再試`);
@@ -816,6 +871,67 @@ export default function Home() {
       `目前 ${currentExam.shortName} 題庫沒有可用題目，請確認本機 JSON 增量同步結果`,
       "已載入",
       { mode: "practice" }
+    );
+  }
+
+  function scrollToQuestionPanel() {
+    window.requestAnimationFrame(() => {
+      questionPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function restartPracticeRound(nextQuestions: QuizQuestion[], message: string) {
+    if (nextQuestions.length === 0) return;
+    setQuestions(nextQuestions);
+    setCurrentQuestionIndex(0);
+    setSelectedOptions([]);
+    setHasAnswered(false);
+    setIsSavingAttempt(false);
+    setActiveSessionId(null);
+    setQuizMessage(message);
+    setExamCorrectCount(0);
+    setExamAnsweredCount(0);
+    setExamResult(null);
+    setRoundResult(null);
+    setExamEndsAt(null);
+    setIsExamPaused(false);
+    scrollToQuestionPanel();
+  }
+
+  function changePracticeOrder(nextOrder: PracticeOrder) {
+    if (practiceQuestionBank.length === 0) return;
+    setPracticeOrder(nextOrder);
+    if (nextOrder === "random") {
+      const nextQuestions = shuffledQuestions(practiceQuestionBank);
+      restartPracticeRound(nextQuestions, `已切換為隨機出題，共 ${nextQuestions.length} 題`);
+      return;
+    }
+
+    const startOptions = sequentialStartOptions(practiceQuestionBank);
+    const nextStartQuestion = startOptions.includes(sequentialStartQuestion)
+      ? sequentialStartQuestion
+      : startOptions[0] ?? 1;
+    setSequentialStartQuestion(nextStartQuestion);
+    const nextQuestions = practiceQuestionBank.filter((question, index) =>
+      (question.question_no ?? index + 1) >= nextStartQuestion
+    );
+    restartPracticeRound(
+      nextQuestions,
+      `已切換為依序出題，從第 ${nextStartQuestion} 題開始，共 ${nextQuestions.length} 題`
+    );
+  }
+
+  function changeSequentialStart(sliderIndex: number) {
+    const startOptions = sequentialStartOptions(practiceQuestionBank);
+    const nextStartQuestion = startOptions[sliderIndex];
+    if (nextStartQuestion === undefined) return;
+    setSequentialStartQuestion(nextStartQuestion);
+    const nextQuestions = practiceQuestionBank.filter((question, index) =>
+      (question.question_no ?? index + 1) >= nextStartQuestion
+    );
+    restartPracticeRound(
+      nextQuestions,
+      `依序出題已改為從第 ${nextStartQuestion} 題開始，共 ${nextQuestions.length} 題`
     );
   }
 
@@ -1034,9 +1150,7 @@ export default function Home() {
     setSelectedOptions([]);
     setHasAnswered(false);
     setIsSavingAttempt(false);
-    window.requestAnimationFrame(() => {
-      questionPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    scrollToQuestionPanel();
   }
 
   const gmail = user?.email ?? "";
@@ -1058,6 +1172,11 @@ export default function Home() {
   const selectedReviewDomainLabel = selectedReviewDomain === "all"
     ? "全部"
     : reviewDomainOptions.find((domain) => domain.key === selectedReviewDomain)?.label ?? "此領域";
+  const practiceStartValues = sequentialStartOptions(practiceQuestionBank);
+  const practiceStartSliderIndex = Math.max(0, practiceStartValues.indexOf(sequentialStartQuestion));
+  const practiceStartLabels: Array<number | string> = practiceStartValues.length <= 5
+    ? practiceStartValues
+    : [...practiceStartValues.slice(0, 3), "…", practiceStartValues[practiceStartValues.length - 1]];
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
@@ -1379,6 +1498,76 @@ export default function Home() {
             </div>
           ) : (
           <div ref={questionPanelRef} className="scroll-mt-20 border border-zinc-800 bg-filmBlack p-5">
+            {hasStartedQuiz && quizMode === "practice" && practiceQuestionBank.length > 0 ? (
+              <div className="mb-5 border border-zinc-700 bg-black p-4" aria-label="刷題出題方式">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-xs font-black tracking-[0.18em] text-zinc-500">出題方式</p>
+                    <p className="mt-1 text-sm font-bold text-zinc-300">
+                      {practiceOrder === "random"
+                        ? `隨機排列全部 ${practiceQuestionBank.length} 題`
+                        : `依題號從第 ${sequentialStartQuestion} 題開始`}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 border border-zinc-700">
+                    <button
+                      type="button"
+                      onClick={() => changePracticeOrder("random")}
+                      aria-pressed={practiceOrder === "random"}
+                      className={`px-3 py-2 text-xs font-black transition ${
+                        practiceOrder === "random"
+                          ? "bg-flashYellow text-black"
+                          : "bg-black text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      隨機出題
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => changePracticeOrder("sequential")}
+                      aria-pressed={practiceOrder === "sequential"}
+                      className={`border-l border-zinc-700 px-3 py-2 text-xs font-black transition ${
+                        practiceOrder === "sequential"
+                          ? "bg-flashYellow text-black"
+                          : "bg-black text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      依序出題
+                    </button>
+                  </div>
+                </div>
+
+                {practiceOrder === "sequential" && practiceStartValues.length > 0 ? (
+                  <div className="mt-4 border-t border-zinc-800 pt-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <label htmlFor="sequential-start-question" className="text-xs font-black text-zinc-400">
+                        選擇開始題號
+                      </label>
+                      <span className="bg-acidGreen px-2 py-1 text-xs font-black text-black">
+                        第 {sequentialStartQuestion} 題
+                      </span>
+                    </div>
+                    <input
+                      id="sequential-start-question"
+                      type="range"
+                      min={0}
+                      max={Math.max(0, practiceStartValues.length - 1)}
+                      step={1}
+                      value={practiceStartSliderIndex}
+                      onChange={(event) => changeSequentialStart(Number(event.target.value))}
+                      className="mt-4 w-full cursor-pointer accent-[#f5b700]"
+                      aria-valuetext={`從第 ${sequentialStartQuestion} 題開始`}
+                    />
+                    <div className="mt-1 flex justify-between text-[10px] font-bold text-zinc-500" aria-hidden="true">
+                      {practiceStartLabels.map((label, index) => (
+                        <span key={`${label}-${index}`}>{label}</span>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
             <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
               <div>
                 <p className="text-xs tracking-[0.28em] text-deepPink">
