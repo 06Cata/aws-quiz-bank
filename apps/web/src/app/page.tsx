@@ -244,7 +244,7 @@ function sequentialStartOptions(questions: QuizQuestion[]) {
   if (lastQuestionNumber <= 0) return [];
   if (lastQuestionNumber < 10) return [1, lastQuestionNumber].filter((value, index, values) => values.indexOf(value) === index);
 
-  const options: number[] = [];
+  const options: number[] = [1];
   for (let questionNumber = 10; questionNumber < lastQuestionNumber; questionNumber += 10) {
     options.push(questionNumber);
   }
@@ -294,7 +294,7 @@ export default function Home() {
   const [isSavingAttempt, setIsSavingAttempt] = useState(false);
   const [quizMode, setQuizMode] = useState<QuizMode>("practice");
   const [practiceOrder, setPracticeOrder] = useState<PracticeOrder>("random");
-  const [sequentialStartQuestion, setSequentialStartQuestion] = useState(10);
+  const [sequentialStartQuestion, setSequentialStartQuestion] = useState(1);
   const [practiceQuestionBank, setPracticeQuestionBank] = useState<QuizQuestion[]>([]);
   const [selectedExam, setSelectedExam] = useState<ExamType>("saa");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
@@ -1159,6 +1159,12 @@ export default function Home() {
     : selectedExam === "aif"
       ? sampleAifQuestion
       : sampleQuestion;
+  const displayedQuestionNumber = hasStartedQuiz && quizMode === "practice" && practiceOrder === "sequential"
+    ? currentQuestion?.question_no ?? currentQuestionIndex + 1
+    : currentQuestionIndex + 1;
+  const displayedQuestionTotal = hasStartedQuiz && quizMode === "practice" && practiceOrder === "sequential"
+    ? practiceQuestionBank.length
+    : questions.length;
   const questionText = localizedText(currentQuestion?.question_text);
   const discussion = localizedText(currentQuestion?.discussion);
   const correctOptions = currentQuestion?.correct_options ?? [];
@@ -1571,7 +1577,7 @@ export default function Home() {
             <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
               <div>
                 <p className="text-xs tracking-[0.28em] text-deepPink">
-                  {hasStartedQuiz ? `第 ${currentQuestionIndex + 1} / ${questions.length} 題` : "預覽題"}
+                  {hasStartedQuiz ? `第 ${displayedQuestionNumber} / ${displayedQuestionTotal} 題` : "預覽題"}
                 </p>
                 <h2 className="mt-2 text-2xl font-black">{examDomain}</h2>
               </div>
