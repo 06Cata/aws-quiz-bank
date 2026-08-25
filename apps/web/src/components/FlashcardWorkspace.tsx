@@ -193,16 +193,27 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
     setMessage("");
   }
 
-  async function saveCurrentCard() {
+  async function toggleCurrentCardNote() {
     if (!currentCard || isSaving) return;
     const accessToken = await getAccessToken();
     if (!accessToken) {
-      setMessage("請先回首頁使用 Google 登入，才能儲存學習卡牌筆記。");
+      setMessage("請先回首頁使用 Google 登入，才能變更學習卡牌筆記。");
       return;
     }
     setIsSaving(true);
     setMessage("");
     try {
+      if (currentNote) {
+        const response = await fetch(`${apiBaseUrl}${config.apiPrefix}/flashcard-notes/${currentNote.note_id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (!response.ok) throw new Error("delete note failed");
+        setNotes((items) => items.filter((note) => note.note_id !== currentNote.note_id));
+        setMessage("已取消儲存這張學習卡牌。");
+        return;
+      }
+
       const response = await fetch(`${apiBaseUrl}${config.apiPrefix}/flashcard-notes`, {
         method: "POST",
         headers: {
@@ -215,7 +226,7 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
       await fetchNotes(selectedExam, false);
       setMessage("已存入學習卡牌筆記。");
     } catch {
-      setMessage("學習卡牌筆記儲存失敗，請稍後再試。");
+      setMessage("學習卡牌筆記狀態變更失敗，請稍後再試。");
     } finally {
       setIsSaving(false);
     }
@@ -319,7 +330,15 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
                   </button>
                   <div className="mt-7 grid grid-cols-3 gap-3">
                     <button type="button" onClick={() => moveCard(-1)} className="border-2 border-zinc-700 px-3 py-3 font-black hover:border-white">上一張</button>
-                    <button type="button" onClick={saveCurrentCard} disabled={Boolean(currentNote) || isSaving} className={`border-2 px-3 py-3 font-black disabled:cursor-not-allowed ${currentNote ? "border-deepPink bg-deepPink text-white" : "border-deepPink text-deepPink hover:bg-deepPink hover:text-white"}`}>{currentNote ? "已存筆記" : isSaving ? "儲存中" : "存成筆記"}</button>
+                    <button
+                      type="button"
+                      onClick={toggleCurrentCardNote}
+                      disabled={isSaving}
+                      aria-pressed={Boolean(currentNote)}
+                      className={`border-2 px-3 py-3 font-black disabled:cursor-wait disabled:opacity-60 ${currentNote ? "border-deepPink bg-deepPink text-white hover:bg-transparent hover:text-deepPink" : "border-deepPink text-deepPink hover:bg-deepPink hover:text-white"}`}
+                    >
+                      {isSaving ? (currentNote ? "取消中" : "儲存中") : currentNote ? "取消儲存" : "存成筆記"}
+                    </button>
                     <button type="button" onClick={() => moveCard(1)} className="border-2 border-zinc-700 px-3 py-3 font-black hover:border-white">下一張</button>
                   </div>
                 </>

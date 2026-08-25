@@ -555,7 +555,7 @@ export default function Home() {
     setHasStartedQuiz(false);
     setQuizMode("practice");
     setPracticeOrder("random");
-    setSequentialStartQuestion(10);
+    setSequentialStartQuestion(1);
     setPracticeQuestionBank([]);
     setActiveSessionId(null);
     setIsNotesOpen(false);
@@ -582,6 +582,23 @@ export default function Home() {
       );
       return [note, ...remainingNotes];
     });
+  }
+
+  async function refreshReviewNotes(accessToken: string) {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+    if (!apiBaseUrl) return;
+
+    try {
+      const response = await fetch(`${apiBaseUrl}${currentExam.apiPrefix}/notes`, {
+        cache: "no-store",
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      if (!response.ok) return;
+      const data = (await response.json()) as { items?: ReviewNote[] };
+      setReviewNotes(data.items ?? []);
+    } catch {
+      // 題庫仍可正常使用；使用者按下儲存時會再次取得並驗證登入狀態。
+    }
   }
 
   async function loadReviewNotes() {
@@ -850,6 +867,7 @@ export default function Home() {
       setExamResult(null);
       setRoundResult(null);
       setIsExamPaused(false);
+      void refreshReviewNotes(accessToken);
       if (options.mode === "exam") {
         setExamSecondsRemaining(currentExam.durationSeconds);
         setExamEndsAt(Date.now() + currentExam.durationSeconds * 1000);
@@ -1693,6 +1711,11 @@ export default function Home() {
                         .map(([key, explanation]) => {
                           const text = localizedText(explanation);
                           const optionText = localizedText(currentQuestion.options[key]);
+                          const savedNote = reviewNotes.find((note) =>
+                            note.question_id === currentQuestion.id && note.option_key === key
+                          );
+                          const isChangingNote = isSavingNoteKey === key
+                            || (Boolean(savedNote?.id) && isDeletingNoteId === savedNote?.id);
                           return (
                             <div key={key} className="border-l-2 border-zinc-700 pl-3">
                               <div className="flex items-start justify-between gap-3">
@@ -1707,11 +1730,14 @@ export default function Home() {
                                 {hasStartedQuiz && currentQuestion?.id ? (
                                   <button
                                     type="button"
-                                    onClick={() => saveReviewNote(key)}
-                                    disabled={isSavingNoteKey === key}
-                                    className="shrink-0 border border-flashYellow px-2 py-1 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-wait disabled:opacity-60"
+                                    onClick={() => savedNote?.id ? deleteReviewNote(savedNote.id) : saveReviewNote(key)}
+                                    disabled={isChangingNote}
+                                    aria-pressed={Boolean(savedNote)}
+                                    className={`shrink-0 border px-2 py-1 text-xs font-black transition disabled:cursor-wait disabled:opacity-60 ${savedNote ? "border-deepPink bg-deepPink text-white hover:bg-transparent hover:text-deepPink" : "border-flashYellow text-flashYellow hover:bg-flashYellow hover:text-black"}`}
                                   >
-                                    {isSavingNoteKey === key ? "儲存中" : "存成筆記"}
+                                    {isChangingNote
+                                      ? savedNote ? "取消中" : "儲存中"
+                                      : savedNote ? "取消儲存" : "存成筆記"}
                                   </button>
                                 ) : null}
                               </div>
