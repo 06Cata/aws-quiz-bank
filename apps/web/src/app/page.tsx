@@ -955,7 +955,7 @@ export default function Home() {
 
   async function startWrongReview() {
     await loadQuestionSet(
-      `${currentExam.apiPrefix}/questions/wrong?limit=20`,
+      `${currentExam.apiPrefix}/questions/wrong`,
       "目前沒有錯題紀錄，先完成幾題後再回來複習",
       "已載入錯題複習",
       { mode: "wrong" }
