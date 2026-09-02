@@ -11,7 +11,11 @@ class Settings(BaseSettings):
 
     @property
     def allowed_origin_list(self) -> list[str]:
-        return [origin.strip() for origin in self.allowed_origins.split(",") if origin.strip()]
+        configured_origins = [
+            origin.strip() for origin in self.allowed_origins.split(",") if origin.strip()
+        ]
+        production_origins = ["https://aws-quiz-banks.datavoyageio.com"]
+        return list(dict.fromkeys([*configured_origins, *production_origins]))
 
     model_config = SettingsConfigDict(
         env_file=("../../.env.local", "../../.env", ".env", ".env.local"),
