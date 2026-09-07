@@ -298,6 +298,8 @@ export default function Home() {
   const [practiceOrder, setPracticeOrder] = useState<PracticeOrder>("random");
   const [sequentialStartQuestion, setSequentialStartQuestion] = useState(1);
   const [practiceQuestionBank, setPracticeQuestionBank] = useState<QuizQuestion[]>([]);
+  const [wrongQuestionBank, setWrongQuestionBank] = useState<QuizQuestion[]>([]);
+  const [wrongReviewStartIndex, setWrongReviewStartIndex] = useState(0);
   const [selectedExam, setSelectedExam] = useState<ExamType>("saa");
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [examEndsAt, setExamEndsAt] = useState<number | null>(null);
@@ -559,6 +561,8 @@ export default function Home() {
     setPracticeOrder("random");
     setSequentialStartQuestion(1);
     setPracticeQuestionBank([]);
+    setWrongQuestionBank([]);
+    setWrongReviewStartIndex(0);
     setActiveSessionId(null);
     setIsNotesOpen(false);
     setReviewNotes([]);
@@ -825,8 +829,18 @@ export default function Home() {
         nextQuestions = practiceOrder === "random"
           ? shuffledQuestions(nextQuestionBank).slice(0, PRACTICE_BATCH_SIZE)
           : sequentialPracticeBatch(nextQuestionBank, nextStartQuestion);
+        setWrongQuestionBank([]);
+        setWrongReviewStartIndex(0);
+      } else if (options.mode === "wrong") {
+        const nextWrongQuestionBank = orderedQuestions(loadedQuestions);
+        setPracticeQuestionBank([]);
+        setWrongQuestionBank(nextWrongQuestionBank);
+        setWrongReviewStartIndex(0);
+        nextQuestions = nextWrongQuestionBank;
       } else {
         setPracticeQuestionBank([]);
+        setWrongQuestionBank([]);
+        setWrongReviewStartIndex(0);
       }
 
       let nextSessionId: string | null = null;
@@ -959,6 +973,18 @@ export default function Home() {
     if (nextIndex !== currentIndex) {
       changeSequentialStart(nextIndex);
     }
+  }
+
+  function changeWrongReviewStart(nextIndex: number) {
+    if (wrongQuestionBank.length === 0) return;
+    const boundedIndex = Math.min(Math.max(nextIndex, 0), wrongQuestionBank.length - 1);
+    const nextQuestions = wrongQuestionBank.slice(boundedIndex);
+    const nextQuestionNumber = wrongQuestionBank[boundedIndex]?.question_no ?? boundedIndex + 1;
+    setWrongReviewStartIndex(boundedIndex);
+    restartPracticeRound(
+      nextQuestions,
+      `錯題複習已切換至原題號 ${nextQuestionNumber}，依題號共 ${nextQuestions.length} 題`
+    );
   }
 
   async function startWrongReview() {
@@ -1211,6 +1237,14 @@ export default function Home() {
     : [0, 0.25, 0.5, 0.75, 1].map(
         (position) => practiceStartValues[Math.round((practiceStartValues.length - 1) * position)]
       );
+  const wrongReviewStartLabels = wrongQuestionBank.length <= 5
+    ? wrongQuestionBank.map((question, index) => question.question_no ?? index + 1)
+    : [0, 0.25, 0.5, 0.75, 1].map((position) => {
+        const index = Math.round((wrongQuestionBank.length - 1) * position);
+        return wrongQuestionBank[index]?.question_no ?? index + 1;
+      });
+  const wrongReviewStartQuestion = wrongQuestionBank[wrongReviewStartIndex]?.question_no
+    ?? wrongReviewStartIndex + 1;
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
@@ -1491,6 +1525,11 @@ export default function Home() {
                             {note.exam_domain || "未分類"}
                           </p>
                           <div className="flex shrink-0 items-center gap-2">
+                            {note.question_no != null ? (
+                              <span className="border border-flashYellow px-2 py-1 text-xs font-black text-flashYellow">
+                                原題號 {note.question_no}
+                              </span>
+                            ) : null}
                             <span className="grid h-8 w-8 place-items-center bg-hotRed text-sm font-black text-white">
                               {note.option_key}
                             </span>
@@ -1622,6 +1661,58 @@ export default function Home() {
               </div>
             ) : null}
 
+            {hasStartedQuiz && quizMode === "wrong" && wrongQuestionBank.length > 0 ? (
+              <div className="mb-5 border border-zinc-700 bg-black p-4" aria-label="錯題複習起始題號">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-black tracking-[0.18em] text-zinc-500">錯題複習順序</p>
+                    <p className="mt-1 text-sm font-bold text-zinc-300">
+                      依原題號由小到大，共 {wrongQuestionBank.length} 題
+                    </p>
+                  </div>
+                  <span className="bg-acidGreen px-2 py-1 text-xs font-black text-black">
+                    原題號 {wrongReviewStartQuestion}
+                  </span>
+                </div>
+                <div className="mt-4 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => changeWrongReviewStart(wrongReviewStartIndex - 1)}
+                    disabled={wrongReviewStartIndex <= 0}
+                    aria-label="往前 1 題錯題"
+                    className="shrink-0 border border-flashYellow px-3 py-2 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-not-allowed disabled:border-zinc-800 disabled:text-zinc-700"
+                  >
+                    ← -1
+                  </button>
+                  <input
+                    type="range"
+                    min={0}
+                    max={Math.max(0, wrongQuestionBank.length - 1)}
+                    step={1}
+                    value={wrongReviewStartIndex}
+                    onChange={(event) => changeWrongReviewStart(Number(event.target.value))}
+                    className="w-full cursor-pointer accent-[#f5b700]"
+                    aria-label="選擇錯題複習起始題號"
+                    aria-valuetext={`從原題號 ${wrongReviewStartQuestion} 開始`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => changeWrongReviewStart(wrongReviewStartIndex + 1)}
+                    disabled={wrongReviewStartIndex >= wrongQuestionBank.length - 1}
+                    aria-label="往後 1 題錯題"
+                    className="shrink-0 border border-flashYellow px-3 py-2 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-not-allowed disabled:border-zinc-800 disabled:text-zinc-700"
+                  >
+                    +1 →
+                  </button>
+                </div>
+                <div className="mt-1 flex justify-between text-[10px] font-bold text-zinc-500" aria-hidden="true">
+                  {wrongReviewStartLabels.map((label, index) => (
+                    <span key={`${label}-${index}`}>{label}</span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
             <div className="mb-5 flex items-center justify-between gap-4 border-b border-zinc-800 pb-4">
               <div>
                 <p className="text-xs tracking-[0.28em] text-deepPink">
@@ -1630,6 +1721,11 @@ export default function Home() {
                 <h2 className="mt-2 text-2xl font-black">{examDomain}</h2>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
+                {hasStartedQuiz && quizMode === "wrong" && currentQuestion?.question_no != null ? (
+                  <span className="border border-flashYellow px-3 py-1 text-xs font-black text-flashYellow">
+                    原題號 {currentQuestion.question_no}
+                  </span>
+                ) : null}
                 <span className="bg-flashYellow px-3 py-1 text-xs font-black text-black">
                   {currentQuestion?.choice_type === "multiple" ? "複選" : "單選"}
                 </span>
