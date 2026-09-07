@@ -68,6 +68,8 @@ type ReviewNote = {
   updated_at?: string;
 };
 
+const PRACTICE_BATCH_SIZE = 5;
+
 const sampleQuestion: QuizQuestion = {
   question_no: 3,
   exam_domain: "安全性與合規",
@@ -237,19 +239,19 @@ function shuffledQuestions(questions: QuizQuestion[]) {
 }
 
 function sequentialStartOptions(questions: QuizQuestion[]) {
-  const lastQuestionNumber = questions.reduce(
-    (highest, question, index) => Math.max(highest, question.question_no ?? index + 1),
-    0
-  );
-  if (lastQuestionNumber <= 0) return [];
-  if (lastQuestionNumber < 10) return [1, lastQuestionNumber].filter((value, index, values) => values.indexOf(value) === index);
-
-  const options: number[] = [1];
-  for (let questionNumber = 10; questionNumber < lastQuestionNumber; questionNumber += 10) {
-    options.push(questionNumber);
+  const options: number[] = [];
+  for (let index = 0; index < questions.length; index += PRACTICE_BATCH_SIZE) {
+    options.push(questions[index]?.question_no ?? index + 1);
   }
-  options.push(lastQuestionNumber);
   return options;
+}
+
+function sequentialPracticeBatch(questions: QuizQuestion[], startQuestion: number) {
+  const startIndex = questions.findIndex(
+    (question, index) => (question.question_no ?? index + 1) >= startQuestion
+  );
+  if (startIndex < 0) return [];
+  return questions.slice(startIndex, startIndex + PRACTICE_BATCH_SIZE);
 }
 
 function sortedOptionKeys(options: string[]) {
@@ -821,10 +823,8 @@ export default function Home() {
         setPracticeQuestionBank(nextQuestionBank);
         setSequentialStartQuestion(nextStartQuestion);
         nextQuestions = practiceOrder === "random"
-          ? shuffledQuestions(nextQuestionBank)
-          : nextQuestionBank.filter((question, index) =>
-              (question.question_no ?? index + 1) >= nextStartQuestion
-            );
+          ? shuffledQuestions(nextQuestionBank).slice(0, PRACTICE_BATCH_SIZE)
+          : sequentialPracticeBatch(nextQuestionBank, nextStartQuestion);
       } else {
         setPracticeQuestionBank([]);
       }
@@ -920,8 +920,8 @@ export default function Home() {
     if (practiceQuestionBank.length === 0) return;
     setPracticeOrder(nextOrder);
     if (nextOrder === "random") {
-      const nextQuestions = shuffledQuestions(practiceQuestionBank);
-      restartPracticeRound(nextQuestions, `已切換為隨機出題，共 ${nextQuestions.length} 題`);
+      const nextQuestions = shuffledQuestions(practiceQuestionBank).slice(0, PRACTICE_BATCH_SIZE);
+      restartPracticeRound(nextQuestions, `已切換為隨機刷題，本輪 ${nextQuestions.length} 題`);
       return;
     }
 
@@ -930,12 +930,10 @@ export default function Home() {
       ? sequentialStartQuestion
       : startOptions[0] ?? 1;
     setSequentialStartQuestion(nextStartQuestion);
-    const nextQuestions = practiceQuestionBank.filter((question, index) =>
-      (question.question_no ?? index + 1) >= nextStartQuestion
-    );
+    const nextQuestions = sequentialPracticeBatch(practiceQuestionBank, nextStartQuestion);
     restartPracticeRound(
       nextQuestions,
-      `已切換為依序出題，從第 ${nextStartQuestion} 題開始，共 ${nextQuestions.length} 題`
+      `已切換為依序刷題，從第 ${nextStartQuestion} 題開始，本輪 ${nextQuestions.length} 題`
     );
   }
 
@@ -944,13 +942,23 @@ export default function Home() {
     const nextStartQuestion = startOptions[sliderIndex];
     if (nextStartQuestion === undefined) return;
     setSequentialStartQuestion(nextStartQuestion);
-    const nextQuestions = practiceQuestionBank.filter((question, index) =>
-      (question.question_no ?? index + 1) >= nextStartQuestion
-    );
+    const nextQuestions = sequentialPracticeBatch(practiceQuestionBank, nextStartQuestion);
     restartPracticeRound(
       nextQuestions,
-      `依序出題已改為從第 ${nextStartQuestion} 題開始，共 ${nextQuestions.length} 題`
+      `已切換至第 ${nextStartQuestion} 題開始，本輪 ${nextQuestions.length} 題`
     );
+  }
+
+  function shiftSequentialStart(direction: -1 | 1) {
+    const startOptions = sequentialStartOptions(practiceQuestionBank);
+    const currentIndex = Math.max(0, startOptions.indexOf(sequentialStartQuestion));
+    const nextIndex = Math.min(
+      Math.max(currentIndex + direction, 0),
+      Math.max(startOptions.length - 1, 0)
+    );
+    if (nextIndex !== currentIndex) {
+      changeSequentialStart(nextIndex);
+    }
   }
 
   async function startWrongReview() {
@@ -1531,8 +1539,8 @@ export default function Home() {
                     <p className="text-xs font-black tracking-[0.18em] text-zinc-500">出題方式</p>
                     <p className="mt-1 text-sm font-bold text-zinc-300">
                       {practiceOrder === "random"
-                        ? `隨機排列全部 ${practiceQuestionBank.length} 題`
-                        : `依題號從第 ${sequentialStartQuestion} 題開始`}
+                        ? `從全部 ${practiceQuestionBank.length} 題中隨機抽選 ${Math.min(PRACTICE_BATCH_SIZE, practiceQuestionBank.length)} 題`
+                        : `依題號從第 ${sequentialStartQuestion} 題開始，每組 ${PRACTICE_BATCH_SIZE} 題`}
                     </p>
                   </div>
                   <div className="grid grid-cols-2 border border-zinc-700">
@@ -1573,17 +1581,37 @@ export default function Home() {
                         第 {sequentialStartQuestion} 題
                       </span>
                     </div>
-                    <input
-                      id="sequential-start-question"
-                      type="range"
-                      min={0}
-                      max={Math.max(0, practiceStartValues.length - 1)}
-                      step={1}
-                      value={practiceStartSliderIndex}
-                      onChange={(event) => changeSequentialStart(Number(event.target.value))}
-                      className="mt-4 w-full cursor-pointer accent-[#f5b700]"
-                      aria-valuetext={`從第 ${sequentialStartQuestion} 題開始`}
-                    />
+                    <div className="mt-4 flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => shiftSequentialStart(-1)}
+                        disabled={practiceStartSliderIndex <= 0}
+                        aria-label="往前 5 題"
+                        className="shrink-0 border border-flashYellow px-3 py-2 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-not-allowed disabled:border-zinc-800 disabled:text-zinc-700"
+                      >
+                        ← -5
+                      </button>
+                      <input
+                        id="sequential-start-question"
+                        type="range"
+                        min={0}
+                        max={Math.max(0, practiceStartValues.length - 1)}
+                        step={1}
+                        value={practiceStartSliderIndex}
+                        onChange={(event) => changeSequentialStart(Number(event.target.value))}
+                        className="w-full cursor-pointer accent-[#f5b700]"
+                        aria-valuetext={`從第 ${sequentialStartQuestion} 題開始`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => shiftSequentialStart(1)}
+                        disabled={practiceStartSliderIndex >= practiceStartValues.length - 1}
+                        aria-label="往後 5 題"
+                        className="shrink-0 border border-flashYellow px-3 py-2 text-xs font-black text-flashYellow transition hover:bg-flashYellow hover:text-black disabled:cursor-not-allowed disabled:border-zinc-800 disabled:text-zinc-700"
+                      >
+                        +5 →
+                      </button>
+                    </div>
                     <div className="mt-1 flex justify-between text-[10px] font-bold text-zinc-500" aria-hidden="true">
                       {practiceStartLabels.map((label, index) => (
                         <span key={`${label}-${index}`}>{label}</span>
