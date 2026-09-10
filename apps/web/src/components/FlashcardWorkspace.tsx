@@ -161,11 +161,31 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
     [cards, selectedChapter, selectedTopic]
   );
 
+  const domainCardNumbers = useMemo(() => {
+    const counts = new Map<string, number>();
+    const numbers = new Map<string, number>();
+    for (const card of cards) {
+      const domain = flashcardDomainKey(card.exam_domain)
+        ?? (card.exam_domain.trim().toLowerCase() || "unclassified");
+      const nextNumber = (counts.get(domain) ?? 0) + 1;
+      counts.set(domain, nextNumber);
+      numbers.set(card.id, nextNumber);
+    }
+    return numbers;
+  }, [cards]);
+
   const noteCards = useMemo(
-    () => notes.filter((card) =>
-      selectedDomain === "all" || flashcardDomainKey(card.exam_domain) === selectedDomain
-    ),
-    [notes, selectedDomain]
+    () => notes
+      .filter((card) => selectedDomain === "all" || flashcardDomainKey(card.exam_domain) === selectedDomain)
+      .sort((left, right) => {
+        const leftDomain = flashcardDomainKey(left.exam_domain) ?? left.exam_domain;
+        const rightDomain = flashcardDomainKey(right.exam_domain) ?? right.exam_domain;
+        const domainComparison = leftDomain.localeCompare(rightDomain);
+        if (domainComparison !== 0) return domainComparison;
+        return (domainCardNumbers.get(left.id) ?? Number.MAX_SAFE_INTEGER)
+          - (domainCardNumbers.get(right.id) ?? Number.MAX_SAFE_INTEGER);
+      }),
+    [domainCardNumbers, notes, selectedDomain]
   );
 
   const noteByCardId = useMemo(() => new Map(notes.map((note) => [note.id, note])), [notes]);
@@ -362,7 +382,12 @@ export default function FlashcardWorkspace({ mode }: FlashcardWorkspaceProps) {
                   <article key={card.note_id} className="border-2 border-zinc-800 bg-[#101010] p-5 shadow-[6px_6px_0_#ff3b30]">
                     <div className="flex items-start justify-between gap-4">
                       <p className="text-xs font-black leading-5 text-deepPink">{card.exam_domain}</p>
-                      <button type="button" onClick={() => deleteNote(card.note_id)} disabled={isSaving} className="shrink-0 border border-zinc-700 px-2 py-1 text-xs font-black text-zinc-400 hover:border-hotRed hover:text-hotRed">刪除</button>
+                      <div className="flex flex-wrap items-center justify-end gap-2">
+                        <span className="border border-acidGreen px-2 py-1 text-xs font-black text-acidGreen">
+                          領域題號 {domainCardNumbers.get(card.id) ?? "—"}
+                        </span>
+                        <button type="button" onClick={() => deleteNote(card.note_id)} disabled={isSaving} className="border border-zinc-700 px-2 py-1 text-xs font-black text-zinc-400 hover:border-hotRed hover:text-hotRed">刪除</button>
+                      </div>
                     </div>
                     <p className="mt-3 text-xs font-bold text-zinc-600">{card.chapter_key}</p>
                     <p className="mt-4 text-base font-black leading-7 text-zinc-400">{card.topic}</p>

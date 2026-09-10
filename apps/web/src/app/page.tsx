@@ -203,6 +203,46 @@ function reviewDomainKey(domain: string | null | undefined): Exclude<ReviewDomai
   return null;
 }
 
+function reviewNoteDomainIdentity(note: ReviewNote) {
+  return reviewDomainKey(note.exam_domain) ?? note.exam_domain?.trim().toLowerCase() ?? "unclassified";
+}
+
+function reviewNoteQuestionIdentity(note: ReviewNote) {
+  return note.question_id ?? `${note.question_no ?? "unknown"}:${note.question_text?.zh ?? note.question_text?.en ?? ""}`;
+}
+
+function orderedReviewNotes(notes: ReviewNote[]) {
+  return [...notes].sort((left, right) => {
+    const domainComparison = reviewNoteDomainIdentity(left).localeCompare(reviewNoteDomainIdentity(right));
+    if (domainComparison !== 0) return domainComparison;
+    const leftQuestionNumber = left.question_no ?? Number.MAX_SAFE_INTEGER;
+    const rightQuestionNumber = right.question_no ?? Number.MAX_SAFE_INTEGER;
+    if (leftQuestionNumber !== rightQuestionNumber) return leftQuestionNumber - rightQuestionNumber;
+    const questionComparison = reviewNoteQuestionIdentity(left).localeCompare(reviewNoteQuestionIdentity(right));
+    if (questionComparison !== 0) return questionComparison;
+    return (left.option_key ?? "").localeCompare(right.option_key ?? "");
+  });
+}
+
+function reviewNoteDomainNumbers(notes: ReviewNote[]) {
+  const numbers = new Map<string, number>();
+  const domainCounts = new Map<string, number>();
+  const numberedQuestions = new Set<string>();
+
+  for (const note of orderedReviewNotes(notes)) {
+    const domain = reviewNoteDomainIdentity(note);
+    const question = reviewNoteQuestionIdentity(note);
+    const domainQuestion = `${domain}:${question}`;
+    if (!numberedQuestions.has(domainQuestion)) {
+      numberedQuestions.add(domainQuestion);
+      domainCounts.set(domain, (domainCounts.get(domain) ?? 0) + 1);
+    }
+    numbers.set(`${domain}:${question}`, domainCounts.get(domain) ?? 1);
+  }
+
+  return numbers;
+}
+
 function formatExamTime(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
@@ -1224,9 +1264,11 @@ export default function Home() {
   const correctAnswerLabel = correctOptions.join(", ");
   const examDomain = currentQuestion?.exam_domain?.trim() || "尚未載入考試領域";
   const reviewDomainOptions = REVIEW_DOMAINS[selectedExam];
+  const sortedReviewNotes = orderedReviewNotes(reviewNotes);
   const filteredReviewNotes = selectedReviewDomain === "all"
-    ? reviewNotes
-    : reviewNotes.filter((note) => reviewDomainKey(note.exam_domain) === selectedReviewDomain);
+    ? sortedReviewNotes
+    : sortedReviewNotes.filter((note) => reviewDomainKey(note.exam_domain) === selectedReviewDomain);
+  const domainNumbersByReviewNote = reviewNoteDomainNumbers(reviewNotes);
   const selectedReviewDomainLabel = selectedReviewDomain === "all"
     ? "全部"
     : reviewDomainOptions.find((domain) => domain.key === selectedReviewDomain)?.label ?? "此領域";
@@ -1517,6 +1559,8 @@ export default function Home() {
                     const noteOptionText = localizedText(note.option_text);
                     const noteExplanationText = localizedText(note.explanation_text);
                     const noteKey = `${note.question_id}-${note.option_key}`;
+                    const domainQuestionKey = `${reviewNoteDomainIdentity(note)}:${reviewNoteQuestionIdentity(note)}`;
+                    const domainQuestionNumber = domainNumbersByReviewNote.get(domainQuestionKey);
 
                     return (
                       <article key={noteKey} className="border border-zinc-800 bg-[#121212] p-4">
@@ -1524,7 +1568,12 @@ export default function Home() {
                           <p className="text-xs font-black tracking-[0.18em] text-deepPink">
                             {note.exam_domain || "未分類"}
                           </p>
-                          <div className="flex shrink-0 items-center gap-2">
+                          <div className="flex flex-wrap items-center justify-end gap-2">
+                            {domainQuestionNumber != null ? (
+                              <span className="border border-acidGreen px-2 py-1 text-xs font-black text-acidGreen">
+                                領域題號 {domainQuestionNumber}
+                              </span>
+                            ) : null}
                             {note.question_no != null ? (
                               <span className="border border-flashYellow px-2 py-1 text-xs font-black text-flashYellow">
                                 原題號 {note.question_no}
