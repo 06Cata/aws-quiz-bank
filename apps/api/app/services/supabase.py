@@ -28,6 +28,8 @@ EXAM_DOMAIN_WEIGHTS_BY_EXAM = {
     },
 }
 
+SUPABASE_PAGE_SIZE = 1000
+
 
 @dataclass(frozen=True)
 class QuizTables:
@@ -253,18 +255,33 @@ async def select_questions(limit: int | None = None, exam: str = "clf") -> list[
     tables = quiz_tables(exam)
     url = f"{settings.supabase_url}/rest/v1/{tables.questions}"
     headers = _service_headers()
-    params = {
+    base_params = {
         "select": "*",
         "is_active": "eq.true",
         "order": "question_no.asc",
     }
-    if limit is not None:
-        params["limit"] = str(limit)
 
+    questions: list[dict] = []
+    offset = 0
     async with httpx.AsyncClient(timeout=20) as client:
-        response = await client.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        questions = response.json()
+        while limit is None or len(questions) < limit:
+            page_size = min(SUPABASE_PAGE_SIZE, limit - len(questions)) if limit is not None else SUPABASE_PAGE_SIZE
+            response = await client.get(
+                url,
+                headers=headers,
+                params={
+                    **base_params,
+                    "limit": str(page_size),
+                    "offset": str(offset),
+                },
+            )
+            response.raise_for_status()
+            page = response.json()
+            if not page:
+                break
+
+            questions.extend(page)
+            offset += len(page)
 
     random.shuffle(questions)
     return questions

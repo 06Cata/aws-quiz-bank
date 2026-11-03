@@ -1010,6 +1010,30 @@ export default function Home() {
     }
   }
 
+  function continueSequentialPractice() {
+    if (practiceOrder !== "sequential" || practiceQuestionBank.length === 0) return;
+
+    const lastQuestion = questions[questions.length - 1];
+    const lastQuestionIndex = practiceQuestionBank.findIndex((question, index) => (
+      lastQuestion?.id
+        ? question.id === lastQuestion.id
+        : (question.question_no ?? index + 1) === lastQuestion?.question_no
+    ));
+    const nextStartIndex = lastQuestionIndex + 1;
+    if (lastQuestionIndex < 0 || nextStartIndex >= practiceQuestionBank.length) return;
+
+    const nextStartQuestion = practiceQuestionBank[nextStartIndex]?.question_no ?? nextStartIndex + 1;
+    const nextQuestions = practiceQuestionBank.slice(
+      nextStartIndex,
+      nextStartIndex + PRACTICE_BATCH_SIZE
+    );
+    setSequentialStartQuestion(nextStartQuestion);
+    restartPracticeRound(
+      nextQuestions,
+      `繼續從第 ${nextStartQuestion} 題開始，本輪 ${nextQuestions.length} 題`
+    );
+  }
+
   function changeWrongReviewQuestion(nextIndex: number) {
     if (wrongQuestionBank.length === 0) return;
     const boundedIndex = Math.min(Math.max(nextIndex, 0), wrongQuestionBank.length - 1);
@@ -1283,6 +1307,15 @@ export default function Home() {
       });
   const currentWrongQuestionNumber = wrongQuestionBank[currentQuestionIndex]?.question_no
     ?? currentQuestionIndex + 1;
+  const lastPracticeQuestion = questions[questions.length - 1];
+  const lastPracticeQuestionIndex = practiceQuestionBank.findIndex((question, index) => (
+    lastPracticeQuestion?.id
+      ? question.id === lastPracticeQuestion.id
+      : (question.question_no ?? index + 1) === lastPracticeQuestion?.question_no
+  ));
+  const canContinueSequentialPractice = practiceOrder === "sequential"
+    && lastPracticeQuestionIndex >= 0
+    && lastPracticeQuestionIndex + 1 < practiceQuestionBank.length;
 
   return (
     <main className="min-h-screen overflow-hidden px-6 py-8 text-zinc-100 md:px-12">
@@ -1802,13 +1835,33 @@ export default function Home() {
                 <p className="mt-3 text-sm font-bold text-zinc-300">
                   答對 {roundResult.correctCount} 題／共 {roundResult.totalCount} 題
                 </p>
-                <button
-                  type="button"
-                  onClick={roundResult.mode === "wrong" ? startWrongReview : startQuiz}
-                  className="mt-5 border-2 border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
-                >
-                  {roundResult.mode === "wrong" ? "再次複習錯題" : "重新開始刷題"}
-                </button>
+                {roundResult.mode === "wrong" ? (
+                  <button
+                    type="button"
+                    onClick={startWrongReview}
+                    className="mt-5 border-2 border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
+                  >
+                    再次複習錯題
+                  </button>
+                ) : (
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={startQuiz}
+                      className="border-2 border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
+                    >
+                      重新開始刷題
+                    </button>
+                    <button
+                      type="button"
+                      onClick={continueSequentialPractice}
+                      disabled={!canContinueSequentialPractice}
+                      className="border-2 border-acidGreen bg-acidGreen px-5 py-3 text-sm font-black text-black transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-900 disabled:text-zinc-600"
+                    >
+                      {canContinueSequentialPractice ? "繼續" : "已到最後一題"}
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
             <>
