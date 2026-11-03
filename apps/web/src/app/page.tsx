@@ -965,6 +965,16 @@ export default function Home() {
     scrollToQuestionPanel();
   }
 
+  function restartCompletedPracticeRound() {
+    const firstQuestionNumber = questions[0]?.question_no ?? 1;
+    restartPracticeRound(
+      [...questions],
+      practiceOrder === "sequential"
+        ? `已重新開始本輪，從第 ${firstQuestionNumber} 題開始`
+        : "已重新開始本輪刷題"
+    );
+  }
+
   function changePracticeOrder(nextOrder: PracticeOrder) {
     if (practiceQuestionBank.length === 0) return;
     setPracticeOrder(nextOrder);
@@ -1847,7 +1857,7 @@ export default function Home() {
                   <div className="mt-5 grid grid-cols-2 gap-3">
                     <button
                       type="button"
-                      onClick={startQuiz}
+                      onClick={restartCompletedPracticeRound}
                       className="border-2 border-flashYellow px-5 py-3 text-sm font-black text-flashYellow transition hover:bg-flashYellow hover:text-black"
                     >
                       重新開始刷題
